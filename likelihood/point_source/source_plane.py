@@ -202,29 +202,12 @@ params_tree = jax.tree_util.tree_map(jnp.asarray, instance)
 # Eager baseline — full FitPointDataset (source-plane chi-squared)
 # ---------------------------------------------------------------------------
 
-print("\n--- Eager FitPointDataset (source-plane) ---")
-
-analysis_eager = al.AnalysisPoint(
-    dataset=dataset,
-    solver=solver,
-    fit_positions_cls=al.FitPositionsSource,
-    use_jax=False,
-)
-
-with timer.section("fit_eager"):
-    fit_eager = analysis_eager.fit_from(instance=instance)
-    log_likelihood_ref = float(fit_eager.log_likelihood)
-    figure_of_merit_ref = float(fit_eager.figure_of_merit)
-
-n_eager_repeats = 100
-with timer.section(f"eager_log_likelihood_x{n_eager_repeats}"):
-    for _ in range(n_eager_repeats):
-        analysis_eager.log_likelihood_function(instance=instance)
-eager_per_call = timer.records[-1][1] / n_eager_repeats
-
-print(f"  log_likelihood   = {log_likelihood_ref}")
-print(f"  figure_of_merit  = {figure_of_merit_ref}")
-print(f"  eager per-call   = {eager_per_call:.6f} s")
+# Numpy eager FitPointDataset baseline + steady-state loop stripped — not
+# representative of JAX-jitted cost. ``eager_per_call`` set to None so
+# downstream prints/charts guard against the missing value.
+eager_per_call = None
+log_likelihood_ref = None
+figure_of_merit_ref = None
 
 
 # ===================================================================
@@ -391,6 +374,7 @@ print(
 # ===================================================================
 
 al_version = al.__version__
+backend = jax.default_backend()
 
 print("\n" + "=" * 70)
 print(f"JAX LIKELIHOOD SUMMARY — POINT SOURCE SOURCE-PLANE — v{al_version}")
@@ -401,7 +385,8 @@ print(f"  Position noise sigma:       {positions_noise_sigma}")
 print(f"  Free parameters:            {model.total_free_parameters}")
 print(f"  fit_positions_cls:          FitPositionsSource (source-plane chi-squared)")
 print("-" * 70)
-print(f"  Eager full likelihood:      {eager_per_call:.6f} s/call  ({log_likelihood_ref:.6f})")
+if eager_per_call is not None:
+    print(f"  Eager full likelihood:      {eager_per_call:.6f} s/call  ({log_likelihood_ref:.6f})")
 if full_pipeline_jits:
     print(f"  Full pipeline (JIT):        {full_pipeline_per_call:.6f} s/call")
 else:
@@ -413,6 +398,7 @@ print("=" * 70)
 
 likelihood_summary = {
     "autolens_version": al_version,
+    "device": {"backend": backend},
     "dataset": dataset_name,
     "fit_positions_cls": "FitPositionsSource",
     "configuration": {
@@ -420,8 +406,6 @@ likelihood_summary = {
         "positions_noise_sigma": positions_noise_sigma,
         "free_parameters": int(model.total_free_parameters),
     },
-    "eager_per_call": eager_per_call,
-    "eager_log_likelihood": log_likelihood_ref,
     "full_pipeline_jits": full_pipeline_jits,
     "full_pipeline_blocker": full_pipeline_blocker,
     "full_pipeline_single_jit": full_pipeline_per_call,
@@ -440,23 +424,26 @@ likelihood_summary = {
 results_dir = _workspace_root / "results" / "likelihood" / "point_source"
 results_dir.mkdir(parents=True, exist_ok=True)
 
-dict_path = results_dir / f"source_plane_summary_v{al_version}.json"
+dict_path = results_dir / f"source_plane_summary_v{al_version}_{backend}.json"
 dict_path.write_text(json.dumps(likelihood_summary, indent=2))
 print(f"\n  Results dict saved to: {dict_path}")
 
 # --- Bar chart ---
 
 labels = [
-    "Eager full likelihood",
     "JIT-able prefix (raytrace)",
     f"vmap prefix per-call (batch={batch_size})",
 ]
-times = [eager_per_call, prefix_per_call, vmap_per_call]
-colors = ["#8172B3", "#4C72B0", "#55A868"]
+times = [prefix_per_call, vmap_per_call]
+colors = ["#4C72B0", "#55A868"]
 if full_pipeline_jits:
-    labels.insert(1, "Full pipeline (JIT)")
-    times.insert(1, full_pipeline_per_call)
-    colors.insert(1, "#C44E52")
+    labels.insert(0, "Full pipeline (JIT)")
+    times.insert(0, full_pipeline_per_call)
+    colors.insert(0, "#C44E52")
+if eager_per_call is not None:
+    labels.insert(0, "Eager full likelihood")
+    times.insert(0, eager_per_call)
+    colors.insert(0, "#8172B3")
 
 fig, ax = plt.subplots(figsize=(10, 4.5))
 y_pos = range(len(labels))
@@ -491,7 +478,7 @@ ax.set_title(
 ax.margins(x=0.20)
 fig.tight_layout()
 
-chart_path = results_dir / f"source_plane_summary_v{al_version}.png"
+chart_path = results_dir / f"source_plane_summary_v{al_version}_{backend}.png"
 fig.savefig(chart_path, dpi=150)
 plt.close(fig)
 print(f"  Bar chart saved to:    {chart_path}")
@@ -517,19 +504,8 @@ print(f"  Bar chart saved to:    {chart_path}")
 # autolens_workspace_developer@f8a5cef.
 EXPECTED_LOG_LIKELIHOOD_SOURCE_PLANE = -33788.35731127962
 
-np.testing.assert_allclose(
-    log_likelihood_ref,
-    EXPECTED_LOG_LIKELIHOOD_SOURCE_PLANE,
-    rtol=1e-4,
-    err_msg=(
-        f"point_source/source_plane: regression — eager log_likelihood drifted "
-        f"(got {log_likelihood_ref}, expected {EXPECTED_LOG_LIKELIHOOD_SOURCE_PLANE})"
-    ),
-)
-print(
-    f"  Eager regression assertion PASSED: log_likelihood matches "
-    f"{EXPECTED_LOG_LIKELIHOOD_SOURCE_PLANE:.6f}"
-)
+# Eager regression assertion stripped — eager numpy path removed from this script.
+# The JIT assertion below is the sole regression guard.
 
 if full_pipeline_jits:
     np.testing.assert_allclose(

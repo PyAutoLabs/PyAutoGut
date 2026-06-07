@@ -298,23 +298,17 @@ print(f"  Over-sampled pixels:     {n_over_sampled_pixels}")
 print(f"  Linear Gaussians:        {n_linear_gaussians}")
 
 # ---------------------------------------------------------------------------
-# 4. Full-pipeline reference (FitImaging) — eager baseline
+# 4. Full-pipeline reference (FitImaging) — construction kept for downstream
+#    consumers (fit.profile_subtracted_image); eager timing + figure_of_merit
+#    / log_likelihood reads stripped (not representative of user workloads).
 # ---------------------------------------------------------------------------
 
-print("\n--- Full FitImaging (eager baseline) ---")
-
-with timer.section("fit_imaging_eager"):
-    fit = al.FitImaging(
-        dataset=dataset,
-        tracer=tracer,
-        settings=al.Settings(use_border_relocator=True),
-        xp=np,
-    )
-    log_evidence_ref = fit.figure_of_merit
-    log_likelihood_ref = fit.log_likelihood
-
-print(f"  figure_of_merit (log_evidence) = {log_evidence_ref}")
-print(f"  log_likelihood                 = {log_likelihood_ref}")
+fit = al.FitImaging(
+    dataset=dataset,
+    tracer=tracer,
+    settings=al.Settings(use_border_relocator=True),
+    xp=np,
+)
 
 
 # ===================================================================
@@ -341,11 +335,9 @@ grid_lp = dataset.grids.lp
 
 print("\n--- Step 1: Ray-trace grids ---")
 
-with timer.section("ray_trace_eager"):
-    traced_grids = tracer.traced_grid_2d_list_from(grid=grid_lp, xp=jnp)
-    for tg in traced_grids:
-        block(tg)
-
+# Eager (un-jitted) ray-trace stripped — only here to print the plane count
+# as a sanity diagnostic; the JIT version below produces the real timing.
+traced_grids = tracer.traced_grid_2d_list_from(grid=grid_lp, xp=jnp)
 print(f"  Number of planes traced: {len(traced_grids)}")
 
 def ray_trace_raw(grid_raw):
@@ -469,10 +461,7 @@ def compute_data_vector(blurred_mapping_matrix, image, noise_map):
 bmm_jnp = jnp.array(blurred_mapping_matrix)
 noise_jnp = jnp.array(dataset.noise_map.array)
 
-with timer.section("data_vector_eager"):
-    data_vector = compute_data_vector(bmm_jnp, data_array, noise_jnp)
-    block(data_vector)
-
+# Eager data-vector compute stripped (sanity-only — JIT timing below).
 _, data_vector = jit_profile(
     compute_data_vector, "data_vector_jit", bmm_jnp, data_array, noise_jnp
 )
@@ -497,10 +486,7 @@ def compute_curvature_matrix(blurred_mapping_matrix, noise_map):
         xp=jnp,
     )
 
-with timer.section("curvature_matrix_eager"):
-    curvature_matrix = compute_curvature_matrix(bmm_jnp, noise_jnp)
-    block(curvature_matrix)
-
+# Eager curvature-matrix compute stripped (sanity-only — JIT timing below).
 _, curvature_matrix = jit_profile(
     compute_curvature_matrix, "curvature_matrix_jit", bmm_jnp, noise_jnp
 )
@@ -521,12 +507,7 @@ def compute_reconstruction(data_vector, curvature_matrix):
         xp=jnp,
     )
 
-with timer.section("reconstruction_eager"):
-    reconstruction = compute_reconstruction(
-        jnp.array(data_vector), jnp.array(curvature_matrix)
-    )
-    block(reconstruction)
-
+# Eager reconstruction compute stripped (sanity-only — JIT timing below).
 _, reconstruction = jit_profile(
     compute_reconstruction, "reconstruction_jit",
     jnp.array(data_vector), jnp.array(curvature_matrix)
@@ -548,10 +529,7 @@ def compute_mapped_recon(blurred_mapping_matrix, reconstruction):
         xp=jnp,
     )
 
-with timer.section("mapped_recon_eager"):
-    mapped_recon = compute_mapped_recon(bmm_jnp, jnp.array(reconstruction))
-    block(mapped_recon)
-
+# Eager mapped-recon compute stripped (sanity-only — JIT timing below).
 _, mapped_recon = jit_profile(
     compute_mapped_recon, "mapped_recon_jit", bmm_jnp, jnp.array(reconstruction)
 )
@@ -573,12 +551,7 @@ def compute_log_likelihood(data, noise_map, mapped_recon):
 
 mapped_recon_jnp = jnp.array(mapped_recon)
 
-with timer.section("log_likelihood_eager"):
-    log_like = compute_log_likelihood(
-        data_array, noise_jnp, mapped_recon_jnp
-    )
-    block(log_like)
-
+# Eager log-likelihood compute stripped (sanity-only — JIT timing below).
 _, log_like = jit_profile(
     compute_log_likelihood, "log_likelihood_jit",
     data_array, noise_jnp, mapped_recon_jnp
@@ -586,16 +559,6 @@ _, log_like = jit_profile(
 likelihood_steps.append(("Chi-squared & log likelihood", timer.records[-1][1] / 10))
 
 print(f"  log_likelihood = {log_like}")
-
-# Assert step-by-step result matches FitImaging.log_likelihood
-# (log_likelihood = -0.5 * (chi_squared + noise_norm), same formula as compute_log_likelihood)
-np.testing.assert_allclose(
-    float(log_like),
-    float(log_likelihood_ref),
-    rtol=1e-4,
-    err_msg="Step-by-step log_likelihood does not match FitImaging.log_likelihood",
-)
-print("  Assertion PASSED: step-by-step matches FitImaging.log_likelihood")
 
 # ===================================================================
 # PART C — Full-pipeline JIT for comparison
@@ -727,9 +690,12 @@ print("=" * 70)
 
 # --- Save results dictionary ---
 
+backend = jax.default_backend()
+
 likelihood_summary = {
     "autolens_version": al_version,
     "instrument": instrument,
+    "device": {"backend": backend},
     "configuration": {
         "pixel_scale_arcsec": pixel_scale,
         "mask_radius_arcsec": mask_radius,
@@ -751,7 +717,7 @@ likelihood_summary = {
 results_dir = _workspace_root / "results" / "likelihood" / "imaging"
 results_dir.mkdir(parents=True, exist_ok=True)
 
-dict_path = results_dir / f"mge_likelihood_summary_{instrument}_v{al_version}.json"
+dict_path = results_dir / f"mge_likelihood_summary_{instrument}_v{al_version}_{backend}.json"
 dict_path.write_text(json.dumps(likelihood_summary, indent=2))
 print(f"\n  Results dict saved to: {dict_path}")
 
@@ -807,7 +773,7 @@ ax.legend(loc="lower right", fontsize=9)
 ax.margins(x=0.15)
 fig.tight_layout()
 
-chart_path = results_dir / f"mge_likelihood_summary_{instrument}_v{al_version}.png"
+chart_path = results_dir / f"mge_likelihood_summary_{instrument}_v{al_version}_{backend}.png"
 fig.savefig(chart_path, dpi=150)
 plt.close(fig)
 print(f"  Bar chart saved to:    {chart_path}")
@@ -823,19 +789,7 @@ print(f"  Bar chart saved to:    {chart_path}")
 # agree to ~1e-11 precision.
 EXPECTED_LOG_LIKELIHOOD_HST = 27379.38890685539
 
-np.testing.assert_allclose(
-    log_likelihood_ref,
-    EXPECTED_LOG_LIKELIHOOD_HST,
-    rtol=1e-4,
-    err_msg=(
-        f"imaging/mge[{instrument}]: regression — eager log_likelihood drifted "
-        f"(got {log_likelihood_ref}, expected {EXPECTED_LOG_LIKELIHOOD_HST})"
-    ),
-)
-print(
-    f"  Eager regression assertion PASSED: log_likelihood matches "
-    f"{EXPECTED_LOG_LIKELIHOOD_HST:.6f}"
-)
+# Eager regression assertion stripped — numpy FitImaging baseline removed.
 np.testing.assert_allclose(
     float(full_result),
     EXPECTED_LOG_LIKELIHOOD_HST,

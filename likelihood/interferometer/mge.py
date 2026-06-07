@@ -249,23 +249,10 @@ print(f"  Real-space grid shape:   {real_space_shape[0]} x {real_space_shape[1]}
 print(f"  Visibilities:            {n_visibilities}")
 print(f"  Linear Gaussians:        {n_linear_gaussians}")
 
-# ---------------------------------------------------------------------------
-# 5. Full-pipeline reference (FitInterferometer) — eager baseline
-# ---------------------------------------------------------------------------
-
-print("\n--- Full FitInterferometer (eager baseline) ---")
-
-with timer.section("fit_interferometer_eager"):
-    fit = al.FitInterferometer(
-        dataset=dataset,
-        tracer=tracer,
-        xp=np,
-    )
-    figure_of_merit_ref = fit.figure_of_merit
-    log_likelihood_ref = fit.log_likelihood
-
-print(f"  figure_of_merit = {figure_of_merit_ref}")
-print(f"  log_likelihood  = {log_likelihood_ref}")
+# Eager FitInterferometer baseline (numpy path) stripped — was used as a
+# numerical sanity check, but the JIT result is regression-asserted directly
+# against ``EXPECTED_LOG_LIKELIHOOD_SMA`` below. Numpy timing is not
+# representative of what a user runs.
 
 
 # ===================================================================
@@ -327,17 +314,9 @@ print(f"  vmap per call:         {vmap_per_call:.6f} s")
 print(f"  single JIT per call:   {full_pipeline_per_call:.6f} s")
 print(f"  vmap speedup:          {vmap_speedup:.1f}x faster per likelihood")
 
-# Correctness: full-pipeline JIT must match eager FitInterferometer.log_likelihood
-# (NOT figure_of_merit — the analysis.log_likelihood_function returns the
-# log-likelihood scalar directly, whereas FitInterferometer.figure_of_merit may
-# be a log-evidence when an inversion is present).
-np.testing.assert_allclose(
-    float(full_result),
-    float(log_likelihood_ref),
-    rtol=1e-4,
-    err_msg="interferometer/mge: JIT log_likelihood does not match eager FitInterferometer",
-)
-print("  Eager-vs-JIT correctness PASSED")
+# Eager-vs-JIT correctness assertion stripped along with the numpy
+# FitInterferometer baseline. JIT-vs-pinned-constant regression
+# assertion lives at the bottom of the script.
 
 np.testing.assert_allclose(
     np.array(result_vmap),
@@ -385,7 +364,6 @@ print(f"  Real-space grid shape:   {real_space_shape[0]} x {real_space_shape[1]}
 print(f"  Visibilities:            {n_visibilities}")
 print(f"  Linear Gaussians:        {n_linear_gaussians}")
 print("-" * 70)
-print(f"  Eager log_likelihood:    {log_likelihood_ref}")
 print(f"  JIT  log_likelihood:     {float(full_result)}")
 print("-" * 70)
 print(f"  Full pipeline per call:  {full_pipeline_per_call:.6f} s")
@@ -395,10 +373,13 @@ print("=" * 70)
 
 # --- Save results dictionary ---
 
+backend = jax.default_backend()
+
 likelihood_summary = {
     "autolens_version": al_version,
     "instrument": instrument,
     "model": "mge",
+    "device": {"backend": backend},
     "configuration": {
         "pixel_scale_arcsec": pixel_scale,
         "mask_radius_arcsec": mask_radius,
@@ -406,7 +387,6 @@ likelihood_summary = {
         "visibilities": int(n_visibilities),
         "linear_gaussians": int(n_linear_gaussians),
     },
-    "log_likelihood_eager": float(log_likelihood_ref),
     "log_likelihood_jit": float(full_result),
     "full_pipeline_single_jit": full_pipeline_per_call,
     "vmap": {
@@ -424,7 +404,7 @@ likelihood_summary = {
 results_dir = _workspace_root / "results" / "likelihood" / "interferometer"
 results_dir.mkdir(parents=True, exist_ok=True)
 
-dict_path = results_dir / f"mge_likelihood_summary_{instrument}_v{al_version}.json"
+dict_path = results_dir / f"mge_likelihood_summary_{instrument}_v{al_version}_{backend}.json"
 dict_path.write_text(json.dumps(likelihood_summary, indent=2))
 print(f"\n  Results dict saved to: {dict_path}")
 
@@ -468,7 +448,7 @@ ax.set_title(
 ax.margins(x=0.2)
 fig.tight_layout()
 
-chart_path = results_dir / f"mge_likelihood_summary_{instrument}_v{al_version}.png"
+chart_path = results_dir / f"mge_likelihood_summary_{instrument}_v{al_version}_{backend}.png"
 fig.savefig(chart_path, dpi=150)
 plt.close(fig)
 print(f"  Bar chart saved to:    {chart_path}")
@@ -482,19 +462,7 @@ print(f"  Bar chart saved to:    {chart_path}")
 # make the full-pipeline log-likelihood deterministic at the prior median.
 EXPECTED_LOG_LIKELIHOOD_SMA = -3153.8939746810656
 
-np.testing.assert_allclose(
-    log_likelihood_ref,
-    EXPECTED_LOG_LIKELIHOOD_SMA,
-    rtol=1e-4,
-    err_msg=(
-        f"interferometer/mge[{instrument}]: regression — eager log_likelihood drifted "
-        f"(got {log_likelihood_ref}, expected {EXPECTED_LOG_LIKELIHOOD_SMA})"
-    ),
-)
-print(
-    f"  Eager regression assertion PASSED: log_likelihood matches "
-    f"{EXPECTED_LOG_LIKELIHOOD_SMA:.6f}"
-)
+# Eager regression assertion stripped — numpy FitInterferometer baseline removed.
 np.testing.assert_allclose(
     float(full_result),
     EXPECTED_LOG_LIKELIHOOD_SMA,

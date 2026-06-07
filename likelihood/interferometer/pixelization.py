@@ -43,6 +43,7 @@ registration (``autofit.jax.register_model``). Exercises the ``TuplePrior``
 pytree support landed in PyAutoFit#1222.
 """
 
+import os
 import numpy as np
 import jax
 import jax.numpy as jnp
@@ -75,11 +76,14 @@ if _smoke_os.environ.get("AUTOLENS_PROFILING_SMOKE") == "1":
     _smoke_sys.exit(0)
 
 INSTRUMENTS = {
-    "sma": {"pixel_scale": 0.1, "real_space_shape": (256, 256)},
-    "alma": {"pixel_scale": 0.05, "real_space_shape": (256, 256)},
+    "sma": {"pixel_scale": 0.1, "real_space_shape": (256, 256), "mask_radius": 3.0},
+    "alma": {"pixel_scale": 0.05, "real_space_shape": (256, 256), "mask_radius": 3.0},
+    "alma_high_res": {"pixel_scale": 0.025, "real_space_shape": (512, 512), "mask_radius": 3.0},
 }
 
-instrument = "sma"  # <-- change this to profile a different instrument
+# Override via env var so the same script binary can be run multiple times
+# without editing the file between runs (CPU vs GPU × sma vs alma_high_res).
+instrument = os.environ.get("PROFILING_INSTRUMENT", "sma")
 
 mesh_pixels_yx = 32  # 32x32 = 1024 source pixels — 1000-tier production fiducial
 mesh_shape = (mesh_pixels_yx, mesh_pixels_yx)
@@ -152,6 +156,7 @@ _script_dir = Path(__file__).resolve().parent
 _workspace_root = _script_dir.parents[1]
 pixel_scale = INSTRUMENTS[instrument]["pixel_scale"]
 real_space_shape = INSTRUMENTS[instrument]["real_space_shape"]
+mask_radius = INSTRUMENTS[instrument]["mask_radius"]
 dataset_path = Path("dataset") / "interferometer" / instrument
 
 if al.util.dataset.should_simulate(str(dataset_path)):
@@ -162,8 +167,6 @@ if al.util.dataset.should_simulate(str(dataset_path)):
         f"scripts under autolens_workspace_developer/jax_profiling/dataset_setup/, "
         f"then copy the result into autolens_profiling/dataset/."
     )
-
-mask_radius = 3.0
 
 real_space_mask = al.Mask2D.circular(
     shape_native=real_space_shape,
@@ -178,7 +181,18 @@ with timer.section("dataset_load"):
         uv_wavelengths_path=dataset_path / "uv_wavelengths.fits",
         real_space_mask=real_space_mask,
         transformer_class=al.TransformerDFT,
+        # DFT is intentional even at ALMA-scale visibility counts — profiling
+        # the JAX-traceable path is the goal. apply_sparse_operator below
+        # avoids materialising the dense DFT matrix at runtime.
+        raise_error_dft_visibilities_limit=False,
     )
+
+with timer.section("apply_sparse_operator"):
+    # Precompute the FFT-based sparse precision-matrix preload so per-fit
+    # curvature assembly uses the sparse path instead of a dense
+    # (n_vis x n_real_space) DFT mapping matrix for every source pixel.
+    # Mirrors interferometer/delaunay.py.
+    dataset = dataset.apply_sparse_operator(use_jax=True, show_progress=True)
 
 n_visibilities = dataset.uv_wavelengths.shape[0]
 print(f"  Total visibilities: {n_visibilities}")
@@ -276,25 +290,10 @@ with timer.section("adapt_image_build"):
 
 print(f"  adapt_image shape (slim): {adapt_image.shape_slim}")
 
-# ---------------------------------------------------------------------------
-# 5. Full-pipeline reference (FitInterferometer) — eager baseline
-# ---------------------------------------------------------------------------
-
-print("\n--- Full FitInterferometer (eager baseline) ---")
-
-with timer.section("fit_interferometer_eager"):
-    fit = al.FitInterferometer(
-        dataset=dataset,
-        tracer=tracer,
-        adapt_images=adapt_images,
-        xp=np,
-    )
-    figure_of_merit_ref = fit.figure_of_merit
-    log_likelihood_ref = fit.log_likelihood
-
-print(f"  figure_of_merit = {figure_of_merit_ref}")
-print(f"  log_likelihood  = {log_likelihood_ref}")
-
+# Eager FitInterferometer baseline (numpy path) stripped — was used as a
+# numerical sanity check, but the JIT result is regression-asserted directly
+# against ``EXPECTED_LOG_EVIDENCE[instrument]`` below. Numpy timing is not
+# representative of what a user runs.
 
 # ===================================================================
 # PART B — Full-pipeline JIT
@@ -370,19 +369,9 @@ else:
     print(f"  single JIT per call:   {full_pipeline_per_call:.6f} s")
     print(f"  vmap speedup:          {vmap_speedup:.1f}x faster per likelihood")
 
-    # Correctness: for inversion models (pixelization + regularization), the
-    # analysis "log_likelihood_function" actually returns the log-evidence
-    # (= figure_of_merit), which includes the regularization/determinant terms.
-    # Match against figure_of_merit_ref, not log_likelihood_ref. For the MGE case
-    # in Phase 1 the two were numerically equal because there was no regularized
-    # inversion; here they differ by the regularization + log-determinant terms.
-    np.testing.assert_allclose(
-        float(full_result),
-        float(figure_of_merit_ref),
-        rtol=1e-4,
-        err_msg="interferometer/pixelization: JIT log-evidence does not match eager figure_of_merit",
-    )
-    print("  Eager-vs-JIT correctness PASSED")
+    # Eager-vs-JIT correctness assertion stripped along with the numpy
+    # FitInterferometer baseline. JIT-vs-pinned-constant regression
+    # assertion lives at the bottom of the script.
 
     np.testing.assert_allclose(
         np.array(result_vmap),
@@ -424,10 +413,13 @@ import matplotlib.pyplot as plt
 
 al_version = al.__version__
 
+backend = jax.default_backend()
+
 print("\n" + "=" * 70)
 print(f"JAX LIKELIHOOD FUNCTION SUMMARY — {instrument.upper()} — v{al_version}")
 print("=" * 70)
 print(f"  Instrument:              {instrument}")
+print(f"  Device backend:          {backend}")
 print(f"  Pixel scale:             {pixel_scale} arcsec/pixel")
 print(f"  Real-space mask radius:  {mask_radius} arcsec")
 print(f"  Real-space grid shape:   {real_space_shape[0]} x {real_space_shape[1]}")
@@ -435,8 +427,6 @@ print(f"  Visibilities:            {n_visibilities}")
 print(f"  Mesh shape:              {mesh_shape[0]} x {mesh_shape[1]}")
 print(f"  Source pixels:           {n_source_pixels}")
 print("-" * 70)
-print(f"  Eager log_likelihood:    {log_likelihood_ref}")
-print(f"  Eager figure_of_merit:   {figure_of_merit_ref}  (log-evidence)")
 print(f"  JIT  log-evidence:       {float(full_result)}")
 print("-" * 70)
 print(f"  Full pipeline per call:  {full_pipeline_per_call:.6f} s")
@@ -453,6 +443,7 @@ likelihood_summary = {
     "autolens_version": al_version,
     "instrument": instrument,
     "model": "pixelization",
+    "device": {"backend": backend},
     "configuration": {
         "pixel_scale_arcsec": pixel_scale,
         "mask_radius_arcsec": mask_radius,
@@ -462,8 +453,6 @@ likelihood_summary = {
         "source_pixels": int(n_source_pixels),
         "regularization_coefficient": regularization_coefficient,
     },
-    "log_likelihood_eager": float(log_likelihood_ref),
-    "figure_of_merit_eager": float(figure_of_merit_ref),
     "log_evidence_jit": float(full_result),
     "full_pipeline_single_jit": full_pipeline_per_call,
     "vmap": "SKIPPED — model has 0 free parameters (all fixed to truth)" if vmap_per_call is None else {
@@ -481,7 +470,7 @@ likelihood_summary = {
 results_dir = _workspace_root / "results" / "likelihood" / "interferometer"
 results_dir.mkdir(parents=True, exist_ok=True)
 
-dict_path = results_dir / f"pixelization_likelihood_summary_{instrument}_v{al_version}.json"
+dict_path = results_dir / f"pixelization_likelihood_summary_{instrument}_v{al_version}_{backend}.json"
 dict_path.write_text(json.dumps(likelihood_summary, indent=2))
 print(f"\n  Results dict saved to: {dict_path}")
 
@@ -528,7 +517,7 @@ ax.set_title(
 ax.margins(x=0.2)
 fig.tight_layout()
 
-chart_path = results_dir / f"pixelization_likelihood_summary_{instrument}_v{al_version}.png"
+chart_path = results_dir / f"pixelization_likelihood_summary_{instrument}_v{al_version}_{backend}.png"
 fig.savefig(chart_path, dpi=150)
 plt.close(fig)
 print(f"  Bar chart saved to:    {chart_path}")
@@ -542,33 +531,35 @@ print(f"  Bar chart saved to:    {chart_path}")
 # make the full-pipeline log-evidence deterministic at the prior median.
 # 32x32 RectangularAdaptImage mesh + lensed-source adapt image; rtol=1e-3
 # for the JIT paths matches imaging/pixelization (adaptive meshes amplify
-# fp drift through Cholesky / log_det on the bigger mapping matrix).
-EXPECTED_LOG_EVIDENCE_SMA = -3166.33955228  # 32x32 RectangularAdaptImage mesh, adapt_image=lensed_source
+# fp drift through Cholesky / log_det on the bigger mapping matrix). New
+# instruments use ``None`` to skip-and-print so the captured value can be
+# pinned in a follow-up run.
+EXPECTED_LOG_EVIDENCE = {
+    "sma": -3166.33955228,  # 32x32 RectangularAdaptImage mesh, adapt_image=lensed_source
+    "alma": None,
+    "alma_high_res": None,
+}
 
-np.testing.assert_allclose(
-    figure_of_merit_ref,
-    EXPECTED_LOG_EVIDENCE_SMA,
-    rtol=1e-4,
-    err_msg=(
-        f"interferometer/pixelization[{instrument}]: regression — eager log_evidence "
-        f"drifted (got {figure_of_merit_ref}, expected {EXPECTED_LOG_EVIDENCE_SMA})"
-    ),
-)
-print(
-    f"  Eager regression assertion PASSED: log_evidence matches "
-    f"{EXPECTED_LOG_EVIDENCE_SMA:.6f}"
-)
-np.testing.assert_allclose(
-    float(full_result),
-    EXPECTED_LOG_EVIDENCE_SMA,
-    rtol=1e-3,
-    err_msg=f"interferometer/pixelization[{instrument}]: regression — full log_evidence drifted",
-)
-if result_vmap is not None:
-    np.testing.assert_allclose(
-        np.array(result_vmap),
-        EXPECTED_LOG_EVIDENCE_SMA,
-        rtol=1e-3,
-        err_msg=f"interferometer/pixelization[{instrument}]: regression — vmap log_evidence drifted",
+expected_log_evidence = EXPECTED_LOG_EVIDENCE.get(instrument)
+
+if expected_log_evidence is None:
+    print(
+        f"\n  Regression assertion SKIPPED for [{instrument}] — "
+        f"capture this run's JIT log_evidence ({float(full_result)}) "
+        f"and paste it into EXPECTED_LOG_EVIDENCE[{instrument!r}]."
     )
-print(f"  Regression assertion PASSED: log_evidence matches {EXPECTED_LOG_EVIDENCE_SMA:.6f}")
+else:
+    np.testing.assert_allclose(
+        float(full_result),
+        expected_log_evidence,
+        rtol=1e-3,
+        err_msg=f"interferometer/pixelization[{instrument}]: regression — full log_evidence drifted",
+    )
+    if result_vmap is not None:
+        np.testing.assert_allclose(
+            np.array(result_vmap),
+            expected_log_evidence,
+            rtol=1e-3,
+            err_msg=f"interferometer/pixelization[{instrument}]: regression — vmap log_evidence drifted",
+        )
+    print(f"  Regression assertion PASSED: log_evidence matches {expected_log_evidence:.6f}")

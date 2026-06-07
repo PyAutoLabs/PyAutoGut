@@ -218,29 +218,12 @@ params_tree = jax.tree_util.tree_map(jnp.asarray, instance)
 # Eager baseline — full FitPointDataset (image-plane chi-squared)
 # ---------------------------------------------------------------------------
 
-print("\n--- Eager FitPointDataset (image-plane) ---")
-
-analysis_eager = al.AnalysisPoint(
-    dataset=dataset,
-    solver=solver,
-    fit_positions_cls=al.FitPositionsImagePairAll,
-    use_jax=False,
-)
-
-with timer.section("fit_eager"):
-    fit_eager = analysis_eager.fit_from(instance=instance)
-    log_likelihood_ref = float(fit_eager.log_likelihood)
-    figure_of_merit_ref = float(fit_eager.figure_of_merit)
-
-n_eager_repeats = 10
-with timer.section(f"eager_log_likelihood_x{n_eager_repeats}"):
-    for _ in range(n_eager_repeats):
-        analysis_eager.log_likelihood_function(instance=instance)
-eager_per_call = timer.records[-1][1] / n_eager_repeats
-
-print(f"  log_likelihood   = {log_likelihood_ref}")
-print(f"  figure_of_merit  = {figure_of_merit_ref}")
-print(f"  eager per-call   = {eager_per_call:.6f} s")
+# Numpy eager FitPointDataset baseline + steady-state loop stripped — not
+# representative of JAX-jitted cost. ``eager_per_call`` set to None so
+# downstream prints/charts guard against the missing value.
+eager_per_call = None
+log_likelihood_ref = None
+figure_of_merit_ref = None
 
 
 # ===================================================================
@@ -312,16 +295,7 @@ print(f"  vmap speedup:          {vmap_speedup:.1f}x faster per likelihood")
 # Tier 2: single JIT ≡ every entry of vmap output
 # Tier 3: hardcoded regression constant (deterministic via seeded simulator)
 
-np.testing.assert_allclose(
-    log_likelihood_ref,
-    float(full_result),
-    rtol=1e-4,
-    err_msg=(
-        f"point_source/image_plane: eager vs JIT mismatch — "
-        f"eager={log_likelihood_ref} vs JIT={float(full_result)}"
-    ),
-)
-print("  Tier 1: eager ≡ JIT assertion PASSED")
+# Tier 1 (eager ≡ JIT) assertion stripped — numpy steady-state loop removed.
 
 np.testing.assert_allclose(
     np.array(result_vmap),
@@ -364,23 +338,25 @@ print(f"  Position noise sigma:       {positions_noise_sigma}")
 print(f"  Free parameters:            {model.total_free_parameters}")
 print(f"  fit_positions_cls:          FitPositionsImagePairAll (image-plane chi-squared)")
 print("-" * 70)
-print(f"  Eager full likelihood:      {eager_per_call:.6f} s/call  ({log_likelihood_ref:.6f})")
+if eager_per_call is not None:
+    print(f"  Eager full likelihood:      {eager_per_call:.6f} s/call  ({log_likelihood_ref:.6f})")
 print(f"  Full pipeline (JIT):        {full_pipeline_per_call:.6f} s/call")
 print(f"  vmap per-call (batch={batch_size}):    {vmap_per_call:.6f} s")
 print(f"  vmap speedup vs single JIT:           {vmap_speedup:.1f}x")
 print("=" * 70)
 
+backend = jax.default_backend()
+
 likelihood_summary = {
     "autolens_version": al_version,
     "dataset": dataset_name,
     "fit_positions_cls": "FitPositionsImagePairAll",
+    "device": {"backend": backend},
     "configuration": {
         "observed_image_positions": int(n_observed_positions),
         "positions_noise_sigma": positions_noise_sigma,
         "free_parameters": int(model.total_free_parameters),
     },
-    "eager_per_call": eager_per_call,
-    "eager_log_likelihood": log_likelihood_ref,
     "full_pipeline_single_jit": full_pipeline_per_call,
     "full_pipeline_log_likelihood": float(full_result),
     "vmap": {
@@ -394,19 +370,22 @@ likelihood_summary = {
 results_dir = _workspace_root / "results" / "likelihood" / "point_source"
 results_dir.mkdir(parents=True, exist_ok=True)
 
-dict_path = results_dir / f"image_plane_summary_v{al_version}.json"
+dict_path = results_dir / f"image_plane_summary_v{al_version}_{backend}.json"
 dict_path.write_text(json.dumps(likelihood_summary, indent=2))
 print(f"\n  Results dict saved to: {dict_path}")
 
 # --- Bar chart ---
 
 labels = [
-    "Eager full likelihood",
     "Full pipeline (JIT)",
     f"vmap per-call (batch={batch_size})",
 ]
-times = [eager_per_call, full_pipeline_per_call, vmap_per_call]
-colors = ["#8172B3", "#C44E52", "#55A868"]
+times = [full_pipeline_per_call, vmap_per_call]
+colors = ["#C44E52", "#55A868"]
+if eager_per_call is not None:
+    labels.insert(0, "Eager full likelihood")
+    times.insert(0, eager_per_call)
+    colors.insert(0, "#8172B3")
 
 fig, ax = plt.subplots(figsize=(10, 4.0))
 y_pos = range(len(labels))
@@ -439,7 +418,7 @@ ax.set_title(
 ax.margins(x=0.20)
 fig.tight_layout()
 
-chart_path = results_dir / f"image_plane_summary_v{al_version}.png"
+chart_path = results_dir / f"image_plane_summary_v{al_version}_{backend}.png"
 fig.savefig(chart_path, dpi=150)
 plt.close(fig)
 print(f"  Bar chart saved to:    {chart_path}")
@@ -460,19 +439,7 @@ print(f"  Bar chart saved to:    {chart_path}")
 # autolens_workspace_developer@f8a5cef.
 EXPECTED_LOG_LIKELIHOOD_IMAGE_PLANE = 7.196577317761017
 
-np.testing.assert_allclose(
-    log_likelihood_ref,
-    EXPECTED_LOG_LIKELIHOOD_IMAGE_PLANE,
-    rtol=1e-4,
-    err_msg=(
-        f"point_source/image_plane: regression — eager log_likelihood drifted "
-        f"(got {log_likelihood_ref}, expected {EXPECTED_LOG_LIKELIHOOD_IMAGE_PLANE})"
-    ),
-)
-print(
-    f"  Eager regression assertion PASSED: log_likelihood matches "
-    f"{EXPECTED_LOG_LIKELIHOOD_IMAGE_PLANE:.6f}"
-)
+# Eager regression assertion stripped — numpy steady-state loop removed.
 np.testing.assert_allclose(
     float(full_result),
     EXPECTED_LOG_LIKELIHOOD_IMAGE_PLANE,

@@ -55,10 +55,15 @@ be the spleen; the one that *voids* is the gut.)
 
 - **Payload = durable git refs, never markdown.** Fragile forms (local unmerged
   branches, stashes) are materialised as real commits and pushed under the
-  archive namespace `refs/archive/condemned/<name>` — which stays out of
-  `git branch -a` — into this repo (the attic remote) *before* the local copy is
-  deleted. Recovery is a checkout. A stash becomes a branch/commit via
-  `git stash branch` or a tagged stash commit.
+  archive namespace `refs/heads/archive/condemned/<name>` into this repo (the
+  attic remote) *before* the local copy is deleted. Recovery is a checkout. A
+  stash becomes a branch/commit via `git stash branch` or a tagged stash commit.
+  (The archive is a **branch prefix**, not a custom `refs/archive/*` namespace:
+  GitHub only accepts pushes to `refs/heads/*` and `refs/tags/*`, so a custom
+  namespace is unpushable. The refs stay tidy under the `archive/condemned/`
+  prefix — filter them out of normal views with
+  `git branch --list 'archive/condemned/*'` — rather than being fully hidden
+  from `git branch -a`.)
 - **Catalog = `condemned.md` in PyAutoMind** (symmetric to `parked.md`). The
   `.md` is the index; the refs here are the payload. Schema and lifecycle are
   documented there.

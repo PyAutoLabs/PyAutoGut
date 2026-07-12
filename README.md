@@ -10,8 +10,10 @@ deletion itself. Between condemnation and deletion it holds each item as a
 **durable, recoverable git ref** through a *transit window* — an item is
 reabsorbed (recovered) right up until the sweep that voids it.
 
-- **Payload** — durable git refs under `refs/archive/condemned/<name>` (this
-  repo is the *attic remote*), never lossy markdown copies.
+- **Payload** — durable git refs under `refs/heads/archive/condemned/<name>`
+  (this repo is the *attic remote*), never lossy markdown copies. It is a branch
+  prefix, not a custom `refs/archive/*` namespace — GitHub only accepts pushes to
+  `refs/heads/*` and `refs/tags/*`.
 - **Catalog** — the `condemned.md` manifest in **PyAutoMind** (symmetric to
   `parked.md`): the index; the refs here are the payload.
 - **Driver** — the **Brain hygiene conductor** decides what to condemn and when

@@ -6,7 +6,7 @@
 # transit, and VOIDS it on a sweep. Reasoning — *what* to condemn and *when* to
 # sweep — lives in the Brain hygiene conductor, not here; this is the storage
 # substrate it drives. Payload is durable git refs under
-# refs/archive/condemned/<name>; the catalog is PyAutoMind/condemned.md.
+# refs/heads/archive/condemned/<name>; the catalog is PyAutoMind/condemned.md.
 #
 # Usage:
 #   pyauto-gut list
@@ -16,11 +16,16 @@
 #
 # <local-ref> is any commit-ish (a branch, or a stash materialised as a commit,
 # e.g. `git stash branch` or `git commit-tree` of a stash). <name> is the
-# archive slug used in refs/archive/condemned/<name> and in condemned.md.
+# archive slug used in refs/heads/archive/condemned/<name> and in condemned.md.
+#
+# The archive lives under a branch prefix (refs/heads/archive/condemned/*), not
+# a custom refs/archive/* namespace: GitHub only accepts pushes to refs/heads/*
+# and refs/tags/*. Filter the archive out of normal branch views with
+# `git branch --list 'archive/condemned/*'`.
 set -euo pipefail
 
 REMOTE="${PYAUTO_GUT_REMOTE:-origin}"
-NS="refs/archive/condemned"
+NS="refs/heads/archive/condemned"
 
 die() { printf 'pyauto-gut: %s\n' "$1" >&2; exit "${2:-1}"; }
 

@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+# pyauto-gut — the Gut organ's mechanics for condemned self-material.
+#
+# The organ HOLDS (archive a fragile ref before its local copy is deleted),
+# lets it be REABSORBED during the transit window (recover), lists what is in
+# transit, and VOIDS it on a sweep. Reasoning — *what* to condemn and *when* to
+# sweep — lives in the Brain hygiene conductor, not here; this is the storage
+# substrate it drives. Payload is durable git refs under
+# refs/archive/condemned/<name>; the catalog is PyAutoMind/condemned.md.
+#
+# Usage:
+#   pyauto-gut list
+#   pyauto-gut archive <local-ref> <name> [--force]
+#   pyauto-gut recover <name> [<local-branch>]
+#   pyauto-gut void    <name> --yes
+#
+# <local-ref> is any commit-ish (a branch, or a stash materialised as a commit,
+# e.g. `git stash branch` or `git commit-tree` of a stash). <name> is the
+# archive slug used in refs/archive/condemned/<name> and in condemned.md.
+set -euo pipefail
+
+REMOTE="${PYAUTO_GUT_REMOTE:-origin}"
+NS="refs/archive/condemned"
+
+die() { printf 'pyauto-gut: %s\n' "$1" >&2; exit "${2:-1}"; }
+
+usage() { sed -n '2,16p' "$0" | sed 's/^# \{0,1\}//'; }
+
+cmd_list() {
+  local out
+  out="$(git ls-remote "$REMOTE" "$NS/*" || die "cannot reach remote '$REMOTE'")"
+  if [ -z "$out" ]; then
+    echo "(no condemned material in transit)"
+    return 0
+  fi
+  printf '%s\n' "$out" | while read -r sha ref; do
+    printf '%s  %s\n' "${sha:0:12}" "${ref#$NS/}"
+  done
+}
+
+cmd_archive() {
+  local ref="${1:-}" name="${2:-}" force="${3:-}"
+  [ -n "$ref" ] && [ -n "$name" ] || die "archive needs <local-ref> <name>" 2
+  git rev-parse --verify --quiet "$ref^{commit}" >/dev/null \
+    || die "'$ref' is not a valid commit-ish"
+  if git ls-remote --exit-code "$REMOTE" "$NS/$name" >/dev/null 2>&1 \
+     && [ "$force" != "--force" ]; then
+    die "$NS/$name already exists on '$REMOTE' (pass --force to overwrite)"
+  fi
+  git push ${force:+--force} "$REMOTE" "$ref:$NS/$name"
+  echo "archived $ref -> $NS/$name on '$REMOTE'"
+}
+
+cmd_recover() {
+  local name="${1:-}" branch="${2:-}"
+  [ -n "$name" ] || die "recover needs <name>" 2
+  branch="${branch:-$name}"
+  git fetch "$REMOTE" "$NS/$name:refs/heads/$branch" \
+    || die "no archived ref '$NS/$name' on '$REMOTE'"
+  echo "recovered $NS/$name -> local branch '$branch' (check it out to reabsorb)"
+}
+
+cmd_void() {
+  local name="${1:-}" confirm="${2:-}"
+  [ -n "$name" ] || die "void needs <name>" 2
+  [ "$confirm" = "--yes" ] || die "void is destructive — pass --yes to eliminate $NS/$name"
+  git push "$REMOTE" --delete "$NS/$name" \
+    || die "no archived ref '$NS/$name' on '$REMOTE'"
+  echo "voided $NS/$name on '$REMOTE'"
+}
+
+main() {
+  local sub="${1:-}"; shift || true
+  case "$sub" in
+    list)    cmd_list "$@" ;;
+    archive) cmd_archive "$@" ;;
+    recover) cmd_recover "$@" ;;
+    void)    cmd_void "$@" ;;
+    ""|-h|--help|help) usage ;;
+    *) die "unknown command '$sub' (try: list|archive|recover|void)" 2 ;;
+  esac
+}
+
+main "$@"

@@ -1,5 +1,9 @@
 # PyAutoGut
 
+🧬 **PyAutoScientist → <https://github.com/PyAutoLabs/PyAutoScientist>** — this repo is one organ of the PyAuto organism.
+
+📖 **Full documentation → <https://pyautoscientist.readthedocs.io>** — the whole PyAutoScientist organism, including how to fork and run your own.
+
 **The Gut organ of the PyAuto organism.** It owns the full lifecycle of
 *condemned self-material* — the stale branches, `git stash` entries, dead code
 and retired tests that a hygiene / `repo_cleanup` sweep is 95%-but-not-100% sure

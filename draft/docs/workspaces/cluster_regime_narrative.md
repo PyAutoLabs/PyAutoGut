@@ -67,6 +67,17 @@ alignment + gap-filling, not a rebuild.
   (mid-size, JWST-iconic), MACS J1149/SN Refsdal (time-delay cosmography),
   SDSS J1004+4112 (cluster-lensed quasar bridge from point_source users).
 
+## Conventions-sweep validation note (2026-07-25)
+
+The sweep of simulator.py/modeling.py/start_here.py + regenerated
+cluster/simple dataset landed on the task branch. modeling.py validated
+green end-to-end (PYAUTO_TEST_MODE=2) against the regenerated data.
+start_here.py (real a2744, 188 members, multi-plane) did NOT complete a
+45-minute bypass-mode run on the dev container's CPU — the JAX compile of
+the point solver dominates and is unchanged by the sweep (constants only;
+2 fewer free parameters). It is not smoke-gated. First GPU session should
+run it once to confirm end-to-end (expected ~10 min).
+
 ## autolens_workspace_test
 
 Add/extend a cluster extended-source follow-up integration script.

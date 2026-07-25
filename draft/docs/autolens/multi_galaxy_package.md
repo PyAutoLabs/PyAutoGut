@@ -8,8 +8,31 @@ Repos:
 Difficulty: large
 Autonomy: supervised
 Priority: high
-Status: draft
+Status: in progress — core landed on branch claude/pyautolens-doc-reorganization-w6a1l5 (2026-07-25)
 Parent: draft/docs/autolens/split_lensing_regimes.md
+
+## Landed (2026-07-25, this task branch)
+
+- autolens_workspace: scripts/multi_galaxy/ with start_here.py, simulator.py
+  (J1011+0143-like merging pair — 0.9" separation, ~1.8" Einstein cross
+  verified with 4 bright images + central image), modeling.py,
+  README.md (regime-ladder + analysis-split table), features/README.md;
+  top-level README ladder section; group/cluster README + start_here
+  pointers; smoke registration (both fit scripts validated green under
+  PYAUTO_TEST_MODE=2 from a clean slate); notebooks + navigator regenerated.
+- autolens_workspace_test: scripts/multi_galaxy/model_fit.py (end-to-end,
+  structural assertions locking the regime) + imaging/multi_galaxy_mge.py
+  relocated to multi_galaxy/composition_mge.py; smoke updated; validated.
+- PyAutoLens docs: New User Guide four-rung ladder + multi_galaxy links
+  (full RTD restructure remains with docs_three_regime_restructure.md).
+
+## Remaining
+
+- features/ scripts (extra_galaxies, scaling_galaxies with untruncated
+  isothermals, pixelization) — currently README cross-links only.
+- Swap start_here to the REAL SDSS J1011+0143 HST data (F555W/F814W via
+  MAST) once frames are prepared; the simulated look-alike is the interim.
+- likelihood_function.py / fit.py mirrors of the group package equivalents.
 
 Create the new `scripts/multi_galaxy/` package in @autolens_workspace — the first
 of the three above-galaxy-scale regimes (see the parent plan for the full design

@@ -1,3 +1,11 @@
+> **RESOLVED 2026-07-25 — implemented org-wide, beyond the original PyAutoArray
+> scope.** All five libraries normalised in one mechanical pass (878 CRLF text
+> files -> LF: Nerves 46, Fit 127, Array 234, Galaxy 357, Lens 114) with
+> `* text=auto eol=lf` .gitattributes enforcement added everywhere (PyAutoLens
+> `patches/` marked `-text` to stay byte-exact). Every diff proven endings-only
+> via `git diff --ignore-cr-at-eol`; all suites green. PRs: PyAutoNerves#139,
+> PyAutoFit#1419, PyAutoArray#407, PyAutoGalaxy#524, PyAutoLens#651 (merged).
+
 # Normalise CRLF line endings in PyAutoArray (+ add .gitattributes)
 
 Type: maintenance

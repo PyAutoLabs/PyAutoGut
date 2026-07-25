@@ -7,7 +7,7 @@ Repos:
 Difficulty: small
 Autonomy: supervised
 Priority: normal
-Status: draft
+Status: shipped 2026-07-25 (PyAutoGalaxy#526 merged — New User Guide system-scale ladder; overview_1/3 touch-ups remain open if needed)
 Parent: draft/docs/autolens/split_lensing_regimes.md
 
 Surface the new autogalaxy_workspace `multi_galaxy` and `cluster` packages in

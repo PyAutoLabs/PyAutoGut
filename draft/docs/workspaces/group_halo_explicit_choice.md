@@ -8,8 +8,28 @@ Repos:
 Difficulty: large
 Autonomy: supervised
 Priority: high
-Status: draft
+Status: in progress — signature tutorial landed on branch claude/pyautolens-doc-reorganization-w6a1l5 (2026-07-25)
 Parent: draft/docs/autolens/split_lensing_regimes.md
+
+## Landed (2026-07-25, this task branch)
+
+- `group/features/group_halo/` (simulator + modeling + README): fits the
+  same dataset members-only vs members+halo with an identical truncated-dPIE
+  member tier (Bergamini+19 tied exponents, vanishing cores), the
+  radius/evidence/external-information decision framework, and an
+  `include_group_halo` simulator switch to invert the verdict. Registered in
+  smoke (validated green from a clean slate); notebooks regenerated;
+  features README + regime-ladder README edits landed with the multi_galaxy
+  package commit.
+
+## Remaining
+
+- `start_here.py` default model gains the extra_galaxies + scaling_galaxies
+  tiers (currently main_galaxies only) — needs scaling-galaxy
+  centres/luminosities prepared for the real Euclid dataset.
+- `modeling.py`/`simulator.py` halo-narrative threading; CSWA 19 as the
+  possible future real-data flagship for this feature (public HST +
+  published PyAutoLens model, arXiv:2504.11445).
 
 Rework the `scripts/group/` package of @autolens_workspace to match the
 three-regime design (see parent plan): a group-scale lens has a DOMINANT

@@ -33,6 +33,8 @@ Parent: draft/docs/autolens/split_lensing_regimes.md
 - Swap start_here to the REAL SDSS J1011+0143 HST data (F555W/F814W via
   MAST) once frames are prepared; the simulated look-alike is the interim.
 - likelihood_function.py / fit.py mirrors of the group package equivalents.
+- autolens_workspace_test multi_galaxy/jax_likelihood/ variant (only
+  model_fit + the relocated composition test landed).
 
 Create the new `scripts/multi_galaxy/` package in @autolens_workspace — the first
 of the three above-galaxy-scale regimes (see the parent plan for the full design

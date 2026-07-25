@@ -15,12 +15,16 @@ the three above-galaxy-scale regimes defined in the parent plan: `multi_galaxy`,
 `group`, `cluster` — each presented as its own section with its own tutorials,
 example links, API pointers and modelling philosophy.
 
+## Landed (2026-07-25, this task branch)
+
+- `docs/overview/overview_2_new_user_guide.md`: the multi_galaxy rung and the
+  four-step ladder routing with the analysis-split prose landed (PyAutoLens
+  `c086863` + review fixes). The remaining items below are still open.
+
 ## Changes
 
-- `docs/overview/overview_2_new_user_guide.md`: currently routes galaxy → group
-  → cluster. Insert the multi_galaxy rung and rewrite the routing as the
-  four-step ladder (galaxy-scale → multi_galaxy → group → cluster), with the
-  one-line decision rule per rung:
+- ~~`docs/overview/overview_2_new_user_guide.md`~~ LANDED (see above). For
+  reference, the rung decision rules used:
   - multi_galaxy: ≥2 co-dominant deflectors, no host halo, standard extended
     source.
   - group: optional host halo (explicit modelling choice), truncated members

@@ -10,10 +10,10 @@ Repos:
 - autogalaxy_workspace
 - autogalaxy_workspace_test
 - autolens_assistant
-Difficulty: too-large (epic — execute via the child prompts below)
+Difficulty: too-large
 Autonomy: supervised
 Priority: high
-Status: planned
+Status: planned (epic — execute via the child prompts below)
 
 Reorganize the PyAutoLens (and mirrored PyAutoGalaxy) documentation and example
 library by splitting systems above the standard single-galaxy strong-lens

@@ -42,12 +42,18 @@ alignment + gap-filling, not a rebuild.
   deliberate divergence from @autogalaxy_workspace's cluster package, which
   is *about* the galaxies' light); an autolens lens-light cluster feature is
   future work, out of scope here.
-- `mass_parameterizations.py` conventions cross-check against the parent
-  plan's checklist (Bergamini et al. 2019 relation with tied truncation
-  exponent and fixed gamma=0.2; members' r_core fixed small, unscaled;
-  r_cut_ref ~5"; sigma-vs-b0 conventions per the Elíasdóttir 2007 /
-  Kassiola & Kovner 1993 derivation note) — most already landed via the
-  dPIE task series; verify and finish.
+- Conventions sweep — the guides (`mass_parameterizations.py`,
+  `mass_parameterizations_pyautolens.py`) and the dPIE library docstrings
+  were corrected on 2026-07-25 (Bergamini et al. 2019 tied exponents with
+  gamma=0.2, vanishing unscaled member cores, r_cut_ref ~5", sigma_LT vs
+  sigma_0 attribution per the H. Ding derivation note). STILL TO SWEEP here:
+  `start_here.py` (scaling_radius_exponent=0.5, r_core scaled with L,
+  r_cut_ref 15.8"), `simulator.py` (same dated truths) and `modeling.py`
+  (refs fixed at those truths). The simulator truths and the bundled
+  `cluster/simple` dataset must change TOGETHER — re-run the simulator and
+  commit the regenerated dataset in the same PR, then re-validate modeling
+  and start_here end-to-end (this is why the sweep was deferred to this
+  child task rather than done alongside the guides).
 - gNFW guidance: ensure the "beyond the LensTool default" prose (dPIE host →
   (G)NFW host) is present and linked from start_here, per the expert feedback
   recorded in the parent plan.

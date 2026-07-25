@@ -273,8 +273,16 @@ Guides must state it so users moving between libraries are not surprised.
 
 ## Technical conventions checklist (from expert review, 2026-07 Slack)
 
-Verify these hold everywhere the group/cluster mass framework is documented
-(most landed via the dPIE task series — `complete/2026/07/dpie-*.md`):
+Verify these hold everywhere the group/cluster mass framework is documented.
+STATUS 2026-07-25: applied to `cluster/mass_parameterizations.py` and
+`cluster/mass_parameterizations_pyautolens.py` (the expert-reviewed guides)
+and to the dPIE library docstrings (sigma_LT/sigma_0 attribution corrected
+per the H. Ding derivation note) on this task branch. STILL DATED:
+`cluster/start_here.py`, `cluster/simulator.py`, `cluster/modeling.py` (and
+the bundled `cluster/simple` dataset simulated from the old truths —
+r_core scaled with L, radius exponent 0.5, r_cut_ref 15.8") — swept by the
+cluster_regime_narrative child prompt, which must re-run the simulator to
+regenerate the dataset alongside the convention change.
 
 - Members: r_core fixed to a negligibly small value and NOT scaled with
   luminosity (r_a = 0 is safe — handled analytically, no division-by-zero).

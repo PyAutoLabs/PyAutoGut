@@ -1,39 +1,45 @@
-# HowToFit build target registered but repo is an empty shell (no config/build/)
+# CORRECTED: HowToFit build target is fine — the stub is the Jammy2211 fork
 
 Type: maintenance
 Target: workspaces
 Repos:
-- @PyAutoHands
 - @HowToFit
 Difficulty: easy
 Autonomy: supervised
-Priority: normal
+Priority: low
 Status: draft
 
-## Finding (2026-07-25 full health sweep)
+## Correction (2026-07-25, supersedes the original finding)
 
-PyAutoHands `autohands/config/workspaces.yaml` registers the build target
-`howtofit: {repo: HowToFit}`, and its own test
-`test_workspace_config_precedence.py::test_every_build_target_owns_no_run`
-asserts every registered target's repo owns `config/build/no_run.yaml`
-(otherwise `run.py` raises FileNotFoundError).
+The original version of this prompt claimed PyAutoLabs/HowToFit was an empty
+shell missing `config/build/no_run.yaml`, failing PyAutoHands'
+`test_every_build_target_owns_no_run` on full checkouts. **That was wrong.**
 
-PyAutoLabs/HowToFit currently contains **only a README** — the tutorial content
-still lives at jammy2211/HowToFit, mid-migration. So the test FAILS whenever
-HowToFit is checked out as a sibling (as a full dev box does), and passes
-vacuously in CI where the sibling is absent. `pyauto-hands run howtofit` would
-crash.
+PyAutoLabs/HowToFit is fully populated (scripts/, notebooks/, config/build/
+with no_run.yaml + profile_smoke.yaml + markdown_examples.yaml,
+smoke_tests.txt). The failing test was a checkout artifact of the cloud
+session that ran the health sweep: its `HowToFit` sibling directory was a
+clone of **Jammy2211/HowToFit** — a stub containing only a README — so the
+sibling-path check found no config there.
 
-## Decision needed (owner call — do not resolve mechanically)
+## Remaining (small) task
 
-- If the migration lands soon: seed HowToFit with `config/build/no_run.yaml`
-  (+ `profile_smoke.yaml`) as part of the content migration, mirroring
-  HowToLens/HowToGalaxy.
-- If not: de-register (or comment out) the `howtofit` target in
-  workspaces.yaml until the repo is populated, so the registry reflects
-  reality and the Hands test is honest.
+Two loose ends, both about the stub fork, not the org repo:
+
+1. Decide the fate of **Jammy2211/HowToFit** (README-only stub). If it has no
+   purpose, archive or delete it so tooling and session source-lists cannot
+   confuse it with PyAutoLabs/HowToFit. (A stray
+   `claude/g-heart-green-fable-opus-uuiaqf` branch with one harmless seed
+   commit was pushed to it on 2026-07-25 before the mix-up was caught; branch
+   deletion was permission-blocked from the session — remove it when
+   archiving/cleaning.)
+2. Check the cloud-session source configuration that produced the checkout:
+   the session mapped `HowToFit` to the Jammy2211 fork while every other
+   repo mapped to PyAutoLabs. Point it at PyAutoLabs/HowToFit.
 
 ## Acceptance
 
-`pytest tests/test_workspace_config_precedence.py` in PyAutoHands passes with
-ALL sibling repos checked out.
+- Jammy2211/HowToFit archived/deleted or clearly marked; no session source
+  list resolves `HowToFit` to the stub.
+- PyAutoHands `test_every_build_target_owns_no_run` passes on a full sibling
+  checkout that uses the corrected mapping (already true with the org repo).

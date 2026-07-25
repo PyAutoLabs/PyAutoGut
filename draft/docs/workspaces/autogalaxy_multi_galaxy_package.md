@@ -8,7 +8,7 @@ Repos:
 Difficulty: large
 Autonomy: supervised
 Priority: normal
-Status: draft
+Status: shipped 2026-07-25 (autogalaxy_workspace#168 + autogalaxy_workspace_test#97 merged) — awaiting lifecycle completion record
 Parent: draft/docs/autolens/split_lensing_regimes.md
 
 Create the `scripts/multi_galaxy/` package in @autogalaxy_workspace, mirroring

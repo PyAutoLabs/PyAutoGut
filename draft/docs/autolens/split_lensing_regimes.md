@@ -317,12 +317,12 @@ regenerate the dataset alongside the convention change.
 5. `draft/docs/workspaces/galaxy_scale_scaling_extra_features.md` —
    imaging/interferometer/point_source extra_galaxies + scaling_galaxies
    feature parity with regime caveats.
-6. `draft/docs/workspaces/autogalaxy_multi_galaxy_package.md` — autogalaxy
-   multi_galaxy package (+ test mirror).
-7. `draft/docs/workspaces/autogalaxy_cluster_package.md` — autogalaxy cluster
-   package (+ test mirror).
-8. `draft/docs/libraries/autogalaxy_docs_regime_guides.md` — PyAutoGalaxy RTD
-   New User Guide (after 6+7).
+6. `draft/docs/workspaces/autogalaxy_multi_galaxy_package.md` — SHIPPED
+   2026-07-25 (autogalaxy_workspace#168 + test#97).
+7. `draft/docs/workspaces/autogalaxy_cluster_package.md` — SHIPPED 2026-07-25
+   (same PRs; catalogue-driven light tier + divergence note).
+8. `draft/docs/libraries/autogalaxy_docs_regime_guides.md` — SHIPPED
+   2026-07-25 (PyAutoGalaxy#526, New User Guide system-scale ladder).
 9. `draft/docs/workspaces/assistants_regime_extension.md` — assistants
    follow-up (deferred until 1–8 ship).
 

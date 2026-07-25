@@ -1,3 +1,11 @@
+> **RESOLVED 2026-07-25 — implemented as PyAutoHands#198 commit f924785
+> (merged).** Runner-side `is_clean_skip_exit` classifier in the authoritative
+> executor (`build_util.execute_notebook`): ANSI-aware, last CellExecutionError
+> line must be exactly `SystemExit: 0` → PASS; nonzero/real errors stay FAIL.
+> 9 tests + live blackjax-absent check. Remaining: per-repo adoption of the 9
+> drifted run_smoke.py copies — tracked in
+> draft/maintenance/ci/run_smoke_copy_drift.md (rollout in progress).
+
 # sys.exit(0) skip-guards fail in generated notebooks (SystemExit -> cell error)
 
 Type: bug

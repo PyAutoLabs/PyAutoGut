@@ -1,3 +1,10 @@
+> **RESOLVED 2026-07-25 — implemented as PyAutoHands#198 commit e662af4
+> (merged).** Tag step now remote-checks with peeled-tag comparison (skip if
+> same commit, loud-fail on mismatch), PyPI uploads gain --skip-existing + a
+> 3-attempt retry, and the workspace tag step got the same treatment. Tag shell
+> exercised against scratch repos on all three branches. 'Re-run failed jobs'
+> on a partial release now completes without tag surgery.
+
 # Make release.yml re-runnable: idempotent Tag step + skip-existing uploads
 
 Type: maintenance

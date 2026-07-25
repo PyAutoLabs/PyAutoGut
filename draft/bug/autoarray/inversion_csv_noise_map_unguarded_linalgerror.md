@@ -1,3 +1,8 @@
+> **RESOLVED 2026-07-25 — implemented as PyAutoArray#406 (merged).** NaN-filled
+> noise_map column + logged warning, chosen from analysis of every CSV consumer
+> (all read by column name; omission would KeyError downstream). Non-vacuous
+> regression test; suite green (895).
+
 # Unguarded LinAlgError in inversion CSV export (`inversion_plots.py` second call site)
 
 Type: bug

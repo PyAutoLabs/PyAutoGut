@@ -8,7 +8,7 @@ Repos:
 Difficulty: small
 Autonomy: supervised
 Priority: normal
-Status: draft
+Status: shipped 2026-07-25 (autolens_workspace#348 + HowToLens#57 merged) — awaiting lifecycle completion record
 Parent: draft/docs/autolens/split_lensing_regimes.md
 
 The post-merge Opus residual sweep (2026-07-25) found three consumers still
@@ -31,6 +31,11 @@ CI-visible; all need a light touch.
    convention — defensibly, since its job is Lenstool interop — but never
    labels it as the legacy convention vs the modern tied exponent now used
    by `scripts/cluster/`. Add one labelling sentence.
+
+Shipped note: all three items landed and merged same-day (weak/a2744
+conventions applied — compile-clean, SLOW/no_run so GPU-validate on first
+GPU session; lenstool mapping legacy label added, numeric self-checks green;
+HowToLens lens_x2 rerouted to multi_galaxy, notebook regenerated).
 
 Acceptance: smoke suite green; notebooks + navigator regenerated for any
 touched workspace scripts; HowToLens smoke green on its own CI.

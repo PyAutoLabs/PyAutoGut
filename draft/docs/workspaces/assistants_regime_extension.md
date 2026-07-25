@@ -7,7 +7,7 @@ Repos:
 Difficulty: medium
 Autonomy: supervised
 Priority: low
-Status: draft (deferred — land after the workspace/doc reorganization ships)
+Status: in progress — autolens_assistant leg shipped 2026-07-25 (autolens_assistant#91); autogalaxy leg deferred until the autogalaxy packages exist
 Parent: draft/docs/autolens/split_lensing_regimes.md
 
 Once the three-regime reorganization (parent plan) has landed in
@@ -29,7 +29,18 @@ workflow.
   inherit the multi_galaxy + cluster (light) workflows. Record the
   requirement here; do not create the repo as part of this task.
 
-## Specific stale surfaces (post-merge Opus sweep, 2026-07-25)
+## Landed (2026-07-25, autolens_assistant#91)
+
+All the stale surfaces below were updated: group_and_cluster_lensing.md
+rewritten around the three-rung ladder (+ native dPIEMass, group_halo,
+Bergamini+19 tie), mass_profiles.md row split, al_build_imaging_model
+triage bands, skill_citation_map multi_galaxy row, external
+index/workspace enumerations. Remaining for this prompt: regime-routing
+skill work beyond the wiki surfaces (a dedicated multi_galaxy skill if
+demand appears), wiki/literature entries for the flagship systems, and
+the autogalaxy-assistant leg.
+
+## Specific stale surfaces (post-merge Opus sweep, 2026-07-25) — now fixed
 
 The autolens_assistant is systematically one rung behind the shipped split;
 highest-value targets when this task starts:

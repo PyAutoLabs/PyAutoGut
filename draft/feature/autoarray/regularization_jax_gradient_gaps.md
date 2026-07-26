@@ -23,17 +23,17 @@ and the mesh-family negatives by `jax_grad/knn.py`. Three actionable gaps
 fell out — none blocks current production paths, so this is one prompt to
 be split or trimmed at start-dev if any leg grows:
 
-## 1. xp-port two regularization schemes (mechanical)
+## 1. xp-port BrightnessZeroth (mechanical)
 
-Both hard-error with `TracerArrayConversionError` under `jax.jit`/`jax.grad`
-on every mesh (numpy ops on traced arrays):
+Hard-errors with `TracerArrayConversionError` under `jax.jit`/`jax.grad`
+on every mesh (numpy boolean ops on the traced pixel-signals array in
+`brightness_zeroth.py`).
 
-- `BrightnessZeroth` (`brightness_zeroth.py`) — numpy boolean ops on the
-  traced pixel-signals array.
-- `ExponentialKernel` (`exponential_kernel.py`) — numpy `(N, N, 2)`
-  pairwise-difference build. `GaussianKernel` and `MaternKernel` are already
-  xp-threaded (and use the memory-safe `||x||² + ||y||² − 2x·y` form) — port
-  `ExponentialKernel` the same way.
+*(`ExponentialKernel` was the second leg here — DONE 2026-07-26 on the
+`claude/rectangular-mesh-gradients-mh1j0z` branch: xp threaded through the
+covariance build, distances moved to the NaN-safe `sqrt(d²+1e-20)` form
+`matern_cov_matrix_from` uses, JAX gradients verified on both mesh
+families.)*
 
 ## 2. Kernel-scheme linear algebra: avoid the explicit `C^-1` (the real one)
 

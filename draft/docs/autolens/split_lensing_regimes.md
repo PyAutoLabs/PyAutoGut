@@ -313,9 +313,11 @@ regenerate the dataset alongside the convention change.
    local/unrestricted-network session).
 2. `draft/docs/workspaces/group_halo_explicit_choice.md` — group start_here
    gains all three tiers; new `features/group_halo/` halo-choice tutorial.
-   CORE SHIPPED: halo tutorial 2026-07-25; three-tier start_here (with an
-   image-derived scaling_galaxies.csv for the real Euclid dataset)
-   2026-07-26. Remaining: modeling/simulator halo-narrative threading.
+   SHIPPED: halo tutorial 2026-07-25; three-tier start_here (with an
+   image-derived scaling_galaxies.csv for the real Euclid dataset) and the
+   modeling/simulator halo-narrative threading 2026-07-26. Full scope
+   landed; CSWA 19 real-data flagship recorded as a non-blocking future
+   option.
 3. `draft/docs/workspaces/cluster_regime_narrative.md` — cluster narrative
    alignment + `features/extended_source/` follow-up example + conventions
    cross-check.

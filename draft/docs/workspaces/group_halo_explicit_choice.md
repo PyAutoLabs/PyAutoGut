@@ -8,7 +8,7 @@ Repos:
 Difficulty: large
 Autonomy: supervised
 Priority: high
-Status: in progress — signature tutorial landed 2026-07-25; three-tier start_here landed 2026-07-26 (branch claude/pyautolens-doc-reorganization-w6a1l5)
+Status: complete — signature tutorial 2026-07-25; three-tier start_here + modeling/simulator halo-narrative threading 2026-07-26 (branch claude/pyautolens-doc-reorganization-w6a1l5). Full scope landed.
 Parent: draft/docs/autolens/split_lensing_regimes.md
 
 ## Landed (2026-07-25, this task branch)
@@ -40,11 +40,24 @@ Parent: draft/docs/autolens/split_lensing_regimes.md
   the script prose. 24-free-parameter model validated end-to-end under
   test mode.
 
-## Remaining
+## Landed (2026-07-26, narrative threading)
 
-- `modeling.py`/`simulator.py` halo-narrative threading; CSWA 19 as the
-  possible future real-data flagship for this feature (public HST +
-  published PyAutoLens model, arXiv:2504.11445).
+- `group/simulator.py`: new `__No Group Halo__` section — the simulation
+  deliberately has no shared halo; a real group's halo is an explicit
+  choice; `features/group_halo` is the with-halo counterpart (halo +
+  truncated dPIE members enter together).
+- `group/modeling.py`: new `__Group Halo__` section — the absent-halo
+  choice framed explicitly, the fit-both decision framework pointer,
+  the truncated-dPIE pairing, and CSWA 19 (Ding et al. 2025) cited as a
+  published PyAutoLens group model combining both; `group_halo` added to
+  the closing features list.
+
+## Future option (not blocking)
+
+- CSWA 19 as a real-data flagship dataset for the group_halo feature
+  (public HST + published PyAutoLens model, arXiv:2504.11445) — would
+  need frames downloaded and prepared from a local-network session, like
+  the J1011+0143 swap-in.
 
 Rework the `scripts/group/` package of @autolens_workspace to match the
 three-regime design (see parent plan): a group-scale lens has a DOMINANT

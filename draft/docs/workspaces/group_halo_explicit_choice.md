@@ -8,7 +8,7 @@ Repos:
 Difficulty: large
 Autonomy: supervised
 Priority: high
-Status: in progress — signature tutorial landed on branch claude/pyautolens-doc-reorganization-w6a1l5 (2026-07-25)
+Status: in progress — signature tutorial landed 2026-07-25; three-tier start_here landed 2026-07-26 (branch claude/pyautolens-doc-reorganization-w6a1l5)
 Parent: draft/docs/autolens/split_lensing_regimes.md
 
 ## Landed (2026-07-25, this task branch)
@@ -22,11 +22,26 @@ Parent: draft/docs/autolens/split_lensing_regimes.md
   features README + regime-ladder README edits landed with the multi_galaxy
   package commit.
 
+## Landed (2026-07-26, this task branch)
+
+- `group/start_here.py` default model is now three-tier: main (2 galaxies —
+  the central galaxy plus the bright companion 0.36" away, promoted from
+  the extras catalogue after image inspection confirmed a distinct peak;
+  each MGE + Isothermal), extra (1, from `extra_galaxies_centres.json` —
+  MGE with a ±0.1" uniform light-centre prior + mass-centre-fixed bounded
+  `IsothermalSph`), scaling (5, mass-only untruncated `IsothermalSph` on a
+  shared `einstein_radius_ref` prior via
+  `einstein_radius_ref * luminosity_ratio**0.5`; the truncated-dPIE variant
+  stays pointed at `features/group_halo`). Scaling-galaxy
+  centres/luminosities for the real Euclid dataset were derived from the
+  image itself (gaussian-smoothed peak detection outside the main pair,
+  1"-aperture photometry, normalized to the brightest) and committed as
+  `dataset/group/.../scaling_galaxies.csv` with provenance documented in
+  the script prose. 24-free-parameter model validated end-to-end under
+  test mode.
+
 ## Remaining
 
-- `start_here.py` default model gains the extra_galaxies + scaling_galaxies
-  tiers (currently main_galaxies only) — needs scaling-galaxy
-  centres/luminosities prepared for the real Euclid dataset.
 - `modeling.py`/`simulator.py` halo-narrative threading; CSWA 19 as the
   possible future real-data flagship for this feature (public HST +
   published PyAutoLens model, arXiv:2504.11445).

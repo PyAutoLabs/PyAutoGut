@@ -307,13 +307,23 @@ regenerate the dataset alongside the convention change.
 1. `draft/docs/autolens/multi_galaxy_package.md` — new
    `autolens_workspace/scripts/multi_galaxy/` package (+ workspace_test
    mirror). Unblocks everything user-facing; do first.
+   CORE SHIPPED 2026-07-25; features/scaling_galaxies, fit.py and the
+   workspace_test jax_likelihood variant 2026-07-26. Remaining: real
+   J1011+0143 data swap-in (MAST unreachable from cloud sessions — needs a
+   local/unrestricted-network session).
 2. `draft/docs/workspaces/group_halo_explicit_choice.md` — group start_here
    gains all three tiers; new `features/group_halo/` halo-choice tutorial.
+   CORE SHIPPED: halo tutorial 2026-07-25; three-tier start_here (with an
+   image-derived scaling_galaxies.csv for the real Euclid dataset)
+   2026-07-26. Remaining: modeling/simulator halo-narrative threading.
 3. `draft/docs/workspaces/cluster_regime_narrative.md` — cluster narrative
    alignment + `features/extended_source/` follow-up example + conventions
    cross-check.
 4. `draft/docs/autolens/docs_three_regime_restructure.md` — PyAutoLens RTD
-   docs ladder rewrite (after 1, so links resolve).
+   docs ladder rewrite (after 1, so links resolve). SHIPPED 2026-07-26:
+   New User Guide ladder + flagships, overview_1 enumerations, api
+   mass/point/galaxy regime notes + CSV-catalogue section, model_cookbook
+   regime recipes.
 5. `draft/docs/workspaces/galaxy_scale_scaling_extra_features.md` —
    imaging/interferometer/point_source extra_galaxies + scaling_galaxies
    feature parity with regime caveats.

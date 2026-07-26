@@ -7,7 +7,7 @@ Repos:
 Difficulty: medium
 Autonomy: supervised
 Priority: high
-Status: draft
+Status: in progress — all planned edits landed 2026-07-26 (branch claude/pyautolens-doc-reorganization-w6a1l5); pending RTD build confirmation on merge
 Parent: draft/docs/autolens/split_lensing_regimes.md
 
 Restructure the PyAutoLens Sphinx/RTD documentation (`PyAutoLens/docs/`) around
@@ -19,7 +19,31 @@ example links, API pointers and modelling philosophy.
 
 - `docs/overview/overview_2_new_user_guide.md`: the multi_galaxy rung and the
   four-step ladder routing with the analysis-split prose landed (PyAutoLens
-  `c086863` + review fixes). The remaining items below are still open.
+  `c086863` + review fixes). `overview_3_features.md`: group section renamed
+  "Multi-Galaxy Lenses, Groups and Clusters" (PyAutoLens#653).
+
+## Landed (2026-07-26, this task branch)
+
+- `docs/overview/overview_1_start_here.md`: the three regime enumerations
+  now spell out the four-rung ladder (galaxy-scale, multi-galaxy,
+  group-scale, cluster-scale).
+- `docs/api/mass.rst`: regime note on the Total section — untruncated
+  Isothermal/PowerLaw for galaxy/multi_galaxy, tidally truncated dPIE
+  members for group/cluster (sigma_lt vs b0 parameterizations named).
+- `docs/api/point.rst`: intro states point sources are the standard source
+  strategy at cluster scale (per-source redshifts, multi-plane) with the
+  workspace `cluster` package pointer.
+- `docs/api/galaxy.rst`: new "Galaxy Catalogues (CSV)" section documenting
+  `galaxy_table_from_csv` / `galaxies_from_csv_tables` /
+  `galaxy_af_models_from_csv_tables` (previously absent from the API docs)
+  with the scaling-tier regime framing.
+- `docs/general/model_cookbook.md`: new "Multi Galaxy, Group and Cluster
+  Models" section — per-deflector loop recipe, shared-prior scaling-relation
+  tie recipe, cluster point-source framing, links to the four regime
+  notebooks.
+
+This completes the planned scope: the API reference stays single-copy with
+per-surface regime notes (as specified), rather than a three-way fork.
 
 ## Changes
 
@@ -33,22 +57,13 @@ example links, API pointers and modelling philosophy.
     point-source/multi-image-position workflow by default.
   Include the taxonomy sentence: all groups and clusters are multi-galaxy
   systems, but not vice versa.
-- `docs/overview/overview_1_start_here.md` + `overview_3_features.md`: add the
-  regime split where scales are enumerated; link the three start_here Colab
-  notebooks.
-- `docs/api/`: ensure the mass/galaxy/point API pages surface the
-  regime-relevant surfaces where users will look for them — dPIE profiles,
-  `al.sr` scaling relations, `galaxy_table_from_csv` /
-  `galaxies_from_csv_tables` / `galaxy_models_from_csv` CSV APIs, and the
-  point-source/`PointSolver` machinery — grouped or cross-referenced by
-  regime (a short "which regime uses this" note per surface is enough; do not
-  fork the API reference into three copies).
-- `docs/general/model_cookbook.md`: add multi_galaxy, group (both
-  with/without-halo compositions) and cluster model recipes.
-- Scientific grounding: each regime section cites 2–3 flagship
-  systems/surveys from the parent plan's literature research (e.g. the
-  multi_galaxy flagship, SL2S/CASSOWARY groups, HFF/A2744 clusters) so the
-  docs point at real, recognisable science.
+- ~~`docs/overview/overview_1_start_here.md` + `overview_3_features.md`~~
+  LANDED (see above).
+- ~~`docs/api/`~~ LANDED (see above; per-surface regime notes, no fork).
+- ~~`docs/general/model_cookbook.md`~~ LANDED (see above).
+- ~~Scientific grounding~~ LANDED 2026-07-26: the New User Guide ladder now
+  cites J1011+0143/B1608+656 (multi_galaxy), CSWA 19/SL2S (group) and
+  HFF/A2744 (cluster).
 
 ## Ordering
 

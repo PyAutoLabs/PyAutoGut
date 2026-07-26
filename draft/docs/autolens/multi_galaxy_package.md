@@ -8,7 +8,7 @@ Repos:
 Difficulty: large
 Autonomy: supervised
 Priority: high
-Status: in progress — core landed on branch claude/pyautolens-doc-reorganization-w6a1l5 (2026-07-25)
+Status: in progress — core landed 2026-07-25; features/fit/jax legs landed 2026-07-26 (branch claude/pyautolens-doc-reorganization-w6a1l5); only the real-data swap-in remains
 Parent: draft/docs/autolens/split_lensing_regimes.md
 
 ## Landed (2026-07-25, this task branch)
@@ -26,15 +26,36 @@ Parent: draft/docs/autolens/split_lensing_regimes.md
 - PyAutoLens docs: New User Guide four-rung ladder + multi_galaxy links
   (full RTD restructure remains with docs_three_regime_restructure.md).
 
+## Landed (2026-07-26, this task branch)
+
+- `features/scaling_galaxies/` (simulator + modeling): five faint galaxies
+  4–7" out on an untruncated-`IsothermalSph` relation
+  (`einstein_radius = einstein_radius_ref * (L/L_ref)**0.5`, truth ref
+  0.15"), shared-prior tier costing one free parameter, the "load of
+  galaxies far from the lens / not a standard ingredient" framing, and the
+  group/cluster truncation contrast. Smoke-registered and validated green.
+- `fit.py`: N-deflector fit anatomy — per-galaxy deflection fields compared
+  (mean-|deflection| co-dominance ratio 0.82), truth-composition
+  `FitImaging` (full-res truth LL +27220), pointing at `imaging/fit.py` for
+  the step-by-step API anatomy. Smoke-registered and validated green.
+  Scope decision: a `likelihood_function.py` mirror was deliberately NOT
+  added — the likelihood machinery is regime-independent and fully
+  documented by `imaging/` + the group package; `fit.py` covers the one
+  regime-specific piece (summed deflection fields).
+- autolens_workspace_test `multi_galaxy/jax_likelihood/lp.py`: batched
+  `fitness._vmap` literal + `jit(fit_from)` NumPy-parity round-trip over a
+  two-co-dominant-deflector model; smoke-registered, runner-validated
+  (15s).
+
 ## Remaining
 
-- features/ scripts (extra_galaxies, scaling_galaxies with untruncated
-  isothermals, pixelization) — currently README cross-links only.
 - Swap start_here to the REAL SDSS J1011+0143 HST data (F555W/F814W via
   MAST) once frames are prepared; the simulated look-alike is the interim.
-- likelihood_function.py / fit.py mirrors of the group package equivalents.
-- autolens_workspace_test multi_galaxy/jax_likelihood/ variant (only
-  model_fit + the relocated composition test landed).
+  BLOCKED from cloud sessions (2026-07-26): MAST is unreachable through the
+  session proxy (`Tunnel connection failed: 403`) — needs a
+  local/unrestricted-network session to download + prepare the frames.
+- Extra-galaxies / pixelization feature variants remain README cross-links
+  (the group/imaging feature scripts apply verbatim with the lens loop).
 
 Create the new `scripts/multi_galaxy/` package in @autolens_workspace — the first
 of the three above-galaxy-scale regimes (see the parent plan for the full design

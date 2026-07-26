@@ -1,5 +1,13 @@
 # Delaunay frozen-tables gradient — unlock jax.grad with stop_gradient on the tables callback
 
+> **SHIPPED 2026-07-26** on branch `claude/rectangular-mesh-gradients-mh1j0z`
+> (user-directed, same session as the probe): the `stop_gradient` unlock in
+> `_jax_delaunay_tables`, the certification script
+> `autolens_workspace_test/scripts/imaging/jax_grad/delaunay.py`, value
+> parity on the jax_likelihood delaunay literal, and the doc updates (audit
+> README + mesh docstrings). Retained for the record; fold into the branch's
+> completion record at ship time.
+
 Type: feature
 Target: autoarray
 Repos:

@@ -1,12 +1,50 @@
-# Delaunay frozen-tables gradient — unlock jax.grad with stop_gradient on the tables callback
+## delaunay-frozen-tables-gradient
+- completed: 2026-07-26
+- branch: `claude/rectangular-mesh-gradients-mh1j0z` (PyAutoArray + autolens_workspace_test + autolens_workspace_developer; PR/merge pending with the rest of the session's mesh-gradients work — no issue was opened, the task was conceived and executed in the same session)
+- key commits: PyAutoArray `feat: unlock jax.grad through the Delaunay mesh via frozen integer tables` + `docs: state the sense in which the Delaunay mesh is autodifferentiable`; autolens_workspace_test `test: jax_grad FD certification for the Delaunay mesh`
+- verdict: SHIPPED — the Delaunay mesh is autodifferentiable (a.e.-exact frozen-tables gradient)
+- summary: |
+    The 2026-07-09 audit's "Delaunay is hard-undifferentiable" verdict was
+    stale: the visibility-walk refactor had moved every differentiable
+    quantity (point location, barycentric weights, dual areas, split points)
+    in-graph, leaving the host qhull `pure_callback` returning only int32
+    connectivity tables. Those tables are piecewise-constant in the vertex
+    positions — their true derivative is zero between triangle-flip events —
+    so wrapping the callback input in `jax.lax.stop_gradient` (one line in
+    `_jax_delaunay_tables`) yields the EXACT almost-everywhere derivative,
+    not an approximation. Values are bit-identical (primal untouched): the
+    jax_likelihood delaunay regression literal passes unchanged.
 
-> **SHIPPED 2026-07-26** on branch `claude/rectangular-mesh-gradients-mh1j0z`
-> (user-directed, same session as the probe): the `stop_gradient` unlock in
-> `_jax_delaunay_tables`, the certification script
-> `autolens_workspace_test/scripts/imaging/jax_grad/delaunay.py`, value
-> parity on the jax_likelihood delaunay literal, and the doc updates (audit
-> README + mesh docstrings). Retained for the record; fold into the branch's
-> completion record at ship time.
+    Certification (new `autolens_workspace_test/scripts/imaging/jax_grad/delaunay.py`,
+    production shape: Hilbert image mesh + circle edge zeroing +
+    reg.AdaptSplit(0.1, 10), 14-param truth-centred lens): all params live,
+    eager==jit, FD-step-sweep with lens light at 1e-8..1e-10 and mass/shear
+    at 1e-5..2e-3 (documented rtol=1e-2 — the scatter is FD steps straddling
+    flip events, the measure-zero jump seams where no method has a gradient;
+    AD differentiates the branch the point is on).
+
+    THE SENSE IN WHICH IT IS AUTODIFFERENTIABLE (now in the Delaunay class
+    docstring): ReLU-network territory — piecewise-smooth, smooth within
+    each triangulation topology, measure-zero jump discontinuities at flips.
+    Contrast the kernel-CDF rectangular meshes: C-infinity by construction,
+    no seams — still the cleanest gradient-inference choice; Delaunay is the
+    scientifically exact piecewise-smooth alternative.
+
+    REMAINING TRADE (documented, not fixed): the tables callback is
+    `vmap_method="sequential"` — one host qhull call per vmap lane — so the
+    KNN meshes keep the batched-throughput niche until the callback is
+    batched (delaunay_research.md option B territory).
+
+    Lore: the audit README's "Why Delaunay gradients are infeasible" section
+    assessed the PRE-walk architecture (callback returned float split_points
+    /mappings, where freezing would have dropped real terms); its point 3
+    (the frozen gradient is the correct a.e. derivative) is what this ships.
+    Probe pattern for the unlock: monkeypatch stop_gradient, value_and_grad,
+    FD sweep — 30 minutes from hypothesis to evidence.
+
+## Original prompt
+
+# Delaunay frozen-tables gradient — unlock jax.grad with stop_gradient on the tables callback
 
 Type: feature
 Target: autoarray

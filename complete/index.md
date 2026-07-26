@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-739 records across 6 buckets.
+741 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -95,6 +95,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [cti-resurrection-phase5](2026/07/cti-resurrection-phase5.md) — closed
 - [database-latent-wheel-load](2026/07/database-latent-wheel-load.md) — database scripts failed on release wheels loading latent variables → AssertionError. Release-tail item D. Corr…
 - [defunct-grids-yaml-removal](2026/07/defunct-grids-yaml-removal.md) — Deleted the 10 orphan `config/grids.yaml` copies plus 3 references (2 library `config/README.md` bullets, 1 `a…
+- [delaunay-frozen-tables-gradient](2026/07/delaunay-frozen-tables-gradient.md)
 - [delaunay-qhull-callback](2026/07/delaunay-qhull-callback.md)
 - [delete_pyautoheart_shim](2026/07/delete_pyautoheart_shim.md)
 - [desktop-acceptance-mcp](2026/07/desktop-acceptance-mcp.md)
@@ -259,6 +260,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [prior-config-cache](2026/07/prior-config-cache.md) — The aggregator arc's "deeper follow-up" — cProfile showed 77% of per-result summary/model load was Model.__ini…
 - [prior-width-safety](2026/07/prior-width-safety.md) — Phase 2 of #1331 — RelativeWidthModifier abs(mean)+opt-in absolute_floor, default-path width guard (parameter-…
 - [priors-messages-fixes](2026/07/priors-messages-fixes.md) — Phase 1 of #1331 priors/messages batch — 7 fixes (01/02/04/10 + decisions 1/3/4), 12 regression tests, Fable m…
+- [profiling-dataset-auto-simulate](2026/07/profiling-dataset-auto-simulate.md) — PR #89
 - [profiling-mirror-taxonomy](2026/07/profiling-mirror-taxonomy.md) — profiling#85 + Brain#161
 - [profiling-preopt-campaign](2026/07/profiling-preopt-campaign.md) — Phase-3 (likelihood_runtime) leg of the polish.md PreOptimizationTimes campaign, frozen "done enough" at user …
 - [psf-convolution-docstring](2026/07/psf-convolution-docstring.md) — Normalized PSF-convolution docs across 41 simulator.py (both workspaces). Tier A (3 reference files: imaging/s…

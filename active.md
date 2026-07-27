@@ -23,7 +23,10 @@
 ## point-source-chi-squared-variants
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/657
 - session: claude --resume daaa46f9-aac5-48e2-9146-1202a92d879e
-- status: library-dev
+- status: library-shipped, workspace-pending
+- library-pr: PyAutoArray#414, PyAutoGalaxy#531, PyAutoLens#659 (all pending-release; merge array -> galaxy -> lens)
+- heart-ack: ["workspace validation not passing (13 failed, 2026-07-21T19-05-22Z)", "33 stale parked script(s)", "manifest drift: tenant firewall (organ code) — 5 mismatch(es) vs PyAutoMind/repos.yaml"]
+- phases: 2/5 shipped; next start_workspace (phases 3+4), then phase 5 (jax gradients)
 - worktree: ~/Code/PyAutoLabs-wt/point-source-chi-squared-variants
 - repos:
   - PyAutoArray: feature/point-source-chi-squared-variants

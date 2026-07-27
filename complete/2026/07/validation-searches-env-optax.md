@@ -44,3 +44,33 @@
     fail (no truth assert) but analysis.py:68 silently forces use_jax=False, so
     they are duplicate numpy runs contributing ZERO JAX coverage. Reported on
     issue #77, not fixed.
+- follow-up: |
+    PyAutoFit#1426 + PyAutoGalaxy#532 — both MERGED, after the fact.
+
+    REGRESSION I INTRODUCED: PyAutoGalaxy#530 pointed autogalaxy[jax] at
+    autofit[jax], but autofit[jax] declared optax with NO python marker while
+    every autonerves[jax] entry carries python_version >= '3.11'. On 3.9 pip
+    backtracked through the optax/jax history to `error: resolution-too-deep`,
+    taking all four 3.9 legs of python_matrix red. Fixed in PyAutoFit#1426
+    (marker added); python_matrix then went fully green, 34/34.
+
+    THEN an independent `codex review` of #530 found what I had missed: the
+    #1426 fix lives on autofit's MAIN. Released autofit still expands
+    autofit[jax] to an unmarked optax — verified straight from PyPI:
+    autofit 2026.7.27.1 -> 'optax>=0.2.5; extra == "jax"'. So autogalaxy[jax]
+    was only safe when autofit came from a SOURCE checkout. Closed defensively
+    in PyAutoGalaxy#532 by marking autofit[jax] >= 3.11 too, so every member of
+    the extra carries the same gate.
+- lessons: |
+    MARKER PARITY WITHIN AN EXTRA IS LOAD-BEARING. An unmarked dependency added
+    to an extra whose other members are all version-gated does not merely fail
+    to install on the excluded interpreters — it can make the whole resolution
+    UNSOLVABLE there (resolution-too-deep), which presents as a total CI
+    collapse rather than a missing package.
+
+    A SOURCE-INSTALLED CI MATRIX CANNOT VERIFY A RELEASED DEPENDENCY CHAIN.
+    python_matrix installs all five libraries with `-e ./PyAuto*`, so it
+    resolves siblings from source and is structurally blind to what
+    `pip install <lib>[extra]` does against PyPI. Green CI on a packaging
+    change proves the source path only. Check released metadata directly
+    (PyPI JSON `requires_dist`) when an extra crosses a repo boundary.

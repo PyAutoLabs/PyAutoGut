@@ -51,10 +51,12 @@
 ## delaunay-nan-callback
 - issue: https://github.com/PyAutoLabs/PyAutoArray/issues/410
 - session: codex
-- status: library-dev
+- status: awaiting-input
+- question: https://github.com/PyAutoLabs/PyAutoArray/issues/410#issuecomment-5092923633
 - worktree: ~/Code/PyAutoLabs-wt/delaunay-nan-callback
 - autonomy: supervised (`--auto`; capped by the `bug` work-type cap in AUTONOMY.md)
 - prompt: active/delaunay_tables_callback_nan_points_crash.md
+- note: Implementation complete and committed locally. PyAutoArray 906/906 tests; dense/sparse poisoned-lane parity; raw NaN logL; partial/all poisoning gradient isolation; unchanged FD certification all pass. Review CLEAN. PARKED before push/PR because scoped smoke was 20/21 with unrelated imaging/subhalo_recovery.py 300s timeout and Heart is YELLOW; issue comment asks for exact acknowledgement.
 - repos:
   - PyAutoArray: feature/delaunay-nan-callback
   - autolens_workspace_test: feature/delaunay-nan-callback

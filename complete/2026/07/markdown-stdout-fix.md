@@ -1,3 +1,12 @@
+## markdown-stdout-fix
+- issue: https://github.com/PyAutoLabs/PyAutoHands/issues/200
+- completed: 2026-07-27
+- library-pr: https://github.com/PyAutoLabs/PyAutoHands/pull/201
+- workspace-pr: https://github.com/PyAutoLabs/HowToFit/pull/34
+- summary: Leg 4 of the dataset-bulk series, human-decided scope after the load-bearing investigation killed the purge premise (markdown/ churn nil — 2 PNG re-commits ever; untracking reclaims ~0 clone bytes since blobs stay in history; renders are the ONLY no-install figure view because committed notebooks are output-stripped; retro-compression ADDS packed bytes). Shipped: generate_markdown.py now merges each cell's consecutive stream outputs before cleaning (samplers emit each progress update as its own one-line stream output, so the 40-line cap never fired), collapses NNNNit progress runs to their final state tolerating nbconvert's blank-line paragraph interleave (a naive consecutive-line collapse matched ZERO of the 2,480 committed spam lines), and optimizes newly extracted PNGs (256-colour quantize, 35-43% of originals, forward-only — committed images untouched; next full autolens_workspace re-render ~56→~20 MB). Post-hoc repair via the same module function: HowToFit tutorial_4 607 KB/7,758 lines → 62 KB/1,476 lines (was over GitHub's 512 KB render threshold and displayed raw with no images; now renders with all 10 figures), tutorial_3 58→52 KB (5 figures intact). 7 new unit tests; suite 234 passed. Shipped under the 2026-07-27 heart-ack. Merged 2026-07-27: Hands aee90f899, HowToFit da8863a6a.
+
+## Original prompt
+
 # Markdown generator: per-cell stdout truncation + PNG optimization; repair tutorial_4
 
 Type: maintenance

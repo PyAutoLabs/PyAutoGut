@@ -1,24 +1,5 @@
 # Active Tasks
 
-## markdown-stdout-fix
-- issue: https://github.com/PyAutoLabs/PyAutoHands/issues/200
-- session: claude
-- status: awaiting-merge
-- library-pr: https://github.com/PyAutoLabs/PyAutoHands/pull/201
-- workspace-pr: https://github.com/PyAutoLabs/HowToFit/pull/34
-- worktree: ~/Code/PyAutoLabs-wt/markdown-stdout-fix
-- autonomy: supervised
-- heart-ack: 2026-07-27 human acknowledged this ship with the exact YELLOW reasons below; any new reason or RED verdict requires a fresh stop
-  - workspace validation not passing (13 failed, 2026-07-21T19-05-22Z)
-  - 33 stale parked script(s)
-  - manifest drift: tenant firewall (organ code) — 5 mismatch(es) vs PyAutoMind/repos.yaml
-  - release validation stale: source moved since rehearsal (PyAutoNerves, PyAutoFit, PyAutoArray, PyAutoGalaxy, PyAutoLens)
-- prompt: active/markdown_generator_stdout_png_fix.md
-- note: leg 4 of the dataset-bulk series, human-decided scope: NO purge/retro-compress of markdown/ (churn nil, untracking reclaims ~0 clone bytes, renders are the only no-install figure view). Fix generate_markdown.py per-cell stream truncation + progress-line collapse + forward-only PNG optimization (new renders only) + unit tests; post-hoc repair HowToFit tutorial_4 (608 KB > GitHub 512 KB render threshold) and tutorial_3 committed pages.
-- repos:
-  - PyAutoHands: feature/markdown-stdout-fix
-  - HowToFit: feature/markdown-stdout-fix
-
 ## multistart-cadence-int-cast
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1420
 - session: claude

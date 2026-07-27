@@ -34,12 +34,12 @@
 ## delaunay-nan-callback
 - issue: https://github.com/PyAutoLabs/PyAutoArray/issues/410
 - session: codex
-- status: library-shipped, workspace-pending
+- status: workspace-dev
 - library-pr: https://github.com/PyAutoLabs/PyAutoArray/pull/411
 - worktree: ~/Code/PyAutoLabs-wt/delaunay-nan-callback
 - autonomy: supervised (`--auto`; capped by the `bug` work-type cap in AUTONOMY.md)
 - prompt: active/delaunay_tables_callback_nan_points_crash.md
-- note: PyAutoArray PR #411 is open pending-release after human acknowledgement of the exact Heart YELLOW set and acceptance of the unrelated imaging/subhalo_recovery.py timeout. Workspace regression commit 1324100 remains local until the library-first merge gate clears.
+- note: PyAutoArray PR #411 merged as 8c5e28ec210b6149ffa0d313f717884271ce722a after comparison with the same-day PyAutoFit #1421 precedent. The library-first gate is clear; workspace regression commit 1324100 is ready to ship.
 - repos:
   - PyAutoArray: feature/delaunay-nan-callback
   - autolens_workspace_test: feature/delaunay-nan-callback

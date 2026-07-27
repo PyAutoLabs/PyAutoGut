@@ -1,5 +1,16 @@
 # Active Tasks
 
+## multistart-cadence-followups
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1422
+- session: claude
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/multistart-cadence-followups
+- autonomy: supervised (prompt header `safe`, capped by the `bug` work-type cap in AUTONOMY.md)
+- prompt: active/multistart_cadence_followups_combined.md
+- note: THREE bugs in one PR at human request (folded from 3 drafts, e623063). All from the Codex gpt-5.6-sol adversarial review of merged PR#1421. (1) emcee:206 + blackjax/nuts:291 crash on a real cadence — fix the PRODUCER (abstract_search.py:219 float() coercion protects nothing; Python ints hold 1e99). DO NOT touch zeus/bfgs/dynesty/nautilus — verified safe/tolerant, an earlier 5-search claim was falsified. (2) MultiStart runs the final perform_update TWICE (search.py:432 during_analysis=not is_final vs siblings emcee:238/bfgs:219/nautilus:438 which pass True unconditionally). (3) stale stop_reason on resume with a larger n_steps (search.py:413-416). Each part independently droppable. Codex review REQUIRED at the end per human instruction.
+- repos:
+  - PyAutoFit: feature/multistart-cadence-followups
+
 ## clean-slate-write-site
 - issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/169
 - session: claude

@@ -129,7 +129,7 @@ One `##` block per item. Fields:
 - condemned: 2026-07-27
 - sweep-after: 2026-08-27
 - breaks-if-wrong: loses the exact historical noise realizations of the 7 datasets (regenerated copies use fresh noise); recoverable from remote history via the pre-purge SHA
-- archive-ref: n/a — committed deletion; bytes live in remote history at pre-purge SHA 0bb170c57 (autolens_workspace main, 2026-07-27)
+- archive-ref: n/a — committed deletion; pre-purge SHA 0bb170c57 VOIDED by the 2026-07-27 leg-7 history rewrite — bytes recoverable ONLY from the local mirror backup ~/Code/PyAutoLabs-backups/autolens_workspace-pre-rewrite-2026-07-27.git
 
 ## release-datasets/autogalaxy-database-orphans
 - type: file
@@ -140,7 +140,7 @@ One `##` block per item. Fields:
 - condemned: 2026-07-27
 - sweep-after: 2026-08-27
 - breaks-if-wrong: loses the exact historical noise realizations + the 3 simulator scripts; both recoverable from remote history at the recover point
-- archive-ref: n/a — committed deletion; bytes live in remote history at e942d360 (last byte-refresh of all three dirs) and pre-purge main 5632f6d0
+- archive-ref: n/a — committed deletion; SHAs e942d360/5632f6d0 VOIDED by the 2026-07-27 leg-7 history rewrite — bytes (incl. the 3 deleted light_sersic_exp simulators, the one non-regenerable item) recoverable ONLY from ~/Code/PyAutoLabs-backups/autogalaxy_workspace-pre-rewrite-2026-07-27.git
 
 ## release-datasets/autolens-many-visibilities
 - type: file
@@ -151,4 +151,15 @@ One `##` block per item. Fields:
 - condemned: 2026-07-27
 - sweep-after: 2026-08-27
 - breaks-if-wrong: loses nothing unique — stubs + renders, recoverable from remote history
-- archive-ref: n/a — committed deletion; bytes live in remote history at pre-purge SHA 7f6ba9954 (autolens_workspace main)
+- archive-ref: n/a — committed deletion; pre-purge SHA 7f6ba9954 VOIDED by the 2026-07-27 leg-7 history rewrite — bytes recoverable ONLY from ~/Code/PyAutoLabs-backups/autolens_workspace-pre-rewrite-2026-07-27.git
+
+## history-rewrite-2026-07-27-addendum
+- type: file
+- locator: autolens_workspace + autogalaxy_workspace + autofit_workspace — ALL pre-rewrite remote history
+- confidence: 1.0 (human-authorized leg-7 rewrite, dataset-bulk series)
+- reason: git filter-repo removed dead-at-HEAD blobs (purged datasets, historical output/, old howtolens/ tree, etc.); clones now 32/6/98 MiB (were 107/27/310). Every condemned entry pointing at "remote history" SHAs of these three repos (incl. release-datasets/autolens-regenerable @8625a1de, release-datasets/autogalaxy-regenerable @e940f8cd, and the autofit_workspace SHA 1254a2fe of release-datasets-group-b/all-four — the three HowTo SHAs of that entry survive, HowTo repos were NOT rewritten) is void on the remote.
+- merged: n/a
+- condemned: 2026-07-27
+- sweep-after: never — the backups below are the permanent recover path
+- breaks-if-wrong: nothing further; the rewrite already happened (HEAD trees verified byte-identical, tags preserved by name)
+- archive-ref: permanent local mirror backups ~/Code/PyAutoLabs-backups/{autolens,autogalaxy,autofit}_workspace-pre-rewrite-2026-07-27.git (fsck-verified; old main SHAs 6be18d0cf / f0efa50a9 / 277164bc5)

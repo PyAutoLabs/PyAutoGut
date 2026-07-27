@@ -29,12 +29,21 @@ and the **entire vmapped batch / process dies** — one poisoned lane kills all
 every resume crashes instantly (RAL jobs 331197/331198/331199; logs
 `/mnt/ral/jnightin/pixgrad_logs/pix_prod_delaunay-33119[7-9].err`).
 
-Net effect: **Delaunay is currently unusable for broad-start gradient search
-with resurrection** — the mesh whose gradients were certified 2026-07-26
-(frozen-tables) cannot exploit the NaN-mortality machinery (Fit#1400) that
-made pixelized search viable in #101. Campaign fallback is resurrect=False
-(latch-and-freeze), which survives only because params then stay at their last
-finite values.
+**UPDATE (same day, ~14:20): the crash is NOT resurrection-specific.** The
+resurrect=False retry (RAL jobs 331202/331203) died identically, before the
+first 50-step checkpoint. The NaN points do not come from resurrected params —
+ordinary descent trajectories reach mass configurations whose deflections (and
+hence traced mesh points) are non-finite, and the callback converts what
+should be a NaN log-likelihood into a process-fatal exception. The
+`Fitness` where-guard cannot intervene: the exception fires DURING the forward
+evaluation. Note the crash requires a batch: single-point evals at sane
+parameters (truth-bar scans, the FD certification harness) never see it.
+
+Net effect: **Delaunay is currently unusable for ANY broad-start gradient
+search** — the mesh whose gradients were certified 2026-07-26 (frozen-tables)
+crashes under the exact search machinery (Fit#1398/#1400) that made pixelized
+search viable in #101. There is no campaign-side workaround; wsdev#117 records
+the mesh as BLOCKED pending this fix.
 
 ## Fix sketch
 

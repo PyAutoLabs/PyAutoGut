@@ -1,3 +1,16 @@
+## central-community-docs
+- issue: https://github.com/PyAutoLabs/PyAutoScientist/issues/5
+- completed: 2026-07-27
+- primary-pr: https://github.com/PyAutoLabs/PyAutoScientist/pull/6
+- workspace-prs: 22 coordinated PRs — https://github.com/PyAutoLabs/PyAutoScientist/issues/5#issuecomment-5094035448
+- summary: PyAutoScientist became the canonical home for the PyAutoLabs Contributor Covenant 2.1 Code of Conduct and shared contribution guide. Fifteen Code of Conduct files and eighteen contribution files became uniform pointers; sixteen duplicated Markdown issue templates were removed so organization YAML forms are inherited. All 22 PRs merged after their reported CI checks passed.
+- findings: The review faculty found one over-broad statement that every repository had both README.md and AGENTS.md; the canonical guide and pointers were corrected to say "where present" before shipping.
+- merge-order: PyAutoScientist merged first and both canonical URLs returned HTTP 200 before any pointer PR merged.
+- validation: Review faculty CLEAN; pointer hashes single-source; no legacy templates remained; all 22 merge states verified MERGED; final autolens_workspace_test smoke matrix passed 4/4.
+- follow-ups: A future AI_STATEMENT.md can use the same canonical-document plus pointer structure. SECURITY.md, SUPPORT.md, and GOVERNANCE.md remain future centralization candidates.
+
+## Original prompt
+
 # Centralise shared community and governance documents
 
 Type: docs

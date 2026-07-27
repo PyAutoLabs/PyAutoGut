@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-755 records across 6 buckets.
+756 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -65,6 +65,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [bug-agent](2026/07/bug-agent.md)
 - [build-chain-umbrella](2026/07/build-chain-umbrella.md)
 - [build_ic50_assistant_from_autofit_assistant](2026/07/build_ic50_assistant_from_autofit_assistant.md)
+- [central-community-docs](2026/07/central-community-docs.md) — PyAutoScientist became the canonical home for the PyAutoLabs Contributor Covenant 2.1 Code of Conduct and shar…
 - [checkpoint-continue](2026/07/checkpoint-continue.md)
 - [clean-packaging-debris](2026/07/clean-packaging-debris.md) — Added Hygiene's read-only `packaging` debris mode and a narrow `clean_slate.sh --packaging` executor for ignor…
 - [clean-slate-write-site](2026/07/clean-slate-write-site.md) — Leg 5 (final) of the dataset-bulk series — the machinery leg. New bin/dataset_provenance.py: stdlib AST, order…

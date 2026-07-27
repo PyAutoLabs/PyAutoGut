@@ -31,3 +31,12 @@
 - prompt: active/pixelized_multistart_prodigy_cpu.md
 - repos:
   - autolens_workspace_developer: feature/pix-prodigy-cpu
+
+## delaunay-nan-callback
+- issue: https://github.com/PyAutoLabs/PyAutoArray/issues/410
+- session: codex
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/delaunay-nan-callback
+- autonomy: supervised (`--auto`; capped by the `bug` work-type cap in AUTONOMY.md)
+- prompt: active/delaunay_tables_callback_nan_points_crash.md
+- repos:

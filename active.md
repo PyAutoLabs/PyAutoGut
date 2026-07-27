@@ -27,3 +27,6 @@
 - status: library-dev
 - worktree: ~/Code/PyAutoLabs-wt/point-source-chi-squared-variants
 - repos:
+  - PyAutoArray: feature/point-source-chi-squared-variants
+  - PyAutoGalaxy: feature/point-source-chi-squared-variants
+  - PyAutoLens: feature/point-source-chi-squared-variants

@@ -3,7 +3,10 @@
 ## raw-guard-migration
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/354
 - session: claude
-- status: workspace-dev
+- status: awaiting-merge
+- workspace-prs:
+  - https://github.com/PyAutoLabs/autolens_workspace/pull/355
+  - https://github.com/PyAutoLabs/autogalaxy_workspace/pull/171
 - worktree: ~/Code/PyAutoLabs-wt/raw-guard-migration
 - autonomy: supervised
 - heart-ack: 2026-07-27 human acknowledged this workspace ship with the exact YELLOW reasons below; any new reason or RED verdict requires a fresh stop

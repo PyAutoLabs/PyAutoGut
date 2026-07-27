@@ -1,3 +1,11 @@
+## clean-slate-write-site
+- issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/169
+- completed: 2026-07-27
+- library-pr: https://github.com/PyAutoLabs/PyAutoBrain/pull/170
+- summary: Leg 5 (final) of the dataset-bulk series — the machinery leg. New bin/dataset_provenance.py: stdlib AST, order-sensitive write-site classifier (REGENERABLE deleted / DOWNLOADED kept silently / ORPHAN kept+reported); deletion requires positive write evidence; path-shaped derivation guard stops reads laundering into writes (the sdp81 start_here case is a pinned test); aplt.fits_array deliberately NOT a write API (would have condemned real-JWST cosmos_web_ring — writing one auxiliary product into a dataset folder is not generating it); network-binding files blanket-protect every dataset they bind (smacs0723's urlopen never touches the path variable); one-level interprocedural resolution for the simulators/util.py idiom (without it all 18 autofit example_1d datasets regress to ORPHAN). clean_slate.sh phase 1b delegates to the helper with hard-fail-no-fallback; orphans reported; emptied dataset dirs pruned; size warnings per dataset dir (apparent-size); new .ipynb_checkpoints sweep (__pycache__ deliberately kept); new per-repo git gc --auto phase (dry-run-skipped). wake_up.md guardrail wording made honest (recoverable-by-regeneration, not "reversible"). Tests 2→14 for clean_slate (phases 1/1b/2/3 previously zero coverage); suite 178 passed (1 pre-existing deselect: concurrent sizing-faculty wrapper gap). Real-workspace DRY_RUN acceptance: catches start_here/tutorial-written cruft across autolens/autogalaxy/HowTo (~8 MB; HowTo was a 100% miss before), reports dataset/imaging/tutorial as orphan, zero never-touch violations. Shipped under the 2026-07-27 heart-ack. Merged 2026-07-27, merge commit 16ed65f85.
+
+## Original prompt
+
 # clean_slate: write-site provenance, tests, and polish
 
 Type: maintenance

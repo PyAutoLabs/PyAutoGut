@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-749 records across 6 buckets.
+751 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -67,6 +67,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [build_ic50_assistant_from_autofit_assistant](2026/07/build_ic50_assistant_from_autofit_assistant.md)
 - [checkpoint-continue](2026/07/checkpoint-continue.md)
 - [clean-packaging-debris](2026/07/clean-packaging-debris.md) — Added Hygiene's read-only `packaging` debris mode and a narrow `clean_slate.sh --packaging` executor for ignor…
+- [clean-slate-write-site](2026/07/clean-slate-write-site.md) — Leg 5 (final) of the dataset-bulk series — the machinery leg. New bin/dataset_provenance.py: stdlib AST, order…
 - [clear-stale-needs-fix-parks](2026/07/clear-stale-needs-fix-parks.md)
 - [clone-skill-prefix-corruption](2026/07/clone-skill-prefix-corruption.md) — The Clone Agent's skill-prefix substitution (`al_ -> ac_`, from package initials) was applied by `clone_seed.s…
 - [cluster-likelihood-breakdown](2026/07/cluster-likelihood-breakdown.md)
@@ -231,6 +232,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [multi-start-gradient-guides](2026/07/multi-start-gradient-guides.md) — Phase 3 of the multi-start gradient search promotion (Fit#1369). Added a MultiStartAdam config section to scri…
 - [multi-start-gradient-search](2026/07/multi-start-gradient-search.md) — Phase 1 of promoting the benchmark-winning multi-start gradient MAP optimizer to first-class PyAutoFit searche…
 - [multistart-adam-release-jax](2026/07/multistart-adam-release-jax.md)
+- [multistart-cadence-int-cast](2026/07/multistart-cadence-int-cast.md)
 - [multistart-contrib-and-vmapped-state](2026/07/multistart-contrib-and-vmapped-state.md)
 - [multistart-gradient-auto-convergence-phase-1](2026/07/multistart-gradient-auto-convergence-phase-1.md)
 - [multistart-gradient-auto-convergence-phase-2](2026/07/multistart-gradient-auto-convergence-phase-2.md)

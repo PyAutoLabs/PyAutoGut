@@ -1,5 +1,15 @@
 # Active Tasks
 
+## purge-simulated-datasets
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/352
+- session: claude
+- status: workspace-dev
+- worktree: ~/Code/PyAutoLabs-wt/purge-simulated-datasets
+- autonomy: supervised
+- prompt: active/purge_committed_simulated_datasets.md
+- note: leg 1 of the 5-leg dataset-bulk series (siblings in draft/maintenance/{workspaces,howto,pyautobrain}/). Not a pure delete — add auto-simulate guards to the 4-5 unguarded datasets, prove clean-tree regeneration, then purge + drop .gitignore re-includes + check_dataset_allowlist. uv_wavelengths direction check FIRST (likely real SMA input → keep). Feature Agent 4-phase split overridden (repo-count proxy rule).
+- repos:
+
 ## testmode-env-drift
 - issue: https://github.com/PyAutoLabs/PyAutoCTI/issues/95
 - status: PRs OPEN awaiting merge — PyAutoCTI#96 (delete dead fixture) + PyAutoFit#1417 (docstring). KEY FINDING: the obvious fix (rename PYAUTOFIT_TEST_MODE -> PYAUTO_TEST_MODE) is WRONG. Nothing reads PYAUTOFIT_TEST_MODE so the aggregator autouse fixture was always a no-op; making the var LIVE actually enables test mode, which bypasses sampling so the aggregator has no samples -> 6/13 tests FAIL. Measured 3 ways: baseline(dead var)=13 passed; renamed=6 failed/7 passed; fixture DELETED=13 passed. Shipped the deletion (behaviour-preserving, deletes the trap). Two gitignored .claude/settings.local.json allowlists deliberately LEFT ALONE — rewriting them would change what those commands do; they are stale permission strings, not a defect.

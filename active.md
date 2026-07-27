@@ -73,3 +73,13 @@
 - note: 5-phase epic (one-shot attempt per user); new repo autolens_jax_joss (PyAutoLabs, public) born alongside; datasets SDP.81 / RXJ1131 / A2744 user-approved
 - repos:
   - autolens_jax_joss: main (born this task)
+
+## pix-prodigy-cpu
+- issue: https://github.com/PyAutoLabs/autolens_workspace_developer/issues/117
+- session: claude
+- status: workspace-dev
+- worktree: ~/Code/PyAutoLabs-wt/pix-prodigy-cpu
+- autonomy: supervised
+- prompt: active/pixelized_multistart_prodigy_cpu.md
+- repos:
+  - autolens_workspace_developer: feature/pix-prodigy-cpu

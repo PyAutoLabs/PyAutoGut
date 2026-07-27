@@ -18,6 +18,11 @@
 - status: workspace-dev
 - worktree: ~/Code/PyAutoLabs-wt/purge-autocti-datasets
 - autonomy: supervised
+- heart-ack: 2026-07-27 human acknowledged this workspace ship with the exact YELLOW reasons below AND pre-authorized merge on green smoke; any new reason or RED verdict requires a fresh stop
+  - workspace validation not passing (13 failed, 2026-07-21T19-05-22Z)
+  - 33 stale parked script(s)
+  - manifest drift: tenant firewall (organ code) — 5 mismatch(es) vs PyAutoMind/repos.yaml
+  - release validation stale: source moved since rehearsal (PyAutoNerves, PyAutoFit, PyAutoArray, PyAutoGalaxy, PyAutoLens)
 - prompt: active/purge_autocti_committed_datasets.md
 - note: leg 6 of the dataset-bulk series — ~120 MB imaging_ci datasets behind guards; leg-1 recipe; adopt allowlist regime if absent; check autocti_workspace_test consumers; datasets whose guards can't be added cleanly stay committed. Leg 7 (history blob purge, human-gated) filed as draft.
 - repos:

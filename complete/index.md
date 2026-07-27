@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-744 records across 6 buckets.
+745 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -277,6 +277,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [psf-oversample-workspace](2026/07/psf-oversample-workspace.md)
 - [psf-visible-input](2026/07/psf-visible-input.md)
 - [purge-autoconf-era-legacy](2026/07/purge-autoconf-era-legacy.md)
+- [purge-simulated-datasets](2026/07/purge-simulated-datasets.md) — Leg 1 of the dataset-bulk series. Purged 7 committed simulated datasets (~17 MB: cluster/simple 15.7 MB, imagi…
 - [pyautogut-organ](2026/07/pyautogut-organ.md) — Gut organ + hygiene drive seam — complete
 - [pyautolens-assistant-joss-paper](2026/07/pyautolens-assistant-joss-paper.md) — JOSS paper #2 scaffolded next to the software — SHIPPED
 - [pyautolens-jax-joss-paper](2026/07/pyautolens-jax-joss-paper.md) — PyAutoLens-JAX JOSS paper scaffold — MERGED

@@ -1,3 +1,11 @@
+## purge-simulated-datasets
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/352
+- completed: 2026-07-27
+- workspace-pr: https://github.com/PyAutoLabs/autolens_workspace/pull/353
+- summary: Leg 1 of the dataset-bulk series. Purged 7 committed simulated datasets (~17 MB: cluster/simple 15.7 MB, imaging/{mass_stellar_dark,double_einstein_ring,extra_and_scaling_galaxies}, group/{mass_stellar_dark,double_einstein_ring,scaling_relation}) — untracked + .gitignore allowlist re-includes dropped; migrated the 20 consumer scripts from raw `if not dataset_path.exists():` guards to al.util.dataset.should_simulate and regenerated the 20 paired notebooks. interferometer/uv_wavelengths KEPT — verified real SMA uv coverage (read-only simulator input, no writer; both workspaces share this pattern) and marked non-regenerable in .gitignore. Verification: clean-tree regeneration proofs for all 7 via guarded consumers (7-246 s; not merely rc=0), check_dataset_allowlist OK (57 files, 9 patterns), smoke 14/14. Shipped under the 2026-07-27 Heart YELLOW heart-ack. Gotcha for future audits: the "5 unguarded datasets" premise was wrong — all consumers were raw-guarded; grepping only should_simulate misses the raw idiom (autolens still has 132 raw-guard files, folded into the series migration draft). Condemned entry release-datasets/autolens-regenerable-leg2 (pre-purge SHA 0bb170c57, sweep-after 2026-08-27). Merged 2026-07-27; PR #353 merge commit b0b7a41d5.
+
+## Original prompt
+
 # Purge committed simulated datasets from autolens_workspace
 
 Type: maintenance

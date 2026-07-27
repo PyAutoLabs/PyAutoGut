@@ -199,3 +199,37 @@
 - affected-repos:
   - autolens_workspace_test
 - note: latent/latent_nan_robustness.py PASSES but VACUOUSLY under the smoke profile — TEST_MODE=2 yields only 4 bypass samples, and DISABLE_JAX=1 silently flips its deliberate AnalysisImaging(use_jax=True) to False (PyAutoLens analysis/analysis/dataset.py:89), so the JAX column-masking branch the guard exists to catch is never taken. MultiStartAdam/BlackJAXNUTS precedent. Work = (1) config/build/env_vars.yaml override for `latent/latent_nan_robustness` with unset: [PYAUTO_TEST_MODE, PYAUTO_DISABLE_JAX]; (2) trim the script under the 300s cap. MEASURED: honest run = 412s; PYAUTO_TEST_MODE=1 does NOT help (455s) — Nautilus is NOT the bottleneck (~136s post-fit results update + ~56s latent compute on 100 samples), so the lever is sample count. Script is in the curated smoke_tests.txt, which DOES read env_vars.yaml, so this lands in the per-PR gate. Adjacent to the blocker's own follow-up ("re-time the SLOW siblings"). NOT bugs, verified passing from clean output, no change needed: imaging/model_fit.py and latent/latent_variables_smoke.py.
+
+## notebook-kernel-cwd-auto-simulate
+- issue: https://github.com/PyAutoLabs/PyAutoHands/issues/204
+- prompt: draft/bug/workspaces/notebook_kernel_cwd_breaks_auto_simulate.md
+- status: planned
+- filed: 2026-07-27
+- classification: library+workspace (PyAutoHands runner vs per-script path resolution — fix option is a HUMAN CALL, see prompt)
+- suggested-branch: feature/notebook-kernel-cwd-auto-simulate
+- summary: |
+    jupyter nbconvert runs the kernel in the NOTEBOOK'S OWN directory, but the
+    auto-simulate guard shells out to a workspace-root-relative simulator path.
+    So every notebook that auto-simulates dies with exit status 2 ("can't open
+    file"). Proven empirically: launcher cwd .../cwdtest, kernel cwd
+    .../cwdtest/notebooks/sub. Accounts for ~20 of the 29 failing jobs in
+    workspace-validation run 30242158468. Scripts are unaffected (they do run
+    from the root), which is why run_scripts mostly passes and run_notebooks
+    mostly fails.
+
+## auto-simulate-guard-wrong-simulator-target
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/359
+- prompt: draft/bug/autolens_workspace/auto_simulate_guard_wrong_simulator_target.md
+- status: planned
+- filed: 2026-07-27
+- classification: workspace
+- suggested-branch: feature/auto-simulate-guard-wrong-simulator-target
+- summary: |
+    likelihood_function.py scripts load dataset/imaging/simple but their
+    auto-simulate guard runs no_lens_light/simulator.py, which writes
+    simple__no_lens_light — so the guard fires and the load still fails. Guard
+    target dates to 1f39244f; surfaced now because #354 swapped the raw
+    path-exists check for should_simulate. FIRST establish whether the target
+    was always wrong or should_simulate changed the predicate (the latter would
+    be a much wider bug), THEN sweep all 116 migrated guards for the same
+    mismatch.

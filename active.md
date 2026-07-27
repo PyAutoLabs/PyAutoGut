@@ -6,6 +6,11 @@
 - status: workspace-dev
 - worktree: ~/Code/PyAutoLabs-wt/raw-guard-migration
 - autonomy: supervised
+- heart-ack: 2026-07-27 human acknowledged this workspace ship with the exact YELLOW reasons below; any new reason or RED verdict requires a fresh stop
+  - workspace validation not passing (13 failed, 2026-07-21T19-05-22Z)
+  - 33 stale parked script(s)
+  - manifest drift: tenant firewall (organ code) — 5 mismatch(es) vs PyAutoMind/repos.yaml
+  - release validation stale: source moved since rehearsal (PyAutoNerves, PyAutoFit, PyAutoArray, PyAutoGalaxy, PyAutoLens)
 - prompt: active/raw_guard_should_simulate_migration.md
 - note: leg 3 of the dataset-bulk series. Migrate 118 (autolens) + 61 (autogalaxy) raw auto-simulate guards to should_simulate; exact exclusion list in the prompt (7 download guards, inverted SDP.81 guard, 8 results-bootstrap, 5 other, 11 file-path guards -> follow-up). HowToFit/autofit_workspace rejected (no PYAUTO_SMALL_DATASETS, would need new af API). One PR per repo. Counts must assert 118+61.
 - repos:

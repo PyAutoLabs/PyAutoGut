@@ -3,7 +3,9 @@
 ## validation-searches-env-optax
 - issue: https://github.com/PyAutoLabs/autofit_workspace_test/issues/77
 - session: claude
-- status: library-dev
+- status: library-shipped, awaiting-merge
+- library-pr: autofit_workspace_test#78, PyAutoGalaxy#530, PyAutoHeart#111 (all pending-release)
+- heart-ack: ["workspace validation not passing (13 failed, 2026-07-21T19-05-22Z)", "33 stale parked script(s)", "manifest drift: tenant firewall (organ code) — 5 mismatch(es) vs PyAutoMind/repos.yaml"]
 - worktree: ~/Code/PyAutoLabs-wt/validation-searches-env-optax
 - autonomy: supervised
 - prompt: active/validation_searches_env_and_optax_chain.md

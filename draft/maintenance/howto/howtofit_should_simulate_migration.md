@@ -20,6 +20,13 @@ which the `should_simulate` migration everywhere else was written to replace.
 - HowToLens has 25 `al.util.dataset.should_simulate(...)` sites, HowToGalaxy has 21
   `ag.util.dataset.should_simulate(...)` sites — full coverage, implementation at
   `PyAutoArray/autoarray/util/dataset_util.py:54`.
+- **Wider than HowToFit (found during leg 1):** `autolens_workspace/scripts/` still has
+  **132 files** on the raw `if not dataset_path.exists():` idiom vs 40 on
+  `should_simulate` (leg 1 migrated the 20 consumers of its purge datasets; the rest
+  remain). autogalaxy_workspace has ~25 raw sites too. Those repos import `al.`/`ag.`,
+  so migration there is a pure one-line substitution per site with no library change —
+  consider widening this leg to the cross-repo raw→should_simulate sweep, keeping the
+  af-namespace question below as the only genuinely new design point.
 - HowToFit has **11 raw sites** of `if not path.exists(dataset_path): subprocess.run([...])`:
   `scripts/chapter_1_introduction/tutorial_2_fitting_data.py:88`,
   `tutorial_3_non_linear_search.py:169`, `tutorial_4_why_modeling_is_hard.py:68`,

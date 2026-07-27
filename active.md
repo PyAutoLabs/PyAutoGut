@@ -1,19 +1,5 @@
 # Active Tasks
 
-## validation-searches-env-optax
-- issue: https://github.com/PyAutoLabs/autofit_workspace_test/issues/77
-- session: claude
-- status: library-shipped, awaiting-merge
-- library-pr: autofit_workspace_test#78, PyAutoGalaxy#530, PyAutoHeart#111 (all pending-release)
-- heart-ack: ["workspace validation not passing (13 failed, 2026-07-21T19-05-22Z)", "33 stale parked script(s)", "manifest drift: tenant firewall (organ code) — 5 mismatch(es) vs PyAutoMind/repos.yaml"]
-- worktree: ~/Code/PyAutoLabs-wt/validation-searches-env-optax
-- autonomy: supervised
-- prompt: active/validation_searches_env_and_optax_chain.md
-- note: first of the three red overnight jobs from the 2026-07-27 /wake_up digest. Two independent causes — missing __Env__ declarations (autofit_workspace_test) + optax/blackjax never reaching the validation env (PyAutoGalaxy jax extra, PyAutoHeart smoke install). Brain phase-split (score 20, 4 phases) overridden: repo-count proxy, actual diff is 2 docstring sections + 2 one-liners.
-- repos:
-  - autofit_workspace_test: feature/validation-searches-env-optax
-  - PyAutoGalaxy: feature/validation-searches-env-optax
-  - PyAutoHeart: feature/validation-searches-env-optax
 
 ## jax-joss-benchmarks
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/281

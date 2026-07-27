@@ -1,3 +1,14 @@
+## validation-searches-env-optax
+- issue: https://github.com/PyAutoLabs/autofit_workspace_test/issues/77
+- completed: 2026-07-27
+- library-pr: autofit_workspace_test#78, PyAutoGalaxy#530, PyAutoHeart#111 (all merged 2026-07-27)
+- Fixed the red `autofit_test/searches` validation shard (red since 2026-07-26): `MultiStartProdigy.py`/`MultiStartResurrect.py` had no `__Env__` declaration so the smoke profile ran the bypass path instead of a real JAX search — declared `real_search+jax`.
+- optax/blackjax were never installed in the validation env: PyAutoGalaxy#530 lets optax follow the jax extra (`autogalaxy[jax] -> autofit[jax]`); PyAutoHeart#111 installs `autofit[optional]` in the smoke leg so blackjax is present.
+- heart-ack at ship time: workspace validation 13 failed (2026-07-21), 33 stale parked scripts, manifest drift (tenant firewall, 5 mismatches).
+- Merged + completed by the point-source-chi-squared-variants session (#657) to clear the PyAutoGalaxy worktree claim; local worktree/branch cleanup deferred (owning session's Mind checkout was live on another branch).
+
+## Original prompt
+
 # workspace-validation red: missing ENV declarations + optax/blackjax never installed
 
 Type: bug

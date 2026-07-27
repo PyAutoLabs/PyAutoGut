@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-757 records across 6 buckets.
+758 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -365,6 +365,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [tutorial-5-filtering-prose](2026/07/tutorial-5-filtering-prose.md)
 - [unblock-release-validation](2026/07/unblock-release-validation.md)
 - [user-defaults-discovery](2026/07/user-defaults-discovery.md) — batch finale (task 6, rescoped discovery-half) — start-new-project step 0 environment-discovery preflight: rea…
+- [validation-searches-env-optax](2026/07/validation-searches-env-optax.md)
 - [verify-install-check-f-autosimulate-and-dep-pin](2026/07/verify-install-check-f-autosimulate-and-dep-pin.md)
 - [version-check-compat-floor](2026/07/version-check-compat-floor.md)
 - [version-pinning-design-review](2026/07/version-pinning-design-review.md)

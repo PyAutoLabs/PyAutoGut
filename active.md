@@ -9,6 +9,7 @@
 - prompt: active/purge_committed_simulated_datasets.md
 - note: leg 1 of the 5-leg dataset-bulk series (siblings in draft/maintenance/{workspaces,howto,pyautobrain}/). Not a pure delete — add auto-simulate guards to the 4-5 unguarded datasets, prove clean-tree regeneration, then purge + drop .gitignore re-includes + check_dataset_allowlist. uv_wavelengths direction check FIRST (likely real SMA input → keep). Feature Agent 4-phase split overridden (repo-count proxy rule).
 - repos:
+  - autolens_workspace: feature/purge-simulated-datasets
 
 ## testmode-env-drift
 - issue: https://github.com/PyAutoLabs/PyAutoCTI/issues/95

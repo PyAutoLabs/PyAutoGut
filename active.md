@@ -1,5 +1,17 @@
 # Active Tasks
 
+## markdown-stdout-fix
+- issue: https://github.com/PyAutoLabs/PyAutoHands/issues/200
+- session: claude
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/markdown-stdout-fix
+- autonomy: supervised
+- prompt: active/markdown_generator_stdout_png_fix.md
+- note: leg 4 of the dataset-bulk series, human-decided scope: NO purge/retro-compress of markdown/ (churn nil, untracking reclaims ~0 clone bytes, renders are the only no-install figure view). Fix generate_markdown.py per-cell stream truncation + progress-line collapse + forward-only PNG optimization (new renders only) + unit tests; post-hoc repair HowToFit tutorial_4 (608 KB > GitHub 512 KB render threshold) and tutorial_3 committed pages.
+- repos:
+  - PyAutoHands: feature/markdown-stdout-fix
+  - HowToFit: feature/markdown-stdout-fix
+
 ## multistart-cadence-int-cast
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1420
 - session: claude

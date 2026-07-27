@@ -3,11 +3,12 @@
 ## multistart-cadence-int-cast
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1420
 - session: claude
-- status: library-dev
+- status: awaiting-input
+- question: https://github.com/PyAutoLabs/PyAutoFit/issues/1420#issuecomment-5092251405
 - worktree: ~/Code/PyAutoLabs-wt/multistart-cadence-int-cast
 - autonomy: supervised (prompt header `safe`, capped by the `bug` work-type cap in AUTONOMY.md)
 - prompt: active/multistart_iterations_per_full_update_float_crash.md
-- note: `range(float)` crash in the MultiStart gradient step loop; fires ONLY when the cadence is below the remaining budget (the 1e99 config default always took the int branch, which is why it never fired before). Killed RAL chain jobs 331182-331190 in the wsdev#117 campaign. Fix = int() cast at the consumer via a `_steps_in_chunk` helper; the shared float() coercion in abstract_search.py:219 stays (it serves inf-like config values). Helper exists so the test is NumPy-only — `_fit` needs jax+optax+a JAX Analysis. PyAutoFit claim was released from the completed `testmode-env-drift` task first (3a99904). FOLLOW-UPS (not this PR): 5 sibling searches share the latent float-cadence class (emcee/zeus/blackjax-nuts/bfgs/nautilus+dynesty), unreproduced; and the workspace hotfix in autolens_workspace_developer/searches_minimal/pix_prodigy.py belongs to the live `pix-prodigy-cpu` task.
+- note: PARKED at ship sign-off, fix DONE + tested on the branch but UNCOMMITTED. Two gates: (a) effective autonomy supervised (bug cap) makes ship sign-off a checkpoint; (b) Heart YELLOW (score 65, ts 2026-07-27T12:11:07Z) with no launch acknowledgement. Tests 1534 passed/1 skipped; regression pinned (removing the int() cast fails exactly 1 new test). RESUME: on "ship it" + a YELLOW ack of that exact reason set, run smoke + review then commit/push/PR. `range(float)` crash in the MultiStart gradient step loop; fires ONLY when the cadence is below the remaining budget (the 1e99 config default always took the int branch, which is why it never fired before). Killed RAL chain jobs 331182-331190 in the wsdev#117 campaign. Fix = int() cast at the consumer via a `_steps_in_chunk` helper; the shared float() coercion in abstract_search.py:219 stays (it serves inf-like config values). Helper exists so the test is NumPy-only — `_fit` needs jax+optax+a JAX Analysis. PyAutoFit claim was released from the completed `testmode-env-drift` task first (3a99904). FOLLOW-UPS (not this PR): 5 sibling searches share the latent float-cadence class (emcee/zeus/blackjax-nuts/bfgs/nautilus+dynesty), unreproduced; and the workspace hotfix in autolens_workspace_developer/searches_minimal/pix_prodigy.py belongs to the live `pix-prodigy-cpu` task.
 - repos:
   - PyAutoFit: feature/multistart-cadence-int-cast
 

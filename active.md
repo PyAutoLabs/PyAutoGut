@@ -28,6 +28,10 @@
 - autonomy: supervised
 - prompt: active/ai-policy.md
 - note: `autolens_workspace_developer` pointer deferred until `pix-prodigy-cpu` releases its active worktree claim.
+- heart-ack:
+  - workspace validation not passing (13 failed, 2026-07-21T19-05-22Z)
+  - 33 stale parked script(s)
+  - manifest drift: tenant firewall (organ code) — 5 mismatch(es) vs PyAutoMind/repos.yaml
 - repos:
   - .github: feature/ai-policy
   - PyAutoMind: feature/ai-policy

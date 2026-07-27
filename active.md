@@ -19,3 +19,13 @@
 - prompt: active/pixelized_multistart_prodigy_cpu.md
 - repos:
   - autolens_workspace_developer: feature/pix-prodigy-cpu
+
+## ai-policy
+- issue: https://github.com/PyAutoLabs/PyAutoScientist/issues/7
+- session: codex
+- status: workspace-dev
+- worktree: ~/Code/PyAutoLabs-wt/ai-policy
+- autonomy: supervised
+- prompt: active/ai-policy.md
+- note: `autolens_workspace_developer` pointer deferred until `pix-prodigy-cpu` releases its active worktree claim.
+- repos:

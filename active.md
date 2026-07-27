@@ -1,5 +1,17 @@
 # Active Tasks
 
+## history-blob-purge
+- issue: (none — human-directed operation, tracked here + in complete/ record)
+- session: claude
+- status: in-progress
+- autonomy: human-required — EXPLICITLY AUTHORIZED 2026-07-27 by the human: rewrite pushed history of autolens_workspace, autogalaxy_workspace, autofit_workspace with the extended dead-path lists; costs accepted (2026.7.27.1 tag content change in autolens+autogalaxy, 17 autolens fork divergences, early void of 6 condemned recover-points). Mirror backups kept permanently in ~/Code/PyAutoLabs-backups/. HowTo repos SKIPPED (under bar); autocti DEFERRED until leg 6 merges.
+- prompt: active/history_blob_purge.md
+- note: sequence autogalaxy (rehearsal) -> verify -> autofit -> verify -> autolens; per-repo gates: HEAD tree byte-identical, tags preserved by name, 0 open PRs re-checked, backup mirror verified BEFORE force-push. Measurement: reclaim 83+25+235 MiB (73-89% of clone).
+- repos:
+  - autogalaxy_workspace: main (history rewrite)
+  - autofit_workspace: main (history rewrite)
+  - autolens_workspace: main (history rewrite)
+
 ## purge-autocti-datasets
 - issue: https://github.com/PyAutoLabs/autocti_workspace/issues/11
 - session: claude

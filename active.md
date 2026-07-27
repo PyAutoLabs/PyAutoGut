@@ -1,5 +1,16 @@
 # Active Tasks
 
+## purge-autocti-datasets
+- issue: https://github.com/PyAutoLabs/autocti_workspace/issues/11
+- session: claude
+- status: workspace-dev
+- worktree: ~/Code/PyAutoLabs-wt/purge-autocti-datasets
+- autonomy: supervised
+- prompt: active/purge_autocti_committed_datasets.md
+- note: leg 6 of the dataset-bulk series — ~120 MB imaging_ci datasets behind guards; leg-1 recipe; adopt allowlist regime if absent; check autocti_workspace_test consumers; datasets whose guards can't be added cleanly stay committed. Leg 7 (history blob purge, human-gated) filed as draft.
+- repos:
+  - autocti_workspace: feature/purge-autocti-datasets
+
 ## multistart-cadence-followups
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1422
 - session: claude

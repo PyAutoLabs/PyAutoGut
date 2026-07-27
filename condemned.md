@@ -173,4 +173,4 @@ One `##` block per item. Fields:
 - condemned: 2026-07-27
 - sweep-after: 2026-08-27
 - breaks-if-wrong: loses the exact historical noise realizations only; regenerated copies are equivalent by construction
-- archive-ref: n/a — committed deletion; bytes live in remote history at pre-purge SHA 272bae3 (autocti_workspace main). NOTE: if the deferred autocti leg-7 history rewrite proceeds, this recover-point moves to the mirror backup like the other three repos.
+- archive-ref: n/a — committed deletion; pre-purge SHA 272bae3 VOIDED by the 2026-07-27 leg-7 autocti rewrite — bytes recoverable ONLY from the local mirror backup ~/Code/PyAutoLabs-backups/autocti_workspace-pre-rewrite-2026-07-27.git

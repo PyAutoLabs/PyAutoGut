@@ -1,3 +1,10 @@
+## history-blob-purge
+- issue: (none — human-directed operation)
+- completed: 2026-07-27
+- summary: Leg 7 (final) of the dataset-bulk series — the human-authorized exception to the never-rewrite-pushed-history rule, executed with git filter-repo on fresh mirror clones behind hard gates (HEAD tree byte-identical — verified equal pre/post on every repo; tag NAMES preserved so Colab pins keep resolving; non-peeled tag + branch counts unchanged; fsck clean; size-band abort gates; fsck-verified permanent backup mirror BEFORE any push). Results (reachable pack): autogalaxy_workspace 170.6→31.9 MiB (−81%), autofit_workspace 36.6→5.8 MiB (−84%), autolens_workspace 954.4→97.5 MiB (−90%; round 1 ABORTED at the size gate — the measurement's path bins missed the real bulk under top-level output/ ~411 MiB and the ancient howtolens/ tree ~134 MiB; round 2 with the corrected dead-prefix list passed all gates), autocti_workspace 110.4→32.5 MiB (−71%, run after leg-6 merged made its 78 MiB imaging_ci history dead). HowTo repos deliberately SKIPPED (0.5-2 MiB reclaimable, densest Colab-tag coupling). New main SHAs: autogalaxy 5f33e0bc, autofit 6b37f4ab, autolens d83af681, autocti 7a3298c2. Old history recoverable permanently from fsck-verified mirrors in ~/Code/PyAutoLabs-backups/ (old mains f0efa50a9/277164bc5/6be18d0cf/1929ff0c5); condemned.md recover-points reconciled to the mirrors. Local stashes preserved across resets (they pin some old objects locally — accepted). Accepted costs on record: 2026.7.27.1 tag content change in autolens+autogalaxy (purged datasets self-provision via guards), 17 autolens fork divergences, early void of the remote-history recover SHAs. Leftover flag: two local-only unmerged autocti branches (feature/cti-resurrection-phase{4,5}, 2026-07-17) pin ~75 MB of pre-rewrite objects locally — surfaced for a PyAutoGut condemn call, not deleted.
+
+## Original prompt
+
 # History blob purge — rewrite pushed history to drop dead dataset/render bytes
 
 Type: maintenance

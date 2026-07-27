@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-754 records across 6 buckets.
+755 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -153,6 +153,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [hide-autonerves-colab-autogalaxy](2026/07/hide-autonerves-colab-autogalaxy.md) — Merged the AutoGalaxy public/private Colab bootstrap rollout with four handwritten setup scripts and regenerat…
 - [hide-autonerves-colab-autolens](2026/07/hide-autonerves-colab-autolens.md) — Merged the AutoLens public/private Colab bootstrap rollout across eight handwritten setup scripts and regenera…
 - [hide-autonerves-colab-bootstrap](2026/07/hide-autonerves-colab-bootstrap.md) — Completed the end-to-end Colab API boundary: product APIs are user-facing outside Colab, while fresh Colab pri…
+- [history-blob-purge](2026/07/history-blob-purge.md) — Leg 7 (final) of the dataset-bulk series — the human-authorized exception to the never-rewrite-pushed-history …
 - [howto-markdown-resync](2026/07/howto-markdown-resync.md) — re-synced 4 stale HowTo ch1 markdown pages after the truncation-restore work merged post-batch-2b. HowToLens t…
 - [howto-no-run-stale-entries](2026/07/howto-no-run-stale-entries.md)
 - [howto-should-simulate-howtogalaxy](2026/07/howto-should-simulate-howtogalaxy.md)

@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-758 records across 6 buckets.
+760 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -262,6 +262,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [point-pairing-policies](2026/07/point-pairing-policies.md)
 - [potential-correction-asymmetry](2026/07/potential-correction-asymmetry.md) — PR #333
 - [potential-correction-interferometer](2026/07/potential-correction-interferometer.md) — Extended al.pc (potential corrections, epic #618) to Interferometer data with the SPARSE-OPERATOR (w-tilde) ro…
+- [potential-correction-jax-skip](2026/07/potential-correction-jax-skip.md) — same-session continuation of the 2026-07-27 /wake_up red-jobs sweep
 - [potential-correction-port](2026/07/potential-correction-port.md) — Ported caoxiaoyue/lensing_potential_correction (Cao et al. 2025) into the stack as first-class source: PyAutoA…
 - [potential-correction-uv-campaign](2026/07/potential-correction-uv-campaign.md)
 - [pre-build-audit](2026/07/pre-build-audit.md) — pre_build git-add failure-class audit (build-chain campaign #155 Phase 1). Measured: root-glob staging a 13/13…
@@ -346,6 +347,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [slow-skip-timeout-cap-doc](2026/07/slow-skip-timeout-cap-doc.md)
 - [smoke-small-datasets-overrides](2026/07/smoke-small-datasets-overrides.md)
 - [solver-branch-flips](2026/07/solver-branch-flips.md) — research deliverable met — flips are JIT-only (eager clean; XLA-fusion ulp × discrete threshold); positive-onl…
+- [spawn-drift-issued-orphan-ai-policy](2026/07/spawn-drift-issued-orphan-ai-policy.md) — same-session continuation of the 2026-07-27 /wake_up red-jobs sweep
 - [starred-epsf-backend](2026/07/starred-epsf-backend.md) — Optional STARRED (COSMOGRAIL, arXiv:2402.08725) Tier-1b super-sampled ePSF back-end for the PSF stage, born fr…
 - [starred-frame-epsf](2026/07/starred-frame-epsf.md) — Extended STARRED Tier-1b (#36) to the per-exposure FRAME-PRODUCTS mode. build_starred_frame_epsf (autoreduce/p…
 - [starred-jwst-validation](2026/07/starred-jwst-validation.md) — JWST/NIRCam leg of the STARRED Tier-1b validation (sibling of #37 WFC3). STARRED instrument-agnostic → NO new …

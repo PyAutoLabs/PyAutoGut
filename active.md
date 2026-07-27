@@ -40,3 +40,5 @@
 - autonomy: supervised (`--auto`; capped by the `bug` work-type cap in AUTONOMY.md)
 - prompt: active/delaunay_tables_callback_nan_points_crash.md
 - repos:
+  - PyAutoArray: feature/delaunay-nan-callback
+  - autolens_workspace_test: feature/delaunay-nan-callback

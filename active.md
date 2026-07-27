@@ -23,11 +23,12 @@
 ## ai-policy
 - issue: https://github.com/PyAutoLabs/PyAutoScientist/issues/7
 - session: codex
-- status: workspace-dev
+- status: awaiting-merge
 - worktree: ~/Code/PyAutoLabs-wt/ai-policy
 - autonomy: supervised
 - prompt: active/ai-policy.md
-- note: `autolens_workspace_developer` pointer deferred until `pix-prodigy-cpu` releases its active worktree claim.
+- primary-pr: https://github.com/PyAutoLabs/PyAutoScientist/pull/8
+- note: 35 PRs open with `pending-release`; `autolens_workspace_developer` pointer deferred until `pix-prodigy-cpu` releases its active worktree claim.
 - heart-ack:
   - workspace validation not passing (13 failed, 2026-07-21T19-05-22Z)
   - 33 stale parked script(s)

@@ -119,3 +119,14 @@ One `##` block per item. Fields:
 - sweep-after: 2026-10-11
 - breaks-if-wrong: loses the working wfc3_ir reduction script (program 14653, F160W, final_bits=512 workaround) + the model-parity fit harness; recoverable via `pyauto-gut recover pj011646-wfc3-parity` until voided.
 - archive-ref: refs/heads/archive/condemned/pj011646-wfc3-parity on PyAutoReduce origin (bd9806b)
+
+## release-datasets/autolens-regenerable-leg2
+- type: file
+- locator: autolens_workspace dataset/ (7 committed simulated dirs, PR#353) — cluster/simple, imaging/{mass_stellar_dark,double_einstein_ring,extra_and_scaling_galaxies}, group/{mass_stellar_dark,double_einstein_ring,scaling_relation}
+- confidence: 0.98
+- reason: committed simulated data (~17 MB) each regenerated on demand by a guarded consumer running its paired simulator; regeneration proven from a clean tree for all 7 before purge (issue #352). .gitignore allowlist re-includes dropped in the same commit; interferometer/uv_wavelengths deliberately kept (real SMA input, no writer). #126 purge series leg (prior: PR#272).
+- merged: no
+- condemned: 2026-07-27
+- sweep-after: 2026-08-27
+- breaks-if-wrong: loses the exact historical noise realizations of the 7 datasets (regenerated copies use fresh noise); recoverable from remote history via the pre-purge SHA
+- archive-ref: n/a — committed deletion; bytes live in remote history at pre-purge SHA 0bb170c57 (autolens_workspace main, 2026-07-27)

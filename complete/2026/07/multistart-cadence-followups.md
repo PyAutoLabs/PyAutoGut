@@ -1,3 +1,90 @@
+## Shipped
+
+- PR https://github.com/PyAutoLabs/PyAutoFit/pull/1423 **merged** as `c042d72`
+  (2026-07-27, CI green on Docs + both Tests matrix legs); issue
+  https://github.com/PyAutoLabs/PyAutoFit/issues/1422 closed.
+- **Five** bugs fixed, not the three filed — the PR's own adversarial review
+  found two more.
+
+## What shipped
+
+**Part 1 — Emcee and BlackJAX NUTS crashed on a real cadence**, the same defect
+PR#1421 fixed for MultiStart. `emcee`'s `sample()` does `range(iterations)` with
+no cast; `jax.random.split` rejects a float.
+
+**The plan's producer fix was rejected after auditing the consumers.** The issue
+said to fix `abstract_search.py:219`'s `float()` coercion because Python ints
+hold `1e99` fine. True, but `int(1e99)` is a **99-digit integer**, and it would
+land in every saved `search.json` in place of a readable inf-like sentinel. The
+conversion moved *up* instead, into one shared validated
+`AbstractSearch._steps_until_full_update`, now used by all five chunked searches
+(MultiStart, Emcee, Zeus, BFGS, BlackJAX NUTS). Deriving it once beats
+re-deriving it per search — re-deriving it is how this class shipped three times.
+`AbstractMultiStartGradient._steps_in_chunk` (PR#1421) folded into it.
+
+**Part 2 — MultiStart ran the expensive final pass twice.** `_fit` emitted
+`during_analysis=False` on its last chunk while `start_resume_fit` performs the
+final update unconditionally anyway.
+
+**Part 3 — a resumed run inherited the previous run's `stop_reason`**, so raising
+`n_steps` to extend a finished search left a stale `"max_steps"` in every
+intermediate checkpoint and a still-running search reported itself finished.
+Cleared on entry, `"converged"` preserved (the loop guard uses it to refuse
+resuming a converged search).
+
+## The two extra bugs, and the fix that was cosmetic
+
+Two adversarial Codex `gpt-5.6-sol` passes, both of which changed the code:
+
+- **Zeus was NOT safe — just not crashing.** Cleared on #1420 because it casts
+  internally (`self.nsteps = int(iterations)`), but PyAutoFit adds the *uncast*
+  float to its own `total_iterations` (`zeus/search.py:261`): `nsteps=100,
+  iterations_per_full_update=50.9` draws 50 then 49 — 99 samples — while the
+  bookkeeping reaches 100. **Safe-from-crashing is not safe.** BFGS also bypassed
+  the validation the helper advertises for `maxiter`.
+- **The first Part 2 fix was cosmetic.** Flipping `during_analysis` to `True`
+  deduplicates nothing: `SearchUpdater.update` rebuilds the samples, recomputes
+  the summary and re-runs likelihood profiling on *every* call regardless of the
+  flag, and the visualize gate keys off `paths.is_complete`, which is not written
+  until after `_fit` returns. The in-loop update had to be **skipped outright**
+  at a terminal boundary.
+- **The falsy-cadence branch reintroduced the silent behaviour the validation
+  existed to remove**: a stored `0` meant "never checkpoint", reachable through
+  the HPC override (which assigns the config value with no `or` fallback).
+
+Pass 2 verified the production code **CLEAN by running real JAX fits**: a
+one-chunk run produces one checkpoint, **zero** in-loop updates and exactly one
+outer `during_analysis=False` update; a two-chunk run produces `[True, False]`
+and two checkpoints.
+
+Pass 2's remaining findings were about **test strength**: source-level string
+assertions can pass while a semantically-equivalent regression is reintroduced.
+Fixed by extracting the two rules into named seams (`_is_final_boundary`,
+`_stop_reason_on_resume`) and pinning them by exhaustive parametrised behaviour,
+leaving the source assertion as a thin wiring guard.
+
+Final: **1557 passed, 1 skipped**.
+
+## Residual, stated rather than papered over
+
+The cross-search wiring guard cannot prove a search *uses* the value the helper
+returns — a contrived regression that calls it and discards the result would pass.
+Closing that needs the `_fit` bodies (jax/optax/emcee), out of scope for the
+NumPy-only library suite; covered where those bodies actually run, in the
+workspace test repos.
+
+## Lessons
+
+- **Reading the call shape is not verification.** Probe the callee. The original
+  five-sibling claim was wrong in both directions: three of the five were fine,
+  and one of the "fine" ones (zeus) had a different, real bug.
+- **A flag that names a phase does not necessarily gate the work of that phase.**
+  `during_analysis` reads like it gates the final pass; it gates almost none of it.
+- Both adversarial review passes changed the code, and in both cases the first
+  fix was wrong in a way the test suite alone would not have caught.
+
+## Original prompt
+
 # Three MultiStart / cadence follow-ups from the PR#1421 review
 
 Type: bug

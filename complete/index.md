@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-752 records across 6 buckets.
+754 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -233,6 +233,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [multi-start-gradient-guides](2026/07/multi-start-gradient-guides.md) — Phase 3 of the multi-start gradient search promotion (Fit#1369). Added a MultiStartAdam config section to scri…
 - [multi-start-gradient-search](2026/07/multi-start-gradient-search.md) — Phase 1 of promoting the benchmark-winning multi-start gradient MAP optimizer to first-class PyAutoFit searche…
 - [multistart-adam-release-jax](2026/07/multistart-adam-release-jax.md)
+- [multistart-cadence-followups](2026/07/multistart-cadence-followups.md)
 - [multistart-cadence-int-cast](2026/07/multistart-cadence-int-cast.md)
 - [multistart-contrib-and-vmapped-state](2026/07/multistart-contrib-and-vmapped-state.md)
 - [multistart-gradient-auto-convergence-phase-1](2026/07/multistart-gradient-auto-convergence-phase-1.md)
@@ -281,6 +282,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [psf-oversample-workspace](2026/07/psf-oversample-workspace.md)
 - [psf-visible-input](2026/07/psf-visible-input.md)
 - [purge-autoconf-era-legacy](2026/07/purge-autoconf-era-legacy.md)
+- [purge-autocti-datasets](2026/07/purge-autocti-datasets.md) — Leg 6 of the dataset-bulk series — the largest single purge: the six committed dataset/imaging_ci datasets (20…
 - [purge-autogalaxy-database](2026/07/purge-autogalaxy-database.md) — Leg 2 of the dataset-bulk series. Purged the orphaned dataset/database/simple__{0,1,2} (512 KB, 90% of the rep…
 - [purge-simulated-datasets](2026/07/purge-simulated-datasets.md) — Leg 1 of the dataset-bulk series. Purged 7 committed simulated datasets (~17 MB: cluster/simple 15.7 MB, imagi…
 - [pyautogut-organ](2026/07/pyautogut-organ.md) — Gut organ + hygiene drive seam — complete

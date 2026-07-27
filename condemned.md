@@ -163,3 +163,14 @@ One `##` block per item. Fields:
 - sweep-after: never — the backups below are the permanent recover path
 - breaks-if-wrong: nothing further; the rewrite already happened (HEAD trees verified byte-identical, tags preserved by name)
 - archive-ref: permanent local mirror backups ~/Code/PyAutoLabs-backups/{autolens,autogalaxy,autofit}_workspace-pre-rewrite-2026-07-27.git (fsck-verified; old main SHAs 6be18d0cf / f0efa50a9 / 277164bc5)
+
+## release-datasets/autocti-imaging-ci
+- type: file
+- locator: autocti_workspace dataset/imaging_ci/{simple,bias_uncorrected,cosmic_rays,non_uniform,parallel_x2__serial_x2,serial_cti} (200 files, 120.2 MB, PR#12)
+- confidence: 0.98
+- reason: committed simulated CTI calibration data, each regenerated in ~10 s by its sole write-site simulator under scripts/imaging_ci/simulators/**; clean-tree regeneration proven per dataset pre-purge and end-to-end post-merge (92 MB rebuilt from empty with a clean git status). Dataset-bulk series leg 6 (issue #11).
+- merged: no
+- condemned: 2026-07-27
+- sweep-after: 2026-08-27
+- breaks-if-wrong: loses the exact historical noise realizations only; regenerated copies are equivalent by construction
+- archive-ref: n/a — committed deletion; bytes live in remote history at pre-purge SHA 272bae3 (autocti_workspace main). NOTE: if the deferred autocti leg-7 history rewrite proceeds, this recover-point moves to the mirror backup like the other three repos.

@@ -1,3 +1,11 @@
+## hygiene-adjacent-docstrings
+- issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/162
+- completed: 2026-07-24
+- library-pr: https://github.com/PyAutoLabs/PyAutoBrain/pull/163
+- summary: Phase 2 of the adjacent-docstrings arc: read-only AST-backed Hygiene mode reporting adjacent-docstring boundaries (root entry scripts + scripts/**/*.py, exact human/JSON findings, default ranking, /refactor delegation). Final live inventory before cleanup: 81 boundaries in 58 files across 6/7 repos, zero parse errors — the work list phase 3 (autolens_workspace#341) consumed. Current scan reports 0 findings. PR merged 2026-07-24; issue closed 2026-07-27.
+
+## Original prompt
+
 # Phase 2: Detect adjacent script docstrings through Hygiene
 
 Type: feature

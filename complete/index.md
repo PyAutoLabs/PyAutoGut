@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-741 records across 6 buckets.
+744 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -157,6 +157,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [howto-should-simulate-howtolens](2026/07/howto-should-simulate-howtolens.md)
 - [hst-acs-phase1](2026/07/hst-acs-phase1.md)
 - [human-led-tone-sweep](2026/07/human-led-tone-sweep.md) — human-led natural-language framing landed on the agentic-AI pitch surfaces — org front page (.github PRs #1+#2…
+- [hygiene-adjacent-docstrings](2026/07/hygiene-adjacent-docstrings.md) — Phase 2 of the adjacent-docstrings arc: read-only AST-backed Hygiene mode reporting adjacent-docstring boundar…
 - [hygiene-agent](2026/07/hygiene-agent.md) — Phases 1-3 — conductor complete
 - [hygiene-file-modes](2026/07/hygiene-file-modes.md) — crlf / config / artifacts — complete
 - [hygiene-orphan-config-files](2026/07/hygiene-orphan-config-files.md)
@@ -217,6 +218,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [mcp-server-cwd-jax-stdout](2026/07/mcp-server-cwd-jax-stdout.md) — CWD-config + JAX stdout
 - [memory-faculty](2026/07/memory-faculty.md)
 - [memory-structure-cleanup](2026/07/memory-structure-cleanup.md) — wiki/ + bibliography restructure, structure lint, template sync — SHIPPED
+- [merge-adjacent-docstrings](2026/07/merge-adjacent-docstrings.md) — Phase 3 of the adjacent-docstrings arc (PyAutoHands#196 → PyAutoBrain#162 → here). Merged 80 adjacent-docstrin…
 - [mind-guard-cd-fix](2026/07/mind-guard-cd-fix.md) — mind_commit_guard v1.2 — honour a leading `cd` away from Mind. v1.1 keyed is-Mind-commit off the ambient cwd t…
 - [morning-status-release-rehearsal](2026/07/morning-status-release-rehearsal.md) — morning Slack digest + release rehearsal — RESOLVED
 - [multi-shared-state-core-api](2026/07/multi-shared-state-core-api.md)
@@ -240,6 +242,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [nnls-bpp-admm-experiment](2026/07/nnls-bpp-admm-experiment.md) — BPP and ADMM prototyped against the real systems as PDIP alternatives; BOTH FAILED gates. BPP: sign-init 95% c…
 - [nnls-solver-optimization](2026/07/nnls-solver-optimization.md) — NNLS positive-only solver optimization. Phase A on real extracted production systems (rect n=1581 / Delaunay n…
 - [no-run-config-purge](2026/07/no-run-config-purge.md)
+- [notebook-adjacent-docstrings](2026/07/notebook-adjacent-docstrings.md) — Phase 1 of the adjacent-docstrings arc: PyAutoHands notebook generation now merges back-to-back docstrings int…
 - [opus-wrapup](2026/07/opus-wrapup.md) — executed on Fable
 - [per-frame-psf](2026/07/per-frame-psf.md) — per-frame native ePSFs live (psf/frame_epsf.py: sky-subtracted, DQ local-median patch in ESTIMATOR input only …
 - [per-project-literature](2026/07/per-project-literature.md) — task 3 of the autolens_assistant batch — hybrid literature rule live: Create scaffolds wiki/project/bibliograp…

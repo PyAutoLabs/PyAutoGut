@@ -1,3 +1,11 @@
+## notebook-adjacent-docstrings
+- issue: https://github.com/PyAutoLabs/PyAutoHands/issues/196
+- completed: 2026-07-24
+- library-pr: https://github.com/PyAutoLabs/PyAutoHands/pull/197
+- summary: Phase 1 of the adjacent-docstrings arc: PyAutoHands notebook generation now merges back-to-back docstrings into a single notebook cell (previously adjacent docstrings rendered as one literal code cell). 218 PyAutoHands tests passed. Initial parallel smoke harness reported 8 failures that triage traced to two harness defects (notebooks run from /tmp instead of the workspace root; scripts sharing auto-simulated datasets run concurrently) — canonical per-workspace runners passed all affected suites, combined 58 passed / 0 failed / 2 configured skips. PR merged 2026-07-24; issue closed 2026-07-27.
+
+## Original prompt
+
 # Phase 1: Notebook generation must handle back-to-back docstrings
 
 Type: bug

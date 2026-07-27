@@ -3,7 +3,8 @@
 ## clean-slate-write-site
 - issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/169
 - session: claude
-- status: library-dev
+- status: awaiting-merge
+- library-pr: https://github.com/PyAutoLabs/PyAutoBrain/pull/170
 - worktree: ~/Code/PyAutoLabs-wt/clean-slate-write-site
 - autonomy: supervised
 - heart-ack: 2026-07-27 human acknowledged this ship with the exact YELLOW reasons below; any new reason or RED verdict requires a fresh stop

@@ -97,3 +97,31 @@ per workspace conventions) — that is phase 3's paired examples.
 Library PRs open behind the ship gate (`ship_library`): tests green,
 pytrees registered, docstrings truthful. Downstream workspace impact
 analysis recorded for phases 3–4.
+
+## Phase 1 design outcome (2026-07-27 — supersedes placeholders above)
+
+Approved design: https://github.com/PyAutoLabs/PyAutoLens/issues/657#issuecomment-5095032024
+
+Deltas binding on this phase:
+- Model class is `al.ps.PointSolved` (parameter-free; NO flux sibling — the
+  analytic-flux fit never reads `profile.flux`, so `PointSolved` covers
+  positions+fluxes+delays datasets alone).
+- Fit-side API is a `SolvedCentre` mixin overriding the single
+  `source_plane_coordinate` funnel to return the tensor-weighted analytic
+  β* (paper §5.1: `β* = (ΣAᵢᵀΘᵢAᵢ)⁻¹ ΣAᵢᵀΘᵢβ̂ᵢ`, A from
+  `ag.LensCalc.hessian_from`); concrete classes `FitPositionsSourceSolved`
+  (+ `weighting = "jacobian"|"magnification"` class attribute, incl. the
+  marginalization det term), `FitPositionsImagePairAllSolved`,
+  `FitPositionsImagePairRepeatSolved`, `FitFluxesSolved` (flux-space
+  `F* = Σµᵢf̂ᵢ/σᵢ² / Σµᵢ²/σᵢ²`), `FitTimeDelaysSolved` (precision-weighted
+  `T*`). Hungarian `Pair` gets NO solved variant (skip recorded).
+- Missing-image penalty: verification + docs only — `PairAll` already
+  implements the paper's `1/P^I`; `PairRepeat` policies stay as-is; the
+  without-repetition `P!/(P−I)!` form is rejected (factorial, JAX-hostile).
+- Mismatch behaviour: BOTH directions raise loudly (centre-requiring fit ×
+  `PointSolved`, and Solved fit × `Point`/`PointFlux`).
+- PyAutoArray IS in scope (xp fix + pytree registration for
+  `FitPositionsSource`) — 3-repo series, override recorded.
+- Attribution: centre-free IMAGE-plane variants are OUR extension (glafic
+  precedent), not from the paper — docs/prose must not cite the paper for
+  them.

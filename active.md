@@ -1,5 +1,17 @@
 # Active Tasks
 
+## raw-guard-migration
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/354
+- session: claude
+- status: workspace-dev
+- worktree: ~/Code/PyAutoLabs-wt/raw-guard-migration
+- autonomy: supervised
+- prompt: active/raw_guard_should_simulate_migration.md
+- note: leg 3 of the dataset-bulk series. Migrate 118 (autolens) + 61 (autogalaxy) raw auto-simulate guards to should_simulate; exact exclusion list in the prompt (7 download guards, inverted SDP.81 guard, 8 results-bootstrap, 5 other, 11 file-path guards -> follow-up). HowToFit/autofit_workspace rejected (no PYAUTO_SMALL_DATASETS, would need new af API). One PR per repo. Counts must assert 118+61.
+- repos:
+  - autolens_workspace: feature/raw-guard-migration
+  - autogalaxy_workspace: feature/raw-guard-migration
+
 ## multistart-cadence-int-cast
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1420
 - session: claude

@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-751 records across 6 buckets.
+752 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -97,6 +97,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [database-latent-wheel-load](2026/07/database-latent-wheel-load.md) — database scripts failed on release wheels loading latent variables → AssertionError. Release-tail item D. Corr…
 - [defunct-grids-yaml-removal](2026/07/defunct-grids-yaml-removal.md) — Deleted the 10 orphan `config/grids.yaml` copies plus 3 references (2 library `config/README.md` bullets, 1 `a…
 - [delaunay-frozen-tables-gradient](2026/07/delaunay-frozen-tables-gradient.md)
+- [delaunay-nan-callback](2026/07/delaunay-nan-callback.md) — Invalid per-lane Delaunay mesh points are intercepted at the sequential host callback without invoking qhull, …
 - [delaunay-qhull-callback](2026/07/delaunay-qhull-callback.md)
 - [delete_pyautoheart_shim](2026/07/delete_pyautoheart_shim.md)
 - [desktop-acceptance-mcp](2026/07/desktop-acceptance-mcp.md)

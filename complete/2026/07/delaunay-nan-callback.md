@@ -1,3 +1,20 @@
+## delaunay-nan-callback
+- issue: https://github.com/PyAutoLabs/PyAutoArray/issues/410
+- completed: 2026-07-27
+- library-pr: https://github.com/PyAutoLabs/PyAutoArray/pull/411
+- workspace-pr: https://github.com/PyAutoLabs/autolens_workspace_test/pull/226
+- summary: Invalid per-lane Delaunay mesh points are intercepted at the sequential host callback without invoking qhull, while downstream JAX weights deliberately preserve a NaN figure of merit for only the poisoned lane. Dense and sparse production regressions cover all-NaN and partial poisoning, raw NaN likelihood propagation, Fitness resampling, and bit-identical finite-lane values and gradients. PyAutoArray merged as 8c5e28e and the workspace regression merged as f96aed1 after all required CI checks passed.
+
+### Session Notes
+
+- The callback guard alone was unsafe because sentinel tables could be laundered into finite pixel-0 mappings. The walk now refuses padded simplices as a successful result and the JAX weight boundary explicitly encodes invalid mesh state as NaN.
+- The NumPy path remains unchanged to preserve its diagnostic exception behavior.
+- The unchanged finite-difference Delaunay certification passed; finite sibling lanes remained bitwise identical under production vmap and direct value-and-gradient tests.
+- The same callback boundary covers the sparse interferometer path associated with the intermittent qhull-NaN report.
+- No RAL mirror was pulled or modified. The campaign rerun remains the external integration check.
+
+## Original prompt
+
 # Delaunay tables callback crashes the whole JAX run when traced points contain NaN
 
 Type: bug

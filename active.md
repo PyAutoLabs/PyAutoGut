@@ -1,5 +1,16 @@
 # Active Tasks
 
+## clean-slate-write-site
+- issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/169
+- session: claude
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/clean-slate-write-site
+- autonomy: supervised
+- prompt: active/clean_slate_write_site_provenance.md
+- note: leg 5 (final) of the dataset-bulk series. New bin/dataset_provenance.py (write-site classifier: REGENERABLE/DOWNLOADED/ORPHAN; orphans reported not deleted), clean_slate phase 1b uses it; per-dir size warning; git gc --auto phase; .ipynb_checkpoints swept, __pycache__ deliberately left; wake_up.md 'non-destructive' claim fixed; net-new tests for phases 1/1b/2/3 (currently ZERO coverage). Ground-truth catch/never-touch lists in the issue.
+- repos:
+  - PyAutoBrain: feature/clean-slate-write-site
+
 ## multistart-cadence-int-cast
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1420
 - session: claude

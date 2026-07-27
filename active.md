@@ -20,12 +20,17 @@
 ## multistart-cadence-int-cast
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1420
 - session: claude
-- status: awaiting-input
-- question: https://github.com/PyAutoLabs/PyAutoFit/issues/1420#issuecomment-5092251405
+- status: library-shipped, awaiting-merge
+- library-pr: https://github.com/PyAutoLabs/PyAutoFit/pull/1421
 - worktree: ~/Code/PyAutoLabs-wt/multistart-cadence-int-cast
 - autonomy: supervised (prompt header `safe`, capped by the `bug` work-type cap in AUTONOMY.md)
 - prompt: active/multistart_iterations_per_full_update_float_crash.md
-- note: PARKED at ship sign-off, fix DONE + tested on the branch but UNCOMMITTED. Two gates: (a) effective autonomy supervised (bug cap) makes ship sign-off a checkpoint; (b) Heart YELLOW (score 65, ts 2026-07-27T12:11:07Z) with no launch acknowledgement. Tests 1534 passed/1 skipped; regression pinned (removing the int() cast fails exactly 1 new test). RESUME: on "ship it" + a YELLOW ack of that exact reason set, run smoke + review then commit/push/PR. `range(float)` crash in the MultiStart gradient step loop; fires ONLY when the cadence is below the remaining budget (the 1e99 config default always took the int branch, which is why it never fired before). Killed RAL chain jobs 331182-331190 in the wsdev#117 campaign. Fix = int() cast at the consumer via a `_steps_in_chunk` helper; the shared float() coercion in abstract_search.py:219 stays (it serves inf-like config values). Helper exists so the test is NumPy-only — `_fit` needs jax+optax+a JAX Analysis. PyAutoFit claim was released from the completed `testmode-env-drift` task first (3a99904). FOLLOW-UPS (not this PR): 5 sibling searches share the latent float-cadence class (emcee/zeus/blackjax-nuts/bfgs/nautilus+dynesty), unreproduced; and the workspace hotfix in autolens_workspace_developer/searches_minimal/pix_prodigy.py belongs to the live `pix-prodigy-cpu` task.
+- heart-ack: 2026-07-27 human acknowledged this library ship with the exact YELLOW reasons below (Heart score 65, ts 2026-07-27T12:11:07Z, no RED); any new reason or RED verdict requires a fresh stop
+  - workspace validation not passing (13 failed, 2026-07-21T19-05-22Z)
+  - 33 stale parked script(s)
+  - manifest drift: tenant firewall (organ code) — 5 mismatch(es) vs PyAutoMind/repos.yaml
+  - release validation stale: source moved since rehearsal (PyAutoNerves, PyAutoFit, PyAutoArray, PyAutoGalaxy, PyAutoLens)
+- note: SHIPPED to PR#1421 (2 commits), awaiting merge. Tests 1535 passed/1 skipped; review CLEAN on pass 2 — pass 1 caught a defect I introduced (int() truncates toward zero, so a fractional cadence <1 gave range(0) => zero-length chunk => infinite while-loop; floored at 1, test added). Smoke 50 pass/7 fail, all 7 identical on main (jax_likelihood parity scripts run under PYAUTO_DISABLE_JAX=1); a further 5 failed ONLY in the parallel sweep and pass sequentially on the branch — runner contention over shared output/dataset state, NOT a regression. `range(float)` crash in the MultiStart gradient step loop; fires ONLY when the cadence is below the remaining budget (the 1e99 config default always took the int branch, which is why it never fired before). Killed RAL chain jobs 331182-331190 in the wsdev#117 campaign. Fix = int() cast at the consumer via a `_steps_in_chunk` helper; the shared float() coercion in abstract_search.py:219 stays (it serves inf-like config values). Helper exists so the test is NumPy-only — `_fit` needs jax+optax+a JAX Analysis. PyAutoFit claim was released from the completed `testmode-env-drift` task first (3a99904). FOLLOW-UPS (not this PR): 5 sibling searches share the latent float-cadence class (emcee/zeus/blackjax-nuts/bfgs/nautilus+dynesty), unreproduced; and the workspace hotfix in autolens_workspace_developer/searches_minimal/pix_prodigy.py belongs to the live `pix-prodigy-cpu` task.
 - repos:
   - PyAutoFit: feature/multistart-cadence-int-cast
 

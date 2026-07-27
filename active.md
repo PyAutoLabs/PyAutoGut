@@ -1,22 +1,5 @@
 # Active Tasks
 
-## purge-autogalaxy-database
-- issue: https://github.com/PyAutoLabs/autogalaxy_workspace/issues/169
-- session: claude
-- status: awaiting-merge
-- workspace-pr: https://github.com/PyAutoLabs/autogalaxy_workspace/pull/170
-- worktree: ~/Code/PyAutoLabs-wt/purge-autogalaxy-database
-- autonomy: supervised
-- heart-ack: 2026-07-27 human acknowledged this workspace ship with the exact YELLOW reasons below; any new reason or RED verdict requires a fresh stop
-  - workspace validation not passing (13 failed, 2026-07-21T19-05-22Z)
-  - 33 stale parked script(s)
-  - manifest drift: tenant firewall (organ code) — 5 mismatch(es) vs PyAutoMind/repos.yaml
-  - release validation stale: source moved since rehearsal (PyAutoNerves, PyAutoFit, PyAutoArray, PyAutoGalaxy, PyAutoLens)
-- prompt: active/purge_autogalaxy_database_datasets.md
-- note: leg 2 of the dataset-bulk series. Opus archaeology verdict ORPHANED: purge dataset/database/simple__{0,1,2} (512 KB) AND delete the three light_sersic_exp simulators (no reader ever existed; sibling autolens guide is the oracle; 2026-07-13 allowlist call rested on stale prose start_here.py:65 — fix that line too). Regen notebooks + navigator catalogue (stale catalogue = known CI red). sma.fits keep-marker. Recover point e942d360. Feature Agent split overridden (repo-count proxy).
-- repos:
-  - autogalaxy_workspace: feature/purge-autogalaxy-database
-
 ## testmode-env-drift
 - issue: https://github.com/PyAutoLabs/PyAutoCTI/issues/95
 - status: PRs OPEN awaiting merge — PyAutoCTI#96 (delete dead fixture) + PyAutoFit#1417 (docstring). KEY FINDING: the obvious fix (rename PYAUTOFIT_TEST_MODE -> PYAUTO_TEST_MODE) is WRONG. Nothing reads PYAUTOFIT_TEST_MODE so the aggregator autouse fixture was always a no-op; making the var LIVE actually enables test mode, which bypasses sampling so the aggregator has no samples -> 6/13 tests FAIL. Measured 3 ways: baseline(dead var)=13 passed; renamed=6 failed/7 passed; fixture DELETED=13 passed. Shipped the deletion (behaviour-preserving, deletes the trap). Two gitignored .claude/settings.local.json allowlists deliberately LEFT ALONE — rewriting them would change what those commands do; they are stale permission strings, not a defect.

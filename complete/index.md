@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-745 records across 6 buckets.
+747 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -277,6 +277,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [psf-oversample-workspace](2026/07/psf-oversample-workspace.md)
 - [psf-visible-input](2026/07/psf-visible-input.md)
 - [purge-autoconf-era-legacy](2026/07/purge-autoconf-era-legacy.md)
+- [purge-autogalaxy-database](2026/07/purge-autogalaxy-database.md) — Leg 2 of the dataset-bulk series. Purged the orphaned dataset/database/simple__{0,1,2} (512 KB, 90% of the rep…
 - [purge-simulated-datasets](2026/07/purge-simulated-datasets.md) — Leg 1 of the dataset-bulk series. Purged 7 committed simulated datasets (~17 MB: cluster/simple 15.7 MB, imagi…
 - [pyautogut-organ](2026/07/pyautogut-organ.md) — Gut organ + hygiene drive seam — complete
 - [pyautolens-assistant-joss-paper](2026/07/pyautolens-assistant-joss-paper.md) — JOSS paper #2 scaffolded next to the software — SHIPPED
@@ -350,6 +351,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [test-mode-representative-samples-phase-1-design](2026/07/test-mode-representative-samples-phase-1-design.md)
 - [test-mode-representative-samples-phase-2-core-api](2026/07/test-mode-representative-samples-phase-2-core-api.md)
 - [test-results-relayout](2026/07/test-results-relayout.md) — Hands#193 + Heart#106, lockstep pair
+- [testmode-env-drift](2026/07/testmode-env-drift.md)
 - [tutorial-5-filtering-prose](2026/07/tutorial-5-filtering-prose.md)
 - [unblock-release-validation](2026/07/unblock-release-validation.md)
 - [user-defaults-discovery](2026/07/user-defaults-discovery.md) — batch finale (task 6, rescoped discovery-half) — start-new-project step 0 environment-discovery preflight: rea…

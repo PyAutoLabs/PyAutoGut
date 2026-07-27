@@ -1,3 +1,11 @@
+## purge-autogalaxy-database
+- issue: https://github.com/PyAutoLabs/autogalaxy_workspace/issues/169
+- completed: 2026-07-27
+- workspace-pr: https://github.com/PyAutoLabs/autogalaxy_workspace/pull/170
+- summary: Leg 2 of the dataset-bulk series. Purged the orphaned dataset/database/simple__{0,1,2} (512 KB, 90% of the repo's committed dataset bytes) AND deleted their three light_sersic_exp__{0,1,2}.py simulators + empty __init__.py. Opus git archaeology proved no commit in history ever read dataset/database/ — the database guide reads dataset/imaging/* by design ("database" is its output path_prefix), matching the autolens sibling guide which never had a simulators/ dir; the 2026-07-13 allowlist call ("committed-by-design aggregator data", #126 Group B) rested solely on a stale prose line in start_here.py wrong since the root commit, fixed in the PR so the orphan cannot return. The simulators' absence from no_run.yaml made every pre_build re-run them — the source of the dataset byte-churn commits (34ddb66d/10a1ee64/e942d360); post-smoke clean tree confirmed the churn source gone. Also: sma.fits non-regenerable marker in .gitignore; navigator catalogue + .script_sizes.json regenerated in-diff. Verification: check_dataset_allowlist OK (1 file, 2 patterns), smoke 10/10 (16.6 s parallel). Shipped under the 2026-07-27 heart-ack. Condemned entry release-datasets/autogalaxy-database-orphans (recover e942d360, sweep-after 2026-08-27). Merged 2026-07-27, merge commit b44afb6a7.
+
+## Original prompt
+
 # Purge autogalaxy_workspace dataset/database/simple__{0,1,2}
 
 Type: maintenance

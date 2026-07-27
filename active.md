@@ -23,10 +23,12 @@
 ## central-community-docs
 - issue: https://github.com/PyAutoLabs/PyAutoScientist/issues/5
 - session: codex
-- status: workspace-dev
+- status: workspace-shipped, awaiting-merge
 - worktree: ~/Code/PyAutoLabs-wt/central-community-docs
 - autonomy: supervised
 - prompt: active/centralise_community_governance_docs.md
+- primary-pr: https://github.com/PyAutoLabs/PyAutoScientist/pull/6
+- pr-matrix: https://github.com/PyAutoLabs/PyAutoScientist/issues/5#issuecomment-5094035448
 - repos:
   - .github: feature/central-community-docs
   - PyAutoScientist: feature/central-community-docs

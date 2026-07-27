@@ -141,3 +141,14 @@ One `##` block per item. Fields:
 - sweep-after: 2026-08-27
 - breaks-if-wrong: loses the exact historical noise realizations + the 3 simulator scripts; both recoverable from remote history at the recover point
 - archive-ref: n/a — committed deletion; bytes live in remote history at e942d360 (last byte-refresh of all three dirs) and pre-purge main 5632f6d0
+
+## release-datasets/autolens-many-visibilities
+- type: file
+- locator: autolens_workspace dataset/interferometer/many_visibilities (PR#356)
+- confidence: 0.98
+- reason: force-committed in a single 2026-05-14 "pre build" add and never referenced — no script writes or loads it (all 9 name mentions are prose pointing at the many_visibilities_preparation example, which reads interferometer/simple); FITS files are 8,640-byte test-resolution stubs, 1.6 of 1.64 MB is render PNGs. Dataset-bulk series follow-on, user-confirmed kill.
+- merged: no
+- condemned: 2026-07-27
+- sweep-after: 2026-08-27
+- breaks-if-wrong: loses nothing unique — stubs + renders, recoverable from remote history
+- archive-ref: n/a — committed deletion; bytes live in remote history at pre-purge SHA 7f6ba9954 (autolens_workspace main)

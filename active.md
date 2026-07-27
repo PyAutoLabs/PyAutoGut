@@ -1,5 +1,27 @@
 # Active Tasks
 
+## spawn-drift-issued-orphan-ai-policy
+- issue: none (same-session continuation of the 2026-07-27 /wake_up red-jobs sweep)
+- session: claude
+- status: library-shipped, awaiting-merge
+- library-pr: PyAutoMind#113
+- autonomy: supervised
+- prompt: none (diagnosed inline from the failing Spawn Drift run)
+- note: THREE stacked spec gaps, each surfacing only once the prior is cleared — issued/ orphan, then AI_POLICY.md (added org-wide today), then CONTRIBUTING.md (KEEP verbatim would stamp "Contributing to PyAutoLabs" into a fresh-slate template). After merge the job still needs a TEMPLATE REPUBLISH to clear content drift (AI_POLICY.md new + CONTRIBUTING/ROUTING/lifecycle.py/repos_sync.py/spawn.py/arxiv stale) — outward-facing, human-gated, NOT done yet.
+- repos:
+  - PyAutoMind: feature/spawn-drift-issued-orphan-ai-policy
+
+## potential-correction-jax-skip
+- issue: none (same-session continuation of the 2026-07-27 /wake_up red-jobs sweep)
+- session: claude
+- status: library-shipped, awaiting-merge
+- library-pr: PyAutoLens#658 (pending-release)
+- autonomy: supervised
+- prompt: none (diagnosed inline from the failing python_matrix run)
+- note: SECOND cause of python_matrix red, pre-existing and missed in the morning digest (job list truncated at 25 lines). 5 potential_correction tests reach the JAX-only sparse-operator path; jax is gated to py>=3.11. Skip-marked exactly those 5, per-test not module-level so the dense-route numpy cases keep running on 3.9/3.10. A numpy port was considered and rejected (3 jax sites incl. lax + segment_sum; imaging counterpart 8+). Verified: jax present 9 passed/0 skipped; jax absent 4 passed/5 skipped.
+- repos:
+  - PyAutoLens: feature/potential-correction-jax-skip
+
 
 ## jax-joss-benchmarks
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/281

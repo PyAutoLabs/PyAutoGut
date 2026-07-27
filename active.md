@@ -6,6 +6,11 @@
 - status: library-dev
 - worktree: ~/Code/PyAutoLabs-wt/clean-slate-write-site
 - autonomy: supervised
+- heart-ack: 2026-07-27 human acknowledged this ship with the exact YELLOW reasons below; any new reason or RED verdict requires a fresh stop
+  - workspace validation not passing (13 failed, 2026-07-21T19-05-22Z)
+  - 33 stale parked script(s)
+  - manifest drift: tenant firewall (organ code) — 5 mismatch(es) vs PyAutoMind/repos.yaml
+  - release validation stale: source moved since rehearsal (PyAutoNerves, PyAutoFit, PyAutoArray, PyAutoGalaxy, PyAutoLens)
 - prompt: active/clean_slate_write_site_provenance.md
 - note: leg 5 (final) of the dataset-bulk series. New bin/dataset_provenance.py (write-site classifier: REGENERABLE/DOWNLOADED/ORPHAN; orphans reported not deleted), clean_slate phase 1b uses it; per-dir size warning; git gc --auto phase; .ipynb_checkpoints swept, __pycache__ deliberately left; wake_up.md 'non-destructive' claim fixed; net-new tests for phases 1/1b/2/3 (currently ZERO coverage). Ground-truth catch/never-touch lists in the issue.
 - repos:

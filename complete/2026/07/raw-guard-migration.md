@@ -1,3 +1,11 @@
+## raw-guard-migration
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/354
+- completed: 2026-07-27
+- workspace-pr: https://github.com/PyAutoLabs/autolens_workspace/pull/355, https://github.com/PyAutoLabs/autogalaxy_workspace/pull/171
+- summary: Leg 3 of the dataset-bulk series. Migrated 116 (autolens, 113 scripts) + 61 (autogalaxy, 59 scripts) raw `if not dataset_path.exists():` auto-simulate guards to al./ag.util.dataset.should_simulate — functional in these repos because their smoke/release profiles set PYAUTO_SMALL_DATASETS=1 (stale full-res data now force-regenerates at the cap; raw guards only fired on absence). Safety came from per-site classification before conversion: guard body must run a paired simulator subprocess AND the site must not be on the (file,line) exclusion list — 7 download guards over real data (incl. the 96 MB RELICS mosaic), the inverted SDP.81 guard (raises-when-absent; conversion would delete committed non-regenerable data), 9 results-bootstrap guards (_quick_fit on output dirs), 5 inline-write/path-fallback bodies, 11 file-path guards (rmtree on a file crashes), all left byte-identical. Census reconciliation exact: 118 = 116 + 2 latent dataset_Path() NameError sites deferred to a filed bug prompt. HowToFit/autofit_workspace migration REJECTED and recorded (no PYAUTO_SMALL_DATASETS in their profiles, no autoarray import; would need a new af.util.should_simulate — note af.util is a flat module, autofit/__init__.py:114 — plus a new env contract in PyAutoFit, for zero functional gain). Notebooks (113+59, pairing verified exact), navigator catalogues and .script_sizes.json regenerated in-diff. Smoke 14/14 + 10/10. Shipped under the 2026-07-27 heart-ack. Follow-ups filed: draft/maintenance/workspaces/file_path_guard_decision.md, draft/bug/autolens_workspace/subhalo_sensitivity_dataset_path_nameerror.md. Merged 2026-07-27: autolens 7f6ba9954, autogalaxy f0efa50a9.
+
+## Original prompt
+
 # Migrate raw auto-simulate guards to should_simulate (autolens + autogalaxy)
 
 Type: maintenance

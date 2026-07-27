@@ -3,7 +3,8 @@
 ## purge-autogalaxy-database
 - issue: https://github.com/PyAutoLabs/autogalaxy_workspace/issues/169
 - session: claude
-- status: workspace-dev
+- status: awaiting-merge
+- workspace-pr: https://github.com/PyAutoLabs/autogalaxy_workspace/pull/170
 - worktree: ~/Code/PyAutoLabs-wt/purge-autogalaxy-database
 - autonomy: supervised
 - heart-ack: 2026-07-27 human acknowledged this workspace ship with the exact YELLOW reasons below; any new reason or RED verdict requires a fresh stop

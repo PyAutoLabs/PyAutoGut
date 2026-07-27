@@ -130,3 +130,14 @@ One `##` block per item. Fields:
 - sweep-after: 2026-08-27
 - breaks-if-wrong: loses the exact historical noise realizations of the 7 datasets (regenerated copies use fresh noise); recoverable from remote history via the pre-purge SHA
 - archive-ref: n/a — committed deletion; bytes live in remote history at pre-purge SHA 0bb170c57 (autolens_workspace main, 2026-07-27)
+
+## release-datasets/autogalaxy-database-orphans
+- type: file
+- locator: autogalaxy_workspace dataset/database/simple__{0,1,2} + scripts/guides/results/database/simulators/light_sersic_exp__{0,1,2}.py (PR#170)
+- confidence: 0.98
+- reason: orphaned committed simulated data (512 KB) — no commit in repo history ever contained a reader of dataset/database/ (the database guide reads dataset/imaging/*; "database" is its output namespace, matching the autolens sibling guide). The 2026-07-13 allowlist call (#126 Group B "committed-by-design aggregator data") rested on a stale prose line fixed in the same PR. Simulators deleted with their output: unconsumed, and their absence from no_run.yaml made every build re-run them (dataset byte-churn commits 34ddb66d/10a1ee64/e942d360). Dataset-bulk series leg 2 (issue #169).
+- merged: no
+- condemned: 2026-07-27
+- sweep-after: 2026-08-27
+- breaks-if-wrong: loses the exact historical noise realizations + the 3 simulator scripts; both recoverable from remote history at the recover point
+- archive-ref: n/a — committed deletion; bytes live in remote history at e942d360 (last byte-refresh of all three dirs) and pre-purge main 5632f6d0

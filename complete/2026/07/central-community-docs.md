@@ -7,6 +7,7 @@
 - findings: The review faculty found one over-broad statement that every repository had both README.md and AGENTS.md; the canonical guide and pointers were corrected to say "where present" before shipping.
 - merge-order: PyAutoScientist merged first and both canonical URLs returned HTTP 200 before any pointer PR merged.
 - validation: Review faculty CLEAN; pointer hashes single-source; no legacy templates remained; all 22 merge states verified MERGED; final autolens_workspace_test smoke matrix passed 4/4.
+- cleanup: `worktree_remove` skipped the hidden `.github` worktree in its shell glob, leaving stale worktree metadata; the path was already gone, so the metadata was pruned and the merged local branch deleted manually. The helper needs a follow-up fix for hidden repositories.
 - follow-ups: A future AI_STATEMENT.md can use the same canonical-document plus pointer structure. SECURITY.md, SUPPORT.md, and GOVERNANCE.md remain future centralization candidates.
 
 ## Original prompt

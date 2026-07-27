@@ -1,3 +1,19 @@
+## ai-policy
+- issue: https://github.com/PyAutoLabs/PyAutoScientist/issues/7
+- completed: 2026-07-27
+- primary-pr: https://github.com/PyAutoLabs/PyAutoScientist/pull/8
+- workspace-prs: 36 coordinated PRs — https://github.com/PyAutoLabs/PyAutoScientist/issues/7#issuecomment-5094698482
+- summary: PyAutoScientist became the canonical home for the PyAuto AI Policy, faithfully structured from the supplied prose and linked from its README and contribution guide. All 35 other registered repositories now carry the same short root-level `AI_POLICY.md` pointer to the canonical document.
+- findings: The cited research-group AI-policy source was identified as arXiv:2607.20836. `AI_POLICY.md` is not inherited through GitHub organization community defaults, so explicit pointers were required in every registered repository.
+- merge-order: PyAutoScientist merged first and the canonical URL returned HTTP 200 before pointer merges. All 35 pointer PRs then merged, including `autolens_workspace_developer` from an isolated worktree that did not disturb its active `pix-prodigy-cpu` task.
+- validation: Review faculty CLEAN; all pointer files byte-identical; all policy links resolved; Markdown diffs passed whitespace checks; all 36 PR states independently verified `MERGED`; canonical and final pointer URLs returned HTTP 200. No source, tests, notebooks, configuration, or release files changed, so no workspace smoke run was applicable.
+- gate-overrides: At the user's explicit merge-everywhere instruction, three documentation-only PRs merged with known CI failures: PyAutoMemory's root-file allowlist does not recognize `AI_POLICY.md`; autolens_assistant's boundary classifier does not classify the new policy; and autolens_profiling has a pre-existing Ruff formatting failure in `instruments/README.md`.
+- heart-ack: Proceeded with the user-acknowledged YELLOW findings: stale workspace validation (13 failures from 2026-07-21), 33 parked scripts, and five tenant-firewall manifest mismatches.
+- cleanup: The shared task worktree was removed and all 36 local feature branches were deleted after proving each was contained in `origin/main`. As with central-community-docs, the helper skipped hidden `.github` metadata; it was pruned explicitly.
+- follow-ups: Extend PyAutoMemory's top-level allowlist and autolens_assistant's clone-boundary classification for `AI_POLICY.md`; separately repair the pre-existing autolens_profiling README formatting failure.
+
+## Original prompt
+
 # Add a shared PyAuto AI policy
 
 Type: docs

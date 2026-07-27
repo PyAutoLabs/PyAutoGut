@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-756 records across 6 buckets.
+757 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -32,6 +32,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [aggregator-profiling](2026/07/aggregator-profiling.md) — Aggregator profiling harness (autofit_workspace_test scripts/profiling/aggregator/ — mock results via real Dir…
 - [aggregator-quick-fit-consolidation](2026/07/aggregator-quick-fit-consolidation.md) — guides/results tutorials ran own capped fits pruning to 2 samples vs deep [-10]/[9] IndexError → consolidate o…
 - [aggregator-sqlite](2026/07/aggregator-sqlite.md) — Aggregator Phase D — sqlite database exercised + assessed. Fixed: db Aggregator slicing inverted (agg[:5] on 2…
+- [ai-policy](2026/07/ai-policy.md) — PyAutoScientist became the canonical home for the PyAuto AI Policy, faithfully structured from the supplied pr…
 - [alma-interferometer](2026/07/alma-interferometer.md) — ALMA interferometer reduction live (phase 5) — first visibility-domain product family: calibrated MS → al.Inte…
 - [analysis-fitexception-masks-cause](2026/07/analysis-fitexception-masks-cause.md)
 - [api-baseline-refresh](2026/07/api-baseline-refresh.md)

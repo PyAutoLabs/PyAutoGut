@@ -3,7 +3,9 @@
 ## markdown-stdout-fix
 - issue: https://github.com/PyAutoLabs/PyAutoHands/issues/200
 - session: claude
-- status: library-dev
+- status: awaiting-merge
+- library-pr: https://github.com/PyAutoLabs/PyAutoHands/pull/201
+- workspace-pr: https://github.com/PyAutoLabs/HowToFit/pull/34
 - worktree: ~/Code/PyAutoLabs-wt/markdown-stdout-fix
 - autonomy: supervised
 - heart-ack: 2026-07-27 human acknowledged this ship with the exact YELLOW reasons below; any new reason or RED verdict requires a fresh stop

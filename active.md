@@ -19,3 +19,34 @@
 - prompt: active/pixelized_multistart_prodigy_cpu.md
 - repos:
   - autolens_workspace_developer: feature/pix-prodigy-cpu
+
+## central-community-docs
+- issue: https://github.com/PyAutoLabs/PyAutoScientist/issues/5
+- session: codex
+- status: workspace-dev
+- worktree: ~/Code/PyAutoLabs-wt/central-community-docs
+- autonomy: supervised
+- prompt: active/centralise_community_governance_docs.md
+- repos:
+  - .github: feature/central-community-docs
+  - PyAutoScientist: feature/central-community-docs
+  - HowToFit: feature/central-community-docs
+  - HowToGalaxy: feature/central-community-docs
+  - HowToLens: feature/central-community-docs
+  - PyAutoArray: feature/central-community-docs
+  - PyAutoBrain: feature/central-community-docs
+  - PyAutoCTI: feature/central-community-docs
+  - PyAutoFit: feature/central-community-docs
+  - PyAutoGalaxy: feature/central-community-docs
+  - PyAutoHands: feature/central-community-docs
+  - PyAutoHeart: feature/central-community-docs
+  - PyAutoLens: feature/central-community-docs
+  - PyAutoMemory: feature/central-community-docs
+  - PyAutoMind: feature/central-community-docs
+  - PyAutoNerves: feature/central-community-docs
+  - autocti_workspace: feature/central-community-docs
+  - autofit_workspace: feature/central-community-docs
+  - autofit_workspace_test: feature/central-community-docs
+  - autogalaxy_workspace: feature/central-community-docs
+  - autolens_workspace: feature/central-community-docs
+  - autolens_workspace_test: feature/central-community-docs

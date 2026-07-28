@@ -2,9 +2,11 @@
 
 ## python-312-floor
 - issue: https://github.com/PyAutoLabs/PyAutoNerves/issues/142
-- status: library-shipped, awaiting-merge
+- status: library-dev (PyAutoCTI); PyAutoNerves awaiting-merge
 - library-pr: https://github.com/PyAutoLabs/PyAutoNerves/pull/143
 - prompt: active/python_312_floor_phase_1a_nerves.md
+- phase-4a-issue: https://github.com/PyAutoLabs/PyAutoCTI/issues/100
+- phase-4a-prompt: active/python_312_floor_phase_4a_autocti.md
 - branch: feature/python-312-floor
 - worktree: /home/jammy/Code/PyAutoLabs/.codex-worktrees/python-312-floor
 - checkpoint-superseded: https://github.com/PyAutoLabs/PyAutoNerves/issues/142#issuecomment-5109079935
@@ -13,6 +15,7 @@
 - heart-ack: workspace validation not passing (13 failed, 2026-07-21T19-05-22Z); 33 stale parked script(s); manifest drift: tenant firewall (organ code) — 6 mismatch(es) vs PyAutoMind/repos.yaml; release validation stale: source moved since rehearsal (PyAutoNerves, PyAutoFit, PyAutoArray, PyAutoGalaxy, PyAutoLens)
 - repos:
   - PyAutoNerves: feature/python-312-floor
+  - PyAutoCTI: feature/python-312-floor
 - notes: Phase 1A of the reviewed Python >=3.12 ecosystem campaign. Shared
   branch/worktree task will grow through the dependency-ordered core stack;
   JAX 0.11 and Python 3.14 support remain separate follow-ups. Tests, review and
@@ -21,19 +24,9 @@
   paths were resolved from the parent cwd, so in-file ENV declarations were
   missed. No ecosystem defect was present. PyAutoNerves PR #143 is open with
   `pending-release`; merge remains human-gated before dependent phases advance.
-
-## python-312-floor-autocti
-- issue: https://github.com/PyAutoLabs/PyAutoCTI/issues/100
-- status: library-dev
-- prompt: active/python_312_floor_phase_4a_autocti.md
-- branch: feature/python-312-floor
-- worktree: /home/jammy/Code/PyAutoLabs/.codex-worktrees/python-312-floor
-- heart-ack: workspace validation not passing (13 failed, 2026-07-21T19-05-22Z); 33 stale parked script(s); manifest drift: tenant firewall (organ code) — 6 mismatch(es) vs PyAutoMind/repos.yaml; release validation stale: source moved since rehearsal (PyAutoNerves, PyAutoFit, PyAutoArray, PyAutoGalaxy, PyAutoLens)
-- repos:
-  - PyAutoCTI: feature/python-312-floor
-- notes: Independent-package phase 4A. Metadata and living installation claim
-  only; archival paper and historical traceback remain unchanged. Release stays
-  behind the PyAutoCTI resurrection/readiness gate and human approval.
+  Independent Phase 4A is proceeding in PyAutoCTI; its metadata and living
+  installation claim are in scope, while archival paper/history and release
+  execution remain out of scope.
 
 ## vacuous-jax-assertions
 - issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/229

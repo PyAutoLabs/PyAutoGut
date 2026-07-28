@@ -1,5 +1,16 @@
 # Active Tasks
 
+## issue-cleanup
+- issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/174
+- session: claude
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/issue-cleanup
+- autonomy: supervised
+- prompt: active/issue_cleanup_skill.md
+- note: Builds /issue_cleanup, the missing issue-tracker reconciliation door (no skill owned this — /repo_cleanup is git debris only, /community is external issues). Preceded by an ad-hoc sweep on 2026-07-28 that took the trackers 82 open → 47: closed 29 shipped-but-open (two-leg verified: record header + merged PR) and 6 obsolete 2018–2019 PyAutoCTI (named API greps zero in autocti/). LOAD-BEARING FINDING the skill must encode: the PyAutoMind record header KEY carries the meaning — `issue:` (630 uses) completes, but `followup-issue:`/`follow-up-issue:`/`library-followup-issue:`/`parent-issue:`/`upstream-issues-filed:`/`plan:` (13 uses) mean the record SPAWNED a still-open issue; a loose `*issue*:` match would close live follow-ups. Three more traps: body mentions ≠ header claims (many-vis-prep-dft.md discusses PyAutoArray#326 while its own issue: header says "no GitHub issue"); inline `(open …)`/`(STAYS OPEN …)` annotations override and appear on `plan:` lines too; a record in complete/ can carry `Status: issued` (ep-hierarchical-scale-collapse.md FILED PyAutoFit#1405, which is a live bug). PyAutoHands#16/#17 deliberately LEFT OPEN — same 1337-day vintage as the closed CTI ones but still-valid unimplemented asks (no --pre workflow, no RTD gating exist), so age ≠ obsolescence. Approved mode: audit auto-runs read-only in /wake_up, every close stays human-gated. Brain said large/split-into-phases — OVERRIDDEN to single phase (one skill, one repo, reasoning already settled); its "public-API ripple" risk is a false positive for a skill body. Claimed PyAutoBrain over a STALE guard-followups claim (all 3 of its PRs merged 12:53 2026-07-28; its active.md entry still says "3 PRs open" and needs its own post-merge cleanup — not done here).
+- repos:
+  - PyAutoBrain: feature/issue-cleanup
+
 ## guard-followups
 - issue: https://github.com/PyAutoLabs/PyAutoHands/issues/204
 - status: awaiting-merge — 3 PRs open. PyAutoHands#205 (closes #204), PyAutoBrain#173, autogalaxy_workspace#176.

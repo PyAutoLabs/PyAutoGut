@@ -242,3 +242,16 @@ pix_prodigy_findings.md`). The durable lessons their configs encode:
   knn Wendland > delaunay C0-at-flip-seams) and, by extension, which
   posterior kernels each mesh can host (Hamiltonian on the smooth meshes;
   tempered SMC or warm refits for delaunay).
+- **Rectangular caveats (campaign-close state)**: the kernel-CDF
+  `value_and_grad` step cost is anomalously high on CPU (~17x knn vs ~4.5x
+  forward-eval ratio — profile it on the A100 before drawing landscape
+  conclusions), and its *fixed-reg* arm stalled where every other mesh's
+  converged — implicating the sharp `bandwidth=0.1` (narrow gradient
+  support), with `bandwidth=1.0` costing only ~1.4k nats of fit ceiling.
+  Prefer "search smooth, refine sharp" as an annealing schedule; do NOT free
+  bandwidth as a model parameter without first checking the joint
+  (bandwidth, reg) evidence scan for an interior optimum — a MAP objective
+  may rail it at the staircase limit.
+- **Ops**: multi-start resume chains do not survive library upgrades that
+  touch FoM bookkeeping (the resume sanity check refuses, by design) — pin
+  the HPC mirrors for a campaign or plan to restart in-flight chains.

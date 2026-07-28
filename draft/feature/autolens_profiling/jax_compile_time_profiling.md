@@ -1,5 +1,14 @@
 # Profile and speed up JAX likelihood-function compile times (all use cases)
 
+> **Status note (2026-07-28):** largely superseded. The compile-time arc
+> (#71→#77) shipped cache-by-default + autotune-off and closed the speedup
+> question ("settings suffice"); this prompt's "autotuning ruled out" section
+> was later overturned (the A/B never flipped the flag — see the README).
+> The search-transform measurement scope was executed by the MultiStartProdigy
+> census (autolens_profiling#93). What remains of this prompt is only the
+> recurring cell-grid compile **dashboard** (track warm compile per cell so
+> cache regressions are caught) — re-scope to that before starting.
+
 Type: feature
 Target: autolens_profiling
 Repos:

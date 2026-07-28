@@ -1,5 +1,16 @@
 # Active Tasks
 
+## python-312-floor
+- issue: https://github.com/PyAutoLabs/PyAutoNerves/issues/142
+- status: planned
+- prompt: active/python_312_floor_phase_1a_nerves.md
+- branch: feature/python-312-floor
+- affected-repos:
+  - PyAutoNerves
+- notes: Phase 1A of the reviewed Python >=3.12 ecosystem campaign. Shared
+  branch/worktree task will grow through the dependency-ordered core stack;
+  JAX 0.11 and Python 3.14 support remain separate follow-ups.
+
 ## vacuous-jax-assertions
 - issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/229
 - status: awaiting-merge

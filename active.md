@@ -9,6 +9,7 @@
 - phase-4a-prompt: active/python_312_floor_phase_4a_autocti.md
 - phase-4b-issue: https://github.com/PyAutoLabs/PyAutoReduce/issues/59
 - phase-4b-prompt: active/python_312_floor_phase_4b_autoreduce.md
+- phase-4b-status: planned; worktree not attached; no source edits
 - branch: feature/python-312-floor
 - worktree: /home/jammy/Code/PyAutoLabs/.codex-worktrees/python-312-floor
 - checkpoint-superseded: https://github.com/PyAutoLabs/PyAutoNerves/issues/142#issuecomment-5109079935
@@ -18,7 +19,6 @@
 - repos:
   - PyAutoNerves: feature/python-312-floor
   - PyAutoCTI: feature/python-312-floor
-  - PyAutoReduce: feature/python-312-floor
 - notes: Phase 1A of the reviewed Python >=3.12 ecosystem campaign. Shared
   branch/worktree task will grow through the dependency-ordered core stack;
   JAX 0.11 and Python 3.14 support remain separate follow-ups. Tests, review and
@@ -30,7 +30,9 @@
   Independent Phase 4A is proceeding in PyAutoCTI; its metadata and living
   installation claim are in scope, while archival paper/history and release
   execution remain out of scope. Independent Phase 4B is also active in
-  PyAutoReduce; its census found only package metadata below the floor.
+  PyAutoReduce; its census found only package metadata below the floor. Issue
+  #59 is filed, but the worktree has not been attached and no source edits were
+  made before the overnight pause.
 
 ## vacuous-jax-assertions
 - issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/229

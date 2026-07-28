@@ -2,11 +2,12 @@
 
 ## python-312-floor
 - issue: https://github.com/PyAutoLabs/PyAutoNerves/issues/142
-- status: planned
+- status: library-dev
 - prompt: active/python_312_floor_phase_1a_nerves.md
 - branch: feature/python-312-floor
-- affected-repos:
-  - PyAutoNerves
+- worktree: /home/jammy/Code/PyAutoLabs/.codex-worktrees/python-312-floor
+- repos:
+  - PyAutoNerves: feature/python-312-floor
 - notes: Phase 1A of the reviewed Python >=3.12 ecosystem campaign. Shared
   branch/worktree task will grow through the dependency-ordered core stack;
   JAX 0.11 and Python 3.14 support remain separate follow-ups.

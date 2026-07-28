@@ -33,3 +33,48 @@ Pairing requirement: pair each benchmark to the start_here.py file in each autol
 The four multi examples pair to examples in autolens_workspace/scripts/multi or scripts/weak/features/strong_lensing. A new multi script will likely be needed for the imaging + point-source lensing joint-modelling benchmark.
 
 <!-- formalised by the Intake (Conception) Agent on 2026-07-16 from file:/tmp/claude-1000/-home-jammy-Code-PyAutoLabs/b23fc486-a111-4a87-a6c8-b4ca86dd0749/scratchpad/intake_autolens_jax_joss.md -->
+
+---
+
+## PARKED 2026-07-28 — resume state (moved out of `active.md`)
+
+Parked by user request during a `/repo_cleanup` sweep ("we will come back to JOSS
+benchmarks later"). The `active.md` registry entry was removed; this section is
+the authoritative resume context. Issue: <https://github.com/PyAutoLabs/autolens_workspace/issues/281>
+
+**Status at park:** `#282 MERGED+cleaned`; 8/8 runnable A100 rows committed
+(`autolens_jax_joss@64204f6`).
+
+**Worktree:** `~/Code/PyAutoLabs-wt/jax-joss-benchmarks` **no longer exists on
+disk** — recreate it (`start_workspace`) before resuming. Autonomy: supervised.
+New repo `autolens_jax_joss` (PyAutoLabs, public) was born alongside this task.
+Datasets SDP.81 / RXJ1131 / A2744 are user-approved. 5-phase epic, one-shot
+attempt per user.
+
+**SDP.81 prep** = detached RAL job `330608`. (Job `330605` diagnosed: an empty
+leftover `extracted/` skipped the untar — fixed via a `test -d` guard; `casatools`
+import needs `~/.casa/data` — also fixed. The 42GB tarball is CACHED, so no
+re-download.) Pipeline: 45GB ALMA Band6 download -> casatools venv -> 3-level
+export -> installs `dataset/interferometer/{sdp81,sdp81_mid,sdp81_full}` under
+`/mnt/ral/jnightin/autolens_jax_joss`.
+
+**RESUME (short session):**
+
+1. Check `/mnt/ral/jnightin/sdp81_prep_330608.log` — expect `SDP81 PREP ALL DONE`
+   plus per-level visibility counts. Failure modes: casatools pip wheel on py3.12
+   (fallback = monolithic CASA tarball), datacolumn, `MS_LIST` empty (check the
+   find patterns).
+2. `sbatch` the interferometry benchmarks on A100: `benchmarks/interferometer.py`
+   at `--nvis` default/mid/full, plus `benchmarks/imaging_and_interferometer.py`
+   (pattern: `/mnt/ral/jnightin/autolens_jax_joss/run_rest.sbatch`).
+3. `scp results/*.json` back, regenerate `RESULTS.md`, commit — **guard: commit
+   explicit file paths only**.
+4. Copy the small `sdp81/` product locally and rewrite
+   `scripts/interferometer/start_here.py` on a NEW branch (`start_workspace`;
+   #282 is merged) using it. Decide hosting: commit few-MB FITS to the workspace
+   with a `.gitignore` allowlist + `git add -f`, or Zenodo + `SDP81_URL`.
+5. Final issue #281 update.
+
+**Also pending:** cluster-tuning prompt
+`draft/feature/autolens_workspace/joss_cluster_benchmark_tuning.md`; weak JAX-viz
+`PyAutoLens#614`.

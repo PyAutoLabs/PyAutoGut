@@ -1,4 +1,4 @@
-# @rhayes777's 2026-05-23 API audit — all 15 findings re-verified, still reproduce
+# @rhayes777's 2026-05-23 API audit — all 16 findings re-verified, still reproduce
 
 Type: bug
 Target: autoarray
@@ -18,87 +18,177 @@ detailed issues on 2026-05-23 while auditing released `2026.5.21.1` against the
 documented public API. Each carries reproducible snippets and environment info.
 
 **They sat for 66 days with zero comments on any of them.** Surfaced by the
-2026-07-27 `/wake_up` community scan.
+2026-07-27 `/wake_up` community scan; replied to on 2026-07-28.
 
-On 2026-07-27 every claim was **re-run against current `main` (`2026.7.23.1`)**.
-**All 15 still reproduce** — nothing has been fixed by two months of intervening
+Every claim was **re-run against current `main`** (PyAutoArray@616e8b4c,
+PyAutoGalaxy@f0b65f39, PyAutoLens@6567b3b1c — all clean, zero ahead/behind).
+**All 16 still reproduce** — nothing has been fixed by two months of intervening
 work. Evidence below so this does not need re-deriving.
 
 ## The five issues
 
 | Issue | Claims | Verified |
 |---|---|---|
-| [PyAutoArray#332](https://github.com/PyAutoLabs/PyAutoArray/issues/332) | Delaunay + KNNBarycentric crash in `FitImaging`; `ConstantSplit` broken on `RectangularUniform` | 3/3 reproduce |
+| [PyAutoArray#332](https://github.com/PyAutoLabs/PyAutoArray/issues/332) | Delaunay + KNNBarycentric `FitImaging` error; `ConstantSplit` broken on `RectangularUniform` | 3/3 reproduce — **but see the correction below** |
 | [PyAutoArray#333](https://github.com/PyAutoLabs/PyAutoArray/issues/333) | B6, B7, B8, B5, B13 — input validation | 5/5 reproduce |
 | [PyAutoGalaxy#440](https://github.com/PyAutoLabs/PyAutoGalaxy/issues/440) | B9, B10, B11, B12 — profile validation | 4/4 reproduce |
 | [PyAutoLens#531](https://github.com/PyAutoLabs/PyAutoLens/issues/531) | `PointSolver.solve` AxisError + IndexError | 2/2 reproduce |
 | [PyAutoLens#532](https://github.com/PyAutoLabs/PyAutoLens/issues/532) | B4 + Bonus — `Tracer` validation | 2/2 reproduce |
 
-## Verification output (2026-07-27, autolens/autoarray 2026.7.23.1)
+## ⚠️ CORRECTION to the 2026-07-27 reading of #332
+
+**An earlier revision of this prompt recorded #332 part 1 as "Delaunay and
+KNNBarycentric are unusable in a released wheel". That is FALSE.** It was carried
+over from the reporter's headline without testing the other branch. Verified
+2026-07-28:
+
+```
+Delaunay(pixels=100)       + Constant + adapt_images  ->  log_evidence 5084.7513   OK
+KNNBarycentric(pixels=100) + Constant + adapt_images  ->  log_evidence 5211.7226   OK
+Delaunay(pixels=100)       + Constant, NO adapt       ->  AttributeError 'NoneType'
+Delaunay(pixels=100)       + ConstantSplit + adapt    ->  log_evidence 5096.4420   OK
+RectangularUniform(15,15)  + ConstantSplit            ->  AttributeError            BROKEN
+```
+
+Both adaptive meshes **work correctly**. They require an image-plane mesh grid
+supplied via:
+
+```python
+adapt_images = al.AdaptImages(
+    galaxy_image_plane_mesh_grid_dict={source: image_plane_mesh_grid}
+)
+fit = al.FitImaging(dataset=dataset, tracer=tracer, adapt_images=adapt_images)
+```
+
+which is the idiom at `autolens_workspace/scripts/imaging/features/pixelization/delaunay.py:246`.
+Omitting it leaves the grid `None` three frames above the failure site.
+
+**The real defect is the error, not the mesh:** a missing required precondition
+surfaces as `AttributeError: 'NoneType' object has no attribute 'array'` from deep
+inside `border_relocator.py`, naming nothing the caller controls.
+
+**This changes the fix direction.** The previous revision instructed: *"Any fix must
+land with a regression test built the reporter's way, not the examples' way."*
+Followed literally that would assert bare construction **succeeds** — enshrining the
+wrong expectation. The correct fix is the opposite: bare construction must **fail
+fast and legibly**, naming `adapt_images`. The regression test asserts a clear
+`ValueError`/`TypeError` is raised, *not* that a fit is produced.
+
+## Verification output (2026-07-28, libraries at the SHAs above)
 
 ```
 [REPRO] B6    Array2D pixel_scales   0.0 accepted; -0.1 accepted; nan accepted
+              (ps=0 then ZeroDivisionError on first derive_grid)
 [REPRO] B7    Mask2D.circular_annular(inner=0.8, outer=0.3)   pixels_in_mask = 0
 [REPRO] B8    Grid2D.uniform((0,0)) and ((0,5))               shape_slim = 0
 [REPRO] B5    Imaging(data 10x10, noise_map 5x5)              built, shape_native (10,10)
-[REPRO] B13   reg.Constant(coefficient=-1.0)                  accepted
+[REPRO] B13   reg.Constant(coefficient=-1.0)                  accepted, stored as -1.0
 [REPRO] B9    NFW(scale_radius=0.0)                           NaN count 3200 of 3200
 [REPRO] B10   Isothermal(ell_comps=(0,0)) vs IsothermalSph    max|diff| = 2.357e-06
 [REPRO] B11   Sersic(sersic_index=0.0)                        ZeroDivisionError
-[REPRO] B12   Sersic(ell_comps=(2.0,0.0))                     finite image, sum 1296
-[REPRO] B4    Tracer(galaxies="not a list")                   silently constructed
-[REPRO] Bonus z_lens=1.0 > z_source=0.5  image sum 64.97;  redshift=-0.5 accepted
+[REPRO] B12   Sersic(ell_comps=(2.0,0.0))                     finite image, sum 1296.0498
+[REPRO] B4    Tracer(galaxies="not a list")                   constructed; later
+                 AttributeError: 'str' object has no attribute 'redshift'
+[REPRO] Bonus z_lens=1.0 > z_source=0.5  image sum 64.97;  redshift=-0.5 and 1e-12 accepted
 [REPRO] 531-1 source outside caustic, precision 0.001         numpy AxisError
 [REPRO] 531-2 source inside caustic, precision 0.1            IndexError
-[REPRO] 332-1 Delaunay(pixels=100) + Constant       AttributeError: 'NoneType' has no 'array'
-                 autoarray/inversion/mesh/border_relocator.py:450
-[REPRO] 332-2 KNNBarycentric(pixels=100) + Constant             same site
+              (control: same source at precision 0.001 returns 4 images)
+[REPRO] 332-1 Delaunay + Constant, NO adapt_images   AttributeError: 'NoneType' has no 'array'
+                 autoarray/inversion/mesh/border_relocator.py  (~line 446-450)
+[REPRO] 332-2 KNNBarycentric + Constant, NO adapt_images        same site
 [REPRO] 332-3 RectangularUniform + ConstantSplit    AttributeError:
                  'InterpolatorRectangularUniform' has no '_mappings_sizes_weights_split'
                  autoarray/inversion/regularization/constant_split.py:67
 [OK]    ctl   RectangularUniform + Constant                   log_evidence = 4779.4288
+[OK]    ctl   Delaunay / KNNBarycentric WITH adapt_images      fit cleanly (see above)
 ```
 
-The control passing is load-bearing: it confirms #332 is specific to the adaptive
-meshes and the `Split` regularization variant, not to inversions generally.
+## Sharpened finding on B13 (not in the original report)
 
-## The work splits in two
+`constant.py:43` does `regularization_coefficient = coefficient * coefficient`,
+which is why `log_evidence` is identical for `+1.0` and `-1.0`. **But
+`regularization_weights_from` (`constant.py:127`) returns the raw, un-squared
+`self.coefficient`** — so a negative coefficient does leak negative regularization
+weights into every consumer of that method. A negative value is not inert. This
+strengthens the case for rejecting it at construction.
 
-**1. Two real crashes (higher priority)** — #332 and #531. These make documented
-public features unusable in a released wheel.
+## The work splits into five classes
 
-Why #332 survived CI: our pixelization smoke coverage
-(`autolens_workspace/scripts/imaging/features/pixelization/delaunay.py`) builds
-its Delaunay through a configured image-mesh path with a different dataset/mask
-setup, so it never exercises the bare `al.mesh.Delaunay(pixels=N)` construction
-the report uses. **Any fix must land with a regression test built the reporter's
-way, not the examples' way** — otherwise the gap survives the fix.
+**1. Genuine crash bugs (start here — real user impact, no workaround)**
+- **`Split` regularization on rectangular meshes (#332-3).** DESIGN INTENT (confirmed
+  by @Jammy2211 2026-07-28): **rectangular does not support Split.** The fix is a
+  clear "unsupported" exception, NOT implementing the missing capability. Scope is
+  **9 combinations in 2 failure modes**, not the 1 reported:
+  - `RectangularUniform` → `AttributeError` (`InterpolatorRectangularUniform` has no
+    `_mappings_sizes_weights_split`)
+  - `RectangularAdaptDensity` / `RectangularAdaptImage` → `IndexError: index 4 is out
+    of bounds` (`InterpolatorRectangular._mappings_sizes_weights_split` at
+    `rectangular.py:460` is a pass-through returning `self._mappings_sizes_weights`;
+    its comment claiming split "reuses the same mappings" is FALSE — `reg_split_from`
+    expects the split-cross structure and crashes one frame later). DELETE it.
+  - x3 regularizations: `constant_split.py:67`, `adapt_split.py:104`,
+    `adapt_split_zeroth.py:105`
+  - Control: `Delaunay + ConstantSplit` works (`log_evidence 5096.4420`).
+- `PointSolver` single-image source → `AxisError` (#531-1). Should return the one
+  image it finds.
+- `PointSolver` loose `pixel_scale_precision` → `IndexError` (#531-2). Should raise
+  a clear error naming `pixel_scale_precision`.
 
-**2. One coherent validation piece** — #333 + #440 + #532. All are "raise a clear
-`ValueError` at construction instead of a confusing NumPy/numba traceback three
-calls later". The reporter's suggested `_validate_*` helper spans all three repos,
-so decide **where the shared helper lives (PyAutoArray or lower) before writing
-it**, or the three repos get inconsistent messages.
+**2. Constructor validation (one mechanical sweep, 9 findings)**
+B5, B6, B7, B8, B13, B9, B11, B12, B4. All are "raise a clear `ValueError` at
+construction instead of a confusing NumPy/numba traceback three calls later".
+**Decide where the shared `_validate_*` helper lives before writing it** (PyAutoArray
+is the natural floor — Galaxy and Lens both depend on it) or the three repos get
+inconsistent messages.
 
-Open design question inside #532: `z_lens > z_source` should probably **warn**
-rather than raise (multi-plane genuinely supports many geometries), while a
-negative redshift can raise. Not yet decided by a human.
+**Constraint:** these constructors sit on JAX-traced paths. Guards must stay correct
+under tracing and cost nothing when traced — do not use Python `if` on values that
+may be tracers without checking.
 
-## State as of 2026-07-27
+**3. Error-message quality (1 finding)**
+The `adapt_images` precondition (#332-1, #332-2). Either the mesh wires the grid up
+itself, or construction fails immediately naming `adapt_images`. Regression test
+asserts the *clear failure*, per the correction above.
 
-- Five replies were **drafted and shown to the human, who chose NOT to post yet**.
-  Nothing has been sent; all five issues still show zero comments. Re-draft rather
-  than assume the old text is still wanted.
-- **@rhayes777 offered to PR the validation set** ("Happy to PR if useful"). Do not
-  pre-empt that offer by silently implementing it — agree the helper shape with him
-  first. This is the main reason the work was not routed into `start_dev_for_user`.
+**4. Warning-only judgement call (1 finding) — HELD**
+`z_lens > z_source` (#532 Bonus). Multi-plane genuinely supports geometries that
+look wrong under two-plane naming, so this should **warn**, not raise. A negative
+redshift can raise outright. **In the posted reply we asked @rhayes777 whether even
+a warning would be noise in a real multi-plane setup — hold this sub-item until he
+answers.** Everything else is unblocked.
+
+**5. Regression test only (1 finding)**
+B10, the `2.357e-06` Isothermal/IsothermalSph difference at the degenerate point.
+Pin at an explicit tolerance. **Do not chase bit-identity** between the elliptical
+and spherical evaluation paths.
+
+## State as of 2026-07-28
+
+- **All five replies are POSTED** (this supersedes the 2026-07-27 note that they
+  were drafted but withheld):
+  - PyAutoArray#333 — `#issuecomment-5105855009`
+  - PyAutoArray#332 — `#issuecomment-5105855203`
+  - PyAutoGalaxy#440 — `#issuecomment-5105855357`
+  - PyAutoLens#531 — `#issuecomment-5105855611`
+  - PyAutoLens#532 — `#issuecomment-5105855829`
+- **The #332 reply publicly corrects the reporter's headline** while crediting the
+  underlying finding. Keep that framing consistent in any follow-up.
+- **Decided by the human 2026-07-28: we implement in-house.** @rhayes777's "Happy to
+  PR if useful" offer was declined warmly in all replies, on the grounds that the
+  constructors are JAX-traced hot paths. This supersedes the earlier
+  "agree the helper shape with him first" instruction — do not route to
+  `start_dev_for_user`.
+- **All five replies promise a tracking issue.** That is a public commitment with a
+  clock on it.
 
 ## Verification recipe
 
-Re-run any claim straight from the issue bodies; they are self-contained. Two
-gotchas found while doing so:
+Re-run any claim straight from the issue bodies; they are self-contained. Gotchas:
 
 - The PSF constructor is `al.Convolver.from_gaussian` (**not** `al.Kernel2D` — the
-  PyAuto API gate correctly rejects that).
+  PyAuto API gate correctly rejects that; `Kernel2D` no longer exists).
 - Run from a workspace root with `PYAUTO_SKIP_WORKSPACE_VERSION_CHECK=1`,
-  `NUMBA_CACHE_DIR=/tmp/numba_cache`, `MPLCONFIGDIR=/tmp/matplotlib`.
+  `NUMBA_CACHE_DIR=/tmp/numba_cache`, `MPLCONFIGDIR=/tmp/matplotlib`,
+  `PYAUTO_DISABLE_JAX=1`.
+- **Always test the `adapt_images` branch as well as the bare one** — testing only
+  the reporter's construction is what produced the wrong reading on 2026-07-27.

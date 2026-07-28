@@ -7,6 +7,7 @@
 - notes: phase A (measure, autolens_profiling) in flight; phase B (PyAutoFit pyloop batching) serialises behind preserve-in-zip-replace-member's PyAutoFit merge (#1414 / PR#1427)
 - worktree: ~/Code/PyAutoLabs-wt/multistart-prodigy-compile
 - repos:
+  - autolens_profiling (feature/multistart-prodigy-compile)
 
 ## preserve-in-zip-replace-member
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1414

@@ -3,9 +3,11 @@
 ## hpc-guide-sync
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/360
 - session: claude --resume 5fe8735c-25c2-4015-8a00-45f49afc30fd
-- status: workspace-dev
+- status: awaiting-merge — both PRs open, smoke green (autolens 16/16, autogalaxy 12/12)
+- workspace-pr: https://github.com/PyAutoLabs/autolens_workspace/pull/361, https://github.com/PyAutoLabs/autogalaxy_workspace/pull/174
 - worktree: ~/Code/PyAutoLabs-wt/hpc-guide-sync
 - autonomy: supervised
+- heart-ack: workspace validation not passing (13 failed, 2026-07-21T19-05-22Z); 33 stale parked script(s); manifest drift: tenant firewall (organ code) — 5 mismatch(es) vs PyAutoMind/repos.yaml; release validation stale: source moved since rehearsal
 - prompt: active/hpc_guide_sync_and_batch_artifacts.md
 - note: single-phase; Brain's split-into-phases (score 15) overridden — repo-count proxy counted euclid_strong_lens_modeling_pipeline, which is read-only reference material. autogalaxy's batch_cpu/submit, batch_gpu/submit, sync, sync.conf.example are committed ZERO-BYTE — filled in both repos from euclid_strong_lens_modeling_pipeline/hpc/.
 - repos:

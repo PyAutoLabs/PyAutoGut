@@ -111,3 +111,25 @@ symptom in `autolens_workspace` / `autogalaxy_workspace` — `FileNotFoundError`
 path under a profile that sets `PYAUTO_SMALL_DATASETS=1`. Different symptom (missing file vs
 value mismatch), possibly the same root class. Check whether those workspaces had an
 equivalent dataset-untracking change.
+
+---
+
+## Completion record — 2026-07-28
+
+**Shipped:** autolens_workspace_test PR#232 (`7a3812fe`), issue #231 closed.
+
+**Outcome:** the five "stale" `jax_likelihood` literals were **correct and unchanged**. Two
+visualization siblings (`modeling_visualization_{rectangular,delaunay}_jit.py`) carried no
+`__Env__` declaration, inherited `PYAUTO_SMALL_DATASETS=1`, and rebuilt the shared
+`dataset/imaging/jax_test` at 16x16 — poisoning every later `jax_likelihood` run. Added
+`ENV: real_output` to both, matching their declared sibling. No literal, no profile changed.
+
+**Two diagnoses were wrong before the right one**, both corrected publicly on #231:
+1. "smoke profile needs a `SMALL_DATASETS: 0` override" — redundant; the scripts already
+   declare `ENV: jax full_datasets`.
+2. "#213 removing committed datasets is the trigger" — no; with full-size data on disk
+   everything passes under the unmodified profile.
+
+**Still open (class, not instance):** `should_simulate` tests only directory existence and
+cannot detect a dataset built under a different `PYAUTO_SMALL_DATASETS` regime. Any future
+shared-dataset script that omits its declaration reintroduces this silently.

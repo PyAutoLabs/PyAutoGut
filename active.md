@@ -12,16 +12,6 @@
   - autolens_workspace_test (feature/vacuous-jax-assertions)
   - autogalaxy_workspace_test (feature/vacuous-jax-assertions)
 
-## jax-likelihood-smoke-small-datasets
-- issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/231
-- status: workspace-shipped, awaiting-merge
-- workspace-pr: https://github.com/PyAutoLabs/autolens_workspace_test/pull/232
-- prompt: active/jax_likelihood_smoke_small_datasets.md
-- notes: NOT stale constants — the literals are CORRECT (agree to 1e-7 at full size; JAX/NumPy parity matches to 14 sig figs). Root cause: modeling_visualization_{rectangular,delaunay}_jit.py carried NO `__Env__` declaration while their sibling modeling_visualization_jit.py has `ENV: real_output`, so they inherit SMALL_DATASETS=1; should_simulate RMTREES before re-simulating when capped, rebuilding the SHARED dataset/imaging/jax_test at 16x16 and poisoning every later jax_likelihood run. Fix = add the missing declaration to the 2 siblings; no literal, no profile changed. TWO of my earlier diagnoses were WRONG and are corrected on the issue (profile override = redundant; #213 = not the trigger). LATENT: should_simulate only tests directory existence, so it cannot detect a dataset built under a different SMALL_DATASETS regime — the class stays open.
-- worktree: ~/Code/PyAutoLabs-wt/jax-likelihood-smoke-small-datasets
-- repos:
-  - autolens_workspace_test (feature/jax-likelihood-smoke-small-datasets)
-
 ## api-validation-and-crash-fixes
 - issue: https://github.com/PyAutoLabs/PyAutoArray/issues/416
 - epic: https://github.com/PyAutoLabs/PyAutoArray/issues/415

@@ -252,7 +252,10 @@ def _sampler_config_dict(
     if sampler in _MULTI_START_CLASSES:
         # MAP optimizer: no n_live; records its own multi-start knobs, plus the
         # auto-convergence early-stop criterion for the ``*_autoconv`` variants.
-        cfg = {**multi_start_settings(sampler, dataset_class), "number_of_cores": 1}
+        cfg = {
+            **multi_start_settings(sampler, dataset_class, model_type),
+            "number_of_cores": 1,
+        }
         # Recorded for BOTH arms: the fixed-step cells explicitly disable
         # checking (leaving it unset would silently enable it, see _samplers).
         if sampler in _MULTI_START_AUTOCONV:

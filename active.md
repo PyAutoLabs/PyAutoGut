@@ -1,5 +1,11 @@
 # Active Tasks
 
+## preserve-in-zip-replace-member
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1414
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/preserve-in-zip-replace-member
+- repos:
+
 ## point-source-chi-squared-variants
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/657
 - session: claude --resume daaa46f9-aac5-48e2-9146-1202a92d879e

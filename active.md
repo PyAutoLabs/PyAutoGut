@@ -2,15 +2,21 @@
 
 ## python-312-floor
 - issue: https://github.com/PyAutoLabs/PyAutoNerves/issues/142
-- status: library-dev
+- status: awaiting-input
 - prompt: active/python_312_floor_phase_1a_nerves.md
 - branch: feature/python-312-floor
 - worktree: /home/jammy/Code/PyAutoLabs/.codex-worktrees/python-312-floor
+- checkpoint: https://github.com/PyAutoLabs/PyAutoNerves/issues/142#issuecomment-5109079935
+- local-commits: PyAutoNerves f06dd40, a3ed651 (not pushed)
+- heart-ack: workspace validation not passing (13 failed, 2026-07-21T19-05-22Z); 33 stale parked script(s); manifest drift: tenant firewall (organ code) — 6 mismatch(es) vs PyAutoMind/repos.yaml; release validation stale: source moved since rehearsal (PyAutoNerves, PyAutoFit, PyAutoArray, PyAutoGalaxy, PyAutoLens)
 - repos:
   - PyAutoNerves: feature/python-312-floor
 - notes: Phase 1A of the reviewed Python >=3.12 ecosystem campaign. Shared
   branch/worktree task will grow through the dependency-ordered core stack;
-  JAX 0.11 and Python 3.14 support remain separate follow-ups.
+  JAX 0.11 and Python 3.14 support remain separate follow-ups. Tests and review
+  are green, but the strict autonomous smoke leg parked on 11 pre-existing
+  autolens_workspace_test failures reproduced identically on main; repair the
+  organism smoke baseline before resuming.
 
 ## vacuous-jax-assertions
 - issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/229

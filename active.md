@@ -12,15 +12,25 @@
   - autolens_workspace_test (feature/vacuous-jax-assertions)
   - autogalaxy_workspace_test (feature/vacuous-jax-assertions)
 
+## jax-likelihood-smoke-small-datasets
+- issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/231
+- status: workspace-shipped, awaiting-merge
+- workspace-pr: https://github.com/PyAutoLabs/autolens_workspace_test/pull/232
+- prompt: active/jax_likelihood_smoke_small_datasets.md
+- notes: NOT stale constants — the literals are CORRECT (agree to 1e-7 at full size; JAX/NumPy parity matches to 14 sig figs). Root cause: modeling_visualization_{rectangular,delaunay}_jit.py carried NO `__Env__` declaration while their sibling modeling_visualization_jit.py has `ENV: real_output`, so they inherit SMALL_DATASETS=1; should_simulate RMTREES before re-simulating when capped, rebuilding the SHARED dataset/imaging/jax_test at 16x16 and poisoning every later jax_likelihood run. Fix = add the missing declaration to the 2 siblings; no literal, no profile changed. TWO of my earlier diagnoses were WRONG and are corrected on the issue (profile override = redundant; #213 = not the trigger). LATENT: should_simulate only tests directory existence, so it cannot detect a dataset built under a different SMALL_DATASETS regime — the class stays open.
+- worktree: ~/Code/PyAutoLabs-wt/jax-likelihood-smoke-small-datasets
+- repos:
+  - autolens_workspace_test (feature/jax-likelihood-smoke-small-datasets)
+
 ## api-validation-and-crash-fixes
 - issue: https://github.com/PyAutoLabs/PyAutoArray/issues/416
 - epic: https://github.com/PyAutoLabs/PyAutoArray/issues/415
-- status: library-shipped, awaiting-merge
-- library-pr: https://github.com/PyAutoLabs/PyAutoArray/pull/417 (MERGE FIRST), https://github.com/PyAutoLabs/PyAutoLens/pull/662
+- status: phase-1-merged, phases 2-4 remain
+- library-pr: PyAutoArray#417 MERGED (9411904d), PyAutoLens#662 MERGED (2a3f1a63); PyAutoLens#531 CLOSED
 - user-facing: true
 - prompt: active/rhayes_audit_validation_and_crashes.md
 - heart-ack: workspace validation not passing (13 failed, 2026-07-21T19-05-22Z); 33 stale parked script(s); manifest drift: tenant firewall (organ code); release validation stale
-- phases: 1 (crash bugs) SHIPPED 2026-07-28 — PRs open, unmerged; 2 (9 constructor guards, needs shared `_validate_*` home decision — PyAutoArray is the natural floor); 3 (adapt_images error legibility + B10 tolerance test); 4 HELD awaiting @rhayes777's answer on the z_lens>z_source warning
+- phases: 1 (crash bugs) MERGED 2026-07-28 (smoke clean, 0 regressions; 5 jax_likelihood failures were pre-existing → autolens_workspace_test#231/PR#232); 2 (9 constructor guards, needs shared `_validate_*` home decision — PyAutoArray is the natural floor); 3 (adapt_images error legibility + B10 tolerance test); 4 HELD awaiting @rhayes777's answer on the z_lens>z_source warning
 - notes: @rhayes777's 2026-05-23 audit, 5 issues, 66d unanswered — all 5 replied 2026-07-28, all 16 findings re-verified on main. Brain scored 17/too-large and proposed design/core_api/workspace/docs; OVERRIDDEN to split by defect class (no workspace or docs work exists here) — recorded per the repo-count-difficulty-proxy caveat. #332's "Delaunay/KNN unusable" headline is FALSE (they need adapt_images); the real defect is the opaque error, so the regression test asserts a CLEAR FAILURE, not a successful fit. Split-on-rectangular: DESIGN INTENT is that rectangular does NOT support Split — fix is a clear "unsupported" exception, NOT the missing capability. Scope is 9 combos / 2 failure modes (3 rect meshes x 3 Split regs), not the 1 reported: RectangularUniform → AttributeError; RectangularAdaptDensity/AdaptImage → IndexError via the FALSE pass-through at rectangular.py:460 (delete it). Delaunay+ConstantSplit works (5096.4420). Constructors are JAX-traced — no Python `if` on possible tracers.
 - worktree: ~/Code/PyAutoLabs-wt/api-validation-and-crash-fixes
 - repos:

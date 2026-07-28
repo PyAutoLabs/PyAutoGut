@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-761 records across 6 buckets.
+762 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -48,6 +48,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [assistant-ref-mechanics](2026/07/assistant-ref-mechanics.md) — science-project -> assistant refer-back mechanics complete — non-blocking provenance-drift check in start-new-…
 - [assistant-wiki-release](2026/07/assistant-wiki-release.md) — wiki/core release-complete vs autolens_workspace — gaps filled (LOS halos, sky background via DatasetModel, de…
 - [auto-dev-mode](2026/07/auto-dev-mode.md)
+- [auto-simulate-guard-targets](2026/07/auto-simulate-guard-targets.md)
 - [autocti-assistant](2026/07/autocti-assistant.md) — closed
 - [autocti-notebook-bootstrap](2026/07/autocti-notebook-bootstrap.md) — Replaced the obsolete `%matplotlib inline` / `pyprojroot` bootstrap in 79 maintained AutoCTI scripts with `aut…
 - [autofit-assistant-birth](2026/07/autofit-assistant-birth.md) — autofit_assistant born PUBLIC and fully built in one --auto supervised session (launch gates: public at birth,…

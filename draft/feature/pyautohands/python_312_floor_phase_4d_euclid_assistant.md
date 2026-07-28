@@ -15,7 +15,7 @@ Parent: `python_312_floor_phase_4_independent.md`
 
 ## Scope
 
-Raise euclid_assistant package metadata, classifiers, test/development
+Raise @euclid_assistant package metadata, classifiers, test/development
 configuration, and living setup documentation to Python 3.12/3.13. Preserve
 historical/provenance material and keep assistant-content updates scoped to
 live support claims.
@@ -26,4 +26,3 @@ live support claims.
 - The assistant's validation/test suite passes on Python 3.12 and 3.13.
 - No generated or historical content changes outside the intended support
   claims.
-

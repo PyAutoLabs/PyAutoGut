@@ -50,6 +50,18 @@
     so output/ and the generated dataset must be cleared between verification
     runs or the run proves nothing.
 
+    POST-MERGE FIX (autolens_workspace#362, 722d2537): the root .gitignore has
+    `output/`, which matches any output/ directory at any depth, so `git add -A`
+    silently refused
+    `scripts/guides/hpc/batch_{cpu,gpu}/output/.gitignore` while the sibling
+    error/ stubs went in. Git does not warn when add -A declines an ignored
+    path. On a fresh clone the stdout log dir would not exist and sbatch rejects
+    a job whose -o directory is missing, so the first submit would fail.
+    autogalaxy was unaffected because it already tracked both files (force-added
+    when its batch dirs were created). Fixed with `git add -f`. No gate could
+    catch this: smoke/navigator/banner-lint all check scripts/ references, not
+    whether an empty log dir is tracked.
+
     CI CATCH: `navigator / Navigator paths + banner lint` failed on autolens
     for `README.md -> missing path: scripts/guides/hpc/sync.conf`. autogalaxy
     passed the identical line because it already carried a

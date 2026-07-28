@@ -19,6 +19,8 @@
 - prompt: active/pixelized_multistart_prodigy_cpu.md
 - repos:
   - autolens_workspace_developer: feature/pix-prodigy-cpu
+  - autolens_profiling: feature/pix-prodigy-cpu
+  - autolens_workspace: feature/pix-prodigy-cpu
 
 ## point-source-chi-squared-variants
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/657

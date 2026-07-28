@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-764 records across 6 buckets.
+766 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -262,6 +262,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [pix-inversion-not-positive-definite](2026/07/pix-inversion-not-positive-definite.md)
 - [pix-nonfinite-localisation](2026/07/pix-nonfinite-localisation.md) — phase 1 — LOCALISED
 - [pixelized-gradient-experiment](2026/07/pixelized-gradient-experiment.md)
+- [pixelized-multistart-prodigy-cpu](2026/07/pixelized-multistart-prodigy-cpu.md)
 - [plot-rst-functional-rewrite](2026/07/plot-rst-functional-rewrite.md)
 - [point-pairing-policies](2026/07/point-pairing-policies.md)
 - [potential-correction-asymmetry](2026/07/potential-correction-asymmetry.md) — PR #333
@@ -273,6 +274,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [pre-build-slim](2026/07/pre-build-slim.md) — step 3 of the pre_build audit — sweep vestige DELETED (human decision): black on staged dirs only, dataset/con…
 - [preopt-breakdown-dashboard](2026/07/preopt-breakdown-dashboard.md) — Phase-4 (likelihood_breakdown + dashboard) leg of the polish.md PreOptimizationTimes campaign. Delivered: A100…
 - [preserve-in-zip](2026/07/preserve-in-zip.md) — Promoted the search-zip preservation concern to public AbstractPaths.preserve_in_zip (no-op sans zip, idempote…
+- [preserve-in-zip-replace-member](2026/07/preserve-in-zip-replace-member.md) — closed
 - [prior-config-cache](2026/07/prior-config-cache.md) — The aggregator arc's "deeper follow-up" — cProfile showed 77% of per-result summary/model load was Model.__ini…
 - [prior-width-safety](2026/07/prior-width-safety.md) — Phase 2 of #1331 — RelativeWidthModifier abs(mean)+opt-in absolute_floor, default-path width guard (parameter-…
 - [priors-messages-fixes](2026/07/priors-messages-fixes.md) — Phase 1 of #1331 priors/messages batch — 7 fixes (01/02/04/10 + decisions 1/3/4), 12 regression tests, Fable m…

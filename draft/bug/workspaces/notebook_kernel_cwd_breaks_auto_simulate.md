@@ -68,22 +68,37 @@ works from a script run at the root and cannot work from a notebook run in
 The `.py` scripts are fine; only the generated notebooks break. That is why
 `run_scripts` shards mostly pass while `run_notebooks` shards mostly fail.
 
-## Fix options (decide before implementing)
+## Fix options — RESOLVED 2026-07-28 (both original options were wrong)
 
-1. **Central, in PyAutoHands** — make `execute_notebook` force the kernel's
-   working directory to the workspace root. This is one change covering all
-   three workspaces and matches the documented convention, but it alters
-   notebook execution semantics everywhere, so any notebook that *relies* on
-   its own directory must be checked. Note `--output f` is currently the same
-   path as the input; a cwd change interacts with that.
-2. **Per-script** — resolve the simulator path relative to the script/notebook
-   file rather than the cwd (e.g. off `__file__`, or a helper in
-   `al.util.dataset`). Touches the ~116 scripts the `should_simulate`
-   migration already swept (autolens_workspace#354 and siblings), but leaves
-   the execution model alone.
+Investigated empirically before implementing. **Neither option as originally
+written is implementable.**
 
-Option 1 is the smaller diff; option 2 is the more local blast radius. This
-needs a human call — do not pick at implementation time.
+1. **"Central, in PyAutoHands — force the kernel's working directory"** — this
+   is *not* a `cwd=` kwarg on `subprocess.run`. The launcher's cwd is already
+   the workspace root; nbconvert overrides the **kernel's** cwd regardless, and
+   exposes **no CLI flag** for it. The only knob is
+   `resources['metadata']['path']`, which nbclient turns into the kernel `cwd`
+   (`nbclient/client.py:535`) — reachable only from the Python API.
+
+2. **"Per-script — resolve off `__file__`"** — `__file__` **is not defined in a
+   notebook kernel** (verified). It exists in the `.py` scripts, which already
+   work, and is missing in exactly the notebook context that is broken. A
+   root-discovery helper (walk up from `cwd` for a marker) would be needed
+   instead — ~116 guards plus a library change.
+
+**Chosen: 1b** (human call, 2026-07-28) — keep the subprocess boundary, but
+point it at a new `autohands/run_notebook.py` that calls `ExecutePreprocessor`
+with `resources={'metadata': {'path': <workspace root>}}`. Process isolation,
+`BUILD_SCRIPT_TIMEOUT` and per-notebook env are all unchanged; only the
+kernel's cwd moves. No tutorial scripts touched.
+
+**The load-bearing constraint** (nearly missed): `build_util.is_clean_skip_exit`
+parses the run's combined stdout/stderr for a `CellExecutionError` marker whose
+last line is `SystemExit: 0`, to tell an intentional optional-dependency skip
+from a real failure. The runner therefore leaves `CellExecutionError`
+**uncaught** so Python's own traceback reproduces that exact shape. Verified:
+`sys.exit(0)` → `True`, `sys.exit(1)` → `False`, `ValueError` → `False`, plus
+all 234 PyAutoHands tests green.
 
 ## Verification
 

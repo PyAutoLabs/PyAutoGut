@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-763 records across 6 buckets.
+764 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -185,6 +185,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [interpolator-aggregator-test-mode](2026/07/interpolator-aggregator-test-mode.md)
 - [interpolator-stale-needs-fix](2026/07/interpolator-stale-needs-fix.md)
 - [inversion-testmode-singular-guard](2026/07/inversion-testmode-singular-guard.md) — release-tail singular/non-PD inversion FAILs (slam/cpu_fast_modeling) were a flaky TEST_MODE artifact, not a c…
+- [issue-cleanup](2026/07/issue-cleanup.md)
 - [jax-autodiff-gradients-audit](2026/07/jax-autodiff-gradients-audit.md) — 3-phase JAX autodiff gradients audit complete in one supervised session — every smooth likelihood FD-certified…
 - [jax-cache-default](2026/07/jax-cache-default.md) — + XLA_FLAGS clobber fix
 - [jax-compile-time-research](2026/07/jax-compile-time-research.md)

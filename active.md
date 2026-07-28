@@ -2,11 +2,12 @@
 
 ## python-312-floor
 - issue: https://github.com/PyAutoLabs/PyAutoNerves/issues/142
-- status: library-dev (PyAutoCTI); PyAutoNerves awaiting-merge
+- status: campaign-paused; PyAutoNerves and PyAutoCTI awaiting-merge
 - library-pr: https://github.com/PyAutoLabs/PyAutoNerves/pull/143
 - prompt: active/python_312_floor_phase_1a_nerves.md
 - phase-4a-issue: https://github.com/PyAutoLabs/PyAutoCTI/issues/100
 - phase-4a-prompt: active/python_312_floor_phase_4a_autocti.md
+- phase-4a-pr: https://github.com/PyAutoLabs/PyAutoCTI/pull/101
 - phase-4b-issue: https://github.com/PyAutoLabs/PyAutoReduce/issues/59
 - phase-4b-prompt: active/python_312_floor_phase_4b_autoreduce.md
 - phase-4b-status: planned; worktree not attached; no source edits
@@ -29,7 +30,9 @@
   `pending-release`; merge remains human-gated before dependent phases advance.
   Independent Phase 4A is proceeding in PyAutoCTI; its metadata and living
   installation claim are in scope, while archival paper/history and release
-  execution remain out of scope. Independent Phase 4B is also active in
+  execution remain out of scope. PyAutoCTI PR #101 is open with
+  `pending-release`, fully tested on 3.12/3.13 and review CLEAN. Independent
+  Phase 4B is also active in
   PyAutoReduce; its census found only package metadata below the floor. Issue
   #59 is filed, but the worktree has not been attached and no source edits were
   made before the overnight pause.

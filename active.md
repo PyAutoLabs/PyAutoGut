@@ -22,6 +22,19 @@
   missed. No ecosystem defect was present. PyAutoNerves PR #143 is open with
   `pending-release`; merge remains human-gated before dependent phases advance.
 
+## python-312-floor-autocti
+- issue: https://github.com/PyAutoLabs/PyAutoCTI/issues/100
+- status: library-dev
+- prompt: active/python_312_floor_phase_4a_autocti.md
+- branch: feature/python-312-floor
+- worktree: /home/jammy/Code/PyAutoLabs/.codex-worktrees/python-312-floor
+- heart-ack: workspace validation not passing (13 failed, 2026-07-21T19-05-22Z); 33 stale parked script(s); manifest drift: tenant firewall (organ code) — 6 mismatch(es) vs PyAutoMind/repos.yaml; release validation stale: source moved since rehearsal (PyAutoNerves, PyAutoFit, PyAutoArray, PyAutoGalaxy, PyAutoLens)
+- repos:
+  - PyAutoCTI: feature/python-312-floor
+- notes: Independent-package phase 4A. Metadata and living installation claim
+  only; archival paper and historical traceback remain unchanged. Release stays
+  behind the PyAutoCTI resurrection/readiness gate and human approval.
+
 ## vacuous-jax-assertions
 - issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/229
 - status: awaiting-merge

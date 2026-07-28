@@ -21,7 +21,7 @@
 
   ALSO: Brain's Feature Agent scored this large/split-into-phases — OVERRIDDEN to single phase (one skill, one repo, reasoning already settled by the sweep); its "public-API change may ripple downstream" risk is a false positive for a skill body. Claimed PyAutoBrain over a STALE guard-followups worktree claim (all 3 of its PRs had merged 12:53; that task has since cleaned itself up fully).
 
-  LEFT OPEN DELIBERATELY: PyAutoBrain#130 (umbrella, bucket B — needs a human to say whether Phase 5 is done); PyAutoHands#16/#17; the 7 bucket-C annotated issues; the 22-issue bucket-F backlog. An unregistered PyAutoLens worktree on `docs/paper-jax-intro-revision` (2 pushed commits, in no Mind registry) was found living inside this task's worktree root and was NOT removed — it needs its own adjudication.
+  LEFT OPEN DELIBERATELY: PyAutoBrain#130 (umbrella, bucket B — needs a human to say whether Phase 5 is done); PyAutoHands#16/#17; the 7 bucket-C annotated issues; the 22-issue bucket-F backlog. CLEANUP TRAP (recorded because it nearly caused a wrong call): the task worktree root looked like it held a foreign PyAutoLens worktree on `docs/paper-jax-intro-revision` with 2 unmerged commits. It did not — `worktree_create` symlinks every non-claimed repo back to the canonical checkout, so `git -C <wt-root>/PyAutoLens` was reading CANONICAL PyAutoLens, which another session had transiently switched to that branch mid-task. It is back on clean `main` now, nothing was orphaned, and `worktree_remove` would have been safe all along. When auditing a worktree root, test `[[ -L "$entry" ]]` FIRST — a symlinked repo reports the canonical checkout's branch and dirty state as if they were the worktree's own.
 
 ## Original prompt
 

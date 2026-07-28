@@ -1,5 +1,13 @@
 # Active Tasks
 
+## multistart-prodigy-compile
+- issue: https://github.com/PyAutoLabs/autolens_profiling/issues/93
+- session: claude --resume 73eff5ef-e2f6-46ba-9304-60dade7008ac
+- status: workspace-dev
+- notes: phase A (measure, autolens_profiling) in flight; phase B (PyAutoFit pyloop batching) serialises behind preserve-in-zip-replace-member's PyAutoFit merge (#1414 / PR#1427)
+- worktree: ~/Code/PyAutoLabs-wt/multistart-prodigy-compile
+- repos:
+
 ## preserve-in-zip-replace-member
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1414
 - status: library-shipped, awaiting-merge

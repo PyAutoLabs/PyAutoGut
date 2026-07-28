@@ -1,3 +1,89 @@
+## hpc-guide-sync
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/360
+- completed: 2026-07-28
+- workspace-pr: https://github.com/PyAutoLabs/autolens_workspace/pull/361 (merged 301759a5), https://github.com/PyAutoLabs/autogalaxy_workspace/pull/174 (merged 6cbd5570)
+- summary: |
+    The autolens HPC guide had regressed to an older pattern (`srun -n 16
+    --multi-prog`, `sys.argv[1]` integer indexing, hand-written `.conf`
+    CPU-index files, no GPU coverage) while autogalaxy carried a modern
+    array-job guide. Ported the modern guide across as
+    `example_cpu_and_gpu.py` (replacing `example_cpu.py`), rewrote the README
+    to the modern shape, and retired the legacy `batch/` directory in favour
+    of `batch_cpu/` + `batch_gpu/`.
+
+    THE REAL FINDING: autogalaxy's guide documented four artifacts — `sync`,
+    `sync.conf.example`, `batch_cpu/submit`, `batch_gpu/submit` — that were
+    committed as ZERO-BYTE files, with an 11.5 KB README explaining their
+    setup, usage and per-directory rsync strategy in detail. A straight port
+    would have left both workspaces pointing at empty files. All four are now
+    populated in both repos, adapted from the working versions in
+    `euclid_strong_lens_modeling_pipeline/hpc/` (which is evidently where the
+    prose was written from — it matches line for line). Generalised for public
+    use: no personal email, no Euclid sample names.
+
+    Defects fixed rather than propagated:
+    - `--dataset` was read via argparse then discarded by a reassignment ~40
+      lines later, so every array task fitted the same dataset and the
+      docstring's "each array job receives a different value" was false.
+      Verified fixed by running `--dataset=cosmos_web_ring` (loaded 209x209 /
+      2809 px, wrote `output/test_mode/hpc/cosmos_web_ring/example`).
+    - `hpc_dataset_path` was built as `.../dataset/example/simple` then had the
+      same two segments appended again -> `.../example/simple/example/simple`.
+    - Three autogalaxy README errors: "fitting many LENSES" in the galaxy
+      workspace; a documented `config/` folder in the hpc dir that does not
+      exist; `slam_pipeline/` listed as a synced dir (neither workspace has one).
+    - The `batch_{cpu,gpu}/{output,error}/.gitignore` stubs were also empty, so
+      SLURM logs would have landed as untracked files rather than ignored.
+    - The `__Env__` rationale claimed the guide loads committed full-resolution
+      FITS; it actually simulates on demand and runs green under either dataset
+      regime. Corrected in both repos (declaration kept, reason made accurate).
+
+    GOTCHA (cost real time): `build_env_for_script` reads a script's in-file
+    `ENV:` declaration by opening the path it is handed, so it MUST be called
+    with the workspace root as cwd. Called from anywhere else it silently
+    misses the declaration and falls back to the default profile — which is how
+    an `ENV: full_datasets` script ends up running under
+    `PYAUTO_SMALL_DATASETS=1` with no error at all. Two verification runs
+    proved the wrong thing before this was spotted (16x16 data, mask padded,
+    instead of the declared 100x100). Also hit the autofit resume trap: a
+    second run reported "Fit Already Completed: skipping non-linear search",
+    so output/ and the generated dataset must be cleared between verification
+    runs or the run proves nothing.
+
+    CI CATCH: `navigator / Navigator paths + banner lint` failed on autolens
+    for `README.md -> missing path: scripts/guides/hpc/sync.conf`. autogalaxy
+    passed the identical line because it already carried a
+    `.navigator_check_ignore` entry, added when its sync artifacts were first
+    introduced; autolens had none, never having had a sync script. Introducing
+    `sync` into a repo therefore requires bringing that exception with it.
+
+    `no_run.yaml` decided empirically, not assumed: autolens skipped
+    `hpc/example_cpu` ("HPC paths dont exist locally") while autogalaxy had no
+    entry. The ported script was RUN — it passes, thanks to the `try/except`
+    around `conf.instance.push` plus a local-dataset fallback — so the entry
+    was removed rather than renamed, bringing the repos into line.
+
+    Brain phase-split override (recorded on the issue): `pyauto-brain feature`
+    returned `too-large (score 15) -> split-into-phases` with four phases
+    (design / core_api / workspace_examples / docs). Overridden to
+    single-phase — the score is driven by repo count and it counted
+    `euclid_strong_lens_modeling_pipeline` as affected when that repo is
+    read-only reference material. A design/core-API split is meaningless for a
+    docs task with no API surface.
+
+    Heart was YELLOW at ship time on four pre-existing reasons (workspace
+    validation 13 failed 2026-07-21; 33 stale parked scripts; manifest drift
+    tenant firewall; stale release validation) — none touching
+    `scripts/guides/hpc/`. Acknowledged by the human before shipping.
+
+    Verification: smoke autolens 16/16, autogalaxy 12/12, zero failures; both
+    guides EXIT 0 under their resolved smoke env; all 6 shell scripts `bash -n`
+    clean and LF-only (CRLF breaks them on HPC); `sync` fails loudly when
+    unconfigured and resolves the workspace root from any cwd; CI green on both
+    PRs (smoke 3.12 + 3.13, catalogue staleness, navigator paths + banner lint).
+
+## Original prompt
+
 # Sync the autolens HPC guide up to the autogalaxy one, and fill both sets of empty batch/sync artifacts
 
 Type: docs

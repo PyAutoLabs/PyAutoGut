@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-760 records across 6 buckets.
+761 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -160,6 +160,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [howto-no-run-stale-entries](2026/07/howto-no-run-stale-entries.md)
 - [howto-should-simulate-howtogalaxy](2026/07/howto-should-simulate-howtogalaxy.md)
 - [howto-should-simulate-howtolens](2026/07/howto-should-simulate-howtolens.md)
+- [hpc-guide-sync](2026/07/hpc-guide-sync.md)
 - [hst-acs-phase1](2026/07/hst-acs-phase1.md)
 - [human-led-tone-sweep](2026/07/human-led-tone-sweep.md) — human-led natural-language framing landed on the agentic-AI pitch surfaces — org front page (.github PRs #1+#2…
 - [hygiene-adjacent-docstrings](2026/07/hygiene-adjacent-docstrings.md) — Phase 2 of the adjacent-docstrings arc: read-only AST-backed Hygiene mode reporting adjacent-docstring boundar…

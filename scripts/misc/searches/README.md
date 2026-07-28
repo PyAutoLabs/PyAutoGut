@@ -216,3 +216,29 @@ The PyAutoFit search itself writes its own output (`samples.csv`,
 autoconf `output_path` under `path_prefix=searches/<sampler>/
 <dataset_class>/<model>/<instrument>`. The metric JSON+PNG above live
 separately under `results/searches/`.
+
+## Pixelized-mesh multi-start cells (#117 campaign knowledge)
+
+The `multi_start_prodigy/{pixelization,knn,delaunay}.py` imaging cells were
+promoted from the autolens_workspace_developer#117 broad-start campaign
+(2026-07; full record: `autolens_workspace_developer/searches_minimal/
+pix_prodigy_findings.md`). The durable lessons their configs encode:
+
+- **Gradient multi-start works on pixelized sources** — the #100/#101
+  "Nautilus wins pix decisively" verdict inverted once the library search
+  gained per-start vmapped state, lr-free Prodigy, and resurrection. knn:
+  +29724 @ r_E 1.599 vs a matched-settings Nautilus's +5704 @ r_E 1.011.
+- **The regularization axis decides searchability**, not the mesh landscape:
+  AdaptSplit's double-squared coefficients make its high-coefficient region
+  an escape-taxed floor (knn) or an outright NaN wall (delaunay). Fixed or
+  inherited reg (the SLaM `source_pix[1]` pattern) is the fast path
+  (~150-250 steps to truth); free Matérn is the safe free parametrization
+  (same fit ceiling, no wall) — hence the `delaunay_matern` model type.
+- **Budgets**: 16 starts recover the basin; `batch_size=4` is mandatory
+  (unbatched 16-start pixelized jvp ≈ 58 GB); 3000 steps because reg-mode
+  crossings arrive late (~1300-2000 steps) — a long plateau is a reg mode,
+  not convergence.
+- **Mesh smoothness class predicts gradient efficiency** (kernel-CDF C∞ >
+  knn Wendland > delaunay C0-at-flip-seams) and, by extension, which
+  posterior kernels each mesh can host (Hamiltonian on the smooth meshes;
+  tempered SMC or warm refits for delaunay).

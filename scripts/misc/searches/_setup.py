@@ -73,6 +73,16 @@ from instruments.interferometer import (  # noqa: E402
 
 _PIXELIZATION_MESH_SHAPE: tuple[int, int] = (39, 39)  # 1521 source pixels — production fiducial
 _HILBERT_PIXELS: int = 1500
+
+# The pixelized-source model types. ``knn`` and ``delaunay_matern`` were
+# promoted from the autolens_workspace_developer#117 multi-start gradient
+# campaign (searches_minimal/pix_prodigy_findings.md): the Delaunay-family
+# meshes share the Hilbert image-mesh + AdaptImages plumbing, and the choice
+# of regularization parametrization is load-bearing for gradient search (see
+# the model builders below).
+_PIX_MODEL_TYPES: tuple[str, ...] = ("pixelization", "delaunay", "knn", "delaunay_matern")
+# The subset whose mesh vertices come from a precomputed image-plane mesh grid.
+_DELAUNAY_FAMILY: tuple[str, ...] = ("delaunay", "knn", "delaunay_matern")
 _MGE_TOTAL_GAUSSIANS: int = (
     20  # ``source_lp[1]`` SLaM fiducial; lighter than likelihood_runtime's 60
 )
@@ -168,7 +178,7 @@ def _build_for_datacube(
             dataset=ds,
             adapt_images=adapt_images,
             settings=al.Settings(
-                use_border_relocator=model_type in ("pixelization", "delaunay"),
+                use_border_relocator=model_type in _PIX_MODEL_TYPES,
                 use_mixed_precision=use_mixed_precision,
             ),
             use_jax=use_jax,
@@ -433,6 +443,10 @@ def _build_model(dataset_class: str, model_type: str, *, mask_radius: float) -> 
         return _pixelization_model(mask_radius=mask_radius)
     if model_type == "delaunay":
         return _delaunay_model(mask_radius=mask_radius)
+    if model_type == "knn":
+        return _knn_model(mask_radius=mask_radius)
+    if model_type == "delaunay_matern":
+        return _delaunay_matern_model(mask_radius=mask_radius)
     if model_type in ("image_plane", "source_plane"):
         return _point_source_model()
     raise ValueError(f"Unknown model_type: {model_type!r}")
@@ -574,6 +588,88 @@ def _delaunay_model(*, mask_radius: float) -> af.Collection:
     return af.Collection(galaxies=af.Collection(lens=lens, source=source))
 
 
+def _knn_model(*, mask_radius: float) -> af.Collection:
+    """Hilbert image_mesh + KNearestNeighbor mesh + free AdaptSplit reg.
+
+    The Wendland-C4 KNN mesh is the Delaunay-family member built for gradient
+    inference: its interpolation is smooth within each neighbour set, so
+    descent information carries much further than through the Delaunay mesh's
+    C0 flip seams. In the #117 broad-start MultiStartProdigy campaign it was
+    the fastest pixelized converger — good basin in ~250 steps, exact truth
+    (r_E to 3 d.p.) once resurrection crossed regularization modes.
+
+    The regularization is the free split-family scheme the campaign validated.
+    LESSON (#117): AdaptSplit double-squares its coefficients, so its
+    high-coefficient region is an over-regularized floor the search must
+    escape via resurrection — on this mesh that region is *finite* (escapable,
+    late breakout ~step 1300), unlike on the Delaunay mesh where it is a NaN
+    wall (see ``_delaunay_matern_model``). Budget accordingly
+    (``_MULTI_START_N_STEPS_BY_CELL``): a long plateau is a reg mode, not
+    convergence.
+    """
+    lens_bulge = al.model_util.mge_model_from(
+        mask_radius=mask_radius,
+        total_gaussians=_MGE_TOTAL_GAUSSIANS,
+        centre_prior_is_uniform=True,
+    )
+    mass, shear = _lens_mass_and_shear()
+    lens = af.Model(al.Galaxy, redshift=0.5, bulge=lens_bulge, mass=mass, shear=shear)
+    # Mesh instance pins all parameters (see _delaunay_model note on why the
+    # bare class form cannot be used). Regularization: free (inner, outer)
+    # with signal_scale pinned, matching the #117 validated surface.
+    regularization = af.Model(al.reg.AdaptSplit)
+    regularization.signal_scale = 1.0
+    pixelization = af.Model(
+        al.Pixelization,
+        mesh=al.mesh.KNearestNeighbor(pixels=_HILBERT_PIXELS, zeroed_pixels=0),
+        regularization=regularization,
+    )
+    source = af.Model(al.Galaxy, redshift=1.0, pixelization=pixelization)
+    return af.Collection(galaxies=af.Collection(lens=lens, source=source))
+
+
+def _delaunay_matern_model(*, mask_radius: float) -> af.Collection:
+    """Hilbert image_mesh + Delaunay mesh + free MaternKernel regularization.
+
+    The gradient-search variant of the ``delaunay`` cell. Same mesh, different
+    regularization parametrization — and that difference is the whole point.
+
+    LESSON (#117, searches_minimal/pix_prodigy_findings.md): with the
+    split-family AdaptSplit reg, broad-start gradient search on the Delaunay
+    mesh hits a **NaN wall** at high coefficients (the #104 double-squared
+    lambda^4 fragility): lanes die instead of learning, and escaping the
+    resulting +8.5k-logL plateau took a ~2000-step resurrection lottery. The
+    Matérn kernel scheme reaches the SAME final fit quality (truth-point bars
+    +29682 vs +30079) but degrades *gracefully* at high coefficient — no NaNs
+    anywhere on its axis — giving a smooth, low-churn climb to the bar.
+    Ordering measured on this mesh: Matérn >= fixed/inherited reg >> free
+    AdaptSplit. (The nautilus ``delaunay`` cell keeps ConstantSplit for
+    comparability with its own history; use THIS cell for gradient searches.)
+
+    ``nu`` is pinned at 0.5 so the free reg is 2-parameter (coefficient,
+    scale), dimension-matched to the AdaptSplit surface it replaces. Kernel
+    regularizations build from pairwise vertex distances (no scipy neighbours)
+    and are the other JAX-safe Delaunay-family pairing; they require
+    tfp-nightly.
+    """
+    lens_bulge = al.model_util.mge_model_from(
+        mask_radius=mask_radius,
+        total_gaussians=_MGE_TOTAL_GAUSSIANS,
+        centre_prior_is_uniform=True,
+    )
+    mass, shear = _lens_mass_and_shear()
+    lens = af.Model(al.Galaxy, redshift=0.5, bulge=lens_bulge, mass=mass, shear=shear)
+    regularization = af.Model(al.reg.MaternKernel)
+    regularization.nu = 0.5
+    pixelization = af.Model(
+        al.Pixelization,
+        mesh=al.mesh.Delaunay(pixels=_HILBERT_PIXELS, areas_factor=0.5, zeroed_pixels=0),
+        regularization=regularization,
+    )
+    source = af.Model(al.Galaxy, redshift=1.0, pixelization=pixelization)
+    return af.Collection(galaxies=af.Collection(lens=lens, source=source))
+
+
 def _point_source_model() -> af.Collection:
     mass, _ = _lens_mass_and_shear()  # No shear for the point-source profile.
     lens = af.Model(al.Galaxy, redshift=0.5, mass=mass)
@@ -594,7 +690,7 @@ def _adapt_images_for(
     dataset_path: Path,
     dataset: Any,
 ) -> al.AdaptImages | None:
-    if model_type not in ("pixelization", "delaunay"):
+    if model_type not in _PIX_MODEL_TYPES:
         return None
     if dataset_class not in ("imaging", "interferometer", "datacube"):
         return None
@@ -602,8 +698,8 @@ def _adapt_images_for(
     galaxy_key = "('galaxies', 'source')"
 
     extra: dict = {}
-    if model_type == "delaunay":
-        # Delaunay's mapper.interpolator_from chain expects to find a
+    if model_type in _DELAUNAY_FAMILY:
+        # The Delaunay family's mapper.interpolator_from chain expects to find a
         # precomputed image_plane_mesh_grid via
         # AdaptImages.galaxy_name_image_plane_mesh_grid_dict — al.Pixelization
         # has no image_mesh field of its own. Mirror the workspace pattern
@@ -643,14 +739,14 @@ def _build_analysis(
     # to guard against the demagnified-source systematic. For pure profiling we
     # don't care about solution quality — we're measuring sampler + likelihood
     # cost — so disable the check rather than wire up truth-position plumbing.
-    raise_positions_exc = model_type not in ("pixelization", "delaunay")
+    raise_positions_exc = model_type not in _PIX_MODEL_TYPES
 
     if dataset_class in ("imaging", "group"):
         return al.AnalysisImaging(
             dataset=dataset,
             adapt_images=adapt_images,
             settings=al.Settings(
-                use_border_relocator=model_type in ("pixelization", "delaunay"),
+                use_border_relocator=model_type in _PIX_MODEL_TYPES,
                 use_mixed_precision=use_mixed_precision,
             ),
             raise_inversion_positions_likelihood_exception=raise_positions_exc,
@@ -661,7 +757,7 @@ def _build_analysis(
             dataset=dataset,
             adapt_images=adapt_images,
             settings=al.Settings(
-                use_border_relocator=model_type in ("pixelization", "delaunay"),
+                use_border_relocator=model_type in _PIX_MODEL_TYPES,
                 use_mixed_precision=use_mixed_precision,
             ),
             raise_inversion_positions_likelihood_exception=raise_positions_exc,

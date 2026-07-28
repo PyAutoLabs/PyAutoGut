@@ -156,7 +156,17 @@ _MULTI_START_LEARNING_RATE = 0.01
 # inversion), so on a 6 GB laptop GPU we size the number of starts to fit rather
 # than chunking them (see the batch_size note below). An A100 runs the full 64:
 #   SEARCHES_N_STARTS=64 python searches/multi_start_adam/group/mge.py ...
-_MULTI_START_N_STARTS_BY_CELL: dict[str, int] = {"group": 32}
+# Cell keys are ``dataset_class`` or the more specific
+# ``dataset_class:model_type`` (resolved first). The pixelized cells run 16
+# starts: their per-replica inversion is the memory driver (the 58 GB jvp
+# citation below) and the #117 campaign showed 16 broad starts suffice to
+# recover the truth basin on every searchable mesh.
+_MULTI_START_N_STARTS_BY_CELL: dict[str, int] = {
+    "group": 32,
+    "imaging:pixelization": 16,
+    "imaging:knn": 16,
+    "imaging:delaunay_matern": 16,
+}
 
 # ``batch_size`` (jax.lax.map chunking) is deliberately NOT used for the group
 # cell. It is a genuine memory lever in MultiStartGradient — aimed at
@@ -168,15 +178,33 @@ _MULTI_START_N_STARTS_BY_CELL: dict[str, int] = {"group": 32}
 #   64 starts + batch_size=8  : >44 min, still compiling
 # So we take the smaller vmap instead. ``SEARCHES_BATCH_SIZE`` still forces it
 # on for a cell that genuinely cannot fit any workable n_starts.
-_MULTI_START_BATCH_BY_CELL: dict[str, int] = {}
+# For the PIXELIZED cells batching is NOT optional: the unbatched 16-start
+# jvp fusion is the ~58 GB allocation cited above, so ``batch_size=4`` (the
+# #117 campaign value, numerically inert per PyAutoFit#1374) is the default.
+_MULTI_START_BATCH_BY_CELL: dict[str, int] = {
+    "imaging:pixelization": 4,
+    "imaging:knn": 4,
+    "imaging:delaunay_matern": 4,
+}
 
 
-def multi_start_n_starts(dataset_class: str | None = None) -> int:
+def _cell_lookup(table: dict[str, int], dataset_class: str | None, model_type: str | None):
+    """Resolve a per-cell knob: ``dataset_class:model_type`` wins over
+    ``dataset_class`` wins over the module default (returned as ``None``)."""
+    if dataset_class and model_type and f"{dataset_class}:{model_type}" in table:
+        return table[f"{dataset_class}:{model_type}"]
+    return table.get(dataset_class)
+
+
+def multi_start_n_starts(
+    dataset_class: str | None = None, model_type: str | None = None
+) -> int:
     """Resolve ``n_starts`` for a cell, honouring ``SEARCHES_N_STARTS``."""
     override = os.environ.get("SEARCHES_N_STARTS")
     if override:
         return int(override)
-    return _MULTI_START_N_STARTS_BY_CELL.get(dataset_class, _MULTI_START_N_STARTS)
+    v = _cell_lookup(_MULTI_START_N_STARTS_BY_CELL, dataset_class, model_type)
+    return v if v is not None else _MULTI_START_N_STARTS
 
 
 # Per-dataset-class ``n_steps``. The 300-step default is far too few for the
@@ -185,18 +213,33 @@ def multi_start_n_starts(dataset_class: str | None = None) -> int:
 # final 50 steps (747335 -> 464003, still descending). Any "gradient optimizers
 # can't do this model" claim read off a 300-step run would be an artefact of the
 # step budget, not a property of the method. ``SEARCHES_N_STEPS`` overrides.
-_MULTI_START_N_STEPS_BY_CELL: dict[str, int] = {"group": 3000}
+# The pixelized cells get the same 3000-step budget for a different reason
+# (#117): with a FREE regularization the best-fit reg mode is found by
+# resurrection crossing modes, which landed at step ~1300 (knn) / ~2000
+# (delaunay+AdaptSplit) — a long plateau is a reg mode, not convergence. A
+# 300-step read of these cells would be an artefact of the budget.
+_MULTI_START_N_STEPS_BY_CELL: dict[str, int] = {
+    "group": 3000,
+    "imaging:pixelization": 3000,
+    "imaging:knn": 3000,
+    "imaging:delaunay_matern": 3000,
+}
 
 
-def multi_start_n_steps(dataset_class: str | None = None) -> int:
+def multi_start_n_steps(
+    dataset_class: str | None = None, model_type: str | None = None
+) -> int:
     """Resolve ``n_steps`` for a cell, honouring ``SEARCHES_N_STEPS``."""
     override = os.environ.get("SEARCHES_N_STEPS")
     if override:
         return int(override)
-    return _MULTI_START_N_STEPS_BY_CELL.get(dataset_class, _MULTI_START_N_STEPS)
+    v = _cell_lookup(_MULTI_START_N_STEPS_BY_CELL, dataset_class, model_type)
+    return v if v is not None else _MULTI_START_N_STEPS
 
 
-def multi_start_batch_size(dataset_class: str | None = None) -> int | None:
+def multi_start_batch_size(
+    dataset_class: str | None = None, model_type: str | None = None
+) -> int | None:
     """Resolve the memory-bounding ``batch_size``, honouring ``SEARCHES_BATCH_SIZE``.
 
     ``None`` (the default for every cell but ``group``) keeps the fastest
@@ -205,7 +248,7 @@ def multi_start_batch_size(dataset_class: str | None = None) -> int | None:
     override = os.environ.get("SEARCHES_BATCH_SIZE")
     if override:
         return int(override) or None
-    return _MULTI_START_BATCH_BY_CELL.get(dataset_class)
+    return _cell_lookup(_MULTI_START_BATCH_BY_CELL, dataset_class, model_type)
 
 
 # The JAX / optax multi-start gradient MAP optimizers, keyed by profiling
@@ -259,7 +302,9 @@ def _convergence(autoconv: bool) -> af.MultiStartGradientConvergence:
 
 
 def multi_start_settings(
-    sampler: str = "multi_start_adam", dataset_class: str | None = None
+    sampler: str = "multi_start_adam",
+    dataset_class: str | None = None,
+    model_type: str | None = None,
 ) -> dict:
     """The ``n_starts`` / ``n_steps`` / ``learning_rate`` knobs a MultiStart
     builder constructs the search with.
@@ -269,10 +314,10 @@ def multi_start_settings(
     per-cell (see ``multi_start_n_starts``).
     """
     settings: dict = {
-        "n_starts": multi_start_n_starts(dataset_class),
-        "n_steps": multi_start_n_steps(dataset_class),
+        "n_starts": multi_start_n_starts(dataset_class, model_type),
+        "n_steps": multi_start_n_steps(dataset_class, model_type),
     }
-    batch_size = multi_start_batch_size(dataset_class)
+    batch_size = multi_start_batch_size(dataset_class, model_type)
     if batch_size is not None:
         settings["batch_size"] = batch_size
     if sampler not in _PRODIGY_SAMPLERS:
@@ -308,7 +353,7 @@ def build_multi_start(
         path_prefix=f"searches/{sampler}/{dataset_class}/{model_type}/{instrument}",
         number_of_cores=1,
         convergence=_convergence(autoconv=sampler in _MULTI_START_AUTOCONV),
-        **multi_start_settings(sampler, dataset_class),
+        **multi_start_settings(sampler, dataset_class, model_type),
     )
     return cls(**kwargs)
 

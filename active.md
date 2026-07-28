@@ -2,7 +2,7 @@
 
 ## auto-simulate-guard-targets
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/359
-- status: workspace-dev
+- status: awaiting-merge — PRs open, all CI green (Smoke Tests + Navigator Check on both). autolens_workspace#364, autogalaxy_workspace#175, both labelled pending-release. Heart was YELLOW (score 65, no RED) at ship; human acked the 3 unrelated reasons.
 - worktree: ~/Code/PyAutoLabs-wt/auto-simulate-guard-targets
 - autonomy: supervised
 - prompt: draft/bug/autolens_workspace/auto_simulate_guard_wrong_simulator_target.md

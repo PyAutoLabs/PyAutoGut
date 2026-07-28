@@ -9,6 +9,8 @@
 - prompt: active/hpc_guide_sync_and_batch_artifacts.md
 - note: single-phase; Brain's split-into-phases (score 15) overridden — repo-count proxy counted euclid_strong_lens_modeling_pipeline, which is read-only reference material. autogalaxy's batch_cpu/submit, batch_gpu/submit, sync, sync.conf.example are committed ZERO-BYTE — filled in both repos from euclid_strong_lens_modeling_pipeline/hpc/.
 - repos:
+  - autolens_workspace: feature/hpc-guide-sync
+  - autogalaxy_workspace: feature/hpc-guide-sync
 
 ## jax-joss-benchmarks
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/281

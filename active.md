@@ -2,9 +2,13 @@
 
 ## preserve-in-zip-replace-member
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1414
-- status: library-dev
+- status: library-shipped, awaiting-merge
+- library-pr: https://github.com/PyAutoLabs/PyAutoFit/pull/1427, https://github.com/PyAutoLabs/PyAutoGalaxy/pull/533 (docs, merge second)
+- heart-ack: workspace validation not passing (13 failed, 2026-07-21T19-05-22Z); 33 stale parked script(s); manifest drift: tenant firewall (organ code); release validation stale
 - worktree: ~/Code/PyAutoLabs-wt/preserve-in-zip-replace-member
 - repos:
+  - PyAutoFit (feature/preserve-in-zip-replace-member)
+  - PyAutoGalaxy (feature/preserve-in-zip-replace-member)
 
 ## point-source-chi-squared-variants
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/657

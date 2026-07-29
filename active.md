@@ -189,3 +189,12 @@
 - repos:
   - autolens_workspace (feature/assistant-start-here-scripts)
   - autogalaxy_workspace (feature/assistant-start-here-scripts)
+
+## register-tenant-firewall-surfaces
+- issue: https://github.com/PyAutoLabs/PyAutoMind/issues/114
+- session: codex
+- status: library-dev
+- prompt: active/register_recent_tenant_firewall_surfaces.md
+- scope: declare the six intentional Brain/Hands instance-fact surfaces introduced after the frozen tenant-firewall baseline; no organ-source changes
+- worktree: ~/Code/PyAutoLabs-wt/register-tenant-firewall-surfaces
+- repos:

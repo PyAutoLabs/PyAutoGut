@@ -64,22 +64,6 @@
   - autolens_workspace_test (feature/vacuous-jax-assertions)
   - autogalaxy_workspace_test (feature/vacuous-jax-assertions)
 
-## api-validation-and-crash-fixes
-- issue: https://github.com/PyAutoLabs/PyAutoArray/issues/416
-- epic: https://github.com/PyAutoLabs/PyAutoArray/issues/415
-- status: phase-1-merged, phases 2-4 remain
-- library-pr: PyAutoArray#417 MERGED (9411904d), PyAutoLens#662 MERGED (2a3f1a63); PyAutoLens#531 CLOSED
-- user-facing: true
-- prompt: active/rhayes_audit_validation_and_crashes.md
-- heart-ack: workspace validation not passing (13 failed, 2026-07-21T19-05-22Z); 33 stale parked script(s); manifest drift: tenant firewall (organ code); release validation stale
-- phases: 1 (crash bugs) MERGED 2026-07-28 (smoke clean, 0 regressions; 5 jax_likelihood failures were pre-existing → autolens_workspace_test#231/PR#232); 2 (9 constructor guards, needs shared `_validate_*` home decision — PyAutoArray is the natural floor); 3 (adapt_images error legibility + B10 tolerance test); 4 HELD awaiting @rhayes777's answer on the z_lens>z_source warning
-- notes: @rhayes777's 2026-05-23 audit, 5 issues, 66d unanswered — all 5 replied 2026-07-28, all 16 findings re-verified on main. Brain scored 17/too-large and proposed design/core_api/workspace/docs; OVERRIDDEN to split by defect class (no workspace or docs work exists here) — recorded per the repo-count-difficulty-proxy caveat. #332's "Delaunay/KNN unusable" headline is FALSE (they need adapt_images); the real defect is the opaque error, so the regression test asserts a CLEAR FAILURE, not a successful fit. Split-on-rectangular: DESIGN INTENT is that rectangular does NOT support Split — fix is a clear "unsupported" exception, NOT the missing capability. Scope is 9 combos / 2 failure modes (3 rect meshes x 3 Split regs), not the 1 reported: RectangularUniform → AttributeError; RectangularAdaptDensity/AdaptImage → IndexError via the FALSE pass-through at rectangular.py:460 (delete it). Delaunay+ConstantSplit works (5096.4420). Constructors are JAX-traced — no Python `if` on possible tracers.
-- worktree: ~/Code/PyAutoLabs-wt/api-validation-and-crash-fixes
-- repos:
-  - PyAutoArray (feature/api-validation-and-crash-fixes)
-  - PyAutoLens (feature/api-validation-and-crash-fixes)
-  - PyAutoGalaxy (phase 2 — not yet claimed)
-
 ## multistart-prodigy-compile
 - issue: https://github.com/PyAutoLabs/autolens_profiling/issues/93
 - session: claude --resume 73eff5ef-e2f6-46ba-9304-60dade7008ac

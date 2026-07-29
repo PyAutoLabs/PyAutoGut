@@ -1,4 +1,20 @@
 
+## rhayes-audit-validation-phases-2-4
+- epic: https://github.com/PyAutoLabs/PyAutoArray/issues/415 (OPEN — the public watch point promised to @rhayes777 in all five replies)
+- status: planned — phase 1 MERGED and closed 2026-07-29 (PyAutoArray#417 `9411904d`, PyAutoLens#662 `2a3f1a63`, tracker #416 closed, PyAutoLens#531 closed); worktree released, no repo claims held
+- filed: 2026-07-28 · phase-1 shipped 2026-07-28
+- classification: library (PyAutoArray + PyAutoGalaxy + PyAutoLens) — bug, user-facing
+- prompt: draft/bug/autoarray/rhayes_audit_validation_and_crashes.md (carries the phase-1 completion record + the phase 2-4 table)
+- suggested-branch: feature/api-validation-guards
+- open-issues: PyAutoArray#332, PyAutoArray#333, PyAutoGalaxy#440, PyAutoLens#532 — all stay open until phases 2-3 land
+- phase-2 (9 constructor guards; #333 B5-B8/B13 + PyAutoGalaxy#440 B9/B11/B12): needs the shared `_validate_*` home decision — PyAutoArray is the natural floor. Constructors are JAX-traced: no Python `if` on a possible tracer. The negative-redshift half of #532 rides here, NOT with phase 4.
+- phase-3 (#332 + B10): make the missing-`adapt_images` precondition legible — today it surfaces as `AttributeError: 'NoneType' object has no attribute 'array'` from `border_relocator.py:446`, naming nothing the caller controls. The regression test asserts a CLEAR FAILURE, not a successful fit. B10 is a tolerance test only (Ell/Sph 2.357e-06) — do NOT chase bit-identity.
+- phase-4 HELD: `z_lens > z_source` warning — question put to @rhayes777 on PyAutoLens#532 2026-07-28, no reply yet. Multi-plane lens-behind-source is legitimate, so warning at most, never an error.
+- affected-repos:
+  - PyAutoArray
+  - PyAutoGalaxy
+  - PyAutoLens
+
 ## remote-mcp-deployment-tiers
 - issue: https://github.com/PyAutoLabs/autofit_assistant/issues/20 (design/scope shipped 2026-07-21; build gated)
 - status: DESIGN-COMPLETE, build BLOCKED-ON-DEMAND — issue #20 holds the full auth/transport/hosting design + Richard/PyAutoMCP coordination. No code, no network surface built. Per prompt "if it earns it": build tiers 2/3 only once demonstrated demand for REMOTE access exists.

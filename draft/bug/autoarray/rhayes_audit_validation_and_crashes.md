@@ -192,3 +192,47 @@ Re-run any claim straight from the issue bodies; they are self-contained. Gotcha
   `PYAUTO_DISABLE_JAX=1`.
 - **Always test the `adapt_images` branch as well as the bare one** — testing only
   the reporter's construction is what produced the wrong reading on 2026-07-27.
+
+---
+
+## Phase 1 completion record — 2026-07-28
+
+**Shipped:** PyAutoArray#417 (`9411904d`) + PyAutoLens#662 (`2a3f1a63`), both merged.
+PyAutoArray#416 (phase-1 tracker) closed 2026-07-29; PyAutoLens#531 closed.
+Epic PyAutoArray#415 stays **open** for phases 2-4, as do #332, #333,
+PyAutoGalaxy#440 and PyAutoLens#532.
+
+**Delivered (3 of 16 findings — the crash class, no workaround):**
+
+- `Split` regularization on any rectangular mesh now raises an explicit "unsupported"
+  exception at construction, covering all **9** mesh x regularization combinations, not
+  the 1 reported. The false pass-through at `rectangular.py:460` — which claimed split
+  "reuses the same mappings" and produced the second (`IndexError`) failure mode on
+  `RectangularAdaptDensity` / `RectangularAdaptImage` — was deleted, not patched.
+- `PointSolver.solve` returns the single image it finds when the source is outside the
+  caustic, instead of raising numpy `AxisError`.
+- `PointSolver.solve` raises a clear error naming `pixel_scale_precision` when the
+  precision is too coarse to resolve any image, instead of `IndexError`.
+- Regression tests built from the reporter's own snippets; `Delaunay` + `ConstantSplit`
+  (`log_evidence 5096.4420`) kept as the control that Split itself is not broken.
+
+**Validation:** smoke clean across 6 workspaces, **zero regressions**. The 5
+`jax_likelihood` failures observed during the run were baselined sequentially against
+unmodified `main`, confirmed pre-existing, and fixed separately via
+autolens_workspace_test#231 / PR#232.
+
+**Worktree released:** `~/Code/PyAutoLabs-wt/api-validation-and-crash-fixes` removed;
+`feature/api-validation-and-crash-fixes` deleted in PyAutoArray and PyAutoLens, local and
+remote. Nothing from this campaign holds a repo claim.
+
+**Remaining (this prompt returns to `draft/` until phase 2 is started):**
+
+| Phase | Scope | Covers | Blocker |
+|---|---|---|---|
+| 2 | 9 constructor-validation guards | #333 (B5-B8, B13), PyAutoGalaxy#440 (B9, B11, B12) | needs the shared `_validate_*` home decision — PyAutoArray is the natural floor; PyAutoGalaxy not yet claimed |
+| 3 | `adapt_images` precondition error legibility + B10 tolerance regression test | #332, PyAutoGalaxy#440 (B10) | none |
+| 4 | `z_lens > z_source` warning | #532 | HELD on @rhayes777's answer, asked on #532 2026-07-28 |
+
+Phase 2 carries two binding constraints from phase 1: constructors are **JAX-traced**, so
+no Python `if` on a possible tracer; and the negative-redshift half of #532 is *not*
+blocked on the phase-4 question — it rides with phase 2.

@@ -461,10 +461,25 @@ Cold trace + XLA compile, seconds (warm compile in parentheses):
   120 s; mesh cells 16–21 s vs 28–55 s), consistent with XLA's
   multi-core compile parallelism.
 
-A100 rows (job 331380, tags `prodigy-census-a100-*`) are queued behind a
-multi-day external array on the sole healthy GPU node — confirmatory only
-(the #77 census already put single-band A100 compiles at seconds-to-30 s);
-append when the queue drains.
+### A100 tier — attempted, not obtained (job 331380)
+
+The GPU job ran while the node's A100s were saturated by an external multi-day
+array: `cuInit(0)` returned `CUDA_ERROR_NO_DEVICE` and **JAX silently fell back
+to CPU** (`An NVIDIA GPU may be present ... Falling back to cpu`). Its rows are
+therefore 8-core CPU rows, not A100 rows, and were discarded rather than
+committed.
+
+**Trap:** a `--partition=gpu --gres=gpu:1` job that gets no usable device does
+not fail — it warns and runs on CPU, producing plausible-looking numbers.
+Verify the backend from the results themselves (the `local_gpu_*` vs
+`local_cpu` output path) rather than trusting the partition; a "GPU" row slower
+than a many-core CPU row (here: knn `laxmap_vag` 160 s vs the 32-core CPU's
+107 s) is the tell.
+
+A100 rows remain **confirmatory only** — #77 already put single-band A100
+compiles at seconds-to-30 s, and the two CPU tiers agree the verdict is not
+tier-sensitive. Re-run with `sbatch /mnt/ral/jnightin/pixgrad_logs/census_gpu.sbatch`
+when a GPU node is genuinely free.
 
 ### Verdict (issue #93)
 

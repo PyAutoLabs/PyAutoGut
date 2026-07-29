@@ -2,9 +2,12 @@
 
 ## python-312-floor
 - issue: https://github.com/PyAutoLabs/PyAutoNerves/issues/142
-- status: parked; five PRs merged; next core phase claim blocked
+- status: library-dev (PyAutoArray); five prior PRs merged
 - library-pr: https://github.com/PyAutoLabs/PyAutoNerves/pull/143 (MERGED a9bf4561)
 - prompt: active/python_312_floor_phase_1a_nerves.md
+- phase-1b-issue: https://github.com/PyAutoLabs/PyAutoArray/issues/418
+- phase-1b-prompt: active/python_312_floor_phase_1b_array.md
+- phase-1b-status: library-dev
 - phase-4a-issue: https://github.com/PyAutoLabs/PyAutoCTI/issues/100
 - phase-4a-prompt: active/python_312_floor_phase_4a_autocti.md
 - phase-4a-pr: https://github.com/PyAutoLabs/PyAutoCTI/pull/101
@@ -22,8 +25,6 @@
 - phase-4d-pr: https://github.com/Jammy2211/euclid_assistant/pull/11
 - phase-4d-status: merged-unchanged (51143df2); issue auto-closed
 - next-phase: phase 1B — PyAutoArray
-- next-phase-blockers: PyAutoArray is claimed by active task
-  api-validation-and-crash-fixes
 - branch: feature/python-312-floor
 - worktree: /home/jammy/Code/PyAutoLabs/.codex-worktrees/python-312-floor
 - checkpoint-superseded: https://github.com/PyAutoLabs/PyAutoNerves/issues/142#issuecomment-5109079935
@@ -38,6 +39,7 @@
 - heart-ack: workspace validation not passing (13 failed, 2026-07-21T19-05-22Z); 33 stale parked script(s); manifest drift: tenant firewall (organ code) — 6 mismatch(es) vs PyAutoMind/repos.yaml; release validation stale: source moved since rehearsal (PyAutoNerves, PyAutoFit, PyAutoArray, PyAutoGalaxy, PyAutoLens)
 - repos:
   - PyAutoNerves: feature/python-312-floor
+  - PyAutoArray: feature/python-312-floor
   - PyAutoCTI: feature/python-312-floor
   - PyAutoReduce: feature/python-312-floor
   - PyAutoHeart: feature/python-312-floor
@@ -49,8 +51,9 @@
   checked. Opus confirmed two planned release-sequencing hazards: the remaining
   four core library floors must rise before publication, and Heart's legacy
   below-floor install/banner checks must be rewritten in Phase 2. JAX 0.11 and
-  Python 3.14 support remain separate follow-ups. Phase 1B is now blocked only
-  by the existing api-validation-and-crash-fixes claim on PyAutoArray.
+  Python 3.14 support remain separate follow-ups. Phase 1B is active as
+  PyAutoArray issue #418 after the prior claim was durably released; its shared
+  worktree is attached on `feature/python-312-floor` from current `origin/main`.
 
 ## vacuous-jax-assertions
 - issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/229

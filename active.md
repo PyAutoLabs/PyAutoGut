@@ -2,7 +2,7 @@
 
 ## python-312-floor
 - issue: https://github.com/PyAutoLabs/PyAutoNerves/issues/142
-- status: Phase 2 build and health verification; nine prior PRs merged
+- status: Phase 3 coordinated core release readiness; eleven PRs merged
 - library-pr: https://github.com/PyAutoLabs/PyAutoNerves/pull/143 (MERGED a9bf4561)
 - prompt: active/python_312_floor_phase_1a_nerves.md
 - phase-1b-issue: https://github.com/PyAutoLabs/PyAutoArray/issues/418
@@ -29,7 +29,11 @@
 - phase-1e-review: Claude Opus 5 CLEAN on exact byte-identical review tree `83b157014`
 - phase-2-issue: https://github.com/PyAutoLabs/PyAutoHands/issues/206
 - phase-2-prompt: active/python_312_floor_phase_2_build_health.md
-- phase-2-status: library-dev
+- phase-2-hands-pr: https://github.com/PyAutoLabs/PyAutoHands/pull/207
+- phase-2-heart-pr: https://github.com/PyAutoLabs/PyAutoHeart/pull/115
+- phase-2-status: merged-unchanged (Hands `1e9ac6d5`, head `f2e990e0`; Heart `eda92a6b`, head `37783335`)
+- phase-2-review: Claude Opus 5 CLEAN on both exact heads after two remediation rounds
+- phase-2-hosted-matrix: https://github.com/PyAutoLabs/PyAutoHands/actions/runs/30453073189 (22/22 jobs green)
 - phase-4a-issue: https://github.com/PyAutoLabs/PyAutoCTI/issues/100
 - phase-4a-prompt: active/python_312_floor_phase_4a_autocti.md
 - phase-4a-pr: https://github.com/PyAutoLabs/PyAutoCTI/pull/101
@@ -46,7 +50,7 @@
 - phase-4d-prompt: active/python_312_floor_phase_4d_euclid_assistant.md
 - phase-4d-pr: https://github.com/Jammy2211/euclid_assistant/pull/11
 - phase-4d-status: merged-unchanged (51143df2); issue auto-closed
-- next-phase: Phase 2 implementation — PyAutoHands/PyAutoHeart
+- next-phase: Phase 3 coordinated core release readiness; manual version choice and release remain human-required
 - branch: feature/python-312-floor
 - worktree: /home/jammy/Code/PyAutoLabs/.codex-worktrees/python-312-floor
 - checkpoint-superseded: https://github.com/PyAutoLabs/PyAutoNerves/issues/142#issuecomment-5109079935
@@ -60,16 +64,16 @@
   human close authorization
 - heart-ack: workspace validation not passing (13 failed, 2026-07-21T19-05-22Z); 33 stale parked script(s); manifest drift: tenant firewall (organ code) — 6 mismatch(es) vs PyAutoMind/repos.yaml; release validation stale: source moved since rehearsal (PyAutoNerves, PyAutoFit, PyAutoArray, PyAutoGalaxy, PyAutoLens)
 - repos:
-  - PyAutoNerves: feature/python-312-floor
-  - PyAutoHands: feature/python-312-floor
-  - PyAutoArray: feature/python-312-floor
-  - PyAutoFit: feature/python-312-floor
-  - PyAutoGalaxy: feature/python-312-floor
-  - PyAutoLens: feature/python-312-floor
-  - PyAutoCTI: feature/python-312-floor
-  - PyAutoReduce: feature/python-312-floor
-  - PyAutoHeart: feature/python-312-floor
-  - euclid_assistant: feature/python-312-floor
+  - PyAutoNerves: main (`a9bf4561`)
+  - PyAutoHands: main (`1e9ac6d5`)
+  - PyAutoArray: main (`41c55a44`)
+  - PyAutoFit: main (`241f2d69`)
+  - PyAutoGalaxy: main (`b9d9927f`)
+  - PyAutoLens: main (`b40fb0ba`)
+  - PyAutoCTI: main (`3ba4f7a3`)
+  - PyAutoReduce: main (`d7bd916a`)
+  - PyAutoHeart: main (`eda92a6b`)
+  - euclid_assistant: main (`51143df2`)
 - notes: Phase 1A and all independent Phase 4 slices merged unchanged after a
   combined max-effort Claude Opus 5 review returned CLEAN for each exact head.
   Tests, CI where present, wheel metadata, smoke checks, dependency caps, live

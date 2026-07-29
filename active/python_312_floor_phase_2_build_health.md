@@ -5,7 +5,7 @@ Target: PyAutoHands
 Difficulty: large
 Autonomy: supervised
 Priority: high
-Status: library-dev — PyAutoHands#206
+Status: merged — PyAutoHands#207 (`1e9ac6d5`), PyAutoHeart#115 (`eda92a6b`); issue PyAutoHands#206 remains open as the campaign record
 
 Parent: `python_312_ecosystem_floor.md`
 Depends on: `python_312_floor_phase_1_core.md`

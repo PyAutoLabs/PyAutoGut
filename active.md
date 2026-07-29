@@ -2,7 +2,7 @@
 
 ## python-312-floor
 - issue: https://github.com/PyAutoLabs/PyAutoNerves/issues/142
-- status: Phase 1B merged; starting Phase 1C PyAutoFit
+- status: library-dev (PyAutoFit); Phase 1B and five prior PRs merged
 - library-pr: https://github.com/PyAutoLabs/PyAutoNerves/pull/143 (MERGED a9bf4561)
 - prompt: active/python_312_floor_phase_1a_nerves.md
 - phase-1b-issue: https://github.com/PyAutoLabs/PyAutoArray/issues/418
@@ -12,6 +12,9 @@
 - phase-1b-question: https://github.com/PyAutoLabs/PyAutoArray/issues/418#issuecomment-5115166953
 - phase-1b-authorization: https://github.com/PyAutoLabs/PyAutoArray/issues/418#issuecomment-5115445646
 - phase-1b-review: Claude Opus 5 CLEAN on the exact ca98473a tree
+- phase-1c-issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1428
+- phase-1c-prompt: active/python_312_floor_phase_1c_fit.md
+- phase-1c-status: library-dev
 - phase-4a-issue: https://github.com/PyAutoLabs/PyAutoCTI/issues/100
 - phase-4a-prompt: active/python_312_floor_phase_4a_autocti.md
 - phase-4a-pr: https://github.com/PyAutoLabs/PyAutoCTI/pull/101
@@ -60,7 +63,9 @@
   Opus 5-reviewed head `ca98473a`; no release was performed. The human accepted
   the sole sequential smoke timeout as non-causal. Phase 1C now starts in
   PyAutoFit. A separate pre-existing PyNUFFT/SciPy dev-extra incompatibility was
-  reproduced on unmodified main and recorded as a draft bug.
+  reproduced on unmodified main and recorded as a draft bug. Phase 1C is
+  registered as PyAutoFit#1428 with PyAutoFit as its sole affected repository;
+  PyAutoHands is intentionally deferred to Phase 2.
 
 ## vacuous-jax-assertions
 - issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/229

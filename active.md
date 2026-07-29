@@ -34,6 +34,10 @@
 - phase-2-status: merged-unchanged (Hands `1e9ac6d5`, head `f2e990e0`; Heart `eda92a6b`, head `37783335`)
 - phase-2-review: Claude Opus 5 CLEAN on both exact heads after two remediation rounds
 - phase-2-hosted-matrix: https://github.com/PyAutoLabs/PyAutoHands/actions/runs/30453073189 (22/22 jobs green)
+- phase-3-issue: https://github.com/PyAutoLabs/PyAutoHands/issues/208
+- phase-3-prompt: active/python_312_floor_phase_3_core_release.md
+- phase-3-status: release-readiness; preflight and fallback census in progress, manual version choice/release authorization required before any upload
+- phase-3-fallbacks: autoconf `2026.7.15.1`; autoarray/autofit/autogalaxy/autolens `2026.7.29.1` (all unyanked, Requires-Python `>=3.9`)
 - phase-4a-issue: https://github.com/PyAutoLabs/PyAutoCTI/issues/100
 - phase-4a-prompt: active/python_312_floor_phase_4a_autocti.md
 - phase-4a-pr: https://github.com/PyAutoLabs/PyAutoCTI/pull/101
@@ -51,7 +55,7 @@
 - phase-4d-pr: https://github.com/Jammy2211/euclid_assistant/pull/11
 - phase-4d-status: merged-unchanged (51143df2); issue auto-closed
 - next-phase: Phase 3 coordinated core release readiness; manual version choice and release remain human-required
-- branch: feature/python-312-floor
+- branch: none for Phase 3 — release must use the recorded exact `main` heads
 - worktree: /home/jammy/Code/PyAutoLabs/.codex-worktrees/python-312-floor
 - checkpoint-superseded: https://github.com/PyAutoLabs/PyAutoNerves/issues/142#issuecomment-5109079935
 - resume-evidence: https://github.com/PyAutoLabs/PyAutoNerves/issues/142#issuecomment-5109572194

@@ -2,7 +2,7 @@
 
 ## python-312-floor
 - issue: https://github.com/PyAutoLabs/PyAutoNerves/issues/142
-- status: campaign-active; four PRs awaiting-merge
+- status: workspace-dev (euclid_assistant); four prior PRs awaiting-merge
 - library-pr: https://github.com/PyAutoLabs/PyAutoNerves/pull/143
 - prompt: active/python_312_floor_phase_1a_nerves.md
 - phase-4a-issue: https://github.com/PyAutoLabs/PyAutoCTI/issues/100
@@ -16,6 +16,9 @@
 - phase-4c-prompt: active/python_312_floor_phase_4c_heart.md
 - phase-4c-pr: https://github.com/PyAutoLabs/PyAutoHeart/pull/114
 - phase-4c-status: library-shipped, awaiting-merge
+- phase-4d-issue: https://github.com/Jammy2211/euclid_assistant/issues/10
+- phase-4d-prompt: active/python_312_floor_phase_4d_euclid_assistant.md
+- phase-4d-status: workspace-dev
 - branch: feature/python-312-floor
 - worktree: /home/jammy/Code/PyAutoLabs/.codex-worktrees/python-312-floor
 - checkpoint-superseded: https://github.com/PyAutoLabs/PyAutoNerves/issues/142#issuecomment-5109079935
@@ -27,6 +30,7 @@
   - PyAutoCTI: feature/python-312-floor
   - PyAutoReduce: feature/python-312-floor
   - PyAutoHeart: feature/python-312-floor
+  - euclid_assistant: feature/python-312-floor
 - notes: Phase 1A of the reviewed Python >=3.12 ecosystem campaign. Shared
   branch/worktree task will grow through the dependency-ordered core stack;
   JAX 0.11 and Python 3.14 support remain separate follow-ups. Tests, review and
@@ -43,9 +47,12 @@
   Phase 4B is also active in
   PyAutoReduce; its census found only package metadata below the floor. Issue
   #59 is filed and PR #60 is open with `pending-release`, fully tested on
-  3.12/3.13 and review CLEAN. Independent Phase 4C is active in PyAutoHeart;
-  its own package metadata is in scope while release/install verification
-  remains reserved for Phase 2.
+  3.12/3.13 and review CLEAN. Independent Phase 4C is shipped as PyAutoHeart
+  PR #114 with 289 tests green on each supported interpreter and review CLEAN;
+  release/install verification remains reserved for Phase 2. Independent Phase
+  4D is active in euclid_assistant as issue #10; package metadata, required CI
+  coverage, and living setup documentation are in scope, while source papers,
+  generated content, and provenance are protected.
 
 ## vacuous-jax-assertions
 - issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/229

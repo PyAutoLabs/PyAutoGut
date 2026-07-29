@@ -2,7 +2,7 @@
 
 ## python-312-floor
 - issue: https://github.com/PyAutoLabs/PyAutoNerves/issues/142
-- status: Phase 3 validation passed; corrective PR merged; live release held on Heart YELLOW
+- status: Phase 3 live release published; two narrow corrective follow-ups remain
 - library-pr: https://github.com/PyAutoLabs/PyAutoNerves/pull/143 (MERGED a9bf4561)
 - prompt: active/python_312_floor_phase_1a_nerves.md
 - phase-1b-issue: https://github.com/PyAutoLabs/PyAutoArray/issues/418
@@ -36,12 +36,17 @@
 - phase-2-hosted-matrix: https://github.com/PyAutoLabs/PyAutoHands/actions/runs/30453073189 (22/22 jobs green)
 - phase-3-issue: https://github.com/PyAutoLabs/PyAutoHands/issues/208
 - phase-3-prompt: active/python_312_floor_phase_3_core_release.md
-- phase-3-status: rehearsal and definitive Stage 3 validation passed; corrective PyAutoHeart PR merged unchanged; live release not dispatched
+- phase-3-status: live release `2026.7.29.2` published; packages valid; downstream workflow completed with five classified failures
 - phase-3-fix-issue: https://github.com/PyAutoLabs/PyAutoHeart/issues/116
 - phase-3-fix-pr: https://github.com/PyAutoLabs/PyAutoHeart/pull/117
 - phase-3-fix-status: merged-unchanged (bda57c16; reviewed head 8259dcfb; merged tree identical)
 - phase-3-final-validation: https://github.com/PyAutoLabs/PyAutoHeart/actions/runs/30472573498 (588 passed, 0 failed, 91 skipped, 0 timeouts; install A-F PASS)
-- phase-3-heart: YELLOW 80 — workspace validation not passing (13 failed, 2026-07-21T19-05-22Z); 33 stale parked script(s); manifest drift: tenant firewall (organ code) — 6 mismatch(es) vs PyAutoMind/repos.yaml
+- phase-3-heart: YELLOW 80 — workspace validation not passing (13 failed, 2026-07-21T19-05-22Z); 33 stale parked script(s)
+- phase-3-live-release: https://github.com/PyAutoLabs/PyAutoHands/actions/runs/30487799523 (31 success, 5 failure, 1 skipped)
+- phase-3-live-authorization: https://github.com/PyAutoLabs/PyAutoHands/issues/208#issuecomment-5122957688
+- phase-3-live-outcome: https://github.com/PyAutoLabs/PyAutoHands/issues/208#issuecomment-5123225967
+- phase-3-pypi: autonerves/autofit/autoarray/autogalaxy/autolens `2026.7.29.2`; all unyanked with two artifacts and `Requires-Python >=3.12`
+- phase-3-followups: assistant wiki-currency workflows still run Python 3.11; PyAutoHands pre-build commit `95f7502` accidentally staged `=3.12` and `run_logs/`; the AutoGalaxy nufftax smoke failure is within the already-acknowledged workspace-validation class
 - phase-3-release-decision: https://github.com/PyAutoLabs/PyAutoHands/issues/208#issuecomment-5121606547
 - phase-3-fallbacks: autoconf `2026.7.15.1`; autoarray/autofit/autogalaxy/autolens `2026.7.29.1` (all unyanked, Requires-Python `>=3.9`)
 - phase-3-question: https://github.com/PyAutoLabs/PyAutoHands/issues/208#issuecomment-5118261332
@@ -62,8 +67,8 @@
 - phase-4d-prompt: active/python_312_floor_phase_4d_euclid_assistant.md
 - phase-4d-pr: https://github.com/Jammy2211/euclid_assistant/pull/11
 - phase-4d-status: merged-unchanged (51143df2); issue auto-closed
-- next-phase: resolve or refresh the three current Heart YELLOW reasons before live release; source development is unblocked and no duplicate full-main suite is needed
-- branch: none for Phase 3 — release must use the recorded exact `main` heads
+- next-phase: fix the two release-surface regressions without another full ecosystem retest; source development remains unblocked
+- branch: none for the completed release; corrective follow-ups require normal task branches
 - worktree: /home/jammy/Code/PyAutoLabs/.codex-worktrees/python-312-floor
 - checkpoint-superseded: https://github.com/PyAutoLabs/PyAutoNerves/issues/142#issuecomment-5109079935
 - resume-evidence: https://github.com/PyAutoLabs/PyAutoNerves/issues/142#issuecomment-5109572194
@@ -74,10 +79,10 @@
 - issue-close-status: euclid_assistant#10 auto-closed by its PR; PyAutoNerves#142,
   PyAutoCTI#100, PyAutoReduce#59, and PyAutoHeart#113 remain open for explicit
   human close authorization
-- heart-ack: workspace validation not passing (13 failed, 2026-07-21T19-05-22Z); 33 stale parked script(s); manifest drift: tenant firewall (organ code) — 6 mismatch(es) vs PyAutoMind/repos.yaml; release validation stale: source moved since rehearsal (PyAutoNerves, PyAutoFit, PyAutoArray, PyAutoGalaxy, PyAutoLens)
+- heart-ack: workspace validation not passing (13 failed, 2026-07-21T19-05-22Z); 33 stale parked script(s)
 - repos:
   - PyAutoNerves: main (`a9bf4561`)
-  - PyAutoHands: main (`1e9ac6d5`)
+  - PyAutoHands: main (`95f7502`)
   - PyAutoArray: main (`41c55a44`)
   - PyAutoFit: main (`241f2d69`)
   - PyAutoGalaxy: main (`b9d9927f`)

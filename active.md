@@ -206,6 +206,8 @@
 - guard-bug: `worktree_check_conflict` reported NO conflict on both repos despite the two claims above. `worktree_list_claimed` (PyAutoBrain/bin/worktree.sh:326-333) parses `  - <repo>: <branch>` but active.md writes `  - <repo> (<branch>)`, so `repo` swallows the branch and the `==` compare at :346 never matches — the guard has never fired for any task. Filed as draft/bug/pyautobrain/worktree_check_conflict_never_fires.md; NOT fixed in this task
 - worktree: ~/Code/PyAutoLabs-wt/likelihood-function-jax-pointer
 - repos:
+  - autolens_workspace (feature/likelihood-function-jax-pointer)
+  - autogalaxy_workspace (feature/likelihood-function-jax-pointer)
 
 ## register-tenant-firewall-surfaces
 - issue: https://github.com/PyAutoLabs/PyAutoMind/issues/114

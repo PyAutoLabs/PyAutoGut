@@ -2,7 +2,7 @@
 
 ## python-312-floor
 - issue: https://github.com/PyAutoLabs/PyAutoNerves/issues/142
-- status: library-dev (PyAutoHeart); three prior PRs awaiting-merge
+- status: campaign-active; four PRs awaiting-merge
 - library-pr: https://github.com/PyAutoLabs/PyAutoNerves/pull/143
 - prompt: active/python_312_floor_phase_1a_nerves.md
 - phase-4a-issue: https://github.com/PyAutoLabs/PyAutoCTI/issues/100
@@ -14,7 +14,8 @@
 - phase-4b-status: library-shipped, awaiting-merge
 - phase-4c-issue: https://github.com/PyAutoLabs/PyAutoHeart/issues/113
 - phase-4c-prompt: active/python_312_floor_phase_4c_heart.md
-- phase-4c-status: library-dev
+- phase-4c-pr: https://github.com/PyAutoLabs/PyAutoHeart/pull/114
+- phase-4c-status: library-shipped, awaiting-merge
 - branch: feature/python-312-floor
 - worktree: /home/jammy/Code/PyAutoLabs/.codex-worktrees/python-312-floor
 - checkpoint-superseded: https://github.com/PyAutoLabs/PyAutoNerves/issues/142#issuecomment-5109079935
@@ -34,8 +35,9 @@
   paths were resolved from the parent cwd, so in-file ENV declarations were
   missed. No ecosystem defect was present. PyAutoNerves PR #143 is open with
   `pending-release`; merge remains human-gated before dependent phases advance.
-  Independent Phase 4A is proceeding in PyAutoCTI; its metadata and living
-  installation claim are in scope, while archival paper/history and release
+  Independent Phases 4A–4C are shipped as open pending-release PRs for
+  PyAutoCTI, PyAutoReduce, and PyAutoHeart. Their metadata and living
+  installation claims are in scope, while archival paper/history and release
   execution remain out of scope. PyAutoCTI PR #101 is open with
   `pending-release`, fully tested on 3.12/3.13 and review CLEAN. Independent
   Phase 4B is also active in

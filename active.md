@@ -154,7 +154,9 @@
 
 ## multistart-prodigy-start-here
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/366
-- status: workspace-dev
+- status: awaiting-merge
+- workspace-pr: https://github.com/PyAutoLabs/autolens_workspace/pull/373 (OPEN, pending-release)
+- workspace-pr-2: https://github.com/PyAutoLabs/autogalaxy_workspace/pull/180 (OPEN, pending-release)
 - heart-ack: 2026-07-29 — YELLOW 4 reasons, all pre-existing and unrelated to this change: workspace validation not passing (13 failed, 2026-07-21T19-05-22Z); 33 stale parked script(s); manifest drift: public front-door organ tables (generated) — 1 mismatch(es) vs PyAutoMind/repos.yaml; manifest drift: tenant firewall (organ code) — 6 mismatch(es) vs PyAutoMind/repos.yaml
 - ship-evidence: autolens smoke 16/16, autogalaxy smoke 12/12, check_sizes.sh OK both; real no-test-mode fit of autogalaxy imaging/start_here.py converged early at step 132, 7.5min CPU, max log likelihood -808.19
 - prompt: active/multistart_prodigy_in_start_here.md

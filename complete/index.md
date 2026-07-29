@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-769 records across 6 buckets.
+770 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -246,6 +246,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [multistart-contrib-and-vmapped-state](2026/07/multistart-contrib-and-vmapped-state.md)
 - [multistart-gradient-auto-convergence-phase-1](2026/07/multistart-gradient-auto-convergence-phase-1.md)
 - [multistart-gradient-auto-convergence-phase-2](2026/07/multistart-gradient-auto-convergence-phase-2.md)
+- [multistart-prodigy-compile](2026/07/multistart-prodigy-compile.md)
 - [multistart-resurrection-restart-on-death](2026/07/multistart-resurrection-restart-on-death.md)
 - [nautilus-nn-bottleneck](2026/07/nautilus-nn-bottleneck.md) — Nautilus overhead research — anatomy on fast likelihoods (NN training 40-52% + bound geometry 25-38% of wall; …
 - [next-wave-population-optimizers](2026/07/next-wave-population-optimizers.md)

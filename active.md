@@ -129,18 +129,6 @@
   - autolens_workspace_test (feature/vacuous-jax-assertions)
   - autogalaxy_workspace_test (feature/vacuous-jax-assertions)
 
-## multistart-prodigy-compile
-- issue: https://github.com/PyAutoLabs/autolens_profiling/issues/93
-- session: claude --resume 73eff5ef-e2f6-46ba-9304-60dade7008ac
-- status: workspace-shipped, awaiting-merge
-- workspace-pr: https://github.com/PyAutoLabs/autolens_profiling/pull/94 (results-only, pending-release labelled, lint running at hand-off)
-- heart-ack: 2026-07-28 — workspace validation not passing (13 failed, 2026-07-21T19-05-22Z); 33 stale parked script(s); manifest drift: tenant firewall (organ code); release validation stale (all pre-existing, none in autolens_profiling)
-- verdict: phase A DONE. Single-band MultiStartProdigy compile is BENIGN on all endorsed model types (mge/rect/knn/delaunay_matern; worst ~3.5min cold 1-core laptop, <=75s cold / <=2s warm RAL 32-core). Multi-band lax.map explosion does NOT reproduce single-band -> **phase B (PyAutoFit pyloop) is an evidence-based NO-GO**; pyloop lever stays multi-band-FactorGraphModel-only. No PyAutoFit branch was ever created; #1414 serialisation concern is moot.
-- resume-next: (1) RAL A100 job 331380 (queued behind external multi-day array on gpu-2; gpu-1 down) — when it runs, rsync rows from /mnt/ral/jnightin/autolens_profiling_census/scripts/misc/jax_compile/results/, filter tag `prodigy-census-a100-*`, append to README table + results JSON, commit to same branch (confirmatory only — do NOT block the merge on it); (2) merge PR#94 + close #93 (human); (3) route draft/research/autoarray/delaunay_callback_persistent_cache_miss.md via /start_dev — the one real defect found; (4) post-merge cleanup (worktree, branch, complete/2026/07 record).
-- worktree: ~/Code/PyAutoLabs-wt/multistart-prodigy-compile
-- repos:
-  - autolens_profiling (feature/multistart-prodigy-compile)
-
 ## point-source-chi-squared-variants
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/657
 - session: claude --resume daaa46f9-aac5-48e2-9146-1202a92d879e

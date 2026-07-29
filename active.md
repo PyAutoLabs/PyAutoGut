@@ -198,3 +198,4 @@
 - scope: declare the six intentional Brain/Hands instance-fact surfaces introduced after the frozen tenant-firewall baseline; no organ-source changes
 - worktree: ~/Code/PyAutoLabs-wt/register-tenant-firewall-surfaces
 - repos:
+  - PyAutoMind (feature/register-tenant-firewall-surfaces)

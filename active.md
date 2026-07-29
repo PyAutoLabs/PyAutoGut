@@ -148,3 +148,12 @@
 - library-pr: PyAutoArray#414, PyAutoGalaxy#531, PyAutoLens#659 (ALL MERGED 2026-07-27; codex-review fixes included; branches + worktree cleaned)
 - phases: 1 (design) + 2 (core API) COMPLETE; next: start_workspace on active/../draft phase-3 prompt (workspace_test jax_likelihood + profiling examples), then phase 4 (guides), then phase 5 (JAX solver gradients)
 - repos:
+
+## contributing-natural-language-reframe
+- issue: https://github.com/PyAutoLabs/PyAutoScientist/issues/9
+- status: workspace-dev
+- prompt: active/contributing_natural_language_reframe.md
+- scope: docs prose only — PyAutoScientist CONTRIBUTING.md (rewrite) + README.md (positioning prose); generated organs table untouched
+- worktree: ~/Code/PyAutoLabs-wt/contributing-natural-language-reframe
+- repos:
+  - PyAutoScientist (feature/contributing-natural-language-reframe)

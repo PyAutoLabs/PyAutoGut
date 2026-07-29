@@ -139,9 +139,13 @@
 
 ## contributing-natural-language-reframe
 - issue: https://github.com/PyAutoLabs/PyAutoScientist/issues/9
-- status: workspace-dev
+- status: workspace-shipped, awaiting-merge
 - prompt: active/contributing_natural_language_reframe.md
-- scope: docs prose only — PyAutoScientist CONTRIBUTING.md (rewrite) + README.md (positioning prose); generated organs table untouched
+- workspace-pr: https://github.com/PyAutoLabs/PyAutoScientist/pull/10 (pending-release labelled; repo has no CI workflows)
+- scope: docs prose only — PyAutoScientist CONTRIBUTING.md (rewrite) + README.md (positioning prose); generated organs table verified byte-identical
+- heart-ack: 2026-07-29 — workspace validation not passing (13 failed, 2026-07-21T19-05-22Z); 33 stale parked script(s); manifest drift: tenant firewall (organ code) — 6 mismatch(es) vs PyAutoMind/repos.yaml (all pre-existing, none in PyAutoScientist)
+- verdict: natural-language-first reframe shipped. CONTRIBUTING.md rewritten with the trust-first testing section (measured figures: ~3,900 unit tests; ~960 workspace/tutorial scripts run as release validation across 10 repos), the PyAutoScientist/organs explainer, and three contribution routes. README.md headline moved off "human-led AI ... organism" to natural-language-first.
+- resume-next: (1) merge PR#10 + close #9 (human); (2) post-merge cleanup (worktree, branch, complete/2026/07 record)
 - worktree: ~/Code/PyAutoLabs-wt/contributing-natural-language-reframe
 - repos:
   - PyAutoScientist (feature/contributing-natural-language-reframe)
@@ -157,3 +161,16 @@
 - worktree: ~/Code/PyAutoLabs-wt/hygiene-refs-readme-drift
 - repos:
   - PyAutoBrain (feature/hygiene-refs-readme-drift)
+
+## multistart-prodigy-start-here
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/366
+- status: workspace-dev
+- prompt: active/multistart_prodigy_in_start_here.md
+- scope: 8 of 13 dataset-type start_here.py convert to af.MultiStartProdigy; 5 stay on af.Nautilus with a "not available here" note; all 13 modeling.py get a 2-3 line Search-docstring mention with ZERO code
+- blocked-cells: autolens point_source + cluster (AnalysisPoint — point-source JAX gradients do not exist; draft/feature/autolens/point_source_chi_squared_paper_variants_phase_5_jax_gradients.md blocked on phase 2); autolens weak (use_jax=False pinned by PyAutoLens#614, confirmed OPEN); autolens multi + autogalaxy multi (multi-band FactorGraphModel value_and_grad cold compile unbounded on CPU, >2h observed — draft/research/autofit/multi_band_factorgraphmodel_value_and_grad_cold.md, whose named reproducer IS autolens multi/start_here.py)
+- brain-override: Feature Agent returned too-large (score 10) / split-into-phases (design, core_api, workspace_examples, docs) off its repo-count proxy; core_api phase is vacuous (no library code touched at all). Overridden to one PR — uniform prose + search-swap sweep over 26 files in 2 repos
+- smoke-caveat: PYAUTO_TEST_MODE=2 skips search sampling, so smoke does NOT exercise a real MultiStartProdigy fit — needs a separate no-test-mode spot check
+- worktree: ~/Code/PyAutoLabs-wt/multistart-prodigy-start-here
+- repos:
+  - autolens_workspace (feature/multistart-prodigy-start-here)
+  - autogalaxy_workspace (feature/multistart-prodigy-start-here)

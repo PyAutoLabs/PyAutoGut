@@ -142,10 +142,12 @@
 - status: workspace-shipped, awaiting-merge
 - prompt: active/contributing_natural_language_reframe.md
 - workspace-pr: https://github.com/PyAutoLabs/PyAutoScientist/pull/10 (pending-release labelled; repo has no CI workflows)
+- companion-pr: https://github.com/PyAutoLabs/.github/pull/6 (org profile organ table regenerated)
+- body-map: PyAutoMind/repos.yaml public_role x7 reworded — pushed to main (59afba2)
 - scope: docs prose only — PyAutoScientist CONTRIBUTING.md (rewrite) + README.md (positioning prose); generated organs table verified byte-identical
 - heart-ack: 2026-07-29 — workspace validation not passing (13 failed, 2026-07-21T19-05-22Z); 33 stale parked script(s); manifest drift: tenant firewall (organ code) — 6 mismatch(es) vs PyAutoMind/repos.yaml (all pre-existing, none in PyAutoScientist)
-- verdict: natural-language-first reframe shipped. CONTRIBUTING.md rewritten with the trust-first testing section (measured figures: ~3,900 unit tests; ~960 workspace/tutorial scripts run as release validation across 10 repos), the PyAutoScientist/organs explainer, and three contribution routes. README.md headline moved off "human-led AI ... organism" to natural-language-first.
-- resume-next: (1) merge PR#10 + close #9 (human); (2) post-merge cleanup (worktree, branch, complete/2026/07 record)
+- verdict: natural-language-first reframe shipped. Both files were superseded on the branch by the maintainer's own authored text (applied verbatim, commit 8749d66). The README organ table is GENERATED from repos.yaml public_role, so the new role wording had to go through the body map — which propagates to .github/profile/README.md (the public org landing page) as well. Three files move together or repos_sync --check reports front-door drift.
+- resume-next: (1) merge .github PR#6, then PyAutoScientist PR#10 + close #9 (human); (2) post-merge cleanup (worktree, branch, complete/2026/07 record)
 - worktree: ~/Code/PyAutoLabs-wt/contributing-natural-language-reframe
 - repos:
   - PyAutoScientist (feature/contributing-natural-language-reframe)

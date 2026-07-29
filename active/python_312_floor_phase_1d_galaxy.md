@@ -5,7 +5,7 @@ Target: PyAutoGalaxy
 Difficulty: medium
 Autonomy: supervised
 Priority: high
-Status: PR-open — PyAutoGalaxy#535 at `1c34f3c8`, pending authorized merge after green CI
+Status: merged — PR `PyAutoGalaxy#535`, merge `b9d9927f`; issue remains open as the campaign record
 
 Parent: `python_312_floor_phase_1_core.md`
 Depends on: `python_312_floor_phase_1c_fit.md`

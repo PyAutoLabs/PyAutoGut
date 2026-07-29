@@ -182,27 +182,6 @@
   - autolens_workspace (feature/multistart-prodigy-start-here)
   - autogalaxy_workspace (feature/multistart-prodigy-start-here)
 
-## assistant-start-here-scripts
-- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/367
-- status: workspace-dev
-- prompt: active/assistant_section_workspace_start_here_scripts.md
-- scope: the one surface `assistant-first-docs` (PyAutoLens#645, complete 2026-07-24) missed — the ROOT start_here.py of each workspace. autolens: replace `__Three Ways To Learn PyAutoLens__` (lines 353-372, the Manual Navigation / AI Chat Assistant / Fully Agentic AI split) with one `__PyAutoLens AI Assistant__` section mirroring the shipped README/RTD wording. autogalaxy: has NO AI section at all — add the equivalent between `__Wrap Up__` and `__What Data Type?__`
-- autogalaxy-404: https://github.com/PyAutoLabs/autogalaxy_assistant does not exist (gh API 404). Keeping the link is the already-recorded decision — the assistant-first-docs completion record states the URL "is intentionally allowed to return 404 until its repository is created", and it already ships in the AG README + RTD. Re-confirmed by the human 2026-07-29. Neither workspace runs a url_check workflow, so no CI gate is involved
-- brain-override: Feature Agent scored large (6) / split-into-phases off its repo-count proxy; actual change is a ~20-line prose edit in one file per repo, identical in shape — overridden to one PR
-- parallel-claim: `multistart-prodigy-start-here` (#366) claims the SAME two repos. Human decision 2026-07-29: proceed in parallel — zero source-file overlap (that task edits `scripts/<type>/start_here.py`, this one the ROOT `start_here.py`). Only the GENERATED artifacts collide (notebooks/, start_here.ipynb, markdown/, llms-full.txt, workspace_index.json); whichever PR merges second must re-run generate.py + generate_markdown.py rather than hand-resolve
-- regen-note: markdown/start_here.md is NOT produced by generate.py — it comes from PyAutoHands `generate_markdown.py --only start_here.py`, which EXECUTES the script for real figures and hard-exits if PYAUTO_TEST_MODE is set. Cheap here: neither root start_here.py imports autofit or runs a fit
-- retire-candidate: draft/docs/workspaces/unify_ai_assistant_workspace_readmes.md ("Phase 2: workspace READMEs assistant-first") is already satisfied — assistant-first-docs lists autolens_workspace#329 + autogalaxy_workspace#155 as merged and both READMEs carry the unified section today
-- status-detail: awaiting-merge — both PRs OPEN, labelled pending-release
-- workspace-pr: https://github.com/PyAutoLabs/autolens_workspace/pull/371 (719e3a05), https://github.com/PyAutoLabs/autogalaxy_workspace/pull/178 (997fc70)
-- heart-ack: 2026-07-29 — YELLOW 80: workspace validation not passing (13 failed, 2026-07-21T19-05-22Z); 33 stale parked script(s); manifest drift: tenant firewall (organ code) — 6 mismatch(es) vs PyAutoMind/repos.yaml (all pre-existing, none related to a prose-only docs change)
-- stale-artifact-resync: BOTH committed markdown/start_here.md pages were stale before this task — they still carried the old long `__JAX__` section that start_here.py no longer has, and their PNGs predate optimize_pngs() (~4x larger). Regenerating to pick up the new prose necessarily resyncs both. Called out in each PR body so the reviewer does not read it as churn
-- crlf-note: autogalaxy_workspace/start_here.py is a CRLF file with 7 stray LF lines; a normal Edit normalized them and added 10 lines of EOL-only diff noise. Re-applied byte-precisely with \r\n so the diff is a pure 10-line insertion. autolens_workspace/start_here.py is pure LF — no issue there
-- guard-false-negative: `worktree_check_conflict` returned 0 for this task despite two other active tasks claiming the same two repos. Per likelihood-function-jax-pointer's finding, the guard has NEVER fired — worktree_list_claimed parses `  - <repo>: <branch>` but active.md writes `  - <repo> (<branch>)`. Tracked in draft/bug/pyautobrain/worktree_check_conflict_never_fires.md; the parallel-claim decision above was made by the human on the real facts, not on the guard
-- worktree: ~/Code/PyAutoLabs-wt/assistant-start-here-scripts
-- repos:
-  - autolens_workspace (feature/assistant-start-here-scripts)
-  - autogalaxy_workspace (feature/assistant-start-here-scripts)
-
 ## likelihood-function-jax-pointer
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/368
 - status: workspace-dev

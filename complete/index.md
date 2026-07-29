@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-767 records across 6 buckets.
+769 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -192,6 +192,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [jax-grad-env-vars-disable-jax](2026/07/jax-grad-env-vars-disable-jax.md)
 - [jax-grad-param9-autodiff-fd-mismatch](2026/07/jax-grad-param9-autodiff-fd-mismatch.md) — jax_grad imaging pixelization parameter-9 autodiff-vs-FD mismatch → parameter-specific documented FD exclusion…
 - [jax-gradient-optimizer-benchmark](2026/07/jax-gradient-optimizer-benchmark.md)
+- [jax-likelihood-undeclared-siblings](2026/07/jax-likelihood-undeclared-siblings.md)
 - [jax-pytree-partition-vars-no-dict](2026/07/jax-pytree-partition-vars-no-dict.md)
 - [jwst-frame-feasibility](2026/07/jwst-frame-feasibility.md) — JWST per-frame feasibility answered — GO, phased. Should: strongest case = NIRCam SW undersampling (subpixel d…
 - [jwst-frame-products](2026/07/jwst-frame-products.md) — JWST frame products live — 7 feasibility deltas implemented (_crf capture+consume, native MJy/sr + derived man…
@@ -315,6 +316,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [refactor-post-phase3](2026/07/refactor-post-phase3.md) — PyAutoReduce post-phase-3 refactor — MERGED
 - [regen-workspace-notebooks](2026/07/regen-workspace-notebooks.md)
 - [release-advisory-tier-slow-scripts](2026/07/release-advisory-tier-slow-scripts.md) — mode=release integrate kept going RED not on bugs but on a shifting perf-flake tail of slow real-search script…
+- [release-check-e-python-312](2026/07/release-check-e-python-312.md) — Check E now creates its historical 2026.2.26.4 environment explicitly with Python 3.12, fails clearly when tha…
 - [release-datasets-group-b](2026/07/release-datasets-group-b.md) — bare-`dataset/` repos — purged & MERGED
 - [release-docs-polish-learn-paths](2026/07/release-docs-polish-learn-paths.md)
 - [release-profile-jax-default](2026/07/release-profile-jax-default.md) — delete the JAX override-list trap — SHIPPED

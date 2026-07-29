@@ -2,13 +2,13 @@
 
 ## python-312-floor
 - issue: https://github.com/PyAutoLabs/PyAutoNerves/issues/142
-- status: Phase 1B PR open, awaiting authorized merge; five prior PRs merged
+- status: Phase 1B merged; starting Phase 1C PyAutoFit
 - library-pr: https://github.com/PyAutoLabs/PyAutoNerves/pull/143 (MERGED a9bf4561)
 - prompt: active/python_312_floor_phase_1a_nerves.md
 - phase-1b-issue: https://github.com/PyAutoLabs/PyAutoArray/issues/418
 - phase-1b-prompt: active/python_312_floor_phase_1b_array.md
 - phase-1b-pr: https://github.com/PyAutoLabs/PyAutoArray/pull/419
-- phase-1b-status: PR-open (ca98473a; pending-release; merge authorized after green CI)
+- phase-1b-status: merged-unchanged (41c55a44; head ca98473a; CI 4/4 green)
 - phase-1b-question: https://github.com/PyAutoLabs/PyAutoArray/issues/418#issuecomment-5115166953
 - phase-1b-authorization: https://github.com/PyAutoLabs/PyAutoArray/issues/418#issuecomment-5115445646
 - phase-1b-review: Claude Opus 5 CLEAN on the exact ca98473a tree
@@ -28,7 +28,7 @@
 - phase-4d-prompt: active/python_312_floor_phase_4d_euclid_assistant.md
 - phase-4d-pr: https://github.com/Jammy2211/euclid_assistant/pull/11
 - phase-4d-status: merged-unchanged (51143df2); issue auto-closed
-- next-phase: Phase 1C — PyAutoFit, after PyAutoArray#419 is green and merged
+- next-phase: Phase 1C — PyAutoFit
 - branch: feature/python-312-floor
 - worktree: /home/jammy/Code/PyAutoLabs/.codex-worktrees/python-312-floor
 - checkpoint-superseded: https://github.com/PyAutoLabs/PyAutoNerves/issues/142#issuecomment-5109079935
@@ -55,15 +55,12 @@
   checked. Opus confirmed two planned release-sequencing hazards: the remaining
   four core library floors must rise before publication, and Heart's legacy
   below-floor install/banner checks must be rewritten in Phase 2. JAX 0.11 and
-  Python 3.14 support remain separate follow-ups. Phase 1B is open as
-  PyAutoArray#419 at exact reviewed commit `ca98473a`: Python 3.12 and official-
-  profile Python 3.13 suites pass, wheel metadata is correct, Claude Opus 5
-  returned CLEAN, and Heart remains YELLOW with the exact acknowledged launch
-  set and no RED. The human explicitly accepted the sole sequential smoke
-  timeout (`autolens_workspace_test/imaging/subhalo_recovery.py`) as non-causal
-  and authorized merge after green CI. Phase 1C starts only after that merge. A
-  separate pre-existing PyNUFFT/SciPy dev-extra incompatibility was reproduced
-  on unmodified main and recorded as a draft bug.
+  Python 3.14 support remain separate follow-ups. Phase 1B merged unchanged as
+  PyAutoArray#419 (`41c55a44`) after all four CI jobs passed the exact Claude
+  Opus 5-reviewed head `ca98473a`; no release was performed. The human accepted
+  the sole sequential smoke timeout as non-causal. Phase 1C now starts in
+  PyAutoFit. A separate pre-existing PyNUFFT/SciPy dev-extra incompatibility was
+  reproduced on unmodified main and recorded as a draft bug.
 
 ## vacuous-jax-assertions
 - issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/229

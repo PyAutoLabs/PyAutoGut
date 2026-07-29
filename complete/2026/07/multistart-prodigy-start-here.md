@@ -1,3 +1,82 @@
+`start_here.py` across both user-facing workspaces now fits with
+`af.MultiStartProdigy` — the learning-rate-free JAX multi-start gradient MAP
+optimizer — so a new user's first fit finishes in minutes rather than tens of
+minutes, with `modeling.py` remaining the `Nautilus` example that yields the
+full posterior.
+
+## Shipped
+
+- autolens_workspace PR#373 (MERGED `c53f5b11`), autogalaxy_workspace PR#180
+  (MERGED `ea1ce957`). Issue autolens_workspace#366 auto-closed.
+- **8 of 13** dataset-type `start_here.py` converted: autolens
+  `imaging`/`interferometer`/`multi_galaxy`/`group`; autogalaxy
+  `imaging`/`interferometer`/`multi_galaxy`/`cluster`. Each gained a
+  `__Multi Start Gradient Optimization__` section and a `__Posterior__` section
+  stating that a MAP optimizer returns a single best-fit model with no
+  posterior, no errors and no covariances, pointing at the folder's
+  `modeling.py`.
+- **5 kept `af.Nautilus`** with a `__Why Not MultiStartProdigy?__` note.
+- **All 13 `modeling.py`** gained a 2-3 line Search-docstring mention with
+  **zero** code changes (verified by filtering the diff for Python statements).
+
+## The three blockers that cut 13 → 8
+
+1. **Point-source lens-equation solve is not differentiable** — autolens
+   `point_source` and `cluster` (both `AnalysisPoint`). The enabling work is
+   `draft/feature/autolens/point_source_chi_squared_paper_variants_phase_5_jax_gradients.md`,
+   still blocked on its phase-2 merge; its stated goal is verbatim "so gradient
+   searches (`af.MultiStartProdigy` / Adam-family) work on point-source fits".
+   `cluster` additionally ends on `aplt.corner_anesthetic(samples=...)`, a
+   posterior corner plot a MAP optimizer cannot feed.
+2. **PyAutoLens#614 (OPEN)** pins autolens `weak` to `use_jax=False`; a gradient
+   search requires `use_jax=True`.
+3. **Multi-band gradient compile is unbounded on CPU** — autolens and autogalaxy
+   `multi`. Recorded in
+   `draft/research/autofit/multi_band_factorgraphmodel_value_and_grad_cold.md`;
+   its named reproducer IS autolens `multi/start_here.py`'s 4-band
+   `cosmos_web_ring` fit (>2h wall vs 117s single-band). **Smoke would not have
+   caught this** — `PYAUTO_TEST_MODE=2` skips search sampling — so it would have
+   shipped green and hung for real CPU users.
+
+## Two API corrections made while converting
+
+- **`n_batch` deleted** from every converted search: it is Nautilus's own
+  proposal-count knob that autofit merely forwards, not a `MultiStartProdigy`
+  parameter.
+- **`iterations_per_quick_update` 1000/10000 → 50**: those were Nautilus
+  *iteration* counts and would never have fired inside a 300-**step** gradient
+  budget, silently suppressing the quick-update visualization.
+
+## Validation
+
+- autolens smoke 16/16, autogalaxy smoke 12/12; `check_sizes.sh` OK in both.
+- Real no-test-mode fit of autogalaxy `imaging/start_here.py`: converged early
+  at **step 132** of the 300 ceiling, 7.5 min CPU, max log likelihood −808.19 —
+  the only evidence that actually exercised the optimizer.
+- Final CI green on both PR heads (navigator ×2 + smoke 3.12/3.13).
+- Heart YELLOW acknowledged by the human on 4 pre-existing unrelated reasons.
+
+## Traps hit (worth remembering)
+
+- **Navigator passes on `push` but fails on `pull_request` for the same SHA.**
+  The `pull_request` event builds the merge tree with current `main`; `main` had
+  moved `features/potential_correction/` → `features/advanced/potential_correction/`,
+  so the branch's regenerated catalogue named paths absent from the merge tree
+  ("6 missing reference(s)"). Fixed by `git merge origin/main` into the branch
+  (never rebase — pushed), regenerate, then verify locally with
+  `check_navigator.py --root <workspace> --banners=fail`. Falling behind `main`
+  at all is enough to trigger it.
+- **Brain's phase split was overridden.** `feature` returned
+  `too-large (score 10) → split-into-phases` (design/core_api/workspace_examples/docs)
+  off its repo-count proxy; the `core_api` phase was vacuous because no library
+  code is touched. Shipped as one PR pair.
+- **`worktree_check_conflict` returned 0** while two other active worktrees
+  claimed both repos. Hand-checking showed no file overlap
+  (`assistant-start-here-scripts` edits the *repo-root* `start_here.py`; this
+  task only `scripts/`), but the guard protected nothing.
+
+## Original prompt
+
 # start_here.py: MultiStartProdigy as the default search across dataset types
 
 Type: docs

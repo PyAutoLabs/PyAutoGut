@@ -2,7 +2,7 @@
 
 ## python-312-floor
 - issue: https://github.com/PyAutoLabs/PyAutoNerves/issues/142
-- status: workspace-dev (euclid_assistant); four prior PRs awaiting-merge
+- status: parked; five PRs awaiting-merge; next core phase dependency/claim blocked
 - library-pr: https://github.com/PyAutoLabs/PyAutoNerves/pull/143
 - prompt: active/python_312_floor_phase_1a_nerves.md
 - phase-4a-issue: https://github.com/PyAutoLabs/PyAutoCTI/issues/100
@@ -18,7 +18,11 @@
 - phase-4c-status: library-shipped, awaiting-merge
 - phase-4d-issue: https://github.com/Jammy2211/euclid_assistant/issues/10
 - phase-4d-prompt: active/python_312_floor_phase_4d_euclid_assistant.md
-- phase-4d-status: workspace-dev
+- phase-4d-pr: https://github.com/Jammy2211/euclid_assistant/pull/11
+- phase-4d-status: workspace-shipped, awaiting-merge
+- next-phase: phase 1B — PyAutoArray
+- next-phase-blockers: PyAutoNerves PR #143 remains unmerged; PyAutoArray is
+  claimed by active task api-validation-and-crash-fixes
 - branch: feature/python-312-floor
 - worktree: /home/jammy/Code/PyAutoLabs/.codex-worktrees/python-312-floor
 - checkpoint-superseded: https://github.com/PyAutoLabs/PyAutoNerves/issues/142#issuecomment-5109079935
@@ -50,9 +54,11 @@
   3.12/3.13 and review CLEAN. Independent Phase 4C is shipped as PyAutoHeart
   PR #114 with 289 tests green on each supported interpreter and review CLEAN;
   release/install verification remains reserved for Phase 2. Independent Phase
-  4D is active in euclid_assistant as issue #10; package metadata, required CI
-  coverage, and living setup documentation are in scope, while source papers,
-  generated content, and provenance are protected.
+  4D is shipped as euclid_assistant PR #11: local and GitHub 3.12/3.13 tests,
+  wheel metadata, CLI smoke, and review are green; source papers, generated
+  content, and provenance were untouched. All independent Phase 4 slices are
+  now at PR-open. Phase 1B cannot start until PyAutoNerves PR #143 is merged
+  and the existing api-validation-and-crash-fixes claim on PyAutoArray clears.
 
 ## vacuous-jax-assertions
 - issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/229

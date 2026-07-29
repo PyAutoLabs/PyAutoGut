@@ -145,3 +145,14 @@
 - worktree: ~/Code/PyAutoLabs-wt/contributing-natural-language-reframe
 - repos:
   - PyAutoScientist (feature/contributing-natural-language-reframe)
+
+## hygiene-refs-readme-drift
+- issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/177
+- status: library-dev
+- prompt: active/hygiene_refs_readme_drift_class.md
+- scope: phase 1 of 3 — widen `_hygiene_refs.py` (scanned set + 3 new reference shapes) + tests + mode docs; read-only scanner, no repo mutation
+- phases: (1) this — hygiene refs scanner; (2) draft/docs/workspaces/workspace_readme_drift_sweep.md — sweep autolens+autogalaxy READMEs; (3) draft/feature/pyautohands/navigator_check_readme_ref_shapes.md — CI gate, lands AFTER phase 2 merges
+- brain-override: Feature Agent scored large/split-into-phases off its repo-count proxy; split already applied (this is phase 1), single repo — override recorded
+- heart-ack: 2026-07-29 — YELLOW 80: workspace validation not passing (13 failed); 33 stale parked script(s); manifest drift tenant firewall (all pre-existing, none related to a read-only Brain scanner)
+- worktree: ~/Code/PyAutoLabs-wt/hygiene-refs-readme-drift
+- repos:

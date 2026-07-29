@@ -14,7 +14,7 @@
 - phase-1b-review: Claude Opus 5 CLEAN on the exact ca98473a tree
 - phase-1c-issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1428
 - phase-1c-prompt: active/python_312_floor_phase_1c_fit.md
-- phase-1c-status: library-dev
+- phase-1c-status: library-dev (worktree ready at origin/main 658e45250)
 - phase-4a-issue: https://github.com/PyAutoLabs/PyAutoCTI/issues/100
 - phase-4a-prompt: active/python_312_floor_phase_4a_autocti.md
 - phase-4a-pr: https://github.com/PyAutoLabs/PyAutoCTI/pull/101
@@ -47,6 +47,7 @@
 - repos:
   - PyAutoNerves: feature/python-312-floor
   - PyAutoArray: feature/python-312-floor
+  - PyAutoFit: feature/python-312-floor
   - PyAutoCTI: feature/python-312-floor
   - PyAutoReduce: feature/python-312-floor
   - PyAutoHeart: feature/python-312-floor

@@ -2,7 +2,7 @@
 
 ## python-312-floor
 - issue: https://github.com/PyAutoLabs/PyAutoNerves/issues/142
-- status: library-dev (PyAutoFit); Phase 1B and five prior PRs merged
+- status: Phase 1C PR open, awaiting authorized merge; six prior PRs merged
 - library-pr: https://github.com/PyAutoLabs/PyAutoNerves/pull/143 (MERGED a9bf4561)
 - prompt: active/python_312_floor_phase_1a_nerves.md
 - phase-1b-issue: https://github.com/PyAutoLabs/PyAutoArray/issues/418
@@ -14,7 +14,9 @@
 - phase-1b-review: Claude Opus 5 CLEAN on the exact ca98473a tree
 - phase-1c-issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1428
 - phase-1c-prompt: active/python_312_floor_phase_1c_fit.md
-- phase-1c-status: library-dev (worktree ready at origin/main 658e45250)
+- phase-1c-pr: https://github.com/PyAutoLabs/PyAutoFit/pull/1429
+- phase-1c-status: PR-open (70d31a3e; pending-release; merge authorized after green CI)
+- phase-1c-review: Claude Opus 5 CLEAN on the exact 70d31a3e tree
 - phase-4a-issue: https://github.com/PyAutoLabs/PyAutoCTI/issues/100
 - phase-4a-prompt: active/python_312_floor_phase_4a_autocti.md
 - phase-4a-pr: https://github.com/PyAutoLabs/PyAutoCTI/pull/101
@@ -31,7 +33,7 @@
 - phase-4d-prompt: active/python_312_floor_phase_4d_euclid_assistant.md
 - phase-4d-pr: https://github.com/Jammy2211/euclid_assistant/pull/11
 - phase-4d-status: merged-unchanged (51143df2); issue auto-closed
-- next-phase: Phase 1C — PyAutoFit
+- next-phase: Phase 1D — PyAutoGalaxy, after PyAutoFit#1429 is green and merged
 - branch: feature/python-312-floor
 - worktree: /home/jammy/Code/PyAutoLabs/.codex-worktrees/python-312-floor
 - checkpoint-superseded: https://github.com/PyAutoLabs/PyAutoNerves/issues/142#issuecomment-5109079935
@@ -64,9 +66,13 @@
   Opus 5-reviewed head `ca98473a`; no release was performed. The human accepted
   the sole sequential smoke timeout as non-causal. Phase 1C now starts in
   PyAutoFit. A separate pre-existing PyNUFFT/SciPy dev-extra incompatibility was
-  reproduced on unmodified main and recorded as a draft bug. Phase 1C is
-  registered as PyAutoFit#1428 with PyAutoFit as its sole affected repository;
-  PyAutoHands is intentionally deferred to Phase 2.
+  reproduced on unmodified main and recorded as a draft bug. Phase 1C is open
+  as PyAutoFit#1429 at exact reviewed commit `70d31a3e`: both supported
+  runtimes pass 1559 tests with one skip, wheel metadata is correct, Claude
+  Opus 5 returned CLEAN, and Heart remains within the acknowledged YELLOW set.
+  The identical accepted subhalo smoke timeout is the sole sequential failure.
+  Phase 1D starts only after green CI and merge; PyAutoHands remains deferred to
+  Phase 2.
 
 ## vacuous-jax-assertions
 - issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/229

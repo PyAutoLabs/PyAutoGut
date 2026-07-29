@@ -152,3 +152,18 @@
 - repos:
   - autolens_workspace (feature/likelihood-function-jax-pointer)
   - autogalaxy_workspace (feature/likelihood-function-jax-pointer)
+
+## gated-readme-drift
+- issue: https://github.com/PyAutoLabs/autofit_workspace/issues/123
+- status: workspace-dev (PRs open, awaiting CI)
+- prs: autofit_workspace#124, HowToFit#37, HowToGalaxy#49, HowToLens#60 (all pending-release)
+- scope: phase 2b — 40 README findings across the 4 navigator-gated repos not covered by phase 2; dominated by config/**/README.md yaml inventories (identical class to autolens/autogalaxy)
+- why: prerequisite for phase 3 — check_navigator.py is repo-agnostic and gates 6 repos, so widening it while these were dirty would turn them red; sweeping beats grandfathering into .navigator_check_ignore
+- verified: hygiene refs zero README findings in all 4; check_navigator --banners=fail PASS in all 4; navigator catalogues regenerated
+- next: phase 3 = draft/feature/pyautohands/navigator_check_readme_ref_shapes.md (unblocked once these merge)
+- worktree: ~/Code/PyAutoLabs-wt/gated-readme-drift
+- repos:
+  - autofit_workspace (feature/gated-readme-drift)
+  - HowToFit (feature/gated-readme-drift)
+  - HowToGalaxy (feature/gated-readme-drift)
+  - HowToLens (feature/gated-readme-drift)

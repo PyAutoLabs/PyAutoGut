@@ -5,7 +5,7 @@ Target: PyAutoLens
 Difficulty: small
 Autonomy: supervised
 Priority: high
-Status: library-dev — PyAutoLens#663
+Status: merged — PR `PyAutoLens#664`, merge `b40fb0ba`; issue remains open as the campaign record
 
 Parent: `python_312_floor_phase_1_core.md`
 Depends on: `python_312_floor_phase_1d_galaxy.md`

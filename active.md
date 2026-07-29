@@ -2,7 +2,7 @@
 
 ## python-312-floor
 - issue: https://github.com/PyAutoLabs/PyAutoNerves/issues/142
-- status: Phase 1E library development; eight prior PRs merged
+- status: Phase 1 complete; Phase 2 build and health verification next; nine prior PRs merged
 - library-pr: https://github.com/PyAutoLabs/PyAutoNerves/pull/143 (MERGED a9bf4561)
 - prompt: active/python_312_floor_phase_1a_nerves.md
 - phase-1b-issue: https://github.com/PyAutoLabs/PyAutoArray/issues/418
@@ -24,7 +24,9 @@
 - phase-1d-review: Claude Opus 5 CLEAN on exact byte-identical review tree `cd8b35da`
 - phase-1e-issue: https://github.com/PyAutoLabs/PyAutoLens/issues/663
 - phase-1e-prompt: active/python_312_floor_phase_1e_lens.md
-- phase-1e-status: library-dev
+- phase-1e-pr: https://github.com/PyAutoLabs/PyAutoLens/pull/664
+- phase-1e-status: merged-unchanged (b40fb0ba; head 5b42f3e4; CI 5/5 green)
+- phase-1e-review: Claude Opus 5 CLEAN on exact byte-identical review tree `83b157014`
 - phase-4a-issue: https://github.com/PyAutoLabs/PyAutoCTI/issues/100
 - phase-4a-prompt: active/python_312_floor_phase_4a_autocti.md
 - phase-4a-pr: https://github.com/PyAutoLabs/PyAutoCTI/pull/101
@@ -41,7 +43,7 @@
 - phase-4d-prompt: active/python_312_floor_phase_4d_euclid_assistant.md
 - phase-4d-pr: https://github.com/Jammy2211/euclid_assistant/pull/11
 - phase-4d-status: merged-unchanged (51143df2); issue auto-closed
-- next-phase: Phase 1E — PyAutoLens
+- next-phase: Phase 2 — PyAutoHands/PyAutoHeart build and health verification
 - branch: feature/python-312-floor
 - worktree: /home/jammy/Code/PyAutoLabs/.codex-worktrees/python-312-floor
 - checkpoint-superseded: https://github.com/PyAutoLabs/PyAutoNerves/issues/142#issuecomment-5109079935
@@ -91,6 +93,10 @@
   YELLOW set. Phase 1D merged unchanged as PyAutoGalaxy#535 (`b9d9927f`)
   after all five CI checks passed the exact reviewed head. Phase 1E is
   registered as PyAutoLens#663; PyAutoHands remains deferred to Phase 2.
+  Phase 1E merged unchanged as PyAutoLens#664 (`b40fb0ba`) after Claude Opus 5
+  returned CLEAN on byte-identical review tree `83b157014` and all five CI
+  checks passed exact head `5b42f3e4`. The full five-library core floor is now
+  merged; no release or issue closure was performed. Advance to Phase 2.
 
 ## vacuous-jax-assertions
 - issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/229

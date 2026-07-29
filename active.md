@@ -137,21 +137,6 @@
 - phases: 1 (design) + 2 (core API) COMPLETE; next: start_workspace on active/../draft phase-3 prompt (workspace_test jax_likelihood + profiling examples), then phase 4 (guides), then phase 5 (JAX solver gradients)
 - repos:
 
-## hygiene-refs-readme-drift
-- issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/177
-- status: library-shipped, awaiting-merge (phase 2 blocked on this)
-- library-pr: https://github.com/PyAutoLabs/PyAutoBrain/pull/178 (OPEN, pending-release; commit e8e4279)
-- result: refs 4 -> 218 findings across 7/7 repos; now the top-ranked hygiene item; 32/32 conductor tests pass
-- audit-correction: `source_science` is NOT drift — source_science.py exists per dataset package; it was only absent as a directory. Do not "fix" it in phase 2.
-- prompt: active/hygiene_refs_readme_drift_class.md
-- scope: phase 1 of 3 — widen `_hygiene_refs.py` (scanned set + 3 new reference shapes) + tests + mode docs; read-only scanner, no repo mutation
-- phases: (1) this — hygiene refs scanner; (2) draft/docs/workspaces/workspace_readme_drift_sweep.md — sweep autolens+autogalaxy READMEs; (3) draft/feature/pyautohands/navigator_check_readme_ref_shapes.md — CI gate, lands AFTER phase 2 merges
-- brain-override: Feature Agent scored large/split-into-phases off its repo-count proxy; split already applied (this is phase 1), single repo — override recorded
-- heart-ack: 2026-07-29 — YELLOW 80: workspace validation not passing (13 failed); 33 stale parked script(s); manifest drift tenant firewall (all pre-existing, none related to a read-only Brain scanner)
-- worktree: ~/Code/PyAutoLabs-wt/hygiene-refs-readme-drift
-- repos:
-  - PyAutoBrain (feature/hygiene-refs-readme-drift)
-
 ## multistart-prodigy-start-here
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/366
 - status: awaiting-merge
@@ -184,17 +169,3 @@
 - repos:
   - autolens_workspace (feature/likelihood-function-jax-pointer)
   - autogalaxy_workspace (feature/likelihood-function-jax-pointer)
-
-## workspace-readme-drift
-- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/369
-- status: workspace-dev
-- prompt: active/workspace_readme_drift_sweep.md
-- scope: phase 2 of 3 — 62 dead README references across autolens_workspace (34) + autogalaxy_workspace (28); root + scripts/**/ + config/**/ READMEs only, notebooks mirrors regenerated
-- depends-on: PyAutoBrain#178 (MERGED) — the widened hygiene refs scanner generates this fix list
-- brain-override: Feature Agent scored too-large/4-phase design+core_api split off its repo-count proxy; prose-only uniform sweep, no API, no design — override recorded (same as #177)
-- not-findings: `source_science` resolves (source_science.py per dataset package); runtime-generated targets (main_lens_centres.json, dataset/imaging/clumpy, search_internal/, activate.sh)
-- follow-up: 92 further findings in these repos' scripts/**/*.py docstrings + 64 in HowTo*/autofit/autocti — out of this task's README scope, to be filed separately
-- worktree: ~/Code/PyAutoLabs-wt/workspace-readme-drift
-- repos:
-  - autolens_workspace (feature/workspace-readme-drift)
-  - autogalaxy_workspace (feature/workspace-readme-drift)

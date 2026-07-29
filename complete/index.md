@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-773 records across 6 buckets.
+775 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -172,6 +172,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [hygiene-file-modes](2026/07/hygiene-file-modes.md) — crlf / config / artifacts — complete
 - [hygiene-orphan-config-files](2026/07/hygiene-orphan-config-files.md)
 - [hygiene-perf-phase4](2026/07/hygiene-perf-phase4.md) — unit-test / workspace-testmode / function profiling — complete
+- [hygiene-refs-readme-drift](2026/07/hygiene-refs-readme-drift.md)
 - [import-time-heart-leg](2026/07/import-time-heart-leg.md) — hygiene follow-up — complete
 - [inject-alma-simobserve](2026/07/inject-alma-simobserve.md)
 - [inject-jwst](2026/07/inject-jwst.md)
@@ -396,6 +397,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [weak-viz-profiles](2026/07/weak-viz-profiles.md)
 - [wfc3-reduction](2026/07/wfc3-reduction.md)
 - [wire-verify-install-leg](2026/07/wire-verify-install-leg.md)
+- [workspace-readme-drift](2026/07/workspace-readme-drift.md)
 - [workspace-start-here-colab-links](2026/07/workspace-start-here-colab-links.md) — Generic PyAutoLens and PyAutoGalaxy introduction links now open each workspace-root start_here.ipynb rather th…
 - [workspace_examples_agent](2026/07/workspace_examples_agent.md)
 

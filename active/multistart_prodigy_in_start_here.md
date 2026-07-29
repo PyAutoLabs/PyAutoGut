@@ -32,25 +32,31 @@ lines of prose in its `__Search__` (or `__Search + Analysis__`) docstring
 mentioning `MultiStartProdigy` and its use in `start_here.py`. **No code is
 added to `modeling.py`.**
 
-## Scope — 13 dataset-type cells, 10 converted
+## Scope — 13 dataset-type cells, 8 converted
 
-All 10 convertible cells are parametric (MGE / Sersic, no `Pixelization`), so
-they need no `resurrect=True`, no kernel-regularization choice and no extended
-`n_steps` — the settings that the pixelized campaign found load-bearing do not
-apply here.
+All 8 convertible cells are parametric (MGE / Sersic, no `Pixelization`) and
+already set `use_jax=True`, so they need no `resurrect=True`, no
+kernel-regularization choice and no extended `n_steps` — the settings that the
+pixelized campaign found load-bearing do not apply here.
 
 Convert to `af.MultiStartProdigy` (replacing the `af.Nautilus` block outright —
 no commented-out Nautilus left behind):
 
-- autolens_workspace: `imaging`, `interferometer`, `multi`, `multi_galaxy`, `group`
-- autogalaxy_workspace: `imaging`, `interferometer`, `multi`, `multi_galaxy`, `cluster`
+- autolens_workspace: `imaging`, `interferometer`, `multi_galaxy`, `group`
+- autogalaxy_workspace: `imaging`, `interferometer`, `multi_galaxy`, `cluster`
 
-## Blocked cells — keep Nautilus, explain the gap (human decision, 2026-07-29)
+Delete `n_batch` when converting — it is Nautilus's own proposal-count knob that
+autofit merely forwards, not a `MultiStartProdigy` parameter. Keep
+`iterations_per_quick_update` / `live_visual_update` (supported via the base
+class) but retune the cadence: existing values are Nautilus iteration counts and
+would never fire inside a 300-step budget.
 
-Three autolens cells cannot run a gradient search today. They **keep
-`af.Nautilus`** and instead gain 2-3 lines of prose noting that
-`MultiStartProdigy` is the fast MAP default in the other dataset types but is
-not yet available for this data type, with the reason:
+## Blocked cells — keep Nautilus, explain the gap (human decisions, 2026-07-29)
+
+Five cells cannot run a gradient search today. They **keep `af.Nautilus`** and
+instead gain 2-3 lines of prose noting that `MultiStartProdigy` is the fast MAP
+default in the other dataset types but is not yet available for this data type,
+with the reason:
 
 - `point_source` (`AnalysisPoint`) — point-source JAX gradients do not exist
   yet. Enabling work is
@@ -65,9 +71,28 @@ not yet available for this data type, with the reason:
   citing PyAutoLens#614 ("Weak-lensing visualization crashes on JAX path:
   fit.shear_yx lacks .grid"), confirmed OPEN on 2026-07-29. A gradient search
   requires `use_jax=True`.
+- `multi` (autolens) and `multi` (autogalaxy) — multi-band `FactorGraphModel`
+  `value_and_grad` cold compile is **unbounded on CPU** (>2h wall observed, ~1h
+  inside one XLA compile, cache MISS, against the 117s single-band figure).
+  Recorded unresolved in
+  `draft/research/autofit/multi_band_factorgraphmodel_value_and_grad_cold.md`,
+  whose named reproducer IS autolens `multi/start_here.py`'s 4-band
+  `cosmos_web_ring` fit. autogalaxy `multi` is the same shape (2 bands at
+  heterogeneous pixel scales, g=0.08 / r=0.12). Converting these would make the
+  flagship multi-wavelength entry point hang for hours on CPU — the opposite of
+  the intent. Note smoke would NOT catch it: `PYAUTO_TEST_MODE=2` skips search
+  sampling entirely.
 
-Do not write `af.MultiStartProdigy` into these three — it would ship three
-broken entry-point scripts.
+Do not write `af.MultiStartProdigy` into these five — it would ship five broken
+or unusable entry-point scripts.
+
+## Brain phase-split override (recorded)
+
+`bin/pyauto-brain feature` returned `too-large (score 10) → split-into-phases`
+(design / core_api / workspace_examples / docs). **Overridden.** Brain scores
+difficulty off repo count; the proposed `core_api` phase is vacuous because no
+library code is touched at all. This is one uniform prose + search-swap sweep
+over 26 files in 2 repos = one PR.
 
 ## Reference prose
 
@@ -81,11 +106,11 @@ prose should be a short version of this, not a duplicate of it.
 
 ## Acceptance
 
-- 10 `start_here.py` files run `af.MultiStartProdigy`; posterior caveat +
+- 8 `start_here.py` files run `af.MultiStartProdigy`; posterior caveat +
   pointer to `modeling.py` present in each.
 - 13 `modeling.py` files carry the 2-3 line `MultiStartProdigy` mention in their
   Search docstring, and **no** new code.
-- 3 blocked `start_here.py` files carry the "not yet available here" note and
+- 5 blocked `start_here.py` files carry the "not yet available here" note and
   still run `af.Nautilus`.
 - Smoke suite green in both workspaces; notebooks regenerated.
 - `scripts/check_sizes.sh` clean (bulk-edit guard).

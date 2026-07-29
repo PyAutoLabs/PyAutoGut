@@ -119,6 +119,7 @@
 - branch: feature/release-check-e-python-312
 - parent-task: python-312-floor
 - repos:
+  - PyAutoHeart: feature/release-check-e-python-312
 
 ## vacuous-jax-assertions
 - issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/229

@@ -2,33 +2,39 @@
 
 ## python-312-floor
 - issue: https://github.com/PyAutoLabs/PyAutoNerves/issues/142
-- status: parked; five PRs awaiting-merge; next core phase dependency/claim blocked
-- library-pr: https://github.com/PyAutoLabs/PyAutoNerves/pull/143
+- status: parked; five PRs merged; next core phase claim blocked
+- library-pr: https://github.com/PyAutoLabs/PyAutoNerves/pull/143 (MERGED a9bf4561)
 - prompt: active/python_312_floor_phase_1a_nerves.md
 - phase-4a-issue: https://github.com/PyAutoLabs/PyAutoCTI/issues/100
 - phase-4a-prompt: active/python_312_floor_phase_4a_autocti.md
 - phase-4a-pr: https://github.com/PyAutoLabs/PyAutoCTI/pull/101
+- phase-4a-status: merged-unchanged (3ba4f7a3)
 - phase-4b-issue: https://github.com/PyAutoLabs/PyAutoReduce/issues/59
 - phase-4b-prompt: active/python_312_floor_phase_4b_autoreduce.md
 - phase-4b-pr: https://github.com/PyAutoLabs/PyAutoReduce/pull/60
-- phase-4b-status: library-shipped, awaiting-merge
+- phase-4b-status: merged-unchanged (d7bd916a)
 - phase-4c-issue: https://github.com/PyAutoLabs/PyAutoHeart/issues/113
 - phase-4c-prompt: active/python_312_floor_phase_4c_heart.md
 - phase-4c-pr: https://github.com/PyAutoLabs/PyAutoHeart/pull/114
-- phase-4c-status: library-shipped, awaiting-merge
+- phase-4c-status: merged-unchanged (8fb1171f)
 - phase-4d-issue: https://github.com/Jammy2211/euclid_assistant/issues/10
 - phase-4d-prompt: active/python_312_floor_phase_4d_euclid_assistant.md
 - phase-4d-pr: https://github.com/Jammy2211/euclid_assistant/pull/11
-- phase-4d-status: workspace-shipped, awaiting-merge
+- phase-4d-status: merged-unchanged (51143df2); issue auto-closed
 - next-phase: phase 1B — PyAutoArray
-- next-phase-blockers: PyAutoNerves PR #143 remains unmerged; PyAutoArray is
-  claimed by active task api-validation-and-crash-fixes
+- next-phase-blockers: PyAutoArray is claimed by active task
+  api-validation-and-crash-fixes
 - branch: feature/python-312-floor
 - worktree: /home/jammy/Code/PyAutoLabs/.codex-worktrees/python-312-floor
 - checkpoint-superseded: https://github.com/PyAutoLabs/PyAutoNerves/issues/142#issuecomment-5109079935
 - resume-evidence: https://github.com/PyAutoLabs/PyAutoNerves/issues/142#issuecomment-5109572194
 - queue-checkpoint: https://github.com/PyAutoLabs/PyAutoNerves/issues/142#issuecomment-5114496576
 - commits: PyAutoNerves f06dd40, a3ed651 (pushed)
+- opus-review: Claude Opus 5 CLEAN on all five exact PR heads; cross-repository
+  consistency CLEAN; all five safe to merge in any order
+- issue-close-status: euclid_assistant#10 auto-closed by its PR; PyAutoNerves#142,
+  PyAutoCTI#100, PyAutoReduce#59, and PyAutoHeart#113 remain open for explicit
+  human close authorization
 - heart-ack: workspace validation not passing (13 failed, 2026-07-21T19-05-22Z); 33 stale parked script(s); manifest drift: tenant firewall (organ code) — 6 mismatch(es) vs PyAutoMind/repos.yaml; release validation stale: source moved since rehearsal (PyAutoNerves, PyAutoFit, PyAutoArray, PyAutoGalaxy, PyAutoLens)
 - repos:
   - PyAutoNerves: feature/python-312-floor
@@ -36,30 +42,15 @@
   - PyAutoReduce: feature/python-312-floor
   - PyAutoHeart: feature/python-312-floor
   - euclid_assistant: feature/python-312-floor
-- notes: Phase 1A of the reviewed Python >=3.12 ecosystem campaign. Shared
-  branch/worktree task will grow through the dependency-ordered core stack;
-  JAX 0.11 and Python 3.14 support remain separate follow-ups. Tests, review and
-  corrected smoke are green (62 passed, 0 failed, 3 intentional skips). The
-  earlier 11-failure checkpoint was a local wrapper error: relative script
-  paths were resolved from the parent cwd, so in-file ENV declarations were
-  missed. No ecosystem defect was present. PyAutoNerves PR #143 is open with
-  `pending-release`; merge remains human-gated before dependent phases advance.
-  Independent Phases 4A–4C are shipped as open pending-release PRs for
-  PyAutoCTI, PyAutoReduce, and PyAutoHeart. Their metadata and living
-  installation claims are in scope, while archival paper/history and release
-  execution remain out of scope. PyAutoCTI PR #101 is open with
-  `pending-release`, fully tested on 3.12/3.13 and review CLEAN. Independent
-  Phase 4B is also active in
-  PyAutoReduce; its census found only package metadata below the floor. Issue
-  #59 is filed and PR #60 is open with `pending-release`, fully tested on
-  3.12/3.13 and review CLEAN. Independent Phase 4C is shipped as PyAutoHeart
-  PR #114 with 289 tests green on each supported interpreter and review CLEAN;
-  release/install verification remains reserved for Phase 2. Independent Phase
-  4D is shipped as euclid_assistant PR #11: local and GitHub 3.12/3.13 tests,
-  wheel metadata, CLI smoke, and review are green; source papers, generated
-  content, and provenance were untouched. All independent Phase 4 slices are
-  now at PR-open. Phase 1B cannot start until PyAutoNerves PR #143 is merged
-  and the existing api-validation-and-crash-fixes claim on PyAutoArray clears.
+- notes: Phase 1A and all independent Phase 4 slices merged unchanged after a
+  combined max-effort Claude Opus 5 review returned CLEAN for each exact head.
+  Tests, CI where present, wheel metadata, smoke checks, dependency caps, live
+  documentation, and protected historical/provenance scope were independently
+  checked. Opus confirmed two planned release-sequencing hazards: the remaining
+  four core library floors must rise before publication, and Heart's legacy
+  below-floor install/banner checks must be rewritten in Phase 2. JAX 0.11 and
+  Python 3.14 support remain separate follow-ups. Phase 1B is now blocked only
+  by the existing api-validation-and-crash-fixes claim on PyAutoArray.
 
 ## vacuous-jax-assertions
 - issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/229

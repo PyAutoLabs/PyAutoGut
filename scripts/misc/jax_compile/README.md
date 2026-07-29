@@ -373,3 +373,125 @@ Rows recorded in `results/local_cpu/mge.json` (tags `mb_{homo,hetero}_{cold,warm
 single-band A100 `vag` cold was ~28 s vs 229 s CPU, and the transform-width and
 heterogeneity blow-ups above should both shrink dramatically with more compile
 cores.
+
+## MultiStartProdigy transform census — single-band, all endorsed model types (issue #93, 2026-07-28)
+
+MultiStartProdigy is now the endorsed search for MGE and pixelized sources
+(rectangular kernel-CDF / knn / delaunay, wsdev#117), but the #71→#77 census
+measured single-start transforms only, and the mesh model types were never
+compile-probed. This census measures the **production transform matrix** —
+{`mge`, `pixelization`, `knn`, `delaunay_matern`} × {`jit`, `vag`, `vmap_vag`
+(n=16), `pyloop_vag` (bs=4), `laxmap_vag` (bs=4)} × cold/warm — at the
+production knobs (16 starts, `batch_size` 4). Tags
+`prodigy-census-{cold,warm}` in `results/local_cpu/<model_type>.json`.
+
+Host: the 1-core, **15 GB** WSL laptop — the worst-case compile tier (XLA
+compiles on host cores), deliberately: if compile is fine here it is fine
+everywhere. Memory limits below are host-tier facts, not library defects.
+
+**Cold trace + XLA compile, seconds (warm compile in parentheses):**
+
+| cell | jit | vag | vmap_vag (16) | pyloop_vag (4) | laxmap_vag (4) |
+|---|---|---|---|---|---|
+| mge | 11 + 14 (0.3) | 16 + 150 (4.3) | 31 + 179 (3.0) | 26 + 140 (2.8) | 26 + 120 (2.3) |
+| pixelization | 5 + 4 (0.2) | 8 + 21 (1.0) | OOM-exec | OOM-exec | OOM-exec |
+| knn | 5 + 4 (0.3) | 8 + 25 (1.3) | OOM-exec | 13 + 35 (1.7) | 19 + 55 (1.8†) |
+| delaunay_matern | 39 + 11 (**13**) | 18 + 33 (**28**) | OOM-host | 21 + 33 (**26**) | 15 + 28 (**28**) |
+
+† first warm attempt was host-OOM-killed mid-steady on the 15 GB host; the
+retry served compile from cache in 1.8 s (tag `prodigy-census-warm-retry`) —
+transient memory pressure, not structural.
+
+### Findings
+
+1. **Single-band MultiStartProdigy compile is NOT pathological — on any
+   endorsed model type.** Worst cold cell on the worst-case host is MGE
+   `vmap_vag` at ~210 s total; every mesh batched cell compiles in **35–55 s**
+   cold and warms to seconds. The multi-band `lax.map` compile explosion
+   (previous section: intractable / compile-OOM) **does not reproduce
+   single-band**: `laxmap_vag` bs=4 compiles in 28–120 s across all four model
+   types. The scan blow-up needs the multi-band factor-graph fusion as its
+   body; a single-band likelihood body is benign. **Consequence: no PyAutoFit
+   restructuring is indicated for single-band fits** — the settings-suffice
+   verdict extends to the full production transform. The pyloop lever remains
+   live *only* for the multi-band `FactorGraphModel` case.
+2. **The delaunay family busts the persistent compilation cache.** Every
+   `delaunay_matern` transform recompiles at cold cost in every process (warm
+   compile ≈ cold: 13/28/26/28 s vs 11/33/33/28 s; n=8 process pairs), while
+   the pure-JAX meshes (`knn`, `pixelization`, `mge`) warm to 0.2–4 s. Prime
+   suspect: the qhull `pure_callback` in the Delaunay tables path — callback
+   custom_calls embed a process-specific descriptor in the HLO, so the cache
+   key never matches across processes. knn (no host callback) caching
+   perfectly is the control. Cost: ~40–65 s of trace+compile per process,
+   forever, on the mesh family where it can least be amortized. Follow-up
+   filed: `PyAutoMind draft/research/autoarray/delaunay_callback_persistent_cache_miss.md`.
+3. **Rect kernel-CDF batched gradients are memory-bound, not compile-bound:
+   ~9.2 GB per start in the jvp** (sparse-operator config, fp64, 15361 px):
+   width 4 → 37 GB (`RESOURCE_EXHAUSTED` on this host, fits RAL 128 GB CPU /
+   A100 80 GB — exactly the campaign's working configs), width 16 → 147 GB
+   (fits nowhere; `batch_size=4` is load-bearing, not a tuning nicety).
+   Compile itself finished within each ~43 s wall before the exec-OOM. knn
+   width 16 wants 47.5 GB; bs=4 knn/delaunay peak ~10–12 GB — borderline on a
+   15 GB host, comfortable anywhere real.
+4. **Steady-state per-step cost on 1 CPU core** (16-start batched eval): mge
+   3–5 s, knn ~290–350 s, delaunay_matern ~180–205 s — mesh multi-start on a
+   laptop CPU is hopeless for throughput regardless of compile; the compile
+   verdict above is what matters because production mesh fits run on RAL/A100.
+
+### RAL 32-core / 128 GB tier (job 331379, tags `prodigy-census-ral32-*`)
+
+Cold trace + XLA compile, seconds (warm compile in parentheses):
+
+| cell | vag | pyloop_vag (4) | laxmap_vag (4) | steady (16-start eval) |
+|---|---|---|---|---|
+| mge | — | — | 14 + 63 (1.8) | 0.4 s |
+| pixelization | — | 9 + 16 (1.0) | 10 + 18 (1.2) | ~310 s |
+| knn | — | — | 11 + 21 (1.4) | ~107 s |
+| delaunay_matern | 10 + 16 (**16**) | — | 12 + 21 (**21**) | ~59 s |
+
+- **The rect batched cells complete and compile fast on a real node** (job
+  MaxRSS 39.4 GB — the predicted ~37 GB jvp): 16–18 s cold, ~1 s warm. Rect's
+  cost is *throughput* (~310 s per 16-start step on 32 CPU cores — the
+  campaign's known ~5.7 min/step), never compile.
+- **The delaunay cache-miss reproduces on an independent host, to the
+  decimal**: warm compile 16.3 s = cold 16.3 s (vag), 21.2 s = 21.2 s
+  (laxmap), while knn/mge/rect warm to 1–2 s in the same job. Finding 2
+  is cross-host confirmed.
+- 32 compile cores buy 2–6× over the 1-core laptop (mge laxmap 63 s vs
+  120 s; mesh cells 16–21 s vs 28–55 s), consistent with XLA's
+  multi-core compile parallelism.
+
+### A100 tier — attempted, not obtained (job 331380)
+
+The GPU job ran while the node's A100s were saturated by an external multi-day
+array: `cuInit(0)` returned `CUDA_ERROR_NO_DEVICE` and **JAX silently fell back
+to CPU** (`An NVIDIA GPU may be present ... Falling back to cpu`). Its rows are
+therefore 8-core CPU rows, not A100 rows, and were discarded rather than
+committed.
+
+**Trap:** a `--partition=gpu --gres=gpu:1` job that gets no usable device does
+not fail — it warns and runs on CPU, producing plausible-looking numbers.
+Verify the backend from the results themselves (the `local_gpu_*` vs
+`local_cpu` output path) rather than trusting the partition; a "GPU" row slower
+than a many-core CPU row (here: knn `laxmap_vag` 160 s vs the 32-core CPU's
+107 s) is the tell.
+
+A100 rows remain **confirmatory only** — #77 already put single-band A100
+compiles at seconds-to-30 s, and the two CPU tiers agree the verdict is not
+tier-sensitive. Re-run with `sbatch /mnt/ral/jnightin/pixgrad_logs/census_gpu.sbatch`
+when a GPU node is genuinely free.
+
+### Verdict (issue #93)
+
+**Single-band MultiStartProdigy compile time is a non-problem on every
+endorsed model type and every tier measured** — worst case ~3.5 min cold on a
+1-core laptop, ≤ 75 s cold / ≤ 2 s warm on a 32-core node. The multi-band
+`lax.map` compile explosion does not exist single-band, so **the pyloop
+PyAutoFit change is not indicated** (phase B: evidence-based no-go); the
+pyloop lever stays reserved for the multi-band `FactorGraphModel` case
+documented in the previous section. The one real compile defect this census
+found is the **delaunay-family persistent-cache miss** (finding 2) — filed as
+`PyAutoMind draft/research/autoarray/delaunay_callback_persistent_cache_miss.md`.
+`batch_size=4` is load-bearing for memory on all pix meshes (finding 3), and
+mesh multi-start throughput (not compile) is the open cost axis, on the A100
+follow-up list from wsdev#117.

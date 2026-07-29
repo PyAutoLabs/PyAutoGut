@@ -2,7 +2,7 @@
 
 ## python-312-floor
 - issue: https://github.com/PyAutoLabs/PyAutoNerves/issues/142
-- status: Phase 1C PR open, awaiting authorized merge; six prior PRs merged
+- status: Phase 1D library development; seven prior PRs merged
 - library-pr: https://github.com/PyAutoLabs/PyAutoNerves/pull/143 (MERGED a9bf4561)
 - prompt: active/python_312_floor_phase_1a_nerves.md
 - phase-1b-issue: https://github.com/PyAutoLabs/PyAutoArray/issues/418
@@ -15,8 +15,11 @@
 - phase-1c-issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1428
 - phase-1c-prompt: active/python_312_floor_phase_1c_fit.md
 - phase-1c-pr: https://github.com/PyAutoLabs/PyAutoFit/pull/1429
-- phase-1c-status: PR-open (70d31a3e; pending-release; merge authorized after green CI)
+- phase-1c-status: merged-unchanged (241f2d69c; head 70d31a3e; CI 5/5 green)
 - phase-1c-review: Claude Opus 5 CLEAN on the exact 70d31a3e tree
+- phase-1d-issue: https://github.com/PyAutoLabs/PyAutoGalaxy/issues/534
+- phase-1d-prompt: active/python_312_floor_phase_1d_galaxy.md
+- phase-1d-status: library-dev
 - phase-4a-issue: https://github.com/PyAutoLabs/PyAutoCTI/issues/100
 - phase-4a-prompt: active/python_312_floor_phase_4a_autocti.md
 - phase-4a-pr: https://github.com/PyAutoLabs/PyAutoCTI/pull/101
@@ -33,7 +36,7 @@
 - phase-4d-prompt: active/python_312_floor_phase_4d_euclid_assistant.md
 - phase-4d-pr: https://github.com/Jammy2211/euclid_assistant/pull/11
 - phase-4d-status: merged-unchanged (51143df2); issue auto-closed
-- next-phase: Phase 1D — PyAutoGalaxy, after PyAutoFit#1429 is green and merged
+- next-phase: Phase 1D — PyAutoGalaxy
 - branch: feature/python-312-floor
 - worktree: /home/jammy/Code/PyAutoLabs/.codex-worktrees/python-312-floor
 - checkpoint-superseded: https://github.com/PyAutoLabs/PyAutoNerves/issues/142#issuecomment-5109079935
@@ -50,6 +53,7 @@
   - PyAutoNerves: feature/python-312-floor
   - PyAutoArray: feature/python-312-floor
   - PyAutoFit: feature/python-312-floor
+  - PyAutoGalaxy: feature/python-312-floor
   - PyAutoCTI: feature/python-312-floor
   - PyAutoReduce: feature/python-312-floor
   - PyAutoHeart: feature/python-312-floor
@@ -71,8 +75,9 @@
   runtimes pass 1559 tests with one skip, wheel metadata is correct, Claude
   Opus 5 returned CLEAN, and Heart remains within the acknowledged YELLOW set.
   The identical accepted subhalo smoke timeout is the sole sequential failure.
-  Phase 1D starts only after green CI and merge; PyAutoHands remains deferred to
-  Phase 2.
+  Phase 1C merged unchanged as PyAutoFit#1429 (`241f2d69c`) after all five CI
+  checks passed the exact reviewed head. Phase 1D is now registered as
+  PyAutoGalaxy#534; PyAutoHands remains deferred to Phase 2.
 
 ## vacuous-jax-assertions
 - issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/229

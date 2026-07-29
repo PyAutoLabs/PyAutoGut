@@ -5,7 +5,7 @@ Target: PyAutoGalaxy
 Difficulty: medium
 Autonomy: supervised
 Priority: high
-Status: formalised
+Status: library-dev — PyAutoGalaxy#534
 
 Parent: `python_312_floor_phase_1_core.md`
 Depends on: `python_312_floor_phase_1c_fit.md`

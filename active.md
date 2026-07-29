@@ -218,3 +218,17 @@
 - worktree: ~/Code/PyAutoLabs-wt/register-tenant-firewall-surfaces
 - repos:
   - PyAutoMind (feature/register-tenant-firewall-surfaces)
+
+## workspace-readme-drift
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/369
+- status: workspace-dev
+- prompt: active/workspace_readme_drift_sweep.md
+- scope: phase 2 of 3 — 62 dead README references across autolens_workspace (34) + autogalaxy_workspace (28); root + scripts/**/ + config/**/ READMEs only, notebooks mirrors regenerated
+- depends-on: PyAutoBrain#178 (MERGED) — the widened hygiene refs scanner generates this fix list
+- brain-override: Feature Agent scored too-large/4-phase design+core_api split off its repo-count proxy; prose-only uniform sweep, no API, no design — override recorded (same as #177)
+- not-findings: `source_science` resolves (source_science.py per dataset package); runtime-generated targets (main_lens_centres.json, dataset/imaging/clumpy, search_internal/, activate.sh)
+- follow-up: 92 further findings in these repos' scripts/**/*.py docstrings + 64 in HowTo*/autofit/autocti — out of this task's README scope, to be filed separately
+- worktree: ~/Code/PyAutoLabs-wt/workspace-readme-drift
+- repos:
+  - autolens_workspace (feature/workspace-readme-drift)
+  - autogalaxy_workspace (feature/workspace-readme-drift)

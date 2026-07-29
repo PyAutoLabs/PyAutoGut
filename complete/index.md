@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-772 records across 6 buckets.
+773 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -87,6 +87,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [community-voice-agent](2026/07/community-voice-agent.md) — birth of the community conductor — the Ears, the organism's receptive language function (Wernicke to the Works…
 - [compile-census-final](2026/07/compile-census-final.md)
 - [consolidation-sweep](2026/07/consolidation-sweep.md)
+- [contributing-natural-language-reframe](2026/07/contributing-natural-language-reframe.md)
 - [convolver-gaussian-small-datasets-cap](2026/07/convolver-gaussian-small-datasets-cap.md)
 - [coolest-powerlaw-herculens](2026/07/coolest-powerlaw-herculens.md) — Follow-up to #612. Added `ag.mp.PowerLawIntermediate` — elliptical power-law whose einstein_radius is the COOL…
 - [coolest-standard-support](2026/07/coolest-standard-support.md) — COOLEST standard interop for Euclid DR1 prep — conversion layer at the model I/O boundary, internals unchanged…

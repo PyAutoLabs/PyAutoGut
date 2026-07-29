@@ -5,7 +5,7 @@ Target: PyAutoHands
 Difficulty: large
 Autonomy: supervised
 Priority: high
-Status: release-readiness — PyAutoHands#208; manual version choice and release authorization pending
+Status: awaiting-input — PyAutoHands#208; choose version and rehearsal/live-release authorization at issue comment 5118261332
 
 Parent: `python_312_ecosystem_floor.md`
 Depends on: phases 1 and 2

@@ -2,7 +2,7 @@
 
 ## python-312-floor
 - issue: https://github.com/PyAutoLabs/PyAutoNerves/issues/142
-- status: Phase 3 coordinated core release readiness; eleven PRs merged
+- status: Phase 3 validation passed; corrective PR merged; live release held on Heart YELLOW
 - library-pr: https://github.com/PyAutoLabs/PyAutoNerves/pull/143 (MERGED a9bf4561)
 - prompt: active/python_312_floor_phase_1a_nerves.md
 - phase-1b-issue: https://github.com/PyAutoLabs/PyAutoArray/issues/418
@@ -36,10 +36,13 @@
 - phase-2-hosted-matrix: https://github.com/PyAutoLabs/PyAutoHands/actions/runs/30453073189 (22/22 jobs green)
 - phase-3-issue: https://github.com/PyAutoLabs/PyAutoHands/issues/208
 - phase-3-prompt: active/python_312_floor_phase_3_core_release.md
-- phase-3-status: corrective PyAutoHeart PR merged unchanged; definitive Stage 3 run 30472573498 in progress on exact merged tree; live release not dispatched
+- phase-3-status: rehearsal and definitive Stage 3 validation passed; corrective PyAutoHeart PR merged unchanged; live release not dispatched
 - phase-3-fix-issue: https://github.com/PyAutoLabs/PyAutoHeart/issues/116
 - phase-3-fix-pr: https://github.com/PyAutoLabs/PyAutoHeart/pull/117
 - phase-3-fix-status: merged-unchanged (bda57c16; reviewed head 8259dcfb; merged tree identical)
+- phase-3-final-validation: https://github.com/PyAutoLabs/PyAutoHeart/actions/runs/30472573498 (588 passed, 0 failed, 91 skipped, 0 timeouts; install A-F PASS)
+- phase-3-heart: YELLOW 80 — workspace validation not passing (13 failed, 2026-07-21T19-05-22Z); 33 stale parked script(s); manifest drift: tenant firewall (organ code) — 6 mismatch(es) vs PyAutoMind/repos.yaml
+- phase-3-release-decision: https://github.com/PyAutoLabs/PyAutoHands/issues/208#issuecomment-5121606547
 - phase-3-fallbacks: autoconf `2026.7.15.1`; autoarray/autofit/autogalaxy/autolens `2026.7.29.1` (all unyanked, Requires-Python `>=3.9`)
 - phase-3-question: https://github.com/PyAutoLabs/PyAutoHands/issues/208#issuecomment-5118261332
 - phase-3-authorization: https://github.com/PyAutoLabs/PyAutoHands/issues/208#issuecomment-5118295258
@@ -59,7 +62,7 @@
 - phase-4d-prompt: active/python_312_floor_phase_4d_euclid_assistant.md
 - phase-4d-pr: https://github.com/Jammy2211/euclid_assistant/pull/11
 - phase-4d-status: merged-unchanged (51143df2); issue auto-closed
-- next-phase: finish and ingest Stage 3 run 30472573498, then re-evaluate the human release gate; do not repeat the full suite on unchanged main
+- next-phase: resolve or refresh the three current Heart YELLOW reasons before live release; source development is unblocked and no duplicate full-main suite is needed
 - branch: none for Phase 3 — release must use the recorded exact `main` heads
 - worktree: /home/jammy/Code/PyAutoLabs/.codex-worktrees/python-312-floor
 - checkpoint-superseded: https://github.com/PyAutoLabs/PyAutoNerves/issues/142#issuecomment-5109079935

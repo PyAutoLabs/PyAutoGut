@@ -2,7 +2,7 @@
 
 ## python-312-floor
 - issue: https://github.com/PyAutoLabs/PyAutoNerves/issues/142
-- status: library-dev (PyAutoReduce); PyAutoNerves and PyAutoCTI awaiting-merge
+- status: campaign-active; PyAutoNerves, PyAutoCTI, and PyAutoReduce awaiting-merge
 - library-pr: https://github.com/PyAutoLabs/PyAutoNerves/pull/143
 - prompt: active/python_312_floor_phase_1a_nerves.md
 - phase-4a-issue: https://github.com/PyAutoLabs/PyAutoCTI/issues/100
@@ -10,7 +10,8 @@
 - phase-4a-pr: https://github.com/PyAutoLabs/PyAutoCTI/pull/101
 - phase-4b-issue: https://github.com/PyAutoLabs/PyAutoReduce/issues/59
 - phase-4b-prompt: active/python_312_floor_phase_4b_autoreduce.md
-- phase-4b-status: library-dev
+- phase-4b-pr: https://github.com/PyAutoLabs/PyAutoReduce/pull/60
+- phase-4b-status: library-shipped, awaiting-merge
 - branch: feature/python-312-floor
 - worktree: /home/jammy/Code/PyAutoLabs/.codex-worktrees/python-312-floor
 - checkpoint-superseded: https://github.com/PyAutoLabs/PyAutoNerves/issues/142#issuecomment-5109079935
@@ -35,8 +36,8 @@
   `pending-release`, fully tested on 3.12/3.13 and review CLEAN. Independent
   Phase 4B is also active in
   PyAutoReduce; its census found only package metadata below the floor. Issue
-  #59 is filed and its clean `feature/python-312-floor` worktree is attached
-  for implementation.
+  #59 is filed and PR #60 is open with `pending-release`, fully tested on
+  3.12/3.13 and review CLEAN.
 
 ## vacuous-jax-assertions
 - issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/229

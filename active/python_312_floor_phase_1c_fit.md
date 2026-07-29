@@ -5,7 +5,7 @@ Target: PyAutoFit
 Difficulty: medium
 Autonomy: supervised
 Priority: high
-Status: formalised
+Status: merged — PR `PyAutoFit#1429`, merge `241f2d69c`; issue remains open as the campaign record
 
 Parent: `python_312_floor_phase_1_core.md`
 Depends on: `python_312_floor_phase_1b_array.md`

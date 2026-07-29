@@ -2,7 +2,7 @@
 
 ## python-312-floor
 - issue: https://github.com/PyAutoLabs/PyAutoNerves/issues/142
-- status: Phase 1 complete; Phase 2 build and health verification next; nine prior PRs merged
+- status: Phase 2 build and health verification; nine prior PRs merged
 - library-pr: https://github.com/PyAutoLabs/PyAutoNerves/pull/143 (MERGED a9bf4561)
 - prompt: active/python_312_floor_phase_1a_nerves.md
 - phase-1b-issue: https://github.com/PyAutoLabs/PyAutoArray/issues/418
@@ -27,6 +27,9 @@
 - phase-1e-pr: https://github.com/PyAutoLabs/PyAutoLens/pull/664
 - phase-1e-status: merged-unchanged (b40fb0ba; head 5b42f3e4; CI 5/5 green)
 - phase-1e-review: Claude Opus 5 CLEAN on exact byte-identical review tree `83b157014`
+- phase-2-issue: https://github.com/PyAutoLabs/PyAutoHands/issues/206
+- phase-2-prompt: active/python_312_floor_phase_2_build_health.md
+- phase-2-status: library-dev
 - phase-4a-issue: https://github.com/PyAutoLabs/PyAutoCTI/issues/100
 - phase-4a-prompt: active/python_312_floor_phase_4a_autocti.md
 - phase-4a-pr: https://github.com/PyAutoLabs/PyAutoCTI/pull/101
@@ -43,7 +46,7 @@
 - phase-4d-prompt: active/python_312_floor_phase_4d_euclid_assistant.md
 - phase-4d-pr: https://github.com/Jammy2211/euclid_assistant/pull/11
 - phase-4d-status: merged-unchanged (51143df2); issue auto-closed
-- next-phase: Phase 2 — PyAutoHands/PyAutoHeart build and health verification
+- next-phase: Phase 2 implementation — PyAutoHands/PyAutoHeart
 - branch: feature/python-312-floor
 - worktree: /home/jammy/Code/PyAutoLabs/.codex-worktrees/python-312-floor
 - checkpoint-superseded: https://github.com/PyAutoLabs/PyAutoNerves/issues/142#issuecomment-5109079935
@@ -58,6 +61,7 @@
 - heart-ack: workspace validation not passing (13 failed, 2026-07-21T19-05-22Z); 33 stale parked script(s); manifest drift: tenant firewall (organ code) — 6 mismatch(es) vs PyAutoMind/repos.yaml; release validation stale: source moved since rehearsal (PyAutoNerves, PyAutoFit, PyAutoArray, PyAutoGalaxy, PyAutoLens)
 - repos:
   - PyAutoNerves: feature/python-312-floor
+  - PyAutoHands: feature/python-312-floor
   - PyAutoArray: feature/python-312-floor
   - PyAutoFit: feature/python-312-floor
   - PyAutoGalaxy: feature/python-312-floor

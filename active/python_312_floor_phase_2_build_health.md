@@ -5,7 +5,7 @@ Target: PyAutoHands
 Difficulty: large
 Autonomy: supervised
 Priority: high
-Status: formalised
+Status: library-dev — PyAutoHands#206
 
 Parent: `python_312_ecosystem_floor.md`
 Depends on: `python_312_floor_phase_1_core.md`

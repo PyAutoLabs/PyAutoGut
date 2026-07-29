@@ -36,8 +36,10 @@
 - phase-2-hosted-matrix: https://github.com/PyAutoLabs/PyAutoHands/actions/runs/30453073189 (22/22 jobs green)
 - phase-3-issue: https://github.com/PyAutoLabs/PyAutoHands/issues/208
 - phase-3-prompt: active/python_312_floor_phase_3_core_release.md
-- phase-3-status: corrective PyAutoHeart PR reviewed CLEAN; definitive Stage 3 run 30472573498 in progress on exact head 8259dcf; live release not dispatched
+- phase-3-status: corrective PyAutoHeart PR merged unchanged; definitive Stage 3 run 30472573498 in progress on exact merged tree; live release not dispatched
 - phase-3-fix-issue: https://github.com/PyAutoLabs/PyAutoHeart/issues/116
+- phase-3-fix-pr: https://github.com/PyAutoLabs/PyAutoHeart/pull/117
+- phase-3-fix-status: merged-unchanged (bda57c16; reviewed head 8259dcfb; merged tree identical)
 - phase-3-fallbacks: autoconf `2026.7.15.1`; autoarray/autofit/autogalaxy/autolens `2026.7.29.1` (all unyanked, Requires-Python `>=3.9`)
 - phase-3-question: https://github.com/PyAutoLabs/PyAutoHands/issues/208#issuecomment-5118261332
 - phase-3-authorization: https://github.com/PyAutoLabs/PyAutoHands/issues/208#issuecomment-5118295258
@@ -57,7 +59,7 @@
 - phase-4d-prompt: active/python_312_floor_phase_4d_euclid_assistant.md
 - phase-4d-pr: https://github.com/Jammy2211/euclid_assistant/pull/11
 - phase-4d-status: merged-unchanged (51143df2); issue auto-closed
-- next-phase: finish and ingest Stage 3 run 30472573498, merge PyAutoHeart#117 unchanged, verify merged-tree identity, then re-evaluate the human release gate; do not repeat the full suite on unchanged main
+- next-phase: finish and ingest Stage 3 run 30472573498, then re-evaluate the human release gate; do not repeat the full suite on unchanged main
 - branch: none for Phase 3 — release must use the recorded exact `main` heads
 - worktree: /home/jammy/Code/PyAutoLabs/.codex-worktrees/python-312-floor
 - checkpoint-superseded: https://github.com/PyAutoLabs/PyAutoNerves/issues/142#issuecomment-5109079935
@@ -111,22 +113,6 @@
   returned CLEAN on byte-identical review tree `83b157014` and all five CI
   checks passed exact head `5b42f3e4`. The full five-library core floor is now
   merged; no release or issue closure was performed. Advance to Phase 2.
-
-## release-check-e-python-312
-- issue: https://github.com/PyAutoLabs/PyAutoHeart/issues/116
-- status: awaiting-cloud-validation
-- worktree: /home/jammy/Code/PyAutoLabs-wt/release-check-e-python-312
-- branch: feature/release-check-e-python-312
-- pr: https://github.com/PyAutoLabs/PyAutoHeart/pull/117
-- reviewed-head: 8259dcfb3fc7b401e4405473c3ddcf2b99e0610a
-- review: PyAuto CLEAN; Claude Opus 5 max-effort CLEAN on exact head
-- validation-run: https://github.com/PyAutoLabs/PyAutoHeart/actions/runs/30472573498
-- validation-checkpoint: 48/51 complete, 3 active, 0 failed; install A-F ready=true including Check E on python3.12
-- checkpoint: https://github.com/PyAutoLabs/PyAutoHeart/issues/116#issuecomment-5121390364
-- resume: inspect run 30472573498, ingest successful artifacts, merge exact head, verify merged-tree identity, clean task claim; no duplicate full-main run
-- parent-task: python-312-floor
-- repos:
-  - PyAutoHeart: feature/release-check-e-python-312
 
 ## vacuous-jax-assertions
 - issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/229

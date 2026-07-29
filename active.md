@@ -2,12 +2,13 @@
 
 ## python-312-floor
 - issue: https://github.com/PyAutoLabs/PyAutoNerves/issues/142
-- status: library-dev (PyAutoArray); five prior PRs merged
+- status: parked; Phase 1B smoke gate; five prior PRs merged
 - library-pr: https://github.com/PyAutoLabs/PyAutoNerves/pull/143 (MERGED a9bf4561)
 - prompt: active/python_312_floor_phase_1a_nerves.md
 - phase-1b-issue: https://github.com/PyAutoLabs/PyAutoArray/issues/418
 - phase-1b-prompt: active/python_312_floor_phase_1b_array.md
-- phase-1b-status: library-dev
+- phase-1b-status: parked (strict smoke gate; source uncommitted)
+- phase-1b-question: https://github.com/PyAutoLabs/PyAutoArray/issues/418#issuecomment-5115166953
 - phase-4a-issue: https://github.com/PyAutoLabs/PyAutoCTI/issues/100
 - phase-4a-prompt: active/python_312_floor_phase_4a_autocti.md
 - phase-4a-pr: https://github.com/PyAutoLabs/PyAutoCTI/pull/101
@@ -24,7 +25,7 @@
 - phase-4d-prompt: active/python_312_floor_phase_4d_euclid_assistant.md
 - phase-4d-pr: https://github.com/Jammy2211/euclid_assistant/pull/11
 - phase-4d-status: merged-unchanged (51143df2); issue auto-closed
-- next-phase: phase 1B — PyAutoArray
+- next-phase: awaiting explicit Phase 1B smoke decision; later core phases depend on it
 - branch: feature/python-312-floor
 - worktree: /home/jammy/Code/PyAutoLabs/.codex-worktrees/python-312-floor
 - checkpoint-superseded: https://github.com/PyAutoLabs/PyAutoNerves/issues/142#issuecomment-5109079935
@@ -51,9 +52,15 @@
   checked. Opus confirmed two planned release-sequencing hazards: the remaining
   four core library floors must rise before publication, and Heart's legacy
   below-floor install/banner checks must be rewritten in Phase 2. JAX 0.11 and
-  Python 3.14 support remain separate follow-ups. Phase 1B is active as
-  PyAutoArray issue #418 after the prior claim was durably released; its shared
-  worktree is attached on `feature/python-312-floor` from current `origin/main`.
+  Python 3.14 support remain separate follow-ups. Phase 1B source changes are
+  complete locally: Python 3.12 and official-profile Python 3.13 suites pass and
+  wheel metadata is correct. The strict smoke gate remains red because
+  `autolens_workspace_test/imaging/subhalo_recovery.py` exceeded 300 seconds in
+  both the parallel run and a sequential retry; the other 11 parallel timeouts
+  passed sequentially. The Phase 1B source remains uncommitted and unpushed,
+  review and Heart were not run, and all dependent phases are queued pending an
+  explicit human smoke decision. A separate pre-existing PyNUFFT/SciPy dev-extra
+  incompatibility was reproduced on unmodified main and recorded as a draft bug.
 
 ## vacuous-jax-assertions
 - issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/229

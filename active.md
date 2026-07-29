@@ -156,3 +156,4 @@
 - heart-ack: 2026-07-29 — YELLOW 80: workspace validation not passing (13 failed); 33 stale parked script(s); manifest drift tenant firewall (all pre-existing, none related to a read-only Brain scanner)
 - worktree: ~/Code/PyAutoLabs-wt/hygiene-refs-readme-drift
 - repos:
+  - PyAutoBrain (feature/hygiene-refs-readme-drift)

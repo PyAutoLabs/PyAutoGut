@@ -193,6 +193,20 @@
   - autolens_workspace (feature/assistant-start-here-scripts)
   - autogalaxy_workspace (feature/assistant-start-here-scripts)
 
+## likelihood-function-jax-pointer
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/368
+- status: workspace-dev
+- prompt: active/likelihood_function_jax_section_to_pointer.md
+- scope: six `likelihood_function.py` scripts (autolens imaging/interferometer/group/cluster, autogalaxy imaging/interferometer) lose their trailing 25-45 line `__JAX__` block; each gains a `__JAX__` heading + ONE sentence at the end of the opening header docstring (after `__Contents__`) pointing at `scripts/guides/using_jax.py`, plus a `__JAX__` bullet as the FIRST `__Contents__` entry. The deleted detail migrates into `scripts/guides/using_jax.py` in BOTH workspaces as a new `__Custom Likelihood Functions__` section
+- guide-content: the new guide section shows a likelihood function JAX-compiled two ways — (a) via the `Analysis` object (`al.AnalysisImaging(dataset=dataset)`, `use_jax=True` default, `@jax.jit` around `analysis.log_likelihood_function(instance=instance)`) and (b) via `Fitness` (`from autofit.non_linear.fitness import Fitness` — NOT exported as `af.Fitness`; `fitness._vmap(jnp.array([parameters]))[0]`). Plus the hand-rolled `Tracer`+`FitImaging` pattern with `autolens.jax.register_tracer_classes(tracer)` (autogalaxy: `ag.AnalysisImaging` init registers pytrees as a side effect) and the interferometer `TransformerDFT`-not-`TransformerNUFFT` caveat
+- contents-bullet: human decision 2026-07-29 — ADD a `__JAX__` bullet to all six `__Contents__` lists (they list no JAX entry today), as the first entry, since the section now sits immediately after the list
+- cluster-exception: cluster's block is `FitPositionsSource`-shaped, not `FitImaging`. It is REDUCED to the pointer, NOT migrated — folding a point-source recipe into an imaging-shaped guide example would muddy it; `cluster/modeling.py` already carries the `AnalysisPoint(use_jax=True)` path
+- brain-override: Feature Agent returned too-large (score 13) / split-into-4-phases off its repo-count proxy ([[feedback_brain_repo_count_difficulty_proxy]]). Actual change is 8 docstring-only files of uniform shape — overridden to one PR per repo
+- parallel-claim: `multistart-prodigy-start-here` (#366) and `assistant-start-here-scripts` (#367) BOTH claim the same two repos. Human decision 2026-07-29: proceed in parallel — zero source-file overlap (those edit `start_here.py`; this edits `likelihood_function.py` + `guides/using_jax.py`). Only the GENERATED artifacts collide (notebooks/, llms-full.txt, workspace_index.json); whichever PR merges last must re-run generate.py rather than hand-resolve
+- guard-bug: `worktree_check_conflict` reported NO conflict on both repos despite the two claims above. `worktree_list_claimed` (PyAutoBrain/bin/worktree.sh:326-333) parses `  - <repo>: <branch>` but active.md writes `  - <repo> (<branch>)`, so `repo` swallows the branch and the `==` compare at :346 never matches — the guard has never fired for any task. Filed as draft/bug/pyautobrain/worktree_check_conflict_never_fires.md; NOT fixed in this task
+- worktree: ~/Code/PyAutoLabs-wt/likelihood-function-jax-pointer
+- repos:
+
 ## register-tenant-firewall-surfaces
 - issue: https://github.com/PyAutoLabs/PyAutoMind/issues/114
 - session: codex

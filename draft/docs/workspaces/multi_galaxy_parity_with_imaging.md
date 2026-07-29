@@ -69,11 +69,14 @@ several ways. The user's request, verbatim:
 
 ## Constraints / known traps
 
-- The `multi_galaxy/simple` dataset ships **no** `mask_extra_galaxies.fits`
-  (its simulator writes none), so imaging's `__Extra Galaxies Noise Scaling__`
-  sections in `modeling.py` / `fit.py` / `likelihood_function.py` cannot be
-  ported verbatim. Either omit them or add the mask to the simulator — decide
-  explicitly, do not silently load a file that does not exist.
+- **Decided (user, 2026-07-29):** `multi_galaxy/simulator.py` gains a faint
+  extra galaxy + writes `mask_extra_galaxies.fits`, exactly as
+  `imaging/simulator.py` does, so `__Extra Galaxies Noise Scaling__` lands in
+  `start_here.py` / `modeling.py` / `fit.py` / `likelihood_function.py` too.
+  `dataset/multi_galaxy/**` is gitignored, so this adds no committed binary.
+  Trap: `should_simulate` checks directory *existence* only — an already
+  simulated `dataset/multi_galaxy/simple/` will not regenerate and the new
+  mask will be missing, so `rm -rf` it before any run.
 - `multi_galaxy/start_here.py` **is** smoke-enabled (`smoke_tests.txt:11`)
   whereas `imaging/start_here.py` is not. The Scribbler GUI block and the new
   simulator sections must not hang or fail headless CI; if they do, either

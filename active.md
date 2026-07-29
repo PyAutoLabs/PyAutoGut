@@ -152,7 +152,10 @@
 
 ## hygiene-refs-readme-drift
 - issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/177
-- status: library-dev
+- status: library-shipped, awaiting-merge (phase 2 blocked on this)
+- library-pr: https://github.com/PyAutoLabs/PyAutoBrain/pull/178 (OPEN, pending-release; commit e8e4279)
+- result: refs 4 -> 218 findings across 7/7 repos; now the top-ranked hygiene item; 32/32 conductor tests pass
+- audit-correction: `source_science` is NOT drift — source_science.py exists per dataset package; it was only absent as a directory. Do not "fix" it in phase 2.
 - prompt: active/hygiene_refs_readme_drift_class.md
 - scope: phase 1 of 3 — widen `_hygiene_refs.py` (scanned set + 3 new reference shapes) + tests + mode docs; read-only scanner, no repo mutation
 - phases: (1) this — hygiene refs scanner; (2) draft/docs/workspaces/workspace_readme_drift_sweep.md — sweep autolens+autogalaxy READMEs; (3) draft/feature/pyautohands/navigator_check_readme_ref_shapes.md — CI gate, lands AFTER phase 2 merges

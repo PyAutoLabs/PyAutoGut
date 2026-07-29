@@ -68,6 +68,19 @@ paren form is what every skill and every existing entry writes, and
 [[feedback_active_md_dash_repos]] records that these `  - Repo` lines are the
 claims. The parser is what is wrong.
 
+Note the schema drift runs both ways —
+`PyAutoBrain/skills/start_workspace/reference.md` ("active.md registration")
+still documents the colon form the awk expects:
+
+```markdown
+- repos:
+  - PyAutoFit: feature/<task-name>
+```
+
+So the parser matches the *documented* schema and the writers drifted away from
+it. Accepting both forms fixes the guard without a migration; whether to also
+re-align the docs on one form is a separate call.
+
 ## Validation
 
 - `worktree_check_conflict <new-task> autolens_workspace` exits 1 and names both

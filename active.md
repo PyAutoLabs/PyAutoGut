@@ -170,6 +170,8 @@
 ## multistart-prodigy-start-here
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/366
 - status: workspace-dev
+- heart-ack: 2026-07-29 — YELLOW 4 reasons, all pre-existing and unrelated to this change: workspace validation not passing (13 failed, 2026-07-21T19-05-22Z); 33 stale parked script(s); manifest drift: public front-door organ tables (generated) — 1 mismatch(es) vs PyAutoMind/repos.yaml; manifest drift: tenant firewall (organ code) — 6 mismatch(es) vs PyAutoMind/repos.yaml
+- ship-evidence: autolens smoke 16/16, autogalaxy smoke 12/12, check_sizes.sh OK both; real no-test-mode fit of autogalaxy imaging/start_here.py converged early at step 132, 7.5min CPU, max log likelihood -808.19
 - prompt: active/multistart_prodigy_in_start_here.md
 - scope: 8 of 13 dataset-type start_here.py convert to af.MultiStartProdigy; 5 stay on af.Nautilus with a "not available here" note; all 13 modeling.py get a 2-3 line Search-docstring mention with ZERO code
 - blocked-cells: autolens point_source + cluster (AnalysisPoint — point-source JAX gradients do not exist; draft/feature/autolens/point_source_chi_squared_paper_variants_phase_5_jax_gradients.md blocked on phase 2); autolens weak (use_jax=False pinned by PyAutoLens#614, confirmed OPEN); autolens multi + autogalaxy multi (multi-band FactorGraphModel value_and_grad cold compile unbounded on CPU, >2h observed — draft/research/autofit/multi_band_factorgraphmodel_value_and_grad_cold.md, whose named reproducer IS autolens multi/start_here.py)

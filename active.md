@@ -36,9 +36,10 @@
 - phase-2-hosted-matrix: https://github.com/PyAutoLabs/PyAutoHands/actions/runs/30453073189 (22/22 jobs green)
 - phase-3-issue: https://github.com/PyAutoLabs/PyAutoHands/issues/208
 - phase-3-prompt: active/python_312_floor_phase_3_core_release.md
-- phase-3-status: awaiting-input; preflight passed, manual version choice/release authorization required before any upload
+- phase-3-status: release-authorized; version `2026.7.29.2`, full validation and live release allowed only on GREEN or the exact unchanged acknowledged YELLOW 65 set
 - phase-3-fallbacks: autoconf `2026.7.15.1`; autoarray/autofit/autogalaxy/autolens `2026.7.29.1` (all unyanked, Requires-Python `>=3.9`)
 - phase-3-question: https://github.com/PyAutoLabs/PyAutoHands/issues/208#issuecomment-5118261332
+- phase-3-authorization: https://github.com/PyAutoLabs/PyAutoHands/issues/208#issuecomment-5118295258
 - phase-4a-issue: https://github.com/PyAutoLabs/PyAutoCTI/issues/100
 - phase-4a-prompt: active/python_312_floor_phase_4a_autocti.md
 - phase-4a-pr: https://github.com/PyAutoLabs/PyAutoCTI/pull/101

@@ -174,3 +174,18 @@
 - repos:
   - autolens_workspace (feature/multistart-prodigy-start-here)
   - autogalaxy_workspace (feature/multistart-prodigy-start-here)
+
+## assistant-start-here-scripts
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/367
+- status: workspace-dev
+- prompt: active/assistant_section_workspace_start_here_scripts.md
+- scope: the one surface `assistant-first-docs` (PyAutoLens#645, complete 2026-07-24) missed — the ROOT start_here.py of each workspace. autolens: replace `__Three Ways To Learn PyAutoLens__` (lines 353-372, the Manual Navigation / AI Chat Assistant / Fully Agentic AI split) with one `__PyAutoLens AI Assistant__` section mirroring the shipped README/RTD wording. autogalaxy: has NO AI section at all — add the equivalent between `__Wrap Up__` and `__What Data Type?__`
+- autogalaxy-404: https://github.com/PyAutoLabs/autogalaxy_assistant does not exist (gh API 404). Keeping the link is the already-recorded decision — the assistant-first-docs completion record states the URL "is intentionally allowed to return 404 until its repository is created", and it already ships in the AG README + RTD. Re-confirmed by the human 2026-07-29. Neither workspace runs a url_check workflow, so no CI gate is involved
+- brain-override: Feature Agent scored large (6) / split-into-phases off its repo-count proxy; actual change is a ~20-line prose edit in one file per repo, identical in shape — overridden to one PR
+- parallel-claim: `multistart-prodigy-start-here` (#366) claims the SAME two repos. Human decision 2026-07-29: proceed in parallel — zero source-file overlap (that task edits `scripts/<type>/start_here.py`, this one the ROOT `start_here.py`). Only the GENERATED artifacts collide (notebooks/, start_here.ipynb, markdown/, llms-full.txt, workspace_index.json); whichever PR merges second must re-run generate.py + generate_markdown.py rather than hand-resolve
+- regen-note: markdown/start_here.md is NOT produced by generate.py — it comes from PyAutoHands `generate_markdown.py --only start_here.py`, which EXECUTES the script for real figures and hard-exits if PYAUTO_TEST_MODE is set. Cheap here: neither root start_here.py imports autofit or runs a fit
+- retire-candidate: draft/docs/workspaces/unify_ai_assistant_workspace_readmes.md ("Phase 2: workspace READMEs assistant-first") is already satisfied — assistant-first-docs lists autolens_workspace#329 + autogalaxy_workspace#155 as merged and both READMEs carry the unified section today
+- worktree: ~/Code/PyAutoLabs-wt/assistant-start-here-scripts
+- repos:
+  - autolens_workspace (feature/assistant-start-here-scripts)
+  - autogalaxy_workspace (feature/assistant-start-here-scripts)

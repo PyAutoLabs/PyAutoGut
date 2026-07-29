@@ -2,7 +2,7 @@
 
 ## python-312-floor
 - issue: https://github.com/PyAutoLabs/PyAutoNerves/issues/142
-- status: Phase 1E preparation; eight prior PRs merged
+- status: Phase 1E library development; eight prior PRs merged
 - library-pr: https://github.com/PyAutoLabs/PyAutoNerves/pull/143 (MERGED a9bf4561)
 - prompt: active/python_312_floor_phase_1a_nerves.md
 - phase-1b-issue: https://github.com/PyAutoLabs/PyAutoArray/issues/418
@@ -22,6 +22,9 @@
 - phase-1d-pr: https://github.com/PyAutoLabs/PyAutoGalaxy/pull/535
 - phase-1d-status: merged-unchanged (b9d9927f; head 1c34f3c8; CI 5/5 green)
 - phase-1d-review: Claude Opus 5 CLEAN on exact byte-identical review tree `cd8b35da`
+- phase-1e-issue: https://github.com/PyAutoLabs/PyAutoLens/issues/663
+- phase-1e-prompt: active/python_312_floor_phase_1e_lens.md
+- phase-1e-status: library-dev
 - phase-4a-issue: https://github.com/PyAutoLabs/PyAutoCTI/issues/100
 - phase-4a-prompt: active/python_312_floor_phase_4a_autocti.md
 - phase-4a-pr: https://github.com/PyAutoLabs/PyAutoCTI/pull/101
@@ -56,6 +59,7 @@
   - PyAutoArray: feature/python-312-floor
   - PyAutoFit: feature/python-312-floor
   - PyAutoGalaxy: feature/python-312-floor
+  - PyAutoLens: feature/python-312-floor
   - PyAutoCTI: feature/python-312-floor
   - PyAutoReduce: feature/python-312-floor
   - PyAutoHeart: feature/python-312-floor
@@ -85,8 +89,8 @@
   after the separate pip-rollback documentation hazard was durably assigned
   to Phases 3 and 6 in Mind `e2acf4a`; Heart remains within the acknowledged
   YELLOW set. Phase 1D merged unchanged as PyAutoGalaxy#535 (`b9d9927f`)
-  after all five CI checks passed the exact reviewed head. Phase 1E is next;
-  PyAutoHands remains deferred to Phase 2.
+  after all five CI checks passed the exact reviewed head. Phase 1E is
+  registered as PyAutoLens#663; PyAutoHands remains deferred to Phase 2.
 
 ## vacuous-jax-assertions
 - issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/229

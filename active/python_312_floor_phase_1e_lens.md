@@ -5,7 +5,7 @@ Target: PyAutoLens
 Difficulty: small
 Autonomy: supervised
 Priority: high
-Status: formalised
+Status: library-dev — PyAutoLens#663
 
 Parent: `python_312_floor_phase_1_core.md`
 Depends on: `python_312_floor_phase_1d_galaxy.md`

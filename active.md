@@ -149,6 +149,7 @@
 - parent: python-312-floor
 - repos:
   - autofit_assistant: feature/python-312-release-surfaces
+- notes: `wiki-currency` passes on the Python 3.12 PR head.
 
 ## python-312-autolens-wiki-currency-ci
 - issue: https://github.com/PyAutoLabs/autolens_assistant/issues/94
@@ -160,6 +161,9 @@
 - parent: python-312-floor
 - repos:
   - autolens_assistant: feature/python-312-release-surfaces
+- notes: Python 3.12 version, symbol, and idiom checks pass. Merge remains
+  blocked by unrelated baseline drift: unclassified `AI_POLICY.md` and the
+  missing `autolens_workspace:scripts/guides/hpc/example_cpu.py` citation.
 
 ## python-312-autocti-wiki-currency-ci
 - issue: https://github.com/PyAutoLabs/autocti_assistant/issues/14
@@ -171,6 +175,9 @@
 - parent: python-312-floor
 - repos:
   - autocti_assistant: feature/python-312-release-surfaces
+- notes: Python 3.12 exposed the missing `setuptools.build_meta` bootstrap for
+  `arcticpy`; follow-up commit `1130399` installs setuptools/wheel explicitly.
+  Both `wiki-currency` and `boundary` now pass.
 
 ## python-312-memory-validation-ci
 - issue: https://github.com/PyAutoLabs/PyAutoMemory/issues/30

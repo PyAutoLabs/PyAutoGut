@@ -198,7 +198,11 @@
 
 ## likelihood-function-jax-pointer
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/368
-- status: workspace-dev
+- status: awaiting-merge
+- workspace-prs: https://github.com/PyAutoLabs/autolens_workspace/pull/375, https://github.com/PyAutoLabs/autogalaxy_workspace/pull/181
+- ship-evidence: autolens smoke 16/16, autogalaxy smoke 12/12; check_sizes.sh OK; all six likelihood_function.py scripts run green; the three published guide paths executed verbatim and agree with the eager NumPy log likelihood to ~1e-15
+- shipped-comment: https://github.com/PyAutoLabs/autolens_workspace/issues/368#issuecomment-5128300141
+- followup: autogalaxy has NO public counterpart to `autolens.jax.register_tracer_classes` (only the private `AnalysisImaging._register_fit_imaging_pytrees`) — possible library-side prompt, not filed
 - prompt: active/likelihood_function_jax_section_to_pointer.md
 - scope: six `likelihood_function.py` scripts (autolens imaging/interferometer/group/cluster, autogalaxy imaging/interferometer) lose their trailing 25-45 line `__JAX__` block; each gains a `__JAX__` heading + ONE sentence at the end of the opening header docstring (after `__Contents__`) pointing at `scripts/guides/using_jax.py`, plus a `__JAX__` bullet as the FIRST `__Contents__` entry. The deleted detail migrates into `scripts/guides/using_jax.py` in BOTH workspaces as a new `__Custom Likelihood Functions__` section
 - guide-content: the new guide section shows a likelihood function JAX-compiled two ways — (a) via the `Analysis` object (`al.AnalysisImaging(dataset=dataset)`, `use_jax=True` default, `@jax.jit` around `analysis.log_likelihood_function(instance=instance)`) and (b) via `Fitness` (`from autofit.non_linear.fitness import Fitness` — NOT exported as `af.Fitness`; `fitness._vmap(jnp.array([parameters]))[0]`). Plus the hand-rolled `Tracer`+`FitImaging` pattern with `autolens.jax.register_tracer_classes(tracer)` (autogalaxy: `ag.AnalysisImaging` init registers pytrees as a side effect) and the interferometer `TransformerDFT`-not-`TransformerNUFFT` caveat

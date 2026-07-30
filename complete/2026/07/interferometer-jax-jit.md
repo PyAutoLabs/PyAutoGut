@@ -1,3 +1,24 @@
+## interferometer-jax-jit (interferometer simulator @jax.jit path fixed — ONE file, +56/-1 — SHIPPED)
+- issue: https://github.com/PyAutoLabs/PyAutoArray/issues/422 (CLOSED)
+- completed: 2026-07-30
+- library-pr: https://github.com/PyAutoLabs/PyAutoArray/pull/423 (MERGED 71cb7625)
+- summary: Follow-up to #420/#421, which fixed the imaging simulator and deliberately excluded the interferometer. Both `TransformerDFT` and `TransformerNUFFT` now work under `@jax.jit`. Two causes, one file:
+
+  (1) `Interferometer` was not a registered pytree, so it could not cross the jit RETURN boundary. Added `_register_interferometer_pytrees` mirroring `_register_imaging_pytrees` — `data` + `noise_map` dynamic; `uv_wavelengths`, `real_space_mask`, `transformer`, `grids`, over-sample sizes and the Nones as aux (split taken from `vars(dataset)`, NOT the `__init__` signature). It must ALSO register `Visibilities` and `VisibilitiesNoiseMap`: on the imaging path `Array2D` is already registered elsewhere, but nothing registers these, so they surfaced as bare leaves ("returned a value of type Visibilities at output component [0]").
+
+  (2) `via_image_from` called `transformer.visibilities_from(image=image)` with NO `xp=xp`. One line.
+
+- the-issue-was-wrong: **#422 predicted blocker 2 was `TransformerNUFFT._forward_native` hard-converting to NumPy and needing "restructuring with its own correctness surface". That was FALSE.** `_forward_native` already has a complete, jittable JAX branch (`lax.scan` + `dynamic_slice`). The reported failure at `transformer.py:660` was in the **NumPy** branch — the traceback pointed at the symptom while the cause sat one frame up, in a caller that never threaded `xp`. `operators/transformer.py` is deliberately UNTOUCHED. **Had I trusted my own issue and edited the transformer, I would have restructured working code to fix a bug that was somewhere else.** Same root shape as site 1 of #421 (an un-threaded call, not a broken callee).
+- dft-passed-by-luck: `TransformerDFT` worked despite the missing `xp` because its arithmetic flows through tracers. Only NUFFT — which calls into `_nufftax` and then converts — exposed it. **A green DFT was not evidence the path was threaded.**
+- ship-evidence: DFT and NUFFT numpy-eager vs jax-jit agree ~1e-11 on real AND imaginary parts (complex visibilities, both checked); BOTH NUFFT chunk branches under jit match NumPy ~5e-13; returned `Interferometer` keeps uv_wavelengths / real_space_mask / noise_map; NumPy path still ndarray-backed; test_autoarray 929 / test_autogalaxy 1009 / test_autolens 488 — all IDENTICAL to pre-change counts; re-verified against merged main, not just the branch.
+- chunk-branch-note: `chunk_size` is a `TransformerNUFFT.__init__` argument that `SimulatorInterferometer` NEVER sets, so the `lax.scan` branch is unreachable via the simulator. It was exercised on the transformer directly rather than reported as skipped.
+- out-of-scope: `TransformerNUFFTPyNUFFT` — legacy pynufft backend, not JAX-traceable, not expected to be.
+- docs-followup: the interferometer `__JAX Variant__` sections in both workspaces still say the jitted wrap "does not currently work" (autolens_workspace#379), and autolens `interferometer/simulator.py`'s "TransformerNUFFT supports jax.jit" claim is unqualified. Do for interferometer what autolens_workspace#381 did for imaging: restore the recipe, uncomment the call, add the script to `smoke_tests.txt` so CI executes it.
+- arc: 6th and final library generation of the arc that began as "move a __JAX__ section and shorten it" (autolens_workspace#368) → PyAutoGalaxy#536 → autolens_workspace#379 → PyAutoArray#420 → autolens_workspace#381 → here.
+- lesson: twice in this arc the traceback's deepest PyAuto frame was the SYMPTOM and the cause was a caller one frame up that failed to thread `xp`. Read the whole callee before concluding it is broken.
+
+## Original prompt
+
 # Interferometer simulator `@jax.jit` path — two remaining blockers
 
 Type: bug

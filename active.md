@@ -41,8 +41,14 @@
 ## scaling-relation-brightest-galaxy
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/407
 - session: claude --resume b79e03f8-64be-4fce-8c2d-e8b98ce8f487
-- status: workspace-dev
+- status: awaiting-merge (PR https://github.com/PyAutoLabs/autolens_workspace/pull/416 opened 2026-07-30, pending-release, MERGEABLE; smoke 22/22; merge human)
 - worktree: ~/Code/PyAutoLabs-wt/scaling-relation-brightest-galaxy
+- note: two PRE-EXISTING failures found while verifying, reproduce on pristine main, neither in smoke_tests.txt —
+  multi_galaxy/features/scaling_relation/slam.py (IndexError INT_MIN in mapper_util.adaptive_pixel_signals_from via
+  adapt-regularization in source_pix_2) and point_source/features/scaling_relation/fit.py (own astrometric-shift
+  assertion, measured shift 0 mas). NOT fixed here; unfiled.
+- note: notebooks/group/start_here.ipynb drift (script says Nautilus, committed notebook says MultiStartProdigy)
+  reverted and excluded from this PR — still present on main; overlaps the same exclusion in optional-none-default-typos
 - heart-ack: YELLOW acknowledged 2026-07-30 by human, exact reasons:
   - "manifest drift: tenant firewall (organ code) — 1 mismatch(es) vs PyAutoMind/repos.yaml"
   - "test run status unknown (no report.json)" (stale)

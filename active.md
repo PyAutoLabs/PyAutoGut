@@ -160,8 +160,12 @@
 
 ## extra-galaxies-multi-galaxy-lens
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/387
-- status: workspace-dev
+- status: awaiting-merge
+- workspace-pr: https://github.com/PyAutoLabs/autolens_workspace/pull/391 (OPEN, pending-release, head b90af51a, CI 4/4 GREEN)
 - prompt: active/extra_galaxies_feature_parity_phase_2b_multi_galaxy_autolens.md
+- heart: YELLOW 70 — same two reasons the human acked for phase 2a, with ONE delta (release-validation-stale now also lists PyAutoArray). Taken through PR-OPEN on that basis (reversible, and where the autonomy contract stops anyway); MERGE deliberately held for explicit human confirmation rather than re-litigating a third near-identical ack
+- ship-evidence: smoke 19/19 (18 before, +1 new entry); check_sizes clean; navigator verified under the CI root layout; origin/main merged in and catalogue regenerated BEFORE opening the PR (produced no further diff) — avoided the conflict-at-merge-time dance that 2a hit
+- measurement: taking the true tracer and removing ONLY the extra galaxies' mass (keeping light) shifts the model image by up to 7.6 sigma, 226 px >3 sigma, total sqrt(sum chi2) ~89, and NONE of it in the pixels the extra-galaxies mask covers — it is in the arcs. This is the quantitative backing for "noise scaling is not sufficient once an extra galaxy has mass", measured directly rather than inferred from a fit
 - parent: draft/docs/workspaces/extra_galaxies_feature_parity.md — FINAL phase. Phase 1 SHIPPED (autolens#374/PR#376, e005caca); phase 2a SHIPPED (autogalaxy#182/PR#184, 78568683)
 - unblocked: autolens_workspace#370 (multi-galaxy-imaging-parity) MERGED + closed 2026-07-30. Worktree based on origin/main `264d4ab9`
 - division-of-labour: #370's core scripts teach the NOISE-SCALING lever against a MASSLESS contaminant (`simulator.py` adds ONE ExponentialSph extra galaxy at (2.2,1.6) with NO mass, deliberately, "so the lensed source arcs are unchanged and the dataset remains a clean two-deflector lens"; start_here/modeling/fit/likelihood_function all carry `__Extra Galaxies Noise Scaling__`). THIS task is the MODELING lever — extra galaxies in the model with light AND mass on top of N co-dominant deflectors. Reference the noise-scaling walkthrough, do NOT repeat it. Same arrangement as the imaging package

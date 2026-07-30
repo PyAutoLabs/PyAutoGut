@@ -1,25 +1,5 @@
 # Active Tasks
 
-## plot-coverage-gaps
-- issue: https://github.com/PyAutoLabs/PyAutoLens/issues/667
-- session: claude --resume 25fb2cf0-1a9e-48fa-a1a7-9c53f5b57433
-- status: awaiting-merge — all three legs at PR-open; merge is a human act
-- library-pr: https://github.com/PyAutoLabs/PyAutoLens/pull/668 (OPEN, pending-release; commit c3c00874c; 488 tests passed)
-- workspace-pr: autolens_workspace#404 (72ff4e6f), autogalaxy_workspace#191 (c9746d0) — both OPEN, pending-release
-- merge-order: PyAutoLens#668 FIRST (autolens_workspace/scripts/interferometer/plot.py calls the newly exported subplot_interferometer_dataset); autogalaxy_workspace#191 has no library dependency and may merge independently
-- validation: 7/7 touched plot.py scripts ran sequentially in test mode with visualization on against the branch build; coverage matrix re-run on the EDITED files = 22/22 planned gaps closed; *_x1_plane exclusion verified; leak check clean (fits_* write to gitignored output/plot/); notebook regen touched only the 7 notebooks + 2 catalogue files
-- coverage: plot.py 18→36 of 63 exported (autolens_workspace), 11→14 of 28 (autogalaxy_workspace)
-- followups: draft/docs/workspaces/plot_coverage_followups.md — (1) demo subplot_fit_interferometer_combined (exported in #668 but demonstrated NOWHERE; needs a multi-dataset interferometer context), (2) demo subplot_ellipse_errors (needs a real posterior fit_pdf_list), (3) docs/api/plot.rst omits 6 already-exported symbols, (4) autolens.plot shadows its OWN subplot_fit_dirty_images with autogalaxy's — the AL version taking image_plane_lines is reachable under no exported name
-- prompt: active/plot_py_function_coverage_gaps.md
-- classification: docs (both — library → workspace); follow-on to plot-guides-restructure, which built the per-dataset plot.py family but never enumerated per-file function coverage
-- brain-override: Feature Agent returned too-large (15) + a 4-phase split (design/core_api/workspace_examples/docs); overridden to one combined task — it scored 3 repos, not the work (2 import lines + 7 files gaining sections); there is no design left and no core API. Precedent: vacuous-jax-assertions (large/8 → small), multiband-pyloop-batching
-- conflict-note: worktree_check_conflict flagged PyAutoLens as claimed by python-312-floor — hand-verified STALE (`git worktree list` shows one canonical worktree on main; main is 3 commits past the claimed b40fb0ba; that task records "next-phase: none — all phases complete"; its `- Repo` lines are a completion record, not a live claim). autolens_workspace is also claimed by group-start-here-timeout; surfaces disjoint (that task owns scripts/group/start_here.py; this one owns scripts/{imaging,interferometer,weak,cluster,point_source}/plot.py)
-- heart-ack: test run status unknown (no report.json); release validation stale: source moved since rehearsal (PyAutoFit, PyAutoArray, PyAutoGalaxy, PyAutoLens)
-- worktree: ~/Code/PyAutoLabs-wt/plot-coverage-gaps
-- repos:
-  - PyAutoLens (feature/plot-coverage-gaps)
-  - autolens_workspace (feature/plot-coverage-gaps)
-  - autogalaxy_workspace (feature/plot-coverage-gaps)
 
 ## python-312-floor
 - issue: https://github.com/PyAutoLabs/PyAutoNerves/issues/142

@@ -177,3 +177,21 @@
 - worktree: ~/Code/PyAutoLabs-wt/extra-galaxies-multi-galaxy
 - repos:
   - autogalaxy_workspace (feature/extra-galaxies-multi-galaxy)
+
+## simulator-jax-xp-threading
+- issue: https://github.com/PyAutoLabs/PyAutoArray/issues/420
+- status: awaiting-merge
+- library-pr: https://github.com/PyAutoLabs/PyAutoArray/pull/421
+- prompt: draft/bug/autoarray/simulator_jax_jit_path_broken.md
+- scope: the IMAGING simulator `@jax.jit` path now works. FIVE distinct sites: (1) `preprocess.py` `noise_map_via_data_eps_and_exposure_time_map_from` had NO xp param at all, hardcoded np.abs, and `include_poisson_noise_in_noise_map` defaults True so the default path always hit it; (2) `abstract_ndarray._xp` returned np for an instance whose BACKING ARRAY WAS A TRACER — `use_jax` records construction, and intermediate ops drop it (confirmed by instrumentation); (3) `Array2D.native` is a property so its caller cannot pass xp — now forwards `self._xp`; (4) `array_2d_native_from` threaded xp TOO FAR, into `where(~mask)` whose output shape is value-dependent → ConcretizationTypeError; (5) `Imaging` was not a registered pytree so it could not cross the jit RETURN boundary
+- inverted-lesson: site (4) was fixed by threading xp LESS, not more. Mask-derived index maps are concrete geometry and must stay NumPy; only the scatter takes xp
+- trace-time-asymmetry: site (5) works because registration inside the callee is too late for a jitted function's ARGUMENTS (JAX flattens those at trace time — why PointSolver documents registration as the user's job) but IS in time for its RETURN value. Same asymmetry that lets `AnalysisImaging.fit_from` register its own return types
+- mask2d-choice: site (5) also registers `Mask2D`, because `Array2D.instance_flatten` emits `mask` as a child and it would otherwise be a bare leaf. Chosen OVER adding `mask` to `Array2D.__no_flatten__` so Array2D flatten semantics stay unchanged for every other jitted path
+- ship-evidence: noiseless numpy-eager vs jax-jit agree 2.4e-13; jax-eager vs jax-jit 1.8e-15; returned Imaging keeps psf+mask and survives np.asarray; NumPy path byte-identical and still ndarray-backed; autogalaxy `via_galaxies_from` works via the shared fix; test_autoarray 929 / test_autogalaxy 1009 / test_autolens 488 all pass
+- blast-radius: sites (2) and (5) reach the whole stack (`_xp` is consumed by every autoarray structure; registering Mask2D changes flattening for any jitted path) — hence all three suites, not just autoarray's
+- out-of-scope: INTERFEROMETER not fixed. TransformerDFT fails at the jit boundary (Interferometer needs its own pytree registration); TransformerNUFFT fails at `operators/transformer.py:660` whose non-chunked branch ends `np.array(np.asarray(out))`. Filed as draft/bug/autoarray/interferometer_simulator_jax_jit.md, NOT started
+- docs-followup: the imaging `__JAX Variant__` sections + both `guides/using_jax.py` currently say the jitted wrap "does not currently work" and link the issue. After merge, restore the recipe AND uncomment the call so CI executes it
+- origin: 4th generation of one root cause — likelihood-function-jax-pointer (#368) → public-register-galaxies-classes (PyAutoGalaxy#536) → correct-simulator-jax-claims (#379) → here
+- worktree: ~/Code/PyAutoLabs-wt/simulator-jax-xp-threading
+- repos:
+  - PyAutoArray (feature/simulator-jax-xp-threading)

@@ -1,5 +1,14 @@
 # Active Tasks
 
+## worktree-drift-fixes
+- issue: https://github.com/PyAutoLabs/PyAutoHeart/issues/123
+- status: library-dev — extract scan() to python, fix missing/symlink/parked categorisation
+- prompt: active/worktree_drift_false_missing_and_symlink_double_count.md
+- classification: bug (PyAutoHeart) — CI/release audit series task 5; monitoring-only check
+- worktree: ~/Code/PyAutoLabs-wt/worktree-drift-fixes
+- repos:
+  - PyAutoHeart (feature/worktree-drift-fixes)
+
 ## multiband-pyloop-batching
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1430
 - session: claude --resume ed9e7d65-ca7d-4718-8f02-d77a2ad27017

@@ -209,7 +209,11 @@
 ## assistant-output-folder-pointer
 - issue: https://github.com/PyAutoLabs/autolens_assistant/issues/96
 - session: claude --resume 6a3b0456-4835-4b11-9d18-fcb9ad9087f3
-- status: workspace-dev
+- status: awaiting-merge
+- workspace-prs: https://github.com/PyAutoLabs/autolens_assistant/pull/97, https://github.com/PyAutoLabs/autofit_assistant/pull/26, https://github.com/PyAutoLabs/autocti_assistant/pull/16 (all OPEN, pending-release)
+- heart-ack: 2026-07-30 — YELLOW 65, all three reasons pre-existing and structurally unrelated to markdown-only assistant edits: workspace validation not passing (13 failed, 2026-07-21T19-05-22Z); 33 stale parked script(s); release validation stale: source moved since rehearsal (PyAutoFit, PyAutoGalaxy, PyAutoLens)
+- ship-evidence: `audit_skill_apis.py` 0 missing/broken in autolens (66 files/124 symbols) and autofit (29/38); autocti NOT verifiable locally (`autocti` not installed → all 18 misses are `ModuleNotFoundError`, on pre-existing symbols). CI: autofit#26 and autocti#16 fully GREEN
+- ci-preexisting-reds: autolens#97 hit two failures NEITHER caused by this branch. (1) `wiki-currency --check-citations`: `wiki/core/operations/hpc.md` still cited `autolens_workspace:scripts/guides/hpc/example_cpu.py`, renamed to `example_cpu_and_gpu.py` by autolens_workspace#360 (b0836b72), and `batch/` which is now `batch_cpu/` + `batch_gpu/` — FIXED in this PR (commit da75c27; 407 citations, 0 missing). (2) `clone-boundary`: `AI_POLICY.md` unclassified, red on EVERY branch since feature/ai-policy merged 2026-07-27 — filed as draft/bug/pyautobrain/clone_boundary_ai_policy_unclassified.md, NOT fixed here (needs autolens_assistant `modes/maintainer.md` + PyAutoBrain `_clone.py` together)
 - prompt: active/output_folder_layout_pointer.md
 - scope: three assistant cells gain an "announce the output folder at fit launch" rule for novice/teacher-mode users — a new `## Output folder announcement` section in each `skills/_style.md` (sibling of `## Plot output and path announcement`), a `modes/teacher.md` bullet, and the pointer wired into the fit-launch skills (`al_run_search`, `al_configure_search`, `af_run_search`, `ac_fit_cti_model`)
 - citations: pointer ONLY, never a copied tree (it would rot) — autolens → `autolens_workspace/scripts/imaging/modeling.py` `__Output Folder Layout__` (:548-585); autofit → `autofit_workspace/scripts/overview/overview_2_scientific_workflow.py` (:197-223); autocti → `autocti_workspace/scripts/dataset_1d/modeling/start_here.py` `__Output Folder__` + `__On The Fly Outputs__` (:346-371)

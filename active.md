@@ -41,6 +41,7 @@
 - note: Brain sized large (score 8) and wanted a phase split; score is its repo-count proxy — overridden to medium, library/workspace split kept
 - note: CONCURRENT claim on PyAutoFit with multi-start-gradient-progress-logging (#1433, registered minutes earlier). worktree_check_conflict returned 0 only because that worktree did not exist yet — hand-checked instead. Files disjoint: #1433 owns multi_start_gradient/search.py, this owns abstract_search.py + fitness.py. Pre-merge origin/main before PR. Related in substance: #1433's "always log the first step" and this task's first-call compile message both signal "the XLA compile finished" — keep the wording from duplicating
 - repos:
+  - PyAutoFit: feature/sampler-cli-output-numbers
 
 ## multi-start-gradient-progress-logging
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1433

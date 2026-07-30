@@ -1,3 +1,60 @@
+## scaling-relation-degraded-profile-fixes
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/419
+- completed: 2026-07-30
+- workspace-pr: https://github.com/PyAutoLabs/autolens_workspace/pull/420 (MERGED `8f704f84`)
+- summary: |
+    Three features/scaling_relation scripts failed under config/build/profile_smoke.yaml with
+    errors pointing away from the real cause. None was a science bug — all pass in a normal
+    environment. Found while verifying #407/#416; both predate it.
+
+    FIXES:
+      - point_source/features/scaling_relation/fit.py -> `__Env__` section with `ENV: full_datasets`.
+        It asserts on solved image positions; PYAUTO_SMALL_DATASETS caps the grid to 15x15, at which
+        resolution PointSolver returns 2 degenerate images at round coords [[1.,0.],[0.,1.]] instead
+        of 4, collapsing the shift to 0 mas. Its assertion then blamed "the dataset has drifted" —
+        false. Verified: rc=0, 4 images, shifts 182/398/1596/1633 mas.
+      - imaging/ + multi_galaxy/ features/scaling_relation/slam.py -> fail-fast in luminosity_from
+        (byte-identical helper in both) + no_run.yaml entries.
+      - config/build/profile_smoke.yaml -> 3 comments corrected.
+
+    ROOT CAUSE (slam): under PYAUTO_TEST_MODE the light stage yields no usable samples, so every
+    Gaussian intensity is 0 and the script prints `Measured main lens luminosities: [0.0, 0.0]`.
+    The relation then evaluates (0.0/0.0)**0.5 = NaN, detonating far away — TEST_MODE=2 gives
+    IndexError index -9223372036854775808 (INT_MIN, NaN cast to int) in PyAutoArray
+    mapper_util.adaptive_pixel_signals_from; TEST_MODE=1 gives ValueError cannot convert float NaN
+    to integer in PyAutoFit identifier.py:142. Neither traceback named luminosity or test mode.
+
+    KEY DISCRIMINATOR: measured-vs-hardcoded luminosity, NOT the regime.
+    interferometer/features/scaling_relation/slam.py passes and must keep passing — it hardcodes
+    luminosity_anchor. That control reframed the bug from "these two scripts" to "scripts that
+    measure luminosities from a light stage".
+
+    `ENV: real_search` was MEASURED and rejected: imaging slam.py still running at 1293s vs a 300s
+    default / 1800s release cap (lower bound — did not finish; another session's concurrent SLaM run
+    was contending for CPU by the end). Recorded as an explicit lower bound in the no_run reason.
+
+    GOTCHA — the config file taught the wrong syntax. The first issue draft prescribed
+    `# ENV: full_datasets`; that comment form was REMOVED (PyAutoHands#189/#190) and now RAISES. The
+    wording came from profile_smoke.yaml's own header comments. Fixed in the same PR — that is the
+    part that stops the next person repeating it. Live form is an `__Env__` docstring SECTION with a
+    bare `ENV: <tokens>` line.
+
+    GOTCHA — build_env_for_script resolves the declaration via `scripts/<file>` relative to CWD, so
+    a runner that builds the env from the wrong cwd silently gets NO declaration applied. This bit
+    twice: once in a bare probe, once in my own runner (which passed cwd to the subprocess but not
+    to the env build). Symptom is indistinguishable from "the declaration does not work".
+
+    VERIFICATION: should_skip asserted over all 412 scripts — the 2 new patterns match exactly one
+    script each and the skip set widens by exactly 2 (24 -> 26). Smoke 25/25; CI 5/5 both matrix legs.
+
+    NOT DONE: black wants to reflow all three touched scripts; that drift is pre-existing on main and
+    CI does not enforce black, so it was left rather than burying a 5-file fix in churn.
+
+    ALSO: the notebooks/group/start_here.ipynb drift flagged during #407 resolved itself — #417's
+    regeneration on the merged tree fixed it. No longer outstanding.
+
+## Original prompt
+
 # scaling_relation scripts fail under the smoke/test-mode profile with misleading errors
 
 Type: bug

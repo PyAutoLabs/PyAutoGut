@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-842 records across 6 buckets.
+843 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -398,6 +398,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [samplers-faculty](2026/07/samplers-faculty.md)
 - [scaling-relation-bgc-anchored](2026/07/scaling-relation-bgc-anchored.md)
 - [scaling-relation-brightest-galaxy](2026/07/scaling-relation-brightest-galaxy.md)
+- [scaling-relation-degraded-profile-fixes](2026/07/scaling-relation-degraded-profile-fixes.md)
 - [scaling_relation_bgc_anchored_phase_1_imaging_multi_galaxy](2026/07/scaling_relation_bgc_anchored_phase_1_imaging_multi_galaxy.md)
 - [scaling_relation_bgc_anchored_phase_2_interferometer_point_source](2026/07/scaling_relation_bgc_anchored_phase_2_interferometer_point_source.md)
 - [scholar-intake](2026/07/scholar-intake.md)

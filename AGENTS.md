@@ -14,7 +14,7 @@ mirroring the `autolens_workspace*` taxonomy:
 
 ```
 scripts/
-  <dataset>/            imaging/ interferometer/ point_source/ multi/ cluster/ — one folder per
+  <dataset>/            imaging/ interferometer/ point_source/ multi_dataset/ cluster/ — one folder per
                         PyAutoLens dataset family. Group-scale cells live under cluster/; the
                         interferometer datacube cells nest under interferometer/<task>/datacube/.
     likelihood_runtime/   Full-pipeline JIT runtime per cell (<model>.py; driven by the sweep driver)

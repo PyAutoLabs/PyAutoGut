@@ -3,7 +3,7 @@
 Multi-channel cube fit via ``af.FactorGraphModel``: N identical channel
 datasets, each wrapped in ``al.AnalysisInterferometer`` + ``af.AnalysisFactor``,
 combined under a single global model — mirrors
-``autolens_workspace/scripts/multi/modeling.py``. The channel count comes
+``autolens_workspace/scripts/multi_dataset/modeling.py``. The channel count comes
 from ``_DATACUBE_N_CHANNELS`` in ``searches/_setup.py`` (default 4 to
 match the existing ``likelihood_runtime/datacube/delaunay.py`` quick-
 iteration value).

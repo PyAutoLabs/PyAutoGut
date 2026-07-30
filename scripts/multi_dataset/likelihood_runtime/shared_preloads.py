@@ -19,12 +19,12 @@ single jit over fixed parameters can constant-fold the work and report a mislead
 vmapped per-evaluation time is honest (see PyAutoLabs notes on jit const-folding).
 
 Correctness of the imaging `shared_preloads` is asserted separately in
-`autolens_workspace_test/scripts/jax_likelihood_functions/multi/shared_preloads.py`; this script is
+`autolens_workspace_test/scripts/multi_dataset/jax_likelihood/shared_preloads.py`; this script is
 purely a runtime measurement.
 
 Run from the repo root:
 
-    python likelihood_runtime/multi/shared_preloads.py [--instrument hst|hst_up|euclid|...]
+    python multi_dataset/likelihood_runtime/shared_preloads.py [--instrument hst|hst_up|euclid|...]
 """
 
 import sys as _sys

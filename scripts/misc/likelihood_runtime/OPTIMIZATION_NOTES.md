@@ -668,7 +668,7 @@ mesh geometry only** — per-exposure PSFs/offsets keep the mapping
 matrix, blurred mapping matrix, curvature matrix and regularization
 matrix per-exposure, so the design predicted a modest speed-up with
 **consistency** (identical source-pixel grid across exposures) as the
-primary win. Measured by `likelihood_runtime/multi/shared_preloads.py`
+primary win. Measured by `multi_dataset/likelihood_runtime/shared_preloads.py`
 (vmap-honest, 4 identical exposures, Hilbert-1500 + Delaunay):
 
 | Config                                     | unshared       | shared        | speed-up  |
@@ -678,10 +678,10 @@ primary win. Measured by `likelihood_runtime/multi/shared_preloads.py`
 As predicted: the ~12% saved is the per-exposure image-mesh ray-trace +
 Delaunay `pure_callback` triangulation; the dominant per-exposure
 inversion work is untouched by design. Raw log:
-`results/runtime/multi/shared_preloads_hst_local_cpu_fp64.stdout`.
+`results/runtime/multi_dataset/shared_preloads_hst_local_cpu_fp64.stdout`.
 Correctness (identical-exposure shared-vs-unshared bit-parity + g+r
 shared-mesh jit) is asserted in
-`autolens_workspace_test/scripts/jax_likelihood_functions/multi/shared_preloads.py`.
+`autolens_workspace_test/scripts/multi_dataset/jax_likelihood/shared_preloads.py`.
 
 Trap for re-runs: a crashed JAX run can poison the gitignored
 `dataset/imaging/<inst>/lensed_source.fits` adapt cache with in-mask

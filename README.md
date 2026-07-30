@@ -123,7 +123,7 @@ The version string matches the PyAutoLens release that produced the numbers (e.g
 ## Section index
 
 Scripts are laid out **dataset-first, task-second**: `scripts/<dataset>/<task>/<model>.py`
-(`imaging` / `interferometer` / `point_source` / `multi` / `cluster`), mirroring the
+(`imaging` / `interferometer` / `point_source` / `multi_dataset` / `cluster`), mirroring the
 `autolens_workspace*` repos. Each task's shared drivers, framework and narrative README (with the
 auto-tables) live under `scripts/misc/<task>/`; dataset-agnostic tooling lives under `scripts/misc/`.
 

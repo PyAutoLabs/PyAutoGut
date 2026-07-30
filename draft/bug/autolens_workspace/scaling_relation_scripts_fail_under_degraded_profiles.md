@@ -19,6 +19,31 @@ environment. In each case a *degraded-profile* knob silently produces garbage in
 then dies with an error that points somewhere other than the real cause. None of the three is in
 `smoke_tests.txt` or `no_run.yaml`, so nothing catches them today.
 
+## Declaration syntax (get this right — the obvious form is removed)
+
+The `# ENV: <token>` **comment** form was removed (PyAutoHands#189/#190) and a column-0 `# ENV:`
+line now **raises**. `autolens_workspace/scripts/` currently has 0 of them. The live form is an
+`__Env__` docstring section appended at the end of the final docstring (53 scripts use it):
+
+    __Env__ (Developer Only)
+
+    Not user documentation: this section configures the automated test harness.
+    The ENV line declares the environment applied when this script runs in CI
+    (PyAutoHands docs/env_profile_redesign.md §10); this whole section is
+    stripped from generated notebooks and markdown.
+
+    <one-line reason specific to this script>
+
+    ENV: full_datasets
+
+Header at column 0 (trailing parenthetical allowed), exactly one `ENV: <tokens>` line with no
+leading `#`, at most one `__Env__` section per file. Tokens: `full_datasets` unsets
+`PYAUTO_SMALL_DATASETS`, `real_search` unsets `PYAUTO_TEST_MODE`, `real_plots` unsets
+`PYAUTO_FAST_PLOTS` (`ENV_DECLARATION_TOKENS` in `PyAutoHands/autohands/env_config.py`).
+
+Note `config/build/profile_smoke.yaml`'s own comments still describe the removed `# ENV:` form —
+stale, worth fixing in the same pass.
+
 ## Part A — `scaling_relation/slam.py`: measured luminosities are 0.0, giving `0.0 / 0.0` = NaN
 
 **Affected** (verified failing):

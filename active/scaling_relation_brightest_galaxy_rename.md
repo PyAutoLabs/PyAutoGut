@@ -7,7 +7,7 @@ Repos:
 Difficulty: small
 Autonomy: supervised
 Priority: normal
-Status: draft
+Status: active — issue https://github.com/PyAutoLabs/autolens_workspace/issues/407 (2026-07-30)
 Follows: draft/docs/workspaces/scaling_relation_bgc_anchored_feature_packages.md (shipped
 2026-07-30, autolens_workspace PR#396 + PR#398)
 

@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-840 records across 6 buckets.
+841 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights

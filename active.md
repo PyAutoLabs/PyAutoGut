@@ -1,5 +1,14 @@
 # Active Tasks
 
+## release-channel-freshness
+- issue: https://github.com/PyAutoLabs/PyAutoHeart/issues/128
+- status: library-dev — heart/checks/release_run.py mirroring the test_run cached-artifact pattern
+- prompt: active/release_channel_dev_box_freshness.md
+- classification: feature (PyAutoHeart) — CI/release audit series finale; kills the chronic release-validation STALE
+- worktree: ~/Code/PyAutoLabs-wt/release-channel-freshness
+- repos:
+  - PyAutoHeart (feature/release-channel-freshness)
+
 ## assistant-brain-ref
 - issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/186
 - status: library-dev — declared Brain-ref escape hatch in the two clone-boundary workflows + Brain doc line

@@ -48,7 +48,57 @@ currently implies the standard path works.
 Fixing (1) is the priority: it is a data-loss footgun independent of `autocti`.
 Any future unregistered project hits the same trap.
 
+## Why nobody noticed
+
+`autocti_workspace` is absent from `PyAutoHands/pre_build.sh`'s `run_workspace`
+matrix entirely (the `generate=true` set is `autofit_workspace`,
+`autogalaxy_workspace`, `autolens_workspace`, `HowToGalaxy`, `HowToLens`,
+`HowToFit`). No release path exercises `generate.py autocti`, so the breakage has
+been invisible. Corroborating evidence: **0 of the repo's 79 notebooks carry a
+Colab setup cell**, dating them to before `inject_colab_setup` became strict.
+They do still track `scripts/` 1:1 (79 scripts, 79 notebooks, no orphans either
+way), so they were maintained by some path that no longer works.
+
+## Backlog this blocks
+
+`autocti_workspace/notebooks/` currently retains, all already fixed in
+`scripts/`:
+
+- **34 `Finish.` markdown cells** left by PyAutoLabs/autocti_workspace#16
+  (the `Finished.` crutch sweep, PyAutoLabs/PyAutoHands#211);
+- **4 mangled code cells** containing a literal `# %%` and `'''` — a
+  `SyntaxError` if run — in
+  `notebooks/imaging_ci/modeling/features/{cosmic_rays,non_uniform,serial_cti,visualize_full}.ipynb`;
+- the 5 script-reference fixes from PyAutoLabs/autocti_workspace#15.
+
+One successful `generate.py autocti` clears all of them at once, so this bug is
+the single gate on three separate merged sweeps reaching the notebooks.
+
+## If option (2) is "register it"
+
+The Colab install list needs care: `arcticpy`, a hard dependency of the CTI
+stack, is known to downgrade numpy when pip-installed
+([[project_cti_resurrection_epic_scoped]]).
+
+## Validation
+
+- `generate.py <unknown-project>` exits non-zero with `notebooks/` **intact** and
+  no stray `.ipynb` beside any script (regression test).
+- `generate.py autocti` exits 0 from `autocti_workspace/`; all 79 notebooks
+  regenerate; no code cell contains a literal `# %%` or `'''`; no markdown cell
+  is `Finish.`.
+- `autocti_workspace/AGENTS.md`'s *Notebook regeneration* line matches whatever
+  the chosen path actually is.
+
 ## Original request
 
 Filed from the `script_prose_and_howto_ref_drift` sweep, where the crash was hit
 directly. Not part of that task's scope.
+
+Consolidated 2026-07-30 from three independently-filed prompts describing the
+same defect — this one, `draft/maintenance/hands/generate_notebooks_autocti_support.md`
+(filed from dataset-bulk leg 6, which recovered by calling
+`build_util.py_to_notebook` directly and regenerating the 21 affected notebooks
+byte-identically) and `draft/bug/hands/generate_py_autocti_raises_no_colab_project.md`
+(filed from the #211 sweep). The other two are deleted; their unique content is
+above.

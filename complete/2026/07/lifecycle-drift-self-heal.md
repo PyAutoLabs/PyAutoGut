@@ -1,3 +1,33 @@
+issue: https://github.com/PyAutoLabs/PyAutoMind/issues/116
+completed: 2026-07-30
+pr: PyAutoMind#117
+
+The Lifecycle Drift workflow's `index --check` was alarm-only: while
+`complete/index.md` was stale it failed — and emailed the human — on every push
+to main until something regenerated the index. Three storms (2026-07-24 → PR
+#97; 2026-07-30 morning → `aba2ce5` active.md prune; 2026-07-30 evening →
+`fa35972`, ~25 emails in 2h). The third break was an ad-hoc `git mv` of 10
+phase prompts into `complete/` after `record --apply` had already regenerated
+the index — folding registry writes into lifecycle.py cannot guard manual
+mutations, and with many concurrent agent sessions they keep happening.
+
+Fix: on push to main the workflow now self-heals — fetch the tip of main,
+`index --apply`, verify convergence with `index --check`, commit as
+`github-actions[bot]`, push; 3 attempts each rebuilt from the fresh tip (no
+rebase/conflict handling needed). Fails (and emails) only when the repair
+itself fails. Non-push events keep the read-only failure; semantic
+`lifecycle.py check` stays a hard fail. `permissions: contents: write`; the
+`GITHUB_TOKEN` heal push cannot re-trigger the workflow.
+
+Validated three ways: scratch-origin simulation pinned at the real failing
+commit `fa35972` (heal regenerated the 10 missing entries, 823 → 833, and
+pushed), read-only and already-healed race paths, then a controlled LIVE test —
+pushed a deliberately stale index straight to main (`38f4aff`); the run went
+green and main's tip became the bot heal commit `754920e`, no email, no
+workflow loop.
+
+## Original prompt
+
 # Make the Lifecycle Drift index check self-healing
 
 Type: maintenance

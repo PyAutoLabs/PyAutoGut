@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-841 records across 6 buckets.
+842 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -233,6 +233,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [kxs-workspace-tests](2026/07/kxs-workspace-tests.md)
 - [lenstool-example](2026/07/lenstool-example.md)
 - [lenstool-scaling-reference-magnitude](2026/07/lenstool-scaling-reference-magnitude.md) — PR1 cluster + PR2 group/imaging — complete; PR3 SLaM deferred
+- [lifecycle-drift-self-heal](2026/07/lifecycle-drift-self-heal.md)
 - [lifecycle-record-auto-index](2026/07/lifecycle-record-auto-index.md)
 - [lifecycle-state-split](2026/07/lifecycle-state-split.md) — draft/active/complete prompt-file lifecycle + archive wiki — MERGED
 - [likelihood-function-jax-pointer](2026/07/likelihood-function-jax-pointer.md) — six `likelihood_function.py` __JAX__ blocks demoted to a one-line pointer — SHIPPED

@@ -38,9 +38,11 @@
 
 ## multi-package-rename-multi-dataset
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/408
-- status: workspace-dev (phase 1 starting 2026-07-30)
+- status: workspace-dev (phase 1 awaiting-merge 2026-07-30)
 - worktree: ~/Code/PyAutoLabs-wt/multi-package-rename-multi-dataset
-- phases: 1 (autolens_workspace + autogalaxy_workspace) IN FLIGHT; 2 (autolens_workspace_test, autogalaxy_workspace_test, autolens_profiling, autolens_workspace_developer, HowToLens) BLOCKED on point-source-chi-squared-variants releasing its worktree claims; 3 (PyAutoLens/docs, PyAutoGalaxy/docs, autolens_assistant, autolens_jax_joss) GATED on phase 1 merging — blob/main URLs dangle until then
+- workspace-pr: autolens_workspace#414, autogalaxy_workspace#194 (both OPEN, pending-release)
+- heart-ack: YELLOW acknowledged by human 2026-07-30 for exactly these reasons — "manifest drift: tenant firewall (organ code) — 1 mismatch(es) vs PyAutoMind/repos.yaml"; stale: "test run status unknown (no report.json)", "release validation stale: source moved since rehearsal (PyAutoNerves, PyAutoFit, PyAutoArray, PyAutoGalaxy, PyAutoLens)". Does not extend to new reasons.
+- phases: 1 (autolens_workspace + autogalaxy_workspace) PR-OPEN; 2 (autolens_workspace_test, autogalaxy_workspace_test, autolens_profiling, autolens_workspace_developer, HowToLens) BLOCKED on point-source-chi-squared-variants releasing its worktree claims; 3 (PyAutoLens/docs, PyAutoGalaxy/docs, autolens_assistant, autolens_jax_joss) GATED on phase 1 merging — blob/main URLs dangle until then
 - note: Brain phase split (design/core_api/examples/docs) overridden for a per-repo, merge-dependency-ordered split; recorded in the prompt
 - note: THREE concurrent claims on autolens_workspace (#407, #408 this task, #409). Human authorised proceeding over the worktree_check_conflict block — #407's claim was empty (zero commits). Mitigations: (a) this task touches only the multi/ package + its references, disjoint from #407's scaling_relation/ and #409's multi_galaxy/; (b) regenerate notebooks/markdown/workspace_index.json/llms-full.txt/.script_sizes.json LAST, after a pre-PR merge of origin/main
 - repos:

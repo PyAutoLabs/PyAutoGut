@@ -10,6 +10,7 @@
 - heart-ack: 2026-07-30 — YELLOW 70 explicitly approved; `workspace validation not passing (0 failed, cloud#30516167217)`; `release validation stale: source moved since rehearsal (PyAutoFit, PyAutoGalaxy, PyAutoLens)`
 - validation: PyAutoBrain clone tests 28 passed; autolens and autofit boundaries complete locally; AutoCTI correctly skipped because it has no reference profile
 - merge-order: PyAutoBrain#182 first, then assistant PRs; rerun autolens boundary after Brain lands because CI reads PyAutoBrain main
+- ci: PyAutoBrain#182 has no configured checks; autofit_assistant#27 and autocti_assistant#17 GREEN. autolens_assistant#98 has two exact base-dependency failures: boundary sees `AI_POLICY.md` until Brain#182 lands, and citation sees the stale `example_cpu.py` path until autolens_assistant#97 lands. Safe order is Brain#182 → rerun/merge #97 → refresh #98 → merge #98; fit/CTI are independent.
 - scope: classify root `AI_POLICY.md` as generic Clone Agent infrastructure and align the maintainer boundary prose in all three assistant cells; do not add an AutoCTI reference profile
 - parallel-claim: human-approved 2026-07-30; the assistant edits are limited to `modes/maintainer.md` and do not overlap the open `assistant-output-folder-pointer` PRs or Python 3.12 workflow-selector PR
 - related: PyAutoMemory's root allowlist correction remains in PyAutoMemory#30 on the existing `python-312-release-surfaces` task
@@ -161,6 +162,7 @@
 - issue: https://github.com/PyAutoLabs/PyAutoMemory/issues/30
 - status: awaiting-merge
 - workspace-pr: https://github.com/PyAutoLabs/PyAutoMemory/pull/31 (OPEN, pending-release)
+- ci: validate GREEN
 - prompt: active/python_312_memory_validation_ci.md
 - branch: feature/python-312-release-surfaces
 - worktree: ~/Code/PyAutoLabs-wt/python-312-release-surfaces

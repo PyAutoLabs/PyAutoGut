@@ -98,6 +98,13 @@ separately per likelihood × transform. Standing conclusions:
   pays full compile in every process, and rectangular's `batch_size=4` is
   load-bearing for memory (~9.2 GB per start).
   Findings: [`results/notes/multistart_prodigy_compile_census.md`](./results/notes/multistart_prodigy_compile_census.md).
+- **Multi-band `FactorGraphModel` + MultiStartProdigy compile is fixed at the
+  source** (PyAutoFit#1430): `batch_size` now sweeps vmapped chunks from a
+  Python loop instead of an in-XLA `lax.map` scan, and the broad-start filter
+  is jitted. Cold multi-band fit on the 1-core laptop: intractable → ~6.5 min
+  (CPU and laptop GPU); warm ~2–3 min, bit-identical numerics. The scan
+  explosion is CPU-backend-specific — the GPU pipeline compiles it fine.
+  Findings: [`results/notes/multiband_pyloop_productized.md`](./results/notes/multiband_pyloop_productized.md).
 
 ## How to read this repo
 

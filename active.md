@@ -158,20 +158,6 @@
 - repos:
   - autolens_workspace (feature/scaling-relation-bgc-anchored)
 
-## searches-guide-nautilus-first
-- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/386
-- status: awaiting-merge
-- workspace-pr: autolens_workspace#388, autogalaxy_workspace#188 (both OPEN, pending-release)
-- scope: `scripts/guides/modeling/searches.py` in both workspaces — add a Nautilus section first (full posterior; gradient-free so no JAX gradients, but batched `n_batch` evaluation does exploit the JAX GPU), move MultiStartProdigy second
-- prompt: active/docs/workspaces/searches_guide_nautilus_first_prodigy_second.md
-- brain-override: Brain scored too-large/10 with four generic phases (design/core_api/workspace_examples/docs); overridden to small, single pair of PRs — two prose files, zero library API change, so core_api was vacuous
-- collision-cleared: PR#383/#384 (script-prose-ref-drift, remove-finish-docstring-hack) both MERGED 2026-07-30; scaling-relation-bgc-anchored also claims autolens_workspace but is confined to `scripts/*/features/scaling_relation/` — hand-verified disjoint from `guides/modeling/searches.py`
-- heart-ack: workspace validation not passing (0 failed, cloud#30516167217); release validation stale: source moved since rehearsal (PyAutoFit, PyAutoArray, PyAutoGalaxy, PyAutoLens)
-- worktree: ~/Code/PyAutoLabs-wt/searches-guide-nautilus-first
-- repos:
-  - autolens_workspace (feature/searches-guide-nautilus-first)
-  - autogalaxy_workspace (feature/searches-guide-nautilus-first)
-
 ## extra-galaxies-multi-galaxy-lens
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/387
 - status: workspace-dev

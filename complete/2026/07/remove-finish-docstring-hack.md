@@ -1,3 +1,67 @@
+Removed the `Finished.` / `Finish.` trailing-docstring crutch from every workspace, and fixed the two generator defects behind it. **169 occurrences removed across 11 repos; 12 PRs, all merged; CI 56/56 green.**
+
+## The premise was half wrong
+
+The crutch existed because notebook generation supposedly "cut off weird" when a script's last cell was not a docstring. **That shape is already safe.** Deleting the trailing block and running the real `add_notebook_quotes` → `ipynb-py-convert` chain gives a complete, unmangled final code cell (`imaging/features/no_lens_light/slam.py` 23→22 cells; `imaging/features/pixelization/source_science.py` 41→40), as does every other tail shape (no trailing newline / trailing blanks / trailing comment). So that half needed only a regression test.
+
+## Two other generator defects were real and shipping
+
+**1. The docstring-opener emitted its marker after a single newline.** `py2nb` splits the intermediate `.py` on the literal `"\n\n# %%\n"` — the marker must be preceded by a *blank* line. The opener branch of `add_notebook_quotes` emitted `"# %%\n"` after one newline, so a column-0 docstring opened on the line *immediately after code* never split; the marker and both `'''` delimiters landed inside the preceding code cell as literal text. The *closing* path was always fine (it emits `"'''", "\n\n"` first).
+
+**2. Two scripts carried hand-written `# %%` markers in their source.** `guides/hpc/example_cpu_and_gpu.py` in `autolens_workspace` and `autogalaxy_workspace`, lines 1 and 36. An authored marker collides with the generated one and mangles the file *regardless of fix 1* — which is why 4 of the 13 broken cells survived the first regeneration pass. `add_notebook_quotes` now **raises** on a column-0 `# %%` in source.
+
+**13 committed notebook code cells were `SyntaxError`** before this: `autolens_workspace` 4, `autogalaxy_workspace` 3, `autocti_workspace` 4, `HowToLens` 2.
+
+## The two constraints that make the fix safe
+
+Both load-bearing, both verified empirically rather than argued:
+
+1. **Only when `out` is non-empty.** `py2nb` strips a *leading* `# %%\n` header; a leading blank line defeats that strip and yields a spurious empty first code cell.
+2. **Only when not already blank-terminated.** Unconditional emission appends a trailing blank line to *every* code cell in *every* generated notebook.
+
+Proof pair: regenerating `autofit_workspace` (33 notebooks, none with the target shape) with the fix and **no** sweep gives a **zero-byte diff**; regenerating `HowToLens` (41 notebooks, 2 with the shape) changes **exactly those 2 files**, with `llms-full.txt` / `workspace_index.json` byte-identical. Use that pattern for any future generator change — a repo without the shape must produce zero diff, a repo with only the shape must produce exactly it.
+
+## Traps hit
+
+**CRLF nearly shipped ~6000 lines of churn.** The first sweep pass used `pathlib.Path.read_text()` / `write_text()`, which normalises line endings. CRLF `.py` counts: `autocti_workspace_test` 61, `autocti_workspace` 43, `autofit_workspace_test` 14, `euclid_strong_lens_modeling_pipeline` 11 — and `autolens_workspace` **0**, so a canary check on the biggest repo proves nothing. Result was `35 files changed, 5971 insertions(+), 6109 deletions(-)` where `138 deletions(-)` was intended. The tell is *insertions appearing at all* in a delete-only change. Reverted and redone with `newline=""`. Note `Path.read_text(newline="")` needs Python 3.13; on 3.12 use `with f.open(newline="")`. And `$`-anchored regexes stop matching once `\r` is preserved — match against `line.rstrip("\r\n")` but keep the original line for output.
+
+**The census was short by two, and the gap hid a whole shape.** `re.search(r"\bFinish", …)` does **not** match `__Finish__` — the preceding `_` is a word character. Two empty `__Finish__` section headers were invisible to the count *and* to the file-level prefilter, so no downstream logic could have found them. They needed different handling (delete the header plus its preceding blank line). Real total 168, not 166. Reconcile per-shape counts against a raw `grep -c` and treat any gap as an unclassified shape.
+
+**A line scanner cannot tokenize this corpus.** Files carrying the crutch also contain function docstrings that open with text on the delimiter line (`"""Load a centres JSON file, …`), so sequential `"""`-toggling inverts every boundary after one. The sweep used `tokenize.generate_tokens` and matched each occurrence to its exact `STRING` token span. Five shapes resulted: 130 sole-content blocks, 32 in-block lines, 2 sentence-leading, 2 `__Finish__` headers, 1 commented-out.
+
+**`__Env__` blocks change form, and that needed proving.** Removing the word above an `__Env__` header turns the canonical merged form into the standalone-fallback form. Both are supported, but rather than assume it, `env_config.read_env_declaration` was run against the old and new content of all 169 changed files: **169 identical, 0 changed, 0 errors.**
+
+**A green-on-main CI check failed on the branch, purely from base drift.** `navigator / Navigator paths + banner lint` failed on `autolens_workspace` with 5 missing refs in READMEs the task never touched. `main` had moved 13 commits and `3dc5058e docs: fix 5 README refs newly gated by PyAutoHands #213` had already fixed exactly those. Rebased PyAutoHands / autolens / autogalaxy; green. The rebase also released the `multi_galaxy/simulator.py` carve-out (#378 merged mid-task) and surfaced one new occurrence that had arrived on main (`autogalaxy_workspace/scripts/multi_galaxy/features/extra_galaxies/simulator.py`).
+
+**The last merge conflicted on line endings, not content.** `autocti_workspace` #16 hit whole-file conflicts starting at line 1 because the concurrently-merged `script-prose-ref-drift` #15 normalised `scripts/dataset_1d/advanced/database/examples/data_fitting.py` and `scripts/plot/plotters/ImagingCIPlotter.py` from CRLF to LF — the same trap, shipped. Resolved by resetting to `main` and re-sweeping so the commit follows main's endings, rather than rebasing and reintroducing CRLF.
+
+## `markdown/` — edited in place, deliberately
+
+Five curated pages carried a real occurrence. Human-approved decision: delete the paragraph in place rather than re-running `generate_markdown.py`, which re-executes real model fits and re-quantizes every figure PNG — large binary churn for a one-paragraph deletion. **No PNG is touched in any PR.** Two of the five (`autogalaxy_workspace/markdown/interferometer/fit.md`, `autofit_workspace/markdown/overview/overview_1_the_basics.md`) also carried a trailing **empty** ` ```python ` fence, the old generator's empty final code cell, removed with the paragraph. Most `Finish` hits under `markdown/` are Nautilus status tables (`Finished | 18 | 1 | …`) and must be left alone.
+
+## Not done — `autocti_workspace` notebooks
+
+`generate.py autocti` **raises**: `autocti` is absent from `COLAB_PROJECTS` (`build_util.py`) and from `_PROJECTS` (PyAutoNerves `setup_colab.py`), so `inject_colab_setup` refuses the project — after `generate.py` has already `rmtree`'d `notebooks/`. That repo's `scripts/` are swept, but its notebooks retain **34 `Finish.` cells and 4 mangled cells**. Registering `autocti` is a feature (Colab support, and `arcticpy` downgrades numpy), deliberately not bundled.
+
+Why it stayed invisible: `autocti_workspace` is absent from `pre_build.sh`'s `run_workspace` matrix entirely, and **0 of its 79 notebooks carry a Colab setup cell**, dating them to before that check became strict.
+
+## PRs (all merged)
+
+PyAutoHands#214 (the fix, merged first as the gate) · autolens_workspace#384 (61) · autocti_workspace#16 (35) · autocti_workspace_test#12 (27) · autogalaxy_workspace#187 (22) · autofit_workspace#127 (11) · autofit_workspace_test#79 (5) · euclid_strong_lens_modeling_pipeline#38 (3) · autolens_workspace_test#233 (1) · autolens_workspace_developer#120 (1) · HowToFit#39 (1) · HowToLens#62 (0 — mangled-cell repair only).
+
+Verified after merge: residual on `main` is **0** in all 12 repos; PyAutoHands full suite **255 passed**.
+
+## Follow-ups filed
+
+- `draft/bug/pyautohands/generate_rejects_autocti_after_deleting_notebooks.md` — the autocti blocker. It had been filed **three times independently** (dataset-bulk leg 6, `script-prose-ref-drift`, and this task); consolidated into one and the two duplicates deleted. It gates three separate merged sweeps from reaching that repo's notebooks, not just this one.
+- `draft/bug/hands/notebook_quotes_string_literal_closing_delimiter.md` — a code string literal's column-0 *closing* delimiter is read as a docstring, inverting every boundary after it. Latent: one occurrence, `autolens_workspace_test/gallery/gallery_build.py:42`, outside `scripts/` so never converted. Needs real tokenization, shared with `navigator.py`.
+
+## Brain override
+
+The Feature Agent returned too-large (score 29) and a generic `design / core_api / workspace_examples / docs` split off its repo-count proxy. `design` and `core_api` were vacuous (no library API touched; design settled up front) and `docs` was empty — the convention was documented nowhere (`AGENTS.md`, `CONTRIBUTING.md`, `PyAutoHands/docs/` and the Brain skills all checked). Overridden to one PR per repo behind a single PyAutoHands-first gate.
+
+## Original prompt
+
 # Remove the `Finished.` / `Finish.` trailing-docstring hack from every workspace
 
 Type: maintenance

@@ -219,3 +219,4 @@
 - parallel-claim: human-authorised alongside `scaling-relation-bgc-anchored` (#385), `extra-galaxies-multi-galaxy-lens` (#387), `potential-correction-start-here` (#389), `dspl-terminology-rename` (#390), all claiming autolens_workspace. Each worktree's ACTUAL diff hand-checked disjoint. NOTE #389 modifies `scripts/interferometer/features/advanced/potential_correction/start_here.py` — a different file inside this task's DESTINATION parent; git tracks files not directories, so the `git mv` does not touch it. Only overlap is the regenerated catalogue — whichever merges last rebases and re-runs the generator
 - worktree: ~/Code/PyAutoLabs-wt/interferometer-subhalo-to-advanced
 - repos:
+  - autolens_workspace (feature/interferometer-subhalo-to-advanced)

@@ -156,6 +156,9 @@
 - brain-override: Feature Agent returned too-large (score 13) / split-into-4-phases off its repo-count proxy ([[feedback_brain_repo_count_difficulty_proxy]]). Actual change is 8 docstring-only files of uniform shape — overridden to one PR per repo
 - parallel-claim: `multistart-prodigy-start-here` (#366) and `assistant-start-here-scripts` (#367) BOTH claim the same two repos. Human decision 2026-07-29: proceed in parallel — zero source-file overlap (those edit `start_here.py`; this edits `likelihood_function.py` + `guides/using_jax.py`). Only the GENERATED artifacts collide (notebooks/, llms-full.txt, workspace_index.json); whichever PR merges last must re-run generate.py rather than hand-resolve
 - guard-bug: `worktree_check_conflict` reported NO conflict on both repos despite the two claims above. `worktree_list_claimed` (PyAutoBrain/bin/worktree.sh:326-333) parses `  - <repo>: <branch>` but active.md writes `  - <repo> (<branch>)`, so `repo` swallows the branch and the `==` compare at :346 never matches — the guard has never fired for any task. Filed as draft/bug/pyautobrain/worktree_check_conflict_never_fires.md; NOT fixed in this task
+- heart-ack: 2026-07-29 — YELLOW 80, both reasons pre-existing and unrelated to a docstring-only docs change: workspace validation not passing (13 failed, 2026-07-21T19-05-22Z); 33 stale parked script(s)
+- finding: the `@jax.jit` recipe in ALL SIX deleted `__JAX__` blocks did not run. Two independent failures, reproduced in both workspaces: (1) `register_tracer_classes(tracer)` (autolens) / constructing an `AnalysisImaging` (autogalaxy) does NOT let a `ModelInstance` cross the jit boundary — that needs `autofit.jax.pytrees.enable_pytrees()` + `register_model(model)`, which only `Fitness.__init__` does automatically (fitness.py:125-130); (2) even past that, a hand-rolled `FitImaging` without `xp=jnp` raises `TracerArrayConversionError`. The autogalaxy blocks' claim that `AnalysisImaging.__init__` runs `_register_fit_imaging_pytrees()` is false — it is called from `fit_from`, not `__init__`. The guide carries the VERIFIED recipe instead of a copy
+- verification: all three published guide paths (jit-around-Analysis, hand-rolled+`xp=jnp`, `Fitness._vmap`) executed verbatim and agree with the eager NumPy reference to ~1e-15; all six likelihood_function.py scripts run green; `check_sizes.sh` OK
 - worktree: ~/Code/PyAutoLabs-wt/likelihood-function-jax-pointer
 - repos:
   - autolens_workspace (feature/likelihood-function-jax-pointer)
@@ -175,3 +178,18 @@
   - HowToFit (feature/gated-readme-drift)
   - HowToGalaxy (feature/gated-readme-drift)
   - HowToLens (feature/gated-readme-drift)
+
+## extra-galaxies-point-source
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/374
+- status: workspace-dev
+- prompt: active/extra_galaxies_feature_parity_phase_1_point_source.md
+- parent: draft/docs/workspaces/extra_galaxies_feature_parity.md (phase 2 = multi_galaxy, both workspaces, not yet issued)
+- scope: new `scripts/point_source/features/extra_galaxies/{README.md,__init__.py,simulator.py,modeling.py}` — NO slam.py (user-specified). Mass-only example: point-source data has no image pixels, so there is nothing to noise-scale and no extra-galaxy light to fit; extra galaxies perturb the deflection field and therefore the solved multiple-image positions. Plus `point_source/features/README.md` `# Folders` entry
+- library-support: verified, NO library change needed — `AnalysisPoint(AgAnalysis, AnalysisLens)` (PyAutoLens/autolens/point/model/analysis.py:36) inherits `tracer_via_instance_from`, which appends `instance.extra_galaxies` to the tracer's galaxy list (PyAutoLens/autolens/analysis/analysis/lens.py:127-129)
+- smoke-trap: NO point-source script is smoke-enabled. `smoke_tests.txt:7` disables `point_source/start_here.py` for a bypass-mode tuple-path KeyError (rhayes777/PyAutoFit#1179), so `PYAUTO_TEST_MODE=2` cannot validate these scripts. Add the new modeling.py as a COMMENTED-DISABLED entry citing the same reason and validate with a real short run (`PYAUTO_TEST_MODE=1`)
+- brain-override: Feature Agent returned too-large (score 13) / split-into-4-phases (design, core_api, workspace_examples, docs) off its repo-count proxy ([[feedback_brain_repo_count_difficulty_proxy]]). The `core_api` and `design` phases are vacuous — no library code is touched at all. Overridden to two phases split by REGIME (point_source; multi_galaxy)
+- parallel-claim: `likelihood-function-jax-pointer` (#368) also claims autolens_workspace. Human decision 2026-07-29: proceed in parallel — zero source-file overlap (this task creates only NEW folders). Only the GENERATED artifacts collide (notebooks/, llms-full.txt, workspace_index.json); whichever PR merges last must re-run generate.py. `multistart-prodigy-start-here` (#366) MERGED 2026-07-29 and is no longer a claim
+- out-of-scope: `group/` (already uses the extra-galaxies API in start_here.py + modeling.py — user confirmed nothing to change) and `cluster/` (user confirmed it is right not to document them). `imaging/` + `interferometer/` in both workspaces are the confirmed STANDARD to copy
+- worktree: ~/Code/PyAutoLabs-wt/extra-galaxies-point-source
+- repos:
+  - autolens_workspace (feature/extra-galaxies-point-source)

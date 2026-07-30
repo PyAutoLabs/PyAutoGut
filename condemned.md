@@ -174,3 +174,91 @@ One `##` block per item. Fields:
 - sweep-after: 2026-08-27
 - breaks-if-wrong: loses the exact historical noise realizations only; regenerated copies are equivalent by construction
 - archive-ref: n/a — committed deletion; pre-purge SHA 272bae3 VOIDED by the 2026-07-27 leg-7 autocti rewrite — bytes recoverable ONLY from the local mirror backup ~/Code/PyAutoLabs-backups/autocti_workspace-pre-rewrite-2026-07-27.git
+
+## pyautogalaxy/docs-cite-prodigy
+- type: branch
+- locator: docs/cite-prodigy (PyAutoGalaxy, tip e06a527)
+- confidence: 0.95
+- reason: hygiene `tidy` pre-scan flagged as a stale local unmerged branch (not the default branch, no unique work in flight) in the PyAutoGalaxy checkout. Human-authorized batch condemnation 2026-07-30.
+- merged: no
+- condemned: 2026-07-30
+- sweep-after: 2026-08-29
+- breaks-if-wrong: loses whatever cite-prodigy docs drafting the branch held; recoverable via `pyauto-gut recover pyautogalaxy-docs-cite-prodigy` until voided.
+- archive-ref: refs/heads/archive/condemned/pyautogalaxy-docs-cite-prodigy on PyAutoGalaxy origin (e06a527)
+
+## pyautolens/docs-cite-prodigy
+- type: branch
+- locator: docs/cite-prodigy (PyAutoLens, tip 03ad3f8)
+- confidence: 0.95
+- reason: hygiene `tidy` pre-scan flagged as a stale local unmerged branch (not the default branch, no unique work in flight) in the PyAutoLens checkout. Human-authorized batch condemnation 2026-07-30.
+- merged: no
+- condemned: 2026-07-30
+- sweep-after: 2026-08-29
+- breaks-if-wrong: loses whatever cite-prodigy docs drafting the branch held; recoverable via `pyauto-gut recover pyautolens-docs-cite-prodigy` until voided.
+- archive-ref: refs/heads/archive/condemned/pyautolens-docs-cite-prodigy on PyAutoLens origin (03ad3f8)
+
+## pyautobrain/release-accept-red-override
+- type: branch
+- locator: feature/release-accept-red-override (PyAutoBrain, tip 29105d9)
+- confidence: 0.95
+- reason: hygiene `tidy` pre-scan flagged as a stale local unmerged branch in the PyAutoBrain checkout. Human-authorized batch condemnation 2026-07-30.
+- merged: no
+- condemned: 2026-07-30
+- sweep-after: 2026-08-29
+- breaks-if-wrong: loses the release-accept-red-override prototype work; recoverable via `pyauto-gut recover pyautobrain-feature-release-accept-red-override` until voided.
+- archive-ref: refs/heads/archive/condemned/pyautobrain-feature-release-accept-red-override on PyAutoBrain origin (29105d9)
+
+## pyautobrain/stash-remove-pulse-compat
+- type: stash
+- locator: stash@{0} (PyAutoBrain) — "On remove-pulse-compat: preserve feature/remove-pulse-compat before PyAutoHeart issue 27"
+- confidence: 0.95
+- reason: hygiene `tidy` pre-scan flagged a stale local stash in the PyAutoBrain checkout. Materialised to a branch (`git branch <tmp> stash@{0}`, non-destructive — no apply/pop) before archiving, then dropped. Human-authorized batch condemnation 2026-07-30.
+- merged: no
+- condemned: 2026-07-30
+- sweep-after: 2026-08-29
+- breaks-if-wrong: loses the preserved remove-pulse-compat WIP; recoverable via `pyauto-gut recover pyautobrain-stash--0-` until voided.
+- archive-ref: refs/heads/archive/condemned/pyautobrain-stash--0- on PyAutoBrain origin (ff1af88)
+
+## pyautoheart/autonerves-verify-install
+- type: branch
+- locator: feature/autonerves-verify-install (PyAutoHeart, tip 2a1f276)
+- confidence: 0.95
+- reason: hygiene `tidy` pre-scan flagged as a stale local unmerged branch in the PyAutoHeart checkout. Human-authorized batch condemnation 2026-07-30.
+- merged: no
+- condemned: 2026-07-30
+- sweep-after: 2026-08-29
+- breaks-if-wrong: loses the autonerves-verify-install prototype work; recoverable via `pyauto-gut recover pyautoheart-feature-autonerves-verify-install` until voided.
+- archive-ref: refs/heads/archive/condemned/pyautoheart-feature-autonerves-verify-install on PyAutoHeart origin (2a1f276)
+
+## pyautomind/lifecycle-record-auto-index
+- type: branch
+- locator: feature/lifecycle-record-auto-index (PyAutoMind, tip 4b06f15)
+- confidence: 0.95
+- reason: hygiene `tidy` pre-scan flagged as a stale local unmerged branch in the PyAutoMind checkout. Human-authorized batch condemnation 2026-07-30.
+- merged: no
+- condemned: 2026-07-30
+- sweep-after: 2026-08-29
+- breaks-if-wrong: loses the lifecycle-record-auto-index prototype work; recoverable via `pyauto-gut recover pyautomind-feature-lifecycle-record-auto-index` until voided.
+- archive-ref: refs/heads/archive/condemned/pyautomind-feature-lifecycle-record-auto-index on PyAutoMind origin (4b06f15)
+
+## pyautomind/morning-status-workflow
+- type: branch
+- locator: feature/morning-status-workflow (PyAutoMind, tip 13ecca7)
+- confidence: 0.95
+- reason: hygiene `tidy` pre-scan flagged as a stale local unmerged branch in the PyAutoMind checkout. Human-authorized batch condemnation 2026-07-30.
+- merged: no
+- condemned: 2026-07-30
+- sweep-after: 2026-08-29
+- breaks-if-wrong: loses the morning-status-workflow prototype work; recoverable via `pyauto-gut recover pyautomind-feature-morning-status-workflow` until voided.
+- archive-ref: refs/heads/archive/condemned/pyautomind-feature-morning-status-workflow on PyAutoMind origin (13ecca7)
+
+## pyautomind/stash-pre-sync-2026-07-06
+- type: stash
+- locator: stash@{0} (PyAutoMind) — "pre-sync local PyAutoMind edits 2026-07-06 (restored after accidental drop)"
+- confidence: 0.95
+- reason: hygiene `tidy` pre-scan flagged a stale local stash in the PyAutoMind checkout. Materialised to a branch (`git branch <tmp> stash@{0}`, non-destructive — no apply/pop) before archiving, then dropped. Human-authorized batch condemnation 2026-07-30.
+- merged: no
+- condemned: 2026-07-30
+- sweep-after: 2026-08-29
+- breaks-if-wrong: loses the pre-sync 2026-07-06 WIP; recoverable via `pyauto-gut recover pyautomind-stash--0-` until voided.
+- archive-ref: refs/heads/archive/condemned/pyautomind-stash--0- on PyAutoMind origin (9dc61c5)

@@ -173,7 +173,8 @@
 
 ## multi-galaxy-imaging-parity
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/370
-- status: workspace-dev
+- status: workspace-pr-open (awaiting review + merge)
+- workspace-pr: https://github.com/PyAutoLabs/autolens_workspace/pull/378
 - prompt: active/multi_galaxy_parity_with_imaging.md
 - scope: bring `scripts/multi_galaxy/` to `scripts/imaging/`'s teaching depth — trim start_here's `__Model__` + add its missing sections (extra-galaxy removal + GUI, pre-search `__JAX__`, iterations-per-update, live-visual-update, both `__Simulator__` blocks); rewrite modeling.py (327 lines) and fit.py (166) against their imaging counterparts; add `likelihood_function.py` / `simulator_sample.py` / `source_science.py`; delete `__Mass/Light Offsets__` package-wide
 - extra-galaxies: human decision 2026-07-29 — `multi_galaxy/simulator.py` gains a faint extra galaxy + writes `mask_extra_galaxies.fits` mirroring `imaging/simulator.py`, so `__Extra Galaxies Noise Scaling__` lands in start_here/modeling/fit/likelihood_function too. `dataset/multi_galaxy/**` is gitignored so NO committed binary. Trap: `should_simulate` tests directory EXISTENCE only, so `rm -rf dataset/multi_galaxy/simple` before any run ([[feedback_should_simulate_existence_only]])
@@ -181,6 +182,12 @@
 - likelihood-function-convention: autolens_workspace#368 retires the trailing 25-45 line `__JAX__` block in every `likelihood_function.py` for a one-sentence pointer at `scripts/guides/using_jax.py` + a `__JAX__` bullet as the FIRST `__Contents__` entry. The new `multi_galaxy/likelihood_function.py` is written in that NEW shape; #368 gains a seventh script
 - brain-override: Feature Agent scored large (9) / split-into-phases off its repo-count proxy ([[feedback_brain_repo_count_difficulty_proxy]]); one directory of one repo with cross-referencing scripts — overridden to one PR
 - guard-note: `worktree_check_conflict` returned 0 but never fires ([[feedback_worktree_conflict_guard_never_fires]]); the #366 collision was found by hand-diffing its worktree
+- delivered: start_here 347->673, modeling 327->884, fit 166->614, plus new likelihood_function (688), simulator_sample (343), source_science (396); simulator gained the faint extra galaxy + mask_extra_galaxies.fits; `__Mass/Light Offsets__` removed package-wide
+- shear-placement: human decision 2026-07-30 — shear lives in its own `shear_galaxy` at (0.0", 0.0"), NOT attached to `lens_0`. `al.mp.ExternalShear` takes NO `centre` arg (gamma_1/gamma_2 only), so a dedicated galaxy IS how "at the system centre" is expressed. Verified `np.allclose` identical to attaching it to a deflector, so it is presentational only. NOTE: group/ and cluster/ still use the `shear=... if i == 0 else None` idiom — propagating is an open follow-up
+- verified: smoke 16/16; full-fidelity runs with NUMBERS checked, not exit codes (hand-computed figure_of_merit == FitImaging exactly; tracer deflection sum == explicit deflections_0+deflections_1+deflections_shear; planes==2 for 3 galaxies; bad-fit residuals 4230/4317 at r>1.0" vs 33 near the perturbed galaxy; magnification pair 34.36 vs sum-of-parts 10.72, pair+shear 25.600 reconciles headline 25.588; sample co-dominance ratios 0.81-0.87)
+- smoke-decision: the 3 new scripts PASS under TEST_MODE=2/SMALL_DATASETS=1 but are deliberately NOT added to smoke_tests.txt — curated-subset convention ([[feedback_smoke_tests_small_subset]]), imaging/ covers only modeling+fit, and the new shear_galaxy idiom is already exercised by the covered multi_galaxy start_here+modeling entries
+- 375-collision: autolens_workspace#368 merged as PR#375 mid-flight, retiring the long trailing `__JAX__` block in every likelihood_function.py. The new multi_galaxy/likelihood_function.py was written in the NEW shape and then word-aligned to the landed text after merging main — a seventh script in that set, not a regression
+- small-dataset-trap: the smoke run leaves a 15x15 dataset behind, so a later "full fidelity" run silently reused it ([[feedback_should_simulate_existence_only]]). Caught by a changed printed ratio; re-verified after `rm -rf dataset/multi_galaxy` on a real 200x200 dataset
 - worktree: ~/Code/PyAutoLabs-wt/multi-galaxy-imaging-parity
 - repos:
   - autolens_workspace (feature/multi-galaxy-imaging-parity)

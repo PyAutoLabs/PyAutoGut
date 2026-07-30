@@ -3,7 +3,8 @@
 ## plot-coverage-gaps
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/667
 - session: claude --resume 25fb2cf0-1a9e-48fa-a1a7-9c53f5b57433
-- status: library-dev — 2 additive exports in autolens/plot/__init__.py, then 7 workspace plot.py files
+- status: library-shipped, workspace-pending — 2 additive exports MERGED-PENDING in PR#668; next is 7 workspace plot.py files
+- library-pr: https://github.com/PyAutoLabs/PyAutoLens/pull/668 (OPEN, pending-release; commit c3c00874c; 488 tests passed)
 - prompt: active/plot_py_function_coverage_gaps.md
 - classification: docs (both — library → workspace); follow-on to plot-guides-restructure, which built the per-dataset plot.py family but never enumerated per-file function coverage
 - brain-override: Feature Agent returned too-large (15) + a 4-phase split (design/core_api/workspace_examples/docs); overridden to one combined task — it scored 3 repos, not the work (2 import lines + 7 files gaining sections); there is no design left and no core API. Precedent: vacuous-jax-assertions (large/8 → small), multiband-pyloop-batching

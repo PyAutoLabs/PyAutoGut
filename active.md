@@ -68,3 +68,13 @@
 - repos:
   - PyAutoLens: feature/potential-correction-validation
   - autolens_workspace_test: feature/potential-correction-validation
+
+## jax-guard-pointer-retarget
+- issue: https://github.com/PyAutoLabs/PyAutoArray/issues/427
+- session: claude --resume 1eaf929e-624f-4e22-a28f-9b39e463258e
+- status: awaiting-merge (PR open 2026-07-30, CI pending)
+- prs: PyAutoArray#428
+- heart-ack: same three YELLOW reasons as guides-jax-to-using-jax ack (2026-07-30), re-checked identical at ship time; does not extend to new reasons
+- note: 2-line error-message retarget (lens_calc.py Phase 5d → using_jax.py); follow-up to autolens_workspace#412; no worktree (main-checkout branch, since deleted locally after push)
+- repos:
+  - PyAutoArray: feature/jax-guard-pointer-retarget

@@ -1,5 +1,21 @@
 # Active Tasks
 
+## python-312-workspace-runtime-pins
+- issue: https://github.com/PyAutoLabs/autofit_workspace/issues/125
+- status: awaiting-merge — all six PRs OPEN 2026-07-30
+- prompt: active/python_312_workspace_runtime_pins.md
+- parent: python-312-floor / PyAutoNerves#142 (Phase 5B)
+- prs: autofit_workspace#128, autogalaxy_workspace#189, autolens_workspace#399, HowToFit#40, HowToGalaxy#51, HowToLens#63
+- validation: exact-value census (six × `python-3.12.1`, terminating newline) + `git diff --check` clean per repo; no test sweep (deployment-selector lines, per the prompt)
+- worktree: ~/Code/PyAutoLabs-wt/python-312-workspace-runtime-pins
+- repos:
+  - autofit_workspace (feature/python-312-workspace-runtime-pins)
+  - autogalaxy_workspace (feature/python-312-workspace-runtime-pins)
+  - autolens_workspace (feature/python-312-workspace-runtime-pins)
+  - HowToFit (feature/python-312-workspace-runtime-pins)
+  - HowToGalaxy (feature/python-312-workspace-runtime-pins)
+  - HowToLens (feature/python-312-workspace-runtime-pins)
+
 ## python-312-floor
 - issue: https://github.com/PyAutoLabs/PyAutoNerves/issues/142
 - status: Phase 3 live release published; Phase 5A cleanup complete; Phase 5B waiting on one workspace claim
@@ -49,7 +65,7 @@
 - phase-3-followups: assistant wiki-currency workflows still run Python 3.11; PyAutoHands pre-build commit `95f7502` accidentally staged `=3.12` and `run_logs/`; the AutoGalaxy nufftax smoke failure is within the already-acknowledged workspace-validation class
 - phase-5-census: tracked active selectors below 3.12 remain in three assistant wiki workflows, PyAutoMemory validation, and six workspace/HowTo `runtime.txt` files; PyAutoHeart's Python 3.11 rejection job is intentional, while the PyAutoHands summary text and PyAutoFit `h5py>=3.11.0` dependency are not interpreter selectors
 - phase-5a: COMPLETE — PyAutoHands#210, autofit_assistant#25, autolens_assistant#95, autocti_assistant#15, and PyAutoMemory#31 merged; related assistant baseline fixes #97/#98, #26/#27, and #16/#17 also merged green
-- phase-5b: blocked only by `extra-galaxies-multi-galaxy` claiming autogalaxy_workspace — raise `runtime.txt` in autofit/autogalaxy/autolens_workspace and HowToFit/HowToGalaxy/HowToLens as one batch once that claim clears
+- phase-5b: IN FLIGHT 2026-07-30 — all six repos freed; batch executed as task python-312-workspace-runtime-pins (see its entry above); six PRs open awaiting human merge
 - phase-3-release-decision: https://github.com/PyAutoLabs/PyAutoHands/issues/208#issuecomment-5121606547
 - phase-3-fallbacks: autoconf `2026.7.15.1`; autoarray/autofit/autogalaxy/autolens `2026.7.29.1` (all unyanked, Requires-Python `>=3.9`)
 - phase-3-question: https://github.com/PyAutoLabs/PyAutoHands/issues/208#issuecomment-5118261332

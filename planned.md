@@ -1,22 +1,4 @@
 
-## python-312-workspace-runtime-pins
-- issue: https://github.com/PyAutoLabs/autofit_workspace/issues/125
-- status: planned — blocked by an active repository claim; start the full six-repo batch as soon as it clears
-- filed: 2026-07-30
-- classification: workspace — release/deployment metadata
-- prompt: active/python_312_workspace_runtime_pins.md
-- suggested-branch: feature/python-312-workspace-runtime-pins
-- blocked-by: `extra-galaxies-multi-galaxy` claims autogalaxy_workspace; no PR yet
-- scope: set all six root `runtime.txt` files to exactly `python-3.12.1`; six one-line edits, no scripts/notebooks/dependencies/workflows, static validation only
-- affected-repos:
-  - autofit_workspace
-  - autogalaxy_workspace
-  - autolens_workspace
-  - HowToFit
-  - HowToGalaxy
-  - HowToLens
-
-
 ## rhayes-audit-validation-phases-2-4
 - epic: https://github.com/PyAutoLabs/PyAutoArray/issues/415 (OPEN — the public watch point promised to @rhayes777 in all five replies)
 - status: planned — phase 1 MERGED and closed 2026-07-29 (PyAutoArray#417 `9411904d`, PyAutoLens#662 `2a3f1a63`, tracker #416 closed, PyAutoLens#531 closed); worktree released, no repo claims held

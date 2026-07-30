@@ -45,8 +45,21 @@ give `generate.py` a documented no-Colab mode for workspaces that do not — and
 say which in `autocti_workspace/AGENTS.md`, whose *Notebook regeneration* line
 currently implies the standard path works.
 
-Fixing (1) is the priority: it is a data-loss footgun independent of `autocti`.
-Any future unregistered project hits the same trap.
+**Defect (1) is FIXED** — PyAutoLabs/PyAutoHands#215 / PR #216 (2026-07-30).
+`generate.py` now validates the project against `build_util.COLAB_PROJECTS`
+before `generate_project_folders()` and the rmtree, exits with "Nothing was
+modified", and a `finally` on the per-script loop removes the intermediate
+`.ipynb` so a mid-loop failure cannot strand one in `scripts/`. Verified live:
+`generate.py autocti` from `autocti_workspace/` exits 1 with `git status`
+empty and all 79 notebooks intact, and `generate.py howtolens` from
+`HowToLens/` still gives a zero diff. Note the pre-existing safety was
+accidental: the root-level `start_here*.py` loop injects before the rmtree, so
+only a workspace WITHOUT a root `start_here.py` took the destructive path.
+
+**This prompt stays open for defect (2) only** — the `autocti` registration,
+which is owned by `draft/release/autocti/cti_release_train_wiring.md`
+(human-required) items 1-3, not by this file. Close this prompt when that
+release task lands, or fold it in.
 
 ## Why nobody noticed
 

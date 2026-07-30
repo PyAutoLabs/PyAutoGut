@@ -85,7 +85,6 @@
 - heart-ack: workspace validation not passing (13 failed, 2026-07-21T19-05-22Z); 33 stale parked script(s)
 - repos:
   - PyAutoNerves: main (`a9bf4561`)
-  - PyAutoHands: main (`95f7502`)
   - PyAutoArray: main (`41c55a44`)
   - PyAutoFit: main (`241f2d69`)
   - PyAutoGalaxy: main (`b9d9927f`)
@@ -124,6 +123,18 @@
   returned CLEAN on byte-identical review tree `83b157014` and all five CI
   checks passed exact head `5b42f3e4`. The full five-library core floor is now
   merged; no release or issue closure was performed. Advance to Phase 2.
+
+## python-312-prebuild-debris-guard
+- issue: https://github.com/PyAutoLabs/PyAutoHands/issues/209
+- status: library-dev
+- prompt: active/python_312_prebuild_debris_guard.md
+- branch: feature/python-312-release-surfaces
+- worktree: ~/Code/PyAutoLabs-wt/python-312-prebuild-debris-guard
+- parent: python-312-floor
+- repos:
+  - PyAutoHands: feature/python-312-release-surfaces
+- notes: Remove the recoverable `95f7502` debris, prevent future whole-repo
+  pre-build staging, update canonical docs, and run focused checks only.
 
 ## vacuous-jax-assertions
 - issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/229

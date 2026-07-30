@@ -23,9 +23,10 @@
 ## cluster-dpie-docstring-style
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/410
 - session: claude --resume f47a8f9e-ce35-4f6b-bde8-c35ef7338245
-- status: workspace-dev
+- status: awaiting-merge (PR open 2026-07-30; smoke 22/22; Heart YELLOW acked by human at PR-open)
 - worktree: ~/Code/PyAutoLabs-wt/cluster-dpie-docstring-style
-- note: worktree_check_conflict fired on 3 concurrent autolens_workspace claims (#407, #408, multi-galaxy-features-parity); hand-checked file-disjoint from scripts/cluster/** — only generated sidecars shared, re-merge main + regenerate before PR
+- workspace-pr: https://github.com/PyAutoLabs/autolens_workspace/pull/418
+- note: worktree_check_conflict fired on 3 concurrent autolens_workspace claims (#407, #408, multi-galaxy-features-parity); hand-checked file-disjoint from scripts/cluster/** — only generated sidecars shared; pre-PR merge of origin/main was already up to date
 - repos:
   - autolens_workspace: feature/cluster-dpie-docstring-style
 
@@ -37,27 +38,6 @@
 - phase-3-pr: workspace_test#237, profiling#96, workspace_developer#121 (ALL MERGED 2026-07-30; worktree + branches cleaned; shipped comment https://github.com/PyAutoLabs/PyAutoLens/issues/657#issuecomment-5135275039)
 - phases: 1 (design) + 2 (core API) + 3 (workspace_test jax_likelihood + profiling examples) COMPLETE; next: start_workspace on draft phase-4 prompt (guides; fix cluster/likelihood_function.py false profile=None-centroid claim), then phase 5 (PointSolver custom_jvp gradients)
 - repos:
-
-## scaling-relation-brightest-galaxy
-- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/407
-- session: claude --resume b79e03f8-64be-4fce-8c2d-e8b98ce8f487
-- status: awaiting-merge (PR https://github.com/PyAutoLabs/autolens_workspace/pull/416 opened 2026-07-30, pending-release, MERGEABLE; smoke 22/22; merge human)
-- worktree: ~/Code/PyAutoLabs-wt/scaling-relation-brightest-galaxy
-- note: two PRE-EXISTING failures found while verifying, reproduce on pristine main, neither in smoke_tests.txt —
-  multi_galaxy/features/scaling_relation/slam.py (IndexError INT_MIN in mapper_util.adaptive_pixel_signals_from via
-  adapt-regularization in source_pix_2) and point_source/features/scaling_relation/fit.py (own astrometric-shift
-  assertion, measured shift 0 mas). NOT fixed here; unfiled.
-- note: notebooks/group/start_here.ipynb drift (script says Nautilus, committed notebook says MultiStartProdigy)
-  reverted and excluded from this PR — still present on main; overlaps the same exclusion in optional-none-default-typos
-- heart-ack: YELLOW acknowledged 2026-07-30 by human, exact reasons:
-  - "manifest drift: tenant firewall (organ code) — 1 mismatch(es) vs PyAutoMind/repos.yaml"
-  - "test run status unknown (no report.json)" (stale)
-  - "release validation stale: source moved since rehearsal (PyAutoNerves, PyAutoFit, PyAutoArray, PyAutoGalaxy, PyAutoLens)" (stale)
-- note: docs-only terminology rename; group/ deliberately excluded (a group genuinely has a BCG/BGG)
-- note: overlaps multi-package-rename-multi-dataset (#408) on autolens_workspace generated sidecars
-  (llms-full.txt, workspace_index.json) — whichever merges second must regenerate
-- repos:
-  - autolens_workspace: feature/scaling-relation-brightest-galaxy
 
 ## multi-package-rename-multi-dataset
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/408

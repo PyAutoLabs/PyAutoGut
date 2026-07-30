@@ -9,6 +9,10 @@ Autonomy: supervised
 Priority: medium
 Status: draft
 
+Note: Brain Feature Agent scored large(7)/split-into-phases — repo-count proxy
+overestimate; overridden to a single phase (one repo, one package, prose-only
+edits + one script restructure). Override recorded here per workflow.
+
 ## Original request (verbatim)
 
 > We have previous had chats about making cluster examples use dPIE like

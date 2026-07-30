@@ -3,7 +3,7 @@
 ## multi-plane-guide-units
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/411
 - session: claude --resume 5b02920f-dfdb-476a-84df-e81a31971d19
-- status: workspace-dev
+- status: awaiting-merge (PR https://github.com/PyAutoLabs/autolens_workspace/pull/413 opened 2026-07-30; Heart YELLOW at ship — manifest drift tenant firewall — surfaced on issue for human ack; merge human)
 - worktree: ~/Code/PyAutoLabs-wt/multi-plane-guide-units
 - note: worktree_check_conflict fired on 4 concurrent autolens_workspace claims (#407, #408, #409, #410); hand-checked file-disjoint — this task touches only scripts/guides/advanced/multi_plane.py and no in-flight branch touches scripts/guides/advanced/; shared surfaces are generated notebooks/sidecars — re-merge origin/main + regenerate LAST before PR
 - note: Brain FeatureDecision difficulty large (score 9, repo-count proxy) overridden to small, no phasing — single-file docs rewrite, no API surface

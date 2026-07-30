@@ -11,6 +11,7 @@
 - heart-ack: test run status unknown (no report.json); release validation stale: source moved since rehearsal (PyAutoFit, PyAutoArray, PyAutoGalaxy, PyAutoLens)
 - worktree: ~/Code/PyAutoLabs-wt/plot-coverage-gaps
 - repos:
+  - PyAutoLens (feature/plot-coverage-gaps)
 
 ## group-start-here-timeout
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/402

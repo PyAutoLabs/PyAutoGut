@@ -160,7 +160,11 @@
 
 ## dspl-terminology-rename
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/390
-- status: workspace-dev
+- status: awaiting-merge
+- workspace-pr: autolens_workspace#394, autolens_assistant#100 (both OPEN, pending-release)
+- heart-ack: workspace validation not passing (0 failed, cloud#30516167217); manifest drift: tenant firewall (organ code) — 2 mismatch(es) vs PyAutoMind/repos.yaml; release validation stale: source moved since rehearsal (PyAutoFit, PyAutoArray, PyAutoGalaxy, PyAutoLens). NOTE the manifest-drift reason is NEW relative to searches-guide-nautilus-first's ack — acknowledged explicitly, acks never extend to new reasons
+- evidence: 45 files / 32 renames; zero `double_einstein_ring` survivors; unrelated Einstein-ring count still exactly 21; all 14 notebooks BYTE-IDENTICAL to generator output (harness control-tested on an untouched script first); `check_navigator.py --root workspace --banners=fail` path+banner OK and catalogue staleness OK, both run CI-faithfully from a copy in a dir literally named `workspace`; both simulators + both model fits exit 0 under PYAUTO_TEST_MODE=1; audit_skill_apis.py 0 missing/broken
+- script-sizes-decision: did NOT run `check_sizes.sh --update` — main's snapshot is ALREADY stale for 116 unrelated scripts (+3 keys pointing at deleted files), so a blanket refresh would sweep that into the PR and silently bless other changes' shrinkage. Updated only the 18 affected entries; guard passes. The 116-entry drift is a real separate hygiene item, unfiled
 - prompt: active/double_einstein_ring_to_dspl_rename.md
 - scope: rename `double_einstein_ring` → `double_source_plane_lens` across 43 files in autolens_workspace (4 dirs + `plotters_*.{py,ipynb}` pair via `git mv`, `dataset_name`, 6 cross-refs), prose → **DSPL** acronym (expanded once per file, bare after). Plus 2 dangling path citations in autolens_assistant
 - brain-override: Brain scored too-large/13 and routed to `start_library`; overridden to small + `start_workspace` — one workspace repo, zero library API change, mechanical rename. Brain's "Witnesses: NONE — strengthen tests first" gate is unsatisfiable for a workspace repo (no unit tests); real witnesses are script execution + clean navigator_check + zero-diff notebook regeneration

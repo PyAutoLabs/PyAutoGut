@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-844 records across 6 buckets.
+845 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -396,6 +396,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [review-falsified-by](2026/07/review-falsified-by.md) — adversarial pass as a checkpoint stage (item 6, the delicate one). review faculty _review.py lifts load-bearin…
 - [rtd-hygiene](2026/07/rtd-hygiene.md) — RTD hygiene phase A — dead configs deleted, conf.py converged, Heart-owned docs-build CI live on 3 libs (basel…
 - [run-queue](2026/07/run-queue.md)
+- [sampler-cli-output-numbers](2026/07/sampler-cli-output-numbers.md)
 - [samplers-faculty](2026/07/samplers-faculty.md)
 - [scaling-relation-bgc-anchored](2026/07/scaling-relation-bgc-anchored.md)
 - [scaling-relation-brightest-galaxy](2026/07/scaling-relation-brightest-galaxy.md)

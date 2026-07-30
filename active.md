@@ -204,3 +204,18 @@
 - repos:
   - autolens_workspace (feature/potential-correction-start-here)
   - autolens_assistant (feature/potential-correction-start-here)
+
+## interferometer-subhalo-to-advanced
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/392
+- status: workspace-dev
+- prompt: active/interferometer_subhalo_to_advanced.md
+- scope: `git mv` `scripts/interferometer/features/subhalo/` (6 files) + its `notebooks/` mirror (3 ipynb) into `features/advanced/subhalo/`, matching the imaging twin `scripts/imaging/features/advanced/subhalo/`; drop the `- subhalo:` bullet from `scripts/interferometer/features/README.md`; author the missing `scripts/interferometer/features/advanced/README.md`. Zero script-content change
+- path-safety: scripts are location-independent — every dataset/output path is workspace-root-relative (`Path("dataset") / "interferometer" / dataset_name`). NO in-script edits
+- refs: ZERO hand-written cross-references to `interferometer/features/subhalo` exist anywhere. All 12 occurrences are in GENERATED artifacts — `llms-full.txt` (3), `workspace_index.json` (3), `.script_sizes.json` (6). Regenerate, never hand-edit
+- config-check: `config/build/no_run.yaml:41` excludes only the IMAGING twin (`imaging/features/advanced/subhalo/sensitivity/`); `profile_release.yaml` has no subhalo pattern. Expect NO config edit — confirm by re-grepping `config/build/` after the move, don't assume
+- no-smoke-coverage: `smoke_tests.txt` has NO interferometer subhalo entry (16 entries; only `interferometer/modeling.py` + `interferometer/features/pixelization/delaunay.py`). The curated smoke set will NOT exercise this move — proof is generator-clean + the three notebooks reappearing at the new paths + `simulator.py` running from the workspace root + a post-move grep for `features/subhalo` empty outside imaging
+- pre-existing-not-fixed: `subhalo/sensitivity/start_here.py` is ENTIRELY commented out (every line incl. the docstring) — a disabled placeholder; the move neither breaks nor repairs it. Interferometer subhalo also has no per-folder READMEs while imaging has three (`subhalo/`, `detect/`, `sensitivity/`) — human-confirmed out of scope
+- brain-override: Brain scored large/9 + split-into-phases with a "public-API change may ripple downstream" risk — VACUOUS, no library code is touched. Same repo-count-proxy misfire as `potential-correction-start-here` (too-large/12). Overridden to ONE phase
+- parallel-claim: human-authorised alongside `scaling-relation-bgc-anchored` (#385), `extra-galaxies-multi-galaxy-lens` (#387), `potential-correction-start-here` (#389), `dspl-terminology-rename` (#390), all claiming autolens_workspace. Each worktree's ACTUAL diff hand-checked disjoint. NOTE #389 modifies `scripts/interferometer/features/advanced/potential_correction/start_here.py` — a different file inside this task's DESTINATION parent; git tracks files not directories, so the `git mv` does not touch it. Only overlap is the regenerated catalogue — whichever merges last rebases and re-runs the generator
+- worktree: ~/Code/PyAutoLabs-wt/interferometer-subhalo-to-advanced
+- repos:

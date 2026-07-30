@@ -1,3 +1,17 @@
+## ai-policy-validator-followups
+- issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/181 (open; ready for human close)
+- completed: 2026-07-30
+- prs:
+  - https://github.com/PyAutoLabs/PyAutoBrain/pull/182 (merged c878fb44)
+  - https://github.com/PyAutoLabs/autolens_assistant/pull/98 (merged 15ad4096)
+  - https://github.com/PyAutoLabs/autofit_assistant/pull/27 (merged a213b5ef)
+  - https://github.com/PyAutoLabs/autocti_assistant/pull/17 (merged 2d5a7ee8)
+- summary: Root `AI_POLICY.md` is generic Clone Agent infrastructure for every supported reference, with maintainer-owned boundary prose aligned across all three assistant cells. AutoCTI intentionally remains outside `REFERENCE_PROFILES`.
+- validation: 28 focused Clone Agent tests passed; autolens and autofit boundaries completed; assistant CI green after the Brain-first dependency rerun.
+- notes: The autolens PR was refreshed after the output-folder/citation PR landed, so its final diff against main remained only `modes/maintainer.md`.
+
+## Original prompt
+
 # clone-boundary is red on every autolens_assistant branch — AI_POLICY.md unclassified
 
 `Difficulty: small`

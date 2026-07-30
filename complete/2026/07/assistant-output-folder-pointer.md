@@ -1,3 +1,16 @@
+## assistant-output-folder-pointer
+- issue: https://github.com/PyAutoLabs/autolens_assistant/issues/96 (closed)
+- completed: 2026-07-30
+- workspace-prs:
+  - https://github.com/PyAutoLabs/autolens_assistant/pull/97 (merged 5d4c4559)
+  - https://github.com/PyAutoLabs/autofit_assistant/pull/26 (merged ce150b97)
+  - https://github.com/PyAutoLabs/autocti_assistant/pull/16 (merged 37cdd1e3)
+- summary: All three assistant cells now tell novice/teacher-mode users where an active fit writes output and point at the canonical workspace explanation instead of duplicating a directory tree.
+- validation: autofit and AutoCTI CI green unchanged; autolens wiki-currency green and boundary green after the shared policy classifier landed.
+- notes: The autolens PR also corrected two stale HPC citations exposed by its existing wiki-currency gate.
+
+## Original prompt
+
 # Assistants point novices at the output folder when a fit starts
 
 Every assistant cell that launches a model-fit should, when the user reads as a

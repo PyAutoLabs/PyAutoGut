@@ -1,3 +1,13 @@
+## python-312-memory-validation-ci
+- issue: https://github.com/PyAutoLabs/PyAutoMemory/issues/30 (open; ready for human close)
+- completed: 2026-07-30
+- workspace-pr: https://github.com/PyAutoLabs/PyAutoMemory/pull/31 (merged 5fe0536a)
+- summary: PyAutoMemory validation now runs on Python 3.12 and its repository-structure validator recognizes the shared root `AI_POLICY.md`.
+- validation: `make validate` passed; `make test` passed with 10 tests; PR validation green.
+- notes: The allowlist regression was the pre-existing blocker discovered while shipping the Python selector, so both one-line corrections landed together.
+
+## Original prompt
+
 # Python 3.12 floor — Memory validation CI
 
 Type: bug

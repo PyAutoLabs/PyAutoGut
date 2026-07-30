@@ -1,3 +1,13 @@
+## python-312-autolens-wiki-currency-ci
+- issue: https://github.com/PyAutoLabs/autolens_assistant/issues/94 (closed)
+- completed: 2026-07-30
+- workspace-pr: https://github.com/PyAutoLabs/autolens_assistant/pull/95 (merged 806f9a6d)
+- summary: The autolens assistant wiki-currency workflow now runs on Python 3.12, completing the assistant CI-selector portion of the ecosystem migration.
+- validation: clone-boundary and wiki-currency both passed on the final head after PyAutoBrain#182, autolens_assistant#97, and #98 landed.
+- notes: The final branch differed from corrected main only in `.github/workflows/wiki-currency.yml`.
+
+## Original prompt
+
 # Python 3.12 floor — AutoLens assistant wiki CI
 
 Type: bug

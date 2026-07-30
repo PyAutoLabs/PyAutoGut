@@ -1,25 +1,5 @@
 # Active Tasks
 
-## ai-policy-validator-followups
-- issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/181
-- status: awaiting-merge
-- prompt: active/clone_boundary_ai_policy_unclassified.md
-- branch: feature/ai-policy-validator-followups
-- worktree: ~/Code/PyAutoLabs-wt/ai-policy-validator-followups
-- prs: https://github.com/PyAutoLabs/PyAutoBrain/pull/182, https://github.com/PyAutoLabs/autolens_assistant/pull/98, https://github.com/PyAutoLabs/autofit_assistant/pull/27, https://github.com/PyAutoLabs/autocti_assistant/pull/17 (OPEN, pending-release)
-- heart-ack: 2026-07-30 — YELLOW 70 explicitly approved; `workspace validation not passing (0 failed, cloud#30516167217)`; `release validation stale: source moved since rehearsal (PyAutoFit, PyAutoGalaxy, PyAutoLens)`
-- validation: PyAutoBrain clone tests 28 passed; autolens and autofit boundaries complete locally; AutoCTI correctly skipped because it has no reference profile
-- merge-order: PyAutoBrain#182 first, then assistant PRs; rerun autolens boundary after Brain lands because CI reads PyAutoBrain main
-- ci: PyAutoBrain#182 has no configured checks; autofit_assistant#27 and autocti_assistant#17 GREEN. autolens_assistant#98 has two exact base-dependency failures: boundary sees `AI_POLICY.md` until Brain#182 lands, and citation sees the stale `example_cpu.py` path until autolens_assistant#97 lands. Safe order is Brain#182 → rerun/merge #97 → refresh #98 → merge #98; fit/CTI are independent.
-- scope: classify root `AI_POLICY.md` as generic Clone Agent infrastructure and align the maintainer boundary prose in all three assistant cells; do not add an AutoCTI reference profile
-- parallel-claim: human-approved 2026-07-30; the assistant edits are limited to `modes/maintainer.md` and do not overlap the open `assistant-output-folder-pointer` PRs or Python 3.12 workflow-selector PR
-- related: PyAutoMemory's root allowlist correction remains in PyAutoMemory#30 on the existing `python-312-release-surfaces` task
-- repos:
-  - PyAutoBrain: feature/ai-policy-validator-followups
-  - autolens_assistant: feature/ai-policy-validator-followups
-  - autofit_assistant: feature/ai-policy-validator-followups
-  - autocti_assistant: feature/ai-policy-validator-followups
-
 ## python-312-floor
 - issue: https://github.com/PyAutoLabs/PyAutoNerves/issues/142
 - status: Phase 3 live release published; two corrective tracks remain
@@ -144,36 +124,6 @@
   checks passed exact head `5b42f3e4`. The full five-library core floor is now
   merged; no release or issue closure was performed. Advance to Phase 2.
 
-## python-312-autolens-wiki-currency-ci
-- issue: https://github.com/PyAutoLabs/autolens_assistant/issues/94
-- status: awaiting-merge
-- workspace-pr: https://github.com/PyAutoLabs/autolens_assistant/pull/95 (OPEN, pending-release)
-- prompt: active/python_312_autolens_wiki_currency_ci.md
-- branch: feature/python-312-release-surfaces
-- worktree: ~/Code/PyAutoLabs-wt/python-312-release-surfaces
-- parent: python-312-floor
-- repos:
-  - autolens_assistant: feature/python-312-release-surfaces
-- notes: Python 3.12 version, symbol, and idiom checks pass. Merge remains
-  blocked by unrelated baseline drift: unclassified `AI_POLICY.md` and the
-  missing `autolens_workspace:scripts/guides/hpc/example_cpu.py` citation.
-
-## python-312-memory-validation-ci
-- issue: https://github.com/PyAutoLabs/PyAutoMemory/issues/30
-- status: awaiting-merge
-- workspace-pr: https://github.com/PyAutoLabs/PyAutoMemory/pull/31 (OPEN, pending-release)
-- ci: validate GREEN
-- prompt: active/python_312_memory_validation_ci.md
-- branch: feature/python-312-release-surfaces
-- worktree: ~/Code/PyAutoLabs-wt/python-312-release-surfaces
-- parent: python-312-floor
-- repos:
-  - PyAutoMemory: feature/python-312-release-surfaces
-- notes: Python 3.12 workflow selector and the pre-existing `AI_POLICY.md`
-  structure allowlist regression are fixed together; `make validate` and
-  `make test` pass (10 tests). Heart YELLOW 70 explicitly approved with the
-  same exact reasons recorded on `ai-policy-validator-followups`.
-
 ## vacuous-jax-assertions
 - issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/229
 - status: awaiting-merge
@@ -194,29 +144,6 @@
 - phases: 1 (design) + 2 (core API) COMPLETE; next: start_workspace on active/../draft phase-3 prompt (workspace_test jax_likelihood + profiling examples), then phase 4 (guides), then phase 5 (JAX solver gradients)
 - repos:
 
-
-## assistant-output-folder-pointer
-- issue: https://github.com/PyAutoLabs/autolens_assistant/issues/96
-- session: claude --resume 6a3b0456-4835-4b11-9d18-fcb9ad9087f3
-- status: awaiting-merge
-- workspace-prs: https://github.com/PyAutoLabs/autolens_assistant/pull/97, https://github.com/PyAutoLabs/autofit_assistant/pull/26, https://github.com/PyAutoLabs/autocti_assistant/pull/16 (all OPEN, pending-release)
-- heart-ack: 2026-07-30 — YELLOW 65, all three reasons pre-existing and structurally unrelated to markdown-only assistant edits: workspace validation not passing (13 failed, 2026-07-21T19-05-22Z); 33 stale parked script(s); release validation stale: source moved since rehearsal (PyAutoFit, PyAutoGalaxy, PyAutoLens)
-- ship-evidence: `audit_skill_apis.py` 0 missing/broken in autolens (66 files/124 symbols) and autofit (29/38); autocti NOT verifiable locally (`autocti` not installed → all 18 misses are `ModuleNotFoundError`, on pre-existing symbols). CI: autofit#26 and autocti#16 fully GREEN
-- ci-preexisting-reds: autolens#97 hit two failures NEITHER caused by this branch. (1) `wiki-currency --check-citations`: `wiki/core/operations/hpc.md` still cited `autolens_workspace:scripts/guides/hpc/example_cpu.py`, renamed to `example_cpu_and_gpu.py` by autolens_workspace#360 (b0836b72), and `batch/` which is now `batch_cpu/` + `batch_gpu/` — FIXED in this PR (commit da75c27; 407 citations, 0 missing). (2) `clone-boundary`: `AI_POLICY.md` unclassified, red on EVERY branch since feature/ai-policy merged 2026-07-27 — filed as draft/bug/pyautobrain/clone_boundary_ai_policy_unclassified.md, NOT fixed here (needs autolens_assistant `modes/maintainer.md` + PyAutoBrain `_clone.py` together)
-- prompt: active/output_folder_layout_pointer.md
-- scope: three assistant cells gain an "announce the output folder at fit launch" rule for novice/teacher-mode users — a new `## Output folder announcement` section in each `skills/_style.md` (sibling of `## Plot output and path announcement`), a `modes/teacher.md` bullet, and the pointer wired into the fit-launch skills (`al_run_search`, `al_configure_search`, `af_run_search`, `ac_fit_cti_model`)
-- citations: pointer ONLY, never a copied tree (it would rot) — autolens → `autolens_workspace/scripts/imaging/modeling.py` `__Output Folder Layout__` (:548-585); autofit → `autofit_workspace/scripts/overview/overview_2_scientific_workflow.py` (:197-223); autocti → `autocti_workspace/scripts/dataset_1d/modeling/start_here.py` `__Output Folder__` + `__On The Fly Outputs__` (:346-371)
-- depth-gate: reuses the EXISTING cue in `skills/_style.md` "Adaptive depth" / "Newcomer mode" — no second depth rule invented
-- out-of-scope: `euclid_assistant` (the Feature Agent listed it, but it is a paper repo with no `modes/` and no `skills/`); there is no `autogalaxy_assistant`, so the lens cell carries the galaxy citation. No `## Further reading` edit and no new row in `wiki/core/external/skill_citation_map.md` — those blocks are generated from that table and this is not a per-skill citation row. `llms.txt` is hand-maintained, not generated from `skills/`
-- brain-override: Feature Agent returned too-large (score 11) / split-into-4-phases (design, core_api, workspace_examples, docs) off its repo-count proxy ([[feedback_brain_repo_count_difficulty_proxy]]). Three of the four phases are vacuous — no library code, no API, no workspace example. Overridden to one task, one PR per repo (~10 markdown edits of uniform shape)
-- parallel-claim: `worktree_check_conflict` FIRED on all three repos — `python-312-auto{lens,fit,cti}-wiki-currency-ci` claim them from worktree `~/Code/PyAutoLabs-wt/python-312-release-surfaces`, each with an OPEN pending-release PR (autolens_assistant#95, autofit_assistant#25, autocti_assistant#15). Human decision 2026-07-30: proceed in parallel — every one of those PRs changes exactly ONE file, `.github/workflows/wiki-currency.yml` (verified via `gh api .../pulls/N/files`), so there is zero overlap with `modes/` + `skills/`, and they are blocked on the next release merging. (Contrast [[feedback_worktree_conflict_guard_never_fires]]: the guard DOES fire when the claim uses the `  - <repo>: <branch>` form, which these entries do)
-- ci-note: each repo's `wiki-currency` workflow runs on pull_request and audits `skills/` + `wiki/` + `AGENTS.md` + `llms.txt` for stale API symbols — validate locally with `make audit` before shipping. `pending-release` label already present on all three repos
-- worktree-base: branched off origin/main — autolens_assistant `89a2cc3`, autofit_assistant `d83500e`, autocti_assistant `1907634` (all verified equal to origin/main, [[feedback_worktree_base_drifts_from_main]])
-- worktree: ~/Code/PyAutoLabs-wt/assistant-output-folder-pointer
-- repos:
-  - autolens_assistant: feature/assistant-output-folder-pointer
-  - autofit_assistant: feature/assistant-output-folder-pointer
-  - autocti_assistant: feature/assistant-output-folder-pointer
 
 ## remove-finish-docstring-hack
 - issue: https://github.com/PyAutoLabs/PyAutoHands/issues/211
@@ -250,23 +177,3 @@
 - worktree: ~/Code/PyAutoLabs-wt/extra-galaxies-multi-galaxy
 - repos:
   - autogalaxy_workspace (feature/extra-galaxies-multi-galaxy)
-
-## correct-simulator-jax-claims
-- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/379
-- status: awaiting-merge
-- library-pr: https://github.com/PyAutoLabs/PyAutoLens/pull/665
-- workspace-prs: https://github.com/PyAutoLabs/autolens_workspace/pull/380, https://github.com/PyAutoLabs/autogalaxy_workspace/pull/183
-- prompt: draft/docs/workspaces/correct_false_simulator_jax_claims.md
-- scope: four false JAX claims corrected across 9 workspace files + 1 library docstring. (1) "the simulator handles pytree registration internally" — ZERO register hits in any simulator (autolens/autogalaxy/autoarray bases) and unimplementable as worded, since JAX flattens jitted args at trace time; (2) "eager use_jax=True already runs on JAX" — returns numpy.ndarray-backed data in BOTH libraries; (3) the @jax.jit simulator recipe fails even WITH correct registration, inside autoarray; (4) TransformerNUFFT claimed not-JAX-traceable — BACKWARDS
-- my-regression: claim (4) was shipped by ME earlier today in PR#375/#181, inherited from the old __JAX__ blocks. Per autoarray's own error text TransformerNUFFT IS the default JAX-native nufftax-backed transformer (nufftax 0.3.1 installed); TransformerNUFFTPyNUFFT is the legacy pynufft one. Defaults differ BY CLASS: SimulatorInterferometer→TransformerDFT, Interferometer(what a fit uses)→TransformerNUFFT. autolens interferometer/simulator.py already had this right, so #375 contradicted a sibling script
-- exemplars-untouched: point_source/simulator.py and cluster/simulator.py were ALREADY correct — they state the setup, call register_tracer_classes(tracer), and give the trace-time reason. Wording mirrored FROM them; both left alone
-- dead-cells-removed: autolens imaging/ + interferometer/simulator.py had real `@jax.jit def simulate(...)` cells whose CALL was commented out — a decorated function never invoked, which is exactly why the claim survived. Removed; the working use_jax=True constructor stays a live cell
-- ship-evidence: PyAutoLens 488 passed; autolens smoke 17/17; autogalaxy smoke 12/12; all 6 edited simulator scripts run end-to-end; check_sizes.sh clean; post-edit grep zero hits for all four claims
-- gate-note: the library change is docstring-only with ZERO API surface, so library-first is vacuous here — nothing in the workspaces imports new API. Merge order does not matter; PyAutoLens#665 is trivial and can go first
-- origin: fell out of likelihood-function-jax-pointer (#368) → public-register-galaxies-classes (PyAutoGalaxy#536). Third generation of the same root cause: a documented JAX recipe that no script executes will be wrong
-- companion-bug: draft/bug/autoarray/simulator_jax_jit_path_broken.md — the actual library defect behind claim (3), NOT started. At least two un-threaded sites (preprocess.py:153 `noise_map_via_data_eps_and_exposure_time_map_from` takes no xp param at all; then array_2d_util.py), depth beyond that unmeasured
-- worktree: ~/Code/PyAutoLabs-wt/correct-simulator-jax-claims
-- repos:
-  - PyAutoLens (feature/correct-simulator-jax-claims)
-  - autolens_workspace (feature/correct-simulator-jax-claims)
-  - autogalaxy_workspace (feature/correct-simulator-jax-claims)

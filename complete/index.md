@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-780 records across 6 buckets.
+781 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -217,6 +217,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [lenstool-scaling-reference-magnitude](2026/07/lenstool-scaling-reference-magnitude.md) — PR1 cluster + PR2 group/imaging — complete; PR3 SLaM deferred
 - [lifecycle-record-auto-index](2026/07/lifecycle-record-auto-index.md)
 - [lifecycle-state-split](2026/07/lifecycle-state-split.md) — draft/active/complete prompt-file lifecycle + archive wiki — MERGED
+- [likelihood-function-jax-pointer](2026/07/likelihood-function-jax-pointer.md) — six `likelihood_function.py` __JAX__ blocks demoted to a one-line pointer — SHIPPED
 - [live-visual-update-context](2026/07/live-visual-update-context.md) — task 5 of the autolens_assistant batch — al_configure_search ask-once Live visual updates branch (script viewe…
 - [lr-free-multi-start-optimizers](2026/07/lr-free-multi-start-optimizers.md)
 - [manifest-drift-organ-registration](2026/07/manifest-drift-organ-registration.md) — firewall + spawn spec + pointer sweep — complete

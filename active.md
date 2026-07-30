@@ -171,29 +171,6 @@
 - phases: 1 (design) + 2 (core API) COMPLETE; next: start_workspace on active/../draft phase-3 prompt (workspace_test jax_likelihood + profiling examples), then phase 4 (guides), then phase 5 (JAX solver gradients)
 - repos:
 
-## likelihood-function-jax-pointer
-- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/368
-- status: awaiting-merge
-- workspace-prs: https://github.com/PyAutoLabs/autolens_workspace/pull/375, https://github.com/PyAutoLabs/autogalaxy_workspace/pull/181
-- ship-evidence: autolens smoke 16/16, autogalaxy smoke 12/12; check_sizes.sh OK; all six likelihood_function.py scripts run green; the three published guide paths executed verbatim and agree with the eager NumPy log likelihood to ~1e-15
-- shipped-comment: https://github.com/PyAutoLabs/autolens_workspace/issues/368#issuecomment-5128300141
-- followup: autogalaxy has NO public counterpart to `autolens.jax.register_tracer_classes` (only the private `AnalysisImaging._register_fit_imaging_pytrees`) — possible library-side prompt, not filed
-- prompt: active/likelihood_function_jax_section_to_pointer.md
-- scope: six `likelihood_function.py` scripts (autolens imaging/interferometer/group/cluster, autogalaxy imaging/interferometer) lose their trailing 25-45 line `__JAX__` block; each gains a `__JAX__` heading + ONE sentence at the end of the opening header docstring (after `__Contents__`) pointing at `scripts/guides/using_jax.py`, plus a `__JAX__` bullet as the FIRST `__Contents__` entry. The deleted detail migrates into `scripts/guides/using_jax.py` in BOTH workspaces as a new `__Custom Likelihood Functions__` section
-- guide-content: the new guide section shows a likelihood function JAX-compiled two ways — (a) via the `Analysis` object (`al.AnalysisImaging(dataset=dataset)`, `use_jax=True` default, `@jax.jit` around `analysis.log_likelihood_function(instance=instance)`) and (b) via `Fitness` (`from autofit.non_linear.fitness import Fitness` — NOT exported as `af.Fitness`; `fitness._vmap(jnp.array([parameters]))[0]`). Plus the hand-rolled `Tracer`+`FitImaging` pattern with `autolens.jax.register_tracer_classes(tracer)` (autogalaxy: `ag.AnalysisImaging` init registers pytrees as a side effect) and the interferometer `TransformerDFT`-not-`TransformerNUFFT` caveat
-- contents-bullet: human decision 2026-07-29 — ADD a `__JAX__` bullet to all six `__Contents__` lists (they list no JAX entry today), as the first entry, since the section now sits immediately after the list
-- cluster-exception: cluster's block is `FitPositionsSource`-shaped, not `FitImaging`. It is REDUCED to the pointer, NOT migrated — folding a point-source recipe into an imaging-shaped guide example would muddy it; `cluster/modeling.py` already carries the `AnalysisPoint(use_jax=True)` path
-- brain-override: Feature Agent returned too-large (score 13) / split-into-4-phases off its repo-count proxy ([[feedback_brain_repo_count_difficulty_proxy]]). Actual change is 8 docstring-only files of uniform shape — overridden to one PR per repo
-- parallel-claim: `multistart-prodigy-start-here` (#366) and `assistant-start-here-scripts` (#367) BOTH claim the same two repos. Human decision 2026-07-29: proceed in parallel — zero source-file overlap (those edit `start_here.py`; this edits `likelihood_function.py` + `guides/using_jax.py`). Only the GENERATED artifacts collide (notebooks/, llms-full.txt, workspace_index.json); whichever PR merges last must re-run generate.py rather than hand-resolve
-- guard-bug: `worktree_check_conflict` reported NO conflict on both repos despite the two claims above. `worktree_list_claimed` (PyAutoBrain/bin/worktree.sh:326-333) parses `  - <repo>: <branch>` but active.md writes `  - <repo> (<branch>)`, so `repo` swallows the branch and the `==` compare at :346 never matches — the guard has never fired for any task. Filed as draft/bug/pyautobrain/worktree_check_conflict_never_fires.md; NOT fixed in this task
-- heart-ack: 2026-07-29 — YELLOW 80, both reasons pre-existing and unrelated to a docstring-only docs change: workspace validation not passing (13 failed, 2026-07-21T19-05-22Z); 33 stale parked script(s)
-- finding: the `@jax.jit` recipe in ALL SIX deleted `__JAX__` blocks did not run. Two independent failures, reproduced in both workspaces: (1) `register_tracer_classes(tracer)` (autolens) / constructing an `AnalysisImaging` (autogalaxy) does NOT let a `ModelInstance` cross the jit boundary — that needs `autofit.jax.pytrees.enable_pytrees()` + `register_model(model)`, which only `Fitness.__init__` does automatically (fitness.py:125-130); (2) even past that, a hand-rolled `FitImaging` without `xp=jnp` raises `TracerArrayConversionError`. The autogalaxy blocks' claim that `AnalysisImaging.__init__` runs `_register_fit_imaging_pytrees()` is false — it is called from `fit_from`, not `__init__`. The guide carries the VERIFIED recipe instead of a copy
-- verification: all three published guide paths (jit-around-Analysis, hand-rolled+`xp=jnp`, `Fitness._vmap`) executed verbatim and agree with the eager NumPy reference to ~1e-15; all six likelihood_function.py scripts run green; `check_sizes.sh` OK
-- worktree: ~/Code/PyAutoLabs-wt/likelihood-function-jax-pointer
-- repos:
-  - autolens_workspace (feature/likelihood-function-jax-pointer)
-  - autogalaxy_workspace (feature/likelihood-function-jax-pointer)
-
 ## extra-galaxies-point-source
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/374
 - status: workspace-dev

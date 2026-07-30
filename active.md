@@ -2,7 +2,11 @@
 
 ## nufftax-cap-lift
 - issue: https://github.com/PyAutoLabs/PyAutoArray/issues/424
-- status: library-dev — pin lift edited; unit suite + end-to-end script verification running
+- status: awaiting-merge — PyAutoArray#425 + PyAutoHeart#118 OPEN 2026-07-30
+- prs: PyAutoArray#425 (pin lift + rank-guarded batching shim), PyAutoHeart#118 (CI pins; merge after/with #425)
+- second-bug: pin lift alone insufficient — nufftax 0.6.1's batching fast path lacks a rank guard, so vmap(value_and_grad) over the batched mapping matrix crashed; fixed by _patch_nufftax_batchers() in transformer.py (0.6.x only; drop when fixed upstream)
+- evidence: suite 929 passed; start_here.py end-to-end exit 0 on branch autoarray; forward bit-identical 0.4.0↔0.6.1 at eps=1e-12; vmap grads match per-item loop exactly
+- follow-up: upstream GragasLab/nufftax issue/PR is a human-authorized outward action, not taken
 - prompt: active/nufftax_batched_nufft2d2_vjp_release_blocker.md
 - classification: library (PyAutoArray) + CI pin sweep (PyAutoHeart) — bug, nightly release blocker
 - root-cause: nufftax 0.4.0 `_nufft2d2_bwd` assumes 2-D f; MultiStartProdigy-default workspace commits (2026-07-29 19:42) first exercised the batched gradient. 0.6.1 verified: batched vjp works, forward bit-identical at eps=1e-12.

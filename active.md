@@ -173,7 +173,13 @@
 
 ## extra-galaxies-point-source
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/374
-- status: workspace-dev
+- status: awaiting-merge
+- workspace-pr: https://github.com/PyAutoLabs/autolens_workspace/pull/376 (OPEN, pending-release, head 6f1d92df)
+- heart-ack: 2026-07-30 — YELLOW 65, 3 reasons, all pre-existing and unrelated: workspace validation not passing (13 failed, 2026-07-21T19-05-22Z); 33 stale parked script(s); release validation stale: source moved since rehearsal (PyAutoFit, PyAutoGalaxy, PyAutoLens)
+- ship-evidence: smoke 17/17 (was 16, +1 new entry); check_sizes.sh clean; notebooks + navigator regenerated (diff scoped to new folder + llms-full.txt + workspace_index.json); REAL non-test-mode Nautilus fit recovers lens einstein_radius 1.5987 (true 1.6), source centre (0.076, 0.075) (true 0.07, 0.07), flux 1.04 (true 1.0), extra galaxies 0.1014 (true 0.1) and 0.1434 (true 0.15)
+- smoke-finding: the PyAutoFit#1179 bypass tuple-path KeyError that disables `point_source/start_here.py` is SCRIPT-SPECIFIC, not package-wide. The new modeling.py PASSES under PYAUTO_TEST_MODE=2 and is ENABLED in smoke_tests.txt with a comment recording the distinction. TRAP: the first bypass attempt appeared to pass but had silently RESUMED the earlier PYAUTO_TEST_MODE=1 run — both modes share the output/test_mode/ namespace, so `rm -rf output/test_mode` before trusting a bypass result
+- science-note: two perturbers with einstein_radius 0.1"/0.15" at r~2.2"/2.4" move the four images by 50/177/537/795 mas — 1-2 orders of magnitude above the 5 mas astrometric precision. Image positions SOLVE the lens equation rather than reading out the deflection field linearly, so a 0.1" deflection near the ring slides an image along it until ray-tracing rebalances. Point-source extra galaxies are therefore a much bigger effect than the imaging intuition suggests
+- info-budget: a quad gives 8 positional data points vs a 10-parameter model, so the simulated dataset includes FLUXES (4 more points) to make the extra-galaxies model identifiable. This is also why centres are fixed and einstein_radius capped, and why ExternalShear is omitted
 - prompt: active/extra_galaxies_feature_parity_phase_1_point_source.md
 - parent: draft/docs/workspaces/extra_galaxies_feature_parity.md (phase 2 = multi_galaxy, both workspaces, not yet issued)
 - scope: new `scripts/point_source/features/extra_galaxies/{README.md,__init__.py,simulator.py,modeling.py}` — NO slam.py (user-specified). Mass-only example: point-source data has no image pixels, so there is nothing to noise-scale and no extra-galaxy light to fit; extra galaxies perturb the deflection field and therefore the solved multiple-image positions. Plus `point_source/features/README.md` `# Folders` entry

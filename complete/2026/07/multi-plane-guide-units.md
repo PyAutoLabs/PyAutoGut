@@ -1,3 +1,31 @@
+## multi-plane-guide-units
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/411
+- completed: 2026-07-30
+- workspace-pr: https://github.com/PyAutoLabs/autolens_workspace/pull/413 (MERGED)
+- summary: Rewrote guides/advanced/multi_plane.py — replaced the ~400-line raw
+  Slack transcript with distilled "Lensing Units vs Physical Units" (galaxy-scale
+  samples dimensionless (kappa_s, theta_s) because a single source plane makes
+  them complete and exactly what the data constrain; multiple source planes
+  destroy the single-sigma_crit picture and make physical (M200, c) sampling
+  natural) and "The PyAutoLens Convention" (deflections normalized to the final
+  plane; redshift_source = z_max for every physical profile;
+  Sigma = kappa * sigma_crit(z_profile, z_max)). Fixed the "this paper: ?"
+  citation to Schneider, Ehlers & Falco 1992 §9.1 and dropped the McCully 2014
+  mis-citation. Re-synced the pedagogical code copies with the current library
+  (stale D_l1s docstring, Optional typo). Added runnable NFWMCRLudlow examples
+  asserting beta_ij = sigma_crit(z_i, z_final)/sigma_crit(z_i, z_j) (agrees to
+  1e-15) and that massless planes are no-ops. Notebook + catalogue regenerated
+  (verified 308-script count). Heart YELLOW (manifest drift tenant firewall +
+  2 stale reasons) acknowledged by human at merge. Gotcha: generate.py also
+  staged unrelated pre-existing drift in notebooks/group/start_here.ipynb
+  (script Nautilus vs notebook MultiStartProdigy) — excluded from the commit;
+  human confirmed the next generation pass owns it. Follow-up shipped
+  separately: the Optional[None]-as-default typo exists at THREE PyAutoLens
+  sites (tracer.py, tracer_util.py, max_separation.py) → PyAutoLens#674 /
+  PR#675 (optional-none-default-typos task).
+
+## Original prompt
+
 # Distill the multi_plane.py Slack transcript into a proper units explanation
 
 Type: docs

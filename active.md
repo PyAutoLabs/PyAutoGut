@@ -23,7 +23,10 @@
 
 ## plot-guides-restructure
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/400
-- status: library-dev — phase 0 (PyAutoGalaxy `subplot_fit_imaging_list` export), then workspace phases AL → AG → assistant
+- status: awaiting-merge — phases 0–2 shipped 2026-07-30; phase 3 (autolens_assistant) gated on workspace merges
+- prs: PyAutoGalaxy#538 (merges FIRST), autolens_workspace#401, autogalaxy_workspace#190 (after PyAutoGalaxy#538)
+- validation: AL 13/13 + AG 10/10 sequential test-mode runs with visualization on; check_sizes OK both; legacy grep zero both; PyAutoGalaxy 1009 tests passed
+- heart-ack: YELLOW 70 acknowledged 2026-07-30 — workspace validation not passing (0 failed, cloud#30516167217); manifest drift: tenant firewall (organ code) — 2 mismatch(es) vs PyAutoMind/repos.yaml; release validation stale: source moved since rehearsal (PyAutoFit, PyAutoArray, PyAutoGalaxy, PyAutoLens)
 - prompt: active/plot_guides_legacy_removal_restructure.md
 - classification: docs / workspaces — both (1-line PyAutoGalaxy library leg + workspace restructure); Brain scored large-8 off repo count, overridden to one task with 4 phases
 - conflict-note: worktree_check_conflict flagged PyAutoGalaxy claimed by python-312-floor; hand-checked stale — phase-1d PR#535 merged, claiming checkout on main at the merge commit

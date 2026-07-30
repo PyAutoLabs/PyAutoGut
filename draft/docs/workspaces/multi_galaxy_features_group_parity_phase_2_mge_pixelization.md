@@ -7,12 +7,35 @@ Repos:
 Difficulty: large
 Autonomy: supervised
 Priority: normal
-Status: draft
+Status: SPLIT 2026-07-30 — phase 2a (multi_gaussian_expansion) shipped as autolens_workspace PR#422;
+  phase 2b (pixelization) NOT STARTED and is what remains of this prompt
 Parent: draft/docs/workspaces/multi_galaxy_features_group_parity.md
 Blocked-by: phase 1 (needs `multi_galaxy/slam.py` as the baseline each `slam.py` diffs against)
 
 Phase 2 of 4 — the largest by volume. See the parent for the original request, scope
 decisions and the authoring rules that apply to every script.
+
+## Split into 2a / 2b (2026-07-30)
+
+This phase was scoped as MGE + pixelization together — 15 scripts, the largest phase of the arc. It was split
+during execution because the MGE half completed and shipped on its own:
+
+- **Phase 2a — `multi_gaussian_expansion`: SHIPPED.** autolens_workspace PR#422. README, simulator, modeling,
+  fit, likelihood_function, source_science, slam. Catalogue 317 -> 323.
+- **Phase 2b — `pixelization`: NOT STARTED.** The 9 scripts below (README, modeling, fit, likelihood_function,
+  slam, adaptive, delaunay, cpu_fast_modeling, source_science, plus `plot.py` from imaging) are what is left of
+  this prompt. Start here.
+
+Findings from 2a that phase 2b should build on rather than re-derive:
+
+- The two deflectors' MGE bases correlate at **max 0.9877** in the curvature matrix (mean 0.119), versus 0.296 for
+  a single linear profile each and 0.098-0.384 to the source. Coupling values are stable to 4 d.p. across
+  re-simulations; log likelihoods are NOT (unseeded Poisson noise, ~1-2% scatter) so quote them to 2 s.f.
+- A pixelized source is the natural next step in that story: a free-form mesh has enough freedom to absorb an
+  incorrect mass split into source structure. The plan's phase-2 prose already flags this; **verify it
+  numerically before asserting it**, as 2a did.
+- `slam.py` must COPY the baseline's stages, not import them — `multi_galaxy/slam.py` is a script, so importing
+  executes its whole pipeline on the `simple` dataset as a side effect (verified: the import hangs).
 
 ## Deliverables
 

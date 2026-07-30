@@ -7,7 +7,9 @@ Repos:
 Difficulty: large
 Autonomy: supervised
 Priority: normal
-Status: phase 1 SHIPPED 2026-07-30 — autolens_workspace#409 closed, PR#417 merged `f09337ea`;
+Status: phases 1 + 2a SHIPPED 2026-07-30 (PR#417 merged, PR#422 open); the scaling_relation/slam.py
+  follow-up also merged (PR#421). REMAINING: phase 2b (pixelization), phase 3, phase 4.
+  Original phase-1 record: phase 1 SHIPPED 2026-07-30 — autolens_workspace#409 closed, PR#417 merged `f09337ea`;
   record: complete/2026/07/multi-galaxy-features-parity-phase-1.md. Phases 2-4 not started (prompts written,
   no issues yet). Follow-up: re-point features/scaling_relation/slam.py at the new multi_galaxy/slam.py
   baseline (deferred while #407 owned that folder).

@@ -1,0 +1,42 @@
+[
+  {
+    "transform": "pyloop_vag",
+    "trace_s": 102.548,
+    "compile_s": 117.869,
+    "first_s": 1.115,
+    "steady_s": 0.7287,
+    "dataset_class": "datacube_img",
+    "model_type": "mge",
+    "instrument": "hst",
+    "ndim": 15,
+    "n_batch": 16,
+    "batch_size": 4,
+    "hardware": "local_gpu_NVIDIA_GeForce_RTX_2060_with_Max-Q_Design",
+    "jax_version": "0.10.2",
+    "cache_dir": "/tmp/claude-1000/-home-jammy-Code-PyAutoLabs/ed9e7d65-ca7d-4718-8f02-d77a2ad27017/scratchpad/cache_gpu_probe",
+    "mixed_precision": false,
+    "tag": "mb_homo_cold_pyloop_gpu",
+    "hostname": "DESKTOP-H143S82",
+    "timestamp": "2026-07-30T15:50:00"
+  },
+  {
+    "transform": "laxmap_vag",
+    "trace_s": 145.967,
+    "compile_s": 121.672,
+    "first_s": 1.494,
+    "steady_s": 0.7398,
+    "dataset_class": "datacube_img",
+    "model_type": "mge",
+    "instrument": "hst",
+    "ndim": 15,
+    "n_batch": 16,
+    "batch_size": 4,
+    "hardware": "local_gpu_NVIDIA_GeForce_RTX_2060_with_Max-Q_Design",
+    "jax_version": "0.10.2",
+    "cache_dir": "/tmp/claude-1000/-home-jammy-Code-PyAutoLabs/ed9e7d65-ca7d-4718-8f02-d77a2ad27017/scratchpad/cache_gpu_laxmap",
+    "mixed_precision": false,
+    "tag": "mb_homo_cold_laxmap_gpu",
+    "hostname": "DESKTOP-H143S82",
+    "timestamp": "2026-07-30T15:54:40"
+  }
+]

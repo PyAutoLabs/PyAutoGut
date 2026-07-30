@@ -353,12 +353,18 @@ Findings:
   XLA parallelises compilation across cores, so an HPC/A100 first-compile is far
   cheaper. The most certain speed-up for a user hitting the >1 h wall is to run
   the first (cache-populating) fit somewhere with more cores.
-- **Python-loop multi-start batching in `MultiStartProdigy` (the leading source
-  lever).** Finding 5: replacing the in-XLA `lax.map` scan with a Python loop over
-  small `vmap` chunks keeps cold compile at single-fit cost (166 s vs intractable).
-  `batch_size` becomes a compile/throughput tunable — small on CPU, wider on GPU —
-  with the outer loop in Python so no scan is compiled. Concrete, validated (pending
-  the clean re-confirm), and the biggest attack on the dominant driver.
+- **Python-loop multi-start batching in `MultiStartProdigy` — SHIPPED
+  (PyAutoFit#1430, 2026-07-30).** Finding 5 productized: `batch_size` in
+  `AbstractMultiStartGradient` now sweeps `jit(vmap(value_and_grad))` chunks
+  from a Python loop (one chunk-shaped compile per search) instead of the
+  in-XLA `lax.map` scan. The same change jits the broad-start filter's
+  single-point objective, which was eager and cost a cache-immune ~13 min per
+  multi-band process. Production-path result on this host: cold multi-band fit
+  intractable → **395 s CPU / 392 s GPU**, warm **136 s / 199 s**, bit-identical
+  numerics. New GPU probe rows show the scan explosion is **CPU-backend
+  specific** (GPU compiles `laxmap_vag` in ~122 s at steady-eval parity with
+  pyloop), so the Python loop is safe as the only implementation on both
+  backends. Full write-up: `results/notes/multiband_pyloop_productized.md`.
 - **Immediate user workaround — pad short-wavelength bands to a common grid** so
   all factors share one shape. That removes the heterogeneity multiplier
   (704 s → 120 s cold here) but *not* the transform cost, so it helps most when
@@ -369,7 +375,9 @@ Findings:
   at its source). Not yet measured.
 
 Rows recorded in `results/local_cpu/mge.json` (tags `mb_{homo,hetero}_{cold,warm}`,
-`mb_homo_vmap2_cold`, `mb_homo_pyloop_bs1_cold`). A100 / multi-core rows are the natural follow-up — the
+`mb_homo_vmap2_cold`, `mb_homo_pyloop_bs1_cold`) and, for the production-width
+GPU-backend pair, `results/local_gpu_NVIDIA_GeForce_RTX_2060_with_Max-Q_Design/mge.json`
+(tags `mb_homo_cold_{pyloop,laxmap}_gpu`). A100 / multi-core rows are the natural follow-up — the
 single-band A100 `vag` cold was ~28 s vs 229 s CPU, and the transform-width and
 heterogeneity blow-ups above should both shrink dramatically with more compile
 cores.

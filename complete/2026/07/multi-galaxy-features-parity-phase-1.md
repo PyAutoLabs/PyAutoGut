@@ -1,3 +1,101 @@
+Phase 1 of the four-phase arc bringing `scripts/multi_galaxy/features/` to
+`group/features` parity at `imaging/features` depth.
+
+**Shipped:** autolens_workspace issue #409 → PR **#417**, merged `f09337ea`
+(2026-07-30). 11k+ lines. CI 5/5 green across two matrix legs.
+
+## Delivered
+
+- `multi_galaxy/slam.py` — the regime's SLaM baseline (5 stages), generalized
+  over N deflectors: one `lens_i` per deflector in a loop, shear in its own
+  `shear_galaxy`, mass centres fixed in `source_lp[1]` then released via
+  `unfix_mass_centre=True` in `source_pix[1]`, `n_live` scaling with the
+  deflector count.
+- `features/no_lens_light/` — README, simulator, modeling, slam.
+- `features/linear_light_profiles/` — README, modeling, fit,
+  likelihood_function, slam.
+- `features/extra_galaxies/slam.py` — the imaging-parity gap.
+- `features/README.md` rewritten, incl. the `group_halo` non-analogue section.
+
+## Decisions worth not re-deriving
+
+**`group_halo` is omitted BY DEFINITION.** A multi-galaxy lens is defined as
+co-dominant deflectors with no dominant host halo — that is what separates the
+rung from `group/`, and the same fact makes the package's scaling tier
+untruncated. Human-confirmed; written up in `features/README.md` as a section
+rather than left as a missing folder.
+
+**A top-level `multi_galaxy/slam.py` was warranted even though `imaging/` has
+none.** imaging's feature pipelines diff straight against
+`guides/modeling/slam_start_here` because at galaxy scale that composition is
+already right. Multi-galaxy needs a regime baseline for the same reason
+`group/slam.py` exists — four changes repeat in every stage.
+
+## Measured, not asserted (full resolution, 11304 masked pixels)
+
+- No-lens-light saves **4** free params (20 → 16), not the 8 the light removed:
+  the mass centres must be freed because nothing marks two off-origin
+  deflectors. Fixed-centre variant is 12.
+- The linear solve **recovers the simulator's truth**: 1.2010 / 0.9978 against
+  inputs 1.2 / 1.0. A draft claiming otherwise was wrong and was corrected.
+- Normalized curvature matrix: **lens_0–lens_1 = 0.296** vs 0.135 / 0.113 to
+  the source. The strongest coupling in the linear system is between the two
+  deflectors — the solve mostly separates them from *each other*.
+- Consequence: mis-setting `lens_0`'s `effective_radius` 0.6→0.8 moves
+  **lens_1's** intensity 5.2% and the flux ratio 1.20 → 0.81 (33%), in the
+  galaxy whose model was never wrong. No galaxy-scale equivalent.
+- `likelihood_function.py`'s hand-computed reconstruction
+  `[1.2010, 0.9978, 3.6904]` matches `FitImaging` exactly.
+
+## Traps hit
+
+**Smoke auto-simulation poisoned the dataset.** The `should_simulate` block
+spawns the simulator inheriting the current env, so smoke-running a script
+under `PYAUTO_SMALL_DATASETS=1` wrote a 15×15 dataset that every later
+full-resolution run silently read (`log_likelihood = -1.5e8`, ratio 2.40 vs a
+true 1.2). All numbers were re-derived after regenerating at 200×200. This is
+the inverse of the usual staleness trap — your own validation creates the bad
+data.
+
+**A rename reached the merge tree but not this branch.** #416 renamed the
+scaling-relation anchor BGC → "brightest galaxy" while #417 was open. The merge
+was conflict-free, but the rewritten `features/README.md` was not in #416's
+tree, so the retired term survived. Caught by grepping after the merge, not by
+CI.
+
+**Navigator catches forward references in `.py` docstrings, not just READMEs.**
+Six cross-links to phase-2 folders failed `check_navigator.py`. In a phased arc,
+point at the `imaging/` sibling until the local folder exists.
+
+**Four concurrent branches held autolens_workspace** (#407, #408, #410, this).
+`worktree_check_conflict` fired correctly. Human authorised proceeding with
+mitigations: don't touch the folder another task owns; regenerate sidecars last.
+Real source overlap was zero — the conflict surface is generated artifacts.
+Verified the sidecar text-merge was semantically correct by regenerating and
+confirming a zero diff.
+
+## Fixed in passing
+
+- `multi_galaxy/modeling.py` claimed "only `lens_0` carries a `shear`",
+  contradicting the `shear_galaxy` section directly above it (stale since #378).
+- `notebooks/group/start_here.ipynb` was stale: `b0228fe3` reverted its script
+  without regenerating it.
+
+## Open follow-ups
+
+- `features/scaling_relation/slam.py` still uses the OLD
+  `shear=... if i == 0 else None` idiom and re-derives the SLaM divergence from
+  scratch; re-point it at `multi_galaxy/slam.py`. Deferred because #407 owned
+  that folder during this task.
+- Phases 2 (MGE + pixelization), 3 (advanced light), 4 (advanced mass) —
+  prompts written in `draft/docs/workspaces/`.
+
+Validation: every new script green under the smoke profile from a clean dataset
+slate, run sequentially. `smoke_tests.txt` 20 → 22 (23 after merging main).
+Catalogue 308 → 317 scripts.
+
+## Original prompt
+
 # multi_galaxy features parity — phase 1: SLaM baseline + simple features
 
 Type: docs

@@ -7,7 +7,10 @@ Repos:
 Difficulty: large
 Autonomy: supervised
 Priority: normal
-Status: phased 2026-07-30 — four phase prompts written; phase 1 in flight
+Status: phase 1 SHIPPED 2026-07-30 — autolens_workspace#409 closed, PR#417 merged `f09337ea`;
+  record: complete/2026/07/multi-galaxy-features-parity-phase-1.md. Phases 2-4 not started (prompts written,
+  no issues yet). Follow-up: re-point features/scaling_relation/slam.py at the new multi_galaxy/slam.py
+  baseline (deferred while #407 owned that folder).
 Parent: draft/docs/autolens/multi_galaxy_package.md
 Phases:
 - draft/docs/workspaces/multi_galaxy_features_group_parity_phase_1_baseline_simple.md

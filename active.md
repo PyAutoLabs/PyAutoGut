@@ -2,11 +2,11 @@
 
 ## point-source-chi-squared-variants
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/657
-- session: claude --resume daaa46f9-aac5-48e2-9146-1202a92d879e
-- status: phase-3-shipped, phase-4-pending
+- status: phases 1-3 SHIPPED; phase 4 PARKED in planned.md; no worktree, no repo claims held (checkpoint 2026-07-30, resume fresh from this entry)
 - library-pr: PyAutoArray#414, PyAutoGalaxy#531, PyAutoLens#659 (ALL MERGED 2026-07-27; codex-review fixes included; branches + worktree cleaned)
 - phase-3-pr: workspace_test#237, profiling#96, workspace_developer#121 (ALL MERGED 2026-07-30; worktree + branches cleaned; shipped comment https://github.com/PyAutoLabs/PyAutoLens/issues/657#issuecomment-5135275039)
-- phases: 1 (design) + 2 (core API) + 3 (workspace_test jax_likelihood + profiling examples) COMPLETE; next: start_workspace on draft phase-4 prompt (guides; fix cluster/likelihood_function.py false profile=None-centroid claim), then phase 5 (PointSolver custom_jvp gradients)
+- phases: 1 (design) + 2 (core API) + 3 (examples/profiling) COMPLETE. Phase 4 (guides) PARKED — see planned.md "point-source-chi-squared-variants — phase 4": blocked on the autolens_workspace claims of #408 (PR autolens_workspace#414) and #409 (PR #417); unblocks when both merge, or on explicit human authorization of a third concurrent claim. Phase 5 (PointSolver custom_jvp gradients, draft phase-5 prompt) touches PyAutoLens (+PyAutoArray) — NOTE PyAutoLens is claimed by potential-correction-validation (#672); hand-check file overlap before starting.
+- resume-context: project memory `point-source-solved-likelihoods` holds phase-3 literals + lessons (H0-matched parity for time-delay fits; fit_from pytree gap is the ONLY remaining jit blocker; output_to_json key-order nondeterminism filed in ideas.md; profiling baselines used PointFlux so solved swap drops 3 params not 2)
 - repos:
 
 

@@ -125,7 +125,7 @@ def build_for_cell(
     Datacube cells return ``(dataset_list, factor_graph.global_prior_model,
     factor_graph)`` — the search treats the factor graph as both the model
     source and the analysis, per the multi-dataset pattern in
-    ``autolens_workspace/scripts/multi/modeling.py``.
+    ``autolens_workspace/scripts/multi_dataset/modeling.py``.
     """
     if dataset_class == "datacube":
         return _build_for_datacube(
@@ -174,7 +174,7 @@ def _build_for_datacube(
 ) -> tuple[list, Any, Any]:
     """Multi-channel datacube fit via ``af.FactorGraphModel``.
 
-    Mirrors ``autolens_workspace/scripts/multi/modeling.py``: build N
+    Mirrors ``autolens_workspace/scripts/multi_dataset/modeling.py``: build N
     per-channel interferometer datasets, wrap each in an
     ``AnalysisInterferometer``, pair each with a copy of the shared model
     via ``af.AnalysisFactor``, then combine into an ``af.FactorGraphModel``.

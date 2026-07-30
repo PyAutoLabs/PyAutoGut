@@ -37,7 +37,7 @@ dataset/cluster/
 dataset/group/
 dataset/group4_mge/
 dataset/imaging/group4_mge/
-dataset/multi/
+dataset/multi_dataset/
 dataset/imaging/simple/
 dataset/imaging/euclid/
 dataset/imaging/jwst/

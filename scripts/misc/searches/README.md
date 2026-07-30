@@ -137,7 +137,7 @@ interferometer channels via `af.FactorGraphModel`. Each channel becomes
 its own `al.AnalysisInterferometer`, wrapped in an `af.AnalysisFactor`
 paired with `model.copy()`, then combined under a single global model —
 the same pattern documented in
-`autolens_workspace/scripts/multi/modeling.py`. The N channels are
+`autolens_workspace/scripts/multi_dataset/modeling.py`. The N channels are
 identical copies of the per-instrument dataset; the profile measures
 cube-cost scaling, not band-wavelength variation.
 

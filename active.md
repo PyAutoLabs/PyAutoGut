@@ -151,6 +151,9 @@
 - scope: phase 1 of 2 — BGC-anchored scaling_relation packages for imaging + multi_galaxy
 - phase-1-pr: https://github.com/PyAutoLabs/autolens_workspace/pull/396 (pending-release, CI 4/4 GREEN — navigator x2, smoke 3.12 + 3.13)
 - phase-2-issue: https://github.com/PyAutoLabs/autolens_workspace/issues/397
+- phase-2-pr: https://github.com/PyAutoLabs/autolens_workspace/pull/398 (pending-release, STACKED on PR#396 — merge #396 first)
+- phase-2-validation: smoke 21/21; interferometer slam.py 4/4 stages exit 0; navigator clean in CI layout; all scripts run individually
+- status-note: BOTH phases now PR-open and awaiting human merge; merge #396 then #398
 - phase-2-prompt: active/scaling_relation_bgc_anchored_phase_2_interferometer_point_source.md
 - phase-2-worktree: ~/Code/PyAutoLabs-wt/scaling-relation-phase-2 (branch feature/scaling-relation-phase-2, STACKED on phase 1 so cross-refs to phase-1 files resolve for the navigator gate)
 - phase-2-finding: point_source tier tied = 8 free params vs 13 freed, against 12 data points — freeing the tier makes the model under-determined; tier moves the 4 images by 182/398/1596/1633 mas vs 5 mas precision

@@ -1,3 +1,31 @@
+Made Heart's workspace-validation reporting honest: a summary may only carry
+counts somebody measured, and a failing cloud run now names its failing scripts.
+
+- issue: https://github.com/PyAutoLabs/PyAutoHeart/issues/119 (auto-closed)
+- pr: PyAutoHeart#120 (`0a9fc045f`) — merged unchanged (tree diff 0 vs reviewed
+  head `fe93a68`); CI green both Python legs
+- the bug (CI/release audit 2026-07-30, finding B): `test_run.py` took `ready`
+  from the cloud run *conclusion* but counts from a local
+  `run_logs/latest/report.json` that does not exist for cloud runs → zeros
+  printed as fact ("0 failed, cloud#30516167217" while the run had
+  2 failed + 1 timeout).
+- fix: explicit `counts_measured` flag honored by readiness, dashboard, and the
+  check's own CLI line (legacy cloud-shaped sidecars detected as unmeasured);
+  new `_cloud_report()` fetches the run's `workspace-validation-report`
+  artifact — cached per run id via the persisted sidecar (one download per new
+  validation run, not per 30 s tick); compact `failing_scripts` (never
+  tracebacks) carried into the reason:
+  `workspace validation not passing (2 failed, 1 timeout, cloud#…: autogalaxy
+  scripts/interferometer/start_here.py, …)`.
+- boundary preserved: `run()` stays no-network/side-effect-free (fetcher
+  injected only by the tick entrypoint — the PyAutoHeart#83 discipline).
+- trap: bare `pyauto-heart readiness` serves the persisted `release_ready.json`
+  (last daemon tick) — live-compute via `--profile release-ci` or
+  `readiness.run()`; the cached verdict refreshes on the first tick after merge.
+- suite 316 passed (13 new tests).
+
+## Original prompt
+
 # Heart test_run: never assert counts it didn't measure; name the failing scripts
 
 Type: bug

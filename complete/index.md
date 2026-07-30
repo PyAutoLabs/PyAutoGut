@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-806 records across 6 buckets.
+807 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -407,6 +407,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [test-mode-representative-samples-phase-1-design](2026/07/test-mode-representative-samples-phase-1-design.md)
 - [test-mode-representative-samples-phase-2-core-api](2026/07/test-mode-representative-samples-phase-2-core-api.md)
 - [test-results-relayout](2026/07/test-results-relayout.md) — Hands#193 + Heart#106, lockstep pair
+- [test-run-honest-reason](2026/07/test-run-honest-reason.md)
 - [testmode-env-drift](2026/07/testmode-env-drift.md)
 - [tutorial-5-filtering-prose](2026/07/tutorial-5-filtering-prose.md)
 - [unblock-release-validation](2026/07/unblock-release-validation.md)

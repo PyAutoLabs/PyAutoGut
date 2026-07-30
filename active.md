@@ -1,16 +1,5 @@
 # Active Tasks
 
-## test-run-honest-reason
-- issue: https://github.com/PyAutoLabs/PyAutoHeart/issues/119
-- status: awaiting-merge — PyAutoHeart#120 OPEN 2026-07-30
-- pr: https://github.com/PyAutoLabs/PyAutoHeart/pull/120
-- evidence: suite 316 passed; live replay on real state — reason now '2 failed, 1 timeout, cloud#30516167217: <3 scripts>' vs the old fabricated '0 failed'
-- prompt: active/test_run_honest_reason_and_artifact_ingest.md
-- classification: bug (PyAutoHeart) — CI/release audit series task 2
-- worktree: ~/Code/PyAutoLabs-wt/test-run-honest-reason
-- repos:
-  - PyAutoHeart (feature/test-run-honest-reason)
-
 ## multiband-pyloop-batching
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1430
 - session: claude --resume ed9e7d65-ca7d-4718-8f02-d77a2ad27017

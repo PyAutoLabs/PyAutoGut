@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-816 records across 6 buckets.
+817 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -160,6 +160,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [gated-readme-drift](2026/07/gated-readme-drift.md)
 - [gradient-safe-logdet](2026/07/gradient-safe-logdet.md)
 - [graduate-mcp-autofit-extra](2026/07/graduate-mcp-autofit-extra.md)
+- [group-start-here-timeout](2026/07/group-start-here-timeout.md)
 - [guard-followups](2026/07/guard-followups.md)
 - [health-api](2026/07/health-api.md)
 - [health-one-door](2026/07/health-one-door.md)

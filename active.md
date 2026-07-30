@@ -16,16 +16,6 @@
   - autolens_workspace (feature/plot-coverage-gaps)
   - autogalaxy_workspace (feature/plot-coverage-gaps)
 
-## group-start-here-timeout
-- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/402
-- status: workspace-dev — revert group start_here to Nautilus (measured regression: 217s -> >40min local)
-- prompt: active/group_start_here_release_profile_timeout.md
-- classification: bug (autolens_workspace) — CI/release audit series; regression from d5c9802d MultiStartProdigy conversion
-- conflict-note: autolens_workspace also claimed by plot-guides-restructure; surfaces disjoint (scripts/group/start_here.py only)
-- worktree: ~/Code/PyAutoLabs-wt/group-start-here-timeout
-- repos:
-  - autolens_workspace (feature/group-start-here-timeout)
-
 ## multiband-pyloop-batching
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1430
 - session: claude --resume ed9e7d65-ca7d-4718-8f02-d77a2ad27017

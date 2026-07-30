@@ -81,7 +81,8 @@
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/409
 - status: workspace-dev (phase 1 starting 2026-07-30)
 - worktree: ~/Code/PyAutoLabs-wt/multi-galaxy-features-parity
-- phases: 1 (slam.py baseline + no_lens_light + linear_light_profiles + extra_galaxies/slam.py + features/README) IN FLIGHT; 2 (MGE + pixelization), 3 (advanced light), 4 (advanced mass) each get their own issue as the prior one lands
+- workspace-pr: autolens_workspace#417 (OPEN, pending-release) — phase 1
+- phases: 1 (slam.py baseline + no_lens_light + linear_light_profiles + extra_galaxies/slam.py + features/README) PR OPEN #417; 2 (MGE + pixelization), 3 (advanced light), 4 (advanced mass) each get their own issue as the prior one lands
 - note: Brain phase split (design/core_api/workspace_examples/docs) overridden for a content-based split — no core-API leg in pure workspace-docs work; recorded in the arc prompt
 - note: THIRD concurrent claim on autolens_workspace (with #407, #408). Human authorised proceeding over the worktree_check_conflict block (it fired on both). Mitigations: (a) do not touch multi_galaxy/features/scaling_relation/ — #407 owns it, the slam.py re-point is a follow-up; (b) regenerate notebooks/navigator/.script_sizes.json LAST, after a pre-PR merge of origin/main
 - repos:

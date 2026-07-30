@@ -23,7 +23,8 @@
 
 ## lifecycle-drift-self-heal
 - issue: https://github.com/PyAutoLabs/PyAutoMind/issues/116
-- status: library-dev
+- status: library-shipped, awaiting-merge
+- library-pr: PyAutoMind#117 (OPEN)
 - worktree: ~/Code/PyAutoLabs-wt/lifecycle-drift-self-heal
 - note: single-file change to .github/workflows/lifecycle_drift.yml — self-heal stale complete/index.md on push to main (bot commit + rebase-retry push); PR runs stay read-only; `lifecycle.py check` stays hard-fail
 - repos:

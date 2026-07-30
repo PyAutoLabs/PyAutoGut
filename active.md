@@ -274,3 +274,19 @@
 - worktree: ~/Code/PyAutoLabs-wt/navigator-relative-refs
 - repos:
   - PyAutoHands (feature/navigator-relative-refs)
+
+## public-register-galaxies-classes
+- issue: https://github.com/PyAutoLabs/PyAutoGalaxy/issues/536
+- status: awaiting-merge
+- library-pr: https://github.com/PyAutoLabs/PyAutoGalaxy/pull/537
+- prompt: draft/feature/autogalaxy/public_register_galaxies_classes.md
+- scope: new `autogalaxy/jax/{__init__,registration}.py` exporting `register_galaxies_classes(galaxies)` — the public counterpart to `autolens.jax.register_tracer_classes`. Calls the existing private `register_galaxies_pytree()` (the Galaxies list-subclass flatten) AND walks each galaxy registering `Galaxy` + every profile class; both halves are required
+- measured: `@jax.jit` over a fn taking `Galaxies` as an ARGUMENT — no registration fails on `Galaxies`; `register_galaxies_pytree()` alone STILL fails on `Galaxy` at `galaxies[0]`; both steps work and match eager exactly (-270175.0553756637)
+- ship-evidence: test_autogalaxy 1009 passed / 0 failed; three-way probe green on the branch; idempotent; `import autogalaxy` does NOT eagerly import `autogalaxy.jax`; returns False without raising when jax is absent
+- no-internal-caller: unlike autolens (PointSolver + Simulator call register_tracer_classes), NOTHING in autogalaxy calls this — both Analysis classes register inline via `fit_from`. The docstring says so explicitly so it is not later deleted as dead code
+- walker-duplication: the ~60-line recursive walker is COPIED from autolens/jax/registration.py, not shared. Human decision 2026-07-29 — one repo, one reversible PR, rather than coupling autolens main to autogalaxy main right after the 2026.7.29.2 release. Dedupe is a recorded follow-up
+- followups: (1) autogalaxy_workspace guide mention of the jit-argument case — BLOCKED on #537 (library-first); (2) dedupe the walker across the two libraries; (3) verify using_jax.py's "the simulator handles pytree registration internally" claim — neither autogalaxy simulator contains any pytree registration call (pre-existing text, not introduced by autogalaxy_workspace#181)
+- origin: fell out of likelihood-function-jax-pointer (#368) — the deleted `__JAX__` blocks' recipe did not run, and documenting the correct one exposed this asymmetry
+- worktree: ~/Code/PyAutoLabs-wt/public-register-galaxies-classes
+- repos:
+  - PyAutoGalaxy (feature/public-register-galaxies-classes)

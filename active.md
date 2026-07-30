@@ -30,3 +30,11 @@
 - repos:
   - PyAutoLens: feature/potential-correction-validation
   - autolens_workspace_test: feature/potential-correction-validation
+
+## lifecycle-drift-self-heal
+- issue: https://github.com/PyAutoLabs/PyAutoMind/issues/116
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/lifecycle-drift-self-heal
+- note: single-file change to .github/workflows/lifecycle_drift.yml — self-heal stale complete/index.md on push to main (bot commit + rebase-retry push); PR runs stay read-only; `lifecycle.py check` stays hard-fail
+- repos:
+  - PyAutoMind: feature/lifecycle-drift-self-heal

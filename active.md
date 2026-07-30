@@ -186,3 +186,19 @@
 - worktree: ~/Code/PyAutoLabs-wt/extra-galaxies-multi-galaxy-lens
 - repos:
   - autolens_workspace (feature/extra-galaxies-multi-galaxy-lens)
+
+## potential-correction-start-here
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/389
+- status: workspace-dev
+- prompt: active/potential_correction_guide_to_feature_start_here.md
+- scope: move `scripts/guides/advanced/potential_correction.py` → `scripts/imaging/features/advanced/potential_correction/start_here.py` (completing the start_here + likelihood_function pair its interferometer twin already has), re-point 5 stale cross-refs, and author `autolens_assistant/skills/al_potential_correction.md`
+- destination-decision: human-confirmed AGAINST the literal request path `imaging/features/potential_corrections/` (plural, no `advanced/`) — that folder does not exist, would have orphaned the existing `likelihood_function.py`, and diverges from the interferometer twin's singular naming
+- brain-override: Brain scored too-large/12 with the four generic phases (design/core_api/workspace_examples/docs); overridden to ONE phase — a file move plus one authored skill, zero library API change, so core_api is vacuous and its "public-API ripple" risk is false. Same repo-count-proxy misfire as `scaling-relation-bgc-anchored` (too-large/13)
+- parallel-claim: human-authorised alongside `scaling-relation-bgc-anchored` (#385, empty worktree), `searches-guide-nautilus-first` and `extra-galaxies-multi-galaxy-lens` (#387), all claiming autolens_workspace. Script footprints disjoint (`features/advanced/potential_correction/`); only overlap is regenerated `notebooks/` + `llms-full.txt` + `workspace_index.json` — "whichever merges last regenerates"
+- finding-to-fix: the script's `__Env__` block declares `ENV: full_datasets` but justifies it as "Guides load committed full-resolution FITS" — FALSE, it simulates in memory (`al.SimulatorImaging`, line 75) and reads no FITS. Real reason is the dpsi-mesh sparsity crash (`PairRegularDpsiMesh(dpsi_factor=2)` → "The dpsi grid is too sparse", `mesh.py:get_itp_box_ctr`) already documented in `config/build/profile_release.yaml`. Keep the declaration, rewrite the reason
+- config-check: `profile_release.yaml` ALREADY has the destination pattern `imaging/features/advanced/potential_correction/` → `PYAUTO_SMALL_DATASETS: "0"`; today the file rides the blanket `guides/` rule. Expect NO config edit — confirm, don't assume
+- assistant-gap: `autolens_assistant/` has ZERO mentions of potential correction (no skill, no wiki page); nearest is the `al_subhalo_detect.md` stub. Gate is `audit_skill_apis.py` (assistant repos have no smoke tests)
+- worktree: ~/Code/PyAutoLabs-wt/potential-correction-start-here
+- repos:
+  - autolens_workspace (feature/potential-correction-start-here)
+  - autolens_assistant (feature/potential-correction-start-here)

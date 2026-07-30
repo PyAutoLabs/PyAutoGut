@@ -1,3 +1,42 @@
+Renamed `double_einstein_ring` → `double_source_plane_lens` across `autolens_workspace`, and moved documentation prose to the **DSPL** acronym. "Double Einstein ring" describes the image-plane morphology; the standard literature term for the system is a double source-plane lens.
+
+This finished a migration already half-started: the imaging README already opened with "double source-plane strong lenses (DSPLs)" while every sibling file still said "double Einstein ring".
+
+## Shipped
+
+- **autolens_workspace#394** → `726d060d` (45 files, 32 renames, +471/−469)
+- **autolens_assistant#100** → `6a367cf8` (2 citation files)
+- Issue autolens_workspace#390 closed.
+
+## Scope
+
+4 directories + the `plotters_*` file-pair moved via `git mv`; `dataset_name` in both simulators; 6 cross-refs (mass_stellar_dark ×3, point_source/simulator_sample, two index READMEs). `autolens_workspace_test` and `autolens_workspace_developer` had **zero** matches.
+
+## Findings worth keeping
+
+**1. The citation check is a hard cross-repo merge-order gate.** `autolens_assistant`'s `wiki-currency` job runs `--check-citations`, which resolves `autolens_workspace:` paths against a checkout of that repo. The assistant PR therefore **failed** until the workspace PR merged — my PR body's claim that the two were independent was wrong. Any future assistant PR re-pointing a workspace citation must merge *after* the workspace PR, then be re-run. Not advisory; it is a red X.
+
+**2. Prose splits into system-class vs morphology, and only the first should be renamed.** Kept "They appear as two distinct Einstein rings in the image-plane, and can constrain Cosmological parameters in a way single Einstein ring lenses cannot" — substituting DSPL there makes the sentence false. Asserted the 21 unrelated Einstein-ring mentions elsewhere in `scripts/` stayed exactly 21 as a collateral check.
+
+**3. Section headers were COMPOUND, so there was no blanket `__DSPL__` rule.** Four had to be hand-mapped (`__Log Likelihood Function: Group Double Einstein Ring__` → `__…: Group DSPL__`). Every title also carries an `===` underline that must be re-lengthened when the title shortens — a scripted census that only matched a bare `__Double Einstein Ring__` would have missed all of them.
+
+**4. Control-test a notebook-rewriting helper before trusting it.** Round-tripping an unchanged notebook through `json.dumps` caught two format mismatches (`ensure_ascii` and a trailing newline) that would have reformatted every file. After fixing, 14/14 target notebooks round-tripped byte-identically. Final proof: regenerating via `build_util.py_to_notebook` + `inject_colab_setup` reproduced all 14 byte-for-byte — and that harness was itself control-tested against an untouched script first.
+
+**5. `check_sizes.sh --update` sweeps in other people's drift.** `.script_sizes.json` on main was already stale for **116 unrelated scripts** (+3 keys pointing at deleted files). A blanket refresh would have put all of it in this PR and silently blessed unrelated shrinkage. Updated only the 18 affected entries by hand; the guard passes either way.
+
+**6. Reproduce `navigator_check` CI faithfully by copying into a dir literally named `workspace`** and running `--root workspace` from the parent — that is what the workflow does.
+
+## Left open (unfiled)
+
+- `.script_sizes.json` stale for 116 scripts in autolens_workspace, plus 3 keys pointing at deleted `potential_correction` files.
+- 44 pre-existing title-underline off-by-ones across `scripts/` (e.g. `scripts/multi/plot.py:2`). None introduced here.
+
+## Heart
+
+YELLOW 70 at ship time, `red_reasons` empty, read from `readiness --json`. Three reasons acknowledged; the manifest-drift one was **new** relative to the `searches-guide-nautilus-first` ack and was acknowledged explicitly.
+
+## Original prompt
+
 # Rename `double_einstein_ring` → `double_source_plane_lens` (DSPL) in @autolens_workspace
 
 Difficulty: small

@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-799 records across 6 buckets.
+800 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -115,6 +115,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [dpie-lenstool-param](2026/07/dpie-lenstool-param.md)
 - [dpie-simulator-port](2026/07/dpie-simulator-port.md) — PR #87
 - [drop-interferometer-delaunay-marker](2026/07/drop-interferometer-delaunay-marker.md) — Split out from #300 as "interferometer delaunay non-PD FitException". Re-diagnosis on freshly-synced main foun…
+- [dspl-terminology-rename](2026/07/dspl-terminology-rename.md)
 - [eceb-editorial-revision](2026/07/eceb-editorial-revision.md) — ECEB wiki rules — EC A&A template assets — MERGED
 - [ell-comps-kwargs-keyerror](2026/07/ell-comps-kwargs-keyerror.md)
 - [emcee-loguniform-nan](2026/07/emcee-loguniform-nan.md)

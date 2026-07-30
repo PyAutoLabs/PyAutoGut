@@ -1,5 +1,16 @@
 # Active Tasks
 
+## scaling-relation-degraded-profile-fixes
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/419
+- session: claude --resume b79e03f8-64be-4fce-8c2d-e8b98ce8f487
+- status: workspace-dev
+- worktree: ~/Code/PyAutoLabs-wt/scaling-relation-degraded-profile-fixes
+- note: no real worktree claims on autolens_workspace at start (hand-checked; #414/#416/#417/#418 all merged, zero open PRs)
+- note: `ENV: real_search` rejected by measurement — imaging slam.py still running at 1293s vs 300s default cap (lower bound, did not finish); no_run.yaml is the chosen route
+- note: interferometer/features/scaling_relation/slam MUST stay runnable (hardcodes its luminosity) — verified rc=0 and asserted via should_skip that the skip set widens by exactly 2
+- repos:
+  - autolens_workspace: feature/scaling-relation-degraded-profile-fixes
+
 ## point-source-chi-squared-variants
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/657
 - status: phases 1-3 SHIPPED; phase 4 PARKED in planned.md; no worktree, no repo claims held (checkpoint 2026-07-30, resume fresh from this entry)

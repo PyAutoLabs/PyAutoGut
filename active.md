@@ -1,15 +1,5 @@
 # Active Tasks
 
-## optional-none-default-typos
-- issue: https://github.com/PyAutoLabs/PyAutoLens/issues/674
-- session: claude --resume 5b02920f-dfdb-476a-84df-e81a31971d19
-- status: library-dev
-- worktree: ~/Code/PyAutoLabs-wt/optional-none-default-typos
-- note: worktree conflict guard — 2 concurrent PyAutoLens claims (#408 phase 3, #672); hand-checked file-disjoint (neither branch touches tracer.py / tracer_util.py / max_separation.py)
-- note: follow-up drift fix from multi-plane-guide-units (#411); group/start_here.ipynb notebook drift explicitly excluded per human (next generation pass owns it)
-- repos:
-  - PyAutoLens: feature/optional-none-default-typos
-
 ## point-source-chi-squared-variants
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/657
 - session: claude --resume daaa46f9-aac5-48e2-9146-1202a92d879e

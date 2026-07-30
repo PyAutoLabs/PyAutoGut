@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-837 records across 6 buckets.
+838 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -286,6 +286,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [no-run-config-purge](2026/07/no-run-config-purge.md)
 - [notebook-adjacent-docstrings](2026/07/notebook-adjacent-docstrings.md) — Phase 1 of the adjacent-docstrings arc: PyAutoHands notebook generation now merges back-to-back docstrings int…
 - [nufftax-cap-lift](2026/07/nufftax-cap-lift.md)
+- [optional-none-default-typos](2026/07/optional-none-default-typos.md) — Fixed three PyAutoLens sites using the typing construct
 - [opus-wrapup](2026/07/opus-wrapup.md) — executed on Fable
 - [parked-sweep](2026/07/parked-sweep.md)
 - [per-frame-psf](2026/07/per-frame-psf.md) — per-frame native ePSFs live (psf/frame_epsf.py: sky-subtracted, DQ local-median patch in ESTIMATOR input only …

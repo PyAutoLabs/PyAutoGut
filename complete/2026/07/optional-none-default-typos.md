@@ -1,3 +1,24 @@
+## optional-none-default-typos
+- issue: https://github.com/PyAutoLabs/PyAutoLens/issues/674
+- completed: 2026-07-30
+- library-pr: https://github.com/PyAutoLabs/PyAutoLens/pull/675 (MERGED)
+- summary: Fixed three PyAutoLens sites using the typing construct
+  Optional[None] as a *default value* (it evaluates to NoneType, a truthy
+  class object that passes `is not None` guards): tracer.py and
+  tracer_util.py `plane_index_limit: Optional[int] = None`, max_separation.py
+  `plane_redshift: Optional[float] = None`. Behavior-preserving, verified by
+  probing both callees — the tracer's early-exit guard had been running on
+  every default call comparing `plane_index == NoneType` (always False), and
+  SourceMaxSeparation's default only worked because np.isclose(NoneType, z)
+  raises the TypeError its except clause catches; np.isclose(None, z) raises
+  the same. Sweep of PyAutoGalaxy/PyAutoArray/PyAutoFit found zero further
+  sites. test_autolens/lens/ + point/ 200 passed; CI matrix green. Follow-up
+  drift fix from multi-plane-guide-units (#411); the group/start_here.ipynb
+  notebook drift was explicitly excluded per human (next generation pass owns
+  it).
+
+## Original prompt
+
 # Fix Optional[None] default-value typos in PyAutoLens
 
 Type: bug

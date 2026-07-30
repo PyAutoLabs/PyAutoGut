@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-813 records across 6 buckets.
+816 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -42,6 +42,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [arxiv-digest-announcement-window](2026/07/arxiv-digest-announcement-window.md)
 - [arxiv-digest-strong-lensing-term](2026/07/arxiv-digest-strong-lensing-term.md)
 - [assistant-benchmarks](2026/07/assistant-benchmarks.md)
+- [assistant-brain-ref](2026/07/assistant-brain-ref.md)
 - [assistant-deep-audit](2026/07/assistant-deep-audit.md)
 - [assistant-docs-hierarchy](2026/07/assistant-docs-hierarchy.md) — Added distinct AI Assistant and Human-Readable Documentation sections across the PyAutoLens and PyAutoGalaxy R…
 - [assistant-euclid-mode](2026/07/assistant-euclid-mode.md)
@@ -111,6 +112,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [delaunay-qhull-callback](2026/07/delaunay-qhull-callback.md)
 - [delete_pyautoheart_shim](2026/07/delete_pyautoheart_shim.md)
 - [desktop-acceptance-mcp](2026/07/desktop-acceptance-mcp.md)
+- [docs-only-smoke-scope](2026/07/docs-only-smoke-scope.md)
 - [docs-theming-hub](2026/07/docs-theming-hub.md) — phases B+C of docs middle path — hub LIVE at pyautolabs.github.io (Pages; RETROFIT.md = paid-domain flip); sha…
 - [dpie-developer-scripts](2026/07/dpie-developer-scripts.md) — Trivial API-update follow-up to dpie-lenstool-default (#506). Three developer scripts (visualization_profiling…
 - [dpie-lenstool-default](2026/07/dpie-lenstool-default.md) — Made the Lenstool-native parameterization the DEFAULT dPIE. `dPIEMass`/`dPIEMassSph` now take the `.par`-file …
@@ -348,6 +350,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [regen-workspace-notebooks](2026/07/regen-workspace-notebooks.md)
 - [register-tenant-firewall-surfaces](2026/07/register-tenant-firewall-surfaces.md) — Registered the exact intentional instance-fact sets for six recent PyAutoBrain/PyAutoHands surfaces in the fro…
 - [release-advisory-tier-slow-scripts](2026/07/release-advisory-tier-slow-scripts.md) — mode=release integrate kept going RED not on bugs but on a shifting perf-flake tail of slow real-search script…
+- [release-channel-freshness](2026/07/release-channel-freshness.md)
 - [release-check-e-python-312](2026/07/release-check-e-python-312.md) — Check E now creates its historical 2026.2.26.4 environment explicitly with Python 3.12, fails clearly when tha…
 - [release-datasets-group-b](2026/07/release-datasets-group-b.md) — bare-`dataset/` repos — purged & MERGED
 - [release-docs-polish-learn-paths](2026/07/release-docs-polish-learn-paths.md)

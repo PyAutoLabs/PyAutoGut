@@ -1,3 +1,17 @@
+Assistant boundary CI: paired PRs can declare their Brain dependency.
+
+- issue: PyAutoBrain#186 (auto-closed) · prs: autolens_assistant#102 (`74e25a227`),
+  autocti_assistant#18 (`44d0e0b43`), PyAutoBrain#187 docs (`d63600f7a`) — merged unchanged
+- decision (of declared-ref / pinned-sha / advisory): DECLARED-DEPENDENCY — matches how
+  paired PRs are developed, no standing pins. `Brain-ref: <branch-or-sha>` on its own
+  line in the PR body → clone-boundary checks out PyAutoLabs/PyAutoBrain at that ref;
+  absent/push → main (gate stays hard). Ref charset excludes shell metacharacters and
+  only ever reaches actions/checkout (pinned to the Brain repo); hygiene, not a
+  security boundary. Extraction tested over CRLF/missing/sha/injection cases. Future
+  cells inherit via the reference clone-boundary.yml + the clone conductor AGENTS note.
+
+## Original prompt
+
 # Assistant boundary CI: stop predictable-red on cross-repo Brain dependencies
 
 Type: research

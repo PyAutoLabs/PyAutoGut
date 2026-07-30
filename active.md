@@ -1,5 +1,17 @@
 # Active Tasks
 
+## plot-coverage-gaps
+- issue: https://github.com/PyAutoLabs/PyAutoLens/issues/667
+- session: claude --resume 25fb2cf0-1a9e-48fa-a1a7-9c53f5b57433
+- status: library-dev — 2 additive exports in autolens/plot/__init__.py, then 7 workspace plot.py files
+- prompt: active/plot_py_function_coverage_gaps.md
+- classification: docs (both — library → workspace); follow-on to plot-guides-restructure, which built the per-dataset plot.py family but never enumerated per-file function coverage
+- brain-override: Feature Agent returned too-large (15) + a 4-phase split (design/core_api/workspace_examples/docs); overridden to one combined task — it scored 3 repos, not the work (2 import lines + 7 files gaining sections); there is no design left and no core API. Precedent: vacuous-jax-assertions (large/8 → small), multiband-pyloop-batching
+- conflict-note: worktree_check_conflict flagged PyAutoLens as claimed by python-312-floor — hand-verified STALE (`git worktree list` shows one canonical worktree on main; main is 3 commits past the claimed b40fb0ba; that task records "next-phase: none — all phases complete"; its `- Repo` lines are a completion record, not a live claim). autolens_workspace is also claimed by group-start-here-timeout; surfaces disjoint (that task owns scripts/group/start_here.py; this one owns scripts/{imaging,interferometer,weak,cluster,point_source}/plot.py)
+- heart-ack: test run status unknown (no report.json); release validation stale: source moved since rehearsal (PyAutoFit, PyAutoArray, PyAutoGalaxy, PyAutoLens)
+- worktree: ~/Code/PyAutoLabs-wt/plot-coverage-gaps
+- repos:
+
 ## group-start-here-timeout
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/402
 - status: workspace-dev — revert group start_here to Nautilus (measured regression: 217s -> >40min local)
@@ -9,35 +21,6 @@
 - worktree: ~/Code/PyAutoLabs-wt/group-start-here-timeout
 - repos:
   - autolens_workspace (feature/group-start-here-timeout)
-
-## release-channel-freshness
-- issue: https://github.com/PyAutoLabs/PyAutoHeart/issues/128
-- status: library-dev — heart/checks/release_run.py mirroring the test_run cached-artifact pattern
-- prompt: active/release_channel_dev_box_freshness.md
-- classification: feature (PyAutoHeart) — CI/release audit series finale; kills the chronic release-validation STALE
-- worktree: ~/Code/PyAutoLabs-wt/release-channel-freshness
-- repos:
-  - PyAutoHeart (feature/release-channel-freshness)
-
-## assistant-brain-ref
-- issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/186
-- status: library-dev — declared Brain-ref escape hatch in the two clone-boundary workflows + Brain doc line
-- prompt: active/assistant_boundary_ci_cross_repo_ordering.md
-- classification: research→implementation (autolens_assistant + autocti_assistant + PyAutoBrain docs) — CI/release audit series task 9; decision = declared-dependency (option 1)
-- worktree: ~/Code/PyAutoLabs-wt/assistant-brain-ref
-- repos:
-  - autolens_assistant (feature/assistant-brain-ref)
-  - autocti_assistant (feature/assistant-brain-ref)
-  - PyAutoBrain (feature/assistant-brain-ref)
-
-## docs-only-smoke-scope
-- issue: https://github.com/PyAutoLabs/PyAutoHeart/issues/126
-- status: library-dev — changes gate in the reusable smoke workflow
-- prompt: active/docs_only_pr_smoke_scope.md
-- classification: maintenance (PyAutoHeart reusable workflow) — CI/release audit series task 8
-- worktree: ~/Code/PyAutoLabs-wt/docs-only-smoke-scope
-- repos:
-  - PyAutoHeart (feature/docs-only-smoke-scope)
 
 ## multiband-pyloop-batching
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1430

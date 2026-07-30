@@ -1,3 +1,16 @@
+Docs-only workspace changes no longer run the full smoke matrix.
+
+- issue: PyAutoHeart#126 (auto-closed) · pr: PyAutoHeart#127 (`ad0d8840f`), merged unchanged
+- a `changes` gate job in the reusable smoke-tests.yml (all workspace callers, no new
+  third-party actions): base = pull_request.base.sha || event.before, shallow fetch,
+  two-dot diff; FAIL CLOSED (no base / zero sha / unfetchable / empty diff / any
+  non-allowlisted file → matrix runs); allowlist only *.md, root docs/, LICENSE,
+  runtime.txt (dotfiles/sidecars count as code). Skips list files in the step summary;
+  a skipped matrix satisfies required checks. Wiring test pins the needs+if shape.
+  Classifier exercised over 8 edge cases. Library main.yml untouched by design.
+
+## Original prompt
+
 # Docs/metadata-only PRs should not run the full smoke matrix
 
 Type: maintenance

@@ -1,3 +1,20 @@
+The release channel's verdict now self-refreshes on the dev box — the last chronic
+STALE ("release validation stale: source moved since rehearsal") is structural no more.
+
+- issue: PyAutoHeart#128 (auto-closed) · pr: PyAutoHeart#129 (`b58aa35bb`), merged unchanged
+- heart/checks/release_run.py mirrors test_run's cached-artifact pattern: latest
+  release-integrate.yml run via gh, release-stage-report fetched once per run id,
+  folded through the existing heart.validate.run() ingest (stage reports embed their
+  own commit_shas/testpypi_version). decide() pure/no-network; gh callables only in
+  the tick entrypoint. Rules (each test-pinned): in-progress never ingests; cached id
+  never re-downloads; a fresher local ingest is never regressed; unparseable ts fails
+  toward refresh; a FAILED rehearsal ingests too (release_ready=false is evidence →
+  accurate 'release validation FAILED (stage integrate)' RED, self-clearing next
+  green night). Wired into tick.sh. Live proof: the real failed rehearsal artifact
+  ingested to release_ready=False and readiness computed exactly that RED. Suite 337.
+
+## Original prompt
+
 # Dev-box freshness for the release channel (self-refreshing validation_report)
 
 Type: feature

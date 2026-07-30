@@ -1,33 +1,5 @@
 # Active Tasks
 
-## ci-dedupe
-- issue: https://github.com/PyAutoLabs/PyAutoHeart/issues/130
-- status: awaiting-merge — 17 PRs open 2026-07-30; live-proven on autolens_workspace#405 (5 check rows vs 8-10)
-- prompt: active/ci_dedupe_push_pr_double_runs.md
-- conflict-note: workspace repos also claimed by plot-guides-restructure and my parked-sweep; .github/workflows files disjoint from both
-- worktree: ~/Code/PyAutoLabs-wt/ci-dedupe
-- repos: 17 on feature/ci-dedupe (HowTo x3, ws x3, ws_test x4, libs x6, Heart)
-
-## wiki-currency-branch-match
-- issue: https://github.com/PyAutoLabs/autolens_assistant/issues/103
-- status: awaiting-merge — autolens_assistant#104, autofit_assistant#28, autocti_assistant#19 open
-- prompt: active/wiki_currency_matching_branch.md
-- worktree: ~/Code/PyAutoLabs-wt/wiki-currency-branch-match
-- repos:
-  - autolens_assistant (feature/wiki-currency-branch-match)
-
-## parked-sweep
-- issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/234
-- status: awaiting-merge — ag#193, al#406, al_test#236 open; 11 stale -> 0 (1 un-parked, 4 re-tagged NEEDS_FIX incl. 2 new JIT-cache failures with bug prompt filed, 6 SLOW re-dated vs the real 300s cap)
-- prompt: active/parked_script_stale_sweep.md
-- conflict-note: ag/al workspaces also claimed by plot-guides-restructure; config/build/no_run.yaml disjoint
-- worktree: ~/Code/PyAutoLabs-wt/parked-sweep
-- repos:
-  - autogalaxy_workspace (feature/parked-sweep)
-  - autolens_workspace (feature/parked-sweep)
-  - autolens_workspace_test (feature/parked-sweep)
-
-
 ## python-312-floor
 - issue: https://github.com/PyAutoLabs/PyAutoNerves/issues/142
 - status: Phase 3 live release published; Phase 5A cleanup complete; Phase 5B COMPLETE 2026-07-30 — all tracked selectors now at 3.12+; parent awaits explicit human close (PyAutoNerves#142)

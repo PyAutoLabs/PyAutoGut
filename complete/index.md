@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-819 records across 6 buckets.
+822 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -74,6 +74,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [build_ic50_assistant_from_autofit_assistant](2026/07/build_ic50_assistant_from_autofit_assistant.md)
 - [central-community-docs](2026/07/central-community-docs.md) — PyAutoScientist became the canonical home for the PyAutoLabs Contributor Covenant 2.1 Code of Conduct and shar…
 - [checkpoint-continue](2026/07/checkpoint-continue.md)
+- [ci-dedupe](2026/07/ci-dedupe.md)
 - [clean-packaging-debris](2026/07/clean-packaging-debris.md) — Added Hygiene's read-only `packaging` debris mode and a narrow `clean_slate.sh --packaging` executor for ignor…
 - [clean-slate-write-site](2026/07/clean-slate-write-site.md) — Leg 5 (final) of the dataset-bulk series — the machinery leg. New bin/dataset_provenance.py: stdlib AST, order…
 - [clear-manifest-drift-autocti](2026/07/clear-manifest-drift-autocti.md)
@@ -283,6 +284,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [notebook-adjacent-docstrings](2026/07/notebook-adjacent-docstrings.md) — Phase 1 of the adjacent-docstrings arc: PyAutoHands notebook generation now merges back-to-back docstrings int…
 - [nufftax-cap-lift](2026/07/nufftax-cap-lift.md)
 - [opus-wrapup](2026/07/opus-wrapup.md) — executed on Fable
+- [parked-sweep](2026/07/parked-sweep.md)
 - [per-frame-psf](2026/07/per-frame-psf.md) — per-frame native ePSFs live (psf/frame_epsf.py: sky-subtracted, DQ local-median patch in ESTIMATOR input only …
 - [per-project-literature](2026/07/per-project-literature.md) — task 3 of the autolens_assistant batch — hybrid literature rule live: Create scaffolds wiki/project/bibliograp…
 - [pix-gradient-slogdet-revalidation](2026/07/pix-gradient-slogdet-revalidation.md)
@@ -439,6 +441,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [weak-strong-lensing](2026/07/weak-strong-lensing.md)
 - [weak-viz-profiles](2026/07/weak-viz-profiles.md)
 - [wfc3-reduction](2026/07/wfc3-reduction.md)
+- [wiki-currency-branch-match](2026/07/wiki-currency-branch-match.md)
 - [wire-verify-install-leg](2026/07/wire-verify-install-leg.md)
 - [workspace-readme-drift](2026/07/workspace-readme-drift.md)
 - [workspace-start-here-colab-links](2026/07/workspace-start-here-colab-links.md) — Generic PyAutoLens and PyAutoGalaxy introduction links now open each workspace-root start_here.ipynb rather th…

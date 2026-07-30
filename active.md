@@ -15,3 +15,4 @@
 - status: workspace-dev
 - worktree: ~/Code/PyAutoLabs-wt/scaling-relation-brightest-galaxy
 - repos:
+  - autolens_workspace: feature/scaling-relation-brightest-galaxy

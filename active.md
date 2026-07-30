@@ -29,7 +29,11 @@
 ## multiband-pyloop-batching
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1430
 - session: claude --resume ed9e7d65-ca7d-4718-8f02-d77a2ad27017
-- status: library-dev
+- status: library-shipped, awaiting-merge
+- library-pr: https://github.com/PyAutoLabs/PyAutoFit/pull/1431
+- profiling-pr: https://github.com/PyAutoLabs/autolens_profiling/pull/95
+- validation: suite 1592p/1s; parity bit-identical (None/4/ragged-5); targeted smoke 4/4 (MultiStart* + auto_convergence); multi-band e2e cold 395s CPU / 392s GPU, warm 136s / 199s
+- heart-at-ship: stale — "test run status unknown (no report.json)"; "release validation stale: source moved since rehearsal (PyAutoFit, PyAutoArray, PyAutoGalaxy, PyAutoLens)" (pre-existing, surfaced on issue)
 - prompt: active/multi_band_factorgraph_compile_deeper_dig.md
 - classification: research / autofit — library (PyAutoFit pyloop batching) + autolens_profiling benchmark validation; Brain scored too-large-13 off repo count with a generic 4-phase split, overridden to one implement+benchmark task (#93 precedent)
 - conflict-note: worktree_check_conflict flagged PyAutoFit claimed by python-312-floor; hand-checked stale — that worktree's branch is 0 commits ahead of origin/main (PR#1429 merged)

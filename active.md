@@ -2,10 +2,14 @@
 
 ## ai-policy-validator-followups
 - issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/181
-- status: infrastructure-dev
+- status: awaiting-merge
 - prompt: active/clone_boundary_ai_policy_unclassified.md
 - branch: feature/ai-policy-validator-followups
 - worktree: ~/Code/PyAutoLabs-wt/ai-policy-validator-followups
+- prs: https://github.com/PyAutoLabs/PyAutoBrain/pull/182, https://github.com/PyAutoLabs/autolens_assistant/pull/98, https://github.com/PyAutoLabs/autofit_assistant/pull/27, https://github.com/PyAutoLabs/autocti_assistant/pull/17 (OPEN, pending-release)
+- heart-ack: 2026-07-30 — YELLOW 70 explicitly approved; `workspace validation not passing (0 failed, cloud#30516167217)`; `release validation stale: source moved since rehearsal (PyAutoFit, PyAutoGalaxy, PyAutoLens)`
+- validation: PyAutoBrain clone tests 28 passed; autolens and autofit boundaries complete locally; AutoCTI correctly skipped because it has no reference profile
+- merge-order: PyAutoBrain#182 first, then assistant PRs; rerun autolens boundary after Brain lands because CI reads PyAutoBrain main
 - scope: classify root `AI_POLICY.md` as generic Clone Agent infrastructure and align the maintainer boundary prose in all three assistant cells; do not add an AutoCTI reference profile
 - parallel-claim: human-approved 2026-07-30; the assistant edits are limited to `modes/maintainer.md` and do not overlap the open `assistant-output-folder-pointer` PRs or Python 3.12 workflow-selector PR
 - related: PyAutoMemory's root allowlist correction remains in PyAutoMemory#30 on the existing `python-312-release-surfaces` task
@@ -155,16 +159,18 @@
 
 ## python-312-memory-validation-ci
 - issue: https://github.com/PyAutoLabs/PyAutoMemory/issues/30
-- status: workspace-dev, ship-blocked
+- status: awaiting-merge
+- workspace-pr: https://github.com/PyAutoLabs/PyAutoMemory/pull/31 (OPEN, pending-release)
 - prompt: active/python_312_memory_validation_ci.md
 - branch: feature/python-312-release-surfaces
 - worktree: ~/Code/PyAutoLabs-wt/python-312-release-surfaces
 - parent: python-312-floor
 - repos:
   - PyAutoMemory: feature/python-312-release-surfaces
-- notes: Python 3.12 workflow selector is staged but uncommitted. Shipping is
-  blocked by the pre-existing `AI_POLICY.md` structure-test failure on current
-  `origin/main`; do not broaden this task to fix that unrelated regression.
+- notes: Python 3.12 workflow selector and the pre-existing `AI_POLICY.md`
+  structure allowlist regression are fixed together; `make validate` and
+  `make test` pass (10 tests). Heart YELLOW 70 explicitly approved with the
+  same exact reasons recorded on `ai-policy-validator-followups`.
 
 ## vacuous-jax-assertions
 - issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/229

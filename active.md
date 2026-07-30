@@ -16,3 +16,14 @@
 - worktree: ~/Code/PyAutoLabs-wt/scaling-relation-brightest-galaxy
 - repos:
   - autolens_workspace: feature/scaling-relation-brightest-galaxy
+
+## multi-package-rename-multi-dataset
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/408
+- status: workspace-dev (phase 1 starting 2026-07-30)
+- worktree: ~/Code/PyAutoLabs-wt/multi-package-rename-multi-dataset
+- phases: 1 (autolens_workspace + autogalaxy_workspace) IN FLIGHT; 2 (autolens_workspace_test, autogalaxy_workspace_test, autolens_profiling, autolens_workspace_developer, HowToLens) BLOCKED on point-source-chi-squared-variants releasing its worktree claims; 3 (PyAutoLens/docs, PyAutoGalaxy/docs, autolens_assistant, autolens_jax_joss) GATED on phase 1 merging — blob/main URLs dangle until then
+- note: Brain phase split (design/core_api/examples/docs) overridden for a per-repo, merge-dependency-ordered split; recorded in the prompt
+- note: scaling-relation-brightest-galaxy (#407) also touches autolens_workspace generated sidecars (.script_sizes.json, workspace_index.json) — merge-conflict surface if both land
+- repos:
+  - autolens_workspace: feature/multi-package-rename-multi-dataset
+  - autogalaxy_workspace: feature/multi-package-rename-multi-dataset

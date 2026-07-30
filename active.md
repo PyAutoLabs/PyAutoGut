@@ -1,5 +1,16 @@
 # Active Tasks
 
+## nufftax-cap-lift
+- issue: https://github.com/PyAutoLabs/PyAutoArray/issues/424
+- status: library-dev — pin lift edited; unit suite + end-to-end script verification running
+- prompt: active/nufftax_batched_nufft2d2_vjp_release_blocker.md
+- classification: library (PyAutoArray) + CI pin sweep (PyAutoHeart) — bug, nightly release blocker
+- root-cause: nufftax 0.4.0 `_nufft2d2_bwd` assumes 2-D f; MultiStartProdigy-default workspace commits (2026-07-29 19:42) first exercised the batched gradient. 0.6.1 verified: batched vjp works, forward bit-identical at eps=1e-12.
+- worktree: ~/Code/PyAutoLabs-wt/nufftax-cap-lift
+- repos:
+  - PyAutoArray (feature/nufftax-cap-lift)
+  - PyAutoHeart (feature/nufftax-cap-lift)
+
 ## python-312-workspace-runtime-pins
 - issue: https://github.com/PyAutoLabs/autofit_workspace/issues/125
 - status: awaiting-merge — all six PRs OPEN 2026-07-30

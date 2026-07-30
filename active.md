@@ -1,5 +1,16 @@
 # Active Tasks
 
+## split-validation-channels
+- issue: https://github.com/PyAutoLabs/PyAutoHeart/issues/121
+- status: library-dev — Heart body/entry-workflow split, then Brain repoint
+- prompt: active/split_smoke_vs_release_validation_channels.md
+- classification: refactor (PyAutoHeart + PyAutoBrain) — CI/release audit series task 3
+- merge-order: Heart PR then Brain PR, back-to-back, BEFORE the 02:00 UTC nightly
+- worktree: ~/Code/PyAutoLabs-wt/split-validation-channels
+- repos:
+  - PyAutoHeart (feature/split-validation-channels)
+  - PyAutoBrain (feature/split-validation-channels)
+
 ## multiband-pyloop-batching
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1430
 - session: claude --resume ed9e7d65-ca7d-4718-8f02-d77a2ad27017

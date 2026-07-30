@@ -1,7 +1,7 @@
 # Active Tasks
 
 ## assistant-brain-ref
-- issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/185
+- issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/186
 - status: library-dev — declared Brain-ref escape hatch in the two clone-boundary workflows + Brain doc line
 - prompt: active/assistant_boundary_ci_cross_repo_ordering.md
 - classification: research→implementation (autolens_assistant + autocti_assistant + PyAutoBrain docs) — CI/release audit series task 9; decision = declared-dependency (option 1)

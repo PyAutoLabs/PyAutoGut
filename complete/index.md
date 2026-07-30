@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-823 records across 6 buckets.
+834 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -163,6 +163,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [graduate-mcp-autofit-extra](2026/07/graduate-mcp-autofit-extra.md)
 - [group-start-here-timeout](2026/07/group-start-here-timeout.md)
 - [guard-followups](2026/07/guard-followups.md)
+- [guides-jax-to-using-jax](2026/07/guides-jax-to-using-jax.md) — Consolidated the six trailing `__JAX__` guide sections (~536 lines, cross-referencing in a ring) into one `scr…
 - [health-api](2026/07/health-api.md)
 - [health-one-door](2026/07/health-one-door.md)
 - [health-sync-noise-filter](2026/07/health-sync-noise-filter.md)
@@ -347,6 +348,16 @@ _(curate hard-won records here — survives regeneration.)_
 - [python-312-memory-validation-ci](2026/07/python-312-memory-validation-ci.md) — PyAutoMemory validation now runs on Python 3.12 and its repository-structure validator recognizes the shared r…
 - [python-312-release-surfaces](2026/07/python-312-release-surfaces.md) — Removed the accidentally tracked `=3.12` and generated `run_logs/`
 - [python-312-workspace-runtime-pins](2026/07/python-312-workspace-runtime-pins.md)
+- [python_312_floor_phase_1b_array](2026/07/python_312_floor_phase_1b_array.md)
+- [python_312_floor_phase_1c_fit](2026/07/python_312_floor_phase_1c_fit.md)
+- [python_312_floor_phase_1d_galaxy](2026/07/python_312_floor_phase_1d_galaxy.md)
+- [python_312_floor_phase_1e_lens](2026/07/python_312_floor_phase_1e_lens.md)
+- [python_312_floor_phase_2_build_health](2026/07/python_312_floor_phase_2_build_health.md)
+- [python_312_floor_phase_3_core_release](2026/07/python_312_floor_phase_3_core_release.md)
+- [python_312_floor_phase_4a_autocti](2026/07/python_312_floor_phase_4a_autocti.md)
+- [python_312_floor_phase_4b_autoreduce](2026/07/python_312_floor_phase_4b_autoreduce.md)
+- [python_312_floor_phase_4c_heart](2026/07/python_312_floor_phase_4c_heart.md)
+- [python_312_floor_phase_4d_euclid_assistant](2026/07/python_312_floor_phase_4d_euclid_assistant.md)
 - [raw-guard-migration](2026/07/raw-guard-migration.md) — Leg 3 of the dataset-bulk series. Migrated 116 (autolens, 113 scripts) + 61 (autogalaxy, 59 scripts) raw `if n…
 - [rect-adapt](2026/07/rect-adapt.md) — rectangular adaptive-mesh edges — MERGED
 - [rectangular-kernel-cdf-mesh](2026/07/rectangular-kernel-cdf-mesh.md) — kernel-density CDF meshes RectangularKernelAdapt{Density,Image} (Enzi RTU) shipped opt-in — strict FD certifie…

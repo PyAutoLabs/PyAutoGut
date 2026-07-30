@@ -32,6 +32,16 @@
   - PyAutoLens: feature/potential-correction-validation
   - autolens_workspace_test: feature/potential-correction-validation
 
+## sampler-cli-output-numbers
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1434
+- session: claude --resume ba3c8adc-e29a-465b-9045-c13f08824092
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/sampler-cli-output-numbers
+- phases: 1 (PyAutoFit: quick_update_message + JAX compile message at first call) = this issue; 2 (drop the now-duplicated sentence from 23 workspace scripts + regenerate notebooks/markdown) = follow-up issue
+- note: Brain sized large (score 8) and wanted a phase split; score is its repo-count proxy — overridden to medium, library/workspace split kept
+- note: CONCURRENT claim on PyAutoFit with multi-start-gradient-progress-logging (#1433, registered minutes earlier). worktree_check_conflict returned 0 only because that worktree did not exist yet — hand-checked instead. Files disjoint: #1433 owns multi_start_gradient/search.py, this owns abstract_search.py + fitness.py. Pre-merge origin/main before PR. Related in substance: #1433's "always log the first step" and this task's first-call compile message both signal "the XLA compile finished" — keep the wording from duplicating
+- repos:
+
 ## multi-start-gradient-progress-logging
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1433
 - session: claude --resume 9b8e086c-0f40-46ad-ae8c-cda3179a335e

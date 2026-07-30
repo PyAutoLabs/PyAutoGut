@@ -1,5 +1,14 @@
 # Active Tasks
 
+## docs-only-smoke-scope
+- issue: (see commit body — created just above registration)
+- status: library-dev — changes gate in the reusable smoke workflow
+- prompt: active/docs_only_pr_smoke_scope.md
+- classification: maintenance (PyAutoHeart reusable workflow) — CI/release audit series task 8
+- worktree: ~/Code/PyAutoLabs-wt/docs-only-smoke-scope
+- repos:
+  - PyAutoHeart (feature/docs-only-smoke-scope)
+
 ## multiband-pyloop-batching
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1430
 - session: claude --resume ed9e7d65-ca7d-4718-8f02-d77a2ad27017

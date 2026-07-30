@@ -74,6 +74,22 @@ way), so they were maintained by some path that no longer works.
 One successful `generate.py autocti` clears all of them at once, so this bug is
 the single gate on three separate merged sweeps reaching the notebooks.
 
+## Do not hand-roll the workaround
+
+Measured 2026-07-30 (from the `script_prose_and_howto_ref_drift` sweep):
+`build_util.py_to_notebook` alone is **not** equivalent to `generate.py`. Run
+against an *unchanged* script as a control — `scripts/dataset_1d/extract.py`
+vs the committed `notebooks/dataset_1d/extract.ipynb` — the output differs by
+7 lines: the committed notebook carries a **trailing empty code cell** that
+`py_to_notebook` does not emit (343 vs 336 lines, otherwise identical).
+
+So the tempting shortcut (convert the changed scripts directly, move the
+`.ipynb` into `notebooks/`) silently produces notebooks structurally unlike
+every other notebook in the repo. Anyone reaching for it should add the trailing
+cell — or better, fix this bug properly instead of reimplementing the pipeline in
+a caller. Control-test against an unchanged script before trusting any
+regeneration path here; that is what caught this.
+
 ## If option (2) is "register it"
 
 The Colab install list needs care: `arcticpy`, a hard dependency of the CTI

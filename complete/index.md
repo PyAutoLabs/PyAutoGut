@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-782 records across 6 buckets.
+783 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -300,6 +300,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [psf-oversample-simulator](2026/07/psf-oversample-simulator.md)
 - [psf-oversample-workspace](2026/07/psf-oversample-workspace.md)
 - [psf-visible-input](2026/07/psf-visible-input.md)
+- [public-register-galaxies-classes](2026/07/public-register-galaxies-classes.md) — autogalaxy gains the public register_tracer_classes counterpart — SHIPPED
 - [purge-autoconf-era-legacy](2026/07/purge-autoconf-era-legacy.md)
 - [purge-autocti-datasets](2026/07/purge-autocti-datasets.md) — Leg 6 of the dataset-bulk series — the largest single purge: the six committed dataset/imaging_ci datasets (20…
 - [purge-autogalaxy-database](2026/07/purge-autogalaxy-database.md) — Leg 2 of the dataset-bulk series. Purged the orphaned dataset/database/simple__{0,1,2} (512 KB, 90% of the rep…

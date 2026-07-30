@@ -1,3 +1,20 @@
+## public-register-galaxies-classes (autogalaxy gains the public register_tracer_classes counterpart — SHIPPED)
+- issue: https://github.com/PyAutoLabs/PyAutoGalaxy/issues/536 (CLOSED, auto-closed by the PR)
+- completed: 2026-07-29
+- library-pr: https://github.com/PyAutoLabs/PyAutoGalaxy/pull/537 (MERGED 9594c00b)
+- summary: Added `autogalaxy/jax/__init__.py` + `autogalaxy/jax/registration.py` exporting `register_galaxies_classes(galaxies) -> bool`, mirroring `autolens/jax/{__init__,registration}.py`. It is the public one-time pytree registration for the case a user's own `@jax.jit` receives a `Galaxies` as a traced ARGUMENT — the code path that does not go through an `Analysis`.
+
+  **The initial diagnosis was too strong and probing corrected it.** The claim "autogalaxy has no counterpart" was wrong: `autogalaxy/analysis/jax_pytrees.py::register_galaxies_pytree` already existed. But it is private (reached only from the two `Analysis` classes via `fit_from`) and registers ONLY the `Galaxies` list subclass, so it is insufficient alone. Measured three ways on `@jax.jit def f(galaxies): return ag.FitImaging(..., galaxies=galaxies, xp=jnp).log_likelihood`: no registration → `TypeError` on `Galaxies`; `register_galaxies_pytree()` only → STILL `TypeError`, now on `Galaxy` at `galaxies[0]`; both steps → works, `-270175.0553756637`, exactly the eager value. So the public function does both: calls the existing shared registration, then walks each galaxy registering `Galaxy` and every profile class.
+
+  Two deliberate properties recorded in the module docstring so a future reader does not "fix" them: (1) **nothing inside autogalaxy calls this** — unlike autolens, where `PointSolver` and `Simulator` invoke `register_tracer_classes` automatically, both autogalaxy `Analysis` classes already register inline from `fit_from`; it exists purely as the public entry point, so it is not dead code. (2) The ~60-line recursive walker is **copied** from `autolens/jax/registration.py`, not shared — human decision 2026-07-29, keeping the change to one repo and one reversible PR rather than coupling autolens `main` to autogalaxy `main` immediately after the `2026.7.29.2` release.
+
+  Validation: `test_autogalaxy` 1009 passed / 0 failed; three-way probe green on the branch AND re-verified against merged `main`; idempotent (second call returns True, registers nothing); `import autogalaxy` does NOT eagerly import `autogalaxy.jax` (checked via `sys.modules`, so no import cost added); with `import jax` forced to raise, the function returns `False` without raising. CI on the exact head `debf3eb8`: Docs success, Tests success. `autogalaxy.jax` is auto-discovered by `[tool.setuptools.packages.find]`, so no packaging change was needed. Unit tests here are NumPy-only by policy, so the JAX behaviour is covered by the probe, not by `test_autogalaxy/`.
+
+- origin: fell out of likelihood-function-jax-pointer (autolens_workspace#368) — the six deleted `__JAX__` blocks documented a recipe that did not run, and writing the correct one exposed this asymmetry.
+- followups: (1) **autogalaxy_workspace guide mention** — document the jit-argument case + this call in `scripts/guides/using_jax.py`, matching how the autolens guide points at `register_tracer_classes`. NOW UNBLOCKED (#537 merged). (2) **Dedupe the walker** across `autolens/jax/registration.py` and `autogalaxy/jax/registration.py`. (3) **Verify a neighbouring doc claim** — `using_jax.py` says "the simulator handles pytree registration internally", but neither `autogalaxy/imaging/simulator.py` nor `interferometer/simulator.py` contains any pytree registration call; either an autoarray base does it or that sentence is wrong too (pre-existing text).
+
+## Original prompt
+
 # autogalaxy: add a public `register_galaxies_classes`, the counterpart to `autolens.jax.register_tracer_classes`
 
 Type: feature

@@ -196,4 +196,6 @@
 - brain-override: Brain scored too-large/13 with four generic phases (design/core_api/workspace_examples/docs); overridden to two phases split by regime — one repo, zero library API change, so core_api was vacuous
 - collision-cleared: launched authorised to run parallel to PR#383/#384, but both merged 2026-07-30T10:24-10:25Z before any edit — branch is off clean post-merge main, no "take ours" resolution needed
 - worktree: ~/Code/PyAutoLabs-wt/scaling-relation-bgc-anchored
+- base: branched off post-merge main 264d4ab9 (includes PR#383 + PR#384)
 - repos:
+  - autolens_workspace (feature/scaling-relation-bgc-anchored)

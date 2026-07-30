@@ -256,3 +256,18 @@
 - worktree: ~/Code/PyAutoLabs-wt/multi-galaxy-imaging-parity
 - repos:
   - autolens_workspace (feature/multi-galaxy-imaging-parity)
+
+## assistant-output-folder-pointer
+- issue: https://github.com/PyAutoLabs/autolens_assistant/issues/96
+- session: claude --resume 6a3b0456-4835-4b11-9d18-fcb9ad9087f3
+- status: workspace-dev
+- prompt: active/output_folder_layout_pointer.md
+- scope: three assistant cells gain an "announce the output folder at fit launch" rule for novice/teacher-mode users — a new `## Output folder announcement` section in each `skills/_style.md` (sibling of `## Plot output and path announcement`), a `modes/teacher.md` bullet, and the pointer wired into the fit-launch skills (`al_run_search`, `al_configure_search`, `af_run_search`, `ac_fit_cti_model`)
+- citations: pointer ONLY, never a copied tree (it would rot) — autolens → `autolens_workspace/scripts/imaging/modeling.py` `__Output Folder Layout__` (:548-585); autofit → `autofit_workspace/scripts/overview/overview_2_scientific_workflow.py` (:197-223); autocti → `autocti_workspace/scripts/dataset_1d/modeling/start_here.py` `__Output Folder__` + `__On The Fly Outputs__` (:346-371)
+- depth-gate: reuses the EXISTING cue in `skills/_style.md` "Adaptive depth" / "Newcomer mode" — no second depth rule invented
+- out-of-scope: `euclid_assistant` (the Feature Agent listed it, but it is a paper repo with no `modes/` and no `skills/`); there is no `autogalaxy_assistant`, so the lens cell carries the galaxy citation. No `## Further reading` edit and no new row in `wiki/core/external/skill_citation_map.md` — those blocks are generated from that table and this is not a per-skill citation row. `llms.txt` is hand-maintained, not generated from `skills/`
+- brain-override: Feature Agent returned too-large (score 11) / split-into-4-phases (design, core_api, workspace_examples, docs) off its repo-count proxy ([[feedback_brain_repo_count_difficulty_proxy]]). Three of the four phases are vacuous — no library code, no API, no workspace example. Overridden to one task, one PR per repo (~10 markdown edits of uniform shape)
+- parallel-claim: `python-312-floor` phase-5a has a PENDING change to the same three repos but only to `.github/workflows/*` (Python 3.12 in the wiki-currency job) — zero overlap with `modes/` + `skills/`. Hand-verified: no `worktree:` claim in this file touches any assistant repo ([[feedback_worktree_conflict_guard_never_fires]])
+- ci-note: each repo's `wiki-currency` workflow runs on pull_request and audits `skills/` + `wiki/` + `AGENTS.md` + `llms.txt` for stale API symbols — validate locally with `make audit` before shipping
+- worktree: ~/Code/PyAutoLabs-wt/assistant-output-folder-pointer
+- repos:

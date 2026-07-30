@@ -1,3 +1,11 @@
+## jax-guard-pointer-retarget
+- issue: https://github.com/PyAutoLabs/PyAutoArray/issues/427
+- completed: 2026-07-30
+- library-pr: https://github.com/PyAutoLabs/PyAutoArray/pull/428
+- summary: Retargeted the JAX pairing-rule guard's ValueError final sentence in `autoarray/structures/decorators/abstract.py` from the deleted autolens_workspace `scripts/guides/lens_calc.py` `__JAX__` section "(Phase 5d)" to `scripts/guides/using_jax.py` (the runnable, smoke-tested JAX guide from autolens_workspace#412/#415), dropping the internal-phase reference that should never have shipped in a user-facing error. Two-line message change, no behaviour change; sibling sweep verified zero remaining `Phase 5d`/`lens_calc` refs in PyAutoArray; `test_abstract_xp_mismatch.py` asserts only the message's first sentence and passed (3/3 locally, CI 3.12+3.13 green). Same-day follow-up to guides-jax-to-using-jax, shipped under the same re-checked Heart YELLOW ack. No worktree — a short-lived branch on the main checkout.
+
+## Original prompt
+
 # Retarget the xp=np guard's ValueError pointer from lens_calc.py to using_jax.py
 
 Type: docs

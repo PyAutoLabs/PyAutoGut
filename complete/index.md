@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-838 records across 6 buckets.
+839 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -213,6 +213,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [jax-grad-env-vars-disable-jax](2026/07/jax-grad-env-vars-disable-jax.md)
 - [jax-grad-param9-autodiff-fd-mismatch](2026/07/jax-grad-param9-autodiff-fd-mismatch.md) — jax_grad imaging pixelization parameter-9 autodiff-vs-FD mismatch → parameter-specific documented FD exclusion…
 - [jax-gradient-optimizer-benchmark](2026/07/jax-gradient-optimizer-benchmark.md)
+- [jax-guard-pointer-retarget](2026/07/jax-guard-pointer-retarget.md) — Retargeted the JAX pairing-rule guard's ValueError final sentence in `autoarray/structures/decorators/abstract…
 - [jax-likelihood-undeclared-siblings](2026/07/jax-likelihood-undeclared-siblings.md)
 - [jax-pytree-partition-vars-no-dict](2026/07/jax-pytree-partition-vars-no-dict.md)
 - [jwst-frame-feasibility](2026/07/jwst-frame-feasibility.md) — JWST per-frame feasibility answered — GO, phased. Should: strongest case = NIRCam SW undersampling (subpixel d…

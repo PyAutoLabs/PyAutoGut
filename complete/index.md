@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-822 records across 6 buckets.
+823 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -343,6 +343,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [python-312-autocti-wiki-currency-ci](2026/07/python-312-autocti-wiki-currency-ci.md) — Raised the assistant wiki-currency runner to Python 3.12 and made
 - [python-312-autofit-wiki-currency-ci](2026/07/python-312-autofit-wiki-currency-ci.md) — Raised the assistant wiki-currency runner from Python 3.11 to 3.12.
 - [python-312-autolens-wiki-currency-ci](2026/07/python-312-autolens-wiki-currency-ci.md) — The autolens assistant wiki-currency workflow now runs on Python 3.12, completing the assistant CI-selector po…
+- [python-312-floor](2026/07/python-312-floor.md)
 - [python-312-memory-validation-ci](2026/07/python-312-memory-validation-ci.md) — PyAutoMemory validation now runs on Python 3.12 and its repository-structure validator recognizes the shared r…
 - [python-312-release-surfaces](2026/07/python-312-release-surfaces.md) — Removed the accidentally tracked `=3.12` and generated `run_logs/`
 - [python-312-workspace-runtime-pins](2026/07/python-312-workspace-runtime-pins.md)

@@ -9,6 +9,8 @@
 - conflict-note: worktree_check_conflict flagged PyAutoFit claimed by python-312-floor; hand-checked stale — that worktree's branch is 0 commits ahead of origin/main (PR#1429 merged)
 - worktree: ~/Code/PyAutoLabs-wt/multiband-pyloop-batching
 - repos:
+  - PyAutoFit (feature/multiband-pyloop-batching)
+  - autolens_profiling (feature/multiband-pyloop-batching)
 
 ## plot-guides-restructure
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/400

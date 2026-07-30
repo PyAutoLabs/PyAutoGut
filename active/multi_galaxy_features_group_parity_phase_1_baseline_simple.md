@@ -26,7 +26,8 @@ rewritten rather than translated, the `shear_galaxy` idiom, the 3.0" mask, the
   (N co-dominant deflectors in a loop, shear in its own `shear_galaxy`) diverges enough
   from `slam_start_here` that each feature's `slam.py` needs a regime-local thing to
   diff against. `features/scaling_relation/slam.py` currently has to re-explain that
-  divergence from scratch; once this lands it should be re-pointed at the baseline.
+  divergence from scratch; re-pointing it at the baseline is **deferred to a follow-up**
+  (see "Concurrency mitigations" below) — do not touch that folder in this phase.
 - `scripts/multi_galaxy/features/no_lens_light/` — `README.md`, `__init__.py`,
   `simulator.py` (writes `dataset/multi_galaxy/simple__no_lens_light`), `modeling.py`,
   `slam.py`. Sibling references: `group/features/no_lens_light` (294/273/614 lines),
@@ -67,6 +68,25 @@ multi-galaxy default model has no tiers.
   radii are carried through the SLaM stages, and where promoting a perturber costs
   identifiability rather than fit quality (the subtle tier error the folder's
   `modeling.py` already teaches).
+
+## Concurrency mitigations (autolens_workspace held by two other tasks)
+
+Registered 2026-07-30: `autolens_workspace` is concurrently claimed by
+`scaling-relation-brightest-galaxy` (#407, worktree live) and
+`multi-package-rename-multi-dataset` (#408). The human chose to proceed rather than
+park this in `planned.md`, on two conditions:
+
+1. **Do not touch `scripts/multi_galaxy/features/scaling_relation/`** in this phase.
+   #407 owns that folder. The `slam.py` re-point at the new baseline is a follow-up
+   once #407 lands. `features/README.md` may *describe* the scaling tier (it already
+   does) but must not restructure that folder's own docs.
+2. **Regenerate notebooks / navigator / `.script_sizes.json` LAST**, after a pre-PR
+   `git merge origin/main`. #408 already flags the generated-sidecar conflict surface
+   between itself and #407; regenerating after the merge resolves it mechanically
+   instead of by hand.
+
+Phase 1's substance is all new files, so source-level overlap with either task is
+near zero — the conflict surface is generated artifacts and the shared README.
 
 ## Acceptance
 

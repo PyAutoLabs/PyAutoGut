@@ -1,20 +1,4 @@
 
-## multi-galaxy-imaging-parity
-- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/370
-- status: planned — BLOCKED on autolens_workspace#366 merging; plan approved by the human 2026-07-29, no repo claimed, no worktree created
-- filed: 2026-07-29
-- classification: workspace (autolens_workspace) — docs
-- prompt: active/multi_galaxy_parity_with_imaging.md
-- suggested-branch: feature/multi-galaxy-imaging-parity
-- scope: bring `scripts/multi_galaxy/` to `scripts/imaging/`'s teaching depth — trim start_here's `__Model__`, add its 6 missing sections (extra-galaxy removal + GUI, pre-search `__JAX__`, iterations-per-update, live-visual-update, both `__Simulator__` blocks); rewrite modeling.py (327→~700 lines) and fit.py (166→~430) against their imaging counterparts; add `likelihood_function.py` / `simulator_sample.py` / `source_science.py`; delete `__Mass/Light Offsets__` package-wide
-- extra-galaxies: human decision 2026-07-29 — `multi_galaxy/simulator.py` gains a faint extra galaxy + writes `mask_extra_galaxies.fits`, mirroring `imaging/simulator.py`, so `__Extra Galaxies Noise Scaling__` lands in start_here/modeling/fit/likelihood_function too. `dataset/multi_galaxy/**` is gitignored so this adds NO committed binary. Trap: `should_simulate` tests directory EXISTENCE only, so `rm -rf dataset/multi_galaxy/simple` before any run or the new mask is silently missing ([[feedback_should_simulate_existence_only]])
-- blocked-on: autolens_workspace#366 (`multistart-prodigy-start-here`) holds UNCOMMITTED edits to `scripts/multi_galaxy/{start_here,modeling}.py` — the same `search = af.Nautilus(...)` block this task rewrites (it swaps in `af.MultiStartProdigy`, already moves `iterations_per_full_update`→`iterations_per_quick_update=50`, and adds `__Multi Start Gradient Optimization__` + `__Posterior__` sections). It also modifies `imaging/{start_here,modeling}.py`, the prose source this task mirrors. Human decision 2026-07-29: sequence AFTER #366 merges rather than hand-merge a same-line conflict
-- on-resume: rebase on merged #366, then (a) keep its MultiStartProdigy search + both new sections in start_here, (b) write `__Iterations Per Update__` against gradient-optimizer semantics (`n_steps` / `iterations_per_quick_update=50`), NOT Nautilus's 1000-iteration cadence, (c) re-read the post-#366 `imaging/{start_here,modeling}.py` as the mirror source
-- likelihood-function-convention: autolens_workspace#368 is retiring the trailing 25-45 line `__JAX__` block in every `likelihood_function.py` for a one-sentence pointer at `scripts/guides/using_jax.py` plus a `__JAX__` bullet as the FIRST `__Contents__` entry. The new `multi_galaxy/likelihood_function.py` must be written in that NEW shape, not copied from imaging's current long block — and #368 should be told a seventh script joined the set
-- brain-override: Feature Agent scored large (9) / split-into-phases off its repo-count proxy ([[feedback_brain_repo_count_difficulty_proxy]]); one directory of one repo with cross-referencing scripts — overridden to one PR
-- guard-note: `worktree_check_conflict` returned 0 here but is known never to fire (draft/bug/pyautobrain/worktree_check_conflict_never_fires.md) — the #366 collision was found by hand-reading active.md and diffing its worktree
-- affected-repos:
-  - autolens_workspace
 
 ## rhayes-audit-validation-phases-2-4
 - epic: https://github.com/PyAutoLabs/PyAutoArray/issues/415 (OPEN — the public watch point promised to @rhayes777 in all five replies)

@@ -178,3 +178,17 @@
 - worktree: ~/Code/PyAutoLabs-wt/extra-galaxies-point-source
 - repos:
   - autolens_workspace (feature/extra-galaxies-point-source)
+
+## multi-galaxy-imaging-parity
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/370
+- status: workspace-dev
+- prompt: active/multi_galaxy_parity_with_imaging.md
+- scope: bring `scripts/multi_galaxy/` to `scripts/imaging/`'s teaching depth — trim start_here's `__Model__` + add its missing sections (extra-galaxy removal + GUI, pre-search `__JAX__`, iterations-per-update, live-visual-update, both `__Simulator__` blocks); rewrite modeling.py (327 lines) and fit.py (166) against their imaging counterparts; add `likelihood_function.py` / `simulator_sample.py` / `source_science.py`; delete `__Mass/Light Offsets__` package-wide
+- extra-galaxies: human decision 2026-07-29 — `multi_galaxy/simulator.py` gains a faint extra galaxy + writes `mask_extra_galaxies.fits` mirroring `imaging/simulator.py`, so `__Extra Galaxies Noise Scaling__` lands in start_here/modeling/fit/likelihood_function too. `dataset/multi_galaxy/**` is gitignored so NO committed binary. Trap: `should_simulate` tests directory EXISTENCE only, so `rm -rf dataset/multi_galaxy/simple` before any run ([[feedback_should_simulate_existence_only]])
+- unblocked: autolens_workspace#366 MERGED + closed 2026-07-29T19:00Z; worktree based on origin/main `8aa1087c` which carries its `af.MultiStartProdigy` swap. Its multi_galaxy + imaging edits are PRESERVED, not reverted — start_here keeps `MultiStartProdigy` + `__Multi Start Gradient Optimization__` + `__Posterior__`, and `__Iterations Per Update__` is written against gradient-step semantics (`n_steps` / `iterations_per_quick_update=50`), NOT Nautilus's cadence
+- likelihood-function-convention: autolens_workspace#368 retires the trailing 25-45 line `__JAX__` block in every `likelihood_function.py` for a one-sentence pointer at `scripts/guides/using_jax.py` + a `__JAX__` bullet as the FIRST `__Contents__` entry. The new `multi_galaxy/likelihood_function.py` is written in that NEW shape; #368 gains a seventh script
+- brain-override: Feature Agent scored large (9) / split-into-phases off its repo-count proxy ([[feedback_brain_repo_count_difficulty_proxy]]); one directory of one repo with cross-referencing scripts — overridden to one PR
+- guard-note: `worktree_check_conflict` returned 0 but never fires ([[feedback_worktree_conflict_guard_never_fires]]); the #366 collision was found by hand-diffing its worktree
+- worktree: ~/Code/PyAutoLabs-wt/multi-galaxy-imaging-parity
+- repos:
+  - autolens_workspace (feature/multi-galaxy-imaging-parity)

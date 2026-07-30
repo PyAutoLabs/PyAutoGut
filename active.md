@@ -187,6 +187,22 @@
 - repos:
   - autolens_workspace (feature/extra-galaxies-multi-galaxy-lens)
 
+## dspl-terminology-rename
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/390
+- status: workspace-dev
+- prompt: active/double_einstein_ring_to_dspl_rename.md
+- scope: rename `double_einstein_ring` → `double_source_plane_lens` across 43 files in autolens_workspace (4 dirs + `plotters_*.{py,ipynb}` pair via `git mv`, `dataset_name`, 6 cross-refs), prose → **DSPL** acronym (expanded once per file, bare after). Plus 2 dangling path citations in autolens_assistant
+- brain-override: Brain scored too-large/13 and routed to `start_library`; overridden to small + `start_workspace` — one workspace repo, zero library API change, mechanical rename. Brain's "Witnesses: NONE — strengthen tests first" gate is unsatisfiable for a workspace repo (no unit tests); real witnesses are script execution + clean navigator_check + zero-diff notebook regeneration
+- preserve: the **21 unrelated "Einstein ring" mentions** elsewhere in `scripts/` (masks, arcs, mass_stellar_dark, interferometer, guides) AND observational phrasing inside the renamed files — `simulator.py`'s "They appear as two distinct Einstein rings in the image-plane…" describes morphology; substituting DSPL makes it wrong. Assert the count is still exactly 21 after the sweep
+- out-of-scope: `PyAutoLens/autolens/lens/tracer.py:206` ("e.g. double Einstein ring systems") — prose-only, no path dependency, left as-is by decision
+- traps: every renamed script's title carries an `===` underline that must be **re-lengthened** to match the shortened title; section headers are COMPOUND (`__Log Likelihood Function: Group Double Einstein Ring__`) so there is no blanket `__DSPL__` rule — 4 hand-mapped; datasets are gitignored so nothing committed moves, but purge `dataset/{imaging,group}/double_einstein_ring/` so a stale path cannot silently satisfy a later fit; `.script_sizes.json` reads moved paths as deletions and trips the >50%-shrink guard unless refreshed with `scripts/check_sizes.sh --update`; catalogue is GENERATED — regenerate via `regenerate_navigator.py autolens`, never hand-edit
+- collision-cleared: hand-checked each sibling worktree's ACTUAL diff (not its scope line) — source files fully disjoint from `scaling-relation-bgc-anchored` (`imaging/features/scaling_relation/`), `searches-guide-nautilus-first` (`guides/modeling/searches.py`), `extra-galaxies-multi-galaxy-lens` (`multi_galaxy/features/extra_galaxies/`). ONLY collision is the generated catalogue: PR#388 has already committed regenerated `llms-full.txt` + `workspace_index.json`. Whichever merges second rebases and re-runs the generator — never hand-merge
+- assistant-caution: autolens_assistant has CONCURRENT uncommitted JOSS-paper work (`paper/paper.md` modified, `paper/prompt.md` untracked) — stage ONLY the two citation paths, never `git add -A`
+- worktree: ~/Code/PyAutoLabs-wt/dspl-terminology-rename
+- repos:
+  - autolens_workspace (feature/dspl-terminology-rename)
+  - autolens_assistant (feature/dspl-terminology-rename)
+
 ## potential-correction-start-here
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/389
 - status: workspace-dev

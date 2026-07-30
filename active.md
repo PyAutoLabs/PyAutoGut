@@ -194,29 +194,6 @@
 - phases: 1 (design) + 2 (core API) COMPLETE; next: start_workspace on active/../draft phase-3 prompt (workspace_test jax_likelihood + profiling examples), then phase 4 (guides), then phase 5 (JAX solver gradients)
 - repos:
 
-## multi-galaxy-imaging-parity
-- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/370
-- status: workspace-pr-open, CI GREEN at 15a15d13 (awaiting review + merge)
-- workspace-pr: https://github.com/PyAutoLabs/autolens_workspace/pull/378
-- prompt: active/multi_galaxy_parity_with_imaging.md
-- scope: bring `scripts/multi_galaxy/` to `scripts/imaging/`'s teaching depth — trim start_here's `__Model__` + add its missing sections (extra-galaxy removal + GUI, pre-search `__JAX__`, iterations-per-update, live-visual-update, both `__Simulator__` blocks); rewrite modeling.py (327 lines) and fit.py (166) against their imaging counterparts; add `likelihood_function.py` / `simulator_sample.py` / `source_science.py`; delete `__Mass/Light Offsets__` package-wide
-- extra-galaxies: human decision 2026-07-29 — `multi_galaxy/simulator.py` gains a faint extra galaxy + writes `mask_extra_galaxies.fits` mirroring `imaging/simulator.py`, so `__Extra Galaxies Noise Scaling__` lands in start_here/modeling/fit/likelihood_function too. `dataset/multi_galaxy/**` is gitignored so NO committed binary. Trap: `should_simulate` tests directory EXISTENCE only, so `rm -rf dataset/multi_galaxy/simple` before any run ([[feedback_should_simulate_existence_only]])
-- unblocked: autolens_workspace#366 MERGED + closed 2026-07-29T19:00Z; worktree based on origin/main `8aa1087c` which carries its `af.MultiStartProdigy` swap. Its multi_galaxy + imaging edits are PRESERVED, not reverted — start_here keeps `MultiStartProdigy` + `__Multi Start Gradient Optimization__` + `__Posterior__`, and `__Iterations Per Update__` is written against gradient-step semantics (`n_steps` / `iterations_per_quick_update=50`), NOT Nautilus's cadence
-- likelihood-function-convention: autolens_workspace#368 retires the trailing 25-45 line `__JAX__` block in every `likelihood_function.py` for a one-sentence pointer at `scripts/guides/using_jax.py` + a `__JAX__` bullet as the FIRST `__Contents__` entry. The new `multi_galaxy/likelihood_function.py` is written in that NEW shape; #368 gains a seventh script
-- brain-override: Feature Agent scored large (9) / split-into-phases off its repo-count proxy ([[feedback_brain_repo_count_difficulty_proxy]]); one directory of one repo with cross-referencing scripts — overridden to one PR
-- guard-note: `worktree_check_conflict` returned 0 but never fires ([[feedback_worktree_conflict_guard_never_fires]]); the #366 collision was found by hand-diffing its worktree
-- delivered: start_here 347->673, modeling 327->884, fit 166->614, plus new likelihood_function (688), simulator_sample (343), source_science (396); simulator gained the faint extra galaxy + mask_extra_galaxies.fits; `__Mass/Light Offsets__` removed package-wide
-- shear-placement: human decision 2026-07-30 — shear lives in its own `shear_galaxy` at (0.0", 0.0"), NOT attached to `lens_0`. `al.mp.ExternalShear` takes NO `centre` arg (gamma_1/gamma_2 only), so a dedicated galaxy IS how "at the system centre" is expressed. Verified `np.allclose` identical to attaching it to a deflector, so it is presentational only. NOTE: group/ and cluster/ still use the `shear=... if i == 0 else None` idiom — propagating is an open follow-up
-- verified: smoke 16/16; full-fidelity runs with NUMBERS checked, not exit codes (hand-computed figure_of_merit == FitImaging exactly; tracer deflection sum == explicit deflections_0+deflections_1+deflections_shear; planes==2 for 3 galaxies; bad-fit residuals 4230/4317 at r>1.0" vs 33 near the perturbed galaxy; magnification pair 34.36 vs sum-of-parts 10.72, pair+shear 25.600 reconciles headline 25.588; sample co-dominance ratios 0.81-0.87)
-- smoke-decision: the 3 new scripts PASS under TEST_MODE=2/SMALL_DATASETS=1 but are deliberately NOT added to smoke_tests.txt — curated-subset convention ([[feedback_smoke_tests_small_subset]]), imaging/ covers only modeling+fit, and the new shear_galaxy idiom is already exercised by the covered multi_galaxy start_here+modeling entries
-- 375-collision: autolens_workspace#368 merged as PR#375 mid-flight, retiring the long trailing `__JAX__` block in every likelihood_function.py. The new multi_galaxy/likelihood_function.py was written in the NEW shape and then word-aligned to the landed text after merging main — a seventh script in that set, not a regression
-- small-dataset-trap: the smoke run leaves a 15x15 dataset behind, so a later "full fidelity" run silently reused it ([[feedback_should_simulate_existence_only]]). Caught by a changed printed ratio; re-verified after `rm -rf dataset/multi_galaxy` on a real 200x200 dataset
-- ci: smoke 3.12+3.13, navigator paths+banner lint, catalogue staleness — all green at 15a15d13
-- ci-false-green: local `check_navigator.py` PASSED while CI FAILED on 5 refs NOT in this diff (scripts/README.md + 3 interferometer/features READMEs). PyAutoHands #213 widened the ref scanner, newly gating pre-existing drift; main fixed it in `3dc5058e` AFTER this branch's merge base. Merging current main resolved it. Two lessons recorded in [[feedback_worktree_base_drifts_from_main]]: CI pulls PyAutoHands FRESH so a gate can tighten under you, and CI runs `--root <checkout> --banners=fail` which is NOT equivalent to `--root .` from inside the workspace
-- merged-in: origin/main twice — f7d7884d (#375 likelihood_function JAX pointer) and e005caca (#376 point_source extra_galaxies). Catalogue regenerated on top came out byte-identical to main's, so no generated-file conflict
-- worktree: ~/Code/PyAutoLabs-wt/multi-galaxy-imaging-parity
-- repos:
-  - autolens_workspace (feature/multi-galaxy-imaging-parity)
 
 ## assistant-output-folder-pointer
 - issue: https://github.com/PyAutoLabs/autolens_assistant/issues/96
@@ -273,3 +250,23 @@
 - worktree: ~/Code/PyAutoLabs-wt/extra-galaxies-multi-galaxy
 - repos:
   - autogalaxy_workspace (feature/extra-galaxies-multi-galaxy)
+
+## correct-simulator-jax-claims
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/379
+- status: awaiting-merge
+- library-pr: https://github.com/PyAutoLabs/PyAutoLens/pull/665
+- workspace-prs: https://github.com/PyAutoLabs/autolens_workspace/pull/380, https://github.com/PyAutoLabs/autogalaxy_workspace/pull/183
+- prompt: draft/docs/workspaces/correct_false_simulator_jax_claims.md
+- scope: four false JAX claims corrected across 9 workspace files + 1 library docstring. (1) "the simulator handles pytree registration internally" — ZERO register hits in any simulator (autolens/autogalaxy/autoarray bases) and unimplementable as worded, since JAX flattens jitted args at trace time; (2) "eager use_jax=True already runs on JAX" — returns numpy.ndarray-backed data in BOTH libraries; (3) the @jax.jit simulator recipe fails even WITH correct registration, inside autoarray; (4) TransformerNUFFT claimed not-JAX-traceable — BACKWARDS
+- my-regression: claim (4) was shipped by ME earlier today in PR#375/#181, inherited from the old __JAX__ blocks. Per autoarray's own error text TransformerNUFFT IS the default JAX-native nufftax-backed transformer (nufftax 0.3.1 installed); TransformerNUFFTPyNUFFT is the legacy pynufft one. Defaults differ BY CLASS: SimulatorInterferometer→TransformerDFT, Interferometer(what a fit uses)→TransformerNUFFT. autolens interferometer/simulator.py already had this right, so #375 contradicted a sibling script
+- exemplars-untouched: point_source/simulator.py and cluster/simulator.py were ALREADY correct — they state the setup, call register_tracer_classes(tracer), and give the trace-time reason. Wording mirrored FROM them; both left alone
+- dead-cells-removed: autolens imaging/ + interferometer/simulator.py had real `@jax.jit def simulate(...)` cells whose CALL was commented out — a decorated function never invoked, which is exactly why the claim survived. Removed; the working use_jax=True constructor stays a live cell
+- ship-evidence: PyAutoLens 488 passed; autolens smoke 17/17; autogalaxy smoke 12/12; all 6 edited simulator scripts run end-to-end; check_sizes.sh clean; post-edit grep zero hits for all four claims
+- gate-note: the library change is docstring-only with ZERO API surface, so library-first is vacuous here — nothing in the workspaces imports new API. Merge order does not matter; PyAutoLens#665 is trivial and can go first
+- origin: fell out of likelihood-function-jax-pointer (#368) → public-register-galaxies-classes (PyAutoGalaxy#536). Third generation of the same root cause: a documented JAX recipe that no script executes will be wrong
+- companion-bug: draft/bug/autoarray/simulator_jax_jit_path_broken.md — the actual library defect behind claim (3), NOT started. At least two un-threaded sites (preprocess.py:153 `noise_map_via_data_eps_and_exposure_time_map_from` takes no xp param at all; then array_2d_util.py), depth beyond that unmeasured
+- worktree: ~/Code/PyAutoLabs-wt/correct-simulator-jax-claims
+- repos:
+  - PyAutoLens (feature/correct-simulator-jax-claims)
+  - autolens_workspace (feature/correct-simulator-jax-claims)
+  - autogalaxy_workspace (feature/correct-simulator-jax-claims)

@@ -271,3 +271,22 @@
 - ci-note: each repo's `wiki-currency` workflow runs on pull_request and audits `skills/` + `wiki/` + `AGENTS.md` + `llms.txt` for stale API symbols — validate locally with `make audit` before shipping
 - worktree: ~/Code/PyAutoLabs-wt/assistant-output-folder-pointer
 - repos:
+
+## remove-finish-docstring-hack
+- issue: https://github.com/PyAutoLabs/PyAutoHands/issues/211
+- session: claude --resume 60926d52-cc7f-4e42-8d79-92a618520f05
+- status: library-dev
+- prompt: active/remove_finish_docstring_hack.md
+- scope: PyAutoHands `add_notebook_quotes` fix + 3 regression tests, then remove all 166 `Finish.` / `Finished.` occurrences across 10 workspace repos and regenerate artifacts
+- root-cause: `py2nb` splits the intermediate `.py` on `'\n\n# %%\n'` but the docstring-OPENER branch (`add_notebook_quotes.py:133`) emits `'# %%\n'` after a SINGLE newline, so a docstring opened on the line immediately after code never splits — the marker and both `'''` delimiters land inside the preceding code cell as literal text. 13 committed notebook code cells are SyntaxError today (autolens_workspace 4, autogalaxy_workspace 3, autocti_workspace 4, HowToLens 2). The CLOSING path is fine (it emits `"'''", "\n\n"` first)
+- finding: the hack itself is already obsolete — deleting the trailing block from `imaging/features/no_lens_light/slam.py` (23→22 cells) and `imaging/features/pixelization/source_science.py` (41→40) through the real conversion chain gives a complete unmangled final code cell, as does every other tail shape (no trailing newline / trailing blanks / trailing comment). So step 1 is a regression test pinning that, plus the separate live bug above
+- fix-constraints: the blank line must be emitted ONLY when `out` is non-empty (`py2nb` strips a LEADING `# %%\n` header; a leading `\n` defeats that strip and yields a spurious empty first code cell) and ONLY when not already blank-terminated (unconditional emission appends a trailing blank line to EVERY code cell and churns every notebook in every workspace)
+- merge-gate: the PyAutoHands PR must land on main before any workspace regeneration — workspaces invoke `../PyAutoHands/autohands/generate.py` from the local checkout
+- shapes: 126 sole-content trailing blocks at EOF; 33 lines inside a block that continues (`__Env__`, `__JAX Variant__`); 2 `Finished.` leading a real sentence (drop the word only); 2 empty `__Finish__` headers; 5 indented-in-function or commented-out. A blanket regex over all five is wrong
+- markdown-decision: human-approved 2026-07-30 — delete the paragraph IN PLACE in the 5 curated pages rather than re-running `generate_markdown.py`, which re-executes real model fits and re-quantizes every figure PNG ([[feedback_ship_workspace_binary_leak]]). Most `Finish` hits under `markdown/` are Nautilus status tables (`Finished | 18 | 1 | …`) and must be left alone
+- brain-override: Feature Agent returned too-large (score 29) / split-into-4-phases (design, core_api, workspace_examples, docs) off its repo-count proxy ([[feedback_brain_repo_count_difficulty_proxy]]). `design` and `core_api` are vacuous (no library API touched) and `docs` is empty — the convention is documented NOWHERE (`AGENTS.md`, `CONTRIBUTING.md`, `PyAutoHands/docs/`, Brain skills all checked). Overridden to one PR per repo behind a single PyAutoHands-first gate
+- parallel-claim: human decision 2026-07-30 — proceed in parallel. `autolens_workspace` is claimed by THREE tasks, `autogalaxy_workspace` by one, `autolens_workspace_test` by `vacuous-jax-assertions`, `PyAutoHands` by `python-312-release-surfaces` (live uncommitted work in `.gitignore`, `bin/autohands`, `docs/internals.md`, `pre_build.sh`, `run_logs/` — zero overlap with `autohands/add_notebook_quotes.py` + its test). Hand-read; the guard reported nothing ([[feedback_worktree_conflict_guard_never_fires]])
+- carve-out: SKIP `autolens_workspace/scripts/multi_galaxy/simulator.py` — one `Finished.` line, uncommitted in `multi-galaxy-imaging-parity`'s worktree. It is the ONLY script-level overlap; the other 8 files the contending branches touch carry zero occurrences
+- follow-up: a column-0 CLOSING `"""` of a triple-quoted string literal in code toggles docstring state the same way — one occurrence, `autolens_workspace_test/gallery/gallery_build.py:42`, outside `scripts/` so never converted. Needs tokenization, not a line-prefix test; file as its own prompt
+- worktree: ~/Code/PyAutoLabs-wt/remove-finish-docstring-hack
+- repos:

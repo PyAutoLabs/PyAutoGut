@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-808 records across 6 buckets.
+809 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -268,6 +268,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [navigator-relative-refs](2026/07/navigator-relative-refs.md)
 - [next-wave-population-optimizers](2026/07/next-wave-population-optimizers.md)
 - [nightly-loud-failure](2026/07/nightly-loud-failure.md) — nightly driver hardening — token probe, fetch errors page (never 💤), anchor validation w/ 24h fallback, no anc…
+- [nightly-page-names-scripts](2026/07/nightly-page-names-scripts.md)
 - [nightly-release-activity-gate](2026/07/nightly-release-activity-gate.md)
 - [nightly-release-implementation](2026/07/nightly-release-implementation.md)
 - [nnls-bpp-admm-experiment](2026/07/nnls-bpp-admm-experiment.md) — BPP and ADMM prototyped against the real systems as PDIP alternatives; BOTH FAILED gates. BPP: sign-init 95% c…

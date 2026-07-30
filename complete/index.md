@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-800 records across 6 buckets.
+801 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -193,6 +193,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [intake_writes_legacy_layout](2026/07/intake_writes_legacy_layout.md)
 - [interferometer-analysis-fitexception](2026/07/interferometer-analysis-fitexception.md) — interferometer (+point_source) log_likelihood_function lacked imaging's NumPy-path try/except→FitException gua…
 - [interferometer-jax-jit](2026/07/interferometer-jax-jit.md) — interferometer simulator @jax.jit path fixed — ONE file, +56/-1 — SHIPPED
+- [interferometer-subhalo-to-advanced](2026/07/interferometer-subhalo-to-advanced.md) — Moved `scripts/interferometer/features/subhalo/` -> `features/advanced/subhalo/` (6 files, `git mv`, 0-line re…
 - [interpolate-instance-labels](2026/07/interpolate-instance-labels.md)
 - [interpolator-aggregator-test-mode](2026/07/interpolator-aggregator-test-mode.md)
 - [interpolator-stale-needs-fix](2026/07/interpolator-stale-needs-fix.md)

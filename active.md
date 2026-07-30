@@ -164,17 +164,3 @@
 - worktree: ~/Code/PyAutoLabs-wt/remove-finish-docstring-hack
 - repos:
 
-## extra-galaxies-multi-galaxy
-- issue: https://github.com/PyAutoLabs/autogalaxy_workspace/issues/182
-- status: awaiting-merge
-- workspace-pr: https://github.com/PyAutoLabs/autogalaxy_workspace/pull/184 (OPEN, pending-release, head dfca793, CI 4/4 GREEN)
-- heart-ack: 2026-07-30 — YELLOW 70, 2 reasons, both pre-existing and unrelated: workspace validation not passing (0 failed, cloud#30516167217); release validation stale: source moved since rehearsal (PyAutoFit, PyAutoGalaxy, PyAutoLens). NOTE this is a DIFFERENT reason set from phase 1's ack (33 stale parked scripts + manifest drift had cleared), so a fresh ack was taken
-- ship-evidence: smoke 13/13 (12 before, +1 new entry); check_sizes.sh clean; navigator verified under the CI root layout; notebooks + catalogue regenerated
-- validation-depth: NO full non-linear fit, deliberately. Human challenged the need 2026-07-30 and was right — phase 1 warranted one (mass-only point-source extra galaxies was new, 12 data points vs 10 params, identifiability was a real question), but 2a composes two already-proven patterns (imaging/features/extra_galaxies + multi_galaxy/modeling.py), so bypass-mode smoke proves the only new thing (the two-tier model composes and runs). The tier-choice argument is modeling practice, not a numerical result
-- TRAP HIT: the capped smoke check (PYAUTO_SMALL_DATASETS=1) REWROTE dataset/multi_galaxy/extra_galaxies at 16x16, so the first real fit trained on a 16-pixel image and was worthless — caught via `IMAGING - Data masked, contains a total of 256 image-pixels` in the log after ~19 min of CPU. Between any capped run and any real fit: rm -rf the dataset + output and re-simulate, then verify with fits.getdata(...).shape ([[feedback_should_simulate_existence_only]])
-- TRAP HIT: `ps -eo pid,cmd | grep <script> | awk '{print $1}'` returns the WRAPPER bash PID (0% CPU) before the python PID (108%), making a healthy fit look stalled. Match on the `python ` prefix or take the LAST match
-- navigator-fallout: same PyAutoHands#213 gate fallout as autolens PR#376 — 5 pre-existing literal `autogalaxy_workspace/scripts/...` refs in untouched files, fixed to the wildcard form in the same commit
-- phase-2b: `draft/docs/workspaces/extra_galaxies_feature_parity_phase_2b_multi_galaxy_autolens.md`, Blocked-on autolens_workspace#370
-- worktree: ~/Code/PyAutoLabs-wt/extra-galaxies-multi-galaxy
-- repos:
-  - autogalaxy_workspace (feature/extra-galaxies-multi-galaxy)

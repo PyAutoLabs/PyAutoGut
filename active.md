@@ -20,3 +20,11 @@
 - repos:
   - PyAutoLens: feature/potential-correction-validation
   - autolens_workspace_test: feature/potential-correction-validation
+
+## multi-start-gradient-progress-logging
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1433
+- session: claude --resume 9b8e086c-0f40-46ad-ae8c-cda3179a335e
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/multi-start-gradient-progress-logging
+- note: Brain sized large (score 8); overridden to small / no-phase-split — every point came from prompt prose (521 words +3, science keywords dynesty/emcee/gradient/jax/sampler +3, jax/vmap +1, memory-context +1) while repos_affected=1 and architectural_risk=[] contributed nothing
+- repos:

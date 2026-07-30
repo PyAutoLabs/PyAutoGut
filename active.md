@@ -1,5 +1,15 @@
 # Active Tasks
 
+## multiband-pyloop-batching
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1430
+- session: claude --resume ed9e7d65-ca7d-4718-8f02-d77a2ad27017
+- status: library-dev
+- prompt: active/multi_band_factorgraph_compile_deeper_dig.md
+- classification: research / autofit — library (PyAutoFit pyloop batching) + autolens_profiling benchmark validation; Brain scored too-large-13 off repo count with a generic 4-phase split, overridden to one implement+benchmark task (#93 precedent)
+- conflict-note: worktree_check_conflict flagged PyAutoFit claimed by python-312-floor; hand-checked stale — that worktree's branch is 0 commits ahead of origin/main (PR#1429 merged)
+- worktree: ~/Code/PyAutoLabs-wt/multiband-pyloop-batching
+- repos:
+
 ## plot-guides-restructure
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/400
 - status: library-dev — phase 0 (PyAutoGalaxy `subplot_fit_imaging_list` export), then workspace phases AL → AG → assistant

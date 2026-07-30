@@ -2,7 +2,8 @@
 
 ## ci-hygiene-tiny
 - issue: https://github.com/PyAutoLabs/PyAutoHands/issues/217
-- status: library-dev — firewall comment de-instance + v2/v1 action bumps
+- status: awaiting-merge — PyAutoHands#218, PyAutoCTI#102, PyAutoGalaxy#539, PyAutoHeart#125 OPEN 2026-07-30 (independent, any order)
+- note: firewall re-run caught two NEW violations from the just-merged worktree-drift test file — fixed in Heart#125 + Mind d8dc28e (allowlist .sh→.py rename); end-state firewall NONE verified pre-merge via symlink farm
 - prompts: active/register_autocti_workspace_clear_manifest_drift.md, active/action_version_stragglers_v2_v1.md
 - classification: maintenance (PyAutoHands + PyAutoCTI + PyAutoGalaxy) — CI/release audit series tasks 6+7, batched
 - worktree: ~/Code/PyAutoLabs-wt/ci-hygiene-tiny

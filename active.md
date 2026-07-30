@@ -1,7 +1,7 @@
 # Active Tasks
 
 ## docs-only-smoke-scope
-- issue: (see commit body — created just above registration)
+- issue: https://github.com/PyAutoLabs/PyAutoHeart/issues/126
 - status: library-dev — changes gate in the reusable smoke workflow
 - prompt: active/docs_only_pr_smoke_scope.md
 - classification: maintenance (PyAutoHeart reusable workflow) — CI/release audit series task 8

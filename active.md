@@ -2,7 +2,10 @@
 
 ## nightly-page-names-scripts
 - issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/184
-- status: library-dev — artifact download-on-failure + page summary
+- status: awaiting-merge — PyAutoBrain#185 OPEN 2026-07-30
+- pr: https://github.com/PyAutoLabs/PyAutoBrain/pull/185
+- evidence: bash -n clean; page line exercised against the real failed run 30516167217 stage report — '2 failed, 1 timeout: autogalaxy interferometer/start_here.py, …'
+- follow-up-filed: draft/feature/pyautoheart/release_channel_dev_box_freshness.md (the durable dev-box validation_report refresh)
 - prompt: active/nightly_ingest_stage3_artifacts_on_failure.md
 - classification: bug (PyAutoBrain) — CI/release audit series task 4; scope corrected (ingest-on-failure is dead code — ephemeral CI state; the win is the page naming scripts)
 - worktree: ~/Code/PyAutoLabs-wt/nightly-page-names-scripts

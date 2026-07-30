@@ -195,8 +195,10 @@
 
 ## potential-correction-start-here
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/389
-- status: workspace-dev
+- status: awaiting-merge
 - prompt: active/potential_correction_guide_to_feature_start_here.md
+- heart-ack: workspace validation not passing (0 failed, cloud#30516167217); manifest drift: tenant firewall (organ code) — 2 mismatch(es) vs PyAutoMind/repos.yaml; release validation stale: source moved since rehearsal (PyAutoFit, PyAutoArray, PyAutoGalaxy, PyAutoLens). Heart yellow/score 70, red_reasons empty, read from `readiness --json` 2026-07-30T10:58Z. NOTE the manifest-drift reason is NEW — it is not covered by the `searches-guide-nautilus-first` ack, so it was acknowledged explicitly
+- evidence: moved script runs green at the new path (exit 0, 534s local vs the 1800s cap; joint dkappa peak (1.45, 0.15) against true subhalo (1.41, 0.00)); resolved CI env proven byte-identical old-path vs new-path; `audit_skill_apis.py` green with a verified positive control (bogus symbol → 1 flagged, so the pass is not vacuous)
 - scope: move `scripts/guides/advanced/potential_correction.py` → `scripts/imaging/features/advanced/potential_correction/start_here.py` (completing the start_here + likelihood_function pair its interferometer twin already has), re-point 5 stale cross-refs, and author `autolens_assistant/skills/al_potential_correction.md`
 - destination-decision: human-confirmed AGAINST the literal request path `imaging/features/potential_corrections/` (plural, no `advanced/`) — that folder does not exist, would have orphaned the existing `likelihood_function.py`, and diverges from the interferometer twin's singular naming
 - brain-override: Brain scored too-large/12 with the four generic phases (design/core_api/workspace_examples/docs); overridden to ONE phase — a file move plus one authored skill, zero library API change, so core_api is vacuous and its "public-API ripple" risk is false. Same repo-count-proxy misfire as `scaling-relation-bgc-anchored` (too-large/13)

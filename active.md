@@ -148,7 +148,7 @@
 ## remove-finish-docstring-hack
 - issue: https://github.com/PyAutoLabs/PyAutoHands/issues/211
 - session: claude --resume 60926d52-cc7f-4e42-8d79-92a618520f05
-- status: workspace-dev (12 PRs open, awaiting CI + merge)
+- status: workspace-dev (12 PRs open; CI 56/56 green; awaiting human merge + close)
 - prompt: active/remove_finish_docstring_hack.md
 - scope: PyAutoHands `add_notebook_quotes` fix + 3 regression tests, then remove all 166 `Finish.` / `Finished.` occurrences across 10 workspace repos and regenerate artifacts
 - root-cause: `py2nb` splits the intermediate `.py` on `'\n\n# %%\n'` but the docstring-OPENER branch (`add_notebook_quotes.py:133`) emits `'# %%\n'` after a SINGLE newline, so a docstring opened on the line immediately after code never splits — the marker and both `'''` delimiters land inside the preceding code cell as literal text. 13 committed notebook code cells are SyntaxError today (autolens_workspace 4, autogalaxy_workspace 3, autocti_workspace 4, HowToLens 2). The CLOSING path is fine (it emits `"'''", "\n\n"` first)

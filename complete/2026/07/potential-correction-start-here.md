@@ -1,3 +1,56 @@
+Moved the potential-correction technique overview out of `guides/advanced/` and into the feature folder its other material already occupied, and gave `autolens_assistant` its first knowledge of the technique.
+
+## What shipped
+
+| Repo | PR | Merge commit |
+|---|---|---|
+| autolens_workspace | [#393](https://github.com/PyAutoLabs/autolens_workspace/pull/393) | `c25dfca7` |
+| autolens_assistant | [#99](https://github.com/PyAutoLabs/autolens_assistant/pull/99) | `8c6877b1` |
+
+`scripts/guides/advanced/potential_correction.py` → `scripts/imaging/features/advanced/potential_correction/start_here.py`, completing the `start_here.py` + `likelihood_function.py` pair the interferometer sibling already had. Retitled to the `X: Start Here` convention, added a `__Related Examples__` block, re-pointed three cross-references, regenerated notebooks + `llms-full.txt` + `workspace_index.json`. **Zero code lines changed** — the diff is three docstring hunks.
+
+New `autolens_assistant/skills/al_potential_correction.md` (full skill, not a stub): the regime gate, arc masking, one-shot `FitDpsiSrcImaging`, reading the `dkappa` map, iterative refinement with gauge constraints, evidence-sampling the regularization, and the interferometer sparse-operator route. Registered in `skills/README.md`, cross-linked both ways with `al_subhalo_detect`, citation-map row added.
+
+## The destination was not the requested path
+
+The request said `imaging/features/poitential_corrections/start_here.py`. The actual destination is `imaging/features/advanced/potential_correction/start_here.py` — singular, one level deeper. The requested folder did not exist; the singular one did, already held `likelihood_function.py`, was already listed in `advanced/README.md`, and matched the interferometer twin's naming. Taking the path literally would have orphaned `likelihood_function.py` and split the feature across two locations. Human-confirmed before any edit.
+
+## Findings
+
+**The `__Env__` rationale was factually wrong.** The script declared `ENV: full_datasets` and justified it as *"Guides load committed full-resolution FITS; SMALL_DATASETS would mismatch the pre-existing 100x100 data shape."* That is boilerplate inherited from the blanket `guides/` profile rule — the script **simulates in-memory** (`al.SimulatorImaging`, line 75) and reads no FITS. The real reason is the dpsi-mesh sparsity crash (`RegularDpsiMesh(factor=2)` too sparse → `mesh.py:get_itp_box_ctr` raises "The dpsi grid is too sparse"), already documented in `profile_release.yaml`. Declaration kept, reason rewritten.
+
+**In-file `ENV:` declarations defeat profile patterns — by design, and it is easy to misread.** Verifying that `profile_release.yaml` needed no change first *appeared* to show a regression: `PYAUTO_SMALL_DATASETS=0` resolved at the old path but was absent at the new one, despite the destination pattern existing. It was an artifact — the old file had already been moved, so its declaration could not be read. Restoring it from `HEAD` and re-resolving gave byte-identical environments. The mechanism: `apply_profile` order is scrub → defaults → overrides → derivation → **declarations**, and each declaration token *unsets* its managed vars. So `full_datasets` releases `PYAUTO_SMALL_DATASETS` no matter which pattern matched, making the `potential_correction` patterns in `profile_release.yaml` effectively redundant for any script carrying that declaration.
+
+**`.script_sizes.json --update` sweeps unrelated drift.** A full refresh rewrote 132/126 lines — the snapshot was already stale repo-wide. Only the moved script's single entry was re-pointed instead, keeping the PR honest.
+
+**`pgrep -f` in a poll loop matches itself.** A waiter built as `until ! pgrep -f "run_script.py"` never exits, because the waiter's own command line contains the pattern. Wait on a captured PID with `kill -0` instead.
+
+## Follow-up filed
+
+[PyAutoLens#666](https://github.com/PyAutoLabs/PyAutoLens/issues/666) — **pre-existing, not caused by this change.** `IterFitDpsiSrcImaging` places its `dkappa` peak at (-0.55, 0.85) against the true subhalo at (1.41, 0.00), with log evidence 4.2e3 versus the one-shot's 9.2e3 — while the script claims it captures compact perturbers "more faithfully than a single linearization". Most likely cause: the imaging example cold-starts `solve_joint_optimization()` while the interferometer sibling warm-starts from the one-shot (`x0=fit.src_dpsi_slim`) and re-optimizes regularization each step (`reg_optimize_every=1`).
+
+## Validation
+
+- Moved script runs green at the new path: exit 0, 534s local against the 1800s cap (CI records 235.7s; ~2.3x is WSL). Joint fit recovers the subhalo — `dkappa` peak (1.45, 0.15) vs true (1.41, 0.00).
+- Resolved CI environment proven byte-identical old-path vs new-path.
+- No new `SyntaxWarning`s (5 before, 5 after — pre-existing in the science docstrings).
+- CI: workspace 4/4 (navigator paths, catalogue staleness, smoke 3.12, smoke 3.13); assistant 2/2 (boundary, wiki-currency).
+- `audit_skill_apis.py` 0 missing/broken across 67 files / 142 symbols — **verified non-vacuous with a positive control** (injected `al.pc.NotARealSymbolXYZ` → 143 symbols / 1 flagged, then removed).
+- Every `al.*` symbol in the skill grounded by introspection against the installed stack (2026.7.23.1), not recall. The one snippet not lifted from a validated workspace script was corrected from a hand-rolled `np.sum(chi_squared_map)/grid.shape[0]` to the real `fit.reduced_chi_squared`.
+- No stale `guides/advanced/potential_correction` reference anywhere in the repo post-merge.
+
+## Process notes
+
+- **Brain override.** Feature Agent scored `too-large` (score 12) and proposed four generic phases (design / core_api / workspace_examples / docs). Overridden to one phase — a file move plus one authored skill, zero library API change, so `core_api` was vacuous and its "public-API ripple" risk false. Same repo-count-proxy misfire recorded on `scaling-relation-bgc-anchored` as `too-large/13`.
+- **Parallel claim, human-authorised.** Three other tasks already claimed `autolens_workspace` (`scaling-relation-bgc-anchored` #385, `searches-guide-nautilus-first`, `extra-galaxies-multi-galaxy-lens` #387). Footprints disjoint; the shared surface was only the regenerated catalogue/notebooks.
+- **Heart YELLOW acknowledged** (score 70, `red_reasons: []`): workspace validation not passing (cloud#30516167217); manifest drift: tenant firewall (organ code) — 2 mismatches vs `repos.yaml`; release validation stale. The manifest-drift reason was **new** and not covered by the prior `searches-guide-nautilus-first` ack, so it was acknowledged explicitly rather than carried over.
+
+## Known gap
+
+No `wiki/core/` page for gravitational imaging. `wiki/core/concepts/substructure_and_subhalos.md` names the technique in its literature path but does not cover the `al.pc` implementation; the skill points there. Authoring a dedicated page was offered and declined for this pass — worth revisiting, since `_style.md` prefers a skill to have wiki content behind it.
+
+## Original prompt
+
 # Move the potential-correction guide into features/ as start_here.py, and teach the assistant
 
 Type: docs

@@ -188,7 +188,7 @@
 
 ## multi-galaxy-imaging-parity
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/370
-- status: workspace-pr-open (awaiting review + merge)
+- status: workspace-pr-open, CI GREEN at 15a15d13 (awaiting review + merge)
 - workspace-pr: https://github.com/PyAutoLabs/autolens_workspace/pull/378
 - prompt: active/multi_galaxy_parity_with_imaging.md
 - scope: bring `scripts/multi_galaxy/` to `scripts/imaging/`'s teaching depth — trim start_here's `__Model__` + add its missing sections (extra-galaxy removal + GUI, pre-search `__JAX__`, iterations-per-update, live-visual-update, both `__Simulator__` blocks); rewrite modeling.py (327 lines) and fit.py (166) against their imaging counterparts; add `likelihood_function.py` / `simulator_sample.py` / `source_science.py`; delete `__Mass/Light Offsets__` package-wide
@@ -203,6 +203,9 @@
 - smoke-decision: the 3 new scripts PASS under TEST_MODE=2/SMALL_DATASETS=1 but are deliberately NOT added to smoke_tests.txt — curated-subset convention ([[feedback_smoke_tests_small_subset]]), imaging/ covers only modeling+fit, and the new shear_galaxy idiom is already exercised by the covered multi_galaxy start_here+modeling entries
 - 375-collision: autolens_workspace#368 merged as PR#375 mid-flight, retiring the long trailing `__JAX__` block in every likelihood_function.py. The new multi_galaxy/likelihood_function.py was written in the NEW shape and then word-aligned to the landed text after merging main — a seventh script in that set, not a regression
 - small-dataset-trap: the smoke run leaves a 15x15 dataset behind, so a later "full fidelity" run silently reused it ([[feedback_should_simulate_existence_only]]). Caught by a changed printed ratio; re-verified after `rm -rf dataset/multi_galaxy` on a real 200x200 dataset
+- ci: smoke 3.12+3.13, navigator paths+banner lint, catalogue staleness — all green at 15a15d13
+- ci-false-green: local `check_navigator.py` PASSED while CI FAILED on 5 refs NOT in this diff (scripts/README.md + 3 interferometer/features READMEs). PyAutoHands #213 widened the ref scanner, newly gating pre-existing drift; main fixed it in `3dc5058e` AFTER this branch's merge base. Merging current main resolved it. Two lessons recorded in [[feedback_worktree_base_drifts_from_main]]: CI pulls PyAutoHands FRESH so a gate can tighten under you, and CI runs `--root <checkout> --banners=fail` which is NOT equivalent to `--root .` from inside the workspace
+- merged-in: origin/main twice — f7d7884d (#375 likelihood_function JAX pointer) and e005caca (#376 point_source extra_galaxies). Catalogue regenerated on top came out byte-identical to main's, so no generated-file conflict
 - worktree: ~/Code/PyAutoLabs-wt/multi-galaxy-imaging-parity
 - repos:
   - autolens_workspace (feature/multi-galaxy-imaging-parity)

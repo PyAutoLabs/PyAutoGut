@@ -54,8 +54,13 @@ Parent: draft/docs/autolens/split_lensing_regimes.md
   BLOCKED from cloud sessions (2026-07-26): MAST is unreachable through the
   session proxy (`Tunnel connection failed: 403`) — needs a
   local/unrestricted-network session to download + prepare the frames.
-- Extra-galaxies / pixelization feature variants remain README cross-links
-  (the group/imaging feature scripts apply verbatim with the lens loop).
+- ~~Extra-galaxies / pixelization feature variants remain README cross-links
+  (the group/imaging feature scripts apply verbatim with the lens loop).~~
+  `extra_galaxies` shipped (PR#391) and `scaling_relation` shipped (PR#396). The
+  remaining feature tier — linear light profiles, MGE, no_lens_light, pixelization
+  and the whole `advanced/` subtree — is now carried by
+  `draft/docs/workspaces/multi_galaxy_features_group_parity.md` (4 phases,
+  2026-07-30), which also adds a top-level `multi_galaxy/slam.py`.
 
 Create the new `scripts/multi_galaxy/` package in @autolens_workspace — the first
 of the three above-galaxy-scale regimes (see the parent plan for the full design

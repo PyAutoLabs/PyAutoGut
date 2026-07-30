@@ -7,8 +7,13 @@ Repos:
 Difficulty: large
 Autonomy: supervised
 Priority: normal
-Status: draft
+Status: phased 2026-07-30 — four phase prompts written; phase 1 in flight
 Parent: draft/docs/autolens/multi_galaxy_package.md
+Phases:
+- draft/docs/workspaces/multi_galaxy_features_group_parity_phase_1_baseline_simple.md
+- draft/docs/workspaces/multi_galaxy_features_group_parity_phase_2_mge_pixelization.md
+- draft/docs/workspaces/multi_galaxy_features_group_parity_phase_3_advanced_light.md
+- draft/docs/workspaces/multi_galaxy_features_group_parity_phase_4_advanced_mass.md
 
 ## Original request (verbatim)
 
@@ -78,6 +83,16 @@ per script (e.g. pixelization/delaunay 1518 lines vs group's 364).
    the deeper sibling on most folders, and `multi_galaxy/`'s own core scripts (post-#378) are
    written at imaging depth — `modeling.py` 887 lines, `likelihood_function.py` 689 — so imaging
    depth is also what keeps the package internally consistent.
+
+## Brain routing (phase-split override recorded)
+
+`bin/pyauto-brain feature` returned: docs / autolens_workspace, difficulty
+**too-large (score 11)**, workflow **workspace**, decision **split-into-phases** — all
+correct. Its *generic* phase split (`design → core_api → workspace_examples → docs`) was
+**overridden**: this is pure workspace-docs work with no core-API leg, so the phases
+below are content-based instead. Same failure mode as recorded on the extra_galaxies
+arc — the difficulty score is a repo-count proxy and the emitted phase names are a
+template, not a judgment about this task.
 
 ## Phasing
 

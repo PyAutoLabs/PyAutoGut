@@ -185,3 +185,15 @@
   - HowToLens (feature/remove-finish-docstring-hack)
   - euclid_strong_lens_modeling_pipeline (feature/remove-finish-docstring-hack)
 
+
+## scaling-relation-bgc-anchored
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/385
+- session: claude --resume c351dadf-a66d-4a7e-891f-d8771123d77d
+- status: workspace-dev
+- scope: phase 1 of 2 — BGC-anchored scaling_relation packages for imaging + multi_galaxy
+- phase-2-prompt: draft/docs/workspaces/scaling_relation_bgc_anchored_phase_2_interferometer_point_source.md (interferometer + point_source, mass-only regimes)
+- parent-prompt: draft/docs/workspaces/scaling_relation_bgc_anchored_feature_packages.md (verbatim request + research findings)
+- brain-override: Brain scored too-large/13 with four generic phases (design/core_api/workspace_examples/docs); overridden to two phases split by regime — one repo, zero library API change, so core_api was vacuous
+- collision-cleared: launched authorised to run parallel to PR#383/#384, but both merged 2026-07-30T10:24-10:25Z before any edit — branch is off clean post-merge main, no "take ours" resolution needed
+- worktree: ~/Code/PyAutoLabs-wt/scaling-relation-bgc-anchored
+- repos:

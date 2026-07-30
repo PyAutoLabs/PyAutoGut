@@ -7,8 +7,18 @@ Repos:
 Difficulty: medium
 Autonomy: supervised
 Priority: normal
-Status: draft
+Status: superseded 2026-07-30
 Parent: draft/docs/autolens/split_lensing_regimes.md
+Superseded-by: draft/docs/workspaces/scaling_relation_bgc_anchored_feature_packages.md
+
+**Superseded note (2026-07-30).** The `extra_galaxies` half of this prompt shipped as
+autolens_workspace#376 (point_source) and autogalaxy_workspace#184 (multi_galaxy). The
+`scaling_galaxies` half is now carried by the BGC-anchored prompt above, which supersedes the
+mechanism assumed here: that prompt ties each scaling galaxy's Einstein radius to the brightest
+main galaxy's own free radius (zero new free parameters) rather than to a standalone free
+`einstein_radius_ref`. The requirements below — untruncated isothermals at galaxy/multi_galaxy
+scale with the tidal-stripping reasoning, the "load of galaxies far from the lens" framing, and
+the ladder wrap-up — carry over unchanged and are restated in the phase prompts.
 
 Ensure the single-galaxy-scale example trees (`imaging/`, `interferometer/`,
 `point_source/`) each expose `extra_galaxies` and `scaling_galaxies` as

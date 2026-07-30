@@ -8,29 +8,37 @@ Difficulty: medium
 Autonomy: supervised
 Priority: normal
 Status: draft
-Blocked-on: autolens_workspace#370 (multi-galaxy-imaging-parity) must MERGE first
+Unblocked: autolens_workspace#370 MERGED and closed 2026-07-30
 Parent: draft/docs/workspaces/extra_galaxies_feature_parity.md
 
 Phase 2b of the extra-galaxies parity task — the autolens half of phase 2, split out
 2026-07-30. Phase 1 (point_source) shipped as autolens_workspace#374 / PR#376; phase 2a is
 the autogalaxy half.
 
-## Why this is blocked
+## Now unblocked — what #370 actually landed
 
-`multi-galaxy-imaging-parity` (autolens_workspace#370) is in flight and rewrites
-`scripts/multi_galaxy/` wholesale — 2,959 insertions across `start_here.py`, `modeling.py`,
-`fit.py`, `simulator.py` plus new `likelihood_function.py` / `simulator_sample.py` /
-`source_science.py`. Critically for this task, it **adds a faint extra galaxy +
-`mask_extra_galaxies.fits` to `multi_galaxy/simulator.py` and an
-`__Extra Galaxies Noise Scaling__` section to the core scripts**.
+`multi-galaxy-imaging-parity` (autolens_workspace#370) merged and closed 2026-07-30. Verified on
+`origin/main` @ `264d4ab9`:
 
-That is the *core-script* noise-scaling treatment; this task is the *features/* modeling
-example — the same complementary split the imaging package already has. But the prose here
-must reference what #370 actually lands rather than duplicate it, so write this against the
-merged `multi_galaxy/`, not today's.
+- `scripts/multi_galaxy/` gained `likelihood_function.py`, `simulator_sample.py`,
+  `source_science.py`; `modeling.py` is now 886 lines, `fit.py` 614, `start_here.py` 673.
+- `simulator.py` (439 lines) adds **one** faint extra galaxy at `(2.2, 1.6)` — an
+  `ExponentialSph` **light profile only, deliberately no mass**, so "the lensed source arcs are
+  unchanged and the dataset remains a clean two-deflector lens for all other examples".
+- It writes `mask_extra_galaxies.fits`, and `start_here`/`modeling`/`fit`/`likelihood_function`
+  all carry an `__Extra Galaxies Noise Scaling__` section.
+- `multi_galaxy/README.md` already has a `# Folders` section naming `features` — so this task
+  does **not** need to add one (the earlier plan assumed it would).
 
-File overlap when it does run: `scripts/multi_galaxy/README.md` only (#370 also edits it).
-`smoke_tests.txt` and `scripts/multi_galaxy/features/**` are untouched by #370.
+**This settles the division of labour.** The core scripts teach the **noise-scaling lever** with a
+massless contaminant. This task is the **modeling lever**: extra galaxies carried in the model with
+light *and* mass, on top of N co-dominant deflectors. Exactly the imaging arrangement, and
+complementary rather than duplicative — do not repeat the noise-scaling walkthrough, reference it.
+
+The core `simulator.py` prose already raises the tier question ("telling them apart is the first
+judgement you make about a multi-galaxy field — if in doubt, the test is whether it contributes
+significantly to the lensing"). This example is where that judgement should be **operationalised**:
+what actually goes wrong in each direction when you get it wrong.
 
 ## Scope
 

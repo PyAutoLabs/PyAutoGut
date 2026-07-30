@@ -1,5 +1,14 @@
 # Active Tasks
 
+## test-run-honest-reason
+- issue: https://github.com/PyAutoLabs/PyAutoHeart/issues/119
+- status: library-dev — implementing artifact ingest + honest counts
+- prompt: active/test_run_honest_reason_and_artifact_ingest.md
+- classification: bug (PyAutoHeart) — CI/release audit series task 2
+- worktree: ~/Code/PyAutoLabs-wt/test-run-honest-reason
+- repos:
+  - PyAutoHeart (feature/test-run-honest-reason)
+
 ## multiband-pyloop-batching
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1430
 - session: claude --resume ed9e7d65-ca7d-4718-8f02-d77a2ad27017

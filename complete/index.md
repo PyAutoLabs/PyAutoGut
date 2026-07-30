@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-809 records across 6 buckets.
+810 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -434,6 +434,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [workspace-readme-drift](2026/07/workspace-readme-drift.md)
 - [workspace-start-here-colab-links](2026/07/workspace-start-here-colab-links.md) — Generic PyAutoLens and PyAutoGalaxy introduction links now open each workspace-root start_here.ipynb rather th…
 - [workspace_examples_agent](2026/07/workspace_examples_agent.md)
+- [worktree-drift-fixes](2026/07/worktree-drift-fixes.md)
 
 ## 2026/06
 

@@ -1,16 +1,5 @@
 # Active Tasks
 
-## worktree-drift-fixes
-- issue: https://github.com/PyAutoLabs/PyAutoHeart/issues/123
-- status: awaiting-merge — PyAutoHeart#124 OPEN 2026-07-30
-- pr: https://github.com/PyAutoLabs/PyAutoHeart/pull/124
-- evidence: suite 328 passed (8 new tests); live run — only real missing claim surfaced, canonical dirt deduped to once-per-checkout
-- prompt: active/worktree_drift_false_missing_and_symlink_double_count.md
-- classification: bug (PyAutoHeart) — CI/release audit series task 5; monitoring-only check
-- worktree: ~/Code/PyAutoLabs-wt/worktree-drift-fixes
-- repos:
-  - PyAutoHeart (feature/worktree-drift-fixes)
-
 ## multiband-pyloop-batching
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1430
 - session: claude --resume ed9e7d65-ca7d-4718-8f02-d77a2ad27017

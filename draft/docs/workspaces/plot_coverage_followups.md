@@ -58,7 +58,35 @@ autosummary blocks against the live `aplt` namespace.
 
 - @PyAutoLens (and probably @PyAutoGalaxy)
 
-## 4. `autolens.plot` shadows two of its own interferometer functions
+## 4. `autolens.plot` shadows two of its own interferometer functions — RESOLVED
+
+**SHIPPED 2026-07-30 as PyAutoLens#670 (`339867e2c`).** Resolved additively:
+`subplot_fit_interferometer_dirty_images` now exports autolens's own function,
+matching the existing `subplot_fit_real_space` /
+`subplot_fit_interferometer_real_space` convention. `subplot_fit_dirty_images`
+was deliberately **left bound to autogalaxy's** version — the signatures diverge
+(`residuals_symmetric_cmap` vs `image_plane_lines`), so rebinding would be a
+behaviour change rather than an additive export.
+
+Confirmed the autolens version is materially better for lensing, not a
+duplicate: with `image_plane_lines=None` it auto-derives the tracer's critical
+curves from the fit (`_compute_critical_curve_lines`) and overlays them on the
+dirty model image. Verified functionally on a real `FitInterferometer` — 1 curve
+derived — not just signature-checked.
+
+**Remaining sub-item:** `autolens_workspace` still calls the autogalaxy-bound
+`aplt.subplot_fit_dirty_images` at 11 sites —
+`scripts/interferometer/{fit,modeling,plot}.py`, four
+`scripts/interferometer/features/*/fit.py`, and
+`scripts/multi/features/imaging_and_interferometer/modeling.py`. All pass
+`fit=fit` only (none pass `residuals_symmetric_cmap`), so all 11 can be switched
+to the new name and would gain critical-curve overlays for free. Deferred
+because it is a **visual change across 11 lens examples** and deserves its own
+review pass.
+
+<details>
+<summary>Original finding</summary>
+
 
 `aplt.subplot_fit_dirty_images` and `aplt.subplot_fit_real_space` resolve to the
 **autogalaxy** implementations inside `autolens.plot`:
@@ -90,3 +118,5 @@ name, or leave it — then sweep the workspace calls accordingly.
 - @autolens_workspace (calls `aplt.subplot_fit_dirty_images` in
   `scripts/interferometer/plot.py`, `scripts/interferometer/modeling.py` and
   `scripts/multi/features/imaging_and_interferometer/modeling.py`)
+
+</details>

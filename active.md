@@ -124,12 +124,12 @@
   checks passed exact head `5b42f3e4`. The full five-library core floor is now
   merged; no release or issue closure was performed. Advance to Phase 2.
 
-## python-312-prebuild-debris-guard
+## python-312-release-surfaces
 - issue: https://github.com/PyAutoLabs/PyAutoHands/issues/209
 - status: library-dev
 - prompt: active/python_312_prebuild_debris_guard.md
 - branch: feature/python-312-release-surfaces
-- worktree: ~/Code/PyAutoLabs-wt/python-312-prebuild-debris-guard
+- worktree: ~/Code/PyAutoLabs-wt/python-312-release-surfaces
 - parent: python-312-floor
 - repos:
   - PyAutoHands: feature/python-312-release-surfaces

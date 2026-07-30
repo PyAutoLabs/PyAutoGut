@@ -1,5 +1,18 @@
 # Active Tasks
 
+## plot-guides-restructure
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/400
+- status: library-dev — phase 0 (PyAutoGalaxy `subplot_fit_imaging_list` export), then workspace phases AL → AG → assistant
+- prompt: active/plot_guides_legacy_removal_restructure.md
+- classification: docs / workspaces — both (1-line PyAutoGalaxy library leg + workspace restructure); Brain scored large-8 off repo count, overridden to one task with 4 phases
+- conflict-note: worktree_check_conflict flagged PyAutoGalaxy claimed by python-312-floor; hand-checked stale — phase-1d PR#535 merged, claiming checkout on main at the merge commit
+- worktree: ~/Code/PyAutoLabs-wt/plot-guides-restructure
+- repos:
+  - PyAutoGalaxy (feature/plot-guides-restructure)
+  - autolens_workspace (feature/plot-guides-restructure)
+  - autogalaxy_workspace (feature/plot-guides-restructure)
+  - autolens_assistant (feature/plot-guides-restructure)
+
 ## python-312-floor
 - issue: https://github.com/PyAutoLabs/PyAutoNerves/issues/142
 - status: Phase 3 live release published; Phase 5A cleanup complete; Phase 5B COMPLETE 2026-07-30 — all tracked selectors now at 3.12+; parent awaits explicit human close (PyAutoNerves#142)

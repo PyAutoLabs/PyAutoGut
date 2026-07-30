@@ -182,3 +182,23 @@
 - repos:
   - autolens_workspace (feature/restore-imaging-jax-recipe)
   - autogalaxy_workspace (feature/restore-imaging-jax-recipe)
+
+## script-prose-ref-drift
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/377
+- status: workspace-dev (7 PRs open, awaiting CI)
+- prs: autolens_workspace#383, autogalaxy_workspace#186, autofit_workspace#126, autocti_workspace#15, HowToFit#38, HowToGalaxy#50, HowToLens#61 (all pending-release)
+- prompt: active/script_prose_and_howto_ref_drift.md
+- scope: final surface of the README ref-drift arc — dead refs in scripts/**/*.py docstrings; 129 -> 0 findings across all 7 repos
+- verified: hygiene refs 0/7 repos; check_navigator --banners=fail PASS on all 6 gated
+- self-caught: 2 of my own re-points were wrong (point_source/likelihood_function and subhalo/detect/examples do not exist) — found by re-running the scanner after the bulk pass, not by review
+- known-gap: autocti_workspace notebooks NOT regenerated — generate.py rejects project 'autocti' (absent from COLAB_PROJECTS and PyAutoNerves _PROJECTS) and DELETES notebooks/ before aborting; restored, no damage. Follow-up filed.
+- parallel-claim: autolens_workspace also claimed by extra-galaxies-point-source and multi-galaxy-imaging-parity; source files disjoint, but all three touch llms-full.txt/workspace_index.json so the later merge must regenerate
+- worktree: ~/Code/PyAutoLabs-wt/script-prose-ref-drift
+- repos:
+  - autolens_workspace (feature/script-prose-ref-drift)
+  - autogalaxy_workspace (feature/script-prose-ref-drift)
+  - autofit_workspace (feature/script-prose-ref-drift)
+  - autocti_workspace (feature/script-prose-ref-drift)
+  - HowToFit (feature/script-prose-ref-drift)
+  - HowToGalaxy (feature/script-prose-ref-drift)
+  - HowToLens (feature/script-prose-ref-drift)

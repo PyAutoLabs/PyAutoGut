@@ -13,6 +13,8 @@
 - worktree: ~/Code/PyAutoLabs-wt/plot-coverage-gaps
 - repos:
   - PyAutoLens (feature/plot-coverage-gaps)
+  - autolens_workspace (feature/plot-coverage-gaps)
+  - autogalaxy_workspace (feature/plot-coverage-gaps)
 
 ## group-start-here-timeout
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/402

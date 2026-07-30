@@ -153,6 +153,11 @@
 - parent-prompt: draft/docs/workspaces/scaling_relation_bgc_anchored_feature_packages.md (verbatim request + research findings)
 - brain-override: Brain scored too-large/13 with four generic phases (design/core_api/workspace_examples/docs); overridden to two phases split by regime — one repo, zero library API change, so core_api was vacuous
 - collision-cleared: launched authorised to run parallel to PR#383/#384, but both merged 2026-07-30T10:24-10:25Z before any edit — branch is off clean post-merge main, no "take ours" resolution needed
+- heart-ack: YELLOW score 70 acknowledged by human 2026-07-30 for phase 1 ship; exact reasons:
+  - "workspace validation not passing (0 failed, cloud#30516167217)"
+  - "manifest drift: tenant firewall (organ code) — 2 mismatch(es) vs PyAutoMind/repos.yaml"
+  - "release validation stale: source moved since rehearsal (PyAutoFit, PyAutoArray, PyAutoGalaxy, PyAutoLens)"
+  (ack does not extend to any new reason)
 - worktree: ~/Code/PyAutoLabs-wt/scaling-relation-bgc-anchored
 - base: branched off post-merge main 264d4ab9 (includes PR#383 + PR#384)
 - repos:

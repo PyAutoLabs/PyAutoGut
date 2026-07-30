@@ -1,59 +1,18 @@
 ## assistant-output-folder-pointer
 - issue: https://github.com/PyAutoLabs/autolens_assistant/issues/96 (closed)
 - completed: 2026-07-30
-- workspace-prs:
+- workspace-pr:
   - https://github.com/PyAutoLabs/autolens_assistant/pull/97 (merged 5d4c4559)
   - https://github.com/PyAutoLabs/autofit_assistant/pull/26 (merged ce150b97)
   - https://github.com/PyAutoLabs/autocti_assistant/pull/16 (merged 37cdd1e3)
-- summary: All three assistant cells now tell novice/teacher-mode users where an active fit writes output and point at the canonical workspace explanation instead of duplicating a directory tree.
-- validation: autofit and AutoCTI CI green unchanged; autolens wiki-currency green and boundary green after the shared policy classifier landed.
-- notes: The autolens PR also corrected two stale HPC citations exposed by its existing wiki-currency gate.
-
-## Original prompt
-
-# Assistants point novices at the output folder when a fit starts
-
-Every assistant cell that launches a model-fit should, when the user reads as a
-novice or the session is in teacher mode, tell them the output folder is live and
-show them how to look at it — rather than leaving them staring at a running
-search with nothing to do.
-
-Targets: @autolens_assistant, @autofit_assistant, @autocti_assistant (the three
-cells that have `modes/teacher.md` + fit-launching skills; @euclid_assistant has
-neither).
-
-The canonical prose already exists and must be pointed at, not re-written:
-
-- **lens / galaxy** — `__Output Folder Layout__` in
-  `autolens_workspace/scripts/imaging/modeling.py` (also in `interferometer`,
-  `point_source`, `group`, `cluster`, `weak` `modeling.py`, and the same section
-  in `autogalaxy_workspace/scripts/{imaging,interferometer,ellipse}/modeling.py`)
-  — a full annotated directory tree of `files/`, `image/`, `model.info`,
-  `model.results`, `search.summary`, plus the `<unique_hash>` resume behaviour.
-- **fit** — the output-folder breakdown in
-  `autofit_workspace/scripts/overview/overview_2_scientific_workflow.py`.
-- **cti** — `__Output Folder__` / `__On The Fly Outputs__` in
-  `autocti_workspace/scripts/{dataset_1d,imaging_ci}/modeling/start_here.py`.
-
-Edit points to consider (confirm during planning):
-
-- `modes/teacher.md` "What changes" — add the output-folder walkthrough as an
-  explicit teacher-mode behaviour at fit launch.
-- the fit-launching skills — `al_run_search` (its "Output" section already quotes
-  the path but does not point at the workspace section or the novice branch),
-  `al_configure_search` "Output folder layout", `af_run_search` ("Monitoring a
-  running fit"), `ac_fit_cti_model` ("Run the search and read the result").
-- `skills/_style.md` "Adaptive depth" / "Newcomer mode" is where the novice cue is
-  already defined — reuse it rather than inventing a second depth rule.
-
-Keep it minimal: a pointer plus one line on what to open first (the on-the-fly
-`fit.png` / `model.results`), and the fact that results appear *while* the search
-runs. Do not copy the directory tree into the assistant repos — it would rot.
-
-## Original request
-
-I would like the assistant to direct uses to __Output Folder Layout__ (see
-autolens_workspace/scritps/imaging/modeling.) when they begin modeling if they
-sound novice or in teacher mode, so we ned to encourage each assistant tod o
-that. i.e. make sure the iknow they an look at the output folder when the model
-starts and know how to inspect it.
+- summary: Every assistant cell now announces the live output folder when a fit starts, for novice and teacher-mode users. Each of autolens_assistant, autofit_assistant and autocti_assistant gained a `## Output folder announcement` section in `skills/_style.md`, placed beside the existing `## Plot output and path announcement` and following the same three-numbered-rules shape: announce the absolute `output/<path_prefix>/<name>/<unique_id>/` path when the fit starts (results are written on the fly from the best model so far), point at the workspace's own layout prose rather than restating it, and name what to open first before routing to the load-results skill. Depth reuses the existing "Adaptive depth" / "Newcomer mode" cue rather than inventing a second depth rule — both newcomer audiences and any teacher-mode session get the full tour, a returning user gets one line quoting the path. `modes/teacher.md` gained the matching bullet in all three, and the pointer was wired into the four skills where a fit actually launches: `al_run_search`, `al_configure_search`, `af_run_search`, `ac_fit_cti_model`.
+- citations: pointer only — the annotated directory tree was deliberately never copied into an assistant repo, where it would rot. Lens cites `__Output Folder Layout__` in `autolens_workspace/scripts/imaging/modeling.py`; fit cites the output-folder breakdown in `autofit_workspace/scripts/overview/overview_2_scientific_workflow.py`; cti cites `__Output Folder__` / `__On The Fly Outputs__` in `autocti_workspace/scripts/dataset_1d/modeling/start_here.py`. The canonical prose is NOT uniform across stacks: only the lens/galaxy `modeling.py` scripts carry the full annotated tree.
+- stack-nuance: `model.results`, `search.summary` and `image/` are all written by autofit itself (`non_linear/paths/abstract.py:573-608`, `:310-318`), so they are common to every stack — but autofit's `image/` only fills if the `Analysis` defines an `af.Visualizer`, which its rule 3 now says explicitly rather than promising plots nobody wired up. Under a PyAutoCTI factor graph one fit is written per charge line, so the cti rule requires naming whose output is being quoted.
+- scope: `euclid_assistant` excluded — the Brain Feature Agent listed it, but it is a paper repo with no `modes/` and no `skills/`. There is no `autogalaxy_assistant`, so the lens cell carries the galaxy citation. No `## Further reading` edit and no new row in `wiki/core/external/skill_citation_map.md` (those blocks are generated from that table and this is not a per-skill citation row); `llms.txt` is hand-maintained in these repos, not generated from `skills/`, so no regeneration step.
+- brain-override: Feature Agent returned too-large (score 11) / split-into-4-phases (design, core_api, workspace_examples, docs) off its repo-count proxy. Three of the four phases were vacuous — no library code, no API, no workspace example — so it was overridden to one task with one PR per repo (~10 markdown edits of uniform shape).
+- parallel-claim: `worktree_check_conflict` FIRED correctly on all three repos (`python-312-auto{lens,fit,cti}-wiki-currency-ci`, open PRs 95/25/15, colon-form claims). Human decision: proceed in parallel after `gh api repos/<owner>/<repo>/pulls/<n>/files` showed each of those PRs changing exactly one file, `.github/workflows/wiki-currency.yml` — disjoint from `modes/` + `skills/`. The files API is the cheapest disambiguation for a pushed claim.
+- heart-ack: YELLOW 65 — workspace validation not passing (13 failed, 2026-07-21T19-05-22Z); 33 stale parked script(s); release validation stale: source moved since rehearsal (PyAutoFit, PyAutoGalaxy, PyAutoLens). All three pre-existing and structurally unrelated to markdown-only edits in assistant repos.
+- validation: `autoassistant/audit_skill_apis.py` (what the `wiki-currency` CI job runs) reported 0 missing/broken for autolens (66 files, 124 symbols) and autofit (29 files, 38 symbols). autocti is not verifiable locally — `autocti` is not installed in this environment, so all 18 reported misses are `ModuleNotFoundError` on pre-existing symbols; its CI job installs the stack and passed. Every new relative link was resolved from its file's directory, and every cited workspace path plus section header was confirmed present, including the five sibling `modeling.py` scripts named in the lens rule. Assistant repos have no smoke tests; the audit is the gate.
+- preexisting-red-fixed: `wiki-currency --check-citations` had been failing because `autolens_assistant/wiki/core/operations/hpc.md` still cited `autolens_workspace:scripts/guides/hpc/example_cpu.py`, renamed to `example_cpu_and_gpu.py` by autolens_workspace#360 (`b0836b72`), plus a `batch/` folder now split into `batch_cpu/` + `batch_gpu/`. Fixed inside PR #97 (`da75c27`) — 407 citations, 0 missing paths. Fallout of the earlier HPC-guide-sync task that never reached the assistant wiki.
+- preexisting-red-filed-then-fixed: `clone-boundary` failed on autolens_assistant because `AI_POLICY.md` "falls on neither side of the template boundary" — red on EVERY branch of that repo since `feature/ai-policy` merged 2026-07-27, blocking future assistant births as well. Out of scope here (the fix spans `modes/maintainer.md` and PyAutoBrain `_clone.py` `REFERENCE_PROFILES`), so it was filed as `draft/bug/pyautobrain/clone_boundary_ai_policy_unclassified.md` with the grounding done: `AI_POLICY.md` absent from `_SHARED_GENERIC` (`_clone.py:52-72`), all three cells carry the file, none classified it, and `REFERENCE_PROFILES` covers only autolens+autofit — which is why only the lens cell went red. That prompt was picked up the same day and shipped as [[ai-policy-validator-followups]] (PyAutoBrain#181; PRs PyAutoBrain#182, autolens_assistant#98, autofit_assistant#27, autocti_assistant#17, all merged): `AI_POLICY.md` is now generic at `_clone.py:55` and `clone-boundary` is green. #97 itself merged while the check was still red, since its content never caused it.
+- notes: The autolens_assistant main checkout carried unrelated concurrent work (`paper/paper.md` modified, `paper/prompt.md` untracked); it was left untouched and never entered the task worktree.

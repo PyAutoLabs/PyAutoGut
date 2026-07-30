@@ -1,5 +1,14 @@
 # Active Tasks
 
+## cluster-dpie-docstring-style
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/410
+- session: claude --resume f47a8f9e-ce35-4f6b-bde8-c35ef7338245
+- status: workspace-dev
+- worktree: ~/Code/PyAutoLabs-wt/cluster-dpie-docstring-style
+- note: worktree_check_conflict fired on 3 concurrent autolens_workspace claims (#407, #408, multi-galaxy-features-parity); hand-checked file-disjoint from scripts/cluster/** — only generated sidecars shared, re-merge main + regenerate before PR
+- repos:
+  - autolens_workspace: feature/cluster-dpie-docstring-style
+
 ## point-source-chi-squared-variants
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/657
 - session: claude --resume daaa46f9-aac5-48e2-9146-1202a92d879e

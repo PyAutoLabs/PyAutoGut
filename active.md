@@ -165,24 +165,6 @@
 - repos:
 
 
-## restore-imaging-jax-recipe
-- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/381
-- status: awaiting-merge
-- workspace-prs: https://github.com/PyAutoLabs/autolens_workspace/pull/382, https://github.com/PyAutoLabs/autogalaxy_workspace/pull/185
-- prompt: draft/docs/workspaces/restore_imaging_simulator_jax_recipe.md
-- scope: PyAutoArray#421 fixed the imaging simulator @jax.jit path, so the "does not currently work" wording shipped in #379/#183 is now false. Recipe restored in both `imaging/simulator.py` + both `guides/using_jax.py` + the autolens group/multi_galaxy stubs, AND the imaging simulator scripts added to `smoke_tests.txt` so CI executes it
-- the-actual-fix: **no simulator.py was in either smoke_tests.txt**, so uncommenting alone would have bought ZERO CI coverage. Adding `imaging/simulator.py` to the smoke list is the real fix for the root cause of this whole 4-generation arc. autolens 17→18, autogalaxy 12→13; log shows `[PASS] imaging/simulator.py — 5.3s` and `data backing type is ArrayImpl`, i.e. CI genuinely runs the jitted recipe and it returns a real jax.Array. 5.3s, so per-PR cost is negligible
-- autogalaxy-was-worse: its `__JAX Variant__` had the WHOLE recipe including the call inside a ```python fence — it LOOKED like a working `dataset_jax = simulate(galaxies)` while being inert prose. Now real executed cells
-- smoke-path-trap: `smoke_tests.txt` entries are relative to `scripts/`, NOT repo root. A first append of `scripts/imaging/simulator.py` would have resolved to `scripts/scripts/...`; caught by reading the file's existing format. Verify by the summary COUNT rising, not just by green
-- registration-unchanged: PyAutoArray#421 changed only what happens AFTER registration. `register_tracer_classes` / `register_galaxies_classes` remains the caller's job and CANNOT be automated — JAX flattens jitted arguments at trace time, before entering the callee. Kept that reason in the prose
-- interferometer-untouched: both `interferometer/simulator.py` and the interferometer paragraph in both guides still say the jitted path does not work — STILL TRUE (PyAutoArray#421 excluded it; TransformerDFT at the jit boundary, TransformerNUFFT at transformer.py:660). Tracked in draft/bug/autoarray/interferometer_simulator_jax_jit.md
-- parallel-claim: autogalaxy_workspace#184 (feature/extra-galaxies-multi-galaxy, another session) open and touching the generated artifacts; no source overlap, last to merge re-runs generate.py
-- origin: closes the loop on the arc likelihood-function-jax-pointer (#368) → public-register-galaxies-classes (PyAutoGalaxy#536) → correct-simulator-jax-claims (#379) → simulator-jax-xp-threading (PyAutoArray#420) → here
-- worktree: ~/Code/PyAutoLabs-wt/restore-imaging-jax-recipe
-- repos:
-  - autolens_workspace (feature/restore-imaging-jax-recipe)
-  - autogalaxy_workspace (feature/restore-imaging-jax-recipe)
-
 ## script-prose-ref-drift
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/377
 - status: workspace-dev (7 PRs open, awaiting CI)

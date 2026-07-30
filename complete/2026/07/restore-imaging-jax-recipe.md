@@ -1,3 +1,23 @@
+## restore-imaging-jax-recipe (imaging @jax.jit recipe restored AND put under CI — SHIPPED; closes the 5-generation arc)
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/381 (CLOSED)
+- completed: 2026-07-30
+- workspace-prs: https://github.com/PyAutoLabs/autolens_workspace/pull/382 (MERGED ff6f1c84), https://github.com/PyAutoLabs/autogalaxy_workspace/pull/185 (MERGED abd92982)
+- summary: PyAutoArray#421 fixed the imaging simulator `@jax.jit` path, making the "does not currently work" wording from #379/#183 false. Recipe restored in both `imaging/simulator.py`, both `guides/using_jax.py`, and the autolens group/multi_galaxy stubs.
+
+  **The CI half was the actual fix.** Neither workspace had ANY `simulator.py` in `smoke_tests.txt`, so uncommenting the call alone would have bought zero CI coverage — recreating the exact trap that caused this whole arc. Adding `imaging/simulator.py` to both smoke lists is what makes CI execute the recipe. Verified by the summary COUNT rising (autolens 17→18, autogalaxy 12→13) and by the smoke log itself showing `[PASS] imaging/simulator.py — 5.3s` and `JAX-jitted simulation: data backing type is ArrayImpl`. 5.3s, so the per-PR cost is negligible.
+
+  autogalaxy's section was worse than autolens's: the WHOLE recipe including the call sat inside a ```python fence, so it LOOKED like a working `dataset_jax = simulate(galaxies)` while being inert prose. Now real executed cells.
+
+  Registration deliberately still the caller's job with the reason retained — PyAutoArray#421 changed only what happens AFTER registration and cannot make it automatic (JAX flattens jitted arguments at trace time). Interferometer sections deliberately left saying the jitted path does not work: still true, tracked in draft/bug/autoarray/interferometer_simulator_jax_jit.md.
+
+- smoke-path-trap: `smoke_tests.txt` entries are relative to `scripts/`, NOT the repo root. A first append of `scripts/imaging/simulator.py` would have silently resolved to `scripts/scripts/...` and never run. Caught by reading the file's existing format before trusting the append. **Verify a new smoke entry by the summary COUNT rising, not by the suite being green.**
+- ci-flake-observed: on autolens#380 (an earlier PR this session) the SAME commit produced two Smoke runs one second apart — `push`=success, `pull_request`=failure on the py3.12 leg only (3.13 passed). main stayed green (merge commit + 5 recent main runs all success), so not a real regression; log blob was already purged so the entry could not be named. Signature matches the known py3.12 JAX flake. **Lesson: check EVERY workflow run and EVERY matrix leg on a head sha, not the first completed run** — "#380 fully green" was stated on incomplete evidence. #382 and #185 were then each verified across all 4 legs before merge.
+- arc-closed: likelihood-function-jax-pointer (autolens_workspace#368) → public-register-galaxies-classes (PyAutoGalaxy#536) → correct-simulator-jax-claims (autolens_workspace#379) → simulator-jax-xp-threading (PyAutoArray#420) → here. Started as "move a __JAX__ section and shorten it"; every stage exposed that the documented recipe had never been executed.
+- lesson: **a documented JAX recipe that no script executes will be wrong.** The durable fix is not better prose — it is putting the snippet in `smoke_tests.txt` so CI runs it.
+- open-followups: draft/bug/autoarray/interferometer_simulator_jax_jit.md (interferometer jit path, NOT started); draft/bug/pyautobrain/worktree_check_conflict_never_fires.md; dedupe the pytree class-walker between autolens/jax and autogalaxy/jax; full README repo-prefixed-ref alignment sweep in autogalaxy_workspace
+
+## Original prompt
+
 # Restore the imaging simulator `@jax.jit` recipe — and put it under CI
 
 Type: docs

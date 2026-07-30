@@ -267,10 +267,14 @@
 - depth-gate: reuses the EXISTING cue in `skills/_style.md` "Adaptive depth" / "Newcomer mode" — no second depth rule invented
 - out-of-scope: `euclid_assistant` (the Feature Agent listed it, but it is a paper repo with no `modes/` and no `skills/`); there is no `autogalaxy_assistant`, so the lens cell carries the galaxy citation. No `## Further reading` edit and no new row in `wiki/core/external/skill_citation_map.md` — those blocks are generated from that table and this is not a per-skill citation row. `llms.txt` is hand-maintained, not generated from `skills/`
 - brain-override: Feature Agent returned too-large (score 11) / split-into-4-phases (design, core_api, workspace_examples, docs) off its repo-count proxy ([[feedback_brain_repo_count_difficulty_proxy]]). Three of the four phases are vacuous — no library code, no API, no workspace example. Overridden to one task, one PR per repo (~10 markdown edits of uniform shape)
-- parallel-claim: `python-312-floor` phase-5a has a PENDING change to the same three repos but only to `.github/workflows/*` (Python 3.12 in the wiki-currency job) — zero overlap with `modes/` + `skills/`. Hand-verified: no `worktree:` claim in this file touches any assistant repo ([[feedback_worktree_conflict_guard_never_fires]])
-- ci-note: each repo's `wiki-currency` workflow runs on pull_request and audits `skills/` + `wiki/` + `AGENTS.md` + `llms.txt` for stale API symbols — validate locally with `make audit` before shipping
+- parallel-claim: `worktree_check_conflict` FIRED on all three repos — `python-312-auto{lens,fit,cti}-wiki-currency-ci` claim them from worktree `~/Code/PyAutoLabs-wt/python-312-release-surfaces`, each with an OPEN pending-release PR (autolens_assistant#95, autofit_assistant#25, autocti_assistant#15). Human decision 2026-07-30: proceed in parallel — every one of those PRs changes exactly ONE file, `.github/workflows/wiki-currency.yml` (verified via `gh api .../pulls/N/files`), so there is zero overlap with `modes/` + `skills/`, and they are blocked on the next release merging. (Contrast [[feedback_worktree_conflict_guard_never_fires]]: the guard DOES fire when the claim uses the `  - <repo>: <branch>` form, which these entries do)
+- ci-note: each repo's `wiki-currency` workflow runs on pull_request and audits `skills/` + `wiki/` + `AGENTS.md` + `llms.txt` for stale API symbols — validate locally with `make audit` before shipping. `pending-release` label already present on all three repos
+- worktree-base: branched off origin/main — autolens_assistant `89a2cc3`, autofit_assistant `d83500e`, autocti_assistant `1907634` (all verified equal to origin/main, [[feedback_worktree_base_drifts_from_main]])
 - worktree: ~/Code/PyAutoLabs-wt/assistant-output-folder-pointer
 - repos:
+  - autolens_assistant: feature/assistant-output-folder-pointer
+  - autofit_assistant: feature/assistant-output-folder-pointer
+  - autocti_assistant: feature/assistant-output-folder-pointer
 
 ## remove-finish-docstring-hack
 - issue: https://github.com/PyAutoLabs/PyAutoHands/issues/211

@@ -147,8 +147,11 @@
 ## scaling-relation-bgc-anchored
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/385
 - session: claude --resume c351dadf-a66d-4a7e-891f-d8771123d77d
-- status: workspace-dev
+- status: workspace-dev (phase 1 PR open, awaiting CI)
 - scope: phase 1 of 2 — BGC-anchored scaling_relation packages for imaging + multi_galaxy
+- phase-1-pr: https://github.com/PyAutoLabs/autolens_workspace/pull/396 (pending-release)
+- phase-1-validation: smoke 19/19; both slam.py end-to-end under bypass (imaging 6/6, multi_galaxy 7/7, exit 0); navigator clean in CI layout (clone named `workspace`, --root workspace); check_sizes clean
+- phase-1-bugs-fixed: tier index offset read the source as a companion (AttributeError); zero-param tier emptied multi_galaxy lens_light[2] (0-dimension model); adapt_images cannot cross a mask change (11304 vs 68836 broadcast) — the last is LATENT IN mgl_slam_batch.py; mass_total cap could become a zero-width prior
 - phase-2-prompt: draft/docs/workspaces/scaling_relation_bgc_anchored_phase_2_interferometer_point_source.md (interferometer + point_source, mass-only regimes)
 - parent-prompt: draft/docs/workspaces/scaling_relation_bgc_anchored_feature_packages.md (verbatim request + research findings)
 - brain-override: Brain scored too-large/13 with four generic phases (design/core_api/workspace_examples/docs); overridden to two phases split by regime — one repo, zero library API change, so core_api was vacuous

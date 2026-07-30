@@ -1,0 +1,26 @@
+{
+  "autolens_version": "2026.7.23.1",
+  "dataset": "simple",
+  "fit_positions_cls": "FitPositionsSourceSolved",
+  "configuration": {
+    "observed_image_positions": 4,
+    "positions_noise_sigma": 0.05,
+    "free_parameters": 5,
+    "free_parameters_source_plane_plain": 8,
+    "free_parameters_delta": -3,
+    "point_source_profile": "PointSolved"
+  },
+  "eager_per_call": 0.010933216999983415,
+  "eager_log_likelihood": 0.5986504297427313,
+  "full_pipeline_jits": true,
+  "full_pipeline_single_jit": 0.0003383600000233855,
+  "full_pipeline_log_likelihood": 0.5986504555530896,
+  "vmap": {
+    "batch_size": 3,
+    "batch_time": 0.00035438000049907713,
+    "per_call": 0.00011812666683302571,
+    "speedup_vs_single_jit": 2.9
+  },
+  "pinned_expected": 0.5986504555530896,
+  "pinned_drift": []
+}

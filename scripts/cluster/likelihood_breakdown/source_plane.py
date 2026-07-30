@@ -49,6 +49,27 @@ constraint: the *end-to-end* source-plane fit is not JIT-compilable today
 is marked JIT-blocked); the per-step decomposition below sidesteps that by
 compiling the numerical core of each step in isolation.
 
+Solved-variant addendum (issue #657 phase 3)
+----------------------------------------------
+
+Steps 5-6 add a plain-vs-solved fit-total comparison: step 5 times the
+production ``al.FitPositionsSource`` per system (eager, atomic — the same
+call PART C already asserts in summed form, just split per system here so
+it is comparable to step 6), and step 6 times
+``al.FitPositionsSourceSolved`` per system against a second tracer
+(``tracer_solved``) built with zero-parameter ``al.ps.PointSolved``
+profiles in place of ``al.ps.Point``. This IS the paper's result (Lombardi
+2024, arXiv:2406.15280 §5.1) — unlike the image-plane solved extension, the
+source-plane analytic β* solve is exactly what the paper derives. The
+analytic solve itself (``autolens/point/fit/solved.py``: ``SolvedCentre``)
+is profiled as a single atomic fit-total here, not further decomposed into
+its own jacobian/precision-tensor sub-steps, mirroring how PART C already
+treats the plain ``FitPositionsSource`` as one atomic reference alongside
+the fully decomposed steps 1-4. A printed summary reports the per-system
+fit-total runtime delta (step 6 − step 5), to be weighed against the 2
+fewer free centre parameters per point source (4 total for this cluster's
+2 systems) a full model-fit would otherwise sample.
+
 Output
 ------
 
@@ -253,6 +274,17 @@ print(
     f"(2 main dPIE + {len(scaling_galaxies)} scaling dPIE + 1 NFW host)."
 )
 
+# Solved-variant tracer: `al.ps.PointSolved` (0 params) in place of
+# `al.ps.Point(centre=...)` (2 centre params) per source, name-paired the
+# same way. Used only by step 6 below.
+source_galaxies_solved = [
+    al.Galaxy(redshift=float(d.redshift), **{d.name: al.ps.PointSolved()})
+    for d in dataset_list
+]
+tracer_solved = al.Tracer(
+    galaxies=main_lens_galaxies + scaling_galaxies + [host_halo_galaxy] + source_galaxies_solved
+)
+
 positions_list = [np.atleast_2d(np.asarray(d.positions)) for d in dataset_list]
 noise_list = [np.asarray(d.positions_noise_map) for d in dataset_list]
 plane_indices = [
@@ -370,6 +402,78 @@ _, log_likelihood = jit_profile(
 )
 likelihood_steps.append(("4 log-likelihood assembly", timer.records[-1][1] / 10))
 
+_n_plain_steps = len(likelihood_steps)
+
+# ---------------------------------------------------------------------------
+# Step 5 — FitPositionsSource per system, fit-total (eager). Steps 1-4 above
+# decompose the internals of this same call; this atomic per-system timing
+# exists purely so the solved-vs-plain runtime delta below (step 6 - step 5)
+# is apples-to-apples — steps 1-4's individually-JIT-profiled sub-steps
+# aren't directly comparable to step 6's single eager
+# FitPositionsSourceSolved timing. PART C's `reference_fit_positions_source`
+# assertion further below is unaffected — this is an additive per-system
+# timing, not a replacement.
+# ---------------------------------------------------------------------------
+fit_plain_log_likelihoods = []
+fit_plain_total_times = []
+for dataset in dataset_list:
+    with timer.section(f"step5_fit_total_plain_{dataset.name}"):
+        fit_plain = al.FitPositionsSource(
+            name=dataset.name,
+            data=dataset.positions,
+            noise_map=dataset.positions_noise_map,
+            tracer=tracer,
+            solver=None,
+        )
+        fit_plain_log_likelihoods.append(float(fit_plain.log_likelihood))
+    fit_plain_total_times.append(timer.records[-1][1])
+    likelihood_steps.append(
+        (f"5.{dataset.name} FitPositionsSource (fit total)", timer.records[-1][1])
+    )
+
+# ---------------------------------------------------------------------------
+# Step 6 — FitPositionsSourceSolved per system, fit-total (eager, analytic
+# β*). `tracer_solved` carries `PointSolved` in place of `Point` so the
+# *Solved fit class's name-pairing finds a parameter-free profile — pairing
+# a centre-bearing profile with a *Solved fit class raises
+# PointProfileMismatchException. Defaults to xp=numpy (no JAX needed).
+# ---------------------------------------------------------------------------
+fit_solved_log_likelihoods = []
+fit_solved_total_times = []
+for dataset in dataset_list:
+    with timer.section(f"step6_fit_total_solved_{dataset.name}"):
+        fit_solved = al.FitPositionsSourceSolved(
+            name=dataset.name,
+            data=dataset.positions,
+            noise_map=dataset.positions_noise_map,
+            tracer=tracer_solved,
+            solver=None,
+        )
+        fit_solved_log_likelihoods.append(float(fit_solved.log_likelihood))
+    fit_solved_total_times.append(timer.records[-1][1])
+    likelihood_steps.append(
+        (
+            f"6.{dataset.name} FitPositionsSourceSolved (fit total, analytic β*)",
+            timer.records[-1][1],
+        )
+    )
+
+log_likelihood_total_solved = sum(fit_solved_log_likelihoods)
+print(f"\n  source-plane log likelihood, solved (sum over systems): {log_likelihood_total_solved:.6e}")
+
+print("\n--- Solved vs plain: per-system fit-total runtime delta ---")
+delta_per_system = {}
+for dataset, plain_t, solved_t in zip(dataset_list, fit_plain_total_times, fit_solved_total_times):
+    delta = solved_t - plain_t
+    pct = 100.0 * delta / plain_t if plain_t else float("nan")
+    delta_per_system[dataset.name] = delta
+    print(
+        f"  {dataset.name}: plain={plain_t:.6f}s  solved={solved_t:.6f}s  "
+        f"delta={delta:+.6f}s ({pct:+.1f}%)  -- vs -2 free centre params/source if sampled"
+    )
+delta_total = sum(delta_per_system.values())
+print(f"  TOTAL delta across {len(dataset_list)} systems: {delta_total:+.6f}s")
+
 
 # ===================================================================
 # PART C — Eager reference check (FitPositionsSource, production path)
@@ -414,12 +518,22 @@ print("\n" + "=" * 70)
 print(f"PER-STEP BREAKDOWN SUMMARY — CLUSTER SOURCE-PLANE — v{al_version}")
 print("=" * 70)
 max_label = max(len(label) for label, _ in likelihood_steps)
+# `step_total` stays scoped to the original (plain-path) decomposition —
+# steps 1-4 — so it keeps meaning "sum of the decomposed likelihood steps"
+# for the README auto-table / XLA-fusion-caveat comparison. Steps 5-6
+# (plain-vs-solved fit-total comparison) are additive extra measurements,
+# not part of that decomposition; their cost is reported separately.
 step_total = 0.0
+step_total_solved_extra = 0.0
 for i, (label, per_call) in enumerate(likelihood_steps, 1):
     print(f"  {i:>2}. {label:<{max_label}}  {per_call:>12.6f} s")
-    step_total += per_call
+    if i <= _n_plain_steps:
+        step_total += per_call
+    else:
+        step_total_solved_extra += per_call
 print("-" * 70)
-print(f"      {'TOTAL (step-by-step)':<{max_label}}  {step_total:>12.6f} s")
+print(f"      {'TOTAL (step-by-step, plain)':<{max_label}}  {step_total:>12.6f} s")
+print(f"      {'TOTAL (steps 5-6, extra)':<{max_label}}  {step_total_solved_extra:>12.6f} s")
 print("=" * 70)
 
 breakdown_summary = {
@@ -435,6 +549,15 @@ breakdown_summary = {
     "steps": {label: per_call for label, per_call in likelihood_steps},
     "total_step_by_step": step_total,
     "reference_log_likelihood": reference_log_likelihood,
+    "solved": {
+        "fit_positions_cls": "FitPositionsSourceSolved",
+        "log_likelihood": log_likelihood_total_solved,
+        "total_step_solved_extra": step_total_solved_extra,
+        "delta_per_system_s": delta_per_system,
+        "delta_total_s": delta_total,
+        "free_centre_params_removed_per_point_source": 2,
+        "free_centre_params_removed_total": 2 * len(dataset_list),
+    },
 }
 
 dict_path, chart_path = resolve_output_paths(

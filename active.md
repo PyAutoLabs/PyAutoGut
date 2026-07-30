@@ -1,5 +1,32 @@
 # Active Tasks
 
+## ci-dedupe
+- issue: https://github.com/PyAutoLabs/PyAutoHeart/issues/130
+- status: library-dev — 24 workflows / 17 repos, mechanical trigger+concurrency change
+- prompt: active/ci_dedupe_push_pr_double_runs.md
+- conflict-note: workspace repos also claimed by plot-guides-restructure and my parked-sweep; .github/workflows files disjoint from both
+- worktree: ~/Code/PyAutoLabs-wt/ci-dedupe
+- repos: 17 on feature/ci-dedupe (HowTo x3, ws x3, ws_test x4, libs x6, Heart)
+
+## wiki-currency-branch-match
+- issue: https://github.com/PyAutoLabs/autolens_assistant/issues/103
+- status: queued behind ci-dedupe
+- prompt: active/wiki_currency_matching_branch.md
+- worktree: ~/Code/PyAutoLabs-wt/wiki-currency-branch-match
+- repos:
+  - autolens_assistant (feature/wiki-currency-branch-match)
+
+## parked-sweep
+- issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/234
+- status: measuring — 11 entries deleted in worktree; sequential run_python measurements in background
+- prompt: active/parked_script_stale_sweep.md
+- conflict-note: ag/al workspaces also claimed by plot-guides-restructure; config/build/no_run.yaml disjoint
+- worktree: ~/Code/PyAutoLabs-wt/parked-sweep
+- repos:
+  - autogalaxy_workspace (feature/parked-sweep)
+  - autolens_workspace (feature/parked-sweep)
+  - autolens_workspace_test (feature/parked-sweep)
+
 
 ## python-312-floor
 - issue: https://github.com/PyAutoLabs/PyAutoNerves/issues/142

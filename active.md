@@ -33,6 +33,13 @@
 - session: claude --resume b79e03f8-64be-4fce-8c2d-e8b98ce8f487
 - status: workspace-dev
 - worktree: ~/Code/PyAutoLabs-wt/scaling-relation-brightest-galaxy
+- heart-ack: YELLOW acknowledged 2026-07-30 by human, exact reasons:
+  - "manifest drift: tenant firewall (organ code) — 1 mismatch(es) vs PyAutoMind/repos.yaml"
+  - "test run status unknown (no report.json)" (stale)
+  - "release validation stale: source moved since rehearsal (PyAutoNerves, PyAutoFit, PyAutoArray, PyAutoGalaxy, PyAutoLens)" (stale)
+- note: docs-only terminology rename; group/ deliberately excluded (a group genuinely has a BCG/BGG)
+- note: overlaps multi-package-rename-multi-dataset (#408) on autolens_workspace generated sidecars
+  (llms-full.txt, workspace_index.json) — whichever merges second must regenerate
 - repos:
   - autolens_workspace: feature/scaling-relation-brightest-galaxy
 

@@ -49,4 +49,7 @@
 - status: library-dev
 - worktree: ~/Code/PyAutoLabs-wt/multi-start-gradient-progress-logging
 - note: Brain sized large (score 8); overridden to small / no-phase-split — every point came from prompt prose (521 words +3, science keywords dynesty/emcee/gradient/jax/sampler +3, jax/vmap +1, memory-context +1) while repos_affected=1 and architectural_risk=[] contributed nothing
+- scope-note: extended post-plan (human-approved, issue comment 5135955173) to also cover the TWO JAX compile waits in `_fit` — the sibling task `active/sampler_cli_output_actual_numbers.md` fixes the compile message in `fitness.py` `_jit`/`_vmap`/`_grad`, which MultiStartGradient never uses (it builds `jax.value_and_grad(fitness.call)` directly at search.py:260-261). No file collision; the two tasks can run in parallel
+- concurrent-claim: PyAutoFit is ALSO claimed by `sampler-cli-output-numbers` (#1434). Human-authorized 2026-07-30 to run in parallel — files disjoint within PyAutoFit (#1434: `abstract_search.py` + `fitness.py`; this task: `mle/multi_start_gradient/search.py` + its test), both branched off a50ba95b0. Discipline: align the JAX-compile-message wording with #1434 rather than inventing a second phrasing, and pre-merge origin/main before opening the PR
 - repos:
+  - PyAutoFit: feature/multi-start-gradient-progress-logging

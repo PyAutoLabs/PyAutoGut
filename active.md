@@ -248,3 +248,17 @@
 - follow-up: a column-0 CLOSING `"""` of a triple-quoted string literal in code toggles docstring state the same way — one occurrence, `autolens_workspace_test/gallery/gallery_build.py:42`, outside `scripts/` so never converted. Needs tokenization, not a line-prefix test; file as its own prompt
 - worktree: ~/Code/PyAutoLabs-wt/remove-finish-docstring-hack
 - repos:
+
+## extra-galaxies-multi-galaxy
+- issue: https://github.com/PyAutoLabs/autogalaxy_workspace/issues/182
+- status: workspace-dev
+- prompt: active/extra_galaxies_feature_parity_phase_2a_multi_galaxy_autogalaxy.md
+- parent: draft/docs/workspaces/extra_galaxies_feature_parity.md (phase 1 SHIPPED — autolens_workspace#374 / PR#376 merged e005caca)
+- scope: `autogalaxy_workspace/scripts/multi_galaxy/` has NO `features/` folder at all — create `features/{README.md,__init__.py}` plus `features/extra_galaxies/{README.md,__init__.py,simulator.py,modeling.py}`, and add a `# Folders` section to `multi_galaxy/README.md`
+- shape: LIGHT-ONLY (autogalaxy has no mass). Both levers shown as in `imaging/features/extra_galaxies/modeling.py` — noise scaling, then modeling with fixed centres (`lp_linear.SersicSph` Option A, `mge_model_from(centre_fixed=...)` Option B commented). What is NEW vs imaging is the base model: two CO-EQUAL blended galaxies via the `galaxy_0`/`galaxy_1` loop PLUS a lower tier of sub-dominant extras — that contrast is the point
+- phase-split: phase 2 was split BY REPO 2026-07-30. `multi-galaxy-imaging-parity` (autolens_workspace#370) is in flight and rewrites `autolens_workspace/scripts/multi_galaxy/` wholesale (2959 insertions across start_here/modeling/fit/simulator + 3 new scripts, INCLUDING adding a faint extra galaxy + mask_extra_galaxies.fits to multi_galaxy/simulator.py and an `__Extra Galaxies Noise Scaling__` section to the core scripts). The autolens half must be written against that MERGED result → deferred to phase 2b (`draft/docs/workspaces/extra_galaxies_feature_parity_phase_2b_multi_galaxy_autolens.md`, Blocked-on #370). autogalaxy has ZERO contention (#370 does not touch this repo)
+- ag-conventions: centres file is `galaxy_centres.json` NOT autolens's `main_lens_centres.json`; main pair at (0.0,-0.75)/(0.0,0.75) with Sersic bulges; `multi_galaxy/modeling.py` uses mask_radius=3.0 but a LARGER mask is needed to admit the extras (imaging uses 6.0"); `features/README.md` must carry the existing "Scaling Relations (not applicable in autogalaxy)" framing from `imaging/features/extra_galaxies/README.md:18-47`
+- traps: `should_simulate` tests directory EXISTENCE only; PYAUTO_TEST_MODE=1 and =2 SHARE the output/test_mode/ namespace so a bypass run silently RESUMES a =1 run (hit in phase 1) — `rm -rf output/test_mode` first; navigator root-name trap — check_navigator.py strips `<root.name>/` and CI clones as `workspace/`, so a literal `autogalaxy_workspace/scripts/...` ref passes LOCALLY and fails in CI (use the wildcard `autogalaxy_workspace/*/...` form)
+- worktree: ~/Code/PyAutoLabs-wt/extra-galaxies-multi-galaxy
+- repos:
+  - autogalaxy_workspace (feature/extra-galaxies-multi-galaxy)

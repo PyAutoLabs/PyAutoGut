@@ -1,3 +1,24 @@
+## cluster-dpie-docstring-style
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/410
+- completed: 2026-07-30
+- workspace-pr: https://github.com/PyAutoLabs/autolens_workspace/pull/418 (merged b95f246a)
+- summary: Cluster package finalised on dPIE — the last Isothermal scaling tier
+  (mass_parameterizations_pyautolens.py Section 2) became a truncated dPIE
+  (dPIEMassB0Sph, b0 = einstein_radius_BGC·(L/L_BGC)^0.5, zero free params,
+  rs = 5·ratio^0.7), script restructured 3→2 sections with the truncation
+  rationale folded in (prior_count stays 7, all checks pass). Comment→docstring
+  sweep across 9 scripts + 2 READMEs (short component labels kept); stale facts
+  fixed (a2744 members 10→188, "22-D"→N=20, 100x100→120x120 grid text,
+  _pair_closest_no_repeat→_pair_hungarian). Lenstool match re-verified pre-edit:
+  6/6 parity legs. Token-level proof all swept files code-identical to main.
+  Notebook regen also synced pre-existing notebooks/group/start_here.ipynb drift.
+  Gotcha: cluster/start_here.py exceeds test-mode budget on clean main too
+  (no_run.yaml-parked) — validated via code-token identity instead. Smoke 22/22
+  local + CI 3.12/3.13 green; Heart YELLOW (manifest drift / no report.json /
+  stale rehearsal) human-acked at PR-open and merge.
+
+## Original prompt
+
 # Cluster package: dPIE-only scaling galaxies + comment-to-docstring style sweep
 
 Type: docs

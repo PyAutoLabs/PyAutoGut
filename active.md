@@ -149,7 +149,12 @@
 - session: claude --resume c351dadf-a66d-4a7e-891f-d8771123d77d
 - status: workspace-dev (phase 1 PR open, awaiting CI)
 - scope: phase 1 of 2 — BGC-anchored scaling_relation packages for imaging + multi_galaxy
-- phase-1-pr: https://github.com/PyAutoLabs/autolens_workspace/pull/396 (pending-release)
+- phase-1-pr: https://github.com/PyAutoLabs/autolens_workspace/pull/396 (pending-release, CI 4/4 GREEN — navigator x2, smoke 3.12 + 3.13)
+- phase-2-issue: https://github.com/PyAutoLabs/autolens_workspace/issues/397
+- phase-2-prompt: active/scaling_relation_bgc_anchored_phase_2_interferometer_point_source.md
+- phase-2-worktree: ~/Code/PyAutoLabs-wt/scaling-relation-phase-2 (branch feature/scaling-relation-phase-2, STACKED on phase 1 so cross-refs to phase-1 files resolve for the navigator gate)
+- phase-2-finding: point_source tier tied = 8 free params vs 13 freed, against 12 data points — freeing the tier makes the model under-determined; tier moves the 4 images by 182/398/1596/1633 mas vs 5 mas precision
+- phase-2-retune: first point_source draft placed companions at 2-3" where derived einstein_radii reached 0.51" and the solver returned SIX images, breaking the quad; pushed to ~4.3-4.9"
 - phase-1-validation: smoke 19/19; both slam.py end-to-end under bypass (imaging 6/6, multi_galaxy 7/7, exit 0); navigator clean in CI layout (clone named `workspace`, --root workspace); check_sizes clean
 - phase-1-bugs-fixed: tier index offset read the source as a companion (AttributeError); zero-param tier emptied multi_galaxy lens_light[2] (0-dimension model); adapt_images cannot cross a mask change (11304 vs 68836 broadcast) — the last is LATENT IN mgl_slam_batch.py; mass_total cap could become a zero-width prior
 - phase-2-prompt: draft/docs/workspaces/scaling_relation_bgc_anchored_phase_2_interferometer_point_source.md (interferometer + point_source, mass-only regimes)

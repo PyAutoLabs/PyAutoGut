@@ -136,6 +136,46 @@
 - notes: Remove the recoverable `95f7502` debris, prevent future whole-repo
   pre-build staging, update canonical docs, and run focused checks only.
 
+## python-312-autofit-wiki-currency-ci
+- issue: https://github.com/PyAutoLabs/autofit_assistant/issues/24
+- status: workspace-dev
+- prompt: active/python_312_autofit_wiki_currency_ci.md
+- branch: feature/python-312-release-surfaces
+- worktree: ~/Code/PyAutoLabs-wt/python-312-release-surfaces
+- parent: python-312-floor
+- repos:
+  - autofit_assistant: feature/python-312-release-surfaces
+
+## python-312-autolens-wiki-currency-ci
+- issue: https://github.com/PyAutoLabs/autolens_assistant/issues/94
+- status: workspace-dev
+- prompt: active/python_312_autolens_wiki_currency_ci.md
+- branch: feature/python-312-release-surfaces
+- worktree: ~/Code/PyAutoLabs-wt/python-312-release-surfaces
+- parent: python-312-floor
+- repos:
+  - autolens_assistant: feature/python-312-release-surfaces
+
+## python-312-autocti-wiki-currency-ci
+- issue: https://github.com/PyAutoLabs/autocti_assistant/issues/14
+- status: workspace-dev
+- prompt: active/python_312_autocti_wiki_currency_ci.md
+- branch: feature/python-312-release-surfaces
+- worktree: ~/Code/PyAutoLabs-wt/python-312-release-surfaces
+- parent: python-312-floor
+- repos:
+  - autocti_assistant: feature/python-312-release-surfaces
+
+## python-312-memory-validation-ci
+- issue: https://github.com/PyAutoLabs/PyAutoMemory/issues/30
+- status: workspace-dev
+- prompt: active/python_312_memory_validation_ci.md
+- branch: feature/python-312-release-surfaces
+- worktree: ~/Code/PyAutoLabs-wt/python-312-release-surfaces
+- parent: python-312-floor
+- repos:
+  - PyAutoMemory: feature/python-312-release-surfaces
+
 ## vacuous-jax-assertions
 - issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/229
 - status: awaiting-merge

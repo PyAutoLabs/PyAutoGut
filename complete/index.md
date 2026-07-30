@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-783 records across 6 buckets.
+784 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -138,6 +138,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [ep-projection-weights](2026/07/ep-projection-weights.md) — two stacked defects
 - [ep-statistics-audit](2026/07/ep-statistics-audit.md) — F1-F10 census + EP wiki page; fixes dispersed: F3/F10->#1349, F5->#1334, F7c->#1345; remainder executes as bug…
 - [ep-statistics-fix-batch](2026/07/ep-statistics-fix-batch.md) — #1332 F1 (MeanField log_norm->plates ctor slip) + F2 (Gamma/Beta KL direction, MC-certified) + F4 (exoneration…
+- [extra-galaxies-point-source](2026/07/extra-galaxies-point-source.md)
 - [eyes-conductor](2026/07/eyes-conductor.md) — epic #117 Phase 2
 - [eyes-gallery-repoint](2026/07/eyes-gallery-repoint.md) — al_test#219 + Brain#158 + developer#115
 - [eyes-paper-critique](2026/07/eyes-paper-critique.md) — epic #117 CLOSED

@@ -2,7 +2,9 @@
 
 ## split-validation-channels
 - issue: https://github.com/PyAutoLabs/PyAutoHeart/issues/121
-- status: library-dev — Heart body/entry-workflow split, then Brain repoint
+- status: awaiting-merge — PyAutoHeart#122 + PyAutoBrain#183 OPEN 2026-07-30; merge Heart→Brain back-to-back BEFORE the 02:00 UTC nightly
+- prs: PyAutoHeart#122, PyAutoBrain#183
+- evidence: Heart suite 320 passed (4 new wiring tests); three workflows YAML-parse; validate.sh emits {testpypi_version, commit_shas} only
 - prompt: active/split_smoke_vs_release_validation_channels.md
 - classification: refactor (PyAutoHeart + PyAutoBrain) — CI/release audit series task 3
 - merge-order: Heart PR then Brain PR, back-to-back, BEFORE the 02:00 UTC nightly

@@ -1,5 +1,15 @@
 # Active Tasks
 
+## group-start-here-timeout
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/401
+- status: workspace-dev — revert group start_here to Nautilus (measured regression: 217s -> >40min local)
+- prompt: active/group_start_here_release_profile_timeout.md
+- classification: bug (autolens_workspace) — CI/release audit series; regression from d5c9802d MultiStartProdigy conversion
+- conflict-note: autolens_workspace also claimed by plot-guides-restructure; surfaces disjoint (scripts/group/start_here.py only)
+- worktree: ~/Code/PyAutoLabs-wt/group-start-here-timeout
+- repos:
+  - autolens_workspace (feature/group-start-here-timeout)
+
 ## release-channel-freshness
 - issue: https://github.com/PyAutoLabs/PyAutoHeart/issues/128
 - status: library-dev — heart/checks/release_run.py mirroring the test_run cached-artifact pattern

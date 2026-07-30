@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-801 records across 6 buckets.
+802 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -363,6 +363,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [rtd-hygiene](2026/07/rtd-hygiene.md) — RTD hygiene phase A — dead configs deleted, conf.py converged, Heart-owned docs-build CI live on 3 libs (basel…
 - [run-queue](2026/07/run-queue.md)
 - [samplers-faculty](2026/07/samplers-faculty.md)
+- [scaling-relation-bgc-anchored](2026/07/scaling-relation-bgc-anchored.md)
 - [scholar-intake](2026/07/scholar-intake.md)
 - [science-project-api-gate](2026/07/science-project-api-gate.md) — task 2 of the autolens_assistant batch — Create scaffold generates a thin .claude/settings.json wiring the PyA…
 - [science-project-collaborator-clone](2026/07/science-project-collaborator-clone.md) — absorbed

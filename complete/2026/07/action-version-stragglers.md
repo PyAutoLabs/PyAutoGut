@@ -1,3 +1,18 @@
+Bumped the last v2/v1 GitHub Action revisions to the fleet standard
+(checkout@v4 / setup-python@v5 / upload-artifact@v4).
+
+- issue: https://github.com/PyAutoLabs/PyAutoHands/issues/217 (auto-closed)
+- prs (all merged unchanged, mechanical version strings only):
+  PyAutoHands#218 (`release.yml`: checkout@v2→v4 ×several, setup-python@v2→v5),
+  PyAutoCTI#102 (`27c26a029`) + PyAutoGalaxy#539 (`908dfc25e`)
+  (`draft-pdf.yml`: checkout@v2→v4, upload-artifact@v1→v4 — v1 was past
+  end-of-life, so the JOSS draft jobs were likely already broken).
+- fleet census (2026-07-30 audit): everything else already at v4/v5; the
+  coordinated v4→v5 fleet bump stays deferred until GitHub sets a removal date.
+- release.yml is only exercised by a rehearsal — the nightly covers it.
+
+## Original prompt
+
 # Bump the ancient GitHub Action revisions (v2/v1 stragglers)
 
 Type: maintenance

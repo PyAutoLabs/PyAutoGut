@@ -1,17 +1,5 @@
 # Active Tasks
 
-## ci-hygiene-tiny
-- issue: https://github.com/PyAutoLabs/PyAutoHands/issues/217
-- status: awaiting-merge — PyAutoHands#218, PyAutoCTI#102, PyAutoGalaxy#539, PyAutoHeart#125 OPEN 2026-07-30 (independent, any order)
-- note: firewall re-run caught two NEW violations from the just-merged worktree-drift test file — fixed in Heart#125 + Mind d8dc28e (allowlist .sh→.py rename); end-state firewall NONE verified pre-merge via symlink farm
-- prompts: active/register_autocti_workspace_clear_manifest_drift.md, active/action_version_stragglers_v2_v1.md
-- classification: maintenance (PyAutoHands + PyAutoCTI + PyAutoGalaxy) — CI/release audit series tasks 6+7, batched
-- worktree: ~/Code/PyAutoLabs-wt/ci-hygiene-tiny
-- repos:
-  - PyAutoHands (feature/ci-hygiene-tiny)
-  - PyAutoCTI (feature/ci-hygiene-tiny)
-  - PyAutoGalaxy (feature/ci-hygiene-tiny)
-
 ## multiband-pyloop-batching
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1430
 - session: claude --resume ed9e7d65-ca7d-4718-8f02-d77a2ad27017

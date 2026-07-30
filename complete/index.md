@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-811 records across 6 buckets.
+813 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -22,6 +22,7 @@ _(curate hard-won records here — survives regeneration.)_
 
 ## 2026/07
 
+- [action-version-stragglers](2026/07/action-version-stragglers.md)
 - [adapt-image-cache-mask-validation](2026/07/adapt-image-cache-mask-validation.md)
 - [afa-wiki-currency-wiring-afa-skill-tranche](2026/07/afa-wiki-currency-wiring-afa-skill-tranche.md) — both autofit_assistant follow-ups shipped in one --auto session (one in-session Heart-YELLOW ack covering both…
 - [ag-simulator-bootstrap](2026/07/ag-simulator-bootstrap.md) — PR #95
@@ -74,6 +75,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [checkpoint-continue](2026/07/checkpoint-continue.md)
 - [clean-packaging-debris](2026/07/clean-packaging-debris.md) — Added Hygiene's read-only `packaging` debris mode and a narrow `clean_slate.sh --packaging` executor for ignor…
 - [clean-slate-write-site](2026/07/clean-slate-write-site.md) — Leg 5 (final) of the dataset-bulk series — the machinery leg. New bin/dataset_provenance.py: stdlib AST, order…
+- [clear-manifest-drift-autocti](2026/07/clear-manifest-drift-autocti.md)
 - [clear-stale-needs-fix-parks](2026/07/clear-stale-needs-fix-parks.md)
 - [clone-skill-prefix-corruption](2026/07/clone-skill-prefix-corruption.md) — The Clone Agent's skill-prefix substitution (`al_ -> ac_`, from package initials) was applied by `clone_seed.s…
 - [cluster-likelihood-breakdown](2026/07/cluster-likelihood-breakdown.md)

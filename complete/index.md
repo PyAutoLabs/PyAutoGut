@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-807 records across 6 buckets.
+808 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -392,6 +392,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [smoke-small-datasets-overrides](2026/07/smoke-small-datasets-overrides.md)
 - [solver-branch-flips](2026/07/solver-branch-flips.md) — research deliverable met — flips are JIT-only (eager clean; XLA-fusion ulp × discrete threshold); positive-onl…
 - [spawn-drift-issued-orphan-ai-policy](2026/07/spawn-drift-issued-orphan-ai-policy.md) — same-session continuation of the 2026-07-27 /wake_up red-jobs sweep
+- [split-validation-channels](2026/07/split-validation-channels.md)
 - [starred-epsf-backend](2026/07/starred-epsf-backend.md) — Optional STARRED (COSMOGRAIL, arXiv:2402.08725) Tier-1b super-sampled ePSF back-end for the PSF stage, born fr…
 - [starred-frame-epsf](2026/07/starred-frame-epsf.md) — Extended STARRED Tier-1b (#36) to the per-exposure FRAME-PRODUCTS mode. build_starred_frame_epsf (autoreduce/p…
 - [starred-jwst-validation](2026/07/starred-jwst-validation.md) — JWST/NIRCam leg of the STARRED Tier-1b validation (sibling of #37 WFC3). STARRED instrument-agnostic → NO new …

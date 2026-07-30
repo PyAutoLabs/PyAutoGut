@@ -1,3 +1,32 @@
+Split Heart's workspace validation into one workflow file per meaning, so a
+failed nightly release rehearsal can never overwrite the continuous smoke
+verdict again.
+
+- issue: https://github.com/PyAutoLabs/PyAutoHeart/issues/121 (auto-closed)
+- prs: PyAutoHeart#122 (`969b4c89a`) then PyAutoBrain#183 (`780862b94`) —
+  merged back-to-back (ordered: between them the nightly would have dispatched
+  a workflow with no dispatch trigger); both merged unchanged (tree diff 0).
+- shape: `workspace-validation.yml` → workflow_call-only shared body (jobs
+  unchanged, filename kept so test_verify_install_script.py and the Build
+  capability docs stay true); `workspace-smoke.yml` = Monday-03:00 schedule +
+  bare dispatch → mode=smoke (the run history `test_run.py` reads —
+  `VALIDATION_WORKFLOW` repointed); `release-integrate.yml` = dispatch/call
+  with testpypi_version+commit_shas → mode=release, deliberately NO mode input
+  (the channel IS the mode). Runs attribute to the CALLER workflow, which is
+  what makes `gh run list --workflow <entry>` unambiguous.
+- Brain side: validate.sh `INTEGRATE_WORKFLOW=release-integrate.yml`, emitted
+  Stage 3 inputs drop `mode` (the new entry rejects unknown inputs);
+  overnight_status glances workspace-smoke.yml.
+- guard: tests/test_workflow_wiring.py parses the three files (body call-only,
+  smoke owns the schedule, release entry mode-free, VALIDATION_WORKFLOW names
+  an existing entry). Heart suite 320 passed.
+- steady state: smoke verdict refreshes on Monday's schedule or a manual
+  `workspace-smoke.yml` dispatch; the nightly exercises release-integrate.yml.
+- residue (docs-only): PyAutoHands nightly_release_design.md / internals.md
+  mentions + one release.yml comment still say workspace-validation.yml.
+
+## Original prompt
+
 # Split the workspace-validation signal: continuous smoke vs release rehearsal
 
 Type: refactor

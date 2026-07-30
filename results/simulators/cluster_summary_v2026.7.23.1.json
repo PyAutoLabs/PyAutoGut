@@ -1,0 +1,59 @@
+{
+  "autolens_version": "2026.7.23.1",
+  "type": "cluster",
+  "configuration": {
+    "imaging_grid_shape": [
+      1000,
+      1000
+    ],
+    "solver_grid_shape": [
+      800,
+      800
+    ],
+    "pixel_scales": 0.1,
+    "n_sources": 2,
+    "source_redshifts": [
+      1.0,
+      2.0
+    ],
+    "n_lens_galaxies": 2,
+    "host_halo_mass_at_200": 1995262314968882.8,
+    "over_sample_sub_sizes": [
+      32,
+      8,
+      2
+    ]
+  },
+  "phases": {
+    "setup_imaging_grid": 0.19407199999841396,
+    "setup_galaxies": 0.0070218999971984886,
+    "setup_tracer": 1.0099996870849282e-05,
+    "register_pytrees": 0.4693944999962696,
+    "solver_build": 0.04854239999986021,
+    "jitted_solve_src0_lower": 17.030921099998523,
+    "jitted_solve_src0_compile": 1.4590461999978288,
+    "jitted_solve_src0_first_call": 6.7645153000048595,
+    "jitted_solve_src0_steady_x3": 23.18231260000175,
+    "jitted_solve_src1_lower": 1.540487199999916,
+    "jitted_solve_src1_compile": 1.6291495000041323,
+    "jitted_solve_src1_first_call": 7.864882399997441,
+    "jitted_solve_src1_steady_x3": 18.281628900003852,
+    "setup_psf_simulator": 0.000654800001939293,
+    "via_tracer_from": 141.9311338999978,
+    "output_fits": 0.11429460000363179,
+    "output_scaling_galaxies_csv": 0.0002865999995265156,
+    "output_point_datasets": 0.00159939999866765,
+    "output_json": 0.017929999994521495
+  },
+  "diagnostic": {
+    "solver_compile_total_s": 3.088195700001961,
+    "solver_lower_total_s": 18.57140829999844,
+    "solver_steady_total_s": 41.4639415000056,
+    "via_tracer_from_s": 141.9311338999978,
+    "compile_vs_via_tracer_ratio": 0.02
+  },
+  "positions_found": {
+    "src0": 3,
+    "src1": 3
+  }
+}

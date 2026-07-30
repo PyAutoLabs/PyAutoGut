@@ -1,0 +1,42 @@
+{
+  "autolens_version": "2026.7.23.1",
+  "device": {
+    "backend": "cpu",
+    "device": "cpu:0",
+    "xla_flags": "--xla_disable_hlo_passes=constant_folding --xla_gpu_autotune_level=0",
+    "omp_num_threads": "1",
+    "cpu_count": 8
+  },
+  "configuration": {
+    "n_systems": 2,
+    "n_images_total": 6,
+    "n_planes": 3,
+    "n_mass_profiles": 13,
+    "likelihood": "image_plane (FitPositionsImagePairRepeat)",
+    "solver_grid": "200x200 @ 0.7 arcsec",
+    "solver_pixel_scale_precision": 0.01
+  },
+  "steps": {
+    "1 source centres (back-trace)": 0.012421499995980412,
+    "2.point_0 PointSolver solve (z=1.0)": 0.583530866667085,
+    "2.point_1 PointSolver solve (z=2.0)": 0.3362739999987146,
+    "3.point_0 FitPositionsImagePairRepeat (fit total)": 4.335666899998614,
+    "3.point_1 FitPositionsImagePairRepeat (fit total)": 4.9793703999966965,
+    "4.point_0 FitPositionsImagePairRepeatSolved (fit total, analytic \u03b2*)": 4.929903699994611,
+    "4.point_1 FitPositionsImagePairRepeatSolved (fit total, analytic \u03b2*)": 4.697616299999936
+  },
+  "total_step_by_step": 10.24726366665709,
+  "log_likelihood": -51694194.57333637,
+  "solved": {
+    "fit_positions_cls": "FitPositionsImagePairRepeatSolved",
+    "log_likelihood": -11022861.386487413,
+    "total_step_solved_extra": 9.627519999994547,
+    "delta_per_system_s": {
+      "point_0": 0.594236799995997,
+      "point_1": -0.2817540999967605
+    },
+    "delta_total_s": 0.3124826999992365,
+    "free_centre_params_removed_per_point_source": 2,
+    "free_centre_params_removed_total": 4
+  }
+}

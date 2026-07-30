@@ -30,6 +30,24 @@ tutorial-scale configuration of the workspace cluster scripts, chosen so the
 one-off compile stays at minutes; production precision (0.001") multiplies
 the triangle fan-out, not the structure of the breakdown.
 
+Solved-variant addendum (issue #657 phase 3)
+----------------------------------------------
+
+Alongside the plain ``FitPositionsImagePairRepeat`` steps above, step 4
+times ``FitPositionsImagePairRepeatSolved`` per system against a second
+tracer (``tracer_solved``) built with zero-parameter ``al.ps.PointSolved``
+profiles in place of ``al.ps.Point`` — the analytic β* extension in the
+image plane. This is a glafic-style extension, **not** a result from
+Lombardi 2024 (arXiv:2406.15280); see ``autolens/point/fit/solved.py``'s
+module docstring for the attribution split. Step 2's forward-solve is
+unaffected by (and shared with) the solved variant: ``solver.solve()`` only
+consumes an explicit ``source_plane_coordinate`` + the tracer's mass
+profiles, never the point-source profile type, so only step 3's non-solved
+fit and step 4's solved fit differ. A printed summary reports the
+per-system fit-total runtime delta (step 4 − step 3), to be weighed against
+the 2 fewer free centre parameters per point source (4 total for this
+cluster's 2 systems) a full model-fit would otherwise sample.
+
 Output
 ------
 
@@ -215,6 +233,17 @@ tracer = al.Tracer(
 n_mass_profiles = len(main_lens_galaxies) + len(scaling_galaxies) + 1
 print(f"Tracer: {len(tracer.planes)} planes, {n_mass_profiles} mass components.")
 
+# Solved-variant tracer: `al.ps.PointSolved` (0 params) in place of `al.ps.Point`
+# (2 centre params) per source, name-paired the same way. Used only by step 4
+# below — step 1/2's back-trace + forward-solve don't read the point-source
+# profile type at all, so they're shared as-is with the plain-path tracer.
+source_galaxies_solved = [
+    al.Galaxy(redshift=float(d.redshift), **{d.name: al.ps.PointSolved()}) for d in dataset_list
+]
+tracer_solved = al.Tracer(
+    galaxies=main_lens_galaxies + scaling_galaxies + [host_halo_galaxy] + source_galaxies_solved
+)
+
 positions_list = [np.atleast_2d(np.asarray(d.positions)) for d in dataset_list]
 plane_indices = [
     tracer.plane_index_via_redshift_from(redshift=float(d.redshift)) for d in dataset_list
@@ -308,6 +337,7 @@ for dataset, centre in zip(dataset_list, source_centres):
 # pairing overhead is the difference from step 2).
 # ---------------------------------------------------------------------------
 fit_log_likelihoods = []
+fit_total_times = []
 for dataset in dataset_list:
     with timer.section(f"step3_fit_total_{dataset.name}"):
         fit = al.FitPositionsImagePairRepeat(
@@ -318,12 +348,63 @@ for dataset in dataset_list:
             solver=solver,
         )
         fit_log_likelihoods.append(float(fit.log_likelihood))
+    fit_total_times.append(timer.records[-1][1])
     likelihood_steps.append(
         (f"3.{dataset.name} FitPositionsImagePairRepeat (fit total)", timer.records[-1][1])
     )
 
 log_likelihood_total = sum(fit_log_likelihoods)
 print(f"\n  image-plane log likelihood (sum over systems): {log_likelihood_total:.6e}")
+
+# ---------------------------------------------------------------------------
+# Step 4 — FitPositionsImagePairRepeatSolved per system: same forward-solve
+# machinery as steps 2/3, but the source-plane centre driving the
+# PointSolver is analytically solved (β*, tensor-weighted precision) rather
+# than read from a centre-bearing profile. `tracer_solved` carries
+# `PointSolved` in place of `Point` so the *Solved fit class's name-pairing
+# finds a parameter-free profile — pairing a centre-bearing profile with a
+# *Solved fit class raises `PointProfileMismatchException`. Eager-timed,
+# matching step 3's pattern (the fit re-runs the forward-solve internally).
+# ---------------------------------------------------------------------------
+_n_plain_steps = len(likelihood_steps)
+
+fit_solved_log_likelihoods = []
+fit_solved_total_times = []
+for dataset in dataset_list:
+    with timer.section(f"step4_fit_total_solved_{dataset.name}"):
+        fit_solved = al.FitPositionsImagePairRepeatSolved(
+            name=dataset.name,
+            data=dataset.positions,
+            noise_map=dataset.positions_noise_map,
+            tracer=tracer_solved,
+            solver=solver,
+        )
+        fit_solved_log_likelihoods.append(float(fit_solved.log_likelihood))
+    fit_solved_total_times.append(timer.records[-1][1])
+    likelihood_steps.append(
+        (
+            f"4.{dataset.name} FitPositionsImagePairRepeatSolved (fit total, analytic β*)",
+            timer.records[-1][1],
+        )
+    )
+
+log_likelihood_total_solved = sum(fit_solved_log_likelihoods)
+print(
+    f"\n  image-plane log likelihood, solved (sum over systems): {log_likelihood_total_solved:.6e}"
+)
+
+print("\n--- Solved vs plain: per-system fit-total runtime delta ---")
+delta_per_system = {}
+for dataset, plain_t, solved_t in zip(dataset_list, fit_total_times, fit_solved_total_times):
+    delta = solved_t - plain_t
+    pct = 100.0 * delta / plain_t if plain_t else float("nan")
+    delta_per_system[dataset.name] = delta
+    print(
+        f"  {dataset.name}: plain={plain_t:.6f}s  solved={solved_t:.6f}s  "
+        f"delta={delta:+.6f}s ({pct:+.1f}%)  -- vs -2 free centre params/source if sampled"
+    )
+delta_total = sum(delta_per_system.values())
+print(f"  TOTAL delta across {len(dataset_list)} systems: {delta_total:+.6f}s")
 
 
 # ===================================================================
@@ -344,12 +425,23 @@ print("\n" + "=" * 70)
 print(f"PER-STEP BREAKDOWN SUMMARY — CLUSTER IMAGE-PLANE — v{al_version}")
 print("=" * 70)
 max_label = max(len(label) for label, _ in likelihood_steps)
+# `step_total` stays scoped to the original (plain-path) decomposition —
+# steps 1-3 — so it keeps meaning "sum of the decomposed likelihood steps"
+# for the README auto-table / XLA-fusion-caveat comparison against
+# full_pipeline_single_jit. Step 4 (solved) is an additive extra
+# measurement, not part of that decomposition; its cost is reported
+# separately as `total_step_solved_extra`.
 step_total = 0.0
+step_total_solved_extra = 0.0
 for i, (label, per_call) in enumerate(likelihood_steps, 1):
     print(f"  {i:>2}. {label:<{max_label}}  {per_call:>12.6f} s")
-    step_total += per_call
+    if i <= _n_plain_steps:
+        step_total += per_call
+    else:
+        step_total_solved_extra += per_call
 print("-" * 70)
-print(f"      {'TOTAL (step-by-step)':<{max_label}}  {step_total:>12.6f} s")
+print(f"      {'TOTAL (step-by-step, plain)':<{max_label}}  {step_total:>12.6f} s")
+print(f"      {'TOTAL (solved, extra)':<{max_label}}  {step_total_solved_extra:>12.6f} s")
 print("=" * 70)
 
 breakdown_summary = {
@@ -367,6 +459,15 @@ breakdown_summary = {
     "steps": {label: per_call for label, per_call in likelihood_steps},
     "total_step_by_step": step_total,
     "log_likelihood": log_likelihood_total,
+    "solved": {
+        "fit_positions_cls": "FitPositionsImagePairRepeatSolved",
+        "log_likelihood": log_likelihood_total_solved,
+        "total_step_solved_extra": step_total_solved_extra,
+        "delta_per_system_s": delta_per_system,
+        "delta_total_s": delta_total,
+        "free_centre_params_removed_per_point_source": 2,
+        "free_centre_params_removed_total": 2 * len(dataset_list),
+    },
 }
 
 dict_path, chart_path = resolve_output_paths(

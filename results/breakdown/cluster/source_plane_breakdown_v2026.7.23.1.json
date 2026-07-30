@@ -1,0 +1,44 @@
+{
+  "autolens_version": "2026.7.23.1",
+  "device": {
+    "backend": "cpu",
+    "device": "cpu:0",
+    "xla_flags": "--xla_disable_hlo_passes=constant_folding --xla_gpu_autotune_level=0",
+    "omp_num_threads": "1",
+    "cpu_count": 8
+  },
+  "configuration": {
+    "n_systems": 2,
+    "n_images_total": 6,
+    "n_planes": 3,
+    "n_mass_profiles": 13,
+    "likelihood": "source_plane (FitPositionsSource)"
+  },
+  "steps": {
+    "1.0 ray-trace point_0 (3 img)": 0.0010556900000665338,
+    "1.1 ray-trace point_1 (3 img)": 0.0008053600002313032,
+    "2.0 magnification (hessian) point_0": 0.0017030000002705493,
+    "2.1 magnification (hessian) point_1": 0.0008346700000402052,
+    "3.0 weighted chi2 point_0": 3.963000053772703e-05,
+    "3.1 weighted chi2 point_1": 3.6700000055134294e-05,
+    "4 log-likelihood assembly": 6.836999964434653e-05,
+    "5.point_0 FitPositionsSource (fit total)": 0.06679779999831226,
+    "5.point_1 FitPositionsSource (fit total)": 0.047178799999528565,
+    "6.point_0 FitPositionsSourceSolved (fit total, analytic \u03b2*)": 0.07292849999794271,
+    "6.point_1 FitPositionsSourceSolved (fit total, analytic \u03b2*)": 0.061136500000429805
+  },
+  "total_step_by_step": 0.004543420000845799,
+  "reference_log_likelihood": -40135921.91112596,
+  "solved": {
+    "fit_positions_cls": "FitPositionsSourceSolved",
+    "log_likelihood": -4230422.577412412,
+    "total_step_solved_extra": 0.24804159999621334,
+    "delta_per_system_s": {
+      "point_0": 0.006130699999630451,
+      "point_1": 0.01395770000090124
+    },
+    "delta_total_s": 0.020088400000531692,
+    "free_centre_params_removed_per_point_source": 2,
+    "free_centre_params_removed_total": 4
+  }
+}

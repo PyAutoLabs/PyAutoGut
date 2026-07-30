@@ -85,6 +85,8 @@ Empirical effect: mp on CPU consistently helps 7 – 23 %. On GPU it's more vari
 | `datacube/delaunay.py` | Datacube (34-channel cube) | DelaunayBrightnessImage per channel, shared lens model |
 | `point_source/image_plane.py` | Point source | Image-plane χ² via `PointSolver` |
 | `point_source/source_plane.py` | Point source | Source-plane χ² (cheaper proxy) |
+| `point_source/image_plane_solved.py` | Point source | Image-plane χ² via `PointSolver`, analytically-solved centre (`PointSolved` + `FitPositionsImagePairAllSolved`; also times `FitPositionsImagePairRepeatSolved` as a second steady-state entry) |
+| `point_source/source_plane_solved.py` | Point source | Source-plane χ² (analytically-solved centre, `PointSolved` + `FitPositionsSourceSolved`) — full pipeline JITs cleanly (phase-2 xp-propagation fix, unlike the plain source-plane path) |
 
 ## Driving the matrix — `sweep.py` and `aggregate.py`
 

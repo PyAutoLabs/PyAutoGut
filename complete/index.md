@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-781 records across 6 buckets.
+782 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -255,6 +255,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [multistart-prodigy-start-here](2026/07/multistart-prodigy-start-here.md)
 - [multistart-resurrection-restart-on-death](2026/07/multistart-resurrection-restart-on-death.md)
 - [nautilus-nn-bottleneck](2026/07/nautilus-nn-bottleneck.md) — Nautilus overhead research — anatomy on fast likelihoods (NN training 40-52% + bound geometry 25-38% of wall; …
+- [navigator-relative-refs](2026/07/navigator-relative-refs.md)
 - [next-wave-population-optimizers](2026/07/next-wave-population-optimizers.md)
 - [nightly-loud-failure](2026/07/nightly-loud-failure.md) — nightly driver hardening — token probe, fetch errors page (never 💤), anchor validation w/ 24h fallback, no anc…
 - [nightly-release-activity-gate](2026/07/nightly-release-activity-gate.md)

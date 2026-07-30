@@ -238,20 +238,6 @@
 - worktree: ~/Code/PyAutoLabs-wt/remove-finish-docstring-hack
 - repos:
 
-## navigator-relative-refs
-- issue: https://github.com/PyAutoLabs/PyAutoHands/issues/212
-- status: shipped, awaiting-merge (no PR-level CI on Hands — local suite is the gate)
-- library-pr: https://github.com/PyAutoLabs/PyAutoHands/pull/213 (OPEN, pending-release; commit 4605a77)
-- prompt: active/navigator_check_readme_ref_shapes.md
-- scope: phase 3 of 3 — teach check_navigator.py relative folder references in markdown prose
-- human-decision: NARROW design chosen over the planned full mirror — backticked multi-segment extension-less tokens + relative resolution only. Bare structure-list names (the `slam_pipeline` symptom) stay with hygiene refs, because duplicating the quorum heuristics into a second organ would drift and the Brain/Hands boundary forbids sharing the module.
-- validated: green on all 6 gated repos at current main; red on injected `data_preparation/imaging` reversal; 10 new tests (none existed for this module); full suite 250 passed
-- coordination: worktree_check_conflict flagged PyAutoHands as claimed by python-312-floor; verified by hand as a repos:-entry recording release commit 95f7502 with no PyAutoHands worktree and a clean tree. phase-5a touches pre-build staging, this touches check_navigator.py. Proceeded on human go-ahead.
-- merge-risk: navigator_check.yml is consumed @main by all 6 repos, so merging arms the widened gate everywhere immediately. Safe because all 6 verified green first.
-- worktree: ~/Code/PyAutoLabs-wt/navigator-relative-refs
-- repos:
-  - PyAutoHands (feature/navigator-relative-refs)
-
 ## public-register-galaxies-classes
 - issue: https://github.com/PyAutoLabs/PyAutoGalaxy/issues/536
 - status: awaiting-merge

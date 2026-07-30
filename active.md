@@ -9,28 +9,6 @@
 - phases: 1 (design) + 2 (core API) + 3 (workspace_test jax_likelihood + profiling examples) COMPLETE; next: start_workspace on draft phase-4 prompt (guides; fix cluster/likelihood_function.py false profile=None-centroid claim), then phase 5 (PointSolver custom_jvp gradients)
 - repos:
 
-## multi-package-rename-multi-dataset
-- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/408
-- status: phases 1 + 2a + 3 MERGED 2026-07-30; phase 2b PR-OPEN (unblocked — point-source released its claims; remaining potential-correction-validation claim on wst hand-checked file-disjoint, touches only scripts/imaging/subhalo_recovery.py)
-- merged: autolens_workspace#414, autogalaxy_workspace#194, autogalaxy_workspace_test#101, PyAutoLens#673, PyAutoGalaxy#542, autolens_assistant#105, autolens_jax_joss#2 — all 7 merged, feature branches deleted
-- phase2b-scope: autolens_workspace_test, autolens_profiling, autolens_workspace_developer — their own multi/ packages + smoke_tests.txt + no_run.yaml, PLUS 9 now-stale prose pointers into autolens_workspace/scripts/multi/... (3 wst, 5 profiling, 1 developer). Prose only — no runtime breakage, no CI failure. HowToLens needs NO change.
-- phase2b-pr: autolens_workspace_test#239, autolens_profiling#97, autolens_workspace_developer#122 (OPEN)
-- note: profiling/developer keep `simulators/multi.py` + `multi_summary_v*.json` + `"type": "multi"` — one coherent identifier for their OWN result series; nothing reads the field
-- worktree: ~/Code/PyAutoLabs-wt/multi-package-rename-multi-dataset
-- workspace-pr: autolens_workspace#414, autogalaxy_workspace#194 (both OPEN, pending-release)
-- phase3-pr: PyAutoLens#673, PyAutoGalaxy#542, autolens_assistant#105, autolens_jax_joss#2 (all OPEN, docs-only)
-- phase2a-pr: autogalaxy_workspace_test#101 (OPEN, pending-release) — the one phase-2 repo that was unclaimed
-- note: HowToLens needs NO change — its only `multi/start_here` hit is inside a dated 2026-07-23 historical comment recording which override patterns were REMOVED; rewriting it would misrepresent what those patterns said
-- note: autolens_assistant wiki-currency `--check-provenance` errors on any edited wiki/core page (content_sha256 stamp). Fix = `audit_skill_apis.py --write-provenance --page <each edited page>`; `--check-citations` passed (0 missing) even pre-merge
-- MERGE ORDER: autolens_workspace#414 + autogalaxy_workspace#194 FIRST, then the four phase-3 PRs (they are blob/main URLs + paired_example pointers that 404/dangle until the package actually moves on main)
-- heart-ack: YELLOW acknowledged by human 2026-07-30 for exactly these reasons — "manifest drift: tenant firewall (organ code) — 1 mismatch(es) vs PyAutoMind/repos.yaml"; stale: "test run status unknown (no report.json)", "release validation stale: source moved since rehearsal (PyAutoNerves, PyAutoFit, PyAutoArray, PyAutoGalaxy, PyAutoLens)". Does not extend to new reasons.
-- phases: 1 (autolens_workspace + autogalaxy_workspace) PR-OPEN; 2 (autolens_workspace_test, autogalaxy_workspace_test, autolens_profiling, autolens_workspace_developer, HowToLens) BLOCKED on point-source-chi-squared-variants releasing its worktree claims; 3 (PyAutoLens/docs, PyAutoGalaxy/docs, autolens_assistant, autolens_jax_joss) GATED on phase 1 merging — blob/main URLs dangle until then
-- note: Brain phase split (design/core_api/examples/docs) overridden for a per-repo, merge-dependency-ordered split; recorded in the prompt
-- note: THREE concurrent claims on autolens_workspace (#407, #408 this task, #409). Human authorised proceeding over the worktree_check_conflict block — #407's claim was empty (zero commits). Mitigations: (a) this task touches only the multi/ package + its references, disjoint from #407's scaling_relation/ and #409's multi_galaxy/; (b) regenerate notebooks/markdown/workspace_index.json/llms-full.txt/.script_sizes.json LAST, after a pre-PR merge of origin/main
-- repos:
-  - autolens_workspace: feature/multi-package-rename-multi-dataset
-  - autogalaxy_workspace: feature/multi-package-rename-multi-dataset
-
 ## multi-galaxy-features-parity
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/409
 - status: workspace-dev (phase 1 starting 2026-07-30)

@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-839 records across 6 buckets.
+840 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -256,6 +256,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [mind-guard-cd-fix](2026/07/mind-guard-cd-fix.md) — mind_commit_guard v1.2 — honour a leading `cd` away from Mind. v1.1 keyed is-Mind-commit off the ambient cwd t…
 - [morning-status-release-rehearsal](2026/07/morning-status-release-rehearsal.md) — morning Slack digest + release rehearsal — RESOLVED
 - [multi-galaxy-imaging-parity](2026/07/multi-galaxy-imaging-parity.md)
+- [multi-package-rename-multi-dataset](2026/07/multi-package-rename-multi-dataset.md)
 - [multi-plane-guide-units](2026/07/multi-plane-guide-units.md) — Rewrote guides/advanced/multi_plane.py — replaced the ~400-line raw
 - [multi-shared-state-core-api](2026/07/multi-shared-state-core-api.md)
 - [multi-shared-state-examples](2026/07/multi-shared-state-examples.md) — EPIC — phases 1-4 + follow-up

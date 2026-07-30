@@ -1,3 +1,86 @@
+Renamed the `multi` example package to `multi_dataset` across **eleven repos**, covering scripts, notebooks, markdown, dataset paths, output `path_prefix` values, docs URLs, assistant wiki citations and JOSS benchmark pointers.
+
+`multi` was ambiguous: it collided conceptually with the sibling `multi_galaxy` package, with the `multi_gaussian_expansion` feature folders, and with the general adjective "multi-" throughout the prose. `multi_dataset` names what the package actually is — the examples for fitting **multiple datasets** simultaneously via a factor graph.
+
+## PRs (11 repos, 10 PRs, all merged 2026-07-30)
+
+| Phase | PR |
+|-------|-----|
+| 1 — user workspaces | autolens_workspace#414, autogalaxy_workspace#194 |
+| 2a | autogalaxy_workspace_test#101 |
+| 2b | autolens_workspace_test#239, autolens_profiling#97, autolens_workspace_developer#122 |
+| 3 — downstream consumers | PyAutoLens#673, PyAutoGalaxy#542, autolens_assistant#105, autolens_jax_joss#2 |
+
+HowToLens needed no change (see below).
+
+## The trap that would have shipped silently: `bound="multi"`
+
+**Nine sites** across the organism use `multi` as a **Dynesty sampler value**, not a package name: `scripts/guides/modeling/searches.py` in both workspaces (×2 each), `PyAutoLens/autolens/config/non_linear.yaml` (×2), `PyAutoLens/test_autolens/config/non_linear.yaml`, `PyAutoGalaxy/test_autogalaxy/config/non_linear.yaml` (×2). A blanket `s/multi/multi_dataset/` corrupts all nine **with green CI** — nothing validates a sampler bound string.
+
+This is why the whole rename was done pattern-by-pattern with an explicit exclude list, never as a blanket substitution. See [[feedback_delete_the_trap_dont_document_it]] for the general shape.
+
+## Path-keyed sidecars fail OPEN on a `git mv`
+
+No error, no CI failure — just silent loss of coverage. Every one swept by hand and proved by entry **count**, not content:
+
+- `smoke_tests.txt` (4 repos) — including **commented-out** entries, which a naive sweep skips
+- `config/build/no_run.yaml` — SLOW and BOOTSTRAP-TARGET entries, plus trailing **comments** naming the dataset path the entry produces (invisible to a sweep of the entry alone)
+- `config/build/profile_release.yaml` — `- pattern: "multi/start_here"`, a **pattern** match that would have quietly stopped matching rather than erroring
+- `.script_sizes.json` — 28/401 keys (al), 22/174 (ag); hand-edited, **not** `check_sizes.sh --update` (which sweeps in unrelated repo-wide drift, cf. [[project_dspl_terminology_rename]])
+- `.url_check_allowlist.txt` — keyed by a trailing `# scripts/multi/...` path comment
+- `gallery/gallery_run.sh`, `.gitignore` (×2), `workspace_index.json`, `llms-full.txt`, `llms.txt`
+
+## Records vs pointers — the distinction that drove several calls
+
+**Pointers were updated; records were not.**
+
+- JOSS `paired_example` fields → updated (a pointer to the corresponding script; no timing, iteration count or likelihood value touched).
+- A captured execution log line in `markdown/multi_dataset/modeling.md` showing `output/multi/...` from a 2026-07-10 run → **left**, since rewriting it would misrepresent what that run produced.
+- `HowToLens/config/build/profile_smoke.yaml` — a dated 2026-07-23 comment recording which override patterns were *removed*. Those patterns literally said `multi/start_here`; rewriting it would falsify the record. **HowToLens therefore needed no change at all.**
+- `simulators/multi.py` + `multi_summary_v*.json` + `"type": "multi"` in autolens_profiling and autolens_workspace_developer → **left as a triple**. Nothing reads the field (verified write-only), the filename is a separate literal, and renaming part of the triple would orphan the historical series or leave it inconsistent.
+- `hard_group_multi.md`'s `id:` and filename → **left** (benchmark identifiers; renaming breaks comparison against historical results). Only its `workspace_packages:` entry moved.
+- `autolens_jax_joss` `fetch_url(..., "multi/sdp81")` → **left** (that repo's own dataset cache key, not a workspace path; renaming forces large FITS re-downloads for no gain).
+
+## Release notes: a breaking change silently filed as `Internal`
+
+`generate_release_notes.py::classify_pr` matches on a `## API Changes` section containing `### Removed`/`### Renamed`/`### Changed Signature`/`### Changed Behaviour` — **not** on prose. All three workspace PRs carried a prominent `### ⚠️ Breaking for existing users` block and still classified as `internal`, so the `output/multi/` break would never have reached users. Verified by running the real `classify_pr` against the live PR bodies, then fixed. Durable lesson in [[feedback_release_notes_breaking_needs_api_changes_heading]].
+
+## Assistant CI: `--check-provenance`, not the citation gate
+
+`autolens_assistant` `wiki-currency` failed — but **not** on `--check-citations`, which passed with **0 missing paths** even while the workspace PR renaming those paths was still open (it resolves against pinned `sources/` clones). The failure was `--check-provenance`: every `wiki/core` page carries a `content_sha256` stamp that any body edit invalidates. Fixed with `audit_skill_apis.py --write-provenance --page <each>`; 3 errors → 0. Recorded in [[reference_docs_ci_gotchas_workspace_assistant]].
+
+## Nine pre-existing bugs fixed as drive-bys
+
+A faithful rename keeps a wrong path wrong in a new costume, so **every** `multi_dataset/...` reference was checked for existence rather than trusted:
+
+- Four `"can be viewed in the folder"` docstrings had `dataset_type` and `dataset_label` **swapped** (`dataset/imaging/multi/x` for what the code builds as `dataset/multi/imaging/x`); two of those also named the **wrong `dataset_name`**.
+- Two `jax_grad` scripts printed `jax_grad/multi/<name>.py` — components **reversed**.
+- A run command omitted its `jax_likelihood/` component.
+- Two references named a `jax_likelihood_functions/` directory **that does not exist**.
+- Two had `likelihood_runtime/multi/` components reversed.
+- Two stale markdown sentences referenced `advanced/multi/modeling`, a path in neither the old nor the new layout.
+
+## Verification
+
+- **Zero** unintended survivors organism-wide; the 13 remaining `multi` tokens are all documented exclusions.
+- Simulators run green in four repos, writing to the renamed paths; consumers read those paths back and pass (`jax_grad/lp.py` gradient checks, `jax_likelihood/mge.py`) — verified across the **producer/consumer boundary**, not just at the producer.
+- Regeneration counts matched exactly: al **308** scripts, ag **132**.
+- Merge-order gate **verified, not assumed**: after phase 1 merged and before any phase-3 PR, all 7 target paths returned 200 on `main`; afterwards the live doc URLs return 200 and the old paths 404.
+- No collateral damage to the five concurrent `autolens_workspace` branches.
+
+## Process notes
+
+- **Brain phase split overridden.** `pyauto-brain feature` scored `too-large (28)` and proposed the generic `design → core_api → workspace_examples → docs` split — the repo-count heuristic ([[feedback_brain_repo_count_difficulty_proxy]]). There is no design step and no API here; replaced with a per-repo split ordered by merge dependency.
+- **`worktree_check_conflict` overridden twice on human authorisation**, both times after hand-checking that the holding claim was empty or file-disjoint ([[feedback_worktree_conflict_guard_never_fires]]). Up to **eight** concurrent tasks were claiming `autolens_workspace`.
+- **Heart YELLOW acknowledged** by the human for exactly three pre-existing reasons (manifest drift + two stale), re-checked before each ship and never extended to new reasons.
+- `markdown/` was updated **in place** rather than via `generate_markdown.py`, which executes every curated script for real (no test mode, at-release cadence) — hours of sampling to reproduce byte-identical figures for a rename. `markdown/` is stale against `scripts/` independently of this work and wants a real regeneration at release.
+
+## Breaking for users
+
+Results under `output/multi/` are **not migrated** — a re-run writes to `output/multi_dataset/` and will not resume from the old directory. A local `dataset/multi/` is likewise not moved (simulators simply re-create it).
+
+## Original prompt
+
 # Rename the `multi` example package to `multi_dataset`
 
 Type: refactor

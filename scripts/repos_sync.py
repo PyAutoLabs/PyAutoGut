@@ -594,7 +594,7 @@ FIREWALL_ALLOWLIST = {
     "PyAutoHeart/heart/checks/verify_install.sh": {"PyAutoNerves", "PyAutoLabs", "PyAutoLens", "autolens_workspace"},
     "PyAutoHeart/heart/checks/version_skew.py": {"PyAutoLabs"},
     "PyAutoHeart/heart/checks/workspace_testmode_timing.py": {"PyAutoLabs", "autofit_workspace", "autogalaxy_workspace", "autolens_workspace"},
-    "PyAutoHeart/heart/checks/worktree_drift.sh": {"PyAutoLabs"},
+    "PyAutoHeart/heart/checks/worktree_drift.py": {"PyAutoLabs"},
     "PyAutoHeart/heart/dashboard.py": {"autolens_profiling", "pyautolabs.github.io"},
     "PyAutoHeart/heart/fix.py": {"PyAutoFit", "PyAutoLabs"},
     "PyAutoHeart/heart/readiness.py": {"autolens_profiling", "autolens_workspace_test"},

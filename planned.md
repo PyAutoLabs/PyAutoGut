@@ -1,3 +1,13 @@
+## point-source-chi-squared-variants — phase 4 (guides)
+- issue: https://github.com/PyAutoLabs/PyAutoLens/issues/657 (parent series; phases 1-3 merged)
+- status: planned — BLOCKED on autolens_workspace claim conflict (2026-07-30)
+- blocking: autolens_workspace is claimed by multi-package-rename-multi-dataset (#408, PR autolens_workspace#414 OPEN) and multi-galaxy-features-parity (#409, PR #417 OPEN). Phase-4 script targets (guides/, point_source/, cluster/) are file-disjoint from both, but the regenerated artifacts (notebooks, workspace_index.json, .script_sizes.json, navigator, llms-full.txt) are the shared collision surface. Start once #414 and #417 merge, or on explicit human authorization of a third concurrent claim with the regenerate-LAST-after-pre-merge mitigation.
+- prompt: draft/feature/autolens/point_source_chi_squared_paper_variants_phase_4_docs.md (binding phase-1 design deltas inside)
+- classification: workspace docs (autolens_workspace only) — tutorial PROSE stays Opus per WORKFLOW.md; notebook regeneration delegated
+- suggested-branch: feature/point-source-solved-guides
+- affected-repos:
+  - autolens_workspace
+
 
 ## rhayes-audit-validation-phases-2-4
 - epic: https://github.com/PyAutoLabs/PyAutoArray/issues/415 (OPEN — the public watch point promised to @rhayes777 in all five replies)

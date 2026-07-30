@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-802 records across 6 buckets.
+806 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -274,6 +274,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [nnls-solver-optimization](2026/07/nnls-solver-optimization.md) — NNLS positive-only solver optimization. Phase A on real extracted production systems (rect n=1581 / Delaunay n…
 - [no-run-config-purge](2026/07/no-run-config-purge.md)
 - [notebook-adjacent-docstrings](2026/07/notebook-adjacent-docstrings.md) — Phase 1 of the adjacent-docstrings arc: PyAutoHands notebook generation now merges back-to-back docstrings int…
+- [nufftax-cap-lift](2026/07/nufftax-cap-lift.md)
 - [opus-wrapup](2026/07/opus-wrapup.md) — executed on Fable
 - [per-frame-psf](2026/07/per-frame-psf.md) — per-frame native ePSFs live (psf/frame_epsf.py: sky-subtracted, DQ local-median patch in ESTIMATOR input only …
 - [per-project-literature](2026/07/per-project-literature.md) — task 3 of the autolens_assistant batch — hybrid literature rule live: Create scaffolds wiki/project/bibliograp…
@@ -333,6 +334,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [python-312-autolens-wiki-currency-ci](2026/07/python-312-autolens-wiki-currency-ci.md) — The autolens assistant wiki-currency workflow now runs on Python 3.12, completing the assistant CI-selector po…
 - [python-312-memory-validation-ci](2026/07/python-312-memory-validation-ci.md) — PyAutoMemory validation now runs on Python 3.12 and its repository-structure validator recognizes the shared r…
 - [python-312-release-surfaces](2026/07/python-312-release-surfaces.md) — Removed the accidentally tracked `=3.12` and generated `run_logs/`
+- [python-312-workspace-runtime-pins](2026/07/python-312-workspace-runtime-pins.md)
 - [raw-guard-migration](2026/07/raw-guard-migration.md) — Leg 3 of the dataset-bulk series. Migrated 116 (autolens, 113 scripts) + 61 (autogalaxy, 59 scripts) raw `if n…
 - [rect-adapt](2026/07/rect-adapt.md) — rectangular adaptive-mesh edges — MERGED
 - [rectangular-kernel-cdf-mesh](2026/07/rectangular-kernel-cdf-mesh.md) — kernel-density CDF meshes RectangularKernelAdapt{Density,Image} (Enzi RTU) shipped opt-in — strict FD certifie…
@@ -364,6 +366,8 @@ _(curate hard-won records here — survives regeneration.)_
 - [run-queue](2026/07/run-queue.md)
 - [samplers-faculty](2026/07/samplers-faculty.md)
 - [scaling-relation-bgc-anchored](2026/07/scaling-relation-bgc-anchored.md)
+- [scaling_relation_bgc_anchored_phase_1_imaging_multi_galaxy](2026/07/scaling_relation_bgc_anchored_phase_1_imaging_multi_galaxy.md)
+- [scaling_relation_bgc_anchored_phase_2_interferometer_point_source](2026/07/scaling_relation_bgc_anchored_phase_2_interferometer_point_source.md)
 - [scholar-intake](2026/07/scholar-intake.md)
 - [science-project-api-gate](2026/07/science-project-api-gate.md) — task 2 of the autolens_assistant batch — Create scaffold generates a thin .claude/settings.json wiring the PyA…
 - [science-project-collaborator-clone](2026/07/science-project-collaborator-clone.md) — absorbed

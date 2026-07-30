@@ -1,39 +1,8 @@
 # Active Tasks
 
-## nufftax-cap-lift
-- issue: https://github.com/PyAutoLabs/PyAutoArray/issues/424
-- status: awaiting-merge — PyAutoArray#425 + PyAutoHeart#118 OPEN 2026-07-30
-- prs: PyAutoArray#425 (pin lift + rank-guarded batching shim), PyAutoHeart#118 (CI pins; merge after/with #425)
-- second-bug: pin lift alone insufficient — nufftax 0.6.1's batching fast path lacks a rank guard, so vmap(value_and_grad) over the batched mapping matrix crashed; fixed by _patch_nufftax_batchers() in transformer.py (0.6.x only; drop when fixed upstream)
-- evidence: suite 929 passed; start_here.py end-to-end exit 0 on branch autoarray; forward bit-identical 0.4.0↔0.6.1 at eps=1e-12; vmap grads match per-item loop exactly
-- follow-up: upstream GragasLab/nufftax issue/PR is a human-authorized outward action, not taken
-- prompt: active/nufftax_batched_nufft2d2_vjp_release_blocker.md
-- classification: library (PyAutoArray) + CI pin sweep (PyAutoHeart) — bug, nightly release blocker
-- root-cause: nufftax 0.4.0 `_nufft2d2_bwd` assumes 2-D f; MultiStartProdigy-default workspace commits (2026-07-29 19:42) first exercised the batched gradient. 0.6.1 verified: batched vjp works, forward bit-identical at eps=1e-12.
-- worktree: ~/Code/PyAutoLabs-wt/nufftax-cap-lift
-- repos:
-  - PyAutoArray (feature/nufftax-cap-lift)
-  - PyAutoHeart (feature/nufftax-cap-lift)
-
-## python-312-workspace-runtime-pins
-- issue: https://github.com/PyAutoLabs/autofit_workspace/issues/125
-- status: awaiting-merge — all six PRs OPEN 2026-07-30
-- prompt: active/python_312_workspace_runtime_pins.md
-- parent: python-312-floor / PyAutoNerves#142 (Phase 5B)
-- prs: autofit_workspace#128, autogalaxy_workspace#189, autolens_workspace#399, HowToFit#40, HowToGalaxy#51, HowToLens#63
-- validation: exact-value census (six × `python-3.12.1`, terminating newline) + `git diff --check` clean per repo; no test sweep (deployment-selector lines, per the prompt)
-- worktree: ~/Code/PyAutoLabs-wt/python-312-workspace-runtime-pins
-- repos:
-  - autofit_workspace (feature/python-312-workspace-runtime-pins)
-  - autogalaxy_workspace (feature/python-312-workspace-runtime-pins)
-  - autolens_workspace (feature/python-312-workspace-runtime-pins)
-  - HowToFit (feature/python-312-workspace-runtime-pins)
-  - HowToGalaxy (feature/python-312-workspace-runtime-pins)
-  - HowToLens (feature/python-312-workspace-runtime-pins)
-
 ## python-312-floor
 - issue: https://github.com/PyAutoLabs/PyAutoNerves/issues/142
-- status: Phase 3 live release published; Phase 5A cleanup complete; Phase 5B waiting on one workspace claim
+- status: Phase 3 live release published; Phase 5A cleanup complete; Phase 5B COMPLETE 2026-07-30 — all tracked selectors now at 3.12+; parent awaits explicit human close (PyAutoNerves#142)
 - library-pr: https://github.com/PyAutoLabs/PyAutoNerves/pull/143 (MERGED a9bf4561)
 - prompt: active/python_312_floor_phase_1a_nerves.md
 - phase-1b-issue: https://github.com/PyAutoLabs/PyAutoArray/issues/418
@@ -80,7 +49,7 @@
 - phase-3-followups: assistant wiki-currency workflows still run Python 3.11; PyAutoHands pre-build commit `95f7502` accidentally staged `=3.12` and `run_logs/`; the AutoGalaxy nufftax smoke failure is within the already-acknowledged workspace-validation class
 - phase-5-census: tracked active selectors below 3.12 remain in three assistant wiki workflows, PyAutoMemory validation, and six workspace/HowTo `runtime.txt` files; PyAutoHeart's Python 3.11 rejection job is intentional, while the PyAutoHands summary text and PyAutoFit `h5py>=3.11.0` dependency are not interpreter selectors
 - phase-5a: COMPLETE — PyAutoHands#210, autofit_assistant#25, autolens_assistant#95, autocti_assistant#15, and PyAutoMemory#31 merged; related assistant baseline fixes #97/#98, #26/#27, and #16/#17 also merged green
-- phase-5b: IN FLIGHT 2026-07-30 — all six repos freed; batch executed as task python-312-workspace-runtime-pins (see its entry above); six PRs open awaiting human merge
+- phase-5b: COMPLETE 2026-07-30 — six `runtime.txt` PRs merged unchanged (autofit_workspace#128, autogalaxy_workspace#189, autolens_workspace#399, HowToFit#40, HowToGalaxy#51, HowToLens#63); record: complete/2026/07/python-312-workspace-runtime-pins.md
 - phase-3-release-decision: https://github.com/PyAutoLabs/PyAutoHands/issues/208#issuecomment-5121606547
 - phase-3-fallbacks: autoconf `2026.7.15.1`; autoarray/autofit/autogalaxy/autolens `2026.7.29.1` (all unyanked, Requires-Python `>=3.9`)
 - phase-3-question: https://github.com/PyAutoLabs/PyAutoHands/issues/208#issuecomment-5118261332
@@ -101,7 +70,7 @@
 - phase-4d-prompt: active/python_312_floor_phase_4d_euclid_assistant.md
 - phase-4d-pr: https://github.com/Jammy2211/euclid_assistant/pull/11
 - phase-4d-status: merged-unchanged (51143df2); issue auto-closed
-- next-phase: run the six-file Phase 5B `runtime.txt` batch once autogalaxy_workspace is free; do not repeat the full ecosystem suite; source development remains unblocked
+- next-phase: none — all phases complete; remaining act is the explicit human close of PyAutoNerves#142 (and PyAutoCTI#100, PyAutoReduce#59, PyAutoHeart#113)
 - branch: none for the completed release; corrective follow-ups require normal task branches
 - worktree: /home/jammy/Code/PyAutoLabs/.codex-worktrees/python-312-floor
 - checkpoint-superseded: https://github.com/PyAutoLabs/PyAutoNerves/issues/142#issuecomment-5109079935

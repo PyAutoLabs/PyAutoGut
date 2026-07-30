@@ -126,19 +126,23 @@
 
 ## python-312-release-surfaces
 - issue: https://github.com/PyAutoLabs/PyAutoHands/issues/209
-- status: library-dev
+- status: awaiting-merge
+- library-pr: https://github.com/PyAutoLabs/PyAutoHands/pull/210 (OPEN, pending-release)
 - prompt: active/python_312_prebuild_debris_guard.md
 - branch: feature/python-312-release-surfaces
 - worktree: ~/Code/PyAutoLabs-wt/python-312-release-surfaces
 - parent: python-312-floor
 - repos:
   - PyAutoHands: feature/python-312-release-surfaces
-- notes: Remove the recoverable `95f7502` debris, prevent future whole-repo
-  pre-build staging, update canonical docs, and run focused checks only.
+- notes: Removed the recoverable `95f7502` debris, prevented future whole-repo
+  pre-build staging, and updated canonical docs. Validation: 241 tests passed,
+  shell syntax and negative preflight passed. Heart YELLOW acknowledged with
+  the unchanged workspace-validation and stale-parked-script reason set.
 
 ## python-312-autofit-wiki-currency-ci
 - issue: https://github.com/PyAutoLabs/autofit_assistant/issues/24
-- status: workspace-dev
+- status: awaiting-merge
+- workspace-pr: https://github.com/PyAutoLabs/autofit_assistant/pull/25 (OPEN, pending-release)
 - prompt: active/python_312_autofit_wiki_currency_ci.md
 - branch: feature/python-312-release-surfaces
 - worktree: ~/Code/PyAutoLabs-wt/python-312-release-surfaces
@@ -148,7 +152,8 @@
 
 ## python-312-autolens-wiki-currency-ci
 - issue: https://github.com/PyAutoLabs/autolens_assistant/issues/94
-- status: workspace-dev
+- status: awaiting-merge
+- workspace-pr: https://github.com/PyAutoLabs/autolens_assistant/pull/95 (OPEN, pending-release)
 - prompt: active/python_312_autolens_wiki_currency_ci.md
 - branch: feature/python-312-release-surfaces
 - worktree: ~/Code/PyAutoLabs-wt/python-312-release-surfaces
@@ -158,7 +163,8 @@
 
 ## python-312-autocti-wiki-currency-ci
 - issue: https://github.com/PyAutoLabs/autocti_assistant/issues/14
-- status: workspace-dev
+- status: awaiting-merge
+- workspace-pr: https://github.com/PyAutoLabs/autocti_assistant/pull/15 (OPEN, pending-release)
 - prompt: active/python_312_autocti_wiki_currency_ci.md
 - branch: feature/python-312-release-surfaces
 - worktree: ~/Code/PyAutoLabs-wt/python-312-release-surfaces
@@ -168,13 +174,16 @@
 
 ## python-312-memory-validation-ci
 - issue: https://github.com/PyAutoLabs/PyAutoMemory/issues/30
-- status: workspace-dev
+- status: workspace-dev, ship-blocked
 - prompt: active/python_312_memory_validation_ci.md
 - branch: feature/python-312-release-surfaces
 - worktree: ~/Code/PyAutoLabs-wt/python-312-release-surfaces
 - parent: python-312-floor
 - repos:
   - PyAutoMemory: feature/python-312-release-surfaces
+- notes: Python 3.12 workflow selector is staged but uncommitted. Shipping is
+  blocked by the pre-existing `AI_POLICY.md` structure-test failure on current
+  `origin/main`; do not broaden this task to fix that unrelated regression.
 
 ## vacuous-jax-assertions
 - issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/229

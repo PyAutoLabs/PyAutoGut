@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-776 records across 6 buckets.
+777 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -146,6 +146,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [floors-adoption](2026/07/floors-adoption.md) — Phase 4 task 1 — adopt version.minimum_library_version floor (2026.7.9.1) across all 7 workspace config/genera…
 - [frame-products](2026/07/frame-products.md) — opt-in per-exposure frame products live — TargetSpec.frame_products packages every calibrated _flc/_flt SCI ch…
 - [frame-registration](2026/07/frame-registration.md) — inter-exposure registration quantified + extracted — frames/manifest.json per-frame registration block (WCS so…
+- [gated-readme-drift](2026/07/gated-readme-drift.md)
 - [gradient-safe-logdet](2026/07/gradient-safe-logdet.md)
 - [graduate-mcp-autofit-extra](2026/07/graduate-mcp-autofit-extra.md)
 - [guard-followups](2026/07/guard-followups.md)

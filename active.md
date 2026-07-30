@@ -31,7 +31,10 @@
 
 ## multi-package-rename-multi-dataset
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/408
-- status: awaiting-merge (phases 1 + 3 + 2a PR-open 2026-07-30; phase 2b blocked)
+- status: phases 1 + 2a + 3 MERGED 2026-07-30; phase 2b OUTSTANDING (blocked)
+- merged: autolens_workspace#414, autogalaxy_workspace#194, autogalaxy_workspace_test#101, PyAutoLens#673, PyAutoGalaxy#542, autolens_assistant#105, autolens_jax_joss#2 — all 7 merged, feature branches deleted
+- phase2b-scope: autolens_workspace_test, autolens_profiling, autolens_workspace_developer — their own multi/ packages + smoke_tests.txt + no_run.yaml, PLUS 9 now-stale prose pointers into autolens_workspace/scripts/multi/... (3 wst, 5 profiling, 1 developer). Prose only — no runtime breakage, no CI failure. HowToLens needs NO change.
+- phase2b-blocked-by: point-source-chi-squared-variants (all 3 repos) + potential-correction-validation (autolens_workspace_test)
 - worktree: ~/Code/PyAutoLabs-wt/multi-package-rename-multi-dataset
 - workspace-pr: autolens_workspace#414, autogalaxy_workspace#194 (both OPEN, pending-release)
 - phase3-pr: PyAutoLens#673, PyAutoGalaxy#542, autolens_assistant#105, autolens_jax_joss#2 (all OPEN, docs-only)

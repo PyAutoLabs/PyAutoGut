@@ -124,33 +124,6 @@
   checks passed exact head `5b42f3e4`. The full five-library core floor is now
   merged; no release or issue closure was performed. Advance to Phase 2.
 
-## python-312-release-surfaces
-- issue: https://github.com/PyAutoLabs/PyAutoHands/issues/209
-- status: awaiting-merge
-- library-pr: https://github.com/PyAutoLabs/PyAutoHands/pull/210 (OPEN, pending-release)
-- prompt: active/python_312_prebuild_debris_guard.md
-- branch: feature/python-312-release-surfaces
-- worktree: ~/Code/PyAutoLabs-wt/python-312-release-surfaces
-- parent: python-312-floor
-- repos:
-  - PyAutoHands: feature/python-312-release-surfaces
-- notes: Removed the recoverable `95f7502` debris, prevented future whole-repo
-  pre-build staging, and updated canonical docs. Validation: 241 tests passed,
-  shell syntax and negative preflight passed. Heart YELLOW acknowledged with
-  the unchanged workspace-validation and stale-parked-script reason set.
-
-## python-312-autofit-wiki-currency-ci
-- issue: https://github.com/PyAutoLabs/autofit_assistant/issues/24
-- status: awaiting-merge
-- workspace-pr: https://github.com/PyAutoLabs/autofit_assistant/pull/25 (OPEN, pending-release)
-- prompt: active/python_312_autofit_wiki_currency_ci.md
-- branch: feature/python-312-release-surfaces
-- worktree: ~/Code/PyAutoLabs-wt/python-312-release-surfaces
-- parent: python-312-floor
-- repos:
-  - autofit_assistant: feature/python-312-release-surfaces
-- notes: `wiki-currency` passes on the Python 3.12 PR head.
-
 ## python-312-autolens-wiki-currency-ci
 - issue: https://github.com/PyAutoLabs/autolens_assistant/issues/94
 - status: awaiting-merge
@@ -164,20 +137,6 @@
 - notes: Python 3.12 version, symbol, and idiom checks pass. Merge remains
   blocked by unrelated baseline drift: unclassified `AI_POLICY.md` and the
   missing `autolens_workspace:scripts/guides/hpc/example_cpu.py` citation.
-
-## python-312-autocti-wiki-currency-ci
-- issue: https://github.com/PyAutoLabs/autocti_assistant/issues/14
-- status: awaiting-merge
-- workspace-pr: https://github.com/PyAutoLabs/autocti_assistant/pull/15 (OPEN, pending-release)
-- prompt: active/python_312_autocti_wiki_currency_ci.md
-- branch: feature/python-312-release-surfaces
-- worktree: ~/Code/PyAutoLabs-wt/python-312-release-surfaces
-- parent: python-312-floor
-- repos:
-  - autocti_assistant: feature/python-312-release-surfaces
-- notes: Python 3.12 exposed the missing `setuptools.build_meta` bootstrap for
-  `arcticpy`; follow-up commit `1130399` installs setuptools/wheel explicitly.
-  Both `wiki-currency` and `boundary` now pass.
 
 ## python-312-memory-validation-ci
 - issue: https://github.com/PyAutoLabs/PyAutoMemory/issues/30
@@ -301,3 +260,17 @@
 - follow-up: a column-0 CLOSING `"""` of a triple-quoted string literal in code toggles docstring state the same way — one occurrence, `autolens_workspace_test/gallery/gallery_build.py:42`, outside `scripts/` so never converted. Needs tokenization, not a line-prefix test; file as its own prompt
 - worktree: ~/Code/PyAutoLabs-wt/remove-finish-docstring-hack
 - repos:
+
+## navigator-relative-refs
+- issue: https://github.com/PyAutoLabs/PyAutoHands/issues/212
+- status: shipped, awaiting-merge (no PR-level CI on Hands — local suite is the gate)
+- library-pr: https://github.com/PyAutoLabs/PyAutoHands/pull/213 (OPEN, pending-release; commit 4605a77)
+- prompt: active/navigator_check_readme_ref_shapes.md
+- scope: phase 3 of 3 — teach check_navigator.py relative folder references in markdown prose
+- human-decision: NARROW design chosen over the planned full mirror — backticked multi-segment extension-less tokens + relative resolution only. Bare structure-list names (the `slam_pipeline` symptom) stay with hygiene refs, because duplicating the quorum heuristics into a second organ would drift and the Brain/Hands boundary forbids sharing the module.
+- validated: green on all 6 gated repos at current main; red on injected `data_preparation/imaging` reversal; 10 new tests (none existed for this module); full suite 250 passed
+- coordination: worktree_check_conflict flagged PyAutoHands as claimed by python-312-floor; verified by hand as a repos:-entry recording release commit 95f7502 with no PyAutoHands worktree and a clean tree. phase-5a touches pre-build staging, this touches check_navigator.py. Proceeded on human go-ahead.
+- merge-risk: navigator_check.yml is consumed @main by all 6 repos, so merging arms the widened gate everywhere immediately. Safe because all 6 verified green first.
+- worktree: ~/Code/PyAutoLabs-wt/navigator-relative-refs
+- repos:
+  - PyAutoHands (feature/navigator-relative-refs)

@@ -55,10 +55,13 @@
 
 ## multi-package-rename-multi-dataset
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/408
-- status: awaiting-merge (phases 1 + 3 PR-open 2026-07-30; phase 2 blocked)
+- status: awaiting-merge (phases 1 + 3 + 2a PR-open 2026-07-30; phase 2b blocked)
 - worktree: ~/Code/PyAutoLabs-wt/multi-package-rename-multi-dataset
 - workspace-pr: autolens_workspace#414, autogalaxy_workspace#194 (both OPEN, pending-release)
 - phase3-pr: PyAutoLens#673, PyAutoGalaxy#542, autolens_assistant#105, autolens_jax_joss#2 (all OPEN, docs-only)
+- phase2a-pr: autogalaxy_workspace_test#101 (OPEN, pending-release) — the one phase-2 repo that was unclaimed
+- note: HowToLens needs NO change — its only `multi/start_here` hit is inside a dated 2026-07-23 historical comment recording which override patterns were REMOVED; rewriting it would misrepresent what those patterns said
+- note: autolens_assistant wiki-currency `--check-provenance` errors on any edited wiki/core page (content_sha256 stamp). Fix = `audit_skill_apis.py --write-provenance --page <each edited page>`; `--check-citations` passed (0 missing) even pre-merge
 - MERGE ORDER: autolens_workspace#414 + autogalaxy_workspace#194 FIRST, then the four phase-3 PRs (they are blob/main URLs + paired_example pointers that 404/dangle until the package actually moves on main)
 - heart-ack: YELLOW acknowledged by human 2026-07-30 for exactly these reasons — "manifest drift: tenant firewall (organ code) — 1 mismatch(es) vs PyAutoMind/repos.yaml"; stale: "test run status unknown (no report.json)", "release validation stale: source moved since rehearsal (PyAutoNerves, PyAutoFit, PyAutoArray, PyAutoGalaxy, PyAutoLens)". Does not extend to new reasons.
 - phases: 1 (autolens_workspace + autogalaxy_workspace) PR-OPEN; 2 (autolens_workspace_test, autogalaxy_workspace_test, autolens_profiling, autolens_workspace_developer, HowToLens) BLOCKED on point-source-chi-squared-variants releasing its worktree claims; 3 (PyAutoLens/docs, PyAutoGalaxy/docs, autolens_assistant, autolens_jax_joss) GATED on phase 1 merging — blob/main URLs dangle until then
@@ -81,7 +84,12 @@
 ## guides-jax-to-using-jax
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/412
 - session: claude --resume 1eaf929e-624f-4e22-a28f-9b39e463258e
-- status: workspace-dev
+- status: awaiting-merge (PRs open 2026-07-30, CI pending)
+- prs: autolens_workspace#415, autogalaxy_workspace#195
+- heart-ack:
+  - "manifest drift: tenant firewall (organ code) — 1 mismatch(es) vs PyAutoMind/repos.yaml"
+  - "test run status unknown (no report.json)"
+  - "release validation stale: source moved since rehearsal (PyAutoNerves, PyAutoFit, PyAutoArray, PyAutoGalaxy, PyAutoLens)"
 - worktree: ~/Code/PyAutoLabs-wt/guides-jax-to-using-jax
 - note: worktree_check_conflict fired on 6 concurrent/stale autolens_workspace claims; hand-checked file-disjoint — this task owns scripts/guides/{using_jax,data_structures,galaxies,lens_calc,tracer}.py + smoke_tests.txt; only generated sidecars/notebooks shared with #407/#408/#410/multi-plane-guide-units — re-merge main + regenerate before PR
 - note: Model Fable (human decision 2026-07-30); one PR per repo (recorded override of Feature Agent 4-phase split, #368 precedent); using_jax.py becomes runnable + smoke-listed (user scope addition)

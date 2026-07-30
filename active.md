@@ -165,6 +165,7 @@
 - prompt: active/docs/workspaces/searches_guide_nautilus_first_prodigy_second.md
 - brain-override: Brain scored too-large/10 with four generic phases (design/core_api/workspace_examples/docs); overridden to small, single pair of PRs — two prose files, zero library API change, so core_api was vacuous
 - collision-cleared: PR#383/#384 (script-prose-ref-drift, remove-finish-docstring-hack) both MERGED 2026-07-30; scaling-relation-bgc-anchored also claims autolens_workspace but is confined to `scripts/*/features/scaling_relation/` — hand-verified disjoint from `guides/modeling/searches.py`
+- heart-ack: workspace validation not passing (0 failed, cloud#30516167217); release validation stale: source moved since rehearsal (PyAutoFit, PyAutoArray, PyAutoGalaxy, PyAutoLens)
 - worktree: ~/Code/PyAutoLabs-wt/searches-guide-nautilus-first
 - repos:
   - autolens_workspace (feature/searches-guide-nautilus-first)

@@ -32,10 +32,10 @@
 ## point-source-chi-squared-variants
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/657
 - session: claude --resume daaa46f9-aac5-48e2-9146-1202a92d879e
-- status: workspace-dev (phase 3 in flight 2026-07-30)
-- worktree: ~/Code/PyAutoLabs-wt/point-source-chi-squared-variants
+- status: phase-3-shipped, phase-4-pending
 - library-pr: PyAutoArray#414, PyAutoGalaxy#531, PyAutoLens#659 (ALL MERGED 2026-07-27; codex-review fixes included; branches + worktree cleaned)
-- phases: 1 (design) + 2 (core API) COMPLETE; 3 (workspace_test jax_likelihood + profiling examples) IN FLIGHT on feature/point-source-chi-squared-variants (autolens_workspace_test, autolens_profiling, autolens_workspace_developer stale-claim fix); then phase 4 (guides), phase 5 (JAX solver gradients)
+- phase-3-pr: workspace_test#237, profiling#96, workspace_developer#121 (ALL MERGED 2026-07-30; worktree + branches cleaned; shipped comment https://github.com/PyAutoLabs/PyAutoLens/issues/657#issuecomment-5135275039)
+- phases: 1 (design) + 2 (core API) + 3 (workspace_test jax_likelihood + profiling examples) COMPLETE; next: start_workspace on draft phase-4 prompt (guides; fix cluster/likelihood_function.py false profile=None-centroid claim), then phase 5 (PointSolver custom_jvp gradients)
 - repos:
 
 ## scaling-relation-brightest-galaxy

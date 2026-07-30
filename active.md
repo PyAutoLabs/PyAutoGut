@@ -56,3 +56,14 @@
 - note: THIRD concurrent claim on autolens_workspace (with #407, #408). Human authorised proceeding over the worktree_check_conflict block (it fired on both). Mitigations: (a) do not touch multi_galaxy/features/scaling_relation/ — #407 owns it, the slam.py re-point is a follow-up; (b) regenerate notebooks/navigator/.script_sizes.json LAST, after a pre-PR merge of origin/main
 - repos:
   - autolens_workspace: feature/multi-galaxy-features-parity
+
+## guides-jax-to-using-jax
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/412
+- session: claude --resume 1eaf929e-624f-4e22-a28f-9b39e463258e
+- status: workspace-dev
+- worktree: ~/Code/PyAutoLabs-wt/guides-jax-to-using-jax
+- note: worktree_check_conflict fired on 6 concurrent/stale autolens_workspace claims; hand-checked file-disjoint — this task owns scripts/guides/{using_jax,data_structures,galaxies,lens_calc,tracer}.py + smoke_tests.txt; only generated sidecars/notebooks shared with #407/#408/#410/multi-plane-guide-units — re-merge main + regenerate before PR
+- note: Model Fable (human decision 2026-07-30); one PR per repo (recorded override of Feature Agent 4-phase split, #368 precedent); using_jax.py becomes runnable + smoke-listed (user scope addition)
+- repos:
+  - autolens_workspace: feature/guides-jax-to-using-jax
+  - autogalaxy_workspace: feature/guides-jax-to-using-jax

@@ -67,8 +67,15 @@ phases are vacuous — the score is the repo-count proxy again
 by regime, both independent, phase 1 first:
 
 - `extra_galaxies_feature_parity_phase_1_point_source.md` — autolens_workspace, 1 PR.
-- `extra_galaxies_feature_parity_phase_2_multi_galaxy.md` — autolens_workspace +
-  autogalaxy_workspace, 2 PRs.
+  **SHIPPED** 2026-07-30: issue #374 closed, PR#376 merged `e005caca`.
+- `extra_galaxies_feature_parity_phase_2a_multi_galaxy_autogalaxy.md` — autogalaxy_workspace.
+- `extra_galaxies_feature_parity_phase_2b_multi_galaxy_autolens.md` — autolens_workspace,
+  **BLOCKED on #370** (`multi-galaxy-imaging-parity`) merging.
+
+Phase 2 was split by repo on 2026-07-30: #370 is rewriting
+`autolens_workspace/scripts/multi_galaxy/` wholesale (2,959 insertions, incl. adding
+extra-galaxy noise scaling to the core scripts), so the autolens half must be written against
+that merged result. The autogalaxy half has zero contention and runs now.
 
 ## Scope
 

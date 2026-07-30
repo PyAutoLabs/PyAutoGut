@@ -1,5 +1,20 @@
 # Active Tasks
 
+## ai-policy-validator-followups
+- issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/181
+- status: infrastructure-dev
+- prompt: active/clone_boundary_ai_policy_unclassified.md
+- branch: feature/ai-policy-validator-followups
+- worktree: ~/Code/PyAutoLabs-wt/ai-policy-validator-followups
+- scope: classify root `AI_POLICY.md` as generic Clone Agent infrastructure and align the maintainer boundary prose in all three assistant cells; do not add an AutoCTI reference profile
+- parallel-claim: human-approved 2026-07-30; the assistant edits are limited to `modes/maintainer.md` and do not overlap the open `assistant-output-folder-pointer` PRs or Python 3.12 workflow-selector PR
+- related: PyAutoMemory's root allowlist correction remains in PyAutoMemory#30 on the existing `python-312-release-surfaces` task
+- repos:
+  - PyAutoBrain: feature/ai-policy-validator-followups
+  - autolens_assistant: feature/ai-policy-validator-followups
+  - autofit_assistant: feature/ai-policy-validator-followups
+  - autocti_assistant: feature/ai-policy-validator-followups
+
 ## python-312-floor
 - issue: https://github.com/PyAutoLabs/PyAutoNerves/issues/142
 - status: Phase 3 live release published; two corrective tracks remain

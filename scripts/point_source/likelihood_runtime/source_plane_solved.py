@@ -472,7 +472,9 @@ print(
     f"  Free parameters:            {model.total_free_parameters}  "
     "(source_plane.py: 8; delta=-3 -> -2 solved centre, -1 unused flux)"
 )
-print("  fit_positions_cls:          FitPositionsSourceSolved (source-plane chi-squared, solved centre)")
+print(
+    "  fit_positions_cls:          FitPositionsSourceSolved (source-plane chi-squared, solved centre)"
+)
 print("-" * 70)
 print(f"  Eager full likelihood:      {eager_per_call:.6f} s/call  ({log_likelihood_ref:.6f})")
 print(f"  Full pipeline (JIT):        {full_pipeline_per_call:.6f} s/call")

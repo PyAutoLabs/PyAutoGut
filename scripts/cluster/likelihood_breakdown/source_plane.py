@@ -278,8 +278,7 @@ print(
 # `al.ps.Point(centre=...)` (2 centre params) per source, name-paired the
 # same way. Used only by step 6 below.
 source_galaxies_solved = [
-    al.Galaxy(redshift=float(d.redshift), **{d.name: al.ps.PointSolved()})
-    for d in dataset_list
+    al.Galaxy(redshift=float(d.redshift), **{d.name: al.ps.PointSolved()}) for d in dataset_list
 ]
 tracer_solved = al.Tracer(
     galaxies=main_lens_galaxies + scaling_galaxies + [host_halo_galaxy] + source_galaxies_solved
@@ -459,7 +458,9 @@ for dataset in dataset_list:
     )
 
 log_likelihood_total_solved = sum(fit_solved_log_likelihoods)
-print(f"\n  source-plane log likelihood, solved (sum over systems): {log_likelihood_total_solved:.6e}")
+print(
+    f"\n  source-plane log likelihood, solved (sum over systems): {log_likelihood_total_solved:.6e}"
+)
 
 print("\n--- Solved vs plain: per-system fit-total runtime delta ---")
 delta_per_system = {}

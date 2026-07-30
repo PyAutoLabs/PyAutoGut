@@ -238,8 +238,7 @@ print(f"Tracer: {len(tracer.planes)} planes, {n_mass_profiles} mass components."
 # below — step 1/2's back-trace + forward-solve don't read the point-source
 # profile type at all, so they're shared as-is with the plain-path tracer.
 source_galaxies_solved = [
-    al.Galaxy(redshift=float(d.redshift), **{d.name: al.ps.PointSolved()})
-    for d in dataset_list
+    al.Galaxy(redshift=float(d.redshift), **{d.name: al.ps.PointSolved()}) for d in dataset_list
 ]
 tracer_solved = al.Tracer(
     galaxies=main_lens_galaxies + scaling_galaxies + [host_halo_galaxy] + source_galaxies_solved
@@ -390,7 +389,9 @@ for dataset in dataset_list:
     )
 
 log_likelihood_total_solved = sum(fit_solved_log_likelihoods)
-print(f"\n  image-plane log likelihood, solved (sum over systems): {log_likelihood_total_solved:.6e}")
+print(
+    f"\n  image-plane log likelihood, solved (sum over systems): {log_likelihood_total_solved:.6e}"
+)
 
 print("\n--- Solved vs plain: per-system fit-total runtime delta ---")
 delta_per_system = {}

@@ -1,3 +1,14 @@
+## python-312-release-surfaces
+- issue: https://github.com/PyAutoLabs/PyAutoHands/issues/209
+- completed: 2026-07-30
+- library-pr: https://github.com/PyAutoLabs/PyAutoHands/pull/210
+- summary: Removed the accidentally tracked `=3.12` and generated `run_logs/`
+  debris while preserving it in git history. Pre-build now requires a clean
+  PyAutoHands `main` before side effects and never self-stages or self-commits.
+  Documentation and regression coverage were updated; 241 tests passed.
+
+## Original prompt
+
 # Python 3.12 floor — prevent pre-build debris commits
 
 Type: bug

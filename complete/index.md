@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-777 records across 6 buckets.
+780 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -314,6 +314,9 @@ _(curate hard-won records here — survives regeneration.)_
 - [pyautoscientist-phase1](2026/07/pyautoscientist-phase1.md) — PyAutoScientist Phase 1 (zero behaviour risk) — MIT LICENSE on Brain/Mind/Heart, MIT+CC-BY-4.0 split on Memory…
 - [pyautoscientist-phase2](2026/07/pyautoscientist-phase2.md) — PyAutoScientist Phase 2 — the pyautoscientist RTD source in PyAutoBrain/docs/ (13 MyST pages: concepts, per-or…
 - [pyautoscientist-phase3a](2026/07/pyautoscientist-phase3a.md) — Phase 3a (--auto supervised, launched "go --auto") — spawn_spec.md partition rules (3b implements mechanically…
+- [python-312-autocti-wiki-currency-ci](2026/07/python-312-autocti-wiki-currency-ci.md) — Raised the assistant wiki-currency runner to Python 3.12 and made
+- [python-312-autofit-wiki-currency-ci](2026/07/python-312-autofit-wiki-currency-ci.md) — Raised the assistant wiki-currency runner from Python 3.11 to 3.12.
+- [python-312-release-surfaces](2026/07/python-312-release-surfaces.md) — Removed the accidentally tracked `=3.12` and generated `run_logs/`
 - [raw-guard-migration](2026/07/raw-guard-migration.md) — Leg 3 of the dataset-bulk series. Migrated 116 (autolens, 113 scripts) + 61 (autogalaxy, 59 scripts) raw `if n…
 - [rect-adapt](2026/07/rect-adapt.md) — rectangular adaptive-mesh edges — MERGED
 - [rectangular-kernel-cdf-mesh](2026/07/rectangular-kernel-cdf-mesh.md) — kernel-density CDF meshes RectangularKernelAdapt{Density,Image} (Enzi RTU) shipped opt-in — strict FD certifie…

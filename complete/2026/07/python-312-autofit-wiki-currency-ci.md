@@ -1,3 +1,12 @@
+## python-312-autofit-wiki-currency-ci
+- issue: https://github.com/PyAutoLabs/autofit_assistant/issues/24
+- completed: 2026-07-30
+- workspace-pr: https://github.com/PyAutoLabs/autofit_assistant/pull/25
+- summary: Raised the assistant wiki-currency runner from Python 3.11 to 3.12.
+  The PR workflow passed against the released Python-3.12-only stack.
+
+## Original prompt
+
 # Python 3.12 floor — AutoFit assistant wiki CI
 
 Type: bug

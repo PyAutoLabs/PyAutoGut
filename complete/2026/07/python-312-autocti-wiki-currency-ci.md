@@ -1,3 +1,13 @@
+## python-312-autocti-wiki-currency-ci
+- issue: https://github.com/PyAutoLabs/autocti_assistant/issues/14
+- completed: 2026-07-30
+- workspace-pr: https://github.com/PyAutoLabs/autocti_assistant/pull/15
+- summary: Raised the assistant wiki-currency runner to Python 3.12 and made
+  the arcticpy source-build bootstrap explicit by installing setuptools and
+  wheel. Both wiki-currency and clone-boundary checks passed.
+
+## Original prompt
+
 # Python 3.12 floor — AutoCTI assistant wiki CI
 
 Type: bug

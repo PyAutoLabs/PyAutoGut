@@ -7,7 +7,8 @@ Repos:
 Difficulty: medium
 Autonomy: supervised
 Priority: normal
-Status: draft
+Status: shipped 2026-07-30 — BOTH phases merged (autolens_workspace PR#396 `63dbafe8`, PR#398 `4fb2c776`);
+  issues #385 and #397 closed. Completion record: complete/2026/07/scaling-relation-bgc-anchored.md
 Supersedes: draft/docs/workspaces/galaxy_scale_scaling_extra_features.md (scaling half; its
 extra_galaxies half shipped as autolens_workspace#376 / autogalaxy_workspace#184)
 

@@ -1,5 +1,14 @@
 # Active Tasks
 
+## nightly-page-names-scripts
+- issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/184
+- status: library-dev — artifact download-on-failure + page summary
+- prompt: active/nightly_ingest_stage3_artifacts_on_failure.md
+- classification: bug (PyAutoBrain) — CI/release audit series task 4; scope corrected (ingest-on-failure is dead code — ephemeral CI state; the win is the page naming scripts)
+- worktree: ~/Code/PyAutoLabs-wt/nightly-page-names-scripts
+- repos:
+  - PyAutoBrain (feature/nightly-page-names-scripts)
+
 ## multiband-pyloop-batching
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1430
 - session: claude --resume ed9e7d65-ca7d-4718-8f02-d77a2ad27017

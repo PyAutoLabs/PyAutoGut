@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-817 records across 6 buckets.
+818 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -260,6 +260,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [multi-start-gradient-examples](2026/07/multi-start-gradient-examples.md) — Phase 2 (redefined config→examples) of the multi-start gradient search promotion (Fit#1369). Added a MultiStar…
 - [multi-start-gradient-guides](2026/07/multi-start-gradient-guides.md) — Phase 3 of the multi-start gradient search promotion (Fit#1369). Added a MultiStartAdam config section to scri…
 - [multi-start-gradient-search](2026/07/multi-start-gradient-search.md) — Phase 1 of promoting the benchmark-winning multi-start gradient MAP optimizer to first-class PyAutoFit searche…
+- [multiband-pyloop-batching](2026/07/multiband-pyloop-batching.md)
 - [multistart-adam-release-jax](2026/07/multistart-adam-release-jax.md)
 - [multistart-cadence-followups](2026/07/multistart-cadence-followups.md)
 - [multistart-cadence-int-cast](2026/07/multistart-cadence-int-cast.md)

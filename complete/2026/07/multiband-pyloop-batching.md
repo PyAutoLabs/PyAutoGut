@@ -1,3 +1,57 @@
+**Task:** productize the pyloop lever from the multi-band compile investigation —
+the JAX compile of a multi-band `af.FactorGraphModel` + `af.MultiStartProdigy`
+fit (the autolens_assistant COSMOS-Web Ring intro case) exceeded an hour cold on
+CPU with every shipped mitigation live.
+
+**What shipped:** `AbstractMultiStartGradient._fit`'s `batch_size` path replaced
+— the in-XLA `jax.lax.map(value_and_grad, batch_size=)` scan (compile-intractable
+and memory-explosive when its body is a multi-band FactorGraphModel fusion) is
+now a Python sweep over `jit(jax.vmap(value_and_grad))` chunks, the ragged final
+chunk padded so exactly one `(batch_size, ndim)` program compiles per search
+(pure `_chunk_slices` helper, numpy-only tested). A second cost found by
+benchmarking the whole path and fixed in the same PR: `_broad_starts` evaluated
+an **eager** per-draw `value_and_grad` — cache-immune, ~13 min per multi-band
+process — now one jitted, persistently-cached objective built in `_fit`
+(module-level `jax_value_and_grad_single` deleted; no external usages).
+
+**Result** (4-band jwst MGE FactorGraphModel, 16 starts, batch_size 4; 1-core
+WSL laptop + RTX 2060): cold fit intractable (>55 min, OOM) → **395.5 s CPU /
+392.3 s GPU**; warm **136.2 s / 198.5 s**. `best_fom` bit-identical across every
+arm, backend and cache state; Gaussian-cell parity (`batch_size` None / 4 /
+ragged 5) bit-identical per start.
+
+**New census finding: the `lax.map` scan explosion is CPU-backend-SPECIFIC.**
+The CUDA pipeline compiles the same scan in ~122 s at steady-eval parity with
+pyloop (0.740 vs 0.729 s per 16-start sweep) on the same 1-core host — so no
+opt-in scan fallback was kept; pyloop is the only implementation on both
+backends. Rows `mb_homo_cold_{pyloop,laxmap}_gpu`; findings note
+`autolens_profiling/results/notes/multiband_pyloop_productized.md`.
+
+**PRs:** PyAutoFit#1431 (MERGED `f5bdc7c6`), autolens_profiling#95 (MERGED
+`014afbbf`). Issue PyAutoFit#1430 closed.
+
+## Notes worth keeping
+
+1. After fixing a compile cost, benchmark the WHOLE path — the eager broad-start
+   filter hid behind the scan explosion and dominated the warm fit (838 s)
+   once the scan was fixed.
+2. Heart at ship: `stale` ("test run status unknown (no report.json)"; "release
+   validation stale: source moved since rehearsal") — pre-existing, surfaced
+   verbatim on the issue; suite (1592p/1s), parity and 4/4 targeted MultiStart
+   smoke scripts green.
+3. Brain Feature Agent scored too-large-13 off repo count with a generic
+   4-phase split; overridden to one implement+benchmark task (#93 precedent),
+   recorded in the issue.
+4. `~/venv/PyAutoGPU` is now Python 3.12 + jax 0.10.2; both
+   `JAX_PLATFORM_NAME=cuda` and `JAX_PLATFORMS=cuda,cpu` remain required.
+5. Follow-ups re-filed as
+   `draft/research/autolens_profiling/multiband_compile_census_completion.md`
+   (A100/multi-core rows, hetero GPU rows, secondary-lever verdict); the
+   superseded pre-investigation draft `multi_band_factorgraphmodel_value_and_grad_cold.md`
+   shelved to `complete/archive/shelved/`.
+
+## Original prompt
+
 # Multi-band FactorGraphModel value_and_grad compile — deeper dig + productize the fix
 
 Type: research

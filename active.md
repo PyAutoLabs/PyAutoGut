@@ -21,22 +21,6 @@
   - autolens_workspace (feature/plot-coverage-gaps)
   - autogalaxy_workspace (feature/plot-coverage-gaps)
 
-## multiband-pyloop-batching
-- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1430
-- session: claude --resume ed9e7d65-ca7d-4718-8f02-d77a2ad27017
-- status: library-shipped, awaiting-merge
-- library-pr: https://github.com/PyAutoLabs/PyAutoFit/pull/1431
-- profiling-pr: https://github.com/PyAutoLabs/autolens_profiling/pull/95
-- validation: suite 1592p/1s; parity bit-identical (None/4/ragged-5); targeted smoke 4/4 (MultiStart* + auto_convergence); multi-band e2e cold 395s CPU / 392s GPU, warm 136s / 199s
-- heart-at-ship: stale — "test run status unknown (no report.json)"; "release validation stale: source moved since rehearsal (PyAutoFit, PyAutoArray, PyAutoGalaxy, PyAutoLens)" (pre-existing, surfaced on issue)
-- prompt: active/multi_band_factorgraph_compile_deeper_dig.md
-- classification: research / autofit — library (PyAutoFit pyloop batching) + autolens_profiling benchmark validation; Brain scored too-large-13 off repo count with a generic 4-phase split, overridden to one implement+benchmark task (#93 precedent)
-- conflict-note: worktree_check_conflict flagged PyAutoFit claimed by python-312-floor; hand-checked stale — that worktree's branch is 0 commits ahead of origin/main (PR#1429 merged)
-- worktree: ~/Code/PyAutoLabs-wt/multiband-pyloop-batching
-- repos:
-  - PyAutoFit (feature/multiband-pyloop-batching)
-  - autolens_profiling (feature/multiband-pyloop-batching)
-
 ## python-312-floor
 - issue: https://github.com/PyAutoLabs/PyAutoNerves/issues/142
 - status: Phase 3 live release published; Phase 5A cleanup complete; Phase 5B COMPLETE 2026-07-30 — all tracked selectors now at 3.12+; parent awaits explicit human close (PyAutoNerves#142)

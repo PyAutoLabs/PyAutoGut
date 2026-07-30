@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-810 records across 6 buckets.
+811 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -284,6 +284,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [pix-nonfinite-localisation](2026/07/pix-nonfinite-localisation.md) — phase 1 — LOCALISED
 - [pixelized-gradient-experiment](2026/07/pixelized-gradient-experiment.md)
 - [pixelized-multistart-prodigy-cpu](2026/07/pixelized-multistart-prodigy-cpu.md)
+- [plot-guides-restructure](2026/07/plot-guides-restructure.md)
 - [plot-rst-functional-rewrite](2026/07/plot-rst-functional-rewrite.md)
 - [point-pairing-policies](2026/07/point-pairing-policies.md)
 - [potential-correction-asymmetry](2026/07/potential-correction-asymmetry.md) — PR #333

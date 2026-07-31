@@ -7,7 +7,7 @@
 - worktree: ~/Code/PyAutoLabs-wt/py314-promotion
 - prompt: active/python_314_promotion.md
 - note: follow-ups from py314-fork-context (#1437/#1439 merged): matrix promotion + classifiers + Nerves banner. Post-merge evidence: workflow_dispatch python_matrix, confirm 3.14 legs green.
-- claim-note: PyAutoFit held CONCURRENTLY with remove-fit-quick-plots (#680, PR#1438 open) — this task touches ONLY pyproject.toml there; zero overlap; pre-merge origin/main before PR.
+- claim-note: PyAutoFit held CONCURRENTLY with remove-fit-quick-plots (#680), PyAutoLens with potential-correction-validation (#672) + point-source-defaults-campaign (#678) — this task touches ONLY pyproject.toml in the libraries (one classifier line); zero file overlap with any of them; pre-merge origin/main before each PR.
 - repos:
   - PyAutoHands: feature/py314-promotion
   - PyAutoNerves: feature/py314-promotion

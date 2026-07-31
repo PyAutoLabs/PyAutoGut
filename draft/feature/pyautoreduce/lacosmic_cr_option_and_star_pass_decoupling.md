@@ -44,6 +44,12 @@ Scope (one task — the halves are coupled through the no-CR pass):
 
 Validation: unit tests for the pure kwargs/decision functions (house style);
 real-data before/after on a SLACS ACS target measuring core-flux retention
-and usable-star count, mirroring the reporter's numbers.
+and usable-star count, mirroring the reporter's numbers. Include a tuned
+`driz_cr` comparison arm: our adapters set no `driz_cr_snr`/`driz_cr_scale`,
+so we run AstroDrizzle's aggressive pipeline defaults (scale 1.2/0.7) — the
+STScI-documented mitigation for bright-source flagging is raising
+`driz_cr_scale` (published reprocessing used 1.5/1.2), and the default-flip
+decision should compare LACosmic against *tuned* driz_cr, not only against
+our current untuned defaults.
 
 <!-- filed from /community triage of PyAutoReduce#61 + #62 (2026-07-31) -->

@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-857 records across 6 buckets.
+858 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -445,6 +445,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [starred-jwst-validation](2026/07/starred-jwst-validation.md) — JWST/NIRCam leg of the STARRED Tier-1b validation (sibling of #37 WFC3). STARRED instrument-agnostic → NO new …
 - [starred-wfc3-validation](2026/07/starred-wfc3-validation.md) — WFC3/HST leg of #37 — the definitive stellar-field science comparison the F115W (#35) attempt couldn't do (ext…
 - [start-here-jax-simplify](2026/07/start-here-jax-simplify.md) — Trimmed the ~83-line __JAX__ section of the root start_here.py in autolens_workspace AND autogalaxy_workspace …
+- [start-here-other-feature-sections](2026/07/start-here-other-feature-sections.md) — The `__Other:__` stub closing `autolens_workspace/start_here.py` (four bare bullets) and its duplicate `## Oth…
 - [stpsf-tier2b](2026/07/stpsf-tier2b.md) — JWST per-frame PSF coverage lifted 3/6 -> 6/6 (F115W validated) — STPSF tier-2b at frame DETECTOR + target pos…
 - [stub-skill-recipes-fill-in](2026/07/stub-skill-recipes-fill-in.md) — retired by user decision
 - [survey-cutouts](2026/07/survey-cutouts.md)

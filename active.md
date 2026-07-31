@@ -36,20 +36,6 @@
   - PyAutoLens: feature/point-source-defaults-campaign (phase A MERGED via #679; branch retained for phase C)
   - autolens_profiling: feature/point-source-defaults-campaign
 
-## start-here-other-feature-sections
-- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/442
-- session: claude (this session)
-- status: awaiting-merge (4 PRs OPEN, shipped 2026-07-31 under human-authorized Heart-RED override — RED was the unrelated nightly release-validation integrate failure)
-- prs: autolens_workspace#445, PyAutoLens#681, autogalaxy_workspace#196, PyAutoGalaxy#543
-- worktree: ~/Code/PyAutoLabs-wt/start-here-other-feature-sections
-- prompt: active/start_here_other_stub_feature_sections.md
-- claim-note: PyAutoLens held CONCURRENTLY with #672 and #678 worktrees — this task is docs-only (docs/overview/overview_3_features.md), zero file overlap, human-approved parallel run; pre-merge origin/main before PR
-- repos:
-  - autolens_workspace: feature/start-here-other-feature-sections
-  - autogalaxy_workspace: feature/start-here-other-feature-sections
-  - PyAutoLens: feature/start-here-other-feature-sections
-  - PyAutoGalaxy: feature/start-here-other-feature-sections
-
 ## group-extra-galaxies-dpie
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/444
 - session: claude (this session)

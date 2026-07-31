@@ -31,7 +31,8 @@
 ## point-source-defaults-campaign
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/678
 - session: claude --resume ee42120d-c794-4565-804e-d7576d50c37c
-- status: library-dev (phase A MERGED PyAutoLens#679 2026-07-31, RAL mirrors synced via HPCPullPyAuto; phase B evidence campaign IN PROGRESS in autolens_profiling)
+- status: library-dev (phase A MERGED #679; phase B harness PUSHED autolens_profiling ef7da54 — truth anchors + tensor/discriminator/near-caustic cells + cluster factor-graph searches; 25 A100 jobs submitting on RAL via detached submit_all_678_phase_b.sh; awaiting results pull → notes synthesis)
+- discovery: PointSolver.solve defaults plane_redshift to the FINAL plane — both cluster simulators omitted it (z=1.0 source positions unphysical; truth logL −4.2e6 → +26.1 after fix). Profiling sim fixed on branch; workspace cluster/simulator.py:482 STILL AFFECTED — flagged on autolens_workspace#436 (its convergence run is tainted), workspace fix folds into phase D. RAL profiling clone rebuilt as real https clone (was a dead rsync'd worktree pointer; RAL cannot push — pull results from laptop side)
 - library-pr: https://github.com/PyAutoLabs/PyAutoLens/pull/679 (phase A; MERGED 86dea4107; was shipped under human-authorized Heart-RED override — RED was the unrelated nightly release-validation integrate failure)
 - worktree: ~/Code/PyAutoLabs-wt/point-source-defaults-campaign
 - prompt: active/point_source_defaults_campaign.md

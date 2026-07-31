@@ -32,7 +32,10 @@
 
 ## multi-galaxy-features-phase-3
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/428
-- status: workspace-dev — phase 3 of the multi_galaxy features parity arc (advanced light: operated_light_profile, shapelets, sky_background; creates features/advanced/)
+- status: workspace-dev — SHIPPED autolens_workspace#429 (commit 636d7f07) AWAITING HUMAN MERGE. 12 new files (advanced/ tree + operated_light_profile, shapelets, sky_background). Smoke 32/32 clean-slate sequential; navigator clean; catalogue 332→339; smoke_tests.txt 27→30.
+- heart-ack: shipped against the SAME three RED reasons the human authorized for #427 (release validation integrate fail; tenant-firewall literal at PyAutoHeart/heart/checks/release_run.py:42; no report.json). Unchanged set, not new reasons.
+- deviation: shapelets go on the SOURCE, not the deflectors, against the phase prompt's stated motivation. imaging/features/advanced/shapelets/modeling.py's own __Lens Shapelets__ section says lens-light shapelets are not used in the literature and MGE is faster/better for massive early-types. Documented in each file, the README and the PR body.
+- api-note: al.SettingsInversion does NOT exist — inversion settings reach FitImaging via settings=al.Settings(...).
 - worktree: ~/Code/PyAutoLabs-wt/multi-galaxy-features-phase-3
 - prompt: active/multi_galaxy_features_group_parity_phase_3_advanced_light.md
 - arc: #417 (ph1) → #421 → #422 (2a) → #423 (2b) → #424 → #427 (2c, MERGED bb1f850c) → THIS (ph3). Phase 4 (advanced mass: double_source_plane_lens, mass_stellar_dark, subhalo) prompt drafted.

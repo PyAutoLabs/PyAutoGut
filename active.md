@@ -7,6 +7,7 @@
 - worktree: ~/Code/PyAutoLabs-wt/py314-fork-context
 - prompt: active/factor_graph_3_14_instance_iteration.md
 - note: root cause CONFIRMED (py3.14 forkserver default start method; fork-forced tutorial passes end-to-end). Fix = fork-context pin at ~7 autofit pool sites + numpy-only unit test. Follow-ups AFTER merge: PyAutoHands python_matrix.yml 3.14 re-add, library classifiers, PyAutoNerves banner retarget. Repro venv: scratchpad py314 (session-local).
+- claim-note: PyAutoFit held CONCURRENTLY with remove-fit-quick-plots (#680, autofit/non_linear/quick_update.py) — this task touches parallel/, dynesty+nautilus search, EP optimiser, abstract_search make_pool; zero file overlap; pre-merge origin/main before PR.
 - repos:
   - PyAutoFit: feature/py314-fork-context
 

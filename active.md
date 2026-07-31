@@ -2,7 +2,10 @@
 
 ## point-source-chi-squared-variants
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/657
-- status: library-dev — phase 5 (PointSolver implicit-diff gradients) IN FLIGHT (started 2026-07-31; plan approved with feasibility gate — negative result is an acceptable close; human warned of difficulty, gravity.jl comparison done: paper itself uses implicit diff at solved positions, never through the solver)
+- status: phase 5 PRs OPEN awaiting human merge (library-first): PyAutoLens#677 -> wst#240 + wsdev#123 + profiling#98 (all pending-release; opened 2026-07-31 under re-acked Heart RED — same nightly interferometer OOM reason set)
+- heart-ack: release validation FAILED (stage integrate) — human authorized phase-5 PR-open 2026-07-31; merge stays human
+- phase-5-comment: https://github.com/PyAutoLabs/PyAutoLens/issues/657#issuecomment-5142215557
+- spike-verdict: GO — FD-certified (memory: point-solver-implicit-diff holds the staircase/registration/cosmology-aux lessons); follow-ups filed in ideas.md (PairAll logsumexp, cosmology pytree flattening)
 - worktree: ~/Code/PyAutoLabs-wt/point-solver-implicit-diff
 - prompt: active/point_source_chi_squared_paper_variants_phase_5_jax_gradients.md (binding equations + phase-1 deltas inside)
 - claim-note: PyAutoLens + autolens_workspace_test held CONCURRENTLY with potential-correction-validation (#672) — human-authorized via plan approval 2026-07-31; #672 touches only autolens/potential_correction/** and wst phase2_experiments/ (disjoint); pre-merge origin/main before each PR

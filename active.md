@@ -31,3 +31,17 @@
 - repos:
   - PyAutoLens: feature/potential-correction-validation
   - autolens_workspace_test: feature/potential-correction-validation
+
+
+## multi-galaxy-features-phase-4a
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/430
+- status: workspace-dev — phase 4a of the multi_galaxy features parity arc (double_source_plane_lens; 6 scripts + README, ~2000 lines)
+- worktree: ~/Code/PyAutoLabs-wt/multi-galaxy-features-phase-4a
+- prompt: draft/docs/workspaces/multi_galaxy_features_group_parity_phase_4_advanced_mass.md (shared by 4a/4b/4c; stays in draft/ until 4c ships)
+- arc: #417 (ph1) → #421 → #422 (2a) → #423 (2b) → #424 → #427 (2c, MERGED bb1f850c) → #429 (ph3, MERGED 974fc3d7) → THIS (4a). Then 4b mass_stellar_dark, 4c subhalo.
+- split: phase 4 measured ~5174 lines / 15 scripts at implementation time — larger than all of phase 2. Human-confirmed 2026-07-31 to split one folder per PR. Arc-closing checks run at the end of 4c, NOT each sub-phase.
+- claim-to-verify: the prompt says two source planes BREAK the multi-galaxy mass-split degeneracy via "the ratio of deflections at two redshifts". Suspect wrong — both sources sit behind the SAME lens plane, so plane 2's deflection is plane 1's scaled by a geometric factor, which carries no info about the split. The real mechanism is likely that source 2 sits at a different sky position and so samples the deflection field at different image-plane locations. TEST BOTH before writing either.
+- watch: (1) linear light profiles put deflector solved intensities into inversion.reconstruction; (2) al.SettingsInversion does NOT exist — use settings=al.Settings(...).
+- repos:
+  - autolens_workspace: feature/multi-galaxy-features-phase-4a
+

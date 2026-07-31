@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-862 records across 6 buckets.
+863 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -163,6 +163,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [gated-readme-drift](2026/07/gated-readme-drift.md)
 - [gradient-safe-logdet](2026/07/gradient-safe-logdet.md)
 - [graduate-mcp-autofit-extra](2026/07/graduate-mcp-autofit-extra.md)
+- [group-extra-galaxies-dpie](2026/07/group-extra-galaxies-dpie.md) — Group extra galaxies switched to truncated dPIEMass with r_cut fixed by default (a bare dPIEMassSph Model floa…
 - [group-start-here-timeout](2026/07/group-start-here-timeout.md)
 - [group-subhalo-lens-dict](2026/07/group-subhalo-lens-dict.md)
 - [guard-followups](2026/07/guard-followups.md)

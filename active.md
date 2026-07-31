@@ -22,3 +22,12 @@
 - claim-note: PyAutoLens held CONCURRENTLY with potential-correction-validation (#672) — scopes disjoint (autolens/point/fit/ + point/model vs pixelization/potential-correction); pre-merge origin/main before PR
 - repos:
   - PyAutoLens: feature/point-source-defaults-campaign
+
+## start-here-other-feature-sections
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/442
+- session: claude (this session)
+- status: workspace-dev
+- worktree: ~/Code/PyAutoLabs-wt/start-here-other-feature-sections
+- prompt: active/start_here_other_stub_feature_sections.md
+- claim-note: PyAutoLens held CONCURRENTLY with #672 and #678 worktrees — this task is docs-only (docs/overview/overview_3_features.md), zero file overlap, human-approved parallel run; pre-merge origin/main before PR
+- repos:

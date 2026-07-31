@@ -38,7 +38,8 @@
 ## start-here-other-feature-sections
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/442
 - session: claude (this session)
-- status: workspace-dev
+- status: awaiting-merge (4 PRs OPEN, shipped 2026-07-31 under human-authorized Heart-RED override — RED was the unrelated nightly release-validation integrate failure)
+- prs: autolens_workspace#445, PyAutoLens#681, autogalaxy_workspace#196, PyAutoGalaxy#543
 - worktree: ~/Code/PyAutoLabs-wt/start-here-other-feature-sections
 - prompt: active/start_here_other_stub_feature_sections.md
 - claim-note: PyAutoLens held CONCURRENTLY with #672 and #678 worktrees — this task is docs-only (docs/overview/overview_3_features.md), zero file overlap, human-approved parallel run; pre-merge origin/main before PR

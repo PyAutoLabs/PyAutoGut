@@ -1,5 +1,25 @@
 # Active Tasks
 
+## group-subhalo-lens-dict
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/437
+- status: workspace-dev
+- worktree: ~/Code/PyAutoLabs-wt/group-subhalo-lens-dict
+- prompt: active/group_subhalo_lens_dict_collapse.md
+- scope: autolens_workspace only — group/features/advanced/subhalo/detect/start_here.py; rebuild lens_dict via the n_lenses loop from group/slam.py:476 in all 7 downstream stages (206, 273, 349, 420, 470, 545, 628); shear stays on lens_0; notebooks regenerated
+- claim-note: autolens_workspace held CONCURRENTLY with cluster-point-solved-default (#436, cluster/ only) and multi-galaxy-pix-count-autosim (#438, multi_galaxy/ only) — all three scopes disjoint; pre-merge origin/main before PR
+- repos:
+  - autolens_workspace: feature/group-subhalo-lens-dict
+
+## multi-galaxy-pix-count-autosim
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/438
+- status: workspace-dev
+- worktree: ~/Code/PyAutoLabs-wt/multi-galaxy-pix-count-autosim
+- prompt: active/multi_galaxy_pixelization_count_and_autosim_headers.md
+- scope: autolens_workspace only — multi_galaxy/features/pixelization/fit.py source-pixel count (lp_linear bulges inflate reconstruction by 2) + __Dataset Auto-Simulation__ prose header on 5 slam.py; notebooks regenerated
+- claim-note: autolens_workspace held CONCURRENTLY with cluster-point-solved-default (#436) and group-subhalo-lens-dict (#437) — scopes disjoint; pre-merge origin/main before PR
+- repos:
+  - autolens_workspace: feature/multi-galaxy-pix-count-autosim
+
 ## cluster-point-solved-default
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/436
 - status: workspace-dev

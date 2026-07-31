@@ -56,11 +56,18 @@ Parent: draft/docs/autolens/split_lensing_regimes.md
   local/unrestricted-network session to download + prepare the frames.
 - ~~Extra-galaxies / pixelization feature variants remain README cross-links
   (the group/imaging feature scripts apply verbatim with the lens loop).~~
-  `extra_galaxies` shipped (PR#391) and `scaling_relation` shipped (PR#396). The
-  remaining feature tier — linear light profiles, MGE, no_lens_light, pixelization
-  and the whole `advanced/` subtree — is now carried by
-  `draft/docs/workspaces/multi_galaxy_features_group_parity.md` (4 phases,
-  2026-07-30), which also adds a top-level `multi_galaxy/slam.py`.
+  **CLOSED 2026-07-31.** The feature tier is complete. `extra_galaxies` (PR#391)
+  and `scaling_relation` (PR#396) shipped first; the rest was carried by
+  `draft/docs/workspaces/multi_galaxy_features_group_parity.md` across four
+  phases and eight PRs (#417, #421, #422, #423, #424, #427, #429, #431, #433 and
+  the 4c PR), which also added the top-level `multi_galaxy/slam.py`.
+
+  `scripts/multi_galaxy/features/` now equals `scripts/group/features/` minus
+  `group_halo` (no analogue at this scale — a multi-galaxy lens has no host halo
+  by definition) plus `extra_galaxies`, and `features/advanced/` matches
+  `group/features/advanced/` folder for folder. `potential_correction` and
+  `los_halos` are imaging-only and deliberately excluded; subhalo sensitivity
+  mapping is out of scope, the same boundary group draws.
 
 Create the new `scripts/multi_galaxy/` package in @autolens_workspace — the first
 of the three above-galaxy-scale regimes (see the parent plan for the full design

@@ -523,6 +523,8 @@ def _build_model(dataset_class: str, model_type: str, *, mask_radius: float) -> 
         return _delaunay_matern_model(mask_radius=mask_radius)
     if model_type in ("image_plane", "source_plane"):
         return _point_source_model()
+    if model_type in ("image_plane_solved", "source_plane_solved"):
+        return _point_source_model(solved=True)
     raise ValueError(f"Unknown model_type: {model_type!r}")
 
 
@@ -744,10 +746,12 @@ def _delaunay_matern_model(*, mask_radius: float) -> af.Collection:
     return af.Collection(galaxies=af.Collection(lens=lens, source=source))
 
 
-def _point_source_model() -> af.Collection:
+def _point_source_model(solved: bool = False) -> af.Collection:
     mass, _ = _lens_mass_and_shear()  # No shear for the point-source profile.
     lens = af.Model(al.Galaxy, redshift=0.5, mass=mass)
-    point_0 = af.Model(al.ps.PointFlux)
+    # solved: parameter-free PointSolved — the *Solved fit classes solve the source
+    # centre analytically (#657), dropping 3 free parameters vs PointFlux.
+    point_0 = af.Model(al.ps.PointSolved) if solved else af.Model(al.ps.PointFlux)
     source = af.Model(al.Galaxy, redshift=1.0, point_0=point_0)
     return af.Collection(galaxies=af.Collection(lens=lens, source=source))
 
@@ -853,9 +857,12 @@ def _build_analysis(
             pixel_scale_precision=solver_kwargs["pixel_scale_precision"],
             magnification_threshold=solver_kwargs["magnification_threshold"],
         )
-        fit_positions_cls = (
-            al.FitPositionsImagePairAll if model_type == "image_plane" else al.FitPositionsSource
-        )
+        fit_positions_cls = {
+            "image_plane": al.FitPositionsImagePairAll,
+            "source_plane": al.FitPositionsSource,
+            "image_plane_solved": al.FitPositionsImagePairAllSolved,
+            "source_plane_solved": al.FitPositionsSourceSolved,
+        }[model_type]
         return al.AnalysisPoint(
             dataset=dataset,
             solver=solver,

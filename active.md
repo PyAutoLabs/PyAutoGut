@@ -57,7 +57,7 @@
 ## over-sample-trailing-one-to-two
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/443
 - session: claude --resume f6c5759d-3969-4c7a-8407-1b81d4b9514d
-- status: workspace-dev
+- status: awaiting-merge — 5 pending-release PRs open (autolens_workspace#447, autogalaxy_workspace#197, HowToGalaxy#53, autolens_workspace_test#242, autogalaxy_workspace_test#102); smoke green after MGE jax_likelihood pin refresh
 - worktree: ~/Code/PyAutoLabs-wt/over-sample-trailing-one-to-two
 - repos:
   - autolens_workspace: feature/over-sample-trailing-one-to-two

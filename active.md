@@ -37,21 +37,6 @@
 - repos:
   - autolens_workspace: feature/group-extra-galaxies-dpie
 
-## remove-fit-quick-plots
-- issue: https://github.com/PyAutoLabs/PyAutoLens/issues/680
-- session: claude (this session)
-- status: all-shipped, awaiting-merge (merge order: PyAutoLens#682 + PyAutoFit#1438 first, then wst#241 — library-first gate)
-- library-pr: https://github.com/PyAutoLabs/PyAutoLens/pull/682 + https://github.com/PyAutoLabs/PyAutoFit/pull/1438
-- workspace-pr: https://github.com/PyAutoLabs/autolens_workspace_test/pull/241
-- heart-ack: RED 'release validation FAILED (stage integrate)' acknowledged by human 2026-07-31 (unrelated nightly release-pipeline state); ship-anyway authorized to PR-open
-- worktree: ~/Code/PyAutoLabs-wt/remove-fit-quick-plots
-- prompt: active/remove_fit_quick_plots.md
-- claim-note: PyAutoLens held CONCURRENTLY with #672/#678/ws#442, autolens_workspace_test with #672 — human-approved parallel run. Files: autolens/{imaging,interferometer,point,weak}/{model/plotter.py,plot/fit_*_plots.py}, autofit/non_linear/quick_update.py, wst scripts/*/visualization/. Plausible overlap ONLY with #678 (point/model) — pre-merged origin/main (incl. #679), no conflicts.
-- repos:
-  - PyAutoLens: feature/remove-fit-quick-plots
-  - PyAutoFit: feature/remove-fit-quick-plots
-  - autolens_workspace_test: feature/remove-fit-quick-plots
-
 ## over-sample-trailing-one-to-two
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/443
 - session: claude --resume f6c5759d-3969-4c7a-8407-1b81d4b9514d

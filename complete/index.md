@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-859 records across 6 buckets.
+860 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -398,6 +398,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [release-validation-tail-burndown](2026/07/release-validation-tail-burndown.md) — EPIC/capstone. Burned down the 18f/5t mode=release tail. All real correctness bugs fixed+merged+validated on w…
 - [remove-dead-copy-files](2026/07/remove-dead-copy-files.md)
 - [remove-finish-docstring-hack](2026/07/remove-finish-docstring-hack.md)
+- [remove-fit-quick-plots](2026/07/remove-fit-quick-plots.md)
 - [remove-inline-standalones](2026/07/remove-inline-standalones.md) — Removed five inert standalone `%matplotlib inline` comments from the AutoGalaxy and AutoLens top-level script/…
 - [remove-nss-sampler](2026/07/remove-nss-sampler.md) — ALL phases MERGED + dev-clean
 - [remove-pulse-compat](2026/07/remove-pulse-compat.md)

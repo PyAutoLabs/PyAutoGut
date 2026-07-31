@@ -7,8 +7,8 @@ Repos:
 Difficulty: large
 Autonomy: supervised
 Priority: normal
-Status: SPLIT 2026-07-30 — phase 2a (multi_gaussian_expansion) shipped as autolens_workspace PR#422;
-  phase 2b (pixelization) NOT STARTED and is what remains of this prompt
+Status: SPLIT — 2a (MGE) shipped PR#422; 2b (pixelization core: README, modeling, fit) shipped PR#423;
+  2c (adaptive, delaunay, cpu_fast_modeling, slam, source_science, plot) NOT STARTED and is what remains
 Parent: draft/docs/workspaces/multi_galaxy_features_group_parity.md
 Blocked-by: phase 1 (needs `multi_galaxy/slam.py` as the baseline each `slam.py` diffs against)
 
@@ -22,9 +22,25 @@ during execution because the MGE half completed and shipped on its own:
 
 - **Phase 2a — `multi_gaussian_expansion`: SHIPPED.** autolens_workspace PR#422. README, simulator, modeling,
   fit, likelihood_function, source_science, slam. Catalogue 317 -> 323.
-- **Phase 2b — `pixelization`: NOT STARTED.** The 9 scripts below (README, modeling, fit, likelihood_function,
-  slam, adaptive, delaunay, cpu_fast_modeling, source_science, plus `plot.py` from imaging) are what is left of
-  this prompt. Start here.
+- **Phase 2b — `pixelization` core: PARTIALLY SHIPPED.** autolens_workspace PR#423 added README, `modeling.py`
+  and `fit.py` (3 hand-written files, 736 lines). Catalogue 323 -> 325.
+- **Phase 2c — pixelization variants: NOT STARTED.** The six remaining scripts: `adaptive`, `delaunay`,
+  `cpu_fast_modeling`, `slam`, `source_science`, `plot`. Human flagged 2026-07-31 that delaunay + the Adapt
+  schemes are worth real work, and that `autolens_workspace_test` has the end-to-end setup. **Confirmed** —
+  `autolens_workspace_test/scripts/imaging/model_fit.py:127-139` composes
+  `al.mesh.Delaunay(pixels=100)` + `al.reg.ConstantSplit` and builds `AdaptImages` STANDALONE via
+  `galaxy_name_image_plane_mesh_grid_dict={"('galaxies', 'source')": image_plane_mesh_grid}` — no preceding fit
+  needed. That unblocks `delaunay.py` directly.
+
+  **Precision to carry, not to assume away:** that dict supplies a mesh GRID, not surface-brightness adapt
+  IMAGES. It solves the mesh half. Whether `al.reg.Adapt` (which needs a brightness estimate to decide where to
+  smooth harder) can be driven standalone is UNVERIFIED — check it before writing `adaptive.py`. PR#423's README
+  says the Adapt schemes need adapt-images from an earlier fit; that is true for `reg.Adapt` and must not be
+  restated as "no adaptive mesh works standalone", which the Delaunay example above disproves.
+
+  Other verified API constraints from 2b: `AdaptSplit` raises `PixelizationException` against any rectangular
+  mesh (needs split-cross mappings); `al.mesh.Rectangular` does not exist (`RectangularUniform`);
+  `al.PositionsLHPenalty` does not exist (`al.PositionsLH`).
 
 Findings from 2a that phase 2b should build on rather than re-derive:
 

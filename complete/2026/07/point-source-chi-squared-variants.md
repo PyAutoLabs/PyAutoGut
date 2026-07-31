@@ -1,3 +1,13 @@
+## point-source-chi-squared-variants
+- issue: https://github.com/PyAutoLabs/PyAutoLens/issues/657
+- completed: 2026-07-31 (series close-out; phases have their own records)
+- library-pr: PyAutoArray#414, PyAutoGalaxy#531, PyAutoLens#659 (phase 2); PyAutoLens#677 (phase 5)
+- workspace-pr: wst#237/profiling#96/wsdev#121 (phase 3); autolens_workspace#425 (phase 4); wst#240/wsdev#123/profiling#98 (phase 5); autolens_profiling#99 (benchmark addendum)
+- summary: 5-phase series implementing the Lombardi 2024 (arXiv:2406.15280 = gravity.jl) solved point-source likelihoods, closed same-day with a truth-anchored Prodigy-vs-Nautilus benchmark. Phase records: `point-source-solved-guides` (4), `point-solver-implicit-diff` (5); phases 1-3 literals in project memory `point-source-solved-likelihoods`. Benchmark verdict (profiling#99): Prodigy + PointSolved/PairAllSolved converges to truth THROUGH the solver (64x300, ~16 min); free-centre needs 256 starts; scalar-mu^2 source-plane catastrophically biased (truth -33788 vs wrong models -110, the mu=367 image's radial noise mis-mapped) while the tensor-solved variant ranks truth first by >1500 logL — isolation proved the TENSOR WEIGHTING is the fix, the solved centre the orthogonal dimensionality win.
+- follow-ups: `draft/feature/autolens/point_source_defaults_campaign.md` (next chat: logsumexp fix, free-centre tensor option, pairing discriminator, posterior-width honesty, near-caustic stress; galaxy+CLUSTER tiers on RAL A100s; ends in full workspace docs update — supersedes the same-day centre-split decision); cluster swap in flight as autolens_workspace#436; cosmology pytree flattening + PairAll logsumexp in ideas.md (absorbed by campaign); interferometer nightly OOM draft bug (unrelated, found at phase-4 gate).
+
+## Original prompt
+
 # Point-source chi-squared variants (arXiv:2406.15280) — Phase 1: design
 
 Parent: `point_source_chi_squared_paper_variants.md` (verbatim request there).

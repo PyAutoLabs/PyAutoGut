@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-853 records across 6 buckets.
+854 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -312,6 +312,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [plot-rst-functional-rewrite](2026/07/plot-rst-functional-rewrite.md)
 - [point-pairing-policies](2026/07/point-pairing-policies.md)
 - [point-solver-implicit-diff](2026/07/point-solver-implicit-diff.md) — PointSolver gradients via implicit fixed-point `jax.custom_jvp` (`autolens/point/solver/implicit_diff.py`): `A…
+- [point-source-chi-squared-variants](2026/07/point-source-chi-squared-variants.md) — 5-phase series implementing the Lombardi 2024 (arXiv:2406.15280 = gravity.jl) solved point-source likelihoods,…
 - [point-source-solved-guides](2026/07/point-source-solved-guides.md) — Phase 4 (guides/docs) of the solved-likelihood series. Documented the full likelihood-option matrix (pairing s…
 - [potential-correction-asymmetry](2026/07/potential-correction-asymmetry.md) — PR #333
 - [potential-correction-interferometer](2026/07/potential-correction-interferometer.md) — Extended al.pc (potential corrections, epic #618) to Interferometer data with the SPARSE-OPERATOR (w-tilde) ro…

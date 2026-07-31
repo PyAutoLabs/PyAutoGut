@@ -2,13 +2,20 @@
 
 ## point-source-chi-squared-variants
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/657
-- status: phases 1-4 SHIPPED; phase 5 (solver gradients) is the only remaining phase — not started, no worktree, no repo claims held
+- status: library-dev — phase 5 (PointSolver implicit-diff gradients) IN FLIGHT (started 2026-07-31; plan approved with feasibility gate — negative result is an acceptable close; human warned of difficulty, gravity.jl comparison done: paper itself uses implicit diff at solved positions, never through the solver)
+- worktree: ~/Code/PyAutoLabs-wt/point-solver-implicit-diff
+- prompt: active/point_source_chi_squared_paper_variants_phase_5_jax_gradients.md (binding equations + phase-1 deltas inside)
+- claim-note: PyAutoLens + autolens_workspace_test held CONCURRENTLY with potential-correction-validation (#672) — human-authorized via plan approval 2026-07-31; #672 touches only autolens/potential_correction/** and wst phase2_experiments/ (disjoint); pre-merge origin/main before each PR
 - phase-4-pr: autolens_workspace#425 (MERGED 2026-07-31, human merge; record complete/2026/07/point-source-solved-guides.md; comment https://github.com/PyAutoLabs/PyAutoLens/issues/657#issuecomment-5141094763)
 - library-pr: PyAutoArray#414, PyAutoGalaxy#531, PyAutoLens#659 (ALL MERGED 2026-07-27; codex-review fixes included; branches + worktree cleaned)
 - phase-3-pr: workspace_test#237, profiling#96, workspace_developer#121 (ALL MERGED 2026-07-30; worktree + branches cleaned; shipped comment https://github.com/PyAutoLabs/PyAutoLens/issues/657#issuecomment-5135275039)
 - phases: 1 (design) + 2 (core API) + 3 (examples/profiling) + 4 (guides) COMPLETE. Phase 5 (PointSolver custom_jvp gradients, draft phase-5 prompt) touches PyAutoLens (+PyAutoArray) — NOTE PyAutoLens is claimed by potential-correction-validation (#672); hand-check file overlap before starting.
 - resume-context: project memory `point-source-solved-likelihoods` holds phase-3 literals + lessons (H0-matched parity for time-delay fits; fit_from pytree gap is the ONLY remaining jit blocker; output_to_json key-order nondeterminism filed in ideas.md; profiling baselines used PointFlux so solved swap drops 3 params not 2)
 - repos:
+  - PyAutoLens: feature/point-solver-implicit-diff
+  - autolens_workspace_test: feature/point-solver-implicit-diff
+  - autolens_workspace_developer: feature/point-solver-implicit-diff
+  - autolens_profiling: feature/point-solver-implicit-diff
 
 
 ## potential-correction-validation

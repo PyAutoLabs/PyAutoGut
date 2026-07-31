@@ -3,7 +3,7 @@
 ## py314-promotion
 - issue: https://github.com/PyAutoLabs/PyAutoHands/issues/219
 - session: claude --resume 5bc6c978-cb8f-4353-a66c-158a74103a17
-- status: all-PRs-open, awaiting CI → human-authorized batch merge (Hands#220, Nerves#145, Array#429, Fit#1440, Galaxy#544, Lens#683)
+- status: all six PRs MERGED 2026-07-31 (Hands#220, Nerves#145, Array#429, Fit#1440, Galaxy#544, Lens#683); awaiting python_matrix evidence run 30646078121 (3.14 legs) → then completion record + close #219
 - heart-ack: RED 'release validation FAILED (stage integrate)' acknowledged by human 2026-07-31 (unrelated nightly release-pipeline state); batch merge-on-green authorized
 - worktree: ~/Code/PyAutoLabs-wt/py314-promotion
 - prompt: active/python_314_promotion.md

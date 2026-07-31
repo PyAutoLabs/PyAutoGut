@@ -28,3 +28,15 @@
 - repos:
   - PyAutoLens: feature/potential-correction-validation
   - autolens_workspace_test: feature/potential-correction-validation
+
+
+## multi-galaxy-features-phase-3
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/428
+- status: workspace-dev — phase 3 of the multi_galaxy features parity arc (advanced light: operated_light_profile, shapelets, sky_background; creates features/advanced/)
+- worktree: ~/Code/PyAutoLabs-wt/multi-galaxy-features-phase-3
+- prompt: active/multi_galaxy_features_group_parity_phase_3_advanced_light.md
+- arc: #417 (ph1) → #421 → #422 (2a) → #423 (2b) → #424 → #427 (2c, MERGED bb1f850c) → THIS (ph3). Phase 4 (advanced mass: double_source_plane_lens, mass_stellar_dark, subhalo) prompt drafted.
+- depth-decision: operated_light_profile + sky_background take GROUP tier (group is the deeper sibling for both). shapelets takes GROUP tier too despite imaging being 2x deeper (1072 vs 567) — the parent's "cross-link, do not fork where the physics is regime-independent" rule beats its "match the deeper sibling" rule here; imaging's extra ~500 lines are the scale-independent shapelet-basis API walkthrough.
+- watch: (1) linear light profiles put deflector SOLVED INTENSITIES into inversion.reconstruction — bit twice in 2c; use fixed-intensity profiles + cls_list_from when reading the reconstruction. (2) PyAutoFit identifiers ignore the data, so new datasets need their own unique_tag (dataset_name handles it here).
+- repos:
+  - autolens_workspace: feature/multi-galaxy-features-phase-3

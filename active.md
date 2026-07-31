@@ -31,7 +31,10 @@
 
 ## multi-galaxy-features-phase-4a
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/430
-- status: workspace-dev — phase 4a of the multi_galaxy features parity arc (double_source_plane_lens; 6 scripts + README, ~2000 lines)
+- status: workspace-dev — SHIPPED autolens_workspace#431 (commit 977b4842) AWAITING HUMAN MERGE. 6 scripts + README, ~2160 lines. Smoke 34/34 clean-slate sequential; navigator clean; catalogue 339→345; smoke_tests.txt 30→32.
+- claim-VERIFIED-WRONG: the prompt's DSPL motivation ("the ratio of deflections at two redshifts") does NOT hold. Measured plane1/plane0 sensitivity to the mass split: baseline 8.17; move source_1 to source_0's SKY POSITION → 0.89 (effect gone); make source_0 MASSLESS keeping the offset → 17.48 (effect stronger); both removed → 1.48. So the constraint comes from the SECOND SOURCE'S SKY POSITION sampling the deflection field elsewhere, NOT the redshift ratio and NOT multi-plane structure. Extra redshift = cosmology; extra sky position = mass split. Scripts keep the two separate.
+- api-note: al.model_util.mge_from does NOT exist — only mge_model_from (returns af.Model). Concrete fits build al.lp_basis.Basis from al.lp_linear.Gaussian by hand.
+- heart-ack: same three RED reasons the human authorized for #427; unchanged set.
 - worktree: ~/Code/PyAutoLabs-wt/multi-galaxy-features-phase-4a
 - prompt: draft/docs/workspaces/multi_galaxy_features_group_parity_phase_4_advanced_mass.md (shared by 4a/4b/4c; stays in draft/ until 4c ships)
 - arc: #417 (ph1) → #421 → #422 (2a) → #423 (2b) → #424 → #427 (2c, MERGED bb1f850c) → #429 (ph3, MERGED 974fc3d7) → THIS (4a). Then 4b mass_stellar_dark, 4c subhalo.

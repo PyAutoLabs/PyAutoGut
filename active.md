@@ -14,7 +14,8 @@
 ## point-source-defaults-campaign
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/678
 - session: claude --resume ee42120d-c794-4565-804e-d7576d50c37c
-- status: library-dev (phase A of A→B→C→D)
+- status: library-dev (phase A PR OPEN PyAutoLens#679 awaiting human merge; on merge: HPCPullPyAuto then phase B)
+- library-pr: https://github.com/PyAutoLabs/PyAutoLens/pull/679 (phase A; commit 0cebe059d; shipped under human-authorized Heart-RED override — RED was the unrelated nightly release-validation integrate failure)
 - worktree: ~/Code/PyAutoLabs-wt/point-source-defaults-campaign
 - prompt: active/point_source_defaults_campaign.md
 - phases: A library prereqs logsumexp + free-centre tensor (PyAutoLens, small PR FIRST, then HPCPullPyAuto) → B evidence campaign (autolens_profiling, RAL A100s, galaxy + cluster tiers) → C defaults change (PyAutoLens, ## API Changes) → D workspace docs (autolens_workspace, END GOAL)
@@ -31,3 +32,17 @@
 - prompt: active/start_here_other_stub_feature_sections.md
 - claim-note: PyAutoLens held CONCURRENTLY with #672 and #678 worktrees — this task is docs-only (docs/overview/overview_3_features.md), zero file overlap, human-approved parallel run; pre-merge origin/main before PR
 - repos:
+  - autolens_workspace: feature/start-here-other-feature-sections
+  - autogalaxy_workspace: feature/start-here-other-feature-sections
+  - PyAutoLens: feature/start-here-other-feature-sections
+  - PyAutoGalaxy: feature/start-here-other-feature-sections
+
+## group-extra-galaxies-dpie
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/444
+- session: claude (this session)
+- status: workspace-dev
+- worktree: ~/Code/PyAutoLabs-wt/group-extra-galaxies-dpie
+- prompt: active/group_extra_galaxies_dpie_truncation.md
+- claim-note: autolens_workspace held CONCURRENTLY with start-here-other-feature-sections (#442, docs-only docs/overview/overview_3_features.md) — this task touches scripts/group + scripts/cluster + features/extra_galaxies docs, zero file overlap, human-approved parallel run; pre-merge origin/main before PR. Coordinate cluster/ prose with #678 phase D and #436.
+- repos:
+  - autolens_workspace: feature/group-extra-galaxies-dpie

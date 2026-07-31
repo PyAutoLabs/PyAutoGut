@@ -3,7 +3,7 @@
 ## py314-fork-context
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1437
 - session: claude --resume 5bc6c978-cb8f-4353-a66c-158a74103a17
-- status: library-shipped, awaiting-merge (smoke sweep in flight)
+- status: library-shipped, awaiting-merge (six-workspace smoke PASS for this change — 11 wst failures are PRE-EXISTING, controlled bit-identical vs main autofit; see issue comment)
 - library-pr: https://github.com/PyAutoLabs/PyAutoFit/pull/1439 (shipped under human-authorized Heart-RED override — RED was the unrelated nightly release-validation integrate failure)
 - worktree: ~/Code/PyAutoLabs-wt/py314-fork-context
 - prompt: active/factor_graph_3_14_instance_iteration.md

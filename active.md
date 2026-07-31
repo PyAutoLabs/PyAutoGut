@@ -37,7 +37,7 @@
 ## llms-txt-census-fixes
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/451
 - session: claude --resume bbc37e50-2f17-41c1-9180-14a1cd647a1c
-- status: workspace-dev
+- status: workspace-dev (ALL 6 repos committed locally on feature/llms-txt-census-fixes; HELD at ship gate — Heart RED, awaiting human ack to push/PR. RED reasons all pre-existing/unrelated to these docs-only edits: 'release validation FAILED (stage integrate)' = corrective #449/#450 in flight; 'manifest drift: tenant firewall' = PyAutoHeart#132; 'PyAutoLens 2 behind origin'; 'test run status unknown')
 - worktree: ~/Code/PyAutoLabs-wt/llms-txt-census-fixes
 - prompt: active/llms_txt_census_fixes.md
 - note: Brain sized too-large (25, repo-count/prose-driven); override — few-line docs edits across 6 repos, one task, per-repo PRs. Merge order: PyAutoHands FIRST (GROUP_ORDER), then workspaces (navigator_check regenerates vs PyAutoHands main; same-named branches keep PR CI green)

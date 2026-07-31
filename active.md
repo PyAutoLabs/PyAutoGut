@@ -1,5 +1,14 @@
 # Active Tasks
 
+## cluster-point-solved-default
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/436
+- status: workspace-dev
+- worktree: ~/Code/PyAutoLabs-wt/cluster-point-solved-default
+- prompt: active/cluster_default_point_solved.md
+- scope: autolens_workspace only — cluster modeling.py + start_here.py demonstrated default swaps to al.ps.PointSolved + FitPositionsSourceSolved; lenstool mirror stays free-centre; likelihood_function.py prose check; notebooks regenerated; real Nautilus convergence run on cluster/modeling.py
+- repos:
+  - autolens_workspace: feature/cluster-point-solved-default
+
 ## point-source-chi-squared-variants
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/657
 - status: phases 1-5 ALL MERGED (phase 5: PyAutoLens#677 + wst#240 + wsdev#123 + profiling#98, human-merged 2026-07-31; record complete/2026/07/point-solver-implicit-diff.md). ADDENDUM in flight: Prodigy-vs-Nautilus benchmark cells (image_plane + source_plane, free-centre models matching the nautilus reference cells) to empirically validate the gradients in a real search — human-requested 2026-07-31

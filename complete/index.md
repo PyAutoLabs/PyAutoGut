@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-856 records across 6 buckets.
+857 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -82,6 +82,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [clone-skill-prefix-corruption](2026/07/clone-skill-prefix-corruption.md) — The Clone Agent's skill-prefix substitution (`al_ -> ac_`, from package initials) was applied by `clone_seed.s…
 - [cluster-dpie-docstring-style](2026/07/cluster-dpie-docstring-style.md) — Cluster package finalised on dPIE — the last Isothermal scaling tier
 - [cluster-likelihood-breakdown](2026/07/cluster-likelihood-breakdown.md)
+- [cluster-point-solved-default](2026/07/cluster-point-solved-default.md) — Cluster examples' demonstrated default moved from free-centre `al.ps.Point` to parameter-free `al.ps.PointSolv…
 - [cluster-scaling-lenstool](2026/07/cluster-scaling-lenstool.md)
 - [cluster-small-datasets](2026/07/cluster-small-datasets.md)
 - [cluster-visualization](2026/07/cluster-visualization.md)

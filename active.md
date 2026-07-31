@@ -1,14 +1,5 @@
 # Active Tasks
 
-## cluster-point-solved-default
-- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/436
-- status: workspace-dev
-- worktree: ~/Code/PyAutoLabs-wt/cluster-point-solved-default
-- prompt: active/cluster_default_point_solved.md
-- scope: autolens_workspace only — cluster modeling.py + start_here.py demonstrated default swaps to al.ps.PointSolved + FitPositionsSourceSolved; lenstool mirror stays free-centre; likelihood_function.py prose check; notebooks regenerated; real Nautilus convergence run on cluster/modeling.py
-- repos:
-  - autolens_workspace: feature/cluster-point-solved-default
-
 ## potential-correction-validation
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/672
 - session: claude --resume 0100b7de-da01-4c18-a8b0-9d0080d5e07f

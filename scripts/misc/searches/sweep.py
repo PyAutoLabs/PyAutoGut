@@ -82,6 +82,9 @@ _INSTRUMENT_SETS: dict[str, tuple[str, ...]] = {
 CELLS: list[tuple[str, str, str]] = [
     ("nautilus", "point_source", "image_plane"),
     ("nautilus", "point_source", "source_plane"),
+    # Gradient search on the solver-chained solved-centre likelihood — enabled by the
+    # PointSolver implicit-diff custom_jvp (#657 phase 5). JAX-only.
+    ("multi_start_prodigy", "point_source", "image_plane_solved"),
     ("nautilus", "imaging", "mge"),
     ("nautilus", "imaging", "pixelization"),
     ("nautilus", "imaging", "delaunay"),

@@ -1,3 +1,11 @@
+## over-sample-trailing-one-to-two
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/443
+- completed: 2026-07-31
+- workspace-pr: https://github.com/PyAutoLabs/autolens_workspace/pull/447, https://github.com/PyAutoLabs/autogalaxy_workspace/pull/197, https://github.com/PyAutoLabs/HowToGalaxy/pull/53, https://github.com/PyAutoLabs/autolens_workspace_test/pull/242, https://github.com/PyAutoLabs/autogalaxy_workspace_test/pull/102
+- summary: Replaced every trailing sub_size 1 in adaptive over-sampling schemes across five repos (169 files, 186 sites: [4,2,1]→[4,2,2], [8,4,1]→[8,4,2]) so lensed-source arcs are never evaluated without over-sampling — MGE Gaussians alias at 1x1, degrading gradient-based searches. Updated 7 stale cored-profile prose blocks to the MGE-era 2x2-outer-floor justification; notebooks regenerated; simulators ([32,8,2]) untouched. Smoke green (autolens 36, autogalaxy 15, autolens_test 19) after refreshing three MGE jax_likelihood pinned constants that were computed under [4,2,1] (mge −86283.10392994, delaunay_mge −561.39264708, rectangular_mge −11.65793201) — only the MGE pins moved beyond rtol, empirically confirming the motivation. Gotchas: shipped under acknowledged Heart RED (unrelated interferometer nightly failures); a concurrent session's smoke run produced contaminated cache tallies that had to be discarded and re-run sequentially; five pinned-constant scripts sat outside the smoke subset and needed a manual audit; the autogalaxy_workspace_test 3.12 CI leg hung on a runner flake (cancel + rerun fixed it, 3.13 had passed the same diff). Follow-up: dpie PR#446 (autolens_workspace, still open) may need a one-token rebase over this sweep.
+
+## Original prompt
+
 # Adaptive over-sampling: replace trailing sub_size 1 with 2 in examples
 
 Sweep the workspace and tutorial repos so no adaptive over-sampling scheme

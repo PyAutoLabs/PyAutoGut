@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-861 records across 6 buckets.
+862 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -302,6 +302,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [nufftax-cap-lift](2026/07/nufftax-cap-lift.md)
 - [optional-none-default-typos](2026/07/optional-none-default-typos.md) — Fixed three PyAutoLens sites using the typing construct
 - [opus-wrapup](2026/07/opus-wrapup.md) — executed on Fable
+- [over-sample-trailing-one-to-two](2026/07/over-sample-trailing-one-to-two.md) — Replaced every trailing sub_size 1 in adaptive over-sampling schemes across five repos (169 files, 186 sites: …
 - [parked-sweep](2026/07/parked-sweep.md)
 - [per-frame-psf](2026/07/per-frame-psf.md) — per-frame native ePSFs live (psf/frame_epsf.py: sky-subtracted, DQ local-median patch in ESTIMATOR input only …
 - [per-project-literature](2026/07/per-project-literature.md) — task 3 of the autolens_assistant batch — hybrid literature rule live: Create scaffolds wiki/project/bibliograp…

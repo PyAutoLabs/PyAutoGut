@@ -1,3 +1,39 @@
+# llms.txt census fixes — routing drift, navigator group order, cross-repo signposts
+
+Shipped 2026-08-01 (issue autolens_workspace#451). A census of the llms.txt layer ahead of the
+assistant paper release found the generated catalogues fully in sync (zero-diff regeneration in
+all six navigator workspaces) but hand-curated routing drift, one broken cross-repo link, and a
+generator ordering bug. Six PRs, all merged:
+
+- **PyAutoHands#221** (merged FIRST) — `navigator.py` `GROUP_ORDER`: `multi` → `multi_dataset`
+  (post-rename), added `multi_galaxy` + `ellipse`; those groups no longer fall through the
+  alphabetical fallback to after `guides` in `llms-full.txt`.
+- **autolens_workspace#452** — llms.txt: routed the previously-absent `multi_galaxy/` science
+  case (start_here + modeling entries); fixed the stale-false `weak/` claim ("no start_here.py"
+  — it exists); tail line refreshed + scopes `llms-full.txt` to local agents; scripts/README.md
+  gained the missing `weak` entry; catalogue regenerated with the new group order.
+- **autogalaxy_workspace#199** — scripts/README.md gained missing `multi_galaxy` + `cluster`
+  entries; same tail-line scoping; catalogue regenerated.
+- **autocti_assistant#20** — repointed the dead link to a non-existent
+  `autocti_workspace/llms.txt` at the repo root (CTI navigator layer = future task).
+- **PyAutoLens#684** — llms.txt now signposts autolens_assistant under "Use it".
+- **autolens_assistant#106** — AGENTS.md scopes the `llms-full.txt` fetch instruction to local
+  harnesses; connector chats route from the compact `llms.txt` (the census's performance
+  finding: the ~30k-token catalogue ingested by a chat slows every subsequent turn — the
+  likely cause of sluggish ChatGPT assistant sessions).
+
+Shipped under a human-acknowledged Heart RED ("release validation FAILED (stage integrate)" —
+corrective #449/#450 in flight; tenant-firewall manifest drift — PyAutoHeart#132; both
+unrelated to these docs-only edits). Brain sized too-large (25); overridden as prose/repo-count
+driven — one task, per-repo PRs.
+
+Deliberately out of scope: euclid_assistant llms.txt (possibly deliberate absence),
+autocti_workspace navigator layer, and the autogalaxy_assistant birth checklist (workspace
+llms.txt INTERIM science section, capability-boundary assistant link, PyAutoGalaxy/llms.txt
+signpost).
+
+## Original prompt
+
 # llms.txt census fixes: curated routing drift, navigator GROUP_ORDER, cross-repo signposts
 
 Type: docs

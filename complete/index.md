@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-863 records across 6 buckets.
+864 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -15,6 +15,10 @@ _(curate hard-won records here — survives regeneration.)_
 <!-- CURATED:END -->
 
 <!-- GENERATED:START — edit records, not this block; regenerate with `lifecycle.py index --apply` -->
+
+## 2026/08
+
+- [llms-txt-census-fixes](2026/08/llms-txt-census-fixes.md)
 
 ## 2026/07/ep_scale_collapse_assets
 

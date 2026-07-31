@@ -31,7 +31,7 @@
 
 ## point-source-chi-squared-variants
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/657
-- status: phases 1-5 ALL MERGED (phase 5: PyAutoLens#677 + wst#240 + wsdev#123 + profiling#98, human-merged 2026-07-31; record complete/2026/07/point-solver-implicit-diff.md). ADDENDUM in flight: Prodigy-vs-Nautilus benchmark cells (image_plane + source_plane, free-centre models matching the nautilus reference cells) to empirically validate the gradients in a real search — human-requested 2026-07-31
+- status: phases 1-5 ALL MERGED (phase 5: PyAutoLens#677 + wst#240 + wsdev#123 + profiling#98, human-merged 2026-07-31; record complete/2026/07/point-solver-implicit-diff.md). ADDENDUM: benchmark COMPLETE, PR autolens_profiling#99 OPEN awaiting human merge (truth-anchored verdict: Prodigy+solved converges through the solver; comment https://github.com/PyAutoLabs/PyAutoLens/issues/657#issuecomment-5143249713). Follow-up prompts filed: cluster PointSolved default swap + cluster gradient benchmark
 - worktree: ~/Code/PyAutoLabs-wt/point-solver-implicit-diff (only autolens_profiling active on feature/point-source-prodigy-benchmark; other repos detached at main pending final cleanup)
 - phase-5-comment: https://github.com/PyAutoLabs/PyAutoLens/issues/657#issuecomment-5142215557
 - worktree: ~/Code/PyAutoLabs-wt/point-solver-implicit-diff

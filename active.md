@@ -28,3 +28,15 @@
 - repos:
   - PyAutoLens: feature/potential-correction-validation
   - autolens_workspace_test: feature/potential-correction-validation
+
+
+## multi-galaxy-features-phase-2c
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/426
+- status: workspace-dev — phase 2c of the multi_galaxy features parity arc (7 pixelization scripts: adaptive, delaunay, cpu_fast_modeling, likelihood_function, slam, source_science, plot)
+- worktree: ~/Code/PyAutoLabs-wt/multi-galaxy-features-phase-2c
+- prompt: active/multi_galaxy_features_group_parity_phase_2_mge_pixelization.md
+- arc: PR#417 (phase 1) → #421 (slam follow-up) → #422 (2a MGE) → #423 (2b pixelization core) → #424 (section parity) → THIS (2c). Phases 3 (advanced light) + 4 (advanced mass) prompts already drafted.
+- note: Brain sized too-large (11) and proposed a generic 4-way split — rejected, the prompt is already phased and 2c is one folder in one repo (same shape as 2a, 7 files/1 PR). likelihood_function.py added to the 2c list (human-confirmed 2026-07-31): it is in the phase Deliverables and both siblings have one.
+- resume-context: length model is the GROUP tier not imaging (shipped modeling.py 334 vs group 331/imaging 546). House style = tutorials explaining the code, NOT analyses — no measured tables, no parameter arithmetic, no science-consequence prose. adaptive.py self-resolves adapt images via two searches in one script. slam.py COPIES multi_galaxy/slam.py's stages (importing a workspace script executes it). Clean the dataset slate before any full-res run — smoke poisons it at 15x15.
+- follow-ups: missing `__Dataset Auto-Simulation__` header on the five existing multi_galaxy features slam.py files (needs docstring restructuring, not a text insert); house-style cleanup over merged #417/#422.
+- repos:

@@ -2,7 +2,9 @@
 
 ## point-source-chi-squared-variants
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/657
-- status: workspace-dev — phase 4 (guides) IN FLIGHT (resumed 2026-07-31; blockers autolens_workspace#414 + #417 both merged 2026-07-30)
+- status: workspace-dev — phase 4 PR OPEN awaiting human merge: autolens_workspace#425 (pending-release; smoke 26/26 local; opened 2026-07-31 under human-acked Heart RED — nightly interferometer release-leg OOM, unrelated, filed draft/bug/autolens/interferometer_release_leg_oom.md)
+- heart-ack: release validation FAILED (stage integrate) — human authorized PR-open 2026-07-31; merge stays human
+- phase-4-pr: https://github.com/PyAutoLabs/autolens_workspace/pull/425 (comment https://github.com/PyAutoLabs/PyAutoLens/issues/657#issuecomment-5141094763)
 - worktree: ~/Code/PyAutoLabs-wt/point-source-solved-guides
 - prompt: active/point_source_chi_squared_paper_variants_phase_4_docs.md (binding phase-1 deltas inside; plan approved in-session — prose-only recommendation, no demonstrated-default swap; cite glafic/Lenstool where implementations match, Lombardi 2024 only for §5.1)
 - library-pr: PyAutoArray#414, PyAutoGalaxy#531, PyAutoLens#659 (ALL MERGED 2026-07-27; codex-review fixes included; branches + worktree cleaned)

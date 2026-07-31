@@ -27,3 +27,17 @@
 - repos:
   - PyAutoLens: feature/potential-correction-validation
   - autolens_workspace_test: feature/potential-correction-validation
+
+
+## multi-galaxy-features-phase-4c
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/434
+- status: workspace-dev — phase 4c, the LAST sub-phase of the multi_galaxy features parity arc (subhalo; simulator + detect/start_here + 2 READMEs, ~1200 lines). CLOSES THE ARC.
+- worktree: ~/Code/PyAutoLabs-wt/multi-galaxy-features-phase-4c
+- prompt: draft/docs/workspaces/multi_galaxy_features_group_parity_phase_4_advanced_mass.md (shared by 4a/4b/4c)
+- arc: 4a MERGED 9bde8882 (#431), 4b MERGED 0e254390 (#433). THIS = 4c, which ALSO runs the arc-closing checks.
+- arc-closing checks (4c only): (1) grep potential_correction|los_halos in scripts/multi_galaxy/ returns nothing; (2) multi_galaxy/features folder list == group/features minus group_halo plus extra_galaxies + scaling_relation; (3) strike the parent prompt's "Remaining" entry and update draft/docs/autolens/multi_galaxy_package.md, leaving only the real-data MAST swap-in open; (4) grep "group" returns only deliberate cross-refs.
+- claim-to-verify: prompt says a subhalo false positive can be a MIS-SPLIT rather than a subhalo. Test whether a wrong mass split leaves LOCALISED (subhalo-like) or GLOBAL residuals. Track record: ph3 WRONG, 4a WRONG, 4b RIGHT.
+- upstream-bug-to-avoid: group/features/advanced/subhalo/detect/start_here.py uses lens_dict = {"lens_0": lens_0} in all three subhalo stages, DROPPING every deflector after the first. multi_galaxy must loop over all. Report upstream separately.
+- repos:
+  - autolens_workspace: feature/multi-galaxy-features-phase-4c
+

@@ -32,7 +32,9 @@
 
 ## multi-galaxy-features-phase-2c
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/426
-- status: workspace-dev — phase 2c of the multi_galaxy features parity arc (7 pixelization scripts: adaptive, delaunay, cpu_fast_modeling, likelihood_function, slam, source_science, plot)
+- status: workspace-dev — SHIPPED autolens_workspace#427 (commit 7fd11daa) AWAITING HUMAN MERGE. All 7 pixelization scripts written + validated (smoke 29/29 clean-slate sequential; navigator clean; catalogue 325→332; smoke_tests.txt 25→27).
+- heart-ack: human authorized ship 2026-07-31 against these exact RED reasons — "release validation FAILED (stage integrate)"; "manifest drift: tenant firewall (organ code) — 1 mismatch(es) vs PyAutoMind/repos.yaml" (hardcoded 'PyAutoLabs' at PyAutoHeart/heart/checks/release_run.py:42); "test run status unknown (no report.json)". The two "behind origin" reasons (PyAutoLens, PyAutoGalaxy) were cleared by pull_all_main.sh before shipping. Ack does NOT extend to new reasons.
+- bugs-found: linear light profiles put the deflectors' SOLVED INTENSITIES into inversion.reconstruction alongside the source pixels — source_science.py died in griddata ("different number of values and points"), delaunay.py died on inversion.linear_obj_list[0] being LightProfileLinearObjFuncList not Mapper. Fixed with fixed-intensity al.lp.Sersic + inversion.cls_list_from(cls=al.Mapper). The SHIPPED fit.py has the same latent bug (over-counts source pixels by 2) — left alone, filed as a follow-up.
 - worktree: ~/Code/PyAutoLabs-wt/multi-galaxy-features-phase-2c
 - prompt: active/multi_galaxy_features_group_parity_phase_2_mge_pixelization.md
 - arc: PR#417 (phase 1) → #421 (slam follow-up) → #422 (2a MGE) → #423 (2b pixelization core) → #424 (section parity) → THIS (2c). Phases 3 (advanced light) + 4 (advanced mass) prompts already drafted.

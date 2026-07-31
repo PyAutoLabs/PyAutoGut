@@ -7,7 +7,7 @@ Repos:
 Difficulty: large
 Autonomy: supervised
 Priority: normal
-Status: SPLIT into 4a / 4b / 4c (2026-07-31, human-confirmed). 4a NOT STARTED and is next.
+Status: **COMPLETE 2026-07-31.** All three sub-phases shipped: 4a DSPL (#430, PR#431), 4b mass_stellar_dark (#432, PR#433), 4c subhalo (#434, PR#435 — also ran the arc-closing checks). Records in complete/2026/07/multi-galaxy-features-phase-4{a,b,c}.md.
 Parent: draft/docs/workspaces/multi_galaxy_features_group_parity.md
 Blocked-by: phase 1 (done), phase 3 (done — `advanced/` exists, PR#429)
 

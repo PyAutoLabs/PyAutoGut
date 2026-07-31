@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-846 records across 6 buckets.
+847 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -306,6 +306,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [plot-guides-restructure](2026/07/plot-guides-restructure.md)
 - [plot-rst-functional-rewrite](2026/07/plot-rst-functional-rewrite.md)
 - [point-pairing-policies](2026/07/point-pairing-policies.md)
+- [point-source-solved-guides](2026/07/point-source-solved-guides.md) — Phase 4 (guides/docs) of the solved-likelihood series. Documented the full likelihood-option matrix (pairing s…
 - [potential-correction-asymmetry](2026/07/potential-correction-asymmetry.md) — PR #333
 - [potential-correction-interferometer](2026/07/potential-correction-interferometer.md) — Extended al.pc (potential corrections, epic #618) to Interferometer data with the SPARSE-OPERATOR (w-tilde) ro…
 - [potential-correction-jax-skip](2026/07/potential-correction-jax-skip.md) — same-session continuation of the 2026-07-27 /wake_up red-jobs sweep

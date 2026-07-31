@@ -1,3 +1,14 @@
+## point-source-solved-guides
+- issue: https://github.com/PyAutoLabs/PyAutoLens/issues/657 (phase 4 of the point-source-chi-squared-variants series)
+- completed: 2026-07-31
+- library-pr: PyAutoArray#414, PyAutoGalaxy#531, PyAutoLens#659 (phase 2, merged 2026-07-27)
+- workspace-pr: https://github.com/PyAutoLabs/autolens_workspace/pull/425 (merged 2026-07-31)
+- summary: Phase 4 (guides/docs) of the solved-likelihood series. Documented the full likelihood-option matrix (pairing scheme × free-vs-solved centre) across 9 autolens_workspace scripts + regenerated notebooks: pairing guide carries the deep prose (solved-variant table incl. the deliberate Hungarian skip, tensor `weighting = "jacobian"|"magnification"` conventions, solved fluxes/time delays, missing-image-penalty status, runnable Case 4 solved-centre demo); fixed the FALSE `FitPositionsSource(profile=None)` back-traced-barycenter claim in cluster/likelihood_function.py (it raises PointExtractionException; the real centre-free option is `al.ps.PointSolved` + `FitPositionsSourceSolved`); point_source/fit.py gained `__Solved Source Centre__` + the defaults honesty note (`FitPointDataset`→`FitPositionsImagePair` vs `AnalysisPoint`→`FitPositionsImagePairRepeat`); features/fluxes.py + time_delays.py document `FitFluxesSolved` (N=8→N=5) / `FitTimeDelaysSolved` compose-only. Wrote the deferred cluster recommendation from phase-3 numbers: search with `FitPositionsSourceSolved`, validate image-plane; demonstrated defaults unchanged (phase-1 design deferred, so prose-only). Attribution per human instruction: glafic (Oguri 2010) cited for image-plane solved precedent, Lenstool scalar µ² labelled as its convention, Lombardi 2024 only for §5.1/§6.1 results.
+- gotchas: shipped under human-acked Heart RED (nightly interferometer release-leg ~86 GB OOM, unrelated — filed draft/bug/autolens/interferometer_release_leg_oom.md). A background smoke run launched inside a synchronous subagent dies when the subagent returns — relaunch long background jobs from the main session. Local smoke 26/26 (~5 min, far faster than feared). Assistant-wiki refresh filed in ideas.md.
+- follow-ups: phase 5 (PointSolver custom_jvp gradients) is the last phase; PyAutoLens claimed by potential-correction-validation (#672) — hand-check file overlap first.
+
+## Original prompt
+
 # Point-source chi-squared variants (arXiv:2406.15280) — Phase 4: guides + docs
 
 Parent: `point_source_chi_squared_paper_variants.md`. Phase 4 of 5.

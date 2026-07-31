@@ -2,12 +2,15 @@
 
 ## point-source-chi-squared-variants
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/657
-- status: phases 1-3 SHIPPED; phase 4 PARKED in planned.md; no worktree, no repo claims held (checkpoint 2026-07-30, resume fresh from this entry)
+- status: workspace-dev — phase 4 (guides) IN FLIGHT (resumed 2026-07-31; blockers autolens_workspace#414 + #417 both merged 2026-07-30)
+- worktree: ~/Code/PyAutoLabs-wt/point-source-solved-guides
+- prompt: active/point_source_chi_squared_paper_variants_phase_4_docs.md (binding phase-1 deltas inside; plan approved in-session — prose-only recommendation, no demonstrated-default swap; cite glafic/Lenstool where implementations match, Lombardi 2024 only for §5.1)
 - library-pr: PyAutoArray#414, PyAutoGalaxy#531, PyAutoLens#659 (ALL MERGED 2026-07-27; codex-review fixes included; branches + worktree cleaned)
 - phase-3-pr: workspace_test#237, profiling#96, workspace_developer#121 (ALL MERGED 2026-07-30; worktree + branches cleaned; shipped comment https://github.com/PyAutoLabs/PyAutoLens/issues/657#issuecomment-5135275039)
-- phases: 1 (design) + 2 (core API) + 3 (examples/profiling) COMPLETE. Phase 4 (guides) PARKED — see planned.md "point-source-chi-squared-variants — phase 4": blocked on the autolens_workspace claims of #408 (PR autolens_workspace#414) and #409 (PR #417); unblocks when both merge, or on explicit human authorization of a third concurrent claim. Phase 5 (PointSolver custom_jvp gradients, draft phase-5 prompt) touches PyAutoLens (+PyAutoArray) — NOTE PyAutoLens is claimed by potential-correction-validation (#672); hand-check file overlap before starting.
+- phases: 1 (design) + 2 (core API) + 3 (examples/profiling) COMPLETE; 4 (guides) IN FLIGHT on branch feature/point-source-solved-guides. Phase 5 (PointSolver custom_jvp gradients, draft phase-5 prompt) touches PyAutoLens (+PyAutoArray) — NOTE PyAutoLens is claimed by potential-correction-validation (#672); hand-check file overlap before starting.
 - resume-context: project memory `point-source-solved-likelihoods` holds phase-3 literals + lessons (H0-matched parity for time-delay fits; fit_from pytree gap is the ONLY remaining jit blocker; output_to_json key-order nondeterminism filed in ideas.md; profiling baselines used PointFlux so solved swap drops 3 params not 2)
 - repos:
+  - autolens_workspace: feature/point-source-solved-guides
 
 
 ## potential-correction-validation

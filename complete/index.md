@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-847 records across 6 buckets.
+848 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -258,6 +258,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [morning-status-release-rehearsal](2026/07/morning-status-release-rehearsal.md) — morning Slack digest + release rehearsal — RESOLVED
 - [multi-galaxy-features-parity-phase-1](2026/07/multi-galaxy-features-parity-phase-1.md)
 - [multi-galaxy-features-parity-phase-2a](2026/07/multi-galaxy-features-parity-phase-2a.md)
+- [multi-galaxy-features-phase-2c](2026/07/multi-galaxy-features-phase-2c.md)
 - [multi-galaxy-imaging-parity](2026/07/multi-galaxy-imaging-parity.md)
 - [multi-package-rename-multi-dataset](2026/07/multi-package-rename-multi-dataset.md)
 - [multi-plane-guide-units](2026/07/multi-plane-guide-units.md) — Rewrote guides/advanced/multi_plane.py — replaced the ~400-line raw

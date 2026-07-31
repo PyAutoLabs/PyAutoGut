@@ -39,8 +39,9 @@
 
 ## group-extra-galaxies-dpie
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/444
+- pr: https://github.com/PyAutoLabs/autolens_workspace/pull/446
 - session: claude (this session)
-- status: workspace-dev
+- status: awaiting-merge (PR #446 open, pending-release; smoke 34/34; shipped under recorded heart-ack)
 - worktree: ~/Code/PyAutoLabs-wt/group-extra-galaxies-dpie
 - prompt: active/group_extra_galaxies_dpie_truncation.md
 - heart-ack: RED 'release validation FAILED (stage integrate)' + YELLOW manifest drift + stale test report acknowledged by human 2026-07-31 (unrelated release-pipeline state); ship-anyway authorized to PR-open

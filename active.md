@@ -2,10 +2,9 @@
 
 ## point-source-chi-squared-variants
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/657
-- status: phase 5 PRs OPEN awaiting human merge (library-first): PyAutoLens#677 -> wst#240 + wsdev#123 + profiling#98 (all pending-release; opened 2026-07-31 under re-acked Heart RED — same nightly interferometer OOM reason set)
-- heart-ack: release validation FAILED (stage integrate) — human authorized phase-5 PR-open 2026-07-31; merge stays human
+- status: phases 1-5 ALL MERGED (phase 5: PyAutoLens#677 + wst#240 + wsdev#123 + profiling#98, human-merged 2026-07-31; record complete/2026/07/point-solver-implicit-diff.md). ADDENDUM in flight: Prodigy-vs-Nautilus benchmark cells (image_plane + source_plane, free-centre models matching the nautilus reference cells) to empirically validate the gradients in a real search — human-requested 2026-07-31
+- worktree: ~/Code/PyAutoLabs-wt/point-solver-implicit-diff (only autolens_profiling active on feature/point-source-prodigy-benchmark; other repos detached at main pending final cleanup)
 - phase-5-comment: https://github.com/PyAutoLabs/PyAutoLens/issues/657#issuecomment-5142215557
-- spike-verdict: GO — FD-certified (memory: point-solver-implicit-diff holds the staircase/registration/cosmology-aux lessons); follow-ups filed in ideas.md (PairAll logsumexp, cosmology pytree flattening)
 - worktree: ~/Code/PyAutoLabs-wt/point-solver-implicit-diff
 - prompt: active/point_source_chi_squared_paper_variants_phase_5_jax_gradients.md (binding equations + phase-1 deltas inside)
 - claim-note: PyAutoLens + autolens_workspace_test held CONCURRENTLY with potential-correction-validation (#672) — human-authorized via plan approval 2026-07-31; #672 touches only autolens/potential_correction/** and wst phase2_experiments/ (disjoint); pre-merge origin/main before each PR
@@ -15,10 +14,7 @@
 - phases: 1 (design) + 2 (core API) + 3 (examples/profiling) + 4 (guides) COMPLETE. Phase 5 (PointSolver custom_jvp gradients, draft phase-5 prompt) touches PyAutoLens (+PyAutoArray) — NOTE PyAutoLens is claimed by potential-correction-validation (#672); hand-check file overlap before starting.
 - resume-context: project memory `point-source-solved-likelihoods` holds phase-3 literals + lessons (H0-matched parity for time-delay fits; fit_from pytree gap is the ONLY remaining jit blocker; output_to_json key-order nondeterminism filed in ideas.md; profiling baselines used PointFlux so solved swap drops 3 params not 2)
 - repos:
-  - PyAutoLens: feature/point-solver-implicit-diff
-  - autolens_workspace_test: feature/point-solver-implicit-diff
-  - autolens_workspace_developer: feature/point-solver-implicit-diff
-  - autolens_profiling: feature/point-solver-implicit-diff
+  - autolens_profiling: feature/point-source-prodigy-benchmark
 
 
 ## potential-correction-validation

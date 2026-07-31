@@ -1,3 +1,14 @@
+## point-solver-implicit-diff
+- issue: https://github.com/PyAutoLabs/PyAutoLens/issues/657 (phase 5 of the point-source-chi-squared-variants series — final implementation phase)
+- completed: 2026-07-31
+- library-pr: https://github.com/PyAutoLabs/PyAutoLens/pull/677 (merged 2026-07-31)
+- workspace-pr: autolens_workspace_test#240, autolens_workspace_developer#123, autolens_profiling#98 (all merged 2026-07-31)
+- summary: PointSolver gradients via implicit fixed-point `jax.custom_jvp` (`autolens/point/solver/implicit_diff.py`): `A dθ = dα|_θ + dβ` at the solved positions — the gravity.jl/Lombardi 2024 Eq. 30 mechanism (verified against the paper full text: gravity.jl also never differentiates through its solver; its autodiff only VERIFIES analytic rules). Tangent rule linear in tangents (reverse mode free); padded (inf,inf) rows zero tangent; near-critical divergence surfaced never clamped; compatibility gate keeps unregistered (hand-built) tracers on the old zero-gradient forward. `FitFluxes.model_data` vectorized; PairRepeat subgradient semantics documented. FD-certified across the matrix (workspace_test jax_grad/gradient.py blocks C-F): solved+sampled centres through the solver at ≤2% vs stair noise (best steps <0.4%), PairRepeatSolved liveness, nested-autodiff fluxes+delays (third potential derivatives — beyond the paper). Values invariant: numpy path byte-identical, 492 tests green, all jax_likelihood literals unchanged. First gradient-search cell registered (profiling multi_start_prodigy/point_source/image_plane_solved).
+- gotchas: (1) solver STAIRCASE — forward quantizes at pixel_scale_precision, naive FD reads exactly 0 vs correct nonzero AD (envelope derivative); certify with fine-precision solver + per-param rel_steps sweep. (2) custom_jvp args must flatten to JAX leaves — Galaxy/profiles only registered by autofit register_model (Fitness path); hand closures silently zero-grad with NO error. Solver itself is not a pytree — close over it. (3) Tracer keeps cosmology as no_flatten aux → free H0 = stale tracer → UnexpectedTracerError; solver-chained cert models are cosmology-free (2-plane positions H0-independent); multi-plane free-cosmology follow-up in ideas.md. (4) PairAll mixture underflows to -inf at ≳38σ (not logsumexp) — follow-up in ideas.md. Full lessons in project memory `point-solver-implicit-diff`.
+- follow-ups: Prodigy-vs-Nautilus benchmark cells (image_plane + source_plane) running as an addendum under the same issue; cosmology pytree flattening; PairAll logsumexp stabilization.
+
+## Original prompt
+
 # Point-source chi-squared variants (arXiv:2406.15280) — Phase 5: JAX gradients
 
 Parent: `point_source_chi_squared_paper_variants.md`. Phase 5 of 5 (final).

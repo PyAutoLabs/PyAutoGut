@@ -65,3 +65,5 @@
 - prompt: active/remove_fit_quick_plots.md
 - claim-note: PyAutoLens held CONCURRENTLY with #672/#678/ws#442, autolens_workspace_test with #672 — human-approved parallel run. Files: autolens/{imaging,interferometer,point,weak}/{model/plotter.py,plot/fit_*_plots.py}, autofit/non_linear/quick_update.py, wst scripts/*/visualization/. Plausible overlap ONLY with #678 (point/model) — pre-merge origin/main before PR.
 - repos:
+  - PyAutoLens: feature/remove-fit-quick-plots
+  - PyAutoFit: feature/remove-fit-quick-plots

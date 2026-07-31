@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-854 records across 6 buckets.
+856 records across 6 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -163,6 +163,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [gradient-safe-logdet](2026/07/gradient-safe-logdet.md)
 - [graduate-mcp-autofit-extra](2026/07/graduate-mcp-autofit-extra.md)
 - [group-start-here-timeout](2026/07/group-start-here-timeout.md)
+- [group-subhalo-lens-dict](2026/07/group-subhalo-lens-dict.md)
 - [guard-followups](2026/07/guard-followups.md)
 - [guides-jax-to-using-jax](2026/07/guides-jax-to-using-jax.md) — Consolidated the six trailing `__JAX__` guide sections (~536 lines, cross-referencing in a ring) into one `scr…
 - [health-api](2026/07/health-api.md)
@@ -264,6 +265,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [multi-galaxy-features-phase-4b](2026/07/multi-galaxy-features-phase-4b.md)
 - [multi-galaxy-features-phase-4c](2026/07/multi-galaxy-features-phase-4c.md)
 - [multi-galaxy-imaging-parity](2026/07/multi-galaxy-imaging-parity.md)
+- [multi-galaxy-pix-count-autosim](2026/07/multi-galaxy-pix-count-autosim.md)
 - [multi-package-rename-multi-dataset](2026/07/multi-package-rename-multi-dataset.md)
 - [multi-plane-guide-units](2026/07/multi-plane-guide-units.md) — Rewrote guides/advanced/multi_plane.py — replaced the ~400-line raw
 - [multi-shared-state-core-api](2026/07/multi-shared-state-core-api.md)

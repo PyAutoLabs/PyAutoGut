@@ -1,27 +1,5 @@
 # Active Tasks
 
-## group-subhalo-lens-dict
-- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/437
-- status: PR OPEN autolens_workspace#439 awaiting human merge
-- worktree: ~/Code/PyAutoLabs-wt/group-subhalo-lens-dict
-- prompt: active/group_subhalo_lens_dict_collapse.md
-- scope: autolens_workspace only — group/features/advanced/subhalo/detect/start_here.py; rebuild lens_dict via the n_lenses loop from group/slam.py:476 in all 7 downstream stages (206, 273, 349, 420, 470, 545, 628); shear stays on lens_0; notebooks regenerated
-- correction: issue body claimed the shipped dataset has 2 main lens centres and results are already biased — WRONG. This script loads dataset/group/dark_matter_subhalo, whose simulator.py:70 hard-codes main_lens_centres = [(0.0, 0.0)]; its other two galaxies are EXTRA galaxies and were never dropped. Defect is LATENT. Corrected on the issue (comment 5143347492). The 2-centre file I first read belongs to dataset/group/102021990_* — a different example.
-- verification: throwaway instrumented copy printing lens_dict.keys() at all 8 stages with main_lens_centres forced to 2; control built via `git show main:` — before = stage 1 both, stages 2-8 lens_0 only; after = all 8 both
-- claim-note: autolens_workspace held CONCURRENTLY with cluster-point-solved-default (#436, cluster/ only) and multi-galaxy-pix-count-autosim (#438, multi_galaxy/ only) — all three scopes disjoint; pre-merge origin/main before PR
-- repos:
-  - autolens_workspace: feature/group-subhalo-lens-dict
-
-## multi-galaxy-pix-count-autosim
-- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/438
-- status: PR OPEN autolens_workspace#440 awaiting human merge
-- worktree: ~/Code/PyAutoLabs-wt/multi-galaxy-pix-count-autosim
-- prompt: active/multi_galaxy_pixelization_count_and_autosim_headers.md
-- scope: autolens_workspace only — multi_galaxy/features/pixelization/fit.py source-pixel count (lp_linear bulges inflate reconstruction by 2) + __Dataset Auto-Simulation__ prose header on 5 slam.py; notebooks regenerated
-- claim-note: autolens_workspace held CONCURRENTLY with cluster-point-solved-default (#436) and group-subhalo-lens-dict (#437) — scopes disjoint; pre-merge origin/main before PR
-- repos:
-  - autolens_workspace: feature/multi-galaxy-pix-count-autosim
-
 ## cluster-point-solved-default
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/436
 - status: workspace-dev

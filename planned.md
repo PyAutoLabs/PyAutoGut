@@ -248,18 +248,3 @@
     was always wrong or should_simulate changed the predicate (the latter would
     be a much wider bug), THEN sweep all 116 migrated guards for the same
     mismatch.
-
-## over-sample-trailing-one-to-two
-- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/443
-- planned: 2026-07-31
-- classification: workspace (docs) — mechanical sweep + guide-prose update
-- prompt: active/over_sample_trailing_one_to_two.md
-- suggested-branch: feature/over-sample-trailing-one-to-two
-- blocked-by: start-here-other-feature-sections (using autolens_workspace, autogalaxy_workspace); potential-correction-validation (using autolens_workspace_test)
-- summary: replace trailing sub_size 1 in adaptive over-sampling — [4,2,1]→[4,2,2] (~115 sites) + [8,4,1]→[8,4,2] (~45 sites) — so MGE source arcs are never evaluated at sub_size 1 (aliasing hurts gradient-based searches); update the stale cored-profile prose in guides/advanced/over_sampling.py; simulators already [32,8,2], verify-only. Route: start_workspace when unblocked.
-- affected-repos:
-  - autolens_workspace
-  - autogalaxy_workspace
-  - HowToGalaxy
-  - autolens_workspace_test
-  - autogalaxy_workspace_test

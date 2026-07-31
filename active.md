@@ -56,3 +56,15 @@
 - repos:
   - PyAutoLens: feature/remove-fit-quick-plots
   - PyAutoFit: feature/remove-fit-quick-plots
+
+## over-sample-trailing-one-to-two
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/443
+- session: claude --resume f6c5759d-3969-4c7a-8407-1b81d4b9514d
+- status: workspace-dev
+- worktree: ~/Code/PyAutoLabs-wt/over-sample-trailing-one-to-two
+- repos:
+  - autolens_workspace: feature/over-sample-trailing-one-to-two
+  - autogalaxy_workspace: feature/over-sample-trailing-one-to-two
+  - HowToGalaxy: feature/over-sample-trailing-one-to-two
+  - autolens_workspace_test: feature/over-sample-trailing-one-to-two
+  - autogalaxy_workspace_test: feature/over-sample-trailing-one-to-two

@@ -7,12 +7,24 @@ Repos:
 Difficulty: large
 Autonomy: supervised
 Priority: normal
-Status: phases 1 + 2a SHIPPED 2026-07-30 (PR#417 merged, PR#422 open); the scaling_relation/slam.py
-  follow-up also merged (PR#421). REMAINING: phase 2b (pixelization), phase 3, phase 4.
-  Original phase-1 record: phase 1 SHIPPED 2026-07-30 — autolens_workspace#409 closed, PR#417 merged `f09337ea`;
-  record: complete/2026/07/multi-galaxy-features-parity-phase-1.md. Phases 2-4 not started (prompts written,
-  no issues yet). Follow-up: re-point features/scaling_relation/slam.py at the new multi_galaxy/slam.py
-  baseline (deferred while #407 owned that folder).
+Status: PHASES 1 + 2 COMPLETE. Phase 3 IN FLIGHT (issue #428). REMAINING: phase 3, phase 4.
+  - phase 1 SHIPPED 2026-07-30 — autolens_workspace#409 closed, PR#417 merged `f09337ea`;
+    record: complete/2026/07/multi-galaxy-features-parity-phase-1.md. Plus the
+    scaling_relation/slam.py follow-up, PR#421.
+  - phase 2a (MGE) SHIPPED 2026-07-30 — PR#422. Catalogue 317 → 323.
+  - phase 2b (pixelization core: README, modeling, fit) SHIPPED 2026-07-30 — PR#423. 323 → 325.
+    Section parity follow-up PR#424.
+  - phase 2c (pixelization variants: adaptive, delaunay, cpu_fast_modeling, likelihood_function,
+    slam, source_science, plot) SHIPPED 2026-07-31 — issue #426, PR#427 merged `bb1f850c`;
+    record: complete/2026/07/multi-galaxy-features-phase-2c.md. Catalogue 325 → 332.
+  - phase 3 (advanced light) IN FLIGHT 2026-07-31 — issue #428,
+    prompt active/multi_galaxy_features_group_parity_phase_3_advanced_light.md.
+  - phase 4 (advanced mass) not started; prompt drafted.
+  Open follow-ups from phase 2c: `features/pixelization/fit.py` over-counts its source pixels by 2
+  (linear light profiles land in `inversion.reconstruction`); `__Dataset Auto-Simulation__` still
+  missing on the five existing `multi_galaxy/features/*/slam.py` files (needs docstring
+  restructuring, not a text insert); house-style cleanup over merged #417/#422 offered but
+  unrequested.
 Parent: draft/docs/autolens/multi_galaxy_package.md
 Phases:
 - draft/docs/workspaces/multi_galaxy_features_group_parity_phase_1_baseline_simple.md

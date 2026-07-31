@@ -1,5 +1,15 @@
 # Active Tasks
 
+## py314-fork-context
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1437
+- session: claude --resume 5bc6c978-cb8f-4353-a66c-158a74103a17
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/py314-fork-context
+- prompt: active/factor_graph_3_14_instance_iteration.md
+- note: root cause CONFIRMED (py3.14 forkserver default start method; fork-forced tutorial passes end-to-end). Fix = fork-context pin at ~7 autofit pool sites + numpy-only unit test. Follow-ups AFTER merge: PyAutoHands python_matrix.yml 3.14 re-add, library classifiers, PyAutoNerves banner retarget. Repro venv: scratchpad py314 (session-local).
+- repos:
+  - PyAutoFit: feature/py314-fork-context
+
 ## potential-correction-validation
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/672
 - session: claude --resume 0100b7de-da01-4c18-a8b0-9d0080d5e07f

@@ -33,3 +33,13 @@
 - repos:
   - autolens_workspace: feature/interferometer-start-here-batch-size
   - PyAutoHeart: feature/release-run-repo-slug-firewall (YELLOW tenant-firewall, not the RED claim)
+
+## llms-txt-census-fixes
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/451
+- session: claude --resume bbc37e50-2f17-41c1-9180-14a1cd647a1c
+- status: workspace-dev
+- worktree: ~/Code/PyAutoLabs-wt/llms-txt-census-fixes
+- prompt: active/llms_txt_census_fixes.md
+- note: Brain sized too-large (25, repo-count/prose-driven); override — few-line docs edits across 6 repos, one task, per-repo PRs. Merge order: PyAutoHands FIRST (GROUP_ORDER), then workspaces (navigator_check regenerates vs PyAutoHands main; same-named branches keep PR CI green)
+- claim-note: autolens_workspace held CONCURRENTLY with interferometer-start-here-integrate-oom (#449 — its scope is interferometer/start_here.py; ours is llms.txt + scripts/README.md + generated catalogue, disjoint); PyAutoLens held CONCURRENTLY with #672/#678 worktrees (ours touches llms.txt only) — pre-merge origin/main before each PR
+- repos:

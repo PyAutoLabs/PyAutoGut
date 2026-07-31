@@ -31,7 +31,11 @@
 
 ## multi-galaxy-features-phase-4c
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/434
-- status: workspace-dev — phase 4c, the LAST sub-phase of the multi_galaxy features parity arc (subhalo; simulator + detect/start_here + 2 READMEs, ~1200 lines). CLOSES THE ARC.
+- status: workspace-dev — SHIPPED autolens_workspace#435 (commit 81a3a4fe) AWAITING HUMAN MERGE. CLOSES THE ARC. Smoke 37/37 clean-slate sequential; navigator clean; catalogue 351→353; smoke_tests.txt 34→35.
+- arc-closing checks ALL PASS: (1) no potential_correction/los_halos hits; (2) multi_galaxy/features == group/features minus group_halo plus extra_galaxies, and features/advanced matches group/features/advanced folder-for-folder; (3) parent Remaining entry STRUCK in draft/docs/autolens/multi_galaxy_package.md (Mind commit 3de106f) — only the real-data MAST swap-in remains open; (4) 'group' greps are all deliberate cross-refs.
+- claim-VERIFIED-TRUE (stronger than stated): a mis-split residual is MORE concentrated than a subhalo's at matched power — participation ratio 145.4 vs 313.8 pixels, brightest-1% power 0.789 vs 0.639. Moving just 0.022" of Einstein radius between the galaxies (~1% of total) matches a 1e10 Msun subhalo's residual power. A compact-perturber grid search CAN be fooled.
+- upstream-bug-CONFIRMED: group/features/advanced/subhalo/detect/start_here.py uses lens_dict = {"lens_0": lens_0} in all three subhalo stages, dropping every deflector after the first from the comparison model. Needs its own issue.
+- heart-ack: same three RED reasons the human authorized for #427; unchanged set.
 - worktree: ~/Code/PyAutoLabs-wt/multi-galaxy-features-phase-4c
 - prompt: draft/docs/workspaces/multi_galaxy_features_group_parity_phase_4_advanced_mass.md (shared by 4a/4b/4c)
 - arc: 4a MERGED 9bde8882 (#431), 4b MERGED 0e254390 (#433). THIS = 4c, which ALSO runs the arc-closing checks.

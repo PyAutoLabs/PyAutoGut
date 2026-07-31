@@ -24,15 +24,16 @@
 ## point-source-defaults-campaign
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/678
 - session: claude --resume ee42120d-c794-4565-804e-d7576d50c37c
-- status: library-dev (phase A PR OPEN PyAutoLens#679 awaiting human merge; on merge: HPCPullPyAuto then phase B)
-- library-pr: https://github.com/PyAutoLabs/PyAutoLens/pull/679 (phase A; commit 0cebe059d; shipped under human-authorized Heart-RED override — RED was the unrelated nightly release-validation integrate failure)
+- status: library-dev (phase A MERGED PyAutoLens#679 2026-07-31, RAL mirrors synced via HPCPullPyAuto; phase B evidence campaign IN PROGRESS in autolens_profiling)
+- library-pr: https://github.com/PyAutoLabs/PyAutoLens/pull/679 (phase A; MERGED 86dea4107; was shipped under human-authorized Heart-RED override — RED was the unrelated nightly release-validation integrate failure)
 - worktree: ~/Code/PyAutoLabs-wt/point-source-defaults-campaign
 - prompt: active/point_source_defaults_campaign.md
 - phases: A library prereqs logsumexp + free-centre tensor (PyAutoLens, small PR FIRST, then HPCPullPyAuto) → B evidence campaign (autolens_profiling, RAL A100s, galaxy + cluster tiers) → C defaults change (PyAutoLens, ## API Changes) → D workspace docs (autolens_workspace, END GOAL)
 - note: Brain sized too-large (11, prose-driven); human-scoped A–D phasing kept (potential-correction precedent). SUPERSEDES the 2026-07-31 morning galaxy/cluster split; COORDINATES with cluster-point-solved-default (#436 — phase D touches cluster/ only to reconcile); ABSORBS ideas.md PairAll-logsumexp entry (removed) + draft/research/autolens_profiling/cluster_gradient_search_benchmark.md (banner already in file). Time-delay free-H0 arm DEFERRED.
 - claim-note: PyAutoLens held CONCURRENTLY with potential-correction-validation (#672) — scopes disjoint (autolens/point/fit/ + point/model vs pixelization/potential-correction); pre-merge origin/main before PR
 - repos:
-  - PyAutoLens: feature/point-source-defaults-campaign
+  - PyAutoLens: feature/point-source-defaults-campaign (phase A MERGED via #679; branch retained for phase C)
+  - autolens_profiling: feature/point-source-defaults-campaign
 
 ## start-here-other-feature-sections
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/442

@@ -31,7 +31,10 @@
 
 ## multi-galaxy-features-phase-4b
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/432
-- status: workspace-dev — phase 4b of the multi_galaxy features parity arc (mass_stellar_dark; 6 scripts + README, ~2000 lines)
+- status: workspace-dev — SHIPPED autolens_workspace#433 (commit 226ccf43) AWAITING HUMAN MERGE. 6 scripts + README, ~2010 lines. Smoke 36/36 clean-slate sequential; navigator clean; catalogue 345→351; smoke_tests.txt 32→34.
+- claim-VERIFIED-TRUE (first time this phase group): tying the mass-to-light ratio across deflectors DOES remove a near-degenerate direction. Curvature at truth: anti-correlated (trade stellar mass between galaxies) 2.54e-03 vs together 3.12e-02 → ratio 12.3x. Parameter count 16→15 confirms the tie binds. Dark halos deliberately NOT tied.
+- api-note: al.util.chaining.mass_light_dark_from reads a HARDCODED single-lens path (light_result.instance.galaxies.lens.<name>) — unusable for lens_0/lens_1 models. Build the decomposition by hand; group's pipeline does the same.
+- heart-ack: same three RED reasons the human authorized for #427; unchanged set.
 - worktree: ~/Code/PyAutoLabs-wt/multi-galaxy-features-phase-4b
 - prompt: draft/docs/workspaces/multi_galaxy_features_group_parity_phase_4_advanced_mass.md (shared by 4a/4b/4c)
 - arc: 4a MERGED 9bde8882 (#431, record complete/2026/07/multi-galaxy-features-phase-4a.md). THIS = 4b. Then 4c subhalo, which also runs the arc-closing checks.

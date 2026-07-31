@@ -1,22 +1,5 @@
 # Active Tasks
 
-## py314-promotion
-- issue: https://github.com/PyAutoLabs/PyAutoHands/issues/219
-- session: claude --resume 5bc6c978-cb8f-4353-a66c-158a74103a17
-- status: all six PRs MERGED 2026-07-31 (Hands#220, Nerves#145, Array#429, Fit#1440, Galaxy#544, Lens#683); awaiting python_matrix evidence run 30646078121 (3.14 legs) → then completion record + close #219
-- heart-ack: RED 'release validation FAILED (stage integrate)' acknowledged by human 2026-07-31 (unrelated nightly release-pipeline state); batch merge-on-green authorized
-- worktree: ~/Code/PyAutoLabs-wt/py314-promotion
-- prompt: active/python_314_promotion.md
-- note: follow-ups from py314-fork-context (#1437/#1439 merged): matrix promotion + classifiers + Nerves banner. Post-merge evidence: workflow_dispatch python_matrix, confirm 3.14 legs green.
-- claim-note: PyAutoFit held CONCURRENTLY with remove-fit-quick-plots (#680), PyAutoLens with potential-correction-validation (#672) + point-source-defaults-campaign (#678) — this task touches ONLY pyproject.toml in the libraries (one classifier line); zero file overlap with any of them; pre-merge origin/main before each PR.
-- repos:
-  - PyAutoHands: feature/py314-promotion
-  - PyAutoNerves: feature/py314-promotion
-  - PyAutoArray: feature/py314-promotion
-  - PyAutoFit: feature/py314-promotion
-  - PyAutoGalaxy: feature/py314-promotion
-  - PyAutoLens: feature/py314-promotion
-
 ## potential-correction-validation
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/672
 - session: claude --resume 0100b7de-da01-4c18-a8b0-9d0080d5e07f

@@ -3,7 +3,7 @@
 ## potential-correction-validation
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/672
 - session: claude --resume 0100b7de-da01-4c18-a8b0-9d0080d5e07f
-- status: library-dev (phases 1-4 delivered 2026-07-31: wst#238 + PyAutoLens#676 both OPEN awaiting human merge; Phase 2 closed — engines equivalent, damping was the whole discrepancy; Phase 3 evidence grids done — evidence-max localizes but map-corr peaks on the ridge, prior-family finding; Phase 4 review report posted to #672; final end-to-end run of subhalo_recovery_evidence.py in flight, gates the phase-3 wst PR)
+- status: awaiting-merge (ALL FOUR PHASES DELIVERED 2026-07-31; end-to-end acceptance run PASSED. Merge queue: PyAutoLens#676 first, then wst#243; wst#238 independent. Phase 4 review report on #672. Post-merge: completion record + worktree cleanup + close #672)
 - worktree: ~/Code/PyAutoLabs-wt/potential-correction-validation
 - phases: 1 (wst smoke timeout) → 2 (JAX-vs-Python parity hunt vs for_qiuhan tar) → 3 (evidence-sampled recovery test + analysis fast path) → 4 (algorithm review report)
 - note: Brain sized too-large (13); content-based 4-phase split recorded in the prompt. wst has feature/point-source-chi-squared-variants checked out in another worktree (empty repos: claim) — files disjoint, pre-merge origin/main before each PR

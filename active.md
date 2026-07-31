@@ -27,3 +27,16 @@
 - repos:
   - PyAutoLens: feature/potential-correction-validation
   - autolens_workspace_test: feature/potential-correction-validation
+
+
+## multi-galaxy-features-phase-4b
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/432
+- status: workspace-dev — phase 4b of the multi_galaxy features parity arc (mass_stellar_dark; 6 scripts + README, ~2000 lines)
+- worktree: ~/Code/PyAutoLabs-wt/multi-galaxy-features-phase-4b
+- prompt: draft/docs/workspaces/multi_galaxy_features_group_parity_phase_4_advanced_mass.md (shared by 4a/4b/4c)
+- arc: 4a MERGED 9bde8882 (#431, record complete/2026/07/multi-galaxy-features-phase-4a.md). THIS = 4b. Then 4c subhalo, which also runs the arc-closing checks.
+- claim-to-verify: prompt says "tying the mass-to-light ratio across galaxies is what makes the decomposition identifiable when the mass split already is not". First half (it's a real choice) is true; second half is a strong identifiability claim — TEST IT. Vary the two M/L ratios anti-correlated vs together and compare residual-surface flatness. TWO phases running the prompt's motivation has been wrong (ph3 shapelets, 4a DSPL).
+- watch: inversion.reconstruction contamination (2c); al.SettingsInversion doesn't exist (ph3); al.model_util.mge_from doesn't exist (4a).
+- repos:
+  - autolens_workspace: feature/multi-galaxy-features-phase-4b
+

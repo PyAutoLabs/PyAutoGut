@@ -56,3 +56,12 @@
 - claim-note: autolens_workspace held CONCURRENTLY with start-here-other-feature-sections (#442, docs-only docs/overview/overview_3_features.md) — this task touches scripts/group + scripts/cluster + features/extra_galaxies docs, zero file overlap, human-approved parallel run; pre-merge origin/main before PR. Coordinate cluster/ prose with #678 phase D and #436.
 - repos:
   - autolens_workspace: feature/group-extra-galaxies-dpie
+
+## remove-fit-quick-plots
+- issue: https://github.com/PyAutoLabs/PyAutoLens/issues/680
+- session: claude (this session)
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/remove-fit-quick-plots
+- prompt: active/remove_fit_quick_plots.md
+- claim-note: PyAutoLens held CONCURRENTLY with #672/#678/ws#442, autolens_workspace_test with #672 — human-approved parallel run. Files: autolens/{imaging,interferometer,point,weak}/{model/plotter.py,plot/fit_*_plots.py}, autofit/non_linear/quick_update.py, wst scripts/*/visualization/. Plausible overlap ONLY with #678 (point/model) — pre-merge origin/main before PR.
+- repos:

@@ -43,3 +43,9 @@
 - note: Brain sized too-large (25, repo-count/prose-driven); override — few-line docs edits across 6 repos, one task, per-repo PRs. Merge order: PyAutoHands FIRST (GROUP_ORDER), then workspaces (navigator_check regenerates vs PyAutoHands main; same-named branches keep PR CI green)
 - claim-note: autolens_workspace held CONCURRENTLY with interferometer-start-here-integrate-oom (#449 — its scope is interferometer/start_here.py; ours is llms.txt + scripts/README.md + generated catalogue, disjoint); PyAutoLens held CONCURRENTLY with #672/#678 worktrees (ours touches llms.txt only) — pre-merge origin/main before each PR
 - repos:
+  - autolens_workspace: feature/llms-txt-census-fixes
+  - autogalaxy_workspace: feature/llms-txt-census-fixes
+  - PyAutoHands: feature/llms-txt-census-fixes
+  - autocti_assistant: feature/llms-txt-census-fixes
+  - PyAutoLens: feature/llms-txt-census-fixes
+  - autolens_assistant: feature/llms-txt-census-fixes

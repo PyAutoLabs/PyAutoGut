@@ -43,6 +43,7 @@
 - status: workspace-dev
 - worktree: ~/Code/PyAutoLabs-wt/group-extra-galaxies-dpie
 - prompt: active/group_extra_galaxies_dpie_truncation.md
+- heart-ack: RED 'release validation FAILED (stage integrate)' + YELLOW manifest drift + stale test report acknowledged by human 2026-07-31 (unrelated release-pipeline state); ship-anyway authorized to PR-open
 - claim-note: autolens_workspace held CONCURRENTLY with start-here-other-feature-sections (#442, docs-only docs/overview/overview_3_features.md) — this task touches scripts/group + scripts/cluster + features/extra_galaxies docs, zero file overlap, human-approved parallel run; pre-merge origin/main before PR. Coordinate cluster/ prose with #678 phase D and #436.
 - repos:
   - autolens_workspace: feature/group-extra-galaxies-dpie

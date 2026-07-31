@@ -1,17 +1,5 @@
 # Active Tasks
 
-## py314-fork-context
-- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1437
-- session: claude --resume 5bc6c978-cb8f-4353-a66c-158a74103a17
-- status: library-shipped, awaiting-merge (six-workspace smoke PASS for this change — 11 wst failures are PRE-EXISTING, controlled bit-identical vs main autofit; see issue comment)
-- library-pr: https://github.com/PyAutoLabs/PyAutoFit/pull/1439 (shipped under human-authorized Heart-RED override — RED was the unrelated nightly release-validation integrate failure)
-- worktree: ~/Code/PyAutoLabs-wt/py314-fork-context
-- prompt: active/factor_graph_3_14_instance_iteration.md
-- note: root cause CONFIRMED (py3.14 forkserver default start method; fork-forced tutorial passes end-to-end). Fix = fork-context pin at ~7 autofit pool sites + numpy-only unit test. Follow-ups AFTER merge: PyAutoHands python_matrix.yml 3.14 re-add, library classifiers, PyAutoNerves banner retarget. Repro venv: scratchpad py314 (session-local).
-- claim-note: PyAutoFit held CONCURRENTLY with remove-fit-quick-plots (#680, autofit/non_linear/quick_update.py) — this task touches parallel/, dynesty+nautilus search, EP optimiser, abstract_search make_pool; zero file overlap; pre-merge origin/main before PR.
-- repos:
-  - PyAutoFit: feature/py314-fork-context
-
 ## potential-correction-validation
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/672
 - session: claude --resume 0100b7de-da01-4c18-a8b0-9d0080d5e07f

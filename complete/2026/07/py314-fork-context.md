@@ -1,3 +1,51 @@
+Unblocked Python 3.14: the factor-graph "'Gaussian' object is not iterable"
+failure was Python 3.14's forkserver default start method, fixed by pinning
+the pre-3.14 default (`fork` on POSIX) at every PyAutoFit pool/process site.
+
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1437 (auto-closed)
+- pr: PyAutoFit#1439 (`3467de94a`) — merged; CI green (3.12 + 3.13 + docs);
+  shipped under human-authorized Heart-RED override (unrelated nightly
+  "release validation FAILED (stage integrate)")
+- root cause (single-variable confirmed): Python 3.14 changed the Linux
+  default multiprocessing start method fork → forkserver. Unguarded
+  workspace scripts + forkserver (which preloads `__main__`) corrupt the
+  model instances dynesty pool workers receive; other pool creation
+  silently degraded to a misleading "OS does not support multiprocessing"
+  single-CPU fallback. In-process + pickle round-trips were CORRECT — the
+  prompt's iteration-protocol and model-flattening hypotheses were ruled
+  out empirically. Unmodified tutorial fails on 3.14; identical tutorial
+  with fork forced completes.
+- fix: new `autofit.non_linear.parallel.fork_context()` reproduces the
+  pre-3.14 default on every platform (fork on POSIX except macOS — its
+  default has been spawn since py3.8 and fork-with-threads can abort in
+  ObjC runtimes, so pinning fork there would be NEW behavior; platform
+  default on macOS/Windows). Applied at: dynesty pool (subclass — upstream
+  hardcodes the default context), `make_pool`, SneakyPool/SneakierPool +
+  Process/Queue layer (covers emcee/zeus), parallel EP optimiser, and
+  nautilus (handed a managed pool object instead of `pool=<int>` so it no
+  longer builds internal default-context pools). Dynesty's no-pool
+  fallback log now includes the triggering exception.
+- validation: full test_autofit 1641 passed / 2 skipped incl. new
+  numpy-only fork-context tests (factor-graph likelihood computed in a
+  real fork-pool worker == in-process value); 3.14.4 venv (full editable
+  stack — installs cleanly, no dependency blocker) runs
+  `overview_1_the_basics.py` end-to-end on the default start method.
+- smoke: six workspaces — autofit 7/0, autogalaxy 13/0, autolens 34/0,
+  euclid 6/0, HowToLens 6/0; the 11 autolens_workspace_test failures are
+  PRE-EXISTING (three clusters controlled bit-identically on unchanged
+  main autofit: jax_likelihood vmap mismatches, composition_mge
+  prior_count 4≠6, #672 potential-correction dpsi errors; wst is 2 behind
+  origin). Two parallel-run autolens_workspace failures vanished
+  sequentially (known shared-state artifact).
+- also surfaced (pre-existing, py3.13 + unchanged main): multi-core emcee
+  (`number_of_cores=2`) hangs on the WSL dev box (nproc=1); single-core
+  instant. Not filed — needs proper repro triage first.
+- remaining for 3.14 promotion (separate small PRs): re-add 3.14 to
+  PyAutoHands `python_matrix.yml`, add 3.14 classifiers to the libraries,
+  retarget the PyAutoNerves 3.14 experimental banner.
+
+## Original prompt
+
 # Investigate FactorGraphModel instance shape on Python 3.14
 
 Type: bug

@@ -3,7 +3,8 @@
 ## py314-fork-context
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1437
 - session: claude --resume 5bc6c978-cb8f-4353-a66c-158a74103a17
-- status: library-dev
+- status: library-shipped, awaiting-merge (smoke sweep in flight)
+- library-pr: https://github.com/PyAutoLabs/PyAutoFit/pull/1439 (shipped under human-authorized Heart-RED override — RED was the unrelated nightly release-validation integrate failure)
 - worktree: ~/Code/PyAutoLabs-wt/py314-fork-context
 - prompt: active/factor_graph_3_14_instance_iteration.md
 - note: root cause CONFIRMED (py3.14 forkserver default start method; fork-forced tutorial passes end-to-end). Fix = fork-context pin at ~7 autofit pool sites + numpy-only unit test. Follow-ups AFTER merge: PyAutoHands python_matrix.yml 3.14 re-add, library classifiers, PyAutoNerves banner retarget. Repro venv: scratchpad py314 (session-local).

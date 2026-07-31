@@ -1,5 +1,9 @@
 # Cluster-scale gradient-search benchmark (Prodigy vs Nautilus, point-source)
 
+> **ABSORBED 2026-07-31 (same day)** into
+> `draft/feature/autolens/point_source_defaults_campaign.md` (phase B, cluster tier, on
+> RAL A100s). Do not run standalone — kept for the context literals below.
+
 Human-requested follow-up (2026-07-31, #657 wrap-up): once the galaxy-scale point_source
 benchmark cells wrap, extend the Nautilus-vs-MultiStartProdigy comparison to a
 CLUSTER-scale point-source model in autolens_profiling — the regime the solved variants

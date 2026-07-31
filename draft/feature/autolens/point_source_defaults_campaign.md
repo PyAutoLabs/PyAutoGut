@@ -48,12 +48,40 @@ this campaign).
    `"jacobian"` opts into the tensor + matching normalization, reusing
    `precision_tensor_components_from` from `solved.py`). Numpy unit tests per house rule.
 
-## Phase B — evidence campaign (autolens_profiling; truth-anchored throughout)
+## Phase B — evidence campaign (autolens_profiling; truth-anchored; A100s on RAL)
 
 Methodology from the 2026-07-31 runs (`results/searches/**`, PR#99): evaluate each
 likelihood flavour AT THE SIMULATOR TRUTH as the anchor; compare Nautilus + Prodigy
 best-logL/recovery/wall against it. Write every run's JSON + a
 `results/notes/point_source_defaults_campaign.md` synthesis.
+
+**Two dataset tiers — run the full matrix on BOTH:**
+- **Galaxy-scale**: the existing profiling `simple` quad (anchors + 2026-07-31 results
+  already in `results/searches/`).
+- **Cluster-scale**: port the `autolens_workspace/cluster` test case (the family-CSV
+  multi-plane system — 2 sources at different redshifts, dPIE members + host halo,
+  `point_datasets.csv` conventions; the good test case per the human). Expect MUCH
+  slower (image-plane forward solve ~0.3 s/call at cluster scale; multi-plane tracer).
+  This is where the solved-centre dimensionality win compounds (−2 params/source) and
+  where the defaults matter most. Constraint: pin cosmology in every solver-chained
+  gradient cell (free cosmology cannot cross the custom_jvp boundary — Tracer aux).
+  This tier ABSORBS `draft/research/autolens_profiling/cluster_gradient_search_benchmark.md`.
+
+**Execution environment — A100s on RAL (the human's call: the profiling runs that guide
+all of this run on GPU):**
+- Drive with the project's `hpc/sync` CLI: `hpc/sync push-submit gpu <script>` (SLURM
+  `gpu`-partition array, JAX auto-uses the A100), then `hpc/sync jobs` / `tail gpu` /
+  `pull`. Venv: `/mnt/ral/jnightin/PyAuto` via its `activate.sh` (`PYAUTO_HPC_BASE`).
+- **Phase A must be MERGED and synced to RAL first** — refresh the mirrored library
+  mains with `HPCPullPyAuto` before submitting anything.
+- **GOTCHA (recorded)**: sbatch does NOT inherit `JAX_ENABLE_X64` — set x64 explicitly
+  inside the scripts/sbatch or everything runs float32 silently, poisoning the truth
+  anchors and FD checks. `/mnt/ral` is NFS-slow — submit detached, don't babysit.
+- `hpc/sync pull` the result JSONs back into `results/searches/**` so the
+  information-building convention (committed JSONs + notes synthesis) holds; record
+  device blocks (the JSONs carry `device.backend`) so CPU-laptop vs A100 rows are
+  distinguishable. CPU spot-checks on the laptop are fine for smoke, not for the
+  committed evidence.
 
 1. Source-plane tensor-solved cells (Nautilus + Prodigy `source_plane_solved` — fit
    dispatch already exists) vs the free-centre TENSOR variant (new, phase A.2) vs the

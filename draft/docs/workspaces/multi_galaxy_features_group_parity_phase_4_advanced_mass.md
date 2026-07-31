@@ -7,12 +7,34 @@ Repos:
 Difficulty: large
 Autonomy: supervised
 Priority: normal
-Status: draft
+Status: SPLIT into 4a / 4b / 4c (2026-07-31, human-confirmed). 4a NOT STARTED and is next.
 Parent: draft/docs/workspaces/multi_galaxy_features_group_parity.md
-Blocked-by: phase 1
+Blocked-by: phase 1 (done), phase 3 (done — `advanced/` exists, PR#429)
 
 Phase 4 of 4 — closes the arc. See the parent for the original request, scope decisions
 and the authoring rules that apply to every script.
+
+## Split into 4a / 4b / 4c (2026-07-31)
+
+Measured at implementation time, phase 4 is ~5174 lines of Python across 15 scripts — larger
+than all of phase 2 was, and phase 2 was itself split into 2a/2b/2c for that reason. DSPL and
+`mass_stellar_dark` each carry a full six-script set including a `slam.py` (717 / 576 lines)
+and a `chaining.py`, the two heaviest script types in the arc.
+
+Split one folder per issue/PR, each at or below phase 2c's shipped size:
+
+- **Phase 4a — `double_source_plane_lens`** (~2003 lines, 6 `.py` + README). Leads, because the
+  prompt's regime motivation says it is the most genuinely regime-specific point in the phase.
+- **Phase 4b — `mass_stellar_dark`** (~2010 lines, 6 `.py` + README).
+- **Phase 4c — `subhalo`** (~1161 lines, 2 `.py` + 2 READMEs). Detection only, no sensitivity
+  mapping — the same boundary group draws.
+
+The **arc-closing checks** at the bottom of this prompt run at the end of **4c**, not each
+sub-phase.
+
+Terminology verified 2026-07-31 against `imaging/features/advanced/double_source_plane_lens`:
+it says "double source-plane lens (DSPL)", keeps the morphology description "appear as two
+distinct Einstein rings", and no retired names survive anywhere in either sibling.
 
 ## Deliverables
 

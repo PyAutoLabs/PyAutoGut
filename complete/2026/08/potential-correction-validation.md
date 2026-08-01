@@ -3,8 +3,9 @@ bug: the LM damping form was the whole story), fixed the flaky smoke entry,
 implemented the author's evidence-sampled acceptance test (passes end-to-end),
 and delivered the algorithm review + code improvement report.
 
-- issue: https://github.com/PyAutoLabs/PyAutoLens/issues/672 (left open for the
-  upstream author's review of the report; all task work done)
+- issue: https://github.com/PyAutoLabs/PyAutoLens/issues/672 (CLOSED completed
+  2026-08-01 on wrap-up; comments stay open for the upstream author's review of
+  the report — permalink issuecomment-5144563213)
 - prs (all MERGED 2026-07-31/08-01): PyAutoLens#676 (`c8acdd3e9`, damping=
   identity|marquardt on both iterative engines — imaging default restored to
   identity, uv keeps marquardt; rejected-step-below-tol returns converged +
@@ -44,6 +45,24 @@ and delivered the algorithm review + code improvement report.
   from a drifted worktree need the file edit re-applied on main's version.
 - shipped under human-acked Heart RED (release-integrate commit_shas
   dispatcher regression from ci-dedupe #131 — user chose to leave it).
+
+## Wrap-up follow-up (2026-08-01)
+
+- The #676 identity default regressed the smoke script it had just been fixed
+  by #238: subhalo_recovery.py warm-starts at the one-shot optimum, where
+  identity's near-GN trial steps are rejected (the capped 10-rejection storm,
+  each a full Jacobian rebuild) — main run 30669142115 timed out 300s on both
+  legs at identical results. Fixed by pinning damping="marquardt" (wst#244,
+  merged `ae3598a`): CI legs back to 171.7s/170.4s. Attribution measured
+  locally under the smoke profile: marquardt 310-321s local vs identity 663s
+  local with the engine's own "10 consecutive rejected LM steps" warning.
+- PyAutoLens#666 (iterative underperforms one-shot on the workspace example)
+  verified fixed by #676 on the exact reproducer: iterative peak now (1.45,
+  0.15) = one-shot's, evidence 9.0625e3 vs the collapsed 4.2083e3 on
+  2026.7.23.1. Closed completed.
+- Also closed: wst#196 (per-script timeout shipped in #197; never closed).
+- Damping-mode coverage is now deliberate: smoke pins marquardt warm-start;
+  the workspace example exercises the identity cold-start default.
 
 ## Original prompt
 

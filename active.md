@@ -1,5 +1,14 @@
 # Active Tasks
 
+## autogalaxy-assistant-birth
+- issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/188 (epic)
+- status: Phase 0 IN PROGRESS 2026-08-01 — repo born public+empty (github.com/PyAutoLabs/autogalaxy_assistant), local checkout cloned, repos.yaml registered + synced; next = Phase 1 frame+tooling PR. Data-sourcing checkpoint OPEN on the epic (gates Phase 2 — human names the real galaxy cutout).
+- prompt: active/autogalaxy_assistant_birth.md
+- plan: 7 phases (0 epic/repo → 1 frame+tooling+stack → 2 dataset+README+signposts → 3 wiki/core → 4a/4b ag_* skills → 5 wiki/literature → 6 benchmarks+newborn gate); hand-built mirror of autolens_assistant (clone tool NOT run — partition 56/89/301/0 @ b9c10a9 used as checklist); PUBLIC at birth so every merged PR must be residue-free; Opus subagents execute.
+- claim-note: assistant repo is new (no contention); external signpost PRs in Phase 2 touch autogalaxy_workspace + PyAutoGalaxy + HowToGalaxy llms.txt only (small, no scope overlap with active claims).
+- repos:
+  - autogalaxy_assistant: main (in-place feature branches; not worktree-managed)
+
 ## point-source-defaults-campaign
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/678
 - session: claude --resume ee42120d-c794-4565-804e-d7576d50c37c

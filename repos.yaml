@@ -39,7 +39,7 @@ categories:
     role: "Narrative teaching tutorials."
   assistant:
     collapse: true
-    label: "autolens_assistant / euclid_assistant"
+    label: "autocti / autofit / autogalaxy / autolens / euclid _assistant"
     role: "Science-assistant workspaces (see lensing pointer below)."
   pipeline: {}
   project: {}
@@ -173,6 +173,9 @@ repos:
     category: assistant
   autofit_assistant:
     github: PyAutoLabs/autofit_assistant
+    category: assistant
+  autogalaxy_assistant:
+    github: PyAutoLabs/autogalaxy_assistant
     category: assistant
   autolens_assistant:
     github: PyAutoLabs/autolens_assistant

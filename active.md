@@ -1,14 +1,5 @@
 # Active Tasks
 
-## autogalaxy-assistant-birth
-- issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/188 (epic)
-- status: Phases 0-4a MERGED 2026-08-01 (assistant PRs #1 frame / #2 wiki-core / #5 4a-skills (reopen of #3 — GitHub closed it when its stacked base branch was deleted; retarget stacked PRs to main BEFORE deleting the base) / #4 dataset+front-door; 4 signpost PRs merged: autogalaxy_workspace#200, PyAutoGalaxy#545, HowToGalaxy#54, .github#7). Dataset = COSJ100020+015344, 4-band JWST, spec-z 0.3422, reduced from the cached COSMOS-Web exposures. Phase 4b (8 feature skills) authoring via Opus subagents; then Phase 5 literature wiki (also repoints the workspace llms.txt INTERIM science block) + Phase 6 benchmarks/hpc/newborn-gate. Upstream bugs found + logged on epic: PyAutoReduce tier-1 ePSF star-finder broken on crowded JWST fields; af.LBFGS JAX iteration-zero silent success; workspace kwarg typos (auto_correlations_settings, n_live).
-- prompt: active/autogalaxy_assistant_birth.md
-- plan: 7 phases (0 epic/repo → 1 frame+tooling+stack → 2 dataset+README+signposts → 3 wiki/core → 4a/4b ag_* skills → 5 wiki/literature → 6 benchmarks+newborn gate); hand-built mirror of autolens_assistant (clone tool NOT run — partition 56/89/301/0 @ b9c10a9 used as checklist); PUBLIC at birth so every merged PR must be residue-free; Opus subagents execute.
-- claim-note: assistant repo is new (no contention); external signpost PRs in Phase 2 touch autogalaxy_workspace + PyAutoGalaxy + HowToGalaxy llms.txt only (small, no scope overlap with active claims).
-- repos:
-  - autogalaxy_assistant: main (in-place feature branches; not worktree-managed)
-
 ## point-source-defaults-campaign
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/678
 - session: claude --resume ee42120d-c794-4565-804e-d7576d50c37c
@@ -35,3 +26,12 @@
 - repos:
   - autolens_workspace: feature/interferometer-start-here-batch-size
   - PyAutoHeart: feature/release-run-repo-slug-firewall (YELLOW tenant-firewall, not the RED claim)
+
+## nautilus-1core-serial-pool (corrective)
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1442
+- status: PR OPEN 2026-08-01 evening (PyAutoFit#1443, head 75dccb92a) — awaiting CI; merge + Stage 2/3 validation dispatch to follow in-session, nightly releases on green (standing grant)
+- corrective-red: Heart RED reason "release validation FAILED (stage integrate)" — hierarchical.py TIMEOUT 1800s (was 76s) in runs 30672739606 + 30686136529; authorization = human session instruction 2026-08-01 quoted verbatim on #1442 ("do a release, fine if any blockers need sorting…"), given at launch for any blockers rather than post-surfacing (noted on issue + log row); cause = e6279c53f (#1439) always builds fork Pool(1) for Nautilus, bypassing nautilus's pool∈[None,1]→serial guard, forked worker deadlocks in XLA compile under release-profile JAX; fix = pool=None at number_of_cores=1, fork pool kept for >1
+- evidence: regression test red-on-main/green-patched; test_autofit/non_linear 411 passed; py-spy stacks (main in pool.map wait, worker in backend_compile_and_load) on #1442; control-vs-patched hierarchical.py release-env run in flight
+- not-claimed: delaunay.py intermittent TIMEOUT (pre-existing, crosses SHA windows) stays open
+- repos:
+  - PyAutoFit: feature/nautilus-1core-serial-pool (canonical checkout on branch; restore main after merge)

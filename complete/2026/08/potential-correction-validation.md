@@ -1,3 +1,52 @@
+Closed the potential-correction JAX-vs-Python discrepancy (no implementation
+bug: the LM damping form was the whole story), fixed the flaky smoke entry,
+implemented the author's evidence-sampled acceptance test (passes end-to-end),
+and delivered the algorithm review + code improvement report.
+
+- issue: https://github.com/PyAutoLabs/PyAutoLens/issues/672 (left open for the
+  upstream author's review of the report; all task work done)
+- prs (all MERGED 2026-07-31/08-01): PyAutoLens#676 (`c8acdd3e9`, damping=
+  identity|marquardt on both iterative engines — imaging default restored to
+  identity, uv keeps marquardt; rejected-step-below-tol returns converged +
+  max_consecutive_rejections cap, ending a ~47-min shared rejection storm);
+  autolens_workspace_test#238 (`b4085a0`, subhalo_recovery.py over_sample 4→2
+  + n_iter 5→3: CI 232s→170s vs the 300s cap, metrics improved 0.78→0.82);
+  autolens_workspace_test#243 (subhalo_recovery_evidence.py acceptance test +
+  no_run SLOW exclusion, upstream-gated on #676).
+- phase 2 verdict (side-by-side on the author's 200x200 tar demo, identical
+  masked_imaging): one-shot parity at machine precision (evidence diff 6e-7,
+  corr 1.000000); iterative trajectories agree to 4 sig figs once damping
+  matches (mu*I). The reported "same params, different signal" = Marquardt
+  mu*diag(H) under-converging at fixed n_iter (corr 0.024 vs 0.743 cold at
+  c=2000/s=4). Author's stored demo-2 params are evidence-suboptimal: the
+  CONVERGED solution there scores corr 0.18 in both codes.
+- phase 3 acceptance (120x120 mock): one-shot 13x12 evidence grid (fixed-
+  curvature fast path) max 9350.60 @ c=1000/s=1; iterative 5x5 converged-
+  Laplace grid max 9148.53 @ c=1e5/s=0.63; BOTH localize the subhalo at their
+  evidence maxima (0.36"/0.16"). KEY FINDING: within the Matern family
+  evidence-max ≠ map-fidelity-max (+190 nats = +401 prior-misfit relief +102
+  chi2 −313 Occam; the smooth long-scale prior misfits a compact NFW cusp) —
+  map corr 0.13 at the max vs 0.82 on the ridge; a morphology-matched prior
+  family is the recommended follow-up. Acceptance = localization + ridge
+  reference, documented in the script.
+- phase 4: review report posted to #672 (verification tables, 4 algorithm
+  findings incl. a 2-line stall-guard recommendation for the author's own
+  code, ranked 9-item improvement list: apply_over_sampling(4,4) hardcode,
+  log_evidence's extra Jacobian rebuild, fast-path Analysis wiring, KNN
+  asarray hot loop in autoarray, dense PSF product, analysis.py untested,
+  Analysis instance-contract inconsistency, start_here prose-only snippet).
+- artifacts: ~/Code/PyAutoLabs/potential_correction_validation_artifacts/
+  (evidence-surface npz, side-by-side results, run logs, the report).
+- gotchas hit: two OOM kills on the 1-core/15GB box (dense per-trial
+  allocations; per-point process isolation is the pattern), detached chains
+  die with WSL teardown (copy artifacts durably + re-arm), FitDpsiSrcImaging
+  .best_fit_dpsi is lazy (trigger log_evidence first), branch-off-main ships
+  from a drifted worktree need the file edit re-applied on main's version.
+- shipped under human-acked Heart RED (release-integrate commit_shas
+  dispatcher regression from ci-dedupe #131 — user chose to leave it).
+
+## Original prompt
+
 # Potential correction: end-to-end evidence-sampled validation + JAX-vs-Python discrepancy hunt + smoke timeout fix
 
 Type: bug

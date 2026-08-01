@@ -1,20 +1,10 @@
 # Active Tasks
 
-## potential-correction-validation
-- issue: https://github.com/PyAutoLabs/PyAutoLens/issues/672
-- session: claude --resume 0100b7de-da01-4c18-a8b0-9d0080d5e07f
-- status: awaiting-merge (ALL FOUR PHASES DELIVERED 2026-07-31; end-to-end acceptance run PASSED. Merge queue: PyAutoLens#676 first, then wst#243; wst#238 independent. Phase 4 review report on #672. Post-merge: completion record + worktree cleanup + close #672)
-- worktree: ~/Code/PyAutoLabs-wt/potential-correction-validation
-- phases: 1 (wst smoke timeout) → 2 (JAX-vs-Python parity hunt vs for_qiuhan tar) → 3 (evidence-sampled recovery test + analysis fast path) → 4 (algorithm review report)
-- note: Brain sized too-large (13); content-based 4-phase split recorded in the prompt. wst has feature/point-source-chi-squared-variants checked out in another worktree (empty repos: claim) — files disjoint, pre-merge origin/main before each PR
-- repos:
-  - PyAutoLens: feature/potential-correction-validation
-  - autolens_workspace_test: feature/potential-correction-validation
-
 ## point-source-defaults-campaign
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/678
 - session: claude --resume ee42120d-c794-4565-804e-d7576d50c37c
-- status: library-dev (phase A MERGED #679; phase B harness PUSHED autolens_profiling ef7da54 — truth anchors + tensor/discriminator/near-caustic cells + cluster factor-graph searches; 25 A100 jobs submitting on RAL via detached submit_all_678_phase_b.sh; awaiting results pull → notes synthesis)
+- status: library-dev (phase A MERGED #679; phase B RUNNING on RAL — CHECKPOINT 2026-08-01 00:xx: 22/25 result JSONs written on the RAL clone branch, remaining cluster long-wall cells overnight; TWO cells TIMED OUT at 2h walls: nautilus image_plane_solved + image_plane_repeat_solved on simple_extra — the spurious-position arms; itself an exp-3 robustness signal, but resubmit both with --time=8:00:00 for posteriors)
+- resume-runbook: (1) squeue/sacct check remaining cluster cells; (2) resubmit the 2 simple_extra TIMEOUT cells with 8h walls (edit the two submit files on the RAL clone or locally+push+pull); (3) VERIFY the wall=1s free cells (nautilus image_plane + source_plane on simple) were not silent PyAutoFit resumes of pre-logsumexp state (identifiers ignore data) — if resumed, wipe their search output on RAL and re-run, exp-2 depends on it; (4) pull result JSONs to laptop (RAL CANNOT push — rsync/scp from laptop side; RAL clone branch = feature/point-source-defaults-campaign at ef7da54; JSONs named hpc_hpc_a100_fp64.json, path quirk known); (5) commit JSONs + write results/notes/point_source_defaults_campaign.md (Issue/Branch/Status/TL;DR skeleton per repo convention); (6) phase C default swap keyed on exp-3 discriminator verdict — MUST pre-merge origin/main (#680/#683 merged into PyAutoLens since phase A); (7) phase D + workspace cluster/simulator.py:482 plane_redshift fix (coordinate #436). Validated: 4 early cells reproduce truth-anchor literals exactly (7.20/7.74/−33788.4/+0.60), backend=gpu, posterior_stats populated; zero job failures post shadow-package fix (RAL root searches/+simulators/ moved to _legacy_root_shadow_backup/)
 - discovery: PointSolver.solve defaults plane_redshift to the FINAL plane — both cluster simulators omitted it (z=1.0 source positions unphysical; truth logL −4.2e6 → +26.1 after fix). Profiling sim fixed on branch; workspace cluster/simulator.py:482 STILL AFFECTED — flagged on autolens_workspace#436 (its convergence run is tainted), workspace fix folds into phase D. RAL profiling clone rebuilt as real https clone (was a dead rsync'd worktree pointer; RAL cannot push — pull results from laptop side)
 - library-pr: https://github.com/PyAutoLabs/PyAutoLens/pull/679 (phase A; MERGED 86dea4107; was shipped under human-authorized Heart-RED override — RED was the unrelated nightly release-validation integrate failure)
 - worktree: ~/Code/PyAutoLabs-wt/point-source-defaults-campaign

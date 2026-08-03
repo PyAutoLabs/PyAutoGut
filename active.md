@@ -13,7 +13,9 @@
 - claim-note: `worktree_check_conflict` fired TWICE with different holders. First `group-data-preparation-readme` (#454) — CLOSED 2026-08-03T17:33Z, claim discharged. Then `missing-auto-simulate-guards` (#455, sibling triage item) claimed the repo in the interval and is LIVE (16 guards, 18 files, uncommitted). Proceeded as a documented concurrent claim on #455's own precedent. File scopes strictly disjoint: this task is `features/advanced/potential_correction/` only; #455 is `guides/results/*`, `imaging/data_preparation/*`, `cluster/*`, `multi_dataset/*`, `interferometer/features/pixelization/*`, `no_run.yaml`. Shared surface = generated indices (`workspace_index.json`, `llms-full.txt`, `.script_sizes.json`, `notebooks/README.md`) — regenerate notebooks with `--only` scoping and leave the indices to whichever PR merges second. Pre-merge origin/main before the PR.
 - follow-up: all four potential-correction scripts emit `SyntaxWarning: invalid escape sequence` from LaTeX in non-raw docstrings (`\odot`, `\chi`, `\delta`, `\,`). Deliberately NOT bundled — unrelated to this failure and warrants a workspace-wide pass. Needs its own prompt.
 - note: Brain `feature` sized too-large (score 11) and proposed a 4-phase split — OVERRIDDEN. The score tracks prompt prose length; `repos_affected`=1 and the work is three docstring sections. Same override pattern as #455 and intra-family-dep-floors.
+- base: worktree branched from origin/main 047af5a0 (includes #456, the group-data-preparation-readme merge)
 - repos:
+  - autolens_workspace: feature/potential-correction-env-declaration
 
 ## intra-family-dep-floors
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/687

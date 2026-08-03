@@ -1,3 +1,125 @@
+# dep-floors-source-chain-ci
+
+**Issue:** PyAutoLabs/PyAutoNerves#146 · **Shipped:** 2026-08-03
+
+## What was wrong
+
+Every workspace smoke job died at the **install** step from 18:08Z on
+2026-08-03, when the six intra-family dep-floor PRs merged (PyAutoLens#687):
+
+```
+ERROR: Cannot install autofit==1.0.dev0 and autonerves 1.0.dev0 ...
+    autofit 1.0.dev0 depends on autonerves>=2026.7.29.2
+ERROR: ResolutionImpossible
+```
+
+## Root cause — not the floors
+
+`setup.py:4` in all six libraries read
+`version = os.environ.get("VERSION", "1.0.dev0")`. `1.0.dev0` sorts **below
+every date release**, so any source build advertised itself as older than a 2022
+wheel. Harmless only while nothing in the family constrained a sibling; fatal the
+moment the `>=2026.7.29.2` floors landed.
+
+**The defect was long-latent, not fallout.** `autolens_workspace_test`,
+`autogalaxy_workspace_test` and `autocti_workspace_test` each already carried
+`pip install --force-reinstall --no-deps ./PyAutoNerves`, commented *"the
+`[optional]` re-resolution above can upgrade autonerves to the stale PyPI
+release"* — the same bug in its **silent** form, patched per repo. The floors
+converted silent into loud, everywhere at once. That is why it read as a cascade
+from one dependency change.
+
+Three version mechanisms coexisted, mutually disagreeing:
+
+| Mechanism | Value on main | Read by |
+|---|---|---|
+| `setup.py` `VERSION` fallback | `1.0.dev0` | pip / resolution |
+| `<pkg>/__init__.py` `__version__` (sed-stamped at release) | `2026.7.23.1` | `autonerves.check_version()` |
+| `[tool.setuptools_scm]` | inert — `setup.py` passes explicit `version=` | nothing |
+
+## The fix
+
+`setup.py:4` → `os.environ.get("VERSION", "9999.0.0.dev0")` in six libraries.
+Sorts above every date release (satisfies present **and future** floors), keeps
+`.dev` so nothing claims the checkout is a release, and is invisible to the
+workspace handshake (which reads `__version__`, not pip metadata).
+
+Rejected: exporting `VERSION` in `PyAutoHeart/.github/workflows/smoke-tests.yml`,
+the original prompt's hypothesis. It is one line, but it fixes **one of five**
+source-install surfaces:
+
+| Surface | Before | Fixed by stamp | Fixed by CI `VERSION:` |
+|---|---|---|---|
+| 10 workspace smoke epilogues | RED | yes | yes |
+| `PyAutoHands/.github/workflows/python_matrix.yml` | latent red | yes | no |
+| `autocti_assistant/.github/workflows/wiki-currency.yml` | latent red | yes | no |
+| `autocti_assistant/skills/ac_setup_environment.md:96` | broken | yes | no |
+| `PyAutoHeart/.github/workflows/lib-tests.yml` | green, silently installing **PyPI** autonerves over source | yes | no |
+
+## PRs (13, all merged 2026-08-03)
+
+- **Stamp:** PyAutoNerves#147, PyAutoFit#1447, PyAutoArray#433, PyAutoGalaxy#548, PyAutoLens#689, PyAutoCTI#105
+- **Companions:** PyAutoHands#222 (refuse to build on empty `VERSION`), PyAutoHeart#135 (check-B example version)
+- **Unblocked and merged behind it:** autofit_workspace#130, HowToFit#42, autolens_workspace#460, HowToLens#65, autolens_workspace#461
+- **Closed unmerged:** autolens_workspace_test#246 — the pre-merge verification rig
+
+## Evidence
+
+Local control → treatment before pushing: `pip install ./PyAutoNerves ./PyAutoFit`
+on main reproduced the exact `ResolutionImpossible`; the same command against the
+branches with **no `VERSION` set** resolved, every package from source at
+`9999.0.0.dev0`, no family wheels from PyPI. Confirmed on the autolens (5) and
+autocti (4) chains.
+
+Pre-merge CI, autolens_workspace_test#246 run 30851790560, both legs green, with
+the provenance assertion printing `9999.0.0.dev0` for all five packages.
+
+**The decisive result** — autofit_workspace#130, three attempts on the *same
+commit*, nothing in the PR ever changing:
+
+| attempt | time | result |
+|---|---|---|
+| 1 | 17:30Z | success — pre-floors |
+| 2 | 20:07Z | `ResolutionImpossible` — post-floors |
+| 3 | 21:3xZ | success — post-stamp-fix |
+
+All five previously-blocked PRs returned green with no change of their own.
+
+## Traps recorded
+
+- **The prompt's proposed provenance assertion was wrong.** It asked to assert
+  `autofit.__file__` resolves under the checkout. Smoke installs non-editable and
+  sets `PYTHONPATH` only to `PyAutoHands/autohands`, so every family import
+  resolves under `site-packages` either way — the check would pass whether the
+  package came from source or PyPI. The discriminator is the **version**.
+- **`gh --json` field mismatches fail silently in effect.** Three times this
+  session (`jobs` on `run view`, `state` on `pr checks`, `headRefOid` on
+  `pr view`) a nonexistent field made a command error into a retry branch: a
+  monitor polled forever without emitting, a checks query reported "no checks" on
+  passing PRs, and a re-run dispatch sent an empty `head_sha` filter and re-ran
+  whichever run was newest — including one unrelated `main` run. Validate the
+  field list before arming anything that polls.
+- **`worktree_check_conflict` was wrong in both directions again.** It flagged
+  four conflicts (PyAutoFit ×2, PyAutoLens, PyAutoHeart), all stale — those repos
+  had no open PRs and Heart#132 merged 2026-07-31 — while missing a live local
+  branch in a worktree.
+- **Brain `bug` sized this `too-large (28)` → split.** Overridden: 11 repos
+  contributed +20 and the change is one line per library.
+
+## Follow-ups (not done here)
+
+- Retire the three `--force-reinstall --no-deps ./PyAutoNerves` workarounds and
+  their now-wrong comments (they blame `setuptools_scm`, which produces nothing).
+- Decide the fate of the inert `[tool.setuptools_scm]` blocks.
+- Manually dispatch `PyAutoHands` Python Version Matrix and `autocti_assistant`
+  wiki-currency to confirm they recovered — both check out libraries at their
+  default branch, so neither could be proven pre-merge.
+- The four `pending-release` workspace PRs were merged ahead of their gate on
+  explicit human instruction; workspace `main` now calls library API that is on
+  library `main` but not yet on PyPI.
+
+## Original prompt
+
 # Intra-family dep floors break every workspace's source-chain smoke CI
 
 Type: bug

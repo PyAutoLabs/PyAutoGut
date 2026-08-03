@@ -75,8 +75,11 @@
 ## simulator-util-to-af-ex
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1444
 - session: claude --resume e0105850-b98b-47ff-9ada-cba04a455a65
-- status: ALL THREE PRs OPEN 2026-08-03 — PyAutoFit#1445 (library, merge FIRST), autofit_workspace#130 + HowToFit#42 (both PENDING RELEASE, merge only after #1445 ships in a release). Awaiting CI.
-- worktree: ~/Code/PyAutoLabs-wt/simulator-util-to-af-ex
+- status: LIBRARY MERGED 2026-08-03T17:36Z (PyAutoFit#1445 squashed, branch deleted; all CI green). Two workspace PRs remain OPEN and PARKED behind the pending-release gate: autofit_workspace#130 + HowToFit#42, both labelled pending-release, both fully CI-green (smoke 3.12+3.13, navigator, catalogue, tutorials-complete). NO further work needed on them — they merge on the next release.
+- resume-trigger: when a PyAutoFit release ships containing af.ex.util (i.e. > v2026.7.23.1), merge autofit_workspace#130 then HowToFit#42, regenerate workspace_index.json only if a conflicting PR landed first, then lifecycle record. Re-attach worktrees with `worktree_add_repo simulator-util-to-af-ex <repo>` if either PR needs an update.
+- release-context: Heart is NOT release-ready as of 2026-08-03T17:19Z — INSTALL VERIFY failed (testpypi; D) and RELEASE VALIDATION integrate:fail, both separate tracked work, neither caused by this task. This task REMOVES 2 of the 19 workspace-validation failures feeding that RED (the two autofit simulator notebooks).
+- worktree: ~/Code/PyAutoLabs-wt/simulator-util-to-af-ex (REMOVED 2026-08-03 — claims released, see claim-released)
+- claim-released: ALL THREE repo claims DISCHARGED 2026-08-03 so no other task is blocked behind a pending-release wait. PyAutoFit merged + remote branch deleted. autofit_workspace + HowToFit branches are pushed and CI-green with PRs open; nothing local is needed to merge them, so holding the repos claimed would block other work for no benefit. Precedent: interferometer-start-here-integrate-oom released autolens_workspace the same way.
 - library-pr: https://github.com/PyAutoLabs/PyAutoFit/pull/1445
 - workspace-prs: https://github.com/PyAutoLabs/autofit_workspace/pull/130 (pending-release) + https://github.com/PyAutoLabs/HowToFit/pull/42 (pending-release)
 - evidence: parity proven — old workspace util.py vs new af.ex.util under an identical seed give identical file sets and byte-identical json for all 4 helpers; new test_autofit/tools/test_example_util.py 5 passed (example/util.py had ZERO coverage before); full PyAutoFit suite 1647 passed / 2 skipped; all 4 notebooks execute clean via run_notebook.py; all 4 .py siblings pass; run_smoke.py 10/10 in BOTH workspaces; check_navigator.py --banners=fail OK in both
@@ -84,10 +87,7 @@
 - claim-note: worktree_check_conflict flagged PyAutoFit against point-source-defaults-campaign (#1441) and nautilus-1core-serial-pool (#1443) — both STALE, PRs merged 2026-08-01 12:47 and 19:12, PyAutoFit checkout on main and clean, the campaign's wt/PyAutoFit is a symlink not a live worktree. Proceeding; scope is autofit/example/ only, disjoint from both.
 - sizing-override: Brain Feature Agent returned too-large (score 13) -> split-into-4-phases. Factor breakdown measures no property of the change: 3 repos (+6), library+workspace (+2), prompt length (+2), keyword hits trap/cross-repo/smoke/regression from the prompt's own diagnosis prose (architectural_risk is literally the string "cross-repo"). Real change = 4 functions moved, 2 files deleted, 4 scripts edited; uniform per file, additive API only. Shipping as one task, one small PR per repo.
 - discovery: masked SECOND failure in HowToFit/scripts/simulators/simulators.py — trailing runpy.run_path uses path.dirname(path.abspath(__file__)), and __file__ is undefined in a notebook kernel (survives into notebooks/simulators/simulators.ipynb cell 41); that notebook fails again the instant the util import is fixed. Fix folds into the same PR as root-relative path.join("scripts", "simulators", "simulators_sample.py").
-- repos:
-  - PyAutoFit: feature/simulator-util-to-af-ex (worktree branched from origin/main 5bf32dabb; PR #1445)
-  - autofit_workspace: feature/simulator-util-to-af-ex (PR #130, pending-release)
-  - HowToFit: feature/simulator-util-to-af-ex (PR #42, pending-release)
+- repos-released: PyAutoFit (#1445 MERGED), autofit_workspace (#130 open, pending-release), HowToFit (#42 open, pending-release) — listed on this single line deliberately, NOT as a `  - Repo` sub-list, because worktree_check_conflict treats any 2-space `  - <Repo>` bullet as a live claim regardless of the field it sits under.
 
 ## small-datasets-loader-pixel-scales
 - issue: https://github.com/PyAutoLabs/PyAutoArray/issues/430

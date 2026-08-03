@@ -94,25 +94,45 @@ Full list:
 - `scripts/imaging/features/advanced/subhalo/sensitivity/slam_source_parametric.py:868` → `dataset/imaging/dark_matter_subhalo` → `scripts/imaging/features/advanced/subhalo/simulator.py`
 - `scripts/imaging/features/advanced/subhalo/sensitivity/slam_source_pixelized.py:995` → same
 - `scripts/imaging/features/linear_light_profiles/likelihood_function.py:65` → `dataset/imaging/simple`
-- `scripts/imaging/features/pixelization/delaunay.py:932` and `:1041` → `dataset/imaging/simple`
+- `scripts/imaging/features/pixelization/delaunay.py:932` → `dataset/imaging/simple` (the second unguarded block at `:1041` resolves to the SAME path and runs later in the same linear script, so one guard at `:932` covers both — do not add two)
 - `scripts/interferometer/features/pixelization/many_visibilities_preparation.py:82` → `dataset/interferometer/simple` → `scripts/interferometer/simulator.py`
 - `scripts/multi_dataset/features/imaging_and_interferometer/modeling.py:103` → **smoke failure**
 - `HowToLens/scripts/chapter_4_pixelizations/tutorial_3_inversions.py:153` → **smoke failure**
 - `HowToLens/scripts/chapter_4_pixelizations/tutorial_5_borders.py:280` → `dataset/imaging/x2_lens_galaxies` → `scripts/simulator/lens_x2.py` (script is `no_run` for an unrelated mask reason; guard it anyway)
 
-## Dead dataset path — `gui/lens_light_centre.py`
+## Dead dataset path — `dataset/imaging/lens_sersic` (ZERO producers)
 
-`scripts/imaging/data_preparation/gui/lens_light_centre.py:33` points at
-`dataset/imaging/lens_sersic`. **Nothing writes that path.** The only
-`lens_sersic` simulator (`scripts/multi_dataset/simulator.py`) writes
-`dataset/multi_dataset/imaging/lens_sersic`. It does not fail smoke only because
-GUI scripts are `no_run`.
+No simulator in either repo writes `dataset/imaging/lens_sersic`. Three places
+reference it:
 
-Fix (human decision, 2026-08-03): **repoint** the script at
-`dataset/multi_dataset/imaging/lens_sersic` and guard it with
-`scripts/multi_dataset/simulator.py`. Update the surrounding docstring (L30
-names the old folder) and check the waveband file-name prefix — that dataset
-writes `g_data.fits`/`g_psf.fits`/`g_noise_map.fits`, not bare `data.fits`.
+- `scripts/imaging/data_preparation/gui/lens_light_centre.py:32` (+ docstring L30)
+- `scripts/guides/results/database/start_here.py:73` — loops over
+  `["simple", "lens_sersic", "simple__no_lens_light"]`, so this script needs
+  THREE datasets, one of which does not exist. Its `no_run` NEEDS_FIX marker
+  blames only `dataset/imaging/simple/data.fits` — that is the first failure,
+  not the whole story.
+- `scripts/guides/results/aggregator/queries.py:60` — **prose only**. The code
+  at L64 already queries `simple__no_lens_light`; the sentence naming
+  `lens_sersic` is stale. No functional dependency.
+
+Rejected: repointing at `dataset/multi_dataset/imaging/lens_sersic` (the only
+real `lens_sersic` dataset). It is multi-band with `g_data.fits`/`g_psf.fits`/
+`g_noise_map.fits` prefixes, so a plain `from_fits(data_path=dataset_path/"data.fits")`
+cannot load it.
+
+Fix (human decision, 2026-08-03) — **repoint at the existing `dataset/imaging/simple`**,
+which `scripts/imaging/simulator.py` builds with a Sersic bulge on the lens
+galaxy (L184), i.e. single-band imaging that genuinely has lens light:
+
+- `gui/lens_light_centre.py` → `dataset_name = "simple"`, guard with
+  `scripts/imaging/simulator.py`, update the L30 docstring folder reference.
+- `guides/results/database/start_here.py` → **drop** the dead `lens_sersic`
+  entry rather than duplicate `simple` twice (two identically-named database
+  entries would defeat the guide's own point). List becomes
+  `["simple", "simple__no_lens_light"]`; update the surrounding "3 dataset
+  names" prose to 2 and guard both names inside the loop.
+- `guides/results/aggregator/queries.py:60` → fix the stale prose to name
+  `simple__no_lens_light`, matching the code directly beneath it.
 
 ## Correction to the triage note
 

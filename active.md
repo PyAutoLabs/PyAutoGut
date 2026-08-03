@@ -2,7 +2,7 @@
 
 ## intra-family-dep-floors
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/687
-- status: library-dev — issue filed 2026-08-03, plan approved, worktree not yet created. Next: /start_library, then the six pyproject/verify_install edits.
+- status: library-dev — issue filed 2026-08-03, plan approved, worktree created off origin/main for all six repos. Next: the five pyproject floor edits + the PyAutoHeart check_d interpreter detail, then verify on python3.12 AND python3.13, then /ship_library.
 - worktree: ~/Code/PyAutoLabs-wt/intra-family-dep-floors
 - prompt: active/bug/health_fixes/intra_family_dependency_floors.md
 - scope: add `>=2026.7.29.2` floors to the CROSS-PACKAGE intra-family deps (base `dependencies` + `[jax]` extras) in PyAutoArray, PyAutoFit, PyAutoGalaxy, PyAutoLens, PyAutoCTI; PyAutoHeart `check_d` names its interpreter in the sidecar detail. PyAutoNerves inspected — NO CHANGE (only self-references).
@@ -11,7 +11,7 @@
 - control-test: floors added, python3.13, TestPyPI+PyPI -> autoarray/autofit/autogalaxy/autonerves all 2026.8.2.1 and `import autolens` OK; without floors, identical command -> autofit 2026.4.30.582 and raises. Run before the issue was filed.
 - do-not: floor the SELF-referential extras (`autolens[jax]` inside `autolens[optional]`, and siblings) — a self-reference is already version-locked and a floor makes a local `1.0.dev0` wheel build unsatisfiable.
 - timing: the floors only bite once new wheels are published. The RED verify_install leg does NOT clear until a release rehearsal republishes to TestPyPI and Check D re-runs against those wheels.
-- claim-note: worktree_check_conflict returned non-zero — PyAutoFit (point-source-defaults-campaign, nautilus-1core-serial-pool, simulator-util-to-af-ex), PyAutoLens (point-source-defaults-campaign), PyAutoHeart (interferometer-start-here-integrate-oom). Each claiming branch was diffed against origin/main: NONE touches pyproject.toml, and the PyAutoHeart branch's diff is empty (already merged). Proceeded as a documented concurrent claim on human approval, since this is a release-RED leg.
+- claim-note: worktree_check_conflict returned non-zero — PyAutoFit (point-source-defaults-campaign, nautilus-1core-serial-pool, simulator-util-to-af-ex), PyAutoLens (point-source-defaults-campaign), PyAutoHeart (interferometer-start-here-integrate-oom). Each claiming branch was diffed against origin/main: NONE touches pyproject.toml, and the PyAutoHeart branch's diff is empty (already merged). Proceeded as a documented concurrent claim on human approval, since this is a release-RED leg. SECOND FIRING at start_library: PyAutoArray became claimed by `small-datasets-loader-pixel-scales` (worktree ~/Code/PyAutoLabs-wt/small-datasets-loader-pixel-scales) in the interval between start_dev and start_library — that claim is LIVE (branch exists with an empty diff, i.e. another session just started), unlike the others which were stale/merged. File scopes are disjoint (dataset loader / pixel scales vs `pyproject.toml`); whichever PR merges second must rebase, not regenerate. Same pattern as missing-auto-simulate-guards: the manual scope check is the load-bearing one, not the guard.
 - note: Brain `bug` sized too-large (score 16) — OVERRIDDEN. The score tracks prompt prose length + repo count; the change is one line per dependency in six pyproject.toml files.
 - repos:
   - PyAutoArray: feature/intra-family-dep-floors

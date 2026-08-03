@@ -1,5 +1,22 @@
 # Active Tasks
 
+## dep-floors-source-chain-ci
+- issue: https://github.com/PyAutoLabs/PyAutoNerves/issues/146
+- session: claude --resume fea70a51-f60a-4444-8961-e1df3ddae4d8
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/dep-floors-source-chain-ci
+- prompt: active/dep_floors_break_source_chain_ci.md
+- priority: URGENT — main is broken; every workspace smoke job has died at the install step since 18:08Z 2026-08-03.
+- root-cause: NOT the floors, and NOT a CI problem. `setup.py:4` in all six libraries stamps `1.0.dev0` on a source build, which sorts BELOW every real release, so a source checkout advertises itself as older than a 2022 wheel. Fix = `9999.0.0.dev0` in the six `setup.py`. Do NOT export `VERSION` at the CI call sites (fixes 1 of 5 affected surfaces), and do NOT revert or loosen the floors — PyAutoHeart#134's python3.13 control table shows they are load-bearing on the published path.
+- prior-art: the defect is long-latent, not fallout. autolens_workspace_test, autogalaxy_workspace_test and autocti_workspace_test already carry `pip install --force-reinstall --no-deps ./PyAutoNerves` workarounds for the same bug in its silent form ("the [optional] re-resolution above can upgrade autonerves to the stale PyPI release"). The floors turned silent into loud, everywhere at once.
+- also-fixed-for-free: PyAutoHands python_matrix.yml (latent red), autocti_assistant wiki-currency.yml (latent red), autocti_assistant/skills/ac_setup_environment.md:96, and PyAutoHeart lib-tests.yml (green, but its per-repo install loop silently pulls PyPI autonerves 2026.7.29.2 over the source one — verified).
+- verification-plan: same branch name in the six libraries AND in a throwaway autolens_workspace_test draft PR — smoke-tests.yml checks out a matching branch in each cloned dependency, so the fix is proven end-to-end BEFORE anything merges. Green required on 3.12 AND 3.13, plus an assertion that autofit.__file__/autonerves.__file__ resolve under the checkout, not site-packages.
+- control: already banked — autofit_workspace#130 smoke, identical commit, 17:30Z success vs 20:07Z ResolutionImpossible. Do not repeat it.
+- claim-note: worktree_check_conflict flagged PyAutoFit (x2), PyAutoLens and PyAutoHeart. All four are STALE registry entries — PyAutoFit and PyAutoLens have NO open PRs, PyAutoHeart#132 merged 2026-07-31. Proceeded as unblocked; those entries need pruning.
+- note: Brain `bug` sized too-large (score 28) → OVERRIDDEN. 11 repos alone contribute +20, and the change is one line per library.
+- blocks: autofit_workspace#130, HowToFit#42, autolens_workspace#460, HowToLens#65, autolens_workspace#461, and the whole release drive.
+- repos:
+
 ## missing-auto-simulate-guards
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/455
 - status: awaiting-merge — PRs OPEN 2026-08-03: autolens_workspace#460 (e41b0fce+9dc5b0a2, pre-merged onto origin/main 193bb403 incl. #456) and HowToLens#65 (8a138e0+e7b664b), both `pending-release` verified. MERGE IS HUMAN — the authorization covered commit/push/PR-open only.

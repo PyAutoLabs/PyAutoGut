@@ -229,3 +229,78 @@ both matrix legs; treat that as load-bearing, not box-ticking.
 `pyauto-brain bug` returned `too-large (score 27) → split`. 11 repos alone
 contribute +20. Given finding 2 (one line, one file), that split is not
 warranted — override it and record the override, per the established pattern.
+
+---
+
+# ADDENDUM 2 (session fea70a51, 2026-08-03) — the fix locus MOVES to the libraries
+
+Re-run of `pyauto-brain bug` scored `too-large (28)`; overridden again, on the
+same basis.
+
+## The prompt's fix hypothesis is treating a symptom
+
+Both the prompt and addendum 1 assume the fix is to inject `VERSION` at the CI
+call site. **Do not do that.** The defect is not in CI — it is the *default* the
+libraries stamp on a source build:
+
+```python
+version = os.environ.get("VERSION", "1.0.dev0")   # setup.py:4, all six libraries
+```
+
+`1.0.dev0` sorts **below every real release**. A source checkout therefore
+advertises itself as older than a 2022 wheel. The floors are the first constraint
+that ever looked.
+
+## This is a long-latent defect, not fallout from the floors
+
+`autolens_workspace_test`, `autogalaxy_workspace_test` and `autocti_workspace_test`
+each already carry a hand-rolled workaround for it —
+`pip install --force-reinstall --no-deps ./PyAutoNerves` — commented *"The
+`[optional]` re-resolution above can upgrade autonerves to the stale PyPI release
+(… the local copy as 1.0.dev0 …)"*. Same bug, silently swapping a PyPI wheel over
+the source checkout, patched per-repo. (The comment blames `setuptools_scm`, which
+is not what produces the value.) The floors converted a **silent** misinstall into
+a **loud** one everywhere at once — which is why it reads as a cascade.
+
+## Three version mechanisms, mutually disagreeing
+
+| Mechanism | Value on `main` | Read by |
+|---|---|---|
+| `setup.py` `VERSION` fallback | `1.0.dev0` | pip / resolution |
+| `<pkg>/__init__.py` `__version__` (sed-stamped at release) | `2026.7.23.1` | `autonerves.check_version()` |
+| `[tool.setuptools_scm]` | inert (`setup.py` passes explicit `version=`) | nothing |
+
+**This corrects addendum 1, section 3.** The workspace handshake reads
+`__version__`, *not* pip metadata — so the choice of `VERSION` value has no
+handshake or staleness-warning consequence. That whole trade-off was a phantom.
+
+## The fix: `setup.py:4` → `"9999.0.0.dev0"`, six libraries
+
+Sorts above every date release (satisfies present *and* future floors); keeps
+`.dev` so nothing claims the checkout is a release; invisible to the handshake.
+
+Blast radius the CI-side patch would have missed — all fixed by the stamp,
+none by a `VERSION:` line in `smoke-tests.yml`:
+
+- `PyAutoHands/.github/workflows/python_matrix.yml` (one-pass `-e` install) — latent red
+- `autocti_assistant/.github/workflows/wiki-currency.yml` — latent red
+- `autocti_assistant/skills/ac_setup_environment.md:96` — documented setup, broken
+- `PyAutoHeart/.github/workflows/lib-tests.yml` — green, but its per-repo install
+  loop now silently pulls **PyPI** `autonerves 2026.7.29.2` over the source one
+- any future source-install site
+
+Verified locally: `pip install ./PyAutoNerves ./PyAutoFit` reproduces the exact
+`ResolutionImpossible`; the same command under `VERSION=9999.0.0.dev0` resolves
+and installs both from source with no family wheels from PyPI; `pip install
+./PyAutoFit` alone pulls `autonerves-2026.7.29.2` from PyPI, confirming the
+shadowing row.
+
+Companions in the same branch set: a `VERSION` unset/empty guard in
+`PyAutoHands/.github/workflows/release.yml` before `python3 -m build` (the
+fallback is unreachable there today, but 9999 escaping to PyPI would be a bad
+day), and the check-B example version in
+`PyAutoHeart/skills/verify_install/verify_install.md:41`.
+
+Follow-ups, not this task: retire the three `--force-reinstall --no-deps`
+workarounds and their now-wrong comments; decide the fate of the inert
+`[tool.setuptools_scm]` blocks.

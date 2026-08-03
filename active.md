@@ -35,3 +35,14 @@
 - not-claimed: delaunay.py intermittent TIMEOUT (pre-existing, crosses SHA windows) stays open
 - repos:
   - PyAutoFit: feature/nautilus-1core-serial-pool (canonical checkout on branch; restore main after merge)
+
+## simulator-util-to-af-ex
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1444
+- session: claude --resume e0105850-b98b-47ff-9ada-cba04a455a65
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/simulator-util-to-af-ex
+- prompt: active/simulator_notebook_util_import.md
+- claim-note: worktree_check_conflict flagged PyAutoFit against point-source-defaults-campaign (#1441) and nautilus-1core-serial-pool (#1443) — both STALE, PRs merged 2026-08-01 12:47 and 19:12, PyAutoFit checkout on main and clean, the campaign's wt/PyAutoFit is a symlink not a live worktree. Proceeding; scope is autofit/example/ only, disjoint from both.
+- sizing-override: Brain Feature Agent returned too-large (score 13) -> split-into-4-phases. Factor breakdown measures no property of the change: 3 repos (+6), library+workspace (+2), prompt length (+2), keyword hits trap/cross-repo/smoke/regression from the prompt's own diagnosis prose (architectural_risk is literally the string "cross-repo"). Real change = 4 functions moved, 2 files deleted, 4 scripts edited; uniform per file, additive API only. Shipping as one task, one small PR per repo.
+- discovery: masked SECOND failure in HowToFit/scripts/simulators/simulators.py — trailing runpy.run_path uses path.dirname(path.abspath(__file__)), and __file__ is undefined in a notebook kernel (survives into notebooks/simulators/simulators.ipynb cell 41); that notebook fails again the instant the util import is fixed. Fix folds into the same PR as root-relative path.join("scripts", "simulators", "simulators_sample.py").
+- repos:

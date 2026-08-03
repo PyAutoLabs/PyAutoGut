@@ -1,3 +1,119 @@
+# Potential-correction examples: declare ENV: full_datasets
+
+**Issue:** https://github.com/PyAutoLabs/autolens_workspace/issues/457
+**PR:** https://github.com/PyAutoLabs/autolens_workspace/pull/459 — MERGED 2026-08-03T18:05:53Z as `070b1d01`
+**Repo:** autolens_workspace
+
+## What shipped
+
+Three `__Env__ (Developer Only)` docstring sections declaring `ENV: full_datasets`:
+
+- `scripts/interferometer/features/advanced/potential_correction/start_here.py`
+- `scripts/interferometer/features/advanced/potential_correction/likelihood_function.py`
+- `scripts/imaging/features/advanced/potential_correction/likelihood_function.py`
+
+55 insertions, 0 deletions, docstring-only — no executable code touched.
+
+## The bug
+
+Four workspace-smoke failures (PyAutoHeart run 30790463134 — script *and* notebook of both
+interferometer examples), all raising
+`ValueError: The dpsi grid is too sparse. Try decreasing the dpsi_factor to smaller values.`
+
+The smoke profile sets `PYAUTO_SMALL_DATASETS=1`, which shrinks `Mask2D.circular` to 16x16 @
+`pixel_scales=0.6` (`PyAutoArray/autoarray/mask/mask_2d.py:363`). With `dpsi_factor=2` the dpsi
+mesh drops to 8x8; after the arc restriction and `cleaned_mask_from`, zero valid 2x2 interpolation
+boxes survive, so `get_itp_box_ctr` raises at
+`PyAutoLens/autolens/potential_correction/mesh.py:132`.
+
+## Root cause — a port gap, NOT #672 drift
+
+The triage note guessed this was drift from the recently-completed potential-correction port and
+its PyAutoLens#672 validation campaign. It was not. The opt-out already existed everywhere else:
+
+- `imaging/.../potential_correction/start_here.py` carries an `__Env__` section whose comment names
+  **this exact error**, and even says "profile_release.yaml carries the same reasoning for this
+  folder and its interferometer sibling".
+- `config/build/profile_release.yaml:58-61` has always lifted the cap for **both** folders by
+  directory pattern.
+- All 5 potential-correction scripts in `autolens_workspace_test` declare `ENV: full_datasets`.
+
+Only the *smoke* path — which relies on in-file declarations since the #187 Stage 2 migration from
+profile `unset:` lists to `__Env__` sections — was missing them. The declaration reached the imaging
+guide in `5c1ce1d9`, when it moved into `features/`; the interferometer siblings never got the
+equivalent.
+
+## Rejected fixes (both named in the original triage)
+
+- **Lower the example's `dpsi_factor`** — rejected. `factor=2` is the configuration certified by the
+  #672 validation campaign (dkappa correlation ~0.83, peak ~0.15" from truth, ~6 sigma), documented
+  in the script header. At a 16x16 capped grid even `factor=1` is scientifically meaningless.
+- **Loosen the library sparsity check** — rejected. It is correct at that resolution; relaxing it
+  would silently build a degenerate mesh instead of raising, against the workspace's
+  no-silent-guards convention, and the message is already actionable.
+
+## Scope decision
+
+The human scoped this to three scripts, not the two that were failing.
+`imaging/.../likelihood_function.py` was also missing the declaration and passes capped only because
+its `Grid2D.uniform`-derived arc mask happens to retain a valid interpolation box — incidental, and
+in direct contradiction with `profile_release.yaml`, which already lifts its cap. Declaring it keeps
+the smoke and release profiles in agreement rather than waiting for the coincidence to break.
+
+## Verification
+
+| Script | Before | After |
+|---|---|---|
+| `interferometer/.../start_here.py` | FAIL | PASS 59.5s |
+| `interferometer/.../likelihood_function.py` | FAIL | PASS 42.2s |
+| `imaging/.../likelihood_function.py` | PASS 4.5s (capped, incidental) | PASS 17.6s (uncapped) |
+
+All under the exact CI smoke profile, resolved through
+`autohands.env_config.build_env_for_script`, against the 300s cap. `validate_env_profiles.py`
+clean. CI on the PR: all 5 checks green (smoke 3.12, smoke 3.13, smoke/changes, catalogue
+staleness, navigator lint).
+
+## Findings worth keeping
+
+**1. `smoke_tests.txt` is the LOCAL suite's list; CI runs every script.** These four scripts appear
+in neither `smoke_tests.txt` nor `smoke_notebooks.txt`, so `/smoke_test` cannot exercise them — it
+would have gone green and proved nothing. PyAutoHeart's `workspace-validation.yml` builds its matrix
+from `PyAutoHands/autohands/script_matrix.py`, which walks every script in all 9 projects. Two
+different surfaces sharing the name "smoke". Reproduce CI smoke failures per-script via
+`build_env_for_script` (it accepts `.ipynb` and maps back to the `.py` source, which is how one
+declaration covers both legs of a script+notebook failure pair). Worth deciding whether these four
+belong in the smoke lists.
+
+**2. The feared generated-index collision did not exist.** The concurrent claim by
+`missing-auto-simulate-guards` (#455) looked like it shared `workspace_index.json`,
+`llms-full.txt`, `.script_sizes.json` and `notebooks/README.md`. A full `generate.py autolens` run
+on this branch produced **zero diff** on all of them — `__Env__` sections are stripped from
+generated notebooks *and* from the catalogue, and `.script_sizes.json` is not written by
+`generate.py` at all. No merge-order dependency existed.
+
+**3. Brain sizing again tracked prose, not scope.** `pyauto-brain feature` returned
+`too-large (score 11)` and proposed a 4-phase split for what was three docstring sections in one
+repo. Overridden, as with #455 and intra-family-dep-floors. `repos_affected` remains the useful
+signal.
+
+## Ship gate
+
+Heart gated **RED** at ship time. Shipped under the narrow corrective-PR exception, human-authorized
+in session, scoped to the RED reason
+`"workspace validation not passing (19 failed, 1 timeout, cloud#30790463134: ...)"` — the very run
+this task was filed from, whose four potential-correction failures this fixes. The other three RED
+reasons (`PyAutoFit: 1 commit(s) behind origin`, `install verification FAILED (testpypi; checks D)`,
+`release validation FAILED (stage integrate)`) are unrelated to this change. Merge was separately
+authorized by the human after all CI went green.
+
+## Follow-up (not bundled)
+
+All four potential-correction scripts emit `SyntaxWarning: invalid escape sequence` from LaTeX in
+non-raw docstrings (`\odot`, `\chi`, `\delta`, `\,`). Unrelated to this failure; warrants a
+workspace-wide pass rather than a partial fix. Needs its own prompt.
+
+## Original prompt
+
 # Potential-correction interferometer examples fail smoke: dpsi grid too sparse
 
 Type: bug

@@ -8,6 +8,7 @@
 - prompt: active/group_data_preparation_readme_only.md
 - note: smoke FileNotFoundError on dataset/group/simple/data.fits — group/data_preparation/start_here deleted, folder becomes a README pointing at imaging/data_preparation (interferometer/data_preparation precedent). Claimed autolens_workspace after releasing the stale interferometer-start-here-integrate-oom claim (see that entry's claim-released line).
 - repos:
+  - autolens_workspace: feature/group-data-preparation-readme
 
 ## point-source-defaults-campaign
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/678

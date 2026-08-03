@@ -1,5 +1,14 @@
 # Active Tasks
 
+## group-data-preparation-readme
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/454
+- session: claude --resume b9f80103-66c9-467e-bb70-52a080a5dd5b
+- status: workspace-dev
+- worktree: ~/Code/PyAutoLabs-wt/group-data-preparation-readme
+- prompt: active/group_data_preparation_readme_only.md
+- note: smoke FileNotFoundError on dataset/group/simple/data.fits — group/data_preparation/start_here deleted, folder becomes a README pointing at imaging/data_preparation (interferometer/data_preparation precedent). Claimed autolens_workspace after releasing the stale interferometer-start-here-integrate-oom claim (see that entry's claim-released line).
+- repos:
+
 ## point-source-defaults-campaign
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/678
 - session: claude --resume ee42120d-c794-4565-804e-d7576d50c37c
@@ -24,8 +33,8 @@
 - resume: when 30672739606 completes -> `gh run download 30672739606 -R PyAutoLabs/PyAutoHeart -n release-stage-report -D ~/.pyauto-heart/manual_validation_20260801` then `pyauto-brain release validate --ingest ~/.pyauto-heart/manual_validation_20260801 --commit-shas ~/.pyauto-heart/manual_validation_20260801/commit_shas.json` (artifacts dir already holds rehearsal.json + commit_shas.json + testpypi_version.txt). OPTIONAL: heart tick auto-ingests the completed run anyway, and the 05:36 UTC nightly independently re-validates and releases on green (NIGHTLY_RELEASES=true) with no further human step
 - corrective-red: Heart RED reason "release validation FAILED (stage integrate)" — authorization quoted+approved live in session 5b29e469 (recorded on #449); cause = MultiStartProdigy 48-start unbatched vmap OOM (~86 GB) introduced d5c9802d (2026-07-29, post-release); fix = batch_size=4, control-vs-patched verified under release-profile env
 - repos:
-  - autolens_workspace: feature/interferometer-start-here-batch-size
   - PyAutoHeart: feature/release-run-repo-slug-firewall (YELLOW tenant-firewall, not the RED claim)
+- claim-released: autolens_workspace claim DISCHARGED 2026-08-03 — PR #450 merged 2026-07-31T23:15Z, local branch deleted (stale origin/ ref only), checkout clean on main c4bd2796; only the PyAutoHeart release-validation leg remains. Released so group-data-preparation-readme could claim the repo.
 
 ## nautilus-1core-serial-pool (corrective)
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1442

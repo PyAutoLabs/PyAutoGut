@@ -16,6 +16,15 @@
 - note: Brain `bug` sized too-large (score 28) → OVERRIDDEN. 11 repos alone contribute +20, and the change is one line per library.
 - blocks: autofit_workspace#130, HowToFit#42, autolens_workspace#460, HowToLens#65, autolens_workspace#461, and the whole release drive.
 - repos:
+  - PyAutoNerves: feature/dep-floors-source-chain-ci
+  - PyAutoFit: feature/dep-floors-source-chain-ci
+  - PyAutoArray: feature/dep-floors-source-chain-ci
+  - PyAutoGalaxy: feature/dep-floors-source-chain-ci
+  - PyAutoLens: feature/dep-floors-source-chain-ci
+  - PyAutoCTI: feature/dep-floors-source-chain-ci
+  - PyAutoHands: feature/dep-floors-source-chain-ci
+  - PyAutoHeart: feature/dep-floors-source-chain-ci
+  - autolens_workspace_test: feature/dep-floors-source-chain-ci (throwaway verification PR only — closed, not merged)
 
 ## missing-auto-simulate-guards
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/455

@@ -7,7 +7,7 @@ Repos:
 Difficulty: small
 Autonomy: supervised
 Priority: low
-Status: draft
+Status: active
 
 Surfaced while fixing #455 (missing-auto-simulate-guards). Not folded into that
 fix because it is a behaviour change to scripts that currently PASS.

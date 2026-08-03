@@ -140,3 +140,92 @@ Open questions the investigation must settle:
   both red solely from this; their scripts are verified green locally under real
   smoke envs. Merge once CI is fixed.
 - Any workspace PR opened after 18:08Z on 2026-08-03.
+- autolens_workspace#461 (`point_source/start_here` composes `PointSolved`) —
+  release-validation corrective, red solely from this.
+- autofit_workspace#130 + HowToFit#42 (`simulator-util-to-af-ex`,
+  PyAutoFit#1444) — these DISPLAY green, but their CI ran at 17:30Z, before the
+  18:08Z floor merges. Latent-red, see the control test below.
+- PyAutoHeart release-integrate run 30842349506 and the whole release drive.
+
+---
+
+# ADDENDUM (session e0105850, 2026-08-03 ~20:10Z) — control test DONE, scope NARROWED
+
+## 1. Control test: CONFIRMED, on a subject this prompt did not know about
+
+The prompt asks to re-run #459/#453. I used a stronger subject —
+**autofit_workspace#130**, whose smoke run 30837040345 passed at **17:30Z**,
+before the floors. Re-ran the **identical commit** (attempt 2, 20:07Z):
+
+- attempt 1 (17:30Z, pre-floors): **success**
+- attempt 2 (20:07Z, same commit, post-floors): **failure**, and for the right
+  reason — `ERROR: Cannot install autofit==1.0.dev0 and autonerves 1.0.dev0 ...
+  autofit 1.0.dev0 depends on autonerves>=2026.7.29.2 ... ResolutionImpossible`
+
+Nothing about the PR changed; only the libraries underneath it did. The
+diagnosis is proven, not asserted. **You do not need to repeat this** — but
+#459/#453/#42 remain available as further subjects if you want them.
+
+## 2. Scope is ONE FILE, not 10 repos — settles open question 4
+
+The prompt says "the fix may belong in the shared workflow rather than in 10
+copies — check before fanning out." Checked:
+
+- The 10 `smoke_install.sh` files are **all different** — distinct md5s, 2–7
+  `pip install` lines each, different chains (HowToFit installs 2 packages,
+  autofit_workspace 7). They CANNOT be fixed by editing one shared file.
+- **But `VERSION` is an environment variable, not an install command.** All five
+  libraries' `setup.py` read `os.environ.get("VERSION", "1.0.dev0")` (verified in
+  all five), and `PyAutoHeart/.github/workflows/smoke-tests.yml` already has an
+  `env:` block on the exact step that runs
+  `bash workspace/.github/scripts/smoke_install.sh` (it sets `PYTHON_VERSION`
+  there today). Adding `VERSION:` beside it propagates to all 10 epilogues
+  unchanged.
+
+So **`VERSION` = one line in one shared file; `--no-deps` = editing all 10
+differing scripts** AND risking dropped transitive deps. That is a substantive
+argument for `VERSION` over `--no-deps`, not just convenience. Question 4 should
+be settled on this basis unless you find something that overrides it.
+
+## 3. Question 2 (which VERSION value) — a suggestion, still yours to settle
+
+`2026.7.29.2` asserts the local checkout IS a released version, and would
+silently satisfy any FUTURE floor regardless of what the source contains — the
+masking risk, permanently. A sentinel (`9999.1.1`) is honest ("not a release")
+but has the same masking risk in the other direction.
+
+Suggestion: take the sentinel AND rely on the provenance assertion this prompt
+already mandates (`autofit.__file__` resolves under the checkout) to catch
+masking, rather than trying to encode that safety in the version string. Decide
+with evidence; record the reasoning either way.
+
+## 4. Do NOT touch PyAutoHeart#134 — independent, green, and load-bearing
+
+Separate bug, already fixed and open: `verify_install` Check D pins only
+`autolens`, and pip refuses pre-releases for DEPENDENCIES without `--pre`, so
+every rehearsal resolved the family from stable PyPI and validated
+already-published, floor-less metadata instead of the candidate build.
+
+Control test on **python3.13** (3.12 is unaffected and MASKS it) installing
+`autolens[optional]==2026.8.3.1.dev70001`:
+
+| | autofit | autogalaxy | autoconf | import |
+|---|---|---|---|---|
+| without `--pre` | 2026.4.30.582 | 2026.8.2.1 | 2026.7.15.1 | FAIL `no attribute 'Latent'` |
+| with `--pre` | dev70001 | dev70001 | none | OK |
+
+This is independent proof that **the floors are load-bearing on the published
+path** — reinforcing this prompt's "do NOT revert the floors". #134 is green
+(pytest 3.12 + 3.13). Do not revert it as collateral.
+
+## 5. Interpreter trap — verify on BOTH 3.12 and 3.13
+
+In the Check D investigation, 3.12 silently passed where 3.13 failed, and a
+first control test run only on 3.12 was worthless. This prompt already requires
+both matrix legs; treat that as load-bearing, not box-ticking.
+
+## 6. Brain sizing
+
+`pyauto-brain bug` returned `too-large (score 27) → split`. 11 repos alone
+contribute +20. Given finding 2 (one line, one file), that split is not
+warranted — override it and record the override, per the established pattern.

@@ -67,3 +67,18 @@
   - PyAutoFit: feature/simulator-util-to-af-ex (worktree branched from origin/main 5bf32dabb; PR #1445)
   - autofit_workspace: feature/simulator-util-to-af-ex (PR #130, pending-release)
   - HowToFit: feature/simulator-util-to-af-ex (PR #42, pending-release)
+
+## small-datasets-loader-pixel-scales
+- issue: https://github.com/PyAutoLabs/PyAutoArray/issues/430
+- session: claude --resume 4ae831d8-6e74-48f1-b3d5-107a4f246edc
+- status: library-dev — issue filed, branch/worktree not yet created. Next: /start_library, then the 2-file fix.
+- worktree: ~/Code/PyAutoLabs-wt/small-datasets-loader-pixel-scales
+- prompt: active/small_datasets_loader_pixel_scales.md
+- scope: PyAutoArray ONLY, 2 files. cap_array_2d_for_small_datasets (autoarray/util/dataset_util.py:41-42) early-returns the caller's uncapped pixel_scales for at-or-below-cap data; the crop branch above it correctly rebuilds at SMALL_DATASETS_PIXEL_SCALES. Fix = mirror that in the at-or-below-cap branch (rebuild, do NOT crop) + docstring. Also rewrites the two tests in test_autoarray/util/test_dataset_util.py that assert the bug as intended behaviour (test__env_set__shape_already_at_cap__* and test__env_set__shape_below_cap__*).
+- repro: PyAutoHeart Workspace Smoke run 30790463134, autolens scripts/group/slam.py + group/slam.ipynb -> PriorException at slam.py:321 in source_lp[1] (stage 2 of 6), extra-galaxy dPIEMassSph.sigma, i=1 of n_extra=2. total_luminosity=0.0 -> einstein_radius_upper=0.0 -> sigma_upper=0.0 -> UniformPrior(0.0, 0.0). Reproduced on clean main; loader returns pixel_scales=(0.1,0.1) for the 16x16 capped array whose bright clump at index (2,12) maps to (+3.3,+2.7)" only under 0.6, matching declared extra-galaxy centre (3.5,2.5). Monkeypatched loader (no source edits) -> exit 0, all six SLaM stages.
+- claim-note: NO conflict — worktree_check_conflict returned 0 and no active task claims PyAutoArray. autolens_workspace IS claimed (group-data-preparation-readme #454, missing-auto-simulate-guards #455) but is NOT edited here: its group/slam no_run line was already removed by PR #312, and validation runs write only to gitignored dataset/ and output/. The original prompt's 3-repo Repos: header was stale and is corrected in the prompt file.
+- sizing-override: Brain returned too-large (score 12) -> split-into-4-phases (design/core-api/workspace/docs). OVERRIDDEN. The score keyed off prompt prose length plus the stale 3-repo header; repos_affected is 1 and the change is ~4 lines in one function. Same override precedent as missing-auto-simulate-guards and simulator-util-to-af-ex.
+- behaviour-change-to-validate: four scripts with committed 15x15 datasets (double_einstein_ring, mass_stellar_dark, scaling_relation, extra_and_scaling_galaxies) will now receive 0.6 instead of 0.1. Declared and intended (the data genuinely is 0.6) but the main risk in the change — spot-check each.
+- follow-up-candidates: (1) if the fix clears imaging/ + multi_galaxy/features/scaling_relation/slam, un-parking their NEEDS_FIX lines is a SEPARATE autolens_workspace PR (repo claimed by others). (2) shape<=cap implies 0.6 is an inference, not a measurement — a genuinely small real-scale dataset added later would be mislabelled; needs a prompt on simulators recording their own scale. (3) dataset/group/simple ships no scaling_galaxies_centres.json, so n_scaling=0 and group/slam.py's entire scaling-relation path is never exercised by CI even once this is green.
+- process-note: autolens_workspace PR #312 (a9b7ac1a, 2026-07-21) un-parked group/slam as "PriorException fixed" when it was not; the real root cause was formalised one day later and never shipped. Today's Workspace Smoke is the first run to hit it.
+- repos:

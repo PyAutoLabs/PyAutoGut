@@ -4,12 +4,28 @@ Type: bug
 Target: PyAutoArray
 Repos:
 - PyAutoArray
-- autolens_workspace
-- HowToLens
 Difficulty: small
 Autonomy: supervised
 Priority: normal
-Status: formalised
+Status: issued
+
+SCOPE CORRECTION 2026-08-03 (at issue-filing, PyAutoArray#430): the `Repos:`
+header above listed autolens_workspace and HowToLens; both legs were already
+done by then and are removed, leaving PyAutoArray as the only repo edited. The
+`group/slam` no_run line was removed by autolens_workspace PR #312 (a9b7ac1a,
+2026-07-21) — which un-parked the script as "PriorException fixed" when it was
+not, which is why the failure resurfaced in PyAutoHeart Workspace Smoke run
+30790463134. HowToLens has no `group/` scripts and no matching no_run entry.
+Leaving the stale 3-repo header in place made the Brain Feature Agent size this
+`too-large` (score 12) and recommend a 4-phase split for what is a ~4-line
+one-function fix.
+
+The root-cause analysis below was re-verified end-to-end on clean main before
+filing: the loader returns pixel_scales=(0.1,0.1) for the 16x16 capped array,
+whose bright clump at index (2,12) maps to (+3.3,+2.7)" only under 0.6 —
+matching the declared extra-galaxy centre (3.5,2.5). Patching the at-or-below-cap
+branch (monkeypatched, no source edits) took scripts/group/slam.py from
+PriorException at line 321 to exit 0 with all six SLaM stages running.
 
 PYAUTO_SMALL_DATASETS loader keeps uncapped pixel_scales for at-or-below-cap data.
 

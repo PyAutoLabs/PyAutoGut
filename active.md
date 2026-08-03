@@ -1,5 +1,26 @@
 # Active Tasks
 
+## intra-family-dep-floors
+- issue: https://github.com/PyAutoLabs/PyAutoLens/issues/687
+- status: library-dev — issue filed 2026-08-03, plan approved, worktree not yet created. Next: /start_library, then the six pyproject/verify_install edits.
+- worktree: ~/Code/PyAutoLabs-wt/intra-family-dep-floors
+- prompt: active/bug/health_fixes/intra_family_dependency_floors.md
+- scope: add `>=2026.7.29.2` floors to the CROSS-PACKAGE intra-family deps (base `dependencies` + `[jax]` extras) in PyAutoArray, PyAutoFit, PyAutoGalaxy, PyAutoLens, PyAutoCTI; PyAutoHeart `check_d` names its interpreter in the sidecar detail. PyAutoNerves inspected — NO CHANGE (only self-references).
+- root-cause: every intra-family dep is a BARE package name. pip backtracking the `[optional] -> [jax] -> autofit[jax] -> autonerves[jax]` chain walks the history to 2022, and "does not provide the extra 'jax'" is a pip WARNING not an error — so an ancient autofit is a legal solution. Check D landed on autofit 2026.4.30.582 -> `AttributeError: module 'autofit' has no attribute 'Latent'` (PyAutoHeart run 30788224561, job 91606144514; sidecar 2026-08-03T06:01:09Z).
+- python-version trap: check D builds its venv with the DEFAULT `python3`. The release job's setup-python runs 3.11 -> 3.12 -> 3.13, last wins, so CI is 3.13 while local is 3.12. Reproduced on both: 3.12 backtracks to 2026.7.29.2 (still has `Latent`, passes), 3.13 backtracks to 2026.4.30.582 (fails). Always verify BOTH interpreters.
+- control-test: floors added, python3.13, TestPyPI+PyPI -> autoarray/autofit/autogalaxy/autonerves all 2026.8.2.1 and `import autolens` OK; without floors, identical command -> autofit 2026.4.30.582 and raises. Run before the issue was filed.
+- do-not: floor the SELF-referential extras (`autolens[jax]` inside `autolens[optional]`, and siblings) — a self-reference is already version-locked and a floor makes a local `1.0.dev0` wheel build unsatisfiable.
+- timing: the floors only bite once new wheels are published. The RED verify_install leg does NOT clear until a release rehearsal republishes to TestPyPI and Check D re-runs against those wheels.
+- claim-note: worktree_check_conflict returned non-zero — PyAutoFit (point-source-defaults-campaign, nautilus-1core-serial-pool, simulator-util-to-af-ex), PyAutoLens (point-source-defaults-campaign), PyAutoHeart (interferometer-start-here-integrate-oom). Each claiming branch was diffed against origin/main: NONE touches pyproject.toml, and the PyAutoHeart branch's diff is empty (already merged). Proceeded as a documented concurrent claim on human approval, since this is a release-RED leg.
+- note: Brain `bug` sized too-large (score 16) — OVERRIDDEN. The score tracks prompt prose length + repo count; the change is one line per dependency in six pyproject.toml files.
+- repos:
+  - PyAutoArray: feature/intra-family-dep-floors
+  - PyAutoFit: feature/intra-family-dep-floors
+  - PyAutoGalaxy: feature/intra-family-dep-floors
+  - PyAutoLens: feature/intra-family-dep-floors
+  - PyAutoCTI: feature/intra-family-dep-floors
+  - PyAutoHeart: feature/intra-family-dep-floors
+
 ## missing-auto-simulate-guards
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/455
 - status: workspace-dev — ALL 16 GUARDS APPLIED 2026-08-03 (18 files, both repos). Verification in progress; not yet committed/pushed. Next: finish the two model-fit verifications, run the smoke-env pass on guides/results/database/start_here (the script coming off no_run), then /ship_workspace.
@@ -71,7 +92,7 @@
 ## small-datasets-loader-pixel-scales
 - issue: https://github.com/PyAutoLabs/PyAutoArray/issues/430
 - session: claude --resume 4ae831d8-6e74-48f1-b3d5-107a4f246edc
-- status: library-dev — issue filed, branch/worktree not yet created. Next: /start_library, then the 2-file fix.
+- status: library-dev — worktree + branch created (base origin/main 59b0f198, no drift). Next: the 2-file fix, then validation, then /ship_library.
 - worktree: ~/Code/PyAutoLabs-wt/small-datasets-loader-pixel-scales
 - prompt: active/small_datasets_loader_pixel_scales.md
 - scope: PyAutoArray ONLY, 2 files. cap_array_2d_for_small_datasets (autoarray/util/dataset_util.py:41-42) early-returns the caller's uncapped pixel_scales for at-or-below-cap data; the crop branch above it correctly rebuilds at SMALL_DATASETS_PIXEL_SCALES. Fix = mirror that in the at-or-below-cap branch (rebuild, do NOT crop) + docstring. Also rewrites the two tests in test_autoarray/util/test_dataset_util.py that assert the bug as intended behaviour (test__env_set__shape_already_at_cap__* and test__env_set__shape_below_cap__*).
@@ -82,3 +103,4 @@
 - follow-up-candidates: (1) if the fix clears imaging/ + multi_galaxy/features/scaling_relation/slam, un-parking their NEEDS_FIX lines is a SEPARATE autolens_workspace PR (repo claimed by others). (2) shape<=cap implies 0.6 is an inference, not a measurement — a genuinely small real-scale dataset added later would be mislabelled; needs a prompt on simulators recording their own scale. (3) dataset/group/simple ships no scaling_galaxies_centres.json, so n_scaling=0 and group/slam.py's entire scaling-relation path is never exercised by CI even once this is green.
 - process-note: autolens_workspace PR #312 (a9b7ac1a, 2026-07-21) un-parked group/slam as "PriorException fixed" when it was not; the real root cause was formalised one day later and never shipped. Today's Workspace Smoke is the first run to hit it.
 - repos:
+  - PyAutoArray: feature/small-datasets-loader-pixel-scales

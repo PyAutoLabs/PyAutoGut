@@ -2,13 +2,13 @@
 
 ## missing-auto-simulate-guards
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/455
-- status: workspace-dev — plan approved 2026-08-03; worktree not yet created
+- status: workspace-dev — plan approved 2026-08-03; worktree created, both repos on feature/missing-auto-simulate-guards, pending-release label asserted. Edits not yet started.
 - worktree: ~/Code/PyAutoLabs-wt/missing-auto-simulate-guards
 - prompt: active/missing_auto_simulate_guards.md
 - scope: 21 unguarded dataset loads (16 plain guards + delaunay single-guard + 2 HowToLens + 2 repoints) across autolens_workspace + HowToLens. Fixes 3 of the 4 smoke FileNotFoundErrors from PyAutoHeart run 30790463134, ALL reproduced locally on clean main; every paired simulator already exists. Also removes the guides/results/database/start_here NEEDS_FIX line from no_run.yaml.
 - discovery: dataset/imaging/lens_sersic has ZERO producers — referenced by gui/lens_light_centre.py:32, guides/results/database/start_here.py:73 and (prose only, code already correct) guides/results/aggregator/queries.py:60. Repointed at dataset/imaging/simple per human decision; database/start_here DROPS the dead name rather than duplicating simple twice. Rejected multi_dataset/imaging/lens_sersic — multi-band with g_ prefixes, plain from_fits cannot load it.
 - correction: the triage's "several start_here NEEDS_FIX markers" is wrong — no_run.yaml has 6 NEEDS_FIX markers, exactly ONE dataset-related (guides/results/database/start_here). imaging/data_preparation/start_here and guides/results/start_here are NOT in no_run; they pass only by run-ordering luck.
-- claim-note: autolens_workspace held CONCURRENTLY with group-data-preparation-readme (#454 — DELETES scripts/group/data_preparation/start_here.py, the 4th smoke failure, explicitly excluded here) and point-source-defaults-campaign (#453 PENDING RELEASE — touches cluster/{modeling,simulator,start_here}.py, NOT cluster/likelihood_function.py). File scopes disjoint; shared surface is workspace_index.json only — regenerate on whichever merges second. worktree_check_conflict returned 0 despite both live claims (guard unreliable); verified by hand.
+- claim-note: autolens_workspace held CONCURRENTLY with group-data-preparation-readme (#454 — DELETES scripts/group/data_preparation/start_here.py, the 4th smoke failure, explicitly excluded here) and point-source-defaults-campaign (#453 PENDING RELEASE — touches cluster/{modeling,simulator,start_here}.py, NOT cluster/likelihood_function.py). File scopes disjoint; shared surface is workspace_index.json only — regenerate on whichever merges second. Timing note: worktree_check_conflict returned 0 at start_dev (before #454 registered its claim) and correctly fired at start_workspace once it had — the manual scope check was the load-bearing one both times; proceeded as a documented concurrent claim (point-source precedent).
 - note: Brain sized too-large (score 11) and proposed a 4-phase split — OVERRIDDEN. The score tracks prompt prose length; repos_affected=2 and the work is ~21 mechanical insertions of one idiom.
 - repos:
   - autolens_workspace: feature/missing-auto-simulate-guards

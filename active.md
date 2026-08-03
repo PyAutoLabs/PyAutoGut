@@ -1,30 +1,5 @@
 # Active Tasks
 
-## intra-family-dep-floors
-- issue: https://github.com/PyAutoLabs/PyAutoLens/issues/687
-- status: library-shipped, awaiting-merge — all six PRs OPEN 2026-08-03 with `pending-release`: PyAutoArray#432, PyAutoFit#1446, PyAutoGalaxy#547, PyAutoLens#688, PyAutoCTI#104, PyAutoHeart#133. Shipped under the corrective-PR exception for Heart RED (human-authorized, scoped to `install verification FAILED (testpypi; checks D)`); open-PR only, merge + release stay human. Next: human merges the six, then a release rehearsal republishes to TestPyPI and Check D re-runs — only then does the RED leg clear.
-- library-pr: PyAutoArray#432, PyAutoFit#1446, PyAutoGalaxy#547, PyAutoLens#688, PyAutoCTI#104, PyAutoHeart#133
-- verification-trap: the dev shell exports PYTHONPATH at the five source checkouts, so a hand-rolled venv reports `Requirement already satisfied` for every PyAuto package and `import autolens` loads the SOURCE tree, not the installed wheel — the first verification pass was contaminated and falsely "confirmed" the fix. `verify_install.sh` is safe (it `unset PYTHONPATH`s, line 47); ad-hoc venvs are NOT. Always `env -u PYTHONPATH`. Also: `pip install --dry-run`'s "Would install" line OMITS find-links wheels, so it cannot be used to read a resolution — do a real install and `pip list`. And `python -m build` stamps `*.egg-info` in the source checkouts (VERSION env var, setup.py default 1.0.dev0) — restore with `python3 setup.py egg_info` or you leave a fake version visible to the whole dev env.
-- proof: discriminating test = family wheels built from the branch, autolens pinned to the published unfloored dev wheel, siblings via --find-links, python3.13, clean env. Bare sibling metadata -> autofit 2026.4.30.582 + AttributeError; floored sibling metadata -> autofit 2026.8.4.1 + import OK. Identical inputs, metadata the only variable — so the floors bite TRANSITIVELY, not just as top-level pins.
-- correction: the issue body's "known trade-off" (that floors break `verify_install B --version 1.0.dev0 --find-links dist/`) is WRONG and was retracted on the issue — pip already prefers the higher released sibling over a local 1.0.dev0 wheel, floors or no floors, since only autolens is pinned by that invocation.
-- worktree: ~/Code/PyAutoLabs-wt/intra-family-dep-floors
-- prompt: active/bug/health_fixes/intra_family_dependency_floors.md
-- scope: add `>=2026.7.29.2` floors to the CROSS-PACKAGE intra-family deps (base `dependencies` + `[jax]` extras) in PyAutoArray, PyAutoFit, PyAutoGalaxy, PyAutoLens, PyAutoCTI; PyAutoHeart `check_d` names its interpreter in the sidecar detail. PyAutoNerves inspected — NO CHANGE (only self-references).
-- root-cause: every intra-family dep is a BARE package name. pip backtracking the `[optional] -> [jax] -> autofit[jax] -> autonerves[jax]` chain walks the history to 2022, and "does not provide the extra 'jax'" is a pip WARNING not an error — so an ancient autofit is a legal solution. Check D landed on autofit 2026.4.30.582 -> `AttributeError: module 'autofit' has no attribute 'Latent'` (PyAutoHeart run 30788224561, job 91606144514; sidecar 2026-08-03T06:01:09Z).
-- python-version trap: check D builds its venv with the DEFAULT `python3`. The release job's setup-python runs 3.11 -> 3.12 -> 3.13, last wins, so CI is 3.13 while local is 3.12. Reproduced on both: 3.12 backtracks to 2026.7.29.2 (still has `Latent`, passes), 3.13 backtracks to 2026.4.30.582 (fails). Always verify BOTH interpreters.
-- control-test: floors added, python3.13, TestPyPI+PyPI -> autoarray/autofit/autogalaxy/autonerves all 2026.8.2.1 and `import autolens` OK; without floors, identical command -> autofit 2026.4.30.582 and raises. Run before the issue was filed.
-- do-not: floor the SELF-referential extras (`autolens[jax]` inside `autolens[optional]`, and siblings) — a self-reference is already version-locked and a floor makes a local `1.0.dev0` wheel build unsatisfiable.
-- timing: the floors only bite once new wheels are published. The RED verify_install leg does NOT clear until a release rehearsal republishes to TestPyPI and Check D re-runs against those wheels.
-- claim-note: worktree_check_conflict returned non-zero — PyAutoFit (point-source-defaults-campaign, nautilus-1core-serial-pool, simulator-util-to-af-ex), PyAutoLens (point-source-defaults-campaign), PyAutoHeart (interferometer-start-here-integrate-oom). Each claiming branch was diffed against origin/main: NONE touches pyproject.toml, and the PyAutoHeart branch's diff is empty (already merged). Proceeded as a documented concurrent claim on human approval, since this is a release-RED leg. SECOND FIRING at start_library: PyAutoArray became claimed by `small-datasets-loader-pixel-scales` (worktree ~/Code/PyAutoLabs-wt/small-datasets-loader-pixel-scales) in the interval between start_dev and start_library — that claim is LIVE (branch exists with an empty diff, i.e. another session just started), unlike the others which were stale/merged. File scopes are disjoint (dataset loader / pixel scales vs `pyproject.toml`); whichever PR merges second must rebase, not regenerate. Same pattern as missing-auto-simulate-guards: the manual scope check is the load-bearing one, not the guard.
-- note: Brain `bug` sized too-large (score 16) — OVERRIDDEN. The score tracks prompt prose length + repo count; the change is one line per dependency in six pyproject.toml files.
-- repos:
-  - PyAutoArray: feature/intra-family-dep-floors
-  - PyAutoFit: feature/intra-family-dep-floors
-  - PyAutoGalaxy: feature/intra-family-dep-floors
-  - PyAutoLens: feature/intra-family-dep-floors
-  - PyAutoCTI: feature/intra-family-dep-floors
-  - PyAutoHeart: feature/intra-family-dep-floors
-
 ## missing-auto-simulate-guards
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/455
 - status: workspace-dev — ALL 16 GUARDS APPLIED 2026-08-03 (18 files, both repos). Verification in progress; not yet committed/pushed. Next: finish the two model-fit verifications, run the smoke-env pass on guides/results/database/start_here (the script coming off no_run), then /ship_workspace.

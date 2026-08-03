@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-869 records across 7 buckets.
+870 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -20,6 +20,7 @@ _(curate hard-won records here — survives regeneration.)_
 
 - [autogalaxy-assistant](2026/08/autogalaxy-assistant.md) — epic; human to close
 - [group-data-preparation-readme](2026/08/group-data-preparation-readme.md)
+- [intra-family-dep-floors](2026/08/intra-family-dep-floors.md)
 - [llms-txt-census-fixes](2026/08/llms-txt-census-fixes.md)
 - [potential-correction-env-declaration](2026/08/potential-correction-env-declaration.md)
 - [potential-correction-validation](2026/08/potential-correction-validation.md)

@@ -15,20 +15,6 @@
   - autolens_workspace: feature/missing-auto-simulate-guards
   - HowToLens: feature/missing-auto-simulate-guards
 
-## group-data-preparation-readme
-- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/454
-- session: claude --resume b9f80103-66c9-467e-bb70-52a080a5dd5b
-- status: PR OPEN awaiting-merge — autolens_workspace#456 @ 1bd0d3f3, label pending-release verified. Shipped under the corrective-PR Heart-RED exception; stops at PR-open, merge is human.
-- worktree: ~/Code/PyAutoLabs-wt/group-data-preparation-readme
-- prompt: active/group_data_preparation_readme_only.md
-- corrective-red: Heart RED 2026-08-03T17:19:56Z, reasons surfaced verbatim then authorized in-session ("go", recorded on #454): "install verification FAILED (testpypi; checks D)" + "release validation FAILED (stage integrate)". NEITHER relates to this change — both are release-pipeline reds (the second already chased by nautilus-1core-serial-pool). This fix sits under the separate YELLOW "workspace validation not passing (19 failed, 1 timeout, cloud#30790463134)" and removes one of those failures.
-- validation: group/modeling.py + group/features/group_halo/modeling.py both EXIT=0 under the smoke env profile; no stale refs; scripts/notebooks READMEs byte-identical; check_sizes.sh clean; catalogue 353 -> 352. Root cause proven: dataset/group/simple is written by group/simulator.py, absent on fresh checkout, never invoked by the deleted tutorial; nothing imported data_preparation.
-- review-notes: .script_sizes.json edited BY HAND (one entry) — check_sizes.sh --update rewrites the whole snapshot and would have re-baselined ~110 unrelated drifted files into this PR. notebooks/README.md is an incidental generate.py sync of pre-existing main drift. README also corrects scaling_galaxies_centres.json -> scaling_galaxies.csv (the live loader path).
-- coordinates: 1 of 4 missing-dataset smoke failures; the other 3 are missing-auto-simulate-guards (#455), which explicitly excludes this one. Shared surface with #455/#453 is workspace_index.json only — regenerate on whichever merges second.
-- note: smoke FileNotFoundError on dataset/group/simple/data.fits — group/data_preparation/start_here deleted, folder becomes a README pointing at imaging/data_preparation (interferometer/data_preparation precedent). Claimed autolens_workspace after releasing the stale interferometer-start-here-integrate-oom claim (see that entry's claim-released line).
-- repos:
-  - autolens_workspace: feature/group-data-preparation-readme
-
 ## point-source-defaults-campaign
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/678
 - session: claude --resume ee42120d-c794-4565-804e-d7576d50c37c

@@ -1,3 +1,111 @@
+Fixed 3 of the 4 missing-dataset smoke failures from PyAutoHeart run 30790463134
+(the 4th, `group/data_preparation/start_here`, was deleted by #456). All three
+were reproduced on a clean checkout before any edit, and **every paired
+simulator already existed** — the fix was an auto-simulate guard in each case.
+
+- autolens_workspace#460 (issue #455)
+- HowToLens#65
+
+## Root cause shape
+
+Two of the three failing scripts already carried a *correct* guard — for their
+**first** dataset. The load that failed was a **second** dataset further down the
+same file that nobody guarded. `mask_irregular.py` had no guard at all.
+
+A sweep widened this to a class: dataset loads reaching `from_fits` with no guard
+pass smoke only because an earlier script in the run happens to simulate the same
+dataset first. **End state: zero unguarded dataset loads remain in either repo**
+(corrected sweep re-run on the merged tree returns empty).
+
+Final scope: **16 guards across 18 files.**
+
+## Three faults the triage did not name
+
+1. **`dataset/imaging/lens_sersic` has ZERO producers.** Referenced by
+   `gui/lens_light_centre.py:32`, `guides/results/database/start_here.py:73`, and
+   `aggregator/queries.py:60` (prose only). Repointing at
+   `dataset/multi_dataset/imaging/lens_sersic` was rejected — it is multi-band
+   with `g_` prefixes, so a plain `from_fits(data_path=.../"data.fits")` cannot
+   load it. Both consumers repointed at `dataset/imaging/simple`.
+
+2. **`guides/results/database/start_here.py` had THREE faults, not the one its
+   NEEDS_FIX marker named.** Behind the missing dataset sat a missing
+   `info.json` — the sole producer writes it for `simple` ALONE, so nothing wrote
+   `simple__no_lens_light/info.json` in any run order; built inline instead, dead
+   `import json` removed. Behind that sat an **unbounded real search**.
+
+3. **The unbounded search was a missing convention, not a slow script.** It
+   declares `ENV: real_search` (so `PYAUTO_TEST_MODE` is unset and the sampler
+   genuinely runs) but was the ONLY such script in the workspace without an
+   `n_like_max`; its four siblings in `guides/results/` all cap at 300, and
+   `_quick_fit.py:16` documents why. Unbounded (>9min, fit 1 of 2 not
+   converging) → **EXIT 0 in 245s**. Invariant `real_search` ⟹ `n_like_max` now
+   holds with zero exceptions (exactly 5 scripts declare `real_search` + use
+   `af.Nautilus`; all 5 capped).
+
+## Two self-corrections worth carrying forward
+
+- **Sweep under-detected guards.** The first pass grepped only
+  `should_simulate` and missed 4 scripts with hand-rolled
+  `subprocess.run(... simulator.py ...)` guards, inflating scope from 16 to 21.
+  A guard-detection sweep must accept BOTH idioms.
+- **`PYAUTO_TEST_MODE=1` is not smoke.** Smoke uses `TEST_MODE=2` (sampler
+  skipped); `=1` is reduced-iterations and SLOWER. Verifying under `=1` made two
+  scripts appear to stall for 15 minutes. Rebuilt every verification via
+  `autohands.env_config.build_env_for_script` against
+  `config/build/profile_smoke.yaml` — those same scripts then ran in 19s and 20s.
+
+## Validation
+
+Every changed script that can run, run under its real smoke env. Because those
+envs set `PYAUTO_SMALL_DATASETS=1`, `should_simulate` rmtree's and re-simulates,
+so every guard was genuinely exercised rather than skipped over pre-existing
+data. mask_irregular 8s · imaging_and_interferometer 20s · tutorial_3_inversions
+19s · database/start_here 245s · queries 68s · delaunay 24s ·
+linear_light_profiles 11s · guides/results/start_here 11s · psf 10s ·
+latent_variables 9s · data_preparation/start_here 9s.
+
+NOT verified by execution: the 5 GUI scripts + `tutorial_5_borders.py`, all
+`no_run` (cannot run headless). Syntax- and import-checked only; stated as such
+in both PR bodies.
+
+`check_sizes.sh` clean. Full `generate.py autolens` left `workspace_index.json`
+and `llms-full.txt` byte-identical, so the generated-index collision feared
+against #453/#459 never materialised.
+
+## Ship gate + the CI regression it collided with
+
+Heart RED at ship time (2026-08-03T17:44:16Z); shipped under the corrective-PR
+exception, human-authorized, scoped to the YELLOW
+`"workspace validation not passing (... cloud#30790463134 ...)"`. None of the
+three RED reasons related to this change.
+
+Both PRs then went red on CI for a reason that was **not** this change: the six
+`intra-family-dep-floors` PRs merged 18:08:00–18:08:15Z and broke source-chain
+install organism-wide (`autofit 1.0.dev0 depends on autonerves>=2026.7.29.2` →
+`ResolutionImpossible`), because CI installs the chain from local source where
+everything versions as `1.0.dev0`. Diagnosed, and a steering prompt filed at
+`draft/bug/health_fixes/dep_floors_break_source_chain_ci.md` (10 affected repos,
+control test, explicit "do NOT revert the floors", and the trap that a "fix"
+could go green by silently switching CI to released wheels). Another session
+took it and shipped PyAutoNerves#147 — `setup.py` default `1.0.dev0` →
+`9999.0.0.dev0` across all five libraries. CI green after that.
+
+## Follow-up left open (deliberately not bundled)
+
+Two guard idioms coexist and are NOT equivalent: `should_simulate` also
+deletes-and-rebuilds under `PYAUTO_SMALL_DATASETS=1`; the hand-rolled variants in
+4 scripts do not, so those keep FULL-RESOLUTION data on disk in a capped run.
+Not folded in — it is a behaviour change to scripts that currently pass. Prompt:
+`draft/maintenance/autolens_workspace/normalise_auto_simulate_guard_idiom.md`.
+
+Also corrected in-flight: the triage's "several start_here NEEDS_FIX markers"
+claim — `no_run.yaml` carried 4 NEEDS_FIX entries, exactly one dataset-related.
+`imaging/data_preparation/start_here` and `guides/results/start_here` were never
+in `no_run`; they passed only by run-ordering luck and are now guarded.
+
+## Original prompt
+
 # Missing auto-simulate guards on second-and-later dataset loads
 
 Type: bug

@@ -1,5 +1,20 @@
 # Active Tasks
 
+## potential-correction-env-declaration
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/457
+- session: claude --resume c83c2161-cb97-4000-8b0a-670179504ba7
+- status: workspace-dev
+- worktree: ~/Code/PyAutoLabs-wt/potential-correction-env-declaration
+- prompt: active/potential_correction_dpsi_grid_too_sparse.md
+- scope: add an `__Env__` section carrying `ENV: full_datasets` to THREE scripts — both `interferometer/features/advanced/potential_correction/{start_here,likelihood_function}.py` (the 4 smoke failures, script+notebook of each) and `imaging/features/advanced/potential_correction/likelihood_function.py` (not failing; passes only incidentally and contradicts profile_release.yaml). `imaging/.../start_here.py` already carries the declaration and is reference-only.
+- root-cause: smoke's `PYAUTO_SMALL_DATASETS=1` shrinks `Mask2D.circular` to 16x16 @ 0.6 (PyAutoArray mask_2d.py:363); with `dpsi_factor=2` no valid 2x2 interp box survives, so mesh.py:132 `get_itp_box_ctr` raises. NOT drift from PyAutoLens#672 — the declaration reached the imaging guide in 5c1ce1d9 and the interferometer siblings never got it. `config/build/profile_release.yaml:58-61` has always covered both folders; only the smoke path (in-file declarations, post-#187 Stage 2) was missing them.
+- reproduced: both interferometer scripts FAIL under the smoke profile and PASS with the cap released (83s / 44s, vs the 300s cap). CI attribution verified against job logs 91612773963 + 91612954327 — exactly 4 failures, all this folder.
+- rejected: lowering `dpsi_factor` (factor=2 is the #672-certified config: corr ~0.83, peak ~0.15", ~6 sigma; and at 16x16 even factor=1 is meaningless); loosening the library check (correct at that resolution — relaxing it builds a degenerate mesh silently).
+- claim-note: `worktree_check_conflict` fired TWICE with different holders. First `group-data-preparation-readme` (#454) — CLOSED 2026-08-03T17:33Z, claim discharged. Then `missing-auto-simulate-guards` (#455, sibling triage item) claimed the repo in the interval and is LIVE (16 guards, 18 files, uncommitted). Proceeded as a documented concurrent claim on #455's own precedent. File scopes strictly disjoint: this task is `features/advanced/potential_correction/` only; #455 is `guides/results/*`, `imaging/data_preparation/*`, `cluster/*`, `multi_dataset/*`, `interferometer/features/pixelization/*`, `no_run.yaml`. Shared surface = generated indices (`workspace_index.json`, `llms-full.txt`, `.script_sizes.json`, `notebooks/README.md`) — regenerate notebooks with `--only` scoping and leave the indices to whichever PR merges second. Pre-merge origin/main before the PR.
+- follow-up: all four potential-correction scripts emit `SyntaxWarning: invalid escape sequence` from LaTeX in non-raw docstrings (`\odot`, `\chi`, `\delta`, `\,`). Deliberately NOT bundled — unrelated to this failure and warrants a workspace-wide pass. Needs its own prompt.
+- note: Brain `feature` sized too-large (score 11) and proposed a 4-phase split — OVERRIDDEN. The score tracks prompt prose length; `repos_affected`=1 and the work is three docstring sections. Same override pattern as #455 and intra-family-dep-floors.
+- repos:
+
 ## intra-family-dep-floors
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/687
 - status: library-dev — issue filed 2026-08-03, plan approved, worktree created off origin/main for all six repos. Next: the five pyproject floor edits + the PyAutoHeart check_d interpreter detail, then verify on python3.12 AND python3.13, then /ship_library.

@@ -133,10 +133,28 @@ rather than a partial fix here.
 
 ## Claim note
 
-`autolens_workspace` is claimed by `group-data-preparation-readme` (issue #454,
-`feature/group-data-preparation-readme`) as of 2026-08-03. Scopes are disjoint —
-this task touches only `{imaging,interferometer}/features/advanced/potential_correction/`
-and its notebook mirrors; that task touches `group/data_preparation/`. Concurrent
-holds on disjoint scopes have precedent (point-source-defaults-campaign holding
-PyAutoLens alongside potential-correction-validation). Confirm the survey agrees
-before claiming, and pre-merge `origin/main` before opening the PR.
+`worktree_check_conflict` fired twice with two different holders during this
+task's setup:
+
+1. `group-data-preparation-readme` (#454) held `autolens_workspace` at first
+   survey. Its branch touched the repo-wide generated indices
+   (`workspace_index.json`, `llms-full.txt`, `.script_sizes.json`,
+   `notebooks/README.md`) as well as `group/data_preparation/`. **#454 closed
+   2026-08-03T17:33Z**, discharging that claim.
+2. `missing-auto-simulate-guards` (#455 — triage item 4, sibling of this one)
+   claimed the repo in the interval, and is LIVE (16 guards applied across 18
+   files, uncommitted, mid-verification).
+
+Proceeded as a **documented concurrent claim**, matching the precedent #455's own
+claim-note sets for the same repo. File scopes are strictly disjoint:
+
+- this task: `scripts/{imaging,interferometer}/features/advanced/potential_correction/`
+  + the four notebook mirrors
+- #455: `config/build/no_run.yaml`, `scripts/guides/results/*`,
+  `scripts/imaging/data_preparation/*`, `scripts/cluster/*`,
+  `scripts/multi_dataset/*`, `scripts/interferometer/features/pixelization/*`
+
+Shared surface is the generated index files only. Mitigation: scope notebook
+regeneration to the four potential_correction files (`--only`) and leave the
+repo-wide indices untouched, so whichever PR merges second regenerates them.
+Pre-merge `origin/main` before opening the PR.

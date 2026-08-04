@@ -1,5 +1,21 @@
 # Active Tasks
 
+## jax-grad-smoke-timeout-budget
+- issue: https://github.com/PyAutoLabs/PyAutoHands/issues/226
+- status: library-dev — phase 1 (PyAutoHands runner) starting; issue carries the full two-level plan.
+- prompt: active/jax_grad_scripts_timeout_smoke_300s_cap.md
+- worktree: ~/Code/PyAutoLabs-wt/jax-grad-smoke-timeout-budget
+- origin: PyAutoHeart workspace-smoke run 30858578587 (2026-08-03T22:25Z) — 3 jax_grad scripts TIMEOUT at the 300s cap. Feeds the Heart YELLOW "workspace validation not passing" reason in front of release-drive-2026-08-03.
+- established: `point_source/jax_grad/gradient.py` PASSES locally in 665.9s (2.2x cap) — definitively a budget problem, no hang, no correctness failure. Heart's 39.24s baseline is the pre-#216 slug, measured 2026-07-30, BEFORE 50f1c33 (07-31) added solver blocks C-F (+281 lines, 1e-5 solver, 6-step FD). `regularization.py` has never completed in any recorded run (its 103.5s FAIL was the tfp-nightly/bessel_kve import gap, not a timing).
+- NOT established (do not overclaim): whether a genuine mesh/inversion XLA regression exists. The 06:31Z->22:25Z slowdown scales monotonically with runtime (lp -1%, delaunay +9%, knn +14%, pixelization >=+23%), which fits runner contention AND a graph-size-dependent regression equally — flat lp/mge do NOT discriminate. The ">400s on 2026-07-13" corroboration was WITHDRAWN: 74673c8 (07-23) rewrote both gradient scripts, so it describes an ancestor.
+- codex-cross-review: run 2026-08-04, 5 findings all verified CONFIRMED. (1) `timeout:` profile key would FAIL validation — `validate_env_profiles.py:60` allows only pattern/set/unset, so use the existing `set: {BUILD_SCRIPT_TIMEOUT: ...}` syntax and change no schema. (2) `build_util.py:391` DISCARDS `TimeoutExpired.stdout/stderr` — a TIMEOUT cannot say which block ran; fix FIRST, it is what makes the regression question answerable. (3) `run_all.py:256` exports BUILD_SCRIPT_TIMEOUT unconditionally, so an "explicit global wins" precedence would silently disable per-script values under local run_all. (4) 74673c8 invalidated the >400s corroboration. (5) `jax_grad/` matches 8 scripts not 7 (missed `interferometer/jax_grad/gradient.py`, itself SLOW-skipped in no_run.yaml:47 for flaking AT the 1800s cap — evidence this family needs release-scale budgets).
+- sizing-note: Brain scored too-large (13) and proposed a 4-phase design/core-API/examples/docs split; NOT taken — score is prose-driven off an evidence-dense prompt (same override as mge-sigma-min and point-source-defaults). Human-scoped 2 phases: 1 PyAutoHands runner (timeout output + per-script resolution + tests) -> 2 measure, then set the budget in profile_smoke.yaml + Heart comment.
+- local-env-caveat: local jax_grad runs fail assertions that PASS in CI (identical jax 0.10.2; numpy 2.2.6 local vs 2.4.6 CI). The `lp.py` CONTROL fails locally while passing in CI, so local assertion failures are NOT evidence of source defects. Budget numbers must come from CI, not local.
+- repos:
+  - PyAutoHands: feature/jax-grad-smoke-timeout-budget (phase 1)
+  - autolens_workspace_test: feature/jax-grad-smoke-timeout-budget (phase 2)
+  - PyAutoHeart: feature/jax-grad-smoke-timeout-budget (phase 2, comment-only)
+
 ## mge-sigma-min-workspace-sweep
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/466
 - status: phase 1 MERGED 2026-08-04T17:11:13Z (autolens_workspace#467 -> 92019316, issue #466 auto-closed, all 5 CI checks green on head 76a75bec); phase 2 NOT STARTED. Standalone mode (upstream PyAutoGalaxy#549 already MERGED as 13d3023c).
@@ -44,8 +60,8 @@
 - status: BOTH MERGED 2026-08-01 ~00:15 BST (#450 merge, #132 merge; CI green). Manual release validation IN FLIGHT: Stage 2 rehearsal run PyAutoHands 30672432924 SUCCESS -> testpypi 2026.7.31.1.dev69301; Stage 3 PyAutoHeart release-integrate run 30672739606 dispatched 23:23 UTC, in progress
 - resume: when 30672739606 completes -> `gh run download 30672739606 -R PyAutoLabs/PyAutoHeart -n release-stage-report -D ~/.pyauto-heart/manual_validation_20260801` then `pyauto-brain release validate --ingest ~/.pyauto-heart/manual_validation_20260801 --commit-shas ~/.pyauto-heart/manual_validation_20260801/commit_shas.json` (artifacts dir already holds rehearsal.json + commit_shas.json + testpypi_version.txt). OPTIONAL: heart tick auto-ingests the completed run anyway, and the 05:36 UTC nightly independently re-validates and releases on green (NIGHTLY_RELEASES=true) with no further human step
 - corrective-red: Heart RED reason "release validation FAILED (stage integrate)" — authorization quoted+approved live in session 5b29e469 (recorded on #449); cause = MultiStartProdigy 48-start unbatched vmap OOM (~86 GB) introduced d5c9802d (2026-07-29, post-release); fix = batch_size=4, control-vs-patched verified under release-profile env
-- repos:
-  - PyAutoHeart: feature/release-run-repo-slug-firewall (YELLOW tenant-firewall, not the RED claim)
+- repos-none-claimed: this entry claims NO repos — listed on one line, NOT as `  - Repo` bullets, since `worktree_check_conflict` treats any 2-space `  - <Repo>` bullet as a live claim.
+- claim-released (2026-08-04): PyAutoHeart dropped from `repos:` — PR #132 (`feature/release-run-repo-slug-firewall`) MERGED 2026-07-31T23:15:18Z and the branch no longer exists on origin, but the bullet still read as a live claim and fired the conflict guard against jax-grad-smoke-timeout-budget (#226). This entry's OWN status line already said "BOTH MERGED 2026-08-01 (#450 merge, #132 merge)", so the claim contradicted itself — the same stale-claim pattern as the autolens_workspace release below. Only the release-validation leg remains and it claims no repo.
 - claim-released: autolens_workspace claim DISCHARGED 2026-08-03 — PR #450 merged 2026-07-31T23:15Z, local branch deleted (stale origin/ ref only), checkout clean on main c4bd2796; only the PyAutoHeart release-validation leg remains. Released so group-data-preparation-readme could claim the repo.
 
 ## release-drive-2026-08-03

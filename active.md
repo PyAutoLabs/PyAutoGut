@@ -1,16 +1,5 @@
 # Active Tasks
 
-## tenant-firewall-hygiene-extras
-- issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/192
-- status: library-dev
-- worktree: ~/Code/PyAutoLabs-wt/tenant-firewall-hygiene-extras
-- prompt: tenant_firewall_hygiene_extras_lib_repos.md
-- repos:
-  - PyAutoBrain: feature/tenant-firewall-hygiene-extras (base a565750 == origin/main, verified)
-- scope: PyAutoBrain ONLY — `_hygiene_extras.py` derives its library set from the workspace-validation `[mode=release]` install step instead of hard-coding the five repo names; `PyAutoMind/scripts/repos_sync.py` FIREWALL_ALLOWLIST is deliberately NOT grown.
-- sizing-note: Brain scored large (8) / split-into-phases; NOT taken — score is prose-driven (the prompt carries the whole survey), `repos_affected` is one repo, change is one module + its test.
-- control: `_hygiene_extras.py --root . --summary` reports `0|clean` on the UNCHANGED tree — after the refactor it must still be `0|clean` AND derive 5 libraries; an empty derivation reads identically quiet.
-
 ## mge-sigma-min-workspace-sweep
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/466
 - status: BOTH PHASES MERGED 2026-08-04. Phase 1 autolens_workspace#467 -> 92019316 (issue #466 auto-closed). Phase 2 autogalaxy_workspace#203 -> 8a7df7a6, HowToLens#67 -> 4ff3135c, HowToGalaxy#61 -> 51eed3d6, autogalaxy_assistant#10 -> f6966a64. Upstream PyAutoGalaxy#549 -> 13d3023c. All worktrees removed, all branches deleted local+origin, all five canonical checkouts back on main. Code work COMPLETE; two debts remain (below).

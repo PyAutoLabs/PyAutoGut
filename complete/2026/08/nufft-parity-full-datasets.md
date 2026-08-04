@@ -1,3 +1,84 @@
+Smoke-only failure of `autolens_workspace_test scripts/interferometer/nufft.py`
+(`AssertionError: pynufft should match TransformerDFT within its gridding
+precision`, PyAutoHeart workspace-smoke run 30858578587, 2026-08-03).
+
+**Diagnosis was neither hypothesis in the report.** The tolerance was correct for
+the case the script documents and no transform regressed — the script was
+silently running a different, much smaller problem. It carried no `__Env__`
+declaration, so it inherited `PYAUTO_SMALL_DATASETS=1` from
+`config/build/profile_smoke.yaml`, which caps
+`Mask2D.circular(shape_native=(256, 256), pixel_scales=0.1, radius=3.0)` to
+**(16, 16) at 0.6" with 80 unmasked pixels**
+(`autoarray/util/dataset_util.py`, `SMALL_DATASETS_SHAPE_NATIVE`). Test (b),
+labelled and calibrated as "Lensed Sersic image, 256x256, real SMA uv coverage",
+executed at 16x16 — where pynufft's Kaiser-Bessel gridding (`Jd=(6,6)`,
+oversample 2) has an interpolation stencil spanning ~37% of an axis.
+
+Measured, test (b) `max|Δ| pynufft − DFT` / `|vis_DFT|_max`:
+
+| run | relative residual | verdict |
+|-----|-------------------|---------|
+| bare, true 256x256 | 6.0959e-02 | PASS (tol 1e-1) |
+| full smoke profile (actually 16x16) | 8.9643e-01 | FAIL, ~15x over |
+| smoke minus `PYAUTO_SMALL_DATASETS` | 6.0959e-02 | PASS |
+
+nufftax was exact in both regimes (3.02e-14 / 1.73e-14 relative), which is why
+only the approximate leg tripped. `PYAUTO_DISABLE_JAX=1` was not implicated —
+the script calls `nufftax` directly and gives bit-identical numbers either way.
+
+It surfaced now because 6a6156c (2026-07-28) restored the real pynufft leg;
+before that the "pynufft" transformer was built as `al.TransformerNUFFT`, which
+resolves to the nufftax-backed default, so the assertion compared nufftax with
+itself and reported 0.0000e+00.
+
+**Fix** (PR #248, merge bd08b1a) — one file, `scripts/interferometer/nufft.py`:
+
+- `__Env__` section declaring `ENV: full_datasets`, releasing the dataset cap.
+  Provably a no-op under `profile_release.yaml`, which already pinned
+  `PYAUTO_SMALL_DATASETS: "0"`.
+- A geometry guard asserting test (b)'s mask really is (256, 256) at 0.1",
+  placed **before** `should_simulate` — that call deletes the on-disk dataset
+  when the cap is active, so guarding first fails without destroying a
+  full-resolution dataset siblings share.
+- The tolerance comment now records that 1e-1 is a 256x256 number, with both
+  measured values.
+
+**No tolerance loosened, no library source touched.**
+
+**Validation:** resolved smoke profile (env via
+`autohands.env_config.build_env_for_script`) PASS in 20.0s from an empty
+`dataset/`, reporting 6.0959e-02 — vs 9.9s for the failing run. Bare run PASS.
+Control test: forcing the cap back on fails at the new guard with the geometry
+in the message, and the on-disk dataset survives. Order-independence verified —
+`should_simulate` is existence-only, so a sibling could leave a capped dataset
+behind; the simulator's uv coverage is byte-identical capped vs full ((190, 2),
+fixed SMA layout) and nufft.py never reads `dataset.data`, so a re-run against a
+capped dataset gives the identical 6.0959e-02.
+`validate_env_profiles.py --strict-derivation --strict-markers
+--strict-declarations` → 0 errors, 0 warnings.
+
+**Coverage gap found, not fixed here.** The PR gate runs
+`.github/scripts/run_smoke.py` over the `smoke_tests.txt` **allowlist** —
+"Running 21 smoke test script(s)", "21/21 passed" — and `nufft.py` is not on it.
+The green PR tick is therefore vacuous for this change; only Heart's weekly
+workspace-smoke (`run_scripts`, every script) exercises it. Same allowlist
+failure mode the `howto-smoke-all-tutorials` task is fixing for the HowTo repos;
+`autolens_workspace_test` has it too and is uncovered.
+
+**Out of scope:** the other failures in run 30858578587
+(`autolens_test scripts/imaging/pixelization.py`,
+`scripts/imaging/regularization.py`,
+`autofit_test scripts/jax_assertions/multi_start_gradient_auto_convergence.py`,
+plus 3 timeouts) are unrelated and untouched. A sweep of `scripts/` for other
+numerical-tolerance assertions lacking `full_datasets` found no second instance
+of this mode — the rest are same-input A/B parity checks whose tolerances do not
+depend on grid size.
+
+Heart was YELLOW at ship time (no RED); human acknowledged both reasons as
+unrelated.
+
+## Original prompt
+
 # NUFFT parity test asserts a 256x256 tolerance while smoke runs it at 16x16
 
 Type: bug

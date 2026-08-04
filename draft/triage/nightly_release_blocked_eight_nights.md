@@ -69,14 +69,27 @@ matters.
 
 ## Suggested scope
 
-1. Decide the exit-code / conclusion contract for "correctly blocked" vs
-   "driver broke" — they should not both be red.
-2. Fix the stop-summary count + `None` script name.
-3. Triage the Class A rotating script failures (are they the same underlying
-   env/profile issue, or genuinely different scripts each night?) and the
-   Class B gate-vs-release disagreement. Related open work:
-   PyAutoHands#161 (env-profile + validation-gate redesign),
-   PyAutoHands#127 (nightly live releases behind an activity gate).
+1. ~~Decide the exit-code / conclusion contract for "correctly blocked" vs
+   "driver broke" — they should not both be red.~~ **DONE 2026-08-04** —
+   PyAutoBrain#196 (`a2264fe`). The workflow now classifies the driver's exit
+   code: `0/2/3` leave the run green (a blocked night is the gate working, with
+   a named `Blocked at a gate` step + `::warning::` + job summary), `1` and
+   anything else turn it red. `bin/overnight_status.sh` reads that step so a
+   blocked night gets its own `⏸` line and tally instead of reading as plain
+   green — otherwise this would have traded a false alarm for a silent one.
+2. ~~Fix the stop-summary count + `None` script name.~~ **DONE 2026-08-04** —
+   same PR. The formatter moved out of its heredoc into
+   `agents/conductors/release/stage_failure_summary.py` (a file can carry a
+   test) and reports script failures and non-script legs as separate segments:
+   `1 failed: autolens database/start_here.py; verify_install FAILED`.
+   11 tests, shaped from the real 2026-08-04 `stage_report.json`.
+3. **STILL OPEN — the actual releases are still blocked.** Triage the Class A
+   rotating script failures (are they the same underlying env/profile issue, or
+   genuinely different scripts each night?) and the Class B gate-vs-release
+   disagreement. Related open work: PyAutoHands#161 (env-profile +
+   validation-gate redesign), PyAutoHands#127 (nightly live releases behind an
+   activity gate). Nothing in item 1 or 2 unblocked a single night — they only
+   made the signal legible.
 
 Do NOT convert this into a manual release drive — `AUTONOMY.md` forbids
 converting a manual release into the scheduled-nightly exception, and

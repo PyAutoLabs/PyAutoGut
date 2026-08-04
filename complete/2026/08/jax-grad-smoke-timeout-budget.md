@@ -1,3 +1,112 @@
+Three `autolens_workspace_test` jax_grad scripts TIMEOUT at the 300s smoke cap
+(PyAutoHeart workspace-smoke run 30858578587). The question asked was whether
+this was a real slowdown (JIT compile regression, lost caching) or a cap that
+was always marginal — fix the cause, or reclassify with an explicit reason, but
+do not raise the cap silently.
+
+## Verdict: a marginal cap, not a slowdown — measured, not argued
+
+Measured on PyAutoHeart workspace-smoke run 30938311069, the first run in which
+these scripts could finish. All seven live jax_grad scripts PASS:
+
+| script | 06:31Z | 22:25Z | after |
+|---|---|---|---|
+| lp.py | 40.0s | 39.6s | 41.6s |
+| mge.py | 42.1s | 41.8s | 41.2s |
+| delaunay.py | 84.6s | 92.4s | 89.6s |
+| knn.py | 175.8s | 200.0s | 186.5s |
+| pixelization.py | 244.8s | TIMEOUT | 259.8s PASS |
+| regularization.py | FAIL (import) | TIMEOUT | 301.7s PASS |
+| gradient.py | TIMEOUT | TIMEOUT | 568.2s PASS |
+
+The regression hypothesis is dead. It was deliberately kept open because the
+2026-08-03 slowdown scaled monotonically with runtime (-1% at 40s to +23% at
+245s), which fits a graph-size-dependent XLA regression as well as contention,
+and the flat cheap scripts did NOT discriminate between them. It resolves as
+contention: pixelization.py returned 259.8s against its 244.8s baseline (+6%,
+ordinary variance), and knn.py (200.0 -> 186.5) and delaunay.py (92.4 -> 89.6)
+both came back DOWN. A graph-size regression does not undo itself.
+
+Per script: pixelization.py was always marginal (82% of cap, no headroom to
+absorb a slow runner). regularization.py exceeded the cap by 1.7 SECONDS — it
+never was far too slow, and the tfp-nightly/bessel_kve import gap masked that
+until the install was fixed. gradient.py is 1.9x the cap, having grown by design
+in 50f1c33 (+281 lines, 1e-5 solver, 6-step FD sweeps over four extra models).
+
+## Shipped
+
+- PyAutoHands#227 -> 52408a84. `build_util.timeout_for(env)` resolves the cap
+  parent-side for execute_script + execute_notebook; the TimeoutExpired handlers
+  keep a truncated output tail and record the cap in force; the SLOW banner says
+  "default" cap. 25 tests, control-tested (11 fail against the unfixed
+  behaviour).
+- PyAutoHeart#138 -> 1bdf8188. Comment-only: corrects the release cap's "smoke
+  mode is unchanged (still 300s)" premise.
+- autolens_workspace_test#249 -> a430ea61. The `jax_grad/` budget, plus the
+  second-runner fix.
+- autolens_workspace_test#250 -> 527c1669. Tightens 1800s -> 900s on measured
+  durations (~1.6x headroom over the 568.2s worst case).
+
+Heart effect: the workspace-validation YELLOW reason went from "3 failed, 3
+timeout" naming these scripts to "2 failed" naming only autolens (not _test)
+interferometer likelihood_function — pre-existing and out of scope.
+
+## Two defects found that were not in the brief
+
+1. **The timeout artefact was blind.** `build_util` discarded
+   `TimeoutExpired.stdout/stderr`, recording only "Timed out after Ns". A killed
+   script cannot report its own progress, so no CI artefact could say WHICH
+   block died — the reason this was undiagnosable from CI at all. Fixing that
+   first is what made the measurement legible.
+2. **A second runner had the same bug.** `autolens_workspace_test/.github/
+   scripts/run_smoke.py` builds the per-script env via `build_env_for_script`
+   but capped `proc.communicate(timeout=...)` with its own module-global, so the
+   PR gate would have silently ignored the very budget #249 adds — the two
+   runners disagreeing about the same profile. Latent (smoke_tests.txt has no
+   jax_grad entries) but fixed rather than left as a trap.
+
+## Corrections made during the work
+
+- **">400s on 2026-07-13" withdrawn.** Cited as corroboration that
+  pixelization.py was always marginal; commit 74673c8 (07-23) rewrote both
+  gradient scripts, so it described an ancestor. Caught by Codex cross-review.
+- **"Not a regression" was initially too strong** and was softened to "not
+  established" until the measurement settled it.
+- **A projection was wrong.** gradient.py was projected at ~940s in CI from a
+  local 665.9s scaled by knn.py's CI/local ratio (~1.41x). The real figure is
+  568.2s — CI is FASTER than local for that script, so the ratio did not
+  transfer. Conclusion held; the extrapolated number did not. #250 records
+  "measure, do not extrapolate".
+- **A `timeout:` profile key would have failed validation**
+  (ALLOWED_OVERRIDE_KEYS is {pattern, set, unset}); the existing `set:` key was
+  used instead, so no profile schema change and every existing profile stays
+  valid. Also caught by Codex.
+
+## Method notes worth keeping
+
+- The `lp.py` CONTROL is what prevented reporting two phantom correctness
+  regressions: it fails locally while PASSING in CI, so the local
+  eager-vs-jit and AD-vs-FD failures in pixelization/regularization were
+  environment artefacts, not source defects. Never budget from local jax_grad
+  numbers.
+- Precedence is profile > ambient global > 300 default, because `run_all.py:256`
+  exports BUILD_SCRIPT_TIMEOUT unconditionally — the parent cannot tell a
+  deliberate operator cap from the CLI default, so "explicit global wins" would
+  make per-script budgets work in CI and be silently ignored locally.
+- Brain sized this too-large (13) with a 4-phase split; not taken, the score is
+  prose-driven off an evidence-dense prompt.
+
+## Follow-ups filed (not absorbed)
+
+- `draft/bug/pyautoheart/script_timing_baselines_orphaned_and_window_filled.md`
+  — path-derived slugs orphaned every jax_grad baseline at the #216 restructure
+  (no history accumulating since 2026-07-24), and every stored history is one
+  value repeated 7x, so the "median of 7" ratio is a single-observation compare.
+- `draft/bug/autolens_workspace_test/jax_grad_local_assertions_fail_but_pass_in_ci.md`
+  — the local-vs-CI assertion divergence above (suspect numpy 2.2.6 vs 2.4.6).
+
+## Original prompt
+
 # Three JAX-gradient scripts TIMEOUT at the 300s smoke cap
 
 Type: bug

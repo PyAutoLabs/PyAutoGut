@@ -29,10 +29,19 @@
 - docs: AGENTS.md:34 claims PYAUTO_SMALL_DATASETS is "deliberately not used" while profile_smoke.yaml:16 sets it for every script. Human chose keep-the-cap, so AGENTS.md is what's wrong.
 - decisions (human, 2026-08-04): keep the dataset cap + fix AGENTS.md; scope = all three HowTo repos.
 - verify by COUNT rising (4->26, 6->39, 10->15) + negative control, never by a green tick — green already passes today while testing 4 of 26.
+- heart-ack (2026-08-04, human): YELLOW acked for exactly two reasons (workspace validation not passing cloud#30858578587; manifest drift tenant firewall). Identical unchanged reason set + timestamp reused for the phase-2 ship; no RED.
+- BLOCKER FOUND + FIXED (PyAutoHands added as 4th repo, human-approved): build_util.execute_script() had `if "inversion" in f:` -> rewrote ANY failure to PASSED ("Inversion script failure (ignored)"). Substring match on the PATH, not the exception. Proven with a file containing only a raise: main = PASS/has_failures=False, fixed = FAIL/True. 3 scripts workspace-wide match, 2 are the HowToGalaxy+HowToLens ch4 tutorial_3_inversions — i.e. the escape covered EXACTLY the tutorial from #56/#57. Notebook runner never had the clause, which is why the notebook job reported it and a script run never would have. Delegating smoke without this fix would have made that file unconditionally green.
+- LEFT ALONE (flagged for separate decision): execute_notebooks_in_folder has `if "InversionException" in traceback` -> PASS. Exception-typed, not filename-matched, so defensible for data-dependent failures. The adjacent is_clean_skip_exit() pass is correct as-is.
+- design: run_smoke.py is now a thin shim over PyAutoHands autohands/run_python.py (the entry point Heart's run_scripts uses) -> PR gate and validation runner share one code path + one exclusion list (no_run.yaml, already honoured by the notebook runner). smoke_tests.txt deleted in all 3.
+- TRAP handled: run_python.py exits non-zero ONLY with --report-dir (gated on `if report is not None`); without it the suite always exits 0 AND aborts on first failure. Shim always passes it; negative control proves red.
+- verified by COUNT (report JSON, not a green tick): HowToGalaxy 4->26 (25 pass, 1 fail = the #59 bug, green once #59 merges), HowToLens 6->39 +1 deliberate skip, HowToFit 10->15. Four ~0.0s passes verified prose-only (0 non-docstring statements), not vacuous.
+- corrections logged: an earlier `grep -v` wrongly reported HowToFit no_run.yaml MISSING (it exists, parses to []). HowToLens tutorial_5_borders reason "Cant get right masks" is WRONG — controlled re-test on identical dataset files: fails WITH the cap, passes WITHOUT (IndexError 371 vs size 272); cap-induced, same root cause as #59. Reason corrected + NEEDS_FIX tagged.
+- status: awaiting-merge. Merge order: PyAutoHands#225 -> HowToGalaxy#59 -> then #60/#66/#43.
 - repos:
-  - HowToGalaxy: feature/howto-smoke-all-tutorials (base 7f60ea1 == origin/main)
-  - HowToLens: feature/howto-smoke-all-tutorials (base 10992ec == origin/main)
-  - HowToFit: feature/howto-smoke-all-tutorials (base 65e8fbd == origin/main)
+  - HowToGalaxy: feature/howtogalaxy-ch4-mesh-shape (phase 1, PR #59) + feature/howto-smoke-all-tutorials (commit 9013457, PR #60)
+  - HowToLens: feature/howto-smoke-all-tutorials (commit 6eaf6ed, PR https://github.com/PyAutoLabs/HowToLens/pull/66)
+  - HowToFit: feature/howto-smoke-all-tutorials (commit 9b9a2ad, PR https://github.com/PyAutoLabs/HowToFit/pull/43)
+  - PyAutoHands: feature/howto-smoke-all-tutorials (commit 02a0fec, PR https://github.com/PyAutoLabs/PyAutoHands/pull/225)
 
 ## point-source-defaults-campaign
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/678

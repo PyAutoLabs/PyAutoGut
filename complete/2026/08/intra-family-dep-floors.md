@@ -1,6 +1,6 @@
 # Intra-family dependency floors — `autolens[optional]` resolved an ancient autofit
 
-Issue: PyAutoLabs/PyAutoLens#687 (left OPEN — see "What is still outstanding")
+Issue: PyAutoLabs/PyAutoLens#687 (CLOSED 2026-08-04 — see "What was still outstanding")
 
 ## What was wrong
 
@@ -82,16 +82,43 @@ was retracted on the issue: pip already prefers the higher released sibling
 (`2026.7.29.2` > `1.0.dev0`) over a local dev wheel, floors or no floors, since
 only `autolens` is pinned by that invocation.
 
-## What is still outstanding
+## What was still outstanding — DISCHARGED 2026-08-04, #687 CLOSED
 
 The floors take effect **only once the libraries are republished carrying
-them**. The RED `verify_install` leg does not clear until a release rehearsal
-republishes to TestPyPI and Check D re-runs against those wheels. Issue #687 is
-deliberately left OPEN until that happens.
+them**. The RED `verify_install` leg does not clear until a release republishes
+and Check D re-runs against those wheels, so issue #687 was deliberately left
+OPEN until that happened.
 
-Also unaddressed, from the same readiness snapshot: `PyAutoFit: 1 commit(s)
-behind origin`, `release validation FAILED (stage integrate)`, and the workspace
-smoke YELLOW (19 failed + 1 timeout, PyAutoHeart run 30790463134).
+It happened on **2026-08-04**: release `2026.8.4.1` published to PyPI at
+`11:43:29Z` (unyanked). Three proofs, in ascending strength:
+
+1. **Published metadata carries the floors** — `autolens` requires
+   `autogalaxy>=2026.7.29.2`; `autogalaxy` requires `autofit>=2026.7.29.2` +
+   `autoarray>=2026.7.29.2`; `autofit` and `autoarray` require
+   `autonerves>=2026.7.29.2`; the `[jax]` variants likewise.
+2. **Check D green in CI** — `integrate / verify_install_release` SUCCESS in
+   PyAutoHeart Release Integrate `30901054267` (2026-08-04T10:32), a run green
+   end-to-end (51 success / 2 skipped / 0 failure).
+3. **Control test re-run on python3.13** — the interpreter that originally
+   reproduced it (§"Why it stayed hidden": 3.13 fails, 3.12 passes). Fresh venv,
+   `PYTHONPATH` unset: `pip install "autolens[optional]"` rc=0, `import autolens`
+   rc=0, resolved `autofit 2026.8.4.1`, `af.Latent` present. The original
+   `pip rc=0 import rc=1` on `autofit 2026.4.30.582` no longer reproduces.
+
+Closed with this evidence: PyAutoLens#687 (comment `5184044932`).
+
+**Residual, not tracked anywhere else yet:** `autocti` on PyPI is still
+`2024.11.13.2`, its metadata carrying the pre-fix **exact pins**
+`autofit==2024.11.13.2` / `autoarray==2024.11.13.2`. PyAutoCTI#104 put the floors
+in source, but that package was not republished on this release cadence, so the
+fix is not live for `autocti` users. Out of scope for #687 (the `autolens` chain),
+but it means "the floors shipped" is true of four packages, not five.
+
+Also unaddressed at the time, from the same readiness snapshot: `PyAutoFit: 1
+commit(s) behind origin`, `release validation FAILED (stage integrate)`, and the
+workspace smoke YELLOW (19 failed + 1 timeout, PyAutoHeart run 30790463134). The
+integrate leg has since cleared — see the green run cited above and
+[[nautilus-1core-serial-pool]].
 
 ## Original prompt
 

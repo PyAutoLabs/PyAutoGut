@@ -1,18 +1,5 @@
 # Active Tasks
 
-## test-mode-samples-info-hook-contract
-- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1448
-- session: claude (CLI, 2026-08-04)
-- status: library-dev
-- worktree: ~/Code/PyAutoLabs-wt/test-mode-samples-info-hook-contract
-- prompt: active/multi_start_test_mode_samples_info_gap.md
-- origin: split out of autofit_workspace_test#83 (PR#84 merged f4c45c1) — the KeyError investigation surfaced that only 1 of 9 searches overrides `_test_mode_samples_info`, against a docstring that reads as an obligation.
-- finding: the asymmetry is CORRECT; the docstring is wrong. Reachability — no library path reads these keys under bypass (`SamplesMCMC.total_steps` samples/mcmc.py:200 and `SamplesNest.*` samples/nest.py:77-92 live on subclasses `_fit_bypass_test_mode` never constructs; it always builds SamplesPDF). Consumer sweep of all 11 workspace/tutorial repos finds exactly 2 direct `samples_info[...]` reads: autofit_workspace/scripts/searches/mcmc.py:335 (NUTS keys, NO `__Env__` → runs bypassed → why override #1260 exists) and the wst#83 script (asserts → now `ENV: real_search jax`). Nautilus/Dynesty/Emcee/Zeus have no bypassed consumer either; autofit_workspace/scripts/searches/mle.py uses MultiStartAdam but never touches samples_info.
-- rule: PRINTS → placeholders (override the hook); ASSERTS → `ENV: real_search` (no override, or the assert silently passes on a stub).
-- decision (human, 2026-08-04): DOCUMENT the rule in the base hook docstring. Rejected: adding an AbstractMultiStartGradient override (serves no consumer; a placeholder `total_steps` would let a future `assert total_steps < n_steps` pass on 0 — the wst#83 failure mode), and a unit test (cannot express "the others deliberately have none" without freezing the sampler roster).
-- claim-note: BOTH PyAutoFit claims in active.md were stale and were released — point-source-defaults-campaign (#1441 merged 2026-08-01T12:47:32Z) and nautilus-1core-serial-pool (#1443 merged 2026-08-01T19:12:47Z, merge commit 5bf32dab on origin/main). The latter task looks fully shipped and wants a completion pass of its own.
-- repos:
-
 ## point-source-defaults-campaign
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/678
 - session: claude --resume ee42120d-c794-4565-804e-d7576d50c37c

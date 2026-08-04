@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-875 records across 7 buckets.
+876 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -30,6 +30,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [potential-correction-env-declaration](2026/08/potential-correction-env-declaration.md)
 - [potential-correction-validation](2026/08/potential-correction-validation.md)
 - [small-datasets-loader-pixel-scales](2026/08/small-datasets-loader-pixel-scales.md)
+- [test-mode-samples-info-hook-contract](2026/08/test-mode-samples-info-hook-contract.md) — `NonLinearSearch._test_mode_samples_info()`'s docstring told subclasses
 
 ## 2026/07/ep_scale_collapse_assets
 

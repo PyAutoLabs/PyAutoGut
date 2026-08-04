@@ -1,3 +1,51 @@
+## multi-start-auto-convergence-real-search
+- issue: https://github.com/PyAutoLabs/autofit_workspace_test/issues/83
+- completed: 2026-08-04
+- workspace-pr: https://github.com/PyAutoLabs/autofit_workspace_test/pull/84 (MERGED as f4c45c1)
+- summary: `scripts/jax_assertions/multi_start_gradient_auto_convergence.py` failed
+  workspace-smoke with `KeyError: 'total_steps'` (PyAutoHeart run 30858578587).
+  Root cause was NOT a library contract break: the script declared `ENV: jax`,
+  which releases only `PYAUTO_DISABLE_JAX`, so `profile_smoke.yaml`'s
+  `PYAUTO_TEST_MODE: "2"` default still applied and `_fit_bypass_test_mode`
+  skipped the sampler. The bypass builds `samples_info` from a stub plus
+  `_test_mode_samples_info()`, which `AbstractMultiStartGradient` does not
+  override (only `BlackJAXNUTS` does), so `total_steps` was never written.
+  Fixed on the workspace side with `ENV: real_search jax`, matching the three
+  `scripts/searches/` siblings; also dropped the stale `af.` prefix from
+  `af.AbstractMultiStartGradient` in the module docstring (not exported on `af`;
+  trips the PyAuto API gate). Docstring-only diff, no executable code changed.
+- latent-not-regression: identical FAIL in the prior sweep (run 30790463134,
+  2026-08-03T06:33Z). Pre-migration `profile_smoke.yaml` gave `jax_assertions/`
+  only `unset: [PYAUTO_DISABLE_JAX]`, never `PYAUTO_TEST_MODE`, so the #187/#189
+  declaration migration was a true no-op here — the script was broken under the
+  smoke profile from the day it was authored. Not in `smoke_tests.txt`, so the
+  per-PR gate was never affected; only the full-profile sweep runs it.
+- library-decision: adding `_test_mode_samples_info()` to
+  `AbstractMultiStartGradient` was considered and REJECTED (human-confirmed) — a
+  placeholder `total_steps` would convert a loud KeyError into a vacuous
+  `0 < 300` pass followed by a confusing truth-recovery failure, since the bypass
+  returns the prior median and `LogUniformPrior(1e-2, 1e2)`'s median is 1.0, not
+  the asserted 25. Filed instead as
+  `draft/bug/autofit/multi_start_test_mode_samples_info_gap.md`.
+- validation: jax_assertions sweep 11/11 PASS under per-script resolved envs;
+  `validate_env_profiles` 0 errors / 0 warnings with --strict-derivation
+  --strict-markers --strict-declarations. GOTCHA: a repeat run of this script
+  takes ~3.3s instead of ~10s because PyAutoFit RESUMES the completed fit from
+  the existing output folder — the search does not re-run. Clear
+  `output/jax_assertions/multi_start_gradient_auto_convergence` before timing or
+  trusting a pass; the fresh-output runs (10.0s and 11.1s, both EXIT=0) are the
+  real evidence.
+- heart: shipped under human-acknowledged YELLOW (score 70, no RED) — workspace
+  validation not passing (a reason that named THIS script), tenant-firewall
+  manifest drift, stale release validation.
+- side-cleanup: released `point-source-defaults-campaign`'s stale
+  `autofit_workspace_test` claim (its regression-test PR #81 merged
+  2026-08-01T12:47:34Z but the `repos:` line still read "PR #81 OPEN",
+  contradicting that entry's own status line and firing the worktree conflict
+  guard). Its other claims untouched.
+
+## Original prompt
+
 # multi_start_gradient_auto_convergence.py KeyError: 'total_steps' in workspace-smoke
 
 Type: bug

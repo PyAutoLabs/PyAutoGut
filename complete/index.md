@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-885 records across 7 buckets.
+886 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -37,6 +37,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [simulator-util-to-af-ex](2026/08/simulator-util-to-af-ex.md) — moved the four 1D-Gaussian simulator helpers out of the duplicated
 - [small-datasets-loader-pixel-scales](2026/08/small-datasets-loader-pixel-scales.md)
 - [spawn-autonomy-log-generated](2026/08/spawn-autonomy-log-generated.md)
+- [spawn-drift-self-heal](2026/08/spawn-drift-self-heal.md)
 - [spawn-empty-body-privacy-fix](2026/08/spawn-empty-body-privacy-fix.md)
 - [spawn-github-instance-automation](2026/08/spawn-github-instance-automation.md)
 - [test-mode-samples-info-hook-contract](2026/08/test-mode-samples-info-hook-contract.md) — `NonLinearSearch._test_mode_samples_info()`'s docstring told subclasses

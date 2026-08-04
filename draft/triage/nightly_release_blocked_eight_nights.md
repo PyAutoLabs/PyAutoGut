@@ -38,6 +38,10 @@ A single script fails the `mode=release` leg and the night stops. The script
 - 2026-08-03 — `autofit_test graphical/ep.py`
 - 2026-08-01, 07-31, 07-30, 07-28 — no script named in the summary line
 
+> **The four unnamed nights DO name their scripts** — in the dispatched
+> PyAutoHeart run, not in the Brain log. See "Class A triaged" below; the
+> summary line was the only thing missing.
+
 **Class B — passed the readiness gate, then the LIVE release failed (2 nights).**
 These are the serious ones: the gate said GREEN, step 6 dispatched a real
 release, and the release run failed.
@@ -83,13 +87,100 @@ matters.
    test) and reports script failures and non-script legs as separate segments:
    `1 failed: autolens database/start_here.py; verify_install FAILED`.
    11 tests, shaped from the real 2026-08-04 `stage_report.json`.
-3. **STILL OPEN — the actual releases are still blocked.** Triage the Class A
-   rotating script failures (are they the same underlying env/profile issue, or
-   genuinely different scripts each night?) and the Class B gate-vs-release
-   disagreement. Related open work: PyAutoHands#161 (env-profile +
-   validation-gate redesign), PyAutoHands#127 (nightly live releases behind an
-   activity gate). Nothing in item 1 or 2 unblocked a single night — they only
-   made the signal legible.
+3. ~~STILL OPEN — the actual releases are still blocked.~~ **TRIAGED
+   2026-08-04** (evening, after run 30; no night has run since). The two
+   questions this item posed are both answered below. What is left is a short
+   list of named, separately-tracked bugs — not an unexplained streak.
+
+## Class A triaged — five causes, not one (2026-08-04)
+
+Read from the Heart Stage-3 job logs for all six Class A nights. **Genuinely
+different scripts each night, not one env/profile issue wearing masks** — but
+most of the set was already fixed or tracked by the time the streak was noticed.
+
+| Night | Failing legs | Cause | Status |
+|---|---|---|---|
+| 07-28 | 3 × `FileNotFoundError: dataset/…/data.fits` (autogalaxy/multi, autolens/imaging) | auto-simulate guards pointed at the wrong simulator | **FIXED** — see below |
+| 07-30 | `interferometer/start_here.py` in **both** autolens and autogalaxy shards; `group/start_here.py` TIMEOUT | same OOM as 07-31, message eaten by the JAX traceback filter | `draft/bug/autolens/interferometer_release_leg_oom.md` |
+| 07-31 | `interferometer/start_here.py` → `RESOURCE_EXHAUSTED: Out of memory allocating 85898814480 bytes`; `delaunay.py` TIMEOUT | ~86 GB single allocation; XLA hang | as above; autolens_workspace_test#245 |
+| 08-01 | `guides/modeling/advanced/hierarchical.py` TIMEOUT; `delaunay.py` TIMEOUT | Nautilus deadlock; XLA hang | hierarchical **FIXED** (PyAutoFit#1443); #245 |
+| 08-03 | `graphical/ep.py` — "`log_likelihood_function` is always returning `nan`" | EP initializer | `draft/bug/autofit/graphical_ep_nan_likelihood_release_leg.md` |
+| 08-04 | `guides/results/database/start_here.py` `IndexError` | `samples_weight_threshold` pruning | **FIXED + MERGED** 08-04 09:40 — autolens_workspace#465, autogalaxy_workspace#202 |
+
+**The streak began with a self-inflicted regression.** Run 22 (07-27 05:52) was
+the last success. `autolens_workspace 6f1a8b41` — "migrate 116 raw
+auto-simulate guards to `should_simulate`" (#354) — merged 07-27 15:00, that
+afternoon, and pointed guards at simulators that don't write the dataset the
+script then loads. The 07-28 05:16 night is the first run after it, and it fails
+exactly there. Both corrective fixes (`bb272a6a` #364 and autogalaxy_workspace
+`f1ae4c3` #175) merged 07-28 12:37, ~7 hours too late for that night, and the
+cluster never recurred. Nothing to file.
+
+Only two of the six nights need new work, and both are now filed as drafts.
+
+## Class B triaged — it is a flaky test, not a gate disagreement (2026-08-04)
+
+The 08-02 failure resolves completely. PyAutoHands run 30736527569, job
+`release_test_pypi (3.12, PyAutoLabs/PyAutoFit, main, PyAutoFit)`:
+
+```
+FAILED test_autofit/interpolator/test_covariance.py::test_variable_and_constant
+E  assert 30.121646313498022 == 25.0 ± 5
+====== 1 failed, 1641 passed, 2 skipped, 425 warnings in 70.32s ======
+```
+
+`test_variable_and_constant` (`test_autofit/interpolator/test_covariance.py:122`)
+builds its samples from **unseeded** `np.random.random()` and asserts a fixed
+`abs=5.0` tolerance. 30.12 against a 30.0 boundary is a marginal miss.
+
+So the framing above — "either the gate's evidence is stale relative to what
+`release.yml` actually runs, or the two disagree about what 'the libraries pass'
+means" — is wrong, at least for 08-02. Neither. The gate was right and the
+release run drew a different random sample. **This matters more than the fix:
+it removes the evidence that was about to justify a gate-vs-release redesign.**
+Filed as `draft/bug/autofit/covariance_interpolator_test_unseeded_rng.md`; a
+seed would have shipped 2026.8.2.1. The 07-29 release run is no longer
+resolvable through the API, so it stays unattributed — do not assume it was the
+same cause.
+
+## A second blocker item 2 masked (2026-08-04)
+
+`verify_install_release` failed on **08-03 and 08-04**, alongside the script
+failures. Item 2 read the `None verify_install` in the summary as a formatter
+artifact. It was — but it was sitting on top of a genuinely failing leg, and
+fixing the formatter without noticing that would have left a blocker invisible
+for a second time.
+
+Check D — `pip install "autolens[optional]==2026.8.4.1.dev70101"` on Python
+3.13.14 — resolved **autofit 2026.4.30.582** and the retired **autoconf
+2026.7.15.1**, then died on `class LatentGalaxy(af.Latent)` →
+`AttributeError: module 'autofit' has no attribute 'Latent'`. That is exactly
+the PyAutoLens#687 extras-backtracking failure, and the floors that fix it are
+in source (PyAutoLens `c5381651c`, PyAutoGalaxy `07243338`, both 2026-08-03
+19:01) — but the newest *published* autogalaxy at 08-04 05:15 was 2026.8.2.1,
+built before them, so the chain still had a hole. The 2026.8.4.1 wheels released
+later that day do carry the floors (verified on PyPI: `autofit>=2026.7.29.2`,
+`autoarray>=2026.7.29.2`, `autogalaxy>=2026.7.29.2`).
+
+**Prediction to check, not a conclusion: this should self-heal on the next
+night.** If Check D fails again on 08-05, the floors are not the whole story and
+this needs its own prompt.
+
+## What is actually left
+
+- `draft/bug/autofit/covariance_interpolator_test_unseeded_rng.md` — Class B
+  root cause. Smallest and highest value: it alone unblocks a live release.
+- `draft/bug/autolens/interferometer_release_leg_oom.md` — filed 07-31, never
+  issued; now updated with the 07-30 both-workspaces recurrence.
+- `draft/bug/autofit/graphical_ep_nan_likelihood_release_leg.md` — new.
+- autolens_workspace_test#245 (delaunay hang) — already tracked, no action here.
+- Confirm on 08-05 that Check D self-healed and that PyAutoBrain#196 renders the
+  night correctly.
+
+Related open work referenced by the original item 3: PyAutoHands#161
+(env-profile + validation-gate redesign), PyAutoHands#127 (nightly live releases
+behind an activity gate). Note that the Class B finding weakens the case for
+#161's validation-gate half — the gate was not wrong.
 
 Do NOT convert this into a manual release drive — `AUTONOMY.md` forbids
 converting a manual release into the scheduled-nightly exception, and

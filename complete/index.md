@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-888 records across 7 buckets.
+889 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -32,6 +32,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [nautilus-1core-serial-pool](2026/08/nautilus-1core-serial-pool.md) — corrective for the Heart RED "release validation FAILED (stage
 - [nufft-parity-full-datasets](2026/08/nufft-parity-full-datasets.md)
 - [plot-array-stale-kwargs](2026/08/plot-array-stale-kwargs.md)
+- [point-source-defaults-campaign](2026/08/point-source-defaults-campaign.md) — took the point-source likelihood options from "several undocumented
 - [potential-correction-env-declaration](2026/08/potential-correction-env-declaration.md)
 - [potential-correction-validation](2026/08/potential-correction-validation.md)
 - [pyautobrain-pr-test-ci](2026/08/pyautobrain-pr-test-ci.md) — auto-closed by the merge

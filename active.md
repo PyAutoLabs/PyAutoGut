@@ -73,3 +73,17 @@
 - repo-unclaimed: PyAutoReduce is the only affected repo, listed on this single line deliberately and NOT as a 2-space `  - PyAutoReduce` sub-bullet, because worktree_check_conflict reads any such bullet as a live claim — this task holds no claim and must not block other PyAutoReduce work.
 - ordering: `draft/research/pyautoreduce/acceptance_noise_rebaseline.md` must run AFTER this lands — a bits change moves the IVM weights and therefore the noise maps, so its parity numbers would need redoing otherwise. Related but distinct, do not fold in: #61 (driz_cr flux erosion / LACosmic) and #62 (tier-1 ePSF from the CR-rejected mosaic).
 - prompt: active/hst_dq_bits_dial.md
+
+## spawn-empty-body-privacy-fix
+- issue: https://github.com/PyAutoLabs/PyAutoMind/issues/118
+- session: claude --resume 8c223768-7ebb-48b7-9aeb-7d6570b87d81
+- status: library-dev — `spawn.py::empty_body()` implements the spec's EMPTY as "keep line 1" instead of "keep the header line", so live registry entries are stamped into the public fresh-slate templates (violates spawn_spec.md:61 privacy invariant).
+- worktree: ~/Code/PyAutoLabs-wt/spawn-empty-body-privacy-fix
+- prompt: active/spawn_empty_body_leaks_registry_entries.md
+- leak-status: `ideas.md`'s first line (`- lens_calc_zero_contour_jax autolens workspace guide.`) is ALREADY PUBLISHED in PyAutoMind-template (commit 3424dba1, 2026-07-27). `planned.md`'s `## rhayes-audit-validation-phases-2-4` would ship on the next regenerate. Do NOT run `/spawn --apply` until this lands — a plain regenerate publishes the second leak.
+- why-canary-missed-it: CANARY_TOKENS is dataset names only (slacs/b1938/cosmos_web_ring/smbh_binary/arctic). The spec's own example list (spawn_spec.md:64) names `Nightingale`, a person's name; no name token was ever implemented, and the spec-mandated privacy test does not exist in this repo.
+- design-note: a heading-shape test does NOT work — `## rhayes-audit-validation-phases-2-4` is a valid `##` heading, so shape cannot separate a title from a registry entry. An explicit EMPTY_TITLES map is required for the named registry files; glob-matched `bibliography/*` gets a generated header comment (spec rule 2 already says so).
+- sizing-note: Brain said large (score 9) and proposed splitting into phases; NOT taken — score is prose-driven (the prompt is 132 lines of evidence), repos_affected is 1, and the change is one function + one token list + one new test.
+- chronic-CI-cause: keying EMPTY on line 1 couples the template to `planned.md`/`ideas.md`, which ordinary daily prompt work rewrites — so `Spawn Drift` goes red on registry churn alone. The separate "no generator is wired" problem (every green run was a manual dispatch fired seconds after a human `--apply`) is deliberately a FOLLOW-UP prompt, not this task.
+- repos:
+  - PyAutoMind: feature/spawn-empty-body-privacy-fix

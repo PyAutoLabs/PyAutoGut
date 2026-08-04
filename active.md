@@ -86,3 +86,15 @@
 - repo-unclaimed: PyAutoReduce is the only affected repo, listed on this single line deliberately and NOT as a 2-space `  - PyAutoReduce` sub-bullet, because worktree_check_conflict reads any such bullet as a live claim — this task holds no claim and must not block other PyAutoReduce work.
 - ordering: `draft/research/pyautoreduce/acceptance_noise_rebaseline.md` must run AFTER this lands — a bits change moves the IVM weights and therefore the noise maps, so its parity numbers would need redoing otherwise. Related but distinct, do not fold in: #61 (driz_cr flux erosion / LACosmic) and #62 (tier-1 ePSF from the CR-rejected mosaic).
 - prompt: active/hst_dq_bits_dial.md
+
+## spawn-drift-self-heal
+- issue: https://github.com/PyAutoLabs/PyAutoMind/issues/125
+- session: claude --resume 8c223768-7ebb-48b7-9aeb-7d6570b87d81
+- status: library-dev — the last piece of the #118 arc: Spawn Drift detects drift but nothing regenerates, so every green run in its history was a manual dispatch fired 16-19s after a human `--apply`.
+- worktree: ~/Code/PyAutoLabs-wt/spawn-drift-self-heal
+- prompt: active/spawn_drift_has_no_generator.md
+- design (from the filed prompt): on schedule, regenerate and open a PR on the affected TEMPLATE repo — NOT a bot push. These are force-synced generated views, so an automated push is a force-push to a published main; #118 (a leak that sat public for 8 days) is the argument for a human seeing what is about to be published.
+- safety-interlock: `--check` currently collapses every failure into exit 1. Splitting it — 1 = content drift (auto-fixable), 2 = UNMATCHED/canary (human decision) — is what stops the self-heal proposing to publish a leak. Never auto-PR on exit 2.
+- EXTERNAL UNKNOWN: opening a PR on PyAutoMind-template needs write access there; secrets.GITHUB_TOKEN is scoped to PyAutoMind only. Org pattern is secrets.PAT_PYAUTOLABS (nightly-release.yml, PyAutoHands/release.yml). Whether that PAT grants write to the two template repos CANNOT be verified locally — only a real run reveals it. Workflow must fail loudly and actionably rather than silently no-op.
+- repos:
+  - PyAutoMind: feature/spawn-drift-self-heal

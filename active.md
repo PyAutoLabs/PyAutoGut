@@ -6,6 +6,7 @@
 - worktree: ~/Code/PyAutoLabs-wt/nufft-parity-full-datasets
 - prompt: active/nufft_parity_runs_at_16x16_under_smoke.md
 - repos:
+  - autolens_workspace_test: feature/nufft-parity-full-datasets
 - why: smoke-only FAIL of scripts/interferometer/nufft.py. Diagnosis is NOT a too-tight tolerance and NOT a transform regression — the script has no `__Env__` declaration, so `PYAUTO_SMALL_DATASETS=1` caps its "256x256 @ 0.1" mask to (16,16) @ 0.6" / 80 unmasked px. pynufft's gridding (Jd=(6,6), oversample 2) is hopeless there.
 - measured on clean main e6eb41c, (b) `max|Δ| pynufft − DFT` / `|vis_DFT|_max`: bare (true 256x256) 6.0959e-02 PASS (tol 1e-1) · full smoke profile (actually 16x16) 8.9643e-01 FAIL · smoke minus PYAUTO_SMALL_DATASETS 6.0959e-02 PASS in 12.0s (vs 9.9s for the failing run). nufftax exact in both (3.0e-14 / 1.7e-14) — only the pynufft leg trips.
 - surfaced now because 6a6156c (2026-07-28) restored the real pynufft leg; before it the comparison was nufftax-vs-itself reporting 0.0e+00.

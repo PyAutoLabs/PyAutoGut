@@ -79,3 +79,5 @@
 - sizing-override: Brain returned too-large (score 10) -> split-into-4-phases. Driven by repo count (2), prompt length and keyword hits in the prompt's own diagnosis prose; measures no property of the change. Real change = one line + comment per script, one guard block, one no_run.yaml line. One task, one small PR per repo.
 - heart-context: Heart NOT ready at start — release validation integrate:fail (this failure among others), install verify D failed, 3 test-run failures. All pre-existing; this change does not touch them. Ending at PR-open per human instruction; merge stays human.
 - repos:
+  - autolens_workspace: feature/database-guide-sample-weight-threshold
+  - autogalaxy_workspace: feature/database-guide-sample-weight-threshold

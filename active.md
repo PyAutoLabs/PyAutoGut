@@ -2,7 +2,7 @@
 
 ## mge-sigma-min-workspace-sweep
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/466
-- status: issued 2026-08-04, phase 1 starting — no branch/worktree yet, no edits made
+- status: workspace-dev — phase 1 in flight in the worktree; standalone mode (upstream PyAutoGalaxy#549 is already MERGED, so there is no library PR to follow). NOTE the PR needs `pending-release`: `sigma_min` does not exist in the released PyAutoGalaxy, only on main.
 - prompt: active/mge_sigma_min_workspace_sweep.md
 - worktree: ~/Code/PyAutoLabs-wt/mge-sigma-min-workspace-sweep
 - upstream: PyAutoGalaxy#549 MERGED 2026-08-04 (13d3023c) added `sigma_min` to `mge_model_from` (default 1e-4) and `mge_point_model_from` (default 0.01). Library defaults deliberately unchanged so archived runs keep their PyAutoFit identifiers — verified bit-identical across 1440 configs, and locked by a regression test in that PR. Nothing improves for users until the examples pass the argument; this task is that sweep.

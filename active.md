@@ -103,7 +103,11 @@
 ## spawn-empty-body-privacy-fix
 - issue: https://github.com/PyAutoLabs/PyAutoMind/issues/118
 - session: claude --resume 8c223768-7ebb-48b7-9aeb-7d6570b87d81
-- status: library-dev — `spawn.py::empty_body()` implements the spec's EMPTY as "keep line 1" instead of "keep the header line", so live registry entries are stamped into the public fresh-slate templates (violates spawn_spec.md:61 privacy invariant).
+- status: library-shipped, awaiting-merge — PR #119 open (pending-release). `spawn.py::empty_body()` implemented the spec's EMPTY as "keep line 1" instead of "keep the header line", so live registry entries are stamped into the public fresh-slate templates (violates spawn_spec.md:61 privacy invariant).
+- library-pr: https://github.com/PyAutoLabs/PyAutoMind/pull/119
+- heart-ack (2026-08-04, YELLOW at ship): workspace validation not passing (3 failed, 3 timeout, cloud#30858578587); manifest drift: tenant firewall (organ code) — 2 mismatch(es) vs PyAutoMind/repos.yaml; release validation stale: source moved since rehearsal (PyAutoFit, PyAutoGalaxy, PyAutoLens). All unrelated to this change; ack does not extend to new reasons.
+- review-round-2: independent Codex review found the FIRST pass reintroduced the leak via KEEP-copied `tests/` + a spawn.py comment quoting the live slug, hidden by a wholesale canary exemption on both files. Fixed in cb2f60c (fictional fixtures, runtime-derived tokens, exemption removed, end-to-end generate_all() tests added). Confirmed against a generated tree before and after.
+- POST-MERGE ACTION: run `/spawn --apply` to force-sync both templates. Expect 13 drifts cleared (3 leak fixes, 2 bibliography headers, new tests/ dir, 2 changed files, 5 pre-existing source drifts). Do NOT run it before merge — live main still carries the old generator.
 - worktree: ~/Code/PyAutoLabs-wt/spawn-empty-body-privacy-fix
 - prompt: active/spawn_empty_body_leaks_registry_entries.md
 - leak-status: `ideas.md`'s first line (`- lens_calc_zero_contour_jax autolens workspace guide.`) is ALREADY PUBLISHED in PyAutoMind-template (commit 3424dba1, 2026-07-27). `planned.md`'s `## rhayes-audit-validation-phases-2-4` would ship on the next regenerate. Do NOT run `/spawn --apply` until this lands — a plain regenerate publishes the second leak.

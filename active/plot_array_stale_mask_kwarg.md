@@ -45,14 +45,27 @@ output -> REJECTED (TypeError)
 
 **The caller is wrong, not the signature.** `aplt.plot_array` resolves to
 `autogalaxy/util/plot_utils.py:plot_array` (re-exported by both
-`autogalaxy/plot/__init__.py` and `autolens/plot/__init__.py`). That wrapper
-deliberately owns all preprocessing — its docstring states "All array
-preprocessing (zoom, mask-edge extraction, native/extent unpacking) is handled
-internally so callers never need to duplicate it". It derives the mask overlay
-from `array.mask` via `auto_mask_edge` and passes it down to the lower-level
-`autoarray.plot.array.plot_array`, which *does* take a `mask` parameter — but
-as `(N, 2)` mask-edge coordinates, not a `Mask2D`. So `mask=` was never part of
-the `aplt` API; it belongs to the private layer below it.
+`autogalaxy/plot/__init__.py` and `autolens/plot/__init__.py`). The mask
+overlay is derived automatically one layer down: the wrapper does **not**
+forward any `mask` argument, and `autoarray/plot/array.py:128` does
+`if mask is None: mask = auto_mask_edge(array)`. So `mask=` was never part of
+the `aplt` API — the lower-level `autoarray.plot.array.plot_array` does take a
+`mask` parameter, but as `(N, 2)` edge coordinates, not a `Mask2D`.
+
+**Why the author reached for it, and why moving the call fixes it.**
+`auto_mask_edge` returns `None` for a fully-unmasked array, so no overlay is
+drawn. The HowToGalaxy call sits *before* `apply_mask`, where `dataset.data` is
+still unmasked — hence nothing to see, hence the `mask=mask` kwarg. Verified
+empirically on the installed stack:
+
+```
+unmasked   -> mask.is_all_false: True  | auto_mask_edge: None
+after mask -> mask.is_all_false: False | auto_mask_edge: (156, 2)
+```
+
+Moving the plot below `dataset.apply_mask(mask=mask)` therefore restores the
+intended mask-boundary overlay with no kwarg at all — a strictly better result
+than deleting the kwarg (which would show no mask).
 
 **Sibling sweep — AST scan of every `.py` and `.ipynb` in the workspace** (all
 ~25 repos, matching `plot_array` calls whose kwargs fall outside the wrapper
@@ -74,6 +87,9 @@ notebook) — HowToLens and HowToFit are clean. The `output=aplt.Output(...)`
 sites are a second, independent stale-API drift against the same wrapper
 (current API is `output_path` / `output_filename` / `output_format`); they live
 in a developer repo that is not smoke-tested, which is why they never surfaced.
+Those sites are in fact doubly stale: `aplt.Output` no longer exists either
+(`hasattr(aplt, "Output") == False`), so they raise `AttributeError` *before*
+ever reaching the `TypeError`.
 The `plot_array(name=...)` hits in
 `autofit_workspace_developer/projects/cosmology/src/analysis.py` are a **false
 positive** — a local nested `def plot_array(array, name, ...)` at line 134,
@@ -85,17 +101,22 @@ this is a real user-facing break in a public teaching notebook.
 
 ## Fix direction
 
-Canonical idiom, from the direct sibling `HowToLens/scripts/chapter_4_pixelizations/tutorial_3_inversions.py:76`
-and from `autogalaxy_workspace` (e.g. `markdown/ellipse/fit.md:158`): plot the
-data with no `mask=` kwarg, and if the mask overlay is wanted, plot *after*
-`apply_mask` so the wrapper derives the edge from `array.mask` itself. The
-HowToGalaxy call sits immediately before `dataset.apply_mask(mask=mask)`, so
-preserving the author's intent (show the mask over the data) means moving the
-plot below that line rather than merely deleting the kwarg — decide during
-planning which reads better in the tutorial narrative.
+Canonical idiom, from `autogalaxy_workspace` (`markdown/ellipse/fit.md:158`,
+"Image Data With Mask Applied"): plot with **no** `mask=` kwarg, *after*
+`apply_mask`, so the overlay is auto-derived. Move the HowToGalaxy call below
+`dataset = dataset.apply_mask(mask=mask)` and drop the kwarg — the narrative
+already reads "We now create the masked imaging", so the plot lands naturally
+after it as the visual confirmation.
 
-Also update the 7 `output=` sites in `autolens_workspace_developer` to the
-`output_path`/`output_filename`/`output_format` triple.
+Note the direct sibling
+`HowToLens/scripts/chapter_4_pixelizations/tutorial_3_inversions.py:76` plots
+*before* `apply_mask` with no kwarg, so it draws no mask at all. It does not
+crash, so it is out of scope here, but it is the weaker pattern — worth a
+follow-up rather than copying.
+
+Also update the 7 `output=aplt.Output(path=…, filename=…, format=…)` sites in
+`autolens_workspace_developer` to the flat
+`output_path=` / `output_filename=` / `output_format=` triple.
 
 Notebooks are **generated** — edit `scripts/` only, then regenerate
 `notebooks/`; never hand-edit the `.ipynb`.

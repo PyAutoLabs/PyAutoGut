@@ -1,5 +1,17 @@
 # Active Tasks
 
+## plot-array-stale-kwargs
+- issue: https://github.com/PyAutoLabs/HowToGalaxy/issues/56
+- session: claude --resume fa7837d8-5037-412b-9ed9-9c038ab58431
+- status: workspace-dev
+- worktree: ~/Code/PyAutoLabs-wt/plot-array-stale-kwargs
+- prompt: active/plot_array_stale_mask_kwarg.md
+- root-cause: NOT a library break, and NOT fixed by 2026.8.4.1 (PyAutoGalaxy main is at release commit bf91c570 and still rejects `mask`). `aplt.plot_array` -> `autogalaxy/util/plot_utils.py:124`, which has no `mask` param; the overlay is auto-derived one layer down at `autoarray/plot/array.py:128` (`if mask is None: mask = auto_mask_edge(array)`). `auto_mask_edge` returns None for an all-false mask, so the pre-`apply_mask` call drew nothing — which is why the author added `mask=mask`. Measured: unmasked -> None; after apply_mask -> (156, 2) edge coords. Reproduced locally, identical trace to cloud#30858578587.
+- fix: move the call below `dataset.apply_mask(mask=mask)` and drop the kwarg (restores the intended overlay, better than deleting it); regenerate notebooks + navigator catalogue. AST sweep of all ~25 repos found `mask=` at exactly ONE logical site — HowToLens and HowToFit are clean.
+- scope-note (human-confirmed 2026-08-04): also repairs `autolens_workspace_developer`'s `aplt.Output` drift. `aplt.Output` no longer exists on the autolens/autogalaxy plot namespace (survives only as `autoarray.plot.Output`); removal was deliberate, documented in autolens_assistant/AGENTS.md:218. Fixing only the 7 `plot_array(output=)` sites would leave those scripts still crashing on adjacent `subplot_tracer(output=aplt.Output(...))` calls, so the unit of repair is that repo's whole drift — 10 files.
+- deferred: same drift in autocti_workspace_test (27 files, UNVERIFIED — autocti not installed locally, its plot namespace may still export Output) and euclid_strong_lens_modeling_pipeline/tools (2 files). Follow-up prompt to be filed, not dropped.
+- repos:
+
 ## multi-start-auto-convergence-real-search
 - issue: https://github.com/PyAutoLabs/autofit_workspace_test/issues/83
 - session: claude (CLI, 2026-08-04)

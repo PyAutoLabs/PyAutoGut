@@ -1,5 +1,20 @@
 # Active Tasks
 
+## mge-sigma-min-workspace-sweep
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/466
+- status: issued 2026-08-04, phase 1 starting — no branch/worktree yet, no edits made
+- prompt: active/mge_sigma_min_workspace_sweep.md
+- worktree: ~/Code/PyAutoLabs-wt/mge-sigma-min-workspace-sweep
+- upstream: PyAutoGalaxy#549 MERGED 2026-08-04 (13d3023c) added `sigma_min` to `mge_model_from` (default 1e-4) and `mge_point_model_from` (default 0.01). Library defaults deliberately unchanged so archived runs keep their PyAutoFit identifiers — verified bit-identical across 1440 configs, and locked by a regression test in that PR. Nothing improves for users until the examples pass the argument; this task is that sweep.
+- phases: 1 autolens_workspace (234 helper call lines + 23 hand-rolled ladder files — all the judgement) → 2 the mirror (autogalaxy_workspace, HowToLens, HowToGalaxy, autogalaxy_assistant prose). Phase 2 starts only once phase 1 merges.
+- source-rule (human decision 2026-08-04): source-plane MGEs are EXCLUDED and keep the -4 default — the source is lensed, so magnification samples the source plane far finer than the image pixel scale and a pixel-scale floor would truncate real source structure. Only image-plane (deflector / galaxy light) MGEs take `sigma_min=dataset.pixel_scales[0] / 10.0`.
+- classification-trap: this is NOT a regex sweep. Of 234 call lines: 59 explicitly source-named, 29 `lens_bulge`, 143 bare `bulge` needing per-call-site tracing to `lens=`/`source=af.Model(al.Galaxy...)`. scripts/multi_galaxy/modeling.py reuses the SAME name `bulge` for a lens galaxy (line 451) and the source (line 478) — a blind sweep wrongly ties ~100 source MGEs to the pixel scale.
+- OPEN QUESTION (blocks only the hand-rolled source ladders, ~10-14 sites; rest of phase 1 unblocked): helper call sites always inherited -4, but the hand-rolled teaching ladders were written at -2. Leave them at -2 (preserve behaviour) or move to -4 (match the helper they exist to teach)? Recommended: -4.
+- out-of-scope this pass: autolens_workspace_test, autogalaxy_workspace_test, autolens_workspace_developer, autolens_profiling, euclid_strong_lens_modeling_pipeline — changed ladders change fit results there, needs separate re-baselining decision.
+- sizing-note: Brain said too-large (16) and proposed design/core-API/examples/docs phases; NOT taken — score is prose-driven, the API shipped in #549, no design remains. Human-scoped 2-phase split by repo kept (point-source-defaults-campaign precedent).
+- repos:
+  - autolens_workspace: feature/mge-sigma-min-workspace-sweep (phase 1)
+
 ## point-source-defaults-campaign
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/678
 - session: claude --resume ee42120d-c794-4565-804e-d7576d50c37c

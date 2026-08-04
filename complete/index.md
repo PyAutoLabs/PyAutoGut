@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-874 records across 7 buckets.
+875 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -26,6 +26,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [llms-txt-census-fixes](2026/08/llms-txt-census-fixes.md)
 - [missing-auto-simulate-guards](2026/08/missing-auto-simulate-guards.md)
 - [multi-start-auto-convergence-real-search](2026/08/multi-start-auto-convergence-real-search.md) — `scripts/jax_assertions/multi_start_gradient_auto_convergence.py` failed
+- [plot-array-stale-kwargs](2026/08/plot-array-stale-kwargs.md)
 - [potential-correction-env-declaration](2026/08/potential-correction-env-declaration.md)
 - [potential-correction-validation](2026/08/potential-correction-validation.md)
 - [small-datasets-loader-pixel-scales](2026/08/small-datasets-loader-pixel-scales.md)

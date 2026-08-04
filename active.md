@@ -13,29 +13,6 @@
 - claim-note: BOTH PyAutoFit claims in active.md were stale and were released — point-source-defaults-campaign (#1441 merged 2026-08-01T12:47:32Z) and nautilus-1core-serial-pool (#1443 merged 2026-08-01T19:12:47Z, merge commit 5bf32dab on origin/main). The latter task looks fully shipped and wants a completion pass of its own.
 - repos:
 
-## plot-array-stale-kwargs
-- issue: https://github.com/PyAutoLabs/HowToGalaxy/issues/56
-- session: claude --resume fa7837d8-5037-412b-9ed9-9c038ab58431
-- status: workspace-dev
-- worktree: ~/Code/PyAutoLabs-wt/plot-array-stale-kwargs
-- prompt: active/plot_array_stale_mask_kwarg.md
-- root-cause: NOT a library break, and NOT fixed by 2026.8.4.1 (PyAutoGalaxy main is at release commit bf91c570 and still rejects `mask`). `aplt.plot_array` -> `autogalaxy/util/plot_utils.py:124`, which has no `mask` param; the overlay is auto-derived one layer down at `autoarray/plot/array.py:128` (`if mask is None: mask = auto_mask_edge(array)`). `auto_mask_edge` returns None for an all-false mask, so the pre-`apply_mask` call drew nothing — which is why the author added `mask=mask`. Measured: unmasked -> None; after apply_mask -> (156, 2) edge coords. Reproduced locally, identical trace to cloud#30858578587.
-- fix: move the call below `dataset.apply_mask(mask=mask)` and drop the kwarg (restores the intended overlay, better than deleting it); regenerate notebooks + navigator catalogue. AST sweep of all ~25 repos found `mask=` at exactly ONE logical site — HowToLens and HowToFit are clean.
-- scope-note (human-confirmed 2026-08-04): also repairs `autolens_workspace_developer`'s `aplt.Output` drift. `aplt.Output` no longer exists on the autolens/autogalaxy plot namespace (survives only as `autoarray.plot.Output`); removal was deliberate, documented in autolens_assistant/AGENTS.md:218. Fixing only the 7 `plot_array(output=)` sites would leave those scripts still crashing on adjacent `subplot_tracer(output=aplt.Output(...))` calls, so the unit of repair is that repo's whole drift — 10 files.
-- deferred: same drift in autocti_workspace_test (27 files, UNVERIFIED — autocti not installed locally, its plot namespace may still export Output) and euclid_strong_lens_modeling_pipeline/tools (2 files). Follow-up prompt to be filed, not dropped.
-- heart-ack (2026-08-04, human): YELLOW acknowledged for exactly these reasons, no others —
-  - "workspace validation not passing (3 failed, 3 timeout, cloud#30858578587: autofit_test scripts/jax_assertions/multi_start_gradient_auto_convergence.py, autolens_test scripts/imaging/pixelization.py, autolens_test scripts/imaging/regularization.py, +3 more)"
-  - "manifest drift: tenant firewall (organ code) — 2 mismatch(es) vs PyAutoMind/repos.yaml"
-  Reason 1 names cloud#30858578587 — the run that reported THIS bug; the HowToGalaxy failure is one of its "+3 more", so the PR removes one of that reason's own entries.
-- hidden-breaks: the reported TypeError was only the FIRST of three. Behind it sat `aplt.subplot_image_and_mapper` (not re-exported by autogalaxy.plot; lives in autoarray.plot, which tutorial_2_mappers.py already imports as `aaplt`) and `inversion.reconstruction_to_native` (attribute gone -> `mapped_reconstructed_operated_data`). CI only ever shows the first failure; the tutorial is green only because it was re-run after each fix.
-- sweep-correction: the FIRST AST sweep hardcoded the alias `aplt` and MISSED a call site written `aaplt`. Rewritten to resolve aliases from each file's own imports. Treat the original inventory as untrustworthy.
-- verified: all 5 chapter_4_pixelizations tutorials green locally; detector re-run on own output = 0 (it correctly still flagged the generated notebook until regenerated); notebook regenerated via PyAutoHands and confirmed to carry the fix.
-- dev-repo caveat: autolens_workspace_developer has NO smoke coverage and several scripts need FITS data absent from the repo -> compile-checked + signature-bound (112 calls clean), NOT run end-to-end. 4 files still won't run (al.Preloads / al.mapper_indices_from / al.Grid2DIterate) — 56 stale symbols repo-wide, filed separately.
-- status: awaiting-merge (both PRs open; merge stays human)
-- repos:
-  - HowToGalaxy: feature/plot-array-stale-kwargs (worktree base 40958da == origin/main), commit 5e694d3, PR https://github.com/PyAutoLabs/HowToGalaxy/pull/57
-  - autolens_workspace_developer: feature/plot-array-stale-kwargs (worktree base 3becf83 == origin/main), commit 88c60c8, PR https://github.com/PyAutoLabs/autolens_workspace_developer/pull/124
-
 ## point-source-defaults-campaign
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/678
 - session: claude --resume ee42120d-c794-4565-804e-d7576d50c37c

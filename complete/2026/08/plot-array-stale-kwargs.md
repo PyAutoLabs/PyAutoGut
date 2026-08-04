@@ -1,3 +1,106 @@
+Fixed the workspace-smoke failure in the public HowToGalaxy teaching notebook
+`chapter_4_pixelizations/tutorial_3_inversions`, reported as
+`TypeError: plot_array() got an unexpected keyword argument 'mask'`
+(PyAutoHeart workspace-smoke cloud#30858578587, 2026-08-03).
+
+## Outcome
+
+| Repo | PR | Merged |
+|---|---|---|
+| HowToGalaxy | [#57](https://github.com/PyAutoLabs/HowToGalaxy/pull/57) | 2026-08-04T13:41:20Z |
+| autolens_workspace_developer | [#124](https://github.com/PyAutoLabs/autolens_workspace_developer/pull/124) | 2026-08-04T13:41:30Z |
+
+## Root cause
+
+**Not a library break, and not fixed by 2026.8.4.1** — PyAutoGalaxy `main` was at
+the release commit `bf91c570` and `plot_array` still had no `mask` parameter.
+`aplt.plot_array` resolves to `autogalaxy/util/plot_utils.py:124`; the mask
+overlay is auto-derived one layer down at `autoarray/plot/array.py:128`
+(`if mask is None: mask = auto_mask_edge(array)`), and `auto_mask_edge` returns
+`None` for a fully-unmasked array. The call sat *before* `apply_mask`, so it drew
+nothing — which is exactly why the author added the kwarg. Measured: unmasked →
+`None`; after `apply_mask` → `(156, 2)` edge coords. Moving the call below
+`apply_mask` restores the intended boundary with no kwarg.
+
+## The reported error was one of three
+
+Execution stops at the first exception, so CI never showed the other two. Each
+was only found by re-running after the previous fix:
+
+1. `plot_array(..., mask=mask)` — kwarg never existed on that wrapper
+2. `aplt.subplot_image_and_mapper` — not re-exported by `autogalaxy.plot`; it
+   lives in `autoarray.plot`, which `tutorial_2_mappers.py` in the same chapter
+   already imports as `aaplt`
+3. `inversion.reconstruction_to_native` — attribute gone; the plottable `Array2D`
+   is `mapped_reconstructed_operated_data`
+
+A private-path import of `subplot_of_mapper` was also replaced by the public
+`aaplt` export.
+
+## Correction worth carrying forward
+
+The first AST sweep **hardcoded the alias `aplt`** and missed a call site written
+`aaplt`, reporting a falsely confident "2 hits, contained". Rewritten to resolve
+aliases from each file's own imports. A symbol scan also cannot see direct
+imports, kwarg drift, or runtime attributes — break 3 above was invisible to it.
+
+## Second repo — scope and honesty
+
+`autolens_workspace_developer`'s whole `aplt.Output` drift was repaired (10
+files). `aplt.Output` no longer exists on the autolens/autogalaxy plot namespace
+(deliberate removal, documented in `autolens_assistant/AGENTS.md:218`); it
+survives only as `autoarray.plot.Output`. Accepted kwargs differ per callee, so
+it was not a blanket rename: `plot_array` takes
+`output_path`/`output_filename`/`output_format`, the `subplot_*` family only
+`output_path`/`output_format`.
+
+That repo has **no CI** and several scripts need FITS data absent from the repo,
+so files were compile-checked and `inspect.signature`-bound (112 calls clean),
+**not run end-to-end**. Four still do not run — they break earlier on unrelated
+stale symbols (`al.Preloads`, `al.mapper_indices_from`, `al.Grid2DIterate`).
+
+## CI coverage gap (important)
+
+HowToGalaxy's own PR CI is **structurally blind to this bug**: `smoke_tests.txt`
+lists only 4 chapter-1 tutorials and no workflow runs chapter 4 or notebooks. The
+6 green checks proved chapter 1 did not regress and the navigator catalogue is
+consistent — nothing about the fix. Actual evidence was a local run of all five
+chapter-4 tutorials (5/5 green); the real gate is PyAutoHeart's `run_notebooks`.
+
+## Verification
+
+- Failure reproduced on unchanged input first, matching the CI trace exactly
+- All 5 `chapter_4_pixelizations` tutorials green locally
+- Detector re-run on own output: 0 (it correctly still flagged the generated
+  notebook until regenerated)
+- Post-merge on `main`: workspace-wide detector 17 → 6, all 6 being the known
+  false positive (a local nested `def plot_array(array, name, ...)` in
+  `autofit_workspace_developer/projects/cosmology/src/analysis.py`); zero
+  residual `aplt.Output`
+- Notebook regenerated via PyAutoHands, confirmed to carry every fix
+
+Shipped under explicit human acknowledgement of Heart YELLOW (score 70, no RED)
+for exactly two reasons; the first named cloud#30858578587 — this very run.
+
+## Follow-ups filed (draft/)
+
+- `bug/workspaces/aplt_output_drift_remaining_repos.md` — autocti_workspace_test
+  (27 files, flagged **unverified**: different library, may be correct as
+  written) + euclid_strong_lens_modeling_pipeline (2 files)
+- `maintenance/autolens_workspace_developer/stale_api_rot_audit.md` — 56 stale
+  symbols + `al.Pixelization`/`al.Settings` kwarg drift; triage-first, some may
+  be dead experiments better condemned than modernised
+- `docs/howtolens/ch4_mask_overlay_never_drawn.md` — HowToLens ch4 t3 plots
+  before `apply_mask` at lines 76/190, so its mask overlay never draws
+
+## Open, not addressed
+
+`inversion.reconstruction` prints all zeros in this tutorial. Pre-existing (same
+before the fix) and outside scope, but worth a look if that reconstruction is
+meant to be non-trivial.
+
+## Original prompt
+
 # HowToGalaxy chapter_4 TypeError: plot_array() unexpected kwarg 'mask'
 
 Type: bug

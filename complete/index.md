@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-872 records across 7 buckets.
+873 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -19,6 +19,7 @@ _(curate hard-won records here — survives regeneration.)_
 ## 2026/08
 
 - [autogalaxy-assistant](2026/08/autogalaxy-assistant.md) — epic; human to close
+- [database-guide-sample-weight-threshold](2026/08/database-guide-sample-weight-threshold.md) — `guides/results/database/start_here.py` ran its own Nautilus fits capped at n_like_max=300 then indexed sample…
 - [dep-floors-source-chain-ci](2026/08/dep-floors-source-chain-ci.md)
 - [group-data-preparation-readme](2026/08/group-data-preparation-readme.md)
 - [intra-family-dep-floors](2026/08/intra-family-dep-floors.md)

@@ -1,3 +1,23 @@
+## database-guide-sample-weight-threshold
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/464
+- completed: 2026-08-04
+- workspace-pr: https://github.com/PyAutoLabs/autolens_workspace/pull/465 (merged ec82b6ba) + https://github.com/PyAutoLabs/autogalaxy_workspace/pull/202 (merged 9eee226d)
+- summary: `guides/results/database/start_here.py` ran its own Nautilus fits capped at n_like_max=300 then indexed sample 9; config/output.yaml's samples_weight_threshold=1e-10 pruned samples.csv to ONE row, so the index raised IndexError in Heart's release-integrate leg (run 30880450685). Fixed by disabling the threshold before the fits, the idiom _quick_fit.py already established for the sibling results guides in PR#275 — this script was left out of that consolidation because building a database from its OWN output folder is its subject.
+
+  ROOT CAUSE OF THE BLIND SPOT: `samples.py` does `if skip_checks(): weight_threshold = None`, and `skip_checks()` reads PYAUTO_SKIP_CHECKS — smoke sets it to 1, release to 0. Measured 301 rows under smoke vs 1 under release on the same script. The per-PR smoke gate is STRUCTURALLY incapable of failing on this class of bug; both PR bodies say so explicitly so a green smoke run is not mistaken for evidence.
+
+  NOT A REGRESSION: e41b0fce un-parked the script from no_run.yaml, so the guides shard ran 42 scripts vs yesterday's 41. Pre-existing defect, newly reachable. The tell was the PASS/FAIL line count between the two job logs, not a library diff.
+
+  AUTOGALAXY SIBLING needed FOUR fixes, not one, and was un-parked: (1) same threshold bug; (2) no auto-simulate guard at all; (3) it read an info.json that NO simulator writes — only data_preparation/examples/optional/info.py does, and only for `simple`, so two of its three datasets could never have worked (its parking note blamed missing simulator output, which was wrong); (4) three uncapped Nautilus fits under real_search that would not fit the 1800s cap. Now 78s.
+
+  EVIDENCE: control-vs-patched under profile_release.yaml (PYAUTO_SKIP_CHECKS=0, TEST_MODE and SMALL_DATASETS confirmed unset). autolens control reproduced the CI traceback line-for-line at 1 row x2; patched 300 rows x2. autogalaxy control (threshold line ALONE commented out on the branch) 1 row x3 IndexError; patched 300 rows x3 — proving the line is load-bearing there rather than defensive.
+
+  PROCESS: shipped under the corrective-PR exception with Heart RED, human-authorized against the verbatim reason "release validation FAILED (stage integrate)" (recorded on #464 issuecomment-5177223209). Human then instructed merge. `gh pr merge --auto` MERGED BOTH IMMEDIATELY rather than waiting — neither repo configures its smoke checks as REQUIRED, so both PRs were already mergeable. autolens therefore merged with smoke mid-flight; it subsequently passed 3.12 (9m38s) + 3.13 (8m23s), as did autogalaxy. Lesson: verify required-checks configuration before relying on --auto to gate a merge.
+
+- follow-ups: autogalaxy notebooks/README.md is stale vs scripts/README.md (typo + missing multi_galaxy/cluster entries; reverted here to keep the diff scoped); autogalaxy data_preparation/examples/optional/info.py writes LENSING keys in a galaxy workspace. Both noted on PR#202, neither fixed.
+
+## Original prompt
+
 # Database guide indexes sample 9 of a fit the weight threshold prunes to 1 sample
 
 Type: bug

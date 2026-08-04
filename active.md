@@ -11,6 +11,8 @@
 - scope-note (human-confirmed 2026-08-04): also repairs `autolens_workspace_developer`'s `aplt.Output` drift. `aplt.Output` no longer exists on the autolens/autogalaxy plot namespace (survives only as `autoarray.plot.Output`); removal was deliberate, documented in autolens_assistant/AGENTS.md:218. Fixing only the 7 `plot_array(output=)` sites would leave those scripts still crashing on adjacent `subplot_tracer(output=aplt.Output(...))` calls, so the unit of repair is that repo's whole drift — 10 files.
 - deferred: same drift in autocti_workspace_test (27 files, UNVERIFIED — autocti not installed locally, its plot namespace may still export Output) and euclid_strong_lens_modeling_pipeline/tools (2 files). Follow-up prompt to be filed, not dropped.
 - repos:
+  - HowToGalaxy: feature/plot-array-stale-kwargs (worktree base 40958da == origin/main)
+  - autolens_workspace_developer: feature/plot-array-stale-kwargs (worktree base 3becf83 == origin/main)
 
 ## multi-start-auto-convergence-real-search
 - issue: https://github.com/PyAutoLabs/autofit_workspace_test/issues/83

@@ -1,8 +1,8 @@
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/678
 - completed: 2026-08-04 (phases A–D merged 2026-07-31 → 2026-08-03; evidence tail merged and issue closed 2026-08-04)
 - library-prs: https://github.com/PyAutoLabs/PyAutoLens/pull/679 (phase A, MERGED 2026-07-31T14:11:06Z as 86dea4107) + https://github.com/PyAutoLabs/PyAutoLens/pull/686 (phase C default swap, MERGED 2026-08-03T18:31:35Z as 4927738e)
-- workspace-prs: https://github.com/PyAutoLabs/autolens_workspace/pull/453 (phase D, MERGED 2026-08-03T18:35:08Z) + https://github.com/PyAutoLabs/autolens_workspace/pull/468 (evidence tail, 2026-08-04)
-- evidence-prs: https://github.com/PyAutoLabs/autolens_profiling/pull/100 (phase B harness + 23 result cells + notes, 2026-08-04)
+- workspace-prs: https://github.com/PyAutoLabs/autolens_workspace/pull/453 (phase D, MERGED 2026-08-03T18:35:08Z) + https://github.com/PyAutoLabs/autolens_workspace/pull/468 (evidence tail, MERGED 2026-08-04T20:56:57Z as 7835cf62)
+- evidence-prs: https://github.com/PyAutoLabs/autolens_profiling/pull/100 (phase B harness + 23 result cells + notes, MERGED 2026-08-04T20:50:54Z as 272924a0)
 - bugfix-prs: https://github.com/PyAutoLabs/PyAutoFit/pull/1441 + https://github.com/PyAutoLabs/PyAutoLens/pull/685 + https://github.com/PyAutoLabs/autofit_workspace_test/pull/81 (all MERGED 2026-08-01)
 - summary: took the point-source likelihood options from "several undocumented
   conventions" to "one evidenced default per axis, with the alternatives

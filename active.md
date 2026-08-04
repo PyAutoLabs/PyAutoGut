@@ -2,7 +2,9 @@
 
 ## nufft-parity-full-datasets
 - issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/247
-- status: workspace-dev
+- pr: https://github.com/PyAutoLabs/autolens_workspace_test/pull/248 (commit 6f30b1f, pending-release)
+- status: awaiting-merge
+- heart-ack: YELLOW acknowledged 2026-08-04 for exactly these two reasons — "workspace validation not passing (3 failed, 3 timeout, cloud#30858578587: ...)" and "manifest drift: tenant firewall (organ code) — 2 mismatch(es) vs PyAutoMind/repos.yaml". Does not extend to new reasons.
 - worktree: ~/Code/PyAutoLabs-wt/nufft-parity-full-datasets
 - prompt: active/nufft_parity_runs_at_16x16_under_smoke.md
 - repos:

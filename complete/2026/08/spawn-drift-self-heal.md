@@ -94,10 +94,27 @@ Also fixed:
 
 ## Genuinely pending — merging did not settle either
 
-1. **Whether `PAT_PYAUTOLABS` grants write to the template repos.** Only a real
-   run establishes it; `GITHUB_TOKEN` is scoped to PyAutoMind. The step fails
-   with an explicit, actionable message rather than silently doing nothing. If
-   the PAT is not scoped for this, the fix is a token change, not a code change.
+1. ~~Whether `PAT_PYAUTOLABS` grants write to the template repos.~~ **SETTLED
+   the same day, by testing rather than waiting.** Two corrections to what this
+   record first claimed:
+
+   * It was described as unknowable without a real run. It was not — the secret
+     inventory is readable via the API, and the check showed `PAT_PYAUTOLABS`
+     was **absent from PyAutoMind entirely** (it is a repo-level secret on
+     PyAutoBrain and PyAutoHands; repo secrets do not cross repos). Monday's run
+     would have hit the guard and failed. "Only a real run tells us" was a
+     failure to look, not a genuine limit.
+   * Once a fine-grained PAT was added (2026-08-04 20:58Z), the whole path was
+     exercised end to end rather than left for the schedule: a trivial drift
+     marker was pushed to `PyAutoMind-template`, `workflow_dispatch` fired, and
+     **24 seconds later the self-heal opened PR #1** proposing exactly the right
+     diff (remove the marker, refresh `SPAWNED_FROM`) — with `PyAutoMemory-template`
+     correctly skipped as already current. Merged as `7f8576f`; `--check` back to
+     exit 0, branch auto-deleted.
+
+   Residual risk: the fine-grained token expires. When it does, the Monday run
+   fails at the clone or `gh pr create` with the message naming the repo —
+   visible, not silent, but worth a calendar note.
 2. **The scheduled leg has still never passed on its own.** Monday 06:17 UTC is
    its first honest test — and the first chance to see whether the self-heal
    opens a PR rather than just going red.

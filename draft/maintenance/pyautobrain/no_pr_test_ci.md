@@ -40,12 +40,23 @@ Two knock-on facts found in the same pass:
 
 ## Scope
 
-Add a `tests.yml` running `pytest PyAutoBrain/tests/` on `pull_request` and on
-push to `main`, mirroring whatever the sibling organ repos (PyAutoHeart,
-PyAutoHands) already do — check those first rather than inventing a shape.
-Decide whether the suite needs the full workspace checked out (several tests
-build tmp_path fixtures, but some read sibling repos) and pin the environment
-accordingly.
+**Both parts land together** — the workflow can never be green while the suite
+is red, so splitting them would merge a knowingly-failing gate.
 
-Blocked-until: the `sizing` SKILL.md failure above must be resolved for the
-workflow to ever be green.
+1. Add `PyAutoBrain/skills/sizing/SKILL.md` (+ `agents/openai.yaml`), mirroring
+   the sibling faculty wrappers `vitals/`, `samplers/`, `memory/`, `review/`.
+   `sizing` is listed under "Faculties (read-only … also runnable directly)" in
+   `pyauto-brain help` and has its own `sizing.sh`, so the wrapper is the
+   missing piece — delisting it from `help` would be the wrong fix.
+2. Add `PyAutoBrain/.github/workflows/tests.yml`, modelled on
+   `PyAutoHeart/.github/workflows/heart-tests.yml` (push to `main` +
+   `pull_request`, concurrency cancel on PR refs only, python 3.12/3.13).
+
+**Measured 2026-08-04, not assumed:** a lone-repo checkout cannot even COLLECT
+— `agents/faculties/sizing/_sizing.py` reads `PyAutoMind/repos.yaml` at import
+time and is deliberately strict, so `test_policy_seams.py` and
+`test_sizing_paths.py` error out. The workflow must therefore check out
+**PyAutoBrain + PyAutoMind side by side** (`BRAIN_HOME.parent/PyAutoMind`);
+both repos are public, so the default `GITHUB_TOKEN` suffices. With that layout
+the suite is 192 passed / 1 failed (the sizing wrapper) in ~30s, and needs only
+`pytest` + `PyYAML`. No other sibling repo is required.

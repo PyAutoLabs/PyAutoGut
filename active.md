@@ -1,5 +1,17 @@
 # Active Tasks
 
+## multi-start-auto-convergence-real-search
+- issue: https://github.com/PyAutoLabs/autofit_workspace_test/issues/83
+- session: claude (CLI, 2026-08-04)
+- status: workspace-dev
+- worktree: ~/Code/PyAutoLabs-wt/multi-start-auto-convergence-real-search
+- prompt: active/multi_start_gradient_auto_convergence_keyerror.md
+- root-cause: NOT a library break. Script declares `ENV: jax`, which releases only PYAUTO_DISABLE_JAX, so profile_smoke's PYAUTO_TEST_MODE=2 bypasses the sampler; `_fit_bypass_test_mode` never writes `total_steps` into samples_info (AbstractMultiStartGradient has no `_test_mode_samples_info` override — only BlackJAX NUTS does) → KeyError at script line 123. Reproduced locally in ~4.5s. Latent since authoring, not a regression: same FAIL in run 30790463134 (2026-08-03T06:33Z); pre-migration profile only ever unset PYAUTO_DISABLE_JAX for jax_assertions/, so #187/#189 was a true no-op here. Not in smoke_tests.txt → per-PR gate unaffected.
+- fix: `ENV: real_search jax` (mirrors scripts/searches/MultiStartAdam.py) + drop the stale `af.` prefix from `af.AbstractMultiStartGradient` in the module docstring (trips the PyAuto API gate). Verified pre-fix with PYAUTO_TEST_MODE unset: all 3 parts pass (158/300 steps, centre=50.156/norm=25.197/sigma=9.858, HLO identical, results-DB round-trip OK), ~60s vs 4.7s bypassed.
+- decision: library `_test_mode_samples_info()` override for AbstractMultiStartGradient REJECTED for this fix (human-confirmed 2026-08-04) — a placeholder would convert a loud KeyError into a vacuous `0 < 300` pass then a confusing truth-recovery failure. NUTS-vs-MultiStart asymmetry raised separately.
+- claim-note: autofit_workspace_test was listed as claimed by point-source-defaults-campaign on feature/jax-pytree-traced-aux-fix, but that claim is STALE — wst#81 merged 2026-08-01T12:47:34Z, checkout restored to main. Not a live conflict.
+- repos:
+
 ## point-source-defaults-campaign
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/678
 - session: claude --resume ee42120d-c794-4565-804e-d7576d50c37c

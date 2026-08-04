@@ -10,9 +10,18 @@
 - fix: move the call below `dataset.apply_mask(mask=mask)` and drop the kwarg (restores the intended overlay, better than deleting it); regenerate notebooks + navigator catalogue. AST sweep of all ~25 repos found `mask=` at exactly ONE logical site — HowToLens and HowToFit are clean.
 - scope-note (human-confirmed 2026-08-04): also repairs `autolens_workspace_developer`'s `aplt.Output` drift. `aplt.Output` no longer exists on the autolens/autogalaxy plot namespace (survives only as `autoarray.plot.Output`); removal was deliberate, documented in autolens_assistant/AGENTS.md:218. Fixing only the 7 `plot_array(output=)` sites would leave those scripts still crashing on adjacent `subplot_tracer(output=aplt.Output(...))` calls, so the unit of repair is that repo's whole drift — 10 files.
 - deferred: same drift in autocti_workspace_test (27 files, UNVERIFIED — autocti not installed locally, its plot namespace may still export Output) and euclid_strong_lens_modeling_pipeline/tools (2 files). Follow-up prompt to be filed, not dropped.
+- heart-ack (2026-08-04, human): YELLOW acknowledged for exactly these reasons, no others —
+  - "workspace validation not passing (3 failed, 3 timeout, cloud#30858578587: autofit_test scripts/jax_assertions/multi_start_gradient_auto_convergence.py, autolens_test scripts/imaging/pixelization.py, autolens_test scripts/imaging/regularization.py, +3 more)"
+  - "manifest drift: tenant firewall (organ code) — 2 mismatch(es) vs PyAutoMind/repos.yaml"
+  Reason 1 names cloud#30858578587 — the run that reported THIS bug; the HowToGalaxy failure is one of its "+3 more", so the PR removes one of that reason's own entries.
+- hidden-breaks: the reported TypeError was only the FIRST of three. Behind it sat `aplt.subplot_image_and_mapper` (not re-exported by autogalaxy.plot; lives in autoarray.plot, which tutorial_2_mappers.py already imports as `aaplt`) and `inversion.reconstruction_to_native` (attribute gone -> `mapped_reconstructed_operated_data`). CI only ever shows the first failure; the tutorial is green only because it was re-run after each fix.
+- sweep-correction: the FIRST AST sweep hardcoded the alias `aplt` and MISSED a call site written `aaplt`. Rewritten to resolve aliases from each file's own imports. Treat the original inventory as untrustworthy.
+- verified: all 5 chapter_4_pixelizations tutorials green locally; detector re-run on own output = 0 (it correctly still flagged the generated notebook until regenerated); notebook regenerated via PyAutoHands and confirmed to carry the fix.
+- dev-repo caveat: autolens_workspace_developer has NO smoke coverage and several scripts need FITS data absent from the repo -> compile-checked + signature-bound (112 calls clean), NOT run end-to-end. 4 files still won't run (al.Preloads / al.mapper_indices_from / al.Grid2DIterate) — 56 stale symbols repo-wide, filed separately.
+- status: awaiting-merge (both PRs open; merge stays human)
 - repos:
-  - HowToGalaxy: feature/plot-array-stale-kwargs (worktree base 40958da == origin/main)
-  - autolens_workspace_developer: feature/plot-array-stale-kwargs (worktree base 3becf83 == origin/main)
+  - HowToGalaxy: feature/plot-array-stale-kwargs (worktree base 40958da == origin/main), commit 5e694d3, PR https://github.com/PyAutoLabs/HowToGalaxy/pull/57
+  - autolens_workspace_developer: feature/plot-array-stale-kwargs (worktree base 3becf83 == origin/main), commit 88c60c8, PR https://github.com/PyAutoLabs/autolens_workspace_developer/pull/124
 
 ## point-source-defaults-campaign
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/678
@@ -26,11 +35,11 @@
 - prompt: active/point_source_defaults_campaign.md
 - phases: A library prereqs logsumexp + free-centre tensor (PyAutoLens, small PR FIRST, then HPCPullPyAuto) → B evidence campaign (autolens_profiling, RAL A100s, galaxy + cluster tiers) → C defaults change (PyAutoLens, ## API Changes) → D workspace docs (autolens_workspace, END GOAL)
 - note: Brain sized too-large (11, prose-driven); human-scoped A–D phasing kept (potential-correction precedent). SUPERSEDES the 2026-07-31 morning galaxy/cluster split; COORDINATES with cluster-point-solved-default (#436 — phase D touches cluster/ only to reconcile); ABSORBS ideas.md PairAll-logsumexp entry (removed) + draft/research/autolens_profiling/cluster_gradient_search_benchmark.md (banner already in file). Time-delay free-H0 arm DEFERRED.
+- claim-released (2026-08-04, second): PyAutoFit dropped from `repos:` — bug-fix PR #1441 MERGED 2026-08-01T12:47:32Z and the main checkout was already restored, but the line still read "PR #1441 OPEN" and fired the conflict guard against test-mode-samples-info-hook-contract. Same stale-claim pattern as the autofit_workspace_test line below.
 - claim-released (2026-08-04): autofit_workspace_test dropped from `repos:` — its feature/jax-pytree-traced-aux-fix regression-test PR #81 MERGED 2026-08-01T12:47:34Z and the checkout was restored to main, but the repos line still read "PR #81 OPEN", contradicting this entry's own status line and firing the conflict guard against multi-start-auto-convergence-real-search (#83). The campaign's other claims are untouched.
 - claim-note: PyAutoLens held CONCURRENTLY with potential-correction-validation (#672) — scopes disjoint (autolens/point/fit/ + point/model vs pixelization/potential-correction); pre-merge origin/main before PR
 - repos:
   - PyAutoLens: feature/point-source-defaults-campaign (phase A MERGED via #679; branch retained for phase C) + feature/point-solver-padded-row-grads (bug-fix PR #685 OPEN)
-  - PyAutoFit: feature/jax-pytree-traced-aux-fix (bug-fix PR #1441 OPEN; main checkout restored to main)
   - autolens_profiling: feature/point-source-defaults-campaign
 
 ## interferometer-start-here-integrate-oom (corrective)
@@ -48,8 +57,8 @@
 - corrective-red: Heart RED reason "release validation FAILED (stage integrate)" — hierarchical.py TIMEOUT 1800s (was 76s) in runs 30672739606 + 30686136529; authorization = human session instruction 2026-08-01 quoted verbatim on #1442 ("do a release, fine if any blockers need sorting…"), given at launch for any blockers rather than post-surfacing (noted on issue + log row); cause = e6279c53f (#1439) always builds fork Pool(1) for Nautilus, bypassing nautilus's pool∈[None,1]→serial guard, forked worker deadlocks in XLA compile under release-profile JAX; fix = pool=None at number_of_cores=1, fork pool kept for >1
 - evidence: regression test red-on-main/green-patched; test_autofit/non_linear 411 passed; py-spy stacks (main in pool.map wait, worker in backend_compile_and_load) on #1442; control-vs-patched hierarchical.py release-env run in flight
 - not-claimed: delaunay.py intermittent TIMEOUT (pre-existing, crosses SHA windows) stays open
+- claim-released (2026-08-04): PyAutoFit dropped from `repos:` — PyAutoFit#1443 MERGED 2026-08-01T19:12:47Z (merge commit 5bf32dab, contained in origin/main) and the canonical checkout is already back on main, but the line still read "PR OPEN ... restore main after merge" and fired the conflict guard against test-mode-samples-info-hook-contract. NOTE: this task looks fully shipped — its `status:` line still says "PR OPEN 2026-08-01 evening ... awaiting CI". Worth a completion pass (lifecycle record + close #1442); not done here, since that is this task's own call.
 - repos:
-  - PyAutoFit: feature/nautilus-1core-serial-pool (canonical checkout on branch; restore main after merge)
 
 ## simulator-util-to-af-ex
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1444

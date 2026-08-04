@@ -10,8 +10,15 @@
 - fix: `ENV: real_search jax` (mirrors scripts/searches/MultiStartAdam.py) + drop the stale `af.` prefix from `af.AbstractMultiStartGradient` in the module docstring (trips the PyAuto API gate). Verified pre-fix with PYAUTO_TEST_MODE unset: all 3 parts pass (158/300 steps, centre=50.156/norm=25.197/sigma=9.858, HLO identical, results-DB round-trip OK), ~60s vs 4.7s bypassed.
 - decision: library `_test_mode_samples_info()` override for AbstractMultiStartGradient REJECTED for this fix (human-confirmed 2026-08-04) — a placeholder would convert a loud KeyError into a vacuous `0 < 300` pass then a confusing truth-recovery failure. NUTS-vs-MultiStart asymmetry raised separately.
 - claim-note: autofit_workspace_test was listed as claimed by point-source-defaults-campaign on feature/jax-pytree-traced-aux-fix, but that claim is STALE — wst#81 merged 2026-08-01T12:47:34Z, checkout restored to main. Not a live conflict.
+- heart-ack (2026-08-04, human): YELLOW acknowledged for exactly these reasons, no others —
+  - "workspace validation not passing (3 failed, 3 timeout, cloud#30858578587: autofit_test scripts/jax_assertions/multi_start_gradient_auto_convergence.py, autolens_test scripts/imaging/pixelization.py, autolens_test scripts/imaging/regularization.py, +3 more)"
+  - "manifest drift: tenant firewall (organ code) — 2 mismatch(es) vs PyAutoMind/repos.yaml"
+  - "release validation stale: source moved since rehearsal (PyAutoFit, PyAutoGalaxy, PyAutoLens)" (stale)
+  Note the first reason names THIS script — the PR removes one of its entries.
 - repos:
-  - autofit_workspace_test: feature/multi-start-auto-convergence-real-search (worktree base 1a39a7b == origin/main)
+  - autofit_workspace_test: feature/multi-start-auto-convergence-real-search (worktree base 1a39a7b == origin/main), commit a4f3263 pushed
+- workspace-pr: https://github.com/PyAutoLabs/autofit_workspace_test/pull/84 (OPEN, pending-release; standalone — no upstream library PR, so no library-first gate). Awaiting human merge.
+- validation: jax_assertions sweep 11/11 PASS under per-script resolved envs; target script fresh-output runs 10.0s and 11.1s both EXIT=0 (the sweep's 3.3s entry was a resume off existing output, not a fresh fit); validate_env_profiles 0 errors/0 warnings with all three strict flags.
 
 ## point-source-defaults-campaign
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/678

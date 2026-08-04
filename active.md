@@ -11,6 +11,7 @@
 - decision: library `_test_mode_samples_info()` override for AbstractMultiStartGradient REJECTED for this fix (human-confirmed 2026-08-04) — a placeholder would convert a loud KeyError into a vacuous `0 < 300` pass then a confusing truth-recovery failure. NUTS-vs-MultiStart asymmetry raised separately.
 - claim-note: autofit_workspace_test was listed as claimed by point-source-defaults-campaign on feature/jax-pytree-traced-aux-fix, but that claim is STALE — wst#81 merged 2026-08-01T12:47:34Z, checkout restored to main. Not a live conflict.
 - repos:
+  - autofit_workspace_test: feature/multi-start-auto-convergence-real-search (worktree base 1a39a7b == origin/main)
 
 ## point-source-defaults-campaign
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/678
@@ -24,11 +25,11 @@
 - prompt: active/point_source_defaults_campaign.md
 - phases: A library prereqs logsumexp + free-centre tensor (PyAutoLens, small PR FIRST, then HPCPullPyAuto) → B evidence campaign (autolens_profiling, RAL A100s, galaxy + cluster tiers) → C defaults change (PyAutoLens, ## API Changes) → D workspace docs (autolens_workspace, END GOAL)
 - note: Brain sized too-large (11, prose-driven); human-scoped A–D phasing kept (potential-correction precedent). SUPERSEDES the 2026-07-31 morning galaxy/cluster split; COORDINATES with cluster-point-solved-default (#436 — phase D touches cluster/ only to reconcile); ABSORBS ideas.md PairAll-logsumexp entry (removed) + draft/research/autolens_profiling/cluster_gradient_search_benchmark.md (banner already in file). Time-delay free-H0 arm DEFERRED.
+- claim-released (2026-08-04): autofit_workspace_test dropped from `repos:` — its feature/jax-pytree-traced-aux-fix regression-test PR #81 MERGED 2026-08-01T12:47:34Z and the checkout was restored to main, but the repos line still read "PR #81 OPEN", contradicting this entry's own status line and firing the conflict guard against multi-start-auto-convergence-real-search (#83). The campaign's other claims are untouched.
 - claim-note: PyAutoLens held CONCURRENTLY with potential-correction-validation (#672) — scopes disjoint (autolens/point/fit/ + point/model vs pixelization/potential-correction); pre-merge origin/main before PR
 - repos:
   - PyAutoLens: feature/point-source-defaults-campaign (phase A MERGED via #679; branch retained for phase C) + feature/point-solver-padded-row-grads (bug-fix PR #685 OPEN)
   - PyAutoFit: feature/jax-pytree-traced-aux-fix (bug-fix PR #1441 OPEN; main checkout restored to main)
-  - autofit_workspace_test: feature/jax-pytree-traced-aux-fix (regression-test PR #81 OPEN; checkout restored to main)
   - autolens_profiling: feature/point-source-defaults-campaign
 
 ## interferometer-start-here-integrate-oom (corrective)

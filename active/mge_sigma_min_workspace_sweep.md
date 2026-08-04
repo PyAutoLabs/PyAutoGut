@@ -126,7 +126,15 @@ image-plane light, so all of them take the pixel-scale floor.
 `mge_point_model_from` stays pixel-scale-tied by construction: its upper bound is already
 `2 * pixel_scales`, i.e. it exists to model something at the resolution limit.
 
-## OPEN QUESTION — hand-rolled source ladders sit at `-2`, not `-4`
+## RESOLVED — hand-rolled source ladders move to `-4` (human decision 2026-08-04)
+
+Option 2 below was chosen. The ~10-14 hand-rolled source ladders move from `-2` to `-4`, so a
+hand-written source basis behaves identically to one built by `mge_model_from`. This is a
+deliberate behaviour change in those tutorial files.
+
+The original framing is kept below for the record.
+
+## (was) OPEN QUESTION — hand-rolled source ladders sit at `-2`, not `-4`
 
 The source rule says "keep the `-4` default, because that is what was always used". That is true
 of every **helper** call site — none has ever passed anything but the hardcoded `-4`. It is NOT

@@ -109,3 +109,16 @@
 - repo-unclaimed: PyAutoReduce is the only affected repo, listed on this single line deliberately and NOT as a 2-space `  - PyAutoReduce` sub-bullet, because worktree_check_conflict reads any such bullet as a live claim — this task holds no claim and must not block other PyAutoReduce work.
 - ordering: `draft/research/pyautoreduce/acceptance_noise_rebaseline.md` must run AFTER this lands — a bits change moves the IVM weights and therefore the noise maps, so its parity numbers would need redoing otherwise. Related but distinct, do not fold in: #61 (driz_cr flux erosion / LACosmic) and #62 (tier-1 ePSF from the CR-rejected mosaic).
 - prompt: active/hst_dq_bits_dial.md
+
+## spawn-github-instance-automation
+- issue: https://github.com/PyAutoLabs/PyAutoMind/issues/121
+- session: claude --resume 8c223768-7ebb-48b7-9aeb-7d6570b87d81
+- status: library-dev — spawn's blanket `.github/*` KEEP_SUB ships instance automation into the public template; 13 failing runs in PyAutoMind-template prove it.
+- worktree: ~/Code/PyAutoLabs-wt/spawn-github-instance-automation
+- prompt: active/spawn_github_rules_export_instance_automation.md
+- key-finding: owner substitution does NOT make a cross-repo workflow work. The template's own spawn_drift run fails `repository 'https://github.com/YOURORG/PyAutoMind/' not found` — YOURORG is a literal placeholder. So any workflow cloning/querying a sibling repo is broken on arrival, not just the secret-dependent ones.
+- rule-adopted (human decision 2026-08-04): a template workflow must succeed on a freshly-spawned repo with NO secrets and NO sibling repos. Only lifecycle_drift.yml clears it (the one green workflow in the template's history). spawn_drift.yml ships schedule-stripped (dispatch + PR only); morning_status/morning_health/arxiv_papers/arxiv_fetch.py DROP.
+- sizing-note: Brain said large (score 8) and "re-home as feature" — not taken. Score is prose-driven, repos_affected is 1, and it is a rules table + one transform + tests. Kept as bug: shipping pre-broken automation is a defect.
+- provenance: split from spawn_keep_rules_export_instance_state.md (filed during #118 review). Sibling half is draft/bug/pyautomind/spawn_autonomy_log_parses_live_bytes.md — do NOT fold them together.
+- repos:
+  - PyAutoMind: feature/spawn-github-instance-automation

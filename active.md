@@ -47,15 +47,6 @@
 - repos:
   - autolens_profiling: feature/point-source-defaults-campaign (LIVE — the remaining runbook steps (2)-(4) are all in this repo)
 
-## interferometer-start-here-integrate-oom (corrective)
-- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/449
-- status: BOTH MERGED 2026-08-01 ~00:15 BST (#450 merge, #132 merge; CI green). Manual release validation IN FLIGHT: Stage 2 rehearsal run PyAutoHands 30672432924 SUCCESS -> testpypi 2026.7.31.1.dev69301; Stage 3 PyAutoHeart release-integrate run 30672739606 dispatched 23:23 UTC, in progress
-- resume: when 30672739606 completes -> `gh run download 30672739606 -R PyAutoLabs/PyAutoHeart -n release-stage-report -D ~/.pyauto-heart/manual_validation_20260801` then `pyauto-brain release validate --ingest ~/.pyauto-heart/manual_validation_20260801 --commit-shas ~/.pyauto-heart/manual_validation_20260801/commit_shas.json` (artifacts dir already holds rehearsal.json + commit_shas.json + testpypi_version.txt). OPTIONAL: heart tick auto-ingests the completed run anyway, and the 05:36 UTC nightly independently re-validates and releases on green (NIGHTLY_RELEASES=true) with no further human step
-- corrective-red: Heart RED reason "release validation FAILED (stage integrate)" — authorization quoted+approved live in session 5b29e469 (recorded on #449); cause = MultiStartProdigy 48-start unbatched vmap OOM (~86 GB) introduced d5c9802d (2026-07-29, post-release); fix = batch_size=4, control-vs-patched verified under release-profile env
-- repos-none-claimed: this entry claims NO repos — listed on one line, NOT as `  - Repo` bullets, since `worktree_check_conflict` treats any 2-space `  - <Repo>` bullet as a live claim.
-- claim-released (2026-08-04): PyAutoHeart dropped from `repos:` — PR #132 (`feature/release-run-repo-slug-firewall`) MERGED 2026-07-31T23:15:18Z and the branch no longer exists on origin, but the bullet still read as a live claim and fired the conflict guard against jax-grad-smoke-timeout-budget (#226). This entry's OWN status line already said "BOTH MERGED 2026-08-01 (#450 merge, #132 merge)", so the claim contradicted itself — the same stale-claim pattern as the autolens_workspace release below. Only the release-validation leg remains and it claims no repo.
-- claim-released: autolens_workspace claim DISCHARGED 2026-08-03 — PR #450 merged 2026-07-31T23:15Z, local branch deleted (stale origin/ ref only), checkout clean on main c4bd2796; only the PyAutoHeart release-validation leg remains. Released so group-data-preparation-readme could claim the repo.
-
 ## release-drive-2026-08-03
 - issue: (no issue — a human-authorized manual release drive, not a dev task)
 - session: claude --resume e0105850-b98b-47ff-9ada-cba04a455a65

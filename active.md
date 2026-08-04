@@ -1,5 +1,16 @@
 # Active Tasks
 
+## pyautobrain-pr-test-ci
+- issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/194
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/pyautobrain-pr-test-ci
+- prompt: no_pr_test_ci.md
+- repos:
+  - PyAutoBrain: feature/pyautobrain-pr-test-ci (base a1e7098 == origin/main, verified)
+- scope: BOTH follow-ups from the #193 ship, in ONE PR — a `tests.yml` PR gate plus the `skills/sizing/SKILL.md` wrapper whose absence keeps the suite red. Merging the workflow alone would ship a knowingly-failing gate.
+- measured: a LONE PyAutoBrain checkout cannot COLLECT the suite (`_sizing.py` reads `PyAutoMind/repos.yaml` at import, strict) — the workflow must check out PyAutoBrain + PyAutoMind side by side. With both: 192p/1f in ~30s, deps `pytest` + `PyYAML` only, no other sibling repo needed. Both repos public → default GITHUB_TOKEN suffices.
+- sizing-note: Brain scored large (9) / split-into-phases; NOT taken (prose-driven score, one repo, a workflow file + a 3-line wrapper) — same override as #192.
+
 ## mge-sigma-min-workspace-sweep
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/466
 - status: BOTH PHASES MERGED 2026-08-04. Phase 1 autolens_workspace#467 -> 92019316 (issue #466 auto-closed). Phase 2 autogalaxy_workspace#203 -> 8a7df7a6, HowToLens#67 -> 4ff3135c, HowToGalaxy#61 -> 51eed3d6, autogalaxy_assistant#10 -> f6966a64. Upstream PyAutoGalaxy#549 -> 13d3023c. All worktrees removed, all branches deleted local+origin, all five canonical checkouts back on main. Code work COMPLETE; two debts remain (below).

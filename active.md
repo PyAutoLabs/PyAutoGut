@@ -68,8 +68,13 @@
 ## database-guide-sample-weight-threshold
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/464
 - session: claude --resume 1928b898-1a5f-4399-b695-dddee570c5dd
-- status: workspace-dev
+- status: awaiting-merge — BOTH PRs OPEN 2026-08-04, verified, NOT merged (human instruction: end at PR-open)
+- workspace-prs: https://github.com/PyAutoLabs/autolens_workspace/pull/465 + https://github.com/PyAutoLabs/autogalaxy_workspace/pull/202
 - worktree: ~/Code/PyAutoLabs-wt/database-guide-sample-weight-threshold
+- corrective-red: Heart RED at ship time; human authorized the corrective-PR exception scoped to the verbatim reason "release validation FAILED (stage integrate)" after being shown both red_reasons from `pyauto-heart readiness --json`. Covers commit/push/PR-open ONLY. Recorded on #464 issuecomment-5177223209. Install-verify D untouched (owned by intra-family-dep-floors).
+- evidence: control-vs-patched under profile_release.yaml (PYAUTO_SKIP_CHECKS=0, TEST_MODE + SMALL_DATASETS confirmed unset). autolens control = 1 row x2, IndexError line 358 reproducing the CI traceback line-for-line; patched = 300 rows x2, exit 0. autogalaxy control (threshold line alone commented out on the branch) = 1 row x3, IndexError line 359; patched = 300 rows x3, exit 0, 78s for the fits vs the 1800s cap.
+- autogalaxy-scope: the sibling needed FOUR fixes, not one. Its parking note blamed a missing info.json "needs simulator outputs" but NO simulator writes info.json — only data_preparation/examples/optional/info.py does, and only for `simple`, so the read could never have worked for simple__sersic or sersic_x2. Also had zero auto-simulate guard and no n_like_max cap on three real_search fits. All four fixed; un-parked from no_run.yaml.
+- deferred: notebooks/README.md in autogalaxy_workspace is stale vs scripts/README.md (typo + missing multi_galaxy/cluster entries). generate.py regenerates it; reverted here to keep the diff scoped. Also autogalaxy's optional info.py writes LENSING keys in a galaxy workspace. Both noted on PR#202, neither fixed.
 - prompt: active/database_guide_samples_weight_threshold_indexerror.md
 - cause: guides/results/database/start_here.py runs its OWN Nautilus fits capped at n_like_max=300 then indexes parameter_lists[9]; samples.py:398 applies config/output.yaml samples_weight_threshold=1e-10 and a 300-eval nested run is so weight-peaked only ONE sample clears it. Same family as PR#275 (cluster E), which consolidated the other results guides onto _quick_fit.py (threshold=None at :57) but skipped this one because it must build a database from its own output folder.
 - smoke-blind: profile_smoke sets PYAUTO_SKIP_CHECKS=1 -> samples.py:402 `if skip_checks(): weight_threshold = None` -> 301 rows, PASS. profile_release sets it to 0 -> 1 row, FAIL. A green smoke run is NOT evidence for this fix; the real gate is Heart's release-integrate leg. Say so in both PRs.

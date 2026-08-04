@@ -1,3 +1,68 @@
+## simulator-util-to-af-ex
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1444
+- completed: 2026-08-04 (all three PRs merged 2026-08-03; closed out 2026-08-04)
+- library-pr: https://github.com/PyAutoLabs/PyAutoFit/pull/1445 (MERGED 2026-08-03T17:36:47Z)
+- workspace-prs: https://github.com/PyAutoLabs/autofit_workspace/pull/130 (MERGED 2026-08-03T21:40:46Z) + https://github.com/PyAutoLabs/HowToFit/pull/42 (MERGED 2026-08-03T21:40:50Z)
+- summary: moved the four 1D-Gaussian simulator helpers out of the duplicated
+  workspace `util.py` files into the library as `af.ex.util`, deleting the two
+  copies and repointing the scripts/notebooks in both workspaces. Additive API
+  only; 4 functions moved, 2 files deleted, 4 scripts edited.
+- evidence: parity proven — old workspace `util.py` vs new `af.ex.util` under an
+  identical seed give identical file sets and byte-identical JSON for all four
+  helpers; new `test_autofit/tools/test_example_util.py` 5 passed
+  (`example/util.py` had ZERO coverage before); full PyAutoFit suite 1647 passed
+  / 2 skipped; all 4 notebooks execute clean via `run_notebook.py`; all 4 `.py`
+  siblings pass; `run_smoke.py` 10/10 in BOTH workspaces;
+  `check_navigator.py --banners=fail` OK in both.
+- discovery: a SECOND failure was masked behind the first in
+  `HowToFit/scripts/simulators/simulators.py` — a trailing `runpy.run_path` used
+  `path.dirname(path.abspath(__file__))`, and `__file__` is undefined in a
+  notebook kernel (it survived into `notebooks/simulators/simulators.ipynb`
+  cell 41), so that notebook failed again the instant the util import was fixed.
+  Fixed in the same PR with a root-relative `path.join("scripts", "simulators",
+  "simulators_sample.py")`.
+- unblocked-by: complete/2026/08/dep-floors-source-chain-ci.md (PyAutoNerves#146).
+  The latent red was NOT the dependency floors — `setup.py` stamped `1.0.dev0` on
+  source builds, below every date release, so the new `>=` floors could not be
+  satisfied. Fixed by stamping `9999.0.0.dev0` in all six libraries. #130's smoke
+  then went 17:30Z success → 20:07Z ResolutionImpossible → 21:3xZ success on the
+  SAME commit — the control-and-recovery pair for the whole diagnosis.
+- gate-override: the `pending-release` label gate was OVERRIDDEN on explicit
+  human instruction 2026-08-03 ("all five once green"), after the consequence was
+  stated and PROVEN by control test: workspace main calls `af.ex.util` helpers
+  that exist on PyAutoFit main but not on PyPI, so a user on a released install
+  hits `AttributeError` on the first simulator call against released autofit
+  2026.7.29.2 in a clean venv — and HowToFit ships NO datasets (`dataset/`
+  gitignored, 0 tracked files), so a new user would get no data at all. Releasing
+  promptly became the remedy, which is what opened the release drive below.
+- sizing-override: the Brain Feature Agent returned too-large (score 13) →
+  split-into-4-phases. The factor breakdown measured no property of the change:
+  3 repos (+6), library+workspace (+2), prompt length (+2), and keyword hits on
+  trap/cross-repo/smoke/regression drawn from the prompt's own DIAGNOSIS prose
+  (`architectural_risk` is literally the string "cross-repo"). Shipped as one
+  task, one small PR per repo. Same prose-driven false positive as the
+  point-source campaign's score of 11.
+- correction-log (two things reported wrongly mid-drive, recorded so a later
+  session does not inherit them): (a) autolens_workspace#453 was claimed OPEN and
+  a three-option "deadlock" was built on it — it had ALREADY MERGED at 18:35:08Z;
+  the stale `active.md` line had been read instead of the PR. (b) a fresh
+  rehearsal was claimed to clear verify_install check D — it never could, because
+  check D resolves dependencies from stable PyPI without `--pre`. Verify PR state
+  and check semantics before presenting a decision.
+- claim-note at ship time: `worktree_check_conflict` flagged PyAutoFit against
+  point-source-defaults-campaign (#1441) and nautilus-1core-serial-pool (#1443);
+  both were STALE (PRs merged 2026-08-01 12:47 and 19:12). Those two stale claims
+  were finally released on 2026-08-04 — see
+  complete/2026/08/nautilus-1core-serial-pool.md and the campaign's
+  `claim-released` lines.
+- SPLIT OUT, still live: the release drive this task opened is NOT finished and
+  was moved to its own `active.md` entry `release-drive-2026-08-03` rather than
+  being buried in this record — Stage 2/3 are clear to re-run, and the PUBLISH
+  decision is still a separate human call. Its commit-shas, artifacts dir,
+  resume commands, `do-not` notes and outcome analysis all travel with that entry.
+
+## Original prompt
+
 # Simulator notebooks cannot `import util` — move the helpers into `af.ex.util`
 
 Type: bug

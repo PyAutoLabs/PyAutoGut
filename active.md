@@ -14,10 +14,10 @@
 - note: Brain sized too-large (11, prose-driven); human-scoped A–D phasing kept (potential-correction precedent). SUPERSEDES the 2026-07-31 morning galaxy/cluster split; COORDINATES with cluster-point-solved-default (#436 — phase D touches cluster/ only to reconcile); ABSORBS ideas.md PairAll-logsumexp entry (removed) + draft/research/autolens_profiling/cluster_gradient_search_benchmark.md (banner already in file). Time-delay free-H0 arm DEFERRED.
 - claim-released (2026-08-04, second): PyAutoFit dropped from `repos:` — bug-fix PR #1441 MERGED 2026-08-01T12:47:32Z and the main checkout was already restored, but the line still read "PR #1441 OPEN" and fired the conflict guard against test-mode-samples-info-hook-contract. Same stale-claim pattern as the autofit_workspace_test line below.
 - claim-released (2026-08-04): autofit_workspace_test dropped from `repos:` — its feature/jax-pytree-traced-aux-fix regression-test PR #81 MERGED 2026-08-01T12:47:34Z and the checkout was restored to main, but the repos line still read "PR #81 OPEN", contradicting this entry's own status line and firing the conflict guard against multi-start-auto-convergence-real-search (#83). The campaign's other claims are untouched.
+- claim-released (2026-08-04, third): PyAutoLens dropped from `repos:` — every PR that line covered is merged (#679 phase A 2026-07-31T14:11:06Z, #685 padded-row-grads 2026-08-01T12:47:36Z, #686 phase C 2026-08-03T18:31:35Z), and `feature/point-solver-padded-row-grads` no longer exists on origin at all. The line still read "#685 OPEN" and "branch retained for phase C" — phase C is merged, so that retention is spent. Remaining runbook steps (2)-(4) are all autolens_profiling work, so that claim stays LIVE and the task stays active. Note `origin/feature/point-source-defaults-campaign` still exists at d4cd0125 with nothing left to carry — this task's own call whether to delete it.
 - claim-note: PyAutoLens held CONCURRENTLY with potential-correction-validation (#672) — scopes disjoint (autolens/point/fit/ + point/model vs pixelization/potential-correction); pre-merge origin/main before PR
 - repos:
-  - PyAutoLens: feature/point-source-defaults-campaign (phase A MERGED via #679; branch retained for phase C) + feature/point-solver-padded-row-grads (bug-fix PR #685 OPEN)
-  - autolens_profiling: feature/point-source-defaults-campaign
+  - autolens_profiling: feature/point-source-defaults-campaign (LIVE — the remaining runbook steps (2)-(4) are all in this repo)
 
 ## interferometer-start-here-integrate-oom (corrective)
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/449
@@ -27,15 +27,6 @@
 - repos:
   - PyAutoHeart: feature/release-run-repo-slug-firewall (YELLOW tenant-firewall, not the RED claim)
 - claim-released: autolens_workspace claim DISCHARGED 2026-08-03 — PR #450 merged 2026-07-31T23:15Z, local branch deleted (stale origin/ ref only), checkout clean on main c4bd2796; only the PyAutoHeart release-validation leg remains. Released so group-data-preparation-readme could claim the repo.
-
-## nautilus-1core-serial-pool (corrective)
-- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1442
-- status: PR OPEN 2026-08-01 evening (PyAutoFit#1443, head 75dccb92a) — awaiting CI; merge + Stage 2/3 validation dispatch to follow in-session, nightly releases on green (standing grant)
-- corrective-red: Heart RED reason "release validation FAILED (stage integrate)" — hierarchical.py TIMEOUT 1800s (was 76s) in runs 30672739606 + 30686136529; authorization = human session instruction 2026-08-01 quoted verbatim on #1442 ("do a release, fine if any blockers need sorting…"), given at launch for any blockers rather than post-surfacing (noted on issue + log row); cause = e6279c53f (#1439) always builds fork Pool(1) for Nautilus, bypassing nautilus's pool∈[None,1]→serial guard, forked worker deadlocks in XLA compile under release-profile JAX; fix = pool=None at number_of_cores=1, fork pool kept for >1
-- evidence: regression test red-on-main/green-patched; test_autofit/non_linear 411 passed; py-spy stacks (main in pool.map wait, worker in backend_compile_and_load) on #1442; control-vs-patched hierarchical.py release-env run in flight
-- not-claimed: delaunay.py intermittent TIMEOUT (pre-existing, crosses SHA windows) stays open
-- claim-released (2026-08-04): PyAutoFit dropped from `repos:` — PyAutoFit#1443 MERGED 2026-08-01T19:12:47Z (merge commit 5bf32dab, contained in origin/main) and the canonical checkout is already back on main, but the line still read "PR OPEN ... restore main after merge" and fired the conflict guard against test-mode-samples-info-hook-contract. NOTE: this task looks fully shipped — its `status:` line still says "PR OPEN 2026-08-01 evening ... awaiting CI". Worth a completion pass (lifecycle record + close #1442); not done here, since that is this task's own call.
-- repos:
 
 ## simulator-util-to-af-ex
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1444

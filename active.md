@@ -1,19 +1,5 @@
 # Active Tasks
 
-## health-conductor-stale-verdict
-- issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/198
-- status: library-dev — fix COMMITTED AND PUSHED to `claude/health-conductor-stale-verdict-6ve1sl` (PyAutoBrain 1afae0a). NO PR opened (not requested). Cloud session (web-github): no worktree, no `gh` CLI; worked in the canonical /home/user/PyAutoBrain checkout. Issue filed via the GitHub MCP surface.
-- validation: full Brain suite 222 passed = 204 pre-existing + 18 new. Conductor driven end-to-end against a stubbed Heart for all five verdicts: green 0, yellow 2, red 3, unknown 4, stale 6, usage 5.
-- kind taxonomy: stale reasons get a NEW `evidence-gap` kind, deliberately NOT the existing `baseline-gap`. A baseline gap is rendered as "accept, not action items"; a stale reason is the opposite — its remedy is re-running the named check. Forcing the kind by severity mirrors the pre-existing red override in the same loop.
-- refresh commands are grounded, never invented: `pyauto-brain release validate` (validate — the hard gate, preferred when present), `pyauto-heart verify_install`, `pyauto-heart tick` for anything the <30s tick measures. `test_run` / `url_check` have no known entry point → command None, named in prose. Same discipline the file already applied to `pyauto-heart fix` topics.
-- docs updated in the same diff: health.sh header table AND agents/conductors/health/AGENTS.md (its second copy of the table, the triage taxonomy "three kinds"→"four", and the recommended-action table). A test pins both against `_exit_code_for` so they cannot drift.
-- FOLLOW-UP FOUND, deliberately NOT folded in (one prompt = one task): `agents/faculties/vitals/AGENTS.md` has the same class of omission. Its step 1 documents the tier correctly, but step 3 ("Reason about significance") groups only Blocking/Warnings and step 4 ("Determine overall readiness") reads "any red_reasons -> RED, else any yellow_reasons -> YELLOW, else GREEN" — no stale rung. Docs-only, in the faculty the conductor consults; worth an intake.
-- what: the health conductor has no STALE branch. `agents/conductors/health/health.sh` drops `stale_reasons` from triage (the classifier walks only red + yellow), so a stale-only verdict renders the UNKNOWN recommendation with 0/0/0 counts and exits 4 — indistinguishable from "Heart unreachable" for a machine caller, even though `AUTONOMY.md` leg 4 treats STALE as PASSING the dev-ship gate.
-- exit-code decision: STALE gets **6**, not the free slot 1. Bash's own generic failure is 1 (missing `_common.sh`, failed `readlink`), and STALE is a *passing* tier for the ship gate — a crash must never read as a pass. Same reasoning the header already applies to usage errors (5, "so misuse is never read as a real YELLOW"). Existing codes are untouched: 0 green / 2 yellow / 3 red / 4 unknown / 5 usage.
-- prompt: active/health_conductor_stale_verdict.md
-- worktree: (none — cloud session, canonical checkout)
-- repos-single-claim: PyAutoBrain is the only affected repo, named on this one line deliberately and NOT as a 2-space bullet, because worktree_check_conflict reads any such bullet as a live claim. PyAutoHeart is referenced only (its readiness.py already emits the tier correctly and needs no change).
-
 ## covariance-interpolator-rng-seed
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1450
 - status: library-dev — fix COMMITTED AND PUSHED to `claude/covariance-interpolator-rng-seed-8zexp3` (PyAutoFit 68a8b391). NO PR opened (not requested). Cloud session, no worktree and no `gh` CLI; issue filed via the GitHub MCP surface.

@@ -1,5 +1,14 @@
 # Active Tasks
 
+## health-conductor-stale-verdict
+- issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/198
+- status: library-dev — starting. Cloud session (web-github): no worktree, no `gh` CLI; working in the canonical /home/user/PyAutoBrain checkout on the mandated branch `claude/health-conductor-stale-verdict-6ve1sl`. Issue filed via the GitHub MCP surface.
+- what: the health conductor has no STALE branch. `agents/conductors/health/health.sh` drops `stale_reasons` from triage (the classifier walks only red + yellow), so a stale-only verdict renders the UNKNOWN recommendation with 0/0/0 counts and exits 4 — indistinguishable from "Heart unreachable" for a machine caller, even though `AUTONOMY.md` leg 4 treats STALE as PASSING the dev-ship gate.
+- exit-code decision: STALE gets **6**, not the free slot 1. Bash's own generic failure is 1 (missing `_common.sh`, failed `readlink`), and STALE is a *passing* tier for the ship gate — a crash must never read as a pass. Same reasoning the header already applies to usage errors (5, "so misuse is never read as a real YELLOW"). Existing codes are untouched: 0 green / 2 yellow / 3 red / 4 unknown / 5 usage.
+- prompt: active/health_conductor_stale_verdict.md
+- worktree: (none — cloud session, canonical checkout)
+- repos-single-claim: PyAutoBrain is the only affected repo, named on this one line deliberately and NOT as a 2-space bullet, because worktree_check_conflict reads any such bullet as a live claim. PyAutoHeart is referenced only (its readiness.py already emits the tier correctly and needs no change).
+
 ## covariance-interpolator-rng-seed
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1450
 - status: library-dev — fix COMMITTED AND PUSHED to `claude/covariance-interpolator-rng-seed-8zexp3` (PyAutoFit 68a8b391). NO PR opened (not requested). Cloud session, no worktree and no `gh` CLI; issue filed via the GitHub MCP surface.

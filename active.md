@@ -1,5 +1,22 @@
 # Active Tasks
 
+## hygiene-detail-flag
+- issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/203
+- status: library-dev — PR OPEN, CI GREEN. PyAutoBrain#204 (`c05c9e4`, Brain Tests success, mergeable_state clean); Mind-side state in PyAutoMind#138. Cloud session (`web-github`): no worktree, no `gh` CLI; issue and PRs filed via the GitHub MCP surface, work done in the canonical /home/user/PyAutoBrain checkout on the harness-mandated branch. Merge is a human act — not merged.
+- verification: full PyAutoBrain suite 236 passed (`tests/`), hygiene conductor file 53 passed. `--detail` reproduces the expected 19 keys exactly (see baseline below); default line byte-identical; `hygiene config --json` row and the default summary table unchanged.
+- shape: `diff_detail()` / `orphan_detail()` return the items; `diff()` / `orphan_files()` became the count view over the same single traversal via `_summarise()`, so a tally cannot disagree with its own listing. `render_detail()` groups keys under the workspace file missing them and orphans under their repo. `--detail` drops the machine `count|` prefix (it is the human/routing view); default output keeps it.
+- scope-note: also wired the `hygiene config` single-mode human branch in `hygiene.sh` to render the detail block, mirroring the existing `refs`/`optdeps`/`extras` branches — without it the flag is only reachable by calling the helper directly, which is the same "not routable" complaint one level up. `prescan_config()` untouched.
+- observed-not-fixed: `_hygiene_config.py::_suppressed()` is dead code — it predates this change (`orphan_files` always inlined `r.split("/")[0] in owners`). Left alone deliberately to keep this PR scoped; worth a separate tidy.
+- what: the hygiene `config` prescan (`agents/conductors/hygiene/_hygiene_config.py`) emits only `count|summary`; `main()` takes only `--root`. Add `--detail` printing each drifted key path grouped by the config file it is missing from, and the same for the `orphan_files` signal. Default single-line output stays byte-identical so the conductor's summary table is unchanged.
+- why it matters: the hygiene skill routes config findings onward for repair, but the mode hands over nothing routable — recovering the key paths today means importing the module and re-running `diff()` by hand.
+- baseline (live checkouts, root /home/user): `19|19 library config keys absent downstream (review/mirror): autofit_workspace:3 autogalaxy_workspace:15 autolens_workspace:1`; orphan_files 0. `--detail` must resolve those 19 to autofit_workspace general.yaml (output.search_internal, test.check_likelihood_function) + logging.yaml (total_files_open); autogalaxy_workspace general.yaml (test.exception_override) + 14 notation.yaml labels; autolens_workspace general.yaml (output.fit_dill).
+- api-constraint: `diff()` and `orphan_files()` keep their `(total, ["repo:N", ...])` returns — `tests/test_hygiene_conductor.py` asserts all three directly. The detail cores go underneath them, one traversal, so count and listing cannot disagree.
+- prompt: active/add_a_detail_flag_to_the_hygiene.md
+- worktree: (none — cloud session, canonical checkout)
+- repos:
+  - PyAutoBrain
+- prompt-provenance: the draft was filed on `claude/hygiene-agent-run-n9qtd5` (PyAutoMind, commit 89f5404, which filed four hygiene-run findings at once) and is not yet on main. Only this one prompt file was checked out onto the working branch — the other three belong to their own tasks.
+
 ## pyautogalaxy-mge-sigma-test
 - issue: https://github.com/PyAutoLabs/PyAutoGalaxy/issues/550
 - status: library-dev — fix COMMITTED AND PUSHED to `claude/pyautogalaxy-mge-sigma-test-3neq07` (PyAutoGalaxy 91eb878). NO PR opened (not requested). Cloud session, no worktree and no `gh` CLI; issue filed via the GitHub MCP surface.

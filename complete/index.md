@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-894 records across 7 buckets.
+895 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -27,6 +27,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [health-conductor-stale-verdict](2026/08/health-conductor-stale-verdict.md)
 - [howto-smoke-all-tutorials](2026/08/howto-smoke-all-tutorials.md)
 - [hygiene-coverage-drift](2026/08/hygiene-coverage-drift.md)
+- [hygiene-detail-flag](2026/08/hygiene-detail-flag.md)
 - [interferometer-start-here-integrate-oom](2026/08/interferometer-start-here-integrate-oom.md)
 - [intra-family-dep-floors](2026/08/intra-family-dep-floors.md)
 - [jax-grad-smoke-timeout-budget](2026/08/jax-grad-smoke-timeout-budget.md)

@@ -2,7 +2,7 @@
 
 ## hygiene-detail-flag
 - issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/203
-- status: library-dev — COMMITTED AND PUSHED to `claude/hygiene-detail-flag-n1fgdq` (PyAutoBrain c05c9e4). NO PR opened (not requested). Cloud session (`web-github`): no worktree, no `gh` CLI; issue filed via the GitHub MCP surface, work done in the canonical /home/user/PyAutoBrain checkout on the harness-mandated branch.
+- status: library-dev — PR OPEN, CI GREEN. PyAutoBrain#204 (`c05c9e4`, Brain Tests success, mergeable_state clean); Mind-side state in PyAutoMind#138. Cloud session (`web-github`): no worktree, no `gh` CLI; issue and PRs filed via the GitHub MCP surface, work done in the canonical /home/user/PyAutoBrain checkout on the harness-mandated branch. Merge is a human act — not merged.
 - verification: full PyAutoBrain suite 236 passed (`tests/`), hygiene conductor file 53 passed. `--detail` reproduces the expected 19 keys exactly (see baseline below); default line byte-identical; `hygiene config --json` row and the default summary table unchanged.
 - shape: `diff_detail()` / `orphan_detail()` return the items; `diff()` / `orphan_files()` became the count view over the same single traversal via `_summarise()`, so a tally cannot disagree with its own listing. `render_detail()` groups keys under the workspace file missing them and orphans under their repo. `--detail` drops the machine `count|` prefix (it is the human/routing view); default output keeps it.
 - scope-note: also wired the `hygiene config` single-mode human branch in `hygiene.sh` to render the detail block, mirroring the existing `refs`/`optdeps`/`extras` branches — without it the flag is only reachable by calling the helper directly, which is the same "not routable" complaint one level up. `prescan_config()` untouched.
@@ -16,6 +16,20 @@
 - repos:
   - PyAutoBrain
 - prompt-provenance: the draft was filed on `claude/hygiene-agent-run-n9qtd5` (PyAutoMind, commit 89f5404, which filed four hygiene-run findings at once) and is not yet on main. Only this one prompt file was checked out onto the working branch — the other three belong to their own tasks.
+
+## pyautogalaxy-mge-sigma-test
+- issue: https://github.com/PyAutoLabs/PyAutoGalaxy/issues/550
+- status: library-dev — fix COMMITTED AND PUSHED to `claude/pyautogalaxy-mge-sigma-test-3neq07` (PyAutoGalaxy 91eb878). NO PR opened (not requested). Cloud session, no worktree and no `gh` CLI; issue filed via the GitHub MCP surface.
+- what it fixes: the two `*_default_sigma_list_is_bitwise_unchanged` tests added with PyAutoGalaxy#549 compared the implementation's per-element scalar power (`gaussian.sigma = 10 ** log10_sigma_list[i]`, `autogalaxy/analysis/model_util.py:190` and `:271`) against a vectorised `10 ** np.linspace(...)` in the test. Different numpy code paths; numpy does not guarantee scalar and SIMD power loops agree bit for bit. Fix builds the expected ladder element-wise so both sides take the same path.
+- REPRODUCED, not assumed: this cloud runner is itself AVX-512 (`avx512f/bw/cd/dq/vl/vnni` in /proc/cpuinfo) with numpy 2.4.6, so `pytest` failed on the unmodified tree exactly as reported, and passes after. The prompt named one index (mask_radius=3.0/n=20 -> index 18); the actual footprint is wider — mge also drifts at 3.5/30 index 8, and the POINT test drifts too (0.1/10 at indices 4 and 9, 0.05/5 at index 3). Both tests were broken, not just the first.
+- the guarantee was NOT weakened (explicit human instruction): `pytest.approx(rel=1e-8)` deliberately not used; the docstring's reasoning for that is kept verbatim and both docstrings now carry a PORTABILITY TRAP note so the expectation is not re-vectorised by a later tidy-up.
+- control test (the check that matters — an element-wise expectation could have been vacuous): perturbed the implementation defaults by a relative 1e-7 (`sigma_min` 1e-4 -> 1.0000001e-4, 0.01 -> 0.010000001) and BOTH tests still fail. The exactness guarantee survives the change; implementation restored afterwards, only the test file is modified.
+- validation: `test_autogalaxy/analysis/test_model_util.py` 29 passed; full `test_autogalaxy/` 1004 passed, 3 skipped. Ran on Python 3.11 (the only interpreter with a stack in this sandbox) — CI grades 3.12/3.13, and the change is pure-Python test code with no version-sensitive surface.
+- deliberately untouched: the neighbouring `pytest.approx(..., 1.0e-8)` assertions at L129/L237 are tolerance-based by design. `np.log10(1e-4) == -4.0` and `np.log10(0.01) == -2.0` exactly (verified), so the tests' literal endpoints remain a faithful stand-in for the implementation's `np.log10(sigma_min)`.
+- scope: test-only, no library source changed, so no downstream workspace impact and no `pending-release` gate. PyAutoLens has no equivalent `10 ** np.linspace` exact-equality assertion (grepped).
+- prompt: active/pyautogalaxy_mge_bitwise_sigma_test.md
+- worktree: (none — cloud session, worked in the canonical /home/user/PyAutoGalaxy checkout on the mandated branch)
+- repos-single-claim: PyAutoGalaxy is the only affected repo, named on this one line deliberately and NOT as a 2-space `  - PyAutoGalaxy` bullet, because worktree_check_conflict reads any such bullet as a live claim.
 
 ## covariance-interpolator-rng-seed
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1450

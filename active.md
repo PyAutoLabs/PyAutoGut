@@ -1,5 +1,23 @@
 # Active Tasks
 
+## interferometer-multistart-vmap-oom
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1452
+- status: library-dev — issued 2026-08-05, no code work started yet. Three phases, none begun.
+- prompt: active/interferometer_release_leg_oom.md
+- branch: claude/interferometer-oom-nufft-yyz98z (session-designated across all repos; NOT the usual feature/<task-name>). Branch name preserves the original NUFFT hypothesis and is deliberately not churned.
+- worktree: (none — web-github session, operating on the /home/user clones directly)
+- ROOT CAUSE CONFIRMED 2026-08-05, and it is NOT the NUFFT. `af.MultiStartProdigy.batch_size` defaults to None → all `n_starts` evaluated in one `jax.vmap`, materializing the whole batched jvp. 85,898,814,480 / 48 starts = 1.79 GB of jvp per start. PyAutoFit's own `search.py:88-102` docstring already documents this failure mode verbatim.
+- regression-window: both start_here.py files adopted `MultiStartProdigy(n_starts=48)` unguarded on 2026-07-29 (autogalaxy_workspace 255aee4 19:42, autolens_workspace fa31bc7 21:15). First failure is the very next nightly, 07-30. A WORKSPACE AUTHORING change, not a library change.
+- already-fixed-for-autolens: autolens_workspace d7385ff (2026-07-31 23:23) added `batch_size=4` and its commit message records a verified reproduction under the release profile env (unpatched OOMs at the same materialization site; patched exits 0, <4 GB peak). This is why 08-01/08-03/08-04 showed no recurrence — NOT intermittency. The prompt was never updated, which is why the 08-04 addendum re-opened it as unknown.
+- LIVE EXPOSURE: autogalaxy_workspace/scripts/interferometer/start_here.py is STILL unguarded (n_starts=48, no batch_size) and is listed in its smoke_tests.txt. Phase 1 closes this.
+- falsification-test-passed: audited every `search = af.*` constructor under scripts/interferometer/ in both workspaces — start_here.py is the ONLY user of af.MultiStartProdigy; all 45 others use af.Nautilus. In the failing run every sibling on the same dataset and the same TransformerNUFFT passed (fit.py, modeling.py, likelihood_function.py, all seven features/pixelization/*). Beware: a naive grep for `af.MultiStartProdigy` matches PROSE in modeling.py ("The folder's start_here.py instead fits with af.MultiStartProdigy") — audit the constructor lines, not the file text.
+- phases: 1 autogalaxy_workspace batch_size=4 (independent, can land immediately) → 2 PyAutoHands JAX_TRACEBACK_FILTERING=off in env_config.py::build_env_for_script → 3 PyAutoFit automatic memory guard. Library-first merge ordering.
+- phase-3-detail: `af.Analysis.print_vram_use` (analysis.py:337) already exists but is the WRONG instrument — it profiles `fitness.call` (the likelihood), not the `value_and_grad` jvp, so it under-reports precisely the allocation that OOMs a gradient optimizer; and it no-ops under `skip_fit_output()`. Fix the instrument, then make the guard automatic.
+- JAX_TRACEBACK_FILTERING: verified by grep to be set NOWHERE in the organism — not PyAutoHeart, not PyAutoHands, not any workspace config/build/profile_*.yaml. Prompt item 2 genuinely open.
+- NOT-IMPLICATED (checked, do not chase): PyAutoArray transformer.py — TransformerNUFFT.chunk_size, transform_mapping_matrix, and the nufftax 0.6.x _patch_nufftax_batchers shim. nufftax 0.6.1 is what CI installs so the shim IS active, but the guarded sibling scripts exercise all of it on the same dataset without incident.
+- artifact-note: the full traceback lives in PyAutoHeart run 30607596240 artifact 8784798762 (retention 30d from 07-31, expires ~08-30). Not fetchable from a cloud session — the Azure blob host returns 403 through the agent proxy. The diagnosis above did not need it.
+- repos-not-yet-claimed: PyAutoFit, autogalaxy_workspace and PyAutoHands are named on this single line deliberately and NOT as 2-space `  - <Repo>` bullets, because worktree_check_conflict reads any such bullet as a live claim. Convert to bullets when a phase actually starts editing.
+
 ## mge-sigma-min-workspace-sweep
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/466
 - status: BOTH PHASES MERGED 2026-08-04. Phase 1 autolens_workspace#467 -> 92019316 (issue #466 auto-closed). Phase 2 autogalaxy_workspace#203 -> 8a7df7a6, HowToLens#67 -> 4ff3135c, HowToGalaxy#61 -> 51eed3d6, autogalaxy_assistant#10 -> f6966a64. Upstream PyAutoGalaxy#549 -> 13d3023c. All worktrees removed, all branches deleted local+origin, all five canonical checkouts back on main. Code work COMPLETE; two debts remain (below).

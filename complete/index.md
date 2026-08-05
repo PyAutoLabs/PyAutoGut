@@ -36,6 +36,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [point-source-defaults-campaign](2026/08/point-source-defaults-campaign.md) — took the point-source likelihood options from "several undocumented
 - [potential-correction-env-declaration](2026/08/potential-correction-env-declaration.md)
 - [potential-correction-validation](2026/08/potential-correction-validation.md)
+- [pr-ci-for-own-test-suite](2026/08/pr-ci-for-own-test-suite.md)
 - [pyautobrain-pr-test-ci](2026/08/pyautobrain-pr-test-ci.md) — auto-closed by the merge
 - [simulator-util-to-af-ex](2026/08/simulator-util-to-af-ex.md) — moved the four 1D-Gaussian simulator helpers out of the duplicated
 - [small-datasets-loader-pixel-scales](2026/08/small-datasets-loader-pixel-scales.md)

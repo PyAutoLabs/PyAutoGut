@@ -9,6 +9,8 @@
 - parallel-override: PyAutoGalaxy also claimed by yang24-sidm-gravothermal-profile; human approved parallel run 2026-08-06 (overlap nil — pyproject.toml + cosmology/model.py docstrings vs new dark-mass profile). Serialise at merge if both PRs land together.
 - sizing-note: Brain scored 13/too-large + 4-phase split; prose-driven artifact, actual scope 2 repos / 3 files / no API change — kept single-task (repos_affected check).
 - repos:
+  - PyAutoArray: feature/astropy-cap-bump
+  - PyAutoGalaxy: feature/astropy-cap-bump
 
 ## mge-sigma-min-workspace-sweep
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/466

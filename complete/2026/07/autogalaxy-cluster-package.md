@@ -1,3 +1,13 @@
+## autogalaxy-cluster-package
+- completed: 2026-07-25
+- summary: Created `scripts/cluster/` in autogalaxy_workspace (cluster-population light modelling); shipped alongside the multi_galaxy package via autogalaxy_workspace#168 + autogalaxy_workspace_test#97 (merged 2026-07-25) — sibling record [[autogalaxy-multi-galaxy-package]].
+
+## Lifecycle note
+
+Record backfilled 2026-08-06 (draft Status-sweep): the task shipped but its prompt never advanced out of draft/; retired here dated by ship day.
+
+## Original prompt (autogalaxy_cluster_package)
+
 # autogalaxy_workspace: new cluster package (many-galaxy light modelling)
 
 Type: docs

@@ -1,3 +1,13 @@
+## command-surface-in-agents-md
+- completed: 2026-07-12
+- summary: Landed via the agents_md_standardization epic: install.sh --write/--check-agents-surface, generated from the bin/pyauto-brain agent registry, drift-checked by two Brain CI tests.
+
+## Lifecycle note
+
+Record backfilled 2026-08-06 (draft Status-sweep): the task shipped but its prompt never advanced out of draft/; retired here dated by ship day.
+
+## Original prompt (command_surface_in_agents_md)
+
 # Generate the command surface into AGENTS.md (agent-agnostic discovery)
 
 Type: maintenance

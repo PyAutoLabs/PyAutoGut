@@ -1,3 +1,13 @@
+## agents-md-pointer-sweep
+- completed: 2026-07-13
+- summary: euclid_assistant CLAUDE.md became a content-free @AGENTS.md pointer with the canonical header (Jammy2211/euclid_assistant#7, merged squash); the other two audited repos needed no change.
+
+## Lifecycle note
+
+Record backfilled 2026-08-06 (draft Status-sweep): the task shipped but its prompt never advanced out of draft/; retired here dated by ship day.
+
+## Original prompt (agents_md_pointer_sweep)
+
 # Finish the CLAUDE.md → @AGENTS.md sweep for the Jammy2211-owned repos
 
 Type: maintenance

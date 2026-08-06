@@ -1,3 +1,13 @@
+## group-halo-explicit-choice
+- completed: 2026-07-26
+- summary: Group-regime explicit halo choice: signature tutorial (2026-07-25) plus three-tier start_here and modeling/simulator halo-narrative threading (2026-07-26). Full scope landed per the in-prompt Landed log; the doc-reorganization branch has since merged (PyAutoLens PR#652-654 chain).
+
+## Lifecycle note
+
+Record backfilled 2026-08-06 (draft Status-sweep): the task shipped but its prompt never advanced out of draft/; retired here dated by ship day.
+
+## Original prompt (group_halo_explicit_choice)
+
 # Group package: host halo as an explicit modelling choice + default scaling/extra tiers
 
 Type: docs

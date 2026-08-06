@@ -1,3 +1,13 @@
+## autogalaxy-docs-regime-guides
+- completed: 2026-07-25
+- summary: Surfaced the multi_galaxy + cluster packages in PyAutoGalaxy Sphinx/RTD docs; PyAutoGalaxy#526 merged (New User Guide system-scale ladder). Soft remainder noted in-prompt: overview_1/3 touch-ups 'if needed' — re-file if wanted.
+
+## Lifecycle note
+
+Record backfilled 2026-08-06 (draft Status-sweep): the task shipped but its prompt never advanced out of draft/; retired here dated by ship day.
+
+## Original prompt (autogalaxy_docs_regime_guides)
+
 # PyAutoGalaxy RTD docs: multi_galaxy + cluster in New User Guide and overviews
 
 Type: docs

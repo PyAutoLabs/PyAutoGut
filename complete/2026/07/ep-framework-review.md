@@ -1,3 +1,13 @@
+## ep-framework-review
+- completed: 2026-07-08
+- summary: Research review of the EP/graphical framework — all 8 phases executed (shipped or parked on human review, per-phase annotations in the folded prompt); wrap-up on PyAutoFit#1330. Spawned the bug/priors and EP follow-up backlog.
+
+## Lifecycle note
+
+Record backfilled 2026-08-06 (draft Status-sweep): the task shipped but its prompt never advanced out of draft/; retired here dated by ship day.
+
+## Original prompt (ep_framework_review)
+
 # EP framework review — statistics, docs, diagnostics, deterministic variables
 
 Type: research

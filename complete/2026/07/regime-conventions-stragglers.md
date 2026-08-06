@@ -1,3 +1,13 @@
+## regime-conventions-stragglers
+- completed: 2026-07-25
+- summary: Three consumers still on pre-split conventions after the regime reorganization merged; light-touch fixes shipped as autolens_workspace#348 + HowToLens#57 (merged 2026-07-25).
+
+## Lifecycle note
+
+Record backfilled 2026-08-06 (draft Status-sweep): the task shipped but its prompt never advanced out of draft/; retired here dated by ship day.
+
+## Original prompt (regime_conventions_stragglers)
+
 # Regime-split stragglers: consumers still on pre-split conventions
 
 Type: docs

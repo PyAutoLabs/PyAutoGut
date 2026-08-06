@@ -1,3 +1,13 @@
+## claude-md-standardization
+- completed: 2026-07-12
+- summary: Landed via the agents_md_standardization epic: check_claude_md_pointers + a --write pointer sweep + an AGENTS-less report in repos_sync.py; pointer enforced per recommendation (a).
+
+## Lifecycle note
+
+Record backfilled 2026-08-06 (draft Status-sweep): the task shipped but its prompt never advanced out of draft/; retired here dated by ship day.
+
+## Original prompt (claude_md_standardization)
+
 # Standardize CLAUDE.md → AGENTS.md across the whole ecosystem
 
 Type: maintenance

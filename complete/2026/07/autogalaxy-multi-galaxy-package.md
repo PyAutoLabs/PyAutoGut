@@ -1,3 +1,13 @@
+## autogalaxy-multi-galaxy-package
+- completed: 2026-07-25
+- summary: Created `scripts/multi_galaxy/` in autogalaxy_workspace (light-only counterpart of the lens regime split); shipped alongside the cluster package via autogalaxy_workspace#168 + autogalaxy_workspace_test#97 (merged 2026-07-25) — sibling record [[autogalaxy-cluster-package]].
+
+## Lifecycle note
+
+Record backfilled 2026-08-06 (draft Status-sweep): the task shipped but its prompt never advanced out of draft/; retired here dated by ship day.
+
+## Original prompt (autogalaxy_multi_galaxy_package)
+
 # autogalaxy_workspace: new multi_galaxy package
 
 Type: docs

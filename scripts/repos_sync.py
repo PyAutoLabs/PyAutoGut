@@ -640,7 +640,7 @@ FIREWALL_ALLOWLIST = {
     "PyAutoBrain/tests/test_clean_slate.py": {"PyAutoArray", "PyAutoFit", "PyAutoGalaxy", "autolens_workspace", "euclid_assistant"},
     "PyAutoBrain/tests/test_clone_conductor.py": {"autofit_assistant", "autolens_assistant"},
     "PyAutoBrain/tests/test_community_conductor.py": {"Jammy2211", "PyAutoFit", "PyAutoLabs", "PyAutoLens", "admin_jammy"},
-    "PyAutoBrain/tests/test_hygiene_conductor.py": {"PyAutoArray", "PyAutoFit", "PyAutoGalaxy", "autolens_workspace"},
+    "PyAutoBrain/tests/test_hygiene_conductor.py": {"PyAutoArray", "PyAutoFit", "PyAutoGalaxy", "autofit_workspace", "autolens_workspace"},
     "PyAutoBrain/tests/test_mind_commit_guard.py": {"/home/jammy", "PyAutoFit", "PyAutoLabs"},
     "PyAutoBrain/tests/test_policy_seams.py": {"PyAutoFit", "PyAutoLens", "autolens_workspace"},
     "PyAutoBrain/tests/test_review_inplace.py": {"PyAutoArray", "PyAutoLabs"},

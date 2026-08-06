@@ -1,5 +1,16 @@
 # Active Tasks
 
+## hygiene-howto-refs-docstrings
+- issue: https://github.com/PyAutoLabs/HowToGalaxy/issues/63
+- status: workspace-dev
+- prompt: active/hygiene-howto-refs-docstrings-batch.md
+- worktree: ~/Code/PyAutoLabs-wt/hygiene-howto-refs-docstrings
+- sizing-note: Brain scored 9/large + split-into-phases; prose-driven artifact, actual scope 2 repos / 3 files / 4 mechanical edits, no API change — kept single-task (astropy-cap-bump precedent).
+- source: 2026-08-06 /hygiene run (refs + docstrings modes); user pre-approved batch, autonomous execution authorized this session.
+- repos:
+  - HowToGalaxy: feature/hygiene-howto-refs-docstrings
+  - HowToLens: feature/hygiene-howto-refs-docstrings
+
 ## sph-transform-name-check
 - issue: https://github.com/PyAutoLabs/PyAutoGalaxy/issues/555
 - session: claude --resume 33e5462e-9cec-4baf-8041-88bb27c0b435

@@ -1,3 +1,12 @@
+- issue: https://github.com/PyAutoLabs/PyAutoArray/issues/434 (closed manually post-merge — "Part of" in the PR bodies does not auto-close)
+- completed: 2026-08-06
+- pr: https://github.com/PyAutoLabs/PyAutoArray/pull/435 (MERGED, merge 828d5c13) + https://github.com/PyAutoLabs/PyAutoGalaxy/pull/558 (MERGED, merge bfc766e2), both `pending-release`
+- notes: Dropped the stale `astropy>=5.0,<=7.2.0` cap to `astropy>=5.0` in both pyproject.tomls (floors-not-pins convention); a fresh `pip install` now resolves astropy 8.0.1 instead of downgrading to 7.2.0. The PyAutoGalaxy PR also corrected three stale docstrings in `autogalaxy/cosmology/model.py` (native xp implementation still claimed to "wrap the astropy function"; the deliberate astropy value-parity statements were kept). Evidence at ship time: 929 (autoarray) + 1027 (autogalaxy) tests green under astropy 8.0.1; clean-venv `pip install --dry-run` control-tested (capped main → 7.2.0, patched → 8.0.1).
+- merge-context: merged 2026-08-06 ~20:30 UTC on explicit human authorization ("merge anything"), PyAutoArray first then the PyAutoGalaxy sibling. PR check runs could NOT execute — GitHub Actions was in major outage all afternoon (the same outage that queued Workspace Smoke cloud#31123650827) — so the merge evidence is the local test/resolve runs recorded in the PR bodies, not CI. The `smoke-running` status in active.md never concluded for the same reason; the nightly Release Integrate exercises the merged stack next.
+- heart-context: shipped earlier the same day under the recorded human RED override (RED reason verbatim: "release validation FAILED (stage integrate)" — the unrelated MGE interferometer singular-solve, fixed by autolens_workspace e658f684 pending nightly verification). The YELLOW tenant-firewall manifest drift named in the ack was cleared the same day (PyAutoMind c59a27a).
+
+## Original prompt
+
 # Bump astropy cap to allow 8.x (drop the stale `<=7.2.0`)
 
 Type: maintenance

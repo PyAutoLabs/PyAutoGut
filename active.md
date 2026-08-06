@@ -95,4 +95,5 @@
 - status: library-dev
 - worktree: ~/Code/PyAutoLabs-wt/pointmass-smbh-jax
 - repos:
+  - PyAutoGalaxy: feature/pointmass-smbh-jax
 - prompt: active/pointmass_smbh_jax_incompatibility.md

@@ -15,7 +15,7 @@ green, which is exactly why it has gone unnoticed.
 
 ## The gap
 
-`HowToLens/scripts/chapter_4_pixelizations/tutorial_3_inversions.py:76` and
+`HowToLens/scripts/chapter_3_pixelizations/tutorial_3_inversions.py` (chapter renamed from chapter_4_pixelizations in the 2026-08 restructure; line refs predate it) and
 `:190` both do:
 
 ```python

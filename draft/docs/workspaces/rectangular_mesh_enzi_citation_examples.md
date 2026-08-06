@@ -14,7 +14,7 @@ Status: formalised
 
 The rectangular-mesh consolidation added an Enzi et al. 2026 (arXiv:2606.30620,
 RTU grids) citation requirement to the docs citations pages
-(PyAutoLens#644 / PyAutoGalaxy#520) and to the HowToLens/HowToGalaxy chapter 4
+(PyAutoLens#644 / PyAutoGalaxy#520) and to the HowToLens/HowToGalaxy pixelizations-chapter (chapter 3 since the 2026-08 restructure)
 tutorials (HowToLens#53 / HowToGalaxy#43). The remaining piece — a short
 paper-link paragraph in the **user-workspace pixelization examples** — was
 blocked at wrap-up time because `autolens_workspace` / `autogalaxy_workspace`

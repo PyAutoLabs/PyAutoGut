@@ -2,7 +2,8 @@
 
 ## hygiene-howto-refs-docstrings
 - issue: https://github.com/PyAutoLabs/HowToGalaxy/issues/63
-- status: workspace-dev
+- status: workspace-committed, gate-held (Heart RED)
+- gate-note (2026-08-06): edits + notebook regen committed LOCALLY (HowToGalaxy 706920c3, HowToLens 1b544645); push/PR-open held at the ship gate — Heart RED reasons verbatim: "release validation FAILED (stage integrate)" / "manifest drift: tenant firewall (organ code) — 1 mismatch(es) vs PyAutoMind/repos.yaml" / "test run status unknown". Awaiting human RED-override naming this reason set (astropy-cap-bump precedent). PR bodies staged in session scratchpad.
 - prompt: active/hygiene-howto-refs-docstrings-batch.md
 - worktree: ~/Code/PyAutoLabs-wt/hygiene-howto-refs-docstrings
 - sizing-note: Brain scored 9/large + split-into-phases; prose-driven artifact, actual scope 2 repos / 3 files / 4 mechanical edits, no API change — kept single-task (astropy-cap-bump precedent).

@@ -24,11 +24,24 @@ installed environment is the proof it works.
 ## Scope
 
 - Raise the astropy cap in `PyAutoArray/pyproject.toml` and
-  `PyAutoGalaxy/pyproject.toml` from `<=7.2.0` to admit 8.x (e.g.
-  `>=5.0,<9.0` or `>=5.0,<=8.0.1` — pick per the repo's cap convention).
+  `PyAutoGalaxy/pyproject.toml`. Convention update (2026-08-06): since this was
+  filed, the stack moved to **floors, not pins** (PyAutoArray#433 /
+  PyAutoLens#687 dep-floors work; PyAutoFit and PyAutoNerves already declare
+  `astropy>=5.0` uncapped) — so drop the cap entirely: `astropy>=5.0`.
 - Keep the two repos' astropy specifiers **consistent** (they match today; the
   audit found no cross-repo conflict — don't introduce one).
 - No source changes expected; astropy 8 already imports and runs in the venv.
+- **Added scope (human request 2026-08-06): stale astropy docstrings in
+  `autogalaxy/cosmology/model.py`.** The cosmology was reimplemented natively
+  (JAX-compatible) and no longer imports astropy, but two docstrings still say
+  "returns only the value of the astropy function it wraps" (lines ~126, ~142)
+  and `critical_density` carries a conversational porting note ("Astropy
+  returns g/cm^3, but in AutoLens you were immediately converting…",
+  lines ~215-221). Rewrite these to state the native implementation and units
+  directly. KEEP the accurate parity statements ("matches
+  astropy.cosmology.arcsec_per_kpc_proper", "values match astropy Planck15",
+  interface "follows the astropy FlatLambdaCDM class") — they document a real
+  compatibility contract.
 
 ## Verify
 

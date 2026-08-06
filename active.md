@@ -1,5 +1,15 @@
 # Active Tasks
 
+## astropy-cap-bump
+- issue: https://github.com/PyAutoLabs/PyAutoArray/issues/434
+- session: claude --resume 775b7f06-4c97-467b-982b-a1e6e3323283
+- status: library-dev
+- prompt: active/astropy_cap_bump.md
+- worktree: ~/Code/PyAutoLabs-wt/astropy-cap-bump
+- parallel-override: PyAutoGalaxy also claimed by yang24-sidm-gravothermal-profile; human approved parallel run 2026-08-06 (overlap nil — pyproject.toml + cosmology/model.py docstrings vs new dark-mass profile). Serialise at merge if both PRs land together.
+- sizing-note: Brain scored 13/too-large + 4-phase split; prose-driven artifact, actual scope 2 repos / 3 files / no API change — kept single-task (repos_affected check).
+- repos:
+
 ## mge-sigma-min-workspace-sweep
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/466
 - status: BOTH PHASES MERGED 2026-08-04. Phase 1 autolens_workspace#467 -> 92019316 (issue #466 auto-closed). Phase 2 autogalaxy_workspace#203 -> 8a7df7a6, HowToLens#67 -> 4ff3135c, HowToGalaxy#61 -> 51eed3d6, autogalaxy_assistant#10 -> f6966a64. Upstream PyAutoGalaxy#549 -> 13d3023c. All worktrees removed, all branches deleted local+origin, all five canonical checkouts back on main. Code work COMPLETE; two debts remain (below).

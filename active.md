@@ -3,10 +3,12 @@
 ## sph-transform-name-check
 - issue: https://github.com/PyAutoLabs/PyAutoGalaxy/issues/555
 - session: claude --resume 33e5462e-9cec-4baf-8041-88bb27c0b435
-- status: library-dev
+- status: library-shipped, awaiting-merge
 - prompt: active/spherical_bug.md
 - worktree: ~/Code/PyAutoLabs-wt/sph-transform-name-check
+- library-pr: https://github.com/PyAutoLabs/PyAutoGalaxy/pull/557 (commit 8038d1c3, pending-release, 1028 tests green)
 - parallel-override: PyAutoGalaxy also claimed by astropy-cap-bump; human continued 2026-08-06 after yang24 unblocked (overlap nil — geometry_profiles.py + test vs pyproject.toml + cosmology/model.py docstrings). Serialise at merge if both PRs land together.
+- heart-ack (2026-08-06): shipped under human-authorized RED override ("do 1"). Exact RED reason: "release validation FAILED (stage integrate)" (v2026.8.6.1.dev70501, score 50) — in-flight release-drive artifact, unrelated (this diff was uncommitted at verdict time). YELLOW alongside: "manifest drift: tenant firewall (organ code) — 1 mismatch(es) vs PyAutoMind/repos.yaml". Ack covers THIS reason set only; PR-open done, merge stays human.
 - repos:
   - PyAutoGalaxy: feature/sph-transform-name-check
 

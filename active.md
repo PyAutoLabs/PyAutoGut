@@ -1,5 +1,15 @@
 # Active Tasks
 
+## sph-transform-name-check
+- issue: https://github.com/PyAutoLabs/PyAutoGalaxy/issues/555
+- session: claude --resume 33e5462e-9cec-4baf-8041-88bb27c0b435
+- status: library-dev
+- prompt: active/spherical_bug.md
+- worktree: ~/Code/PyAutoLabs-wt/sph-transform-name-check
+- parallel-override: PyAutoGalaxy also claimed by astropy-cap-bump; human continued 2026-08-06 after yang24 unblocked (overlap nil — geometry_profiles.py + test vs pyproject.toml + cosmology/model.py docstrings). Serialise at merge if both PRs land together.
+- repos:
+  - PyAutoGalaxy: feature/sph-transform-name-check
+
 ## astropy-cap-bump
 - issue: https://github.com/PyAutoLabs/PyAutoArray/issues/434
 - session: claude --resume 775b7f06-4c97-467b-982b-a1e6e3323283

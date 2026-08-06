@@ -56,7 +56,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [spawn-drift-self-heal](2026/08/spawn-drift-self-heal.md)
 - [spawn-empty-body-privacy-fix](2026/08/spawn-empty-body-privacy-fix.md)
 - [spawn-github-instance-automation](2026/08/spawn-github-instance-automation.md)
-- [sph-transform-name-check](2026/08/sph-transform-name-check.md) — auto-closed by the merge via "Closes #555"
+- [sph-transform-name-check](2026/08/sph-transform-name-check.md) — `EllProfile.transformed_from_reference_frame_grid_from` checked `startswith("Sph")` while its mirror checks `e…
 - [tenant-firewall-hygiene-extras](2026/08/tenant-firewall-hygiene-extras.md) — auto-closed by the merge
 - [test-mode-samples-info-hook-contract](2026/08/test-mode-samples-info-hook-contract.md) — `NonLinearSearch._test_mode_samples_info()`'s docstring told subclasses
 - [yang24-sidm-gravothermal-profile](2026/08/yang24-sidm-gravothermal-profile.md)

@@ -76,3 +76,251 @@ In @PyAutoNerves on `feature/python-312-floor`:
 
 JAX 0.11, Python 3.14 support, downstream package manifests, Hands/Heart
 matrices, workspaces, release execution, and archival documentation.
+
+## Original series prompt (series umbrella)
+
+# Adopt Python 3.12 as the PyAuto ecosystem minimum
+
+Type: feature
+Target: PyAutoHands
+Difficulty: too-large
+Autonomy: supervised
+Priority: high
+Status: formalised
+
+## Original request
+
+> Ok, lets remove support for anything below python3.12, do a census to make sure we simplify requriements, build server, testing, etc. Also make sure all docs are updated.
+
+## Approved direction
+
+Implement the accepted findings and phases in
+`../../research/libraries/python_312_minimum.md`.
+
+- Set maintained PyAuto package metadata to `requires-python >=3.12`.
+- Declare and require-test Python 3.12 and 3.13.
+- Keep Python 3.14 experimental and non-required until the existing PyAutoFit
+  factor-graph regression is fixed in a separate task.
+- Remove only Python-version markers and compatibility code made obsolete by
+  the floor; retain independently justified dependency caps.
+- Coordinate the five-package core stack in dependency order and ship it as one
+  coherent release. Handle AutoCTI and AutoReduce on their own readiness and
+  release cadences.
+- Align build, release, install verification, workspaces, assistants, runtime
+  declarations, contributor contracts, and living documentation. Regenerate
+  derived notebooks/Markdown from their source scripts and do not rewrite
+  published JOSS papers.
+- Preserve historical wheels and document the actual last-compatible unyanked
+  release for each package; do not yank usable releases.
+
+## Repositories
+
+- Core libraries: @PyAutoNerves, @PyAutoArray, @PyAutoFit, @PyAutoGalaxy, and
+  @PyAutoLens.
+- Build/health and independent packages: @PyAutoHands, @PyAutoHeart,
+  @PyAutoCTI, @PyAutoReduce, and @euclid_assistant.
+- Workspaces and tutorials: @autofit_workspace, @autogalaxy_workspace,
+  @autolens_workspace, @HowToFit, @HowToGalaxy, @HowToLens, and
+  @autocti_workspace.
+- Assistants and supporting tooling: @autocti_assistant, @autofit_assistant,
+  @autolens_assistant, @PyAutoMemory, @autolens_profiling,
+  @autofit_workspace_developer, and @autolens_workspace_developer.
+- Test-workspace config surfaces: @autofit_workspace_test,
+  @autogalaxy_workspace_test, and @autolens_workspace_test.
+
+## Branch and worktree decision
+
+- Unified branch: `feature/python-312-floor`
+- Isolated worktree root: `.codex-worktrees/python-312-floor/<repo>`
+- Human approved the branch and overlap strategy on 2026-07-28.
+
+## Sequencing
+
+1. Core contract: PyAutoNerves -> PyAutoArray -> PyAutoFit -> PyAutoGalaxy ->
+   PyAutoLens.
+2. PyAutoHands/PyAutoHeart matrices and install verification.
+3. Coordinated core release gate.
+4. PyAutoCTI, PyAutoReduce, PyAutoHeart, and euclid_assistant metadata/readiness.
+5. Workspaces, assistants, developer/test tooling, runtime declarations, and
+   RAL/HPC prose.
+6. Living docs and generated artifacts.
+7. Close-out plus separate 3.14 and JAX 0.11 follow-ups.
+
+The Feature Agent scored this campaign `too-large` (61) and recommended phased
+combined library/workspace development. Its generic design/core/workspace/docs
+stub split is overridden by the evidence-backed sequence above: the accepted
+Opus review requires a core release gate and independent CTI/Reduce cadence.
+
+## Acceptance criteria
+
+- All maintained package manifests reject Python below 3.12.
+- Required test/install gates are green on 3.12 and 3.13; 3.11 rejection is
+  explicitly verified; 3.14 evidence is isolated and non-required.
+- Obsolete markers, branches, tests, messages, and duplicated matrix work are
+  removed without weakening behavior-driven dependency constraints.
+- Core wheels are released coherently and verified on both sides of the floor.
+- Every living user/contributor/build/runtime support claim is consistent, and
+  generated docs are regenerated from their owning sources.
+- Pre-existing Heart failures and unrelated dirty work remain outside scope.
+
+## Original series prompt (phase 1 core)
+
+# Python 3.12 floor — Phase 1: core library contract
+
+Type: feature
+Target: PyAutoNerves
+Difficulty: large
+Autonomy: supervised
+Priority: high
+Status: formalised
+
+Parent: `python_312_ecosystem_floor.md`
+Research: `../../research/libraries/python_312_minimum.md`
+
+## Original request
+
+> Ok, lets remove support for anything below python3.12, do a census to make sure we simplify requriements, build server, testing, etc. Also make sure all docs are updated.
+
+## Scope
+
+Implement the core contract in dependency order across @PyAutoNerves,
+@PyAutoArray, @PyAutoFit, @PyAutoGalaxy, and @PyAutoLens on the unified
+`feature/python-312-floor` branch.
+
+- Set `requires-python = ">=3.12"`; advertise only 3.12 and 3.13.
+- Remove the eight dependency markers made tautological by the floor while
+  retaining all independently justified caps.
+- Remove the PyAutoArray pre-3.12 nufftax branch and its mocked 3.11 test
+  atomically; keep missing-dependency behavior with version-neutral wording.
+- Remove the two PyAutoFit Python-3.7 `Protocol = ABC` shims.
+- Retarget, rather than delete, the PyAutoNerves warning/bypass for unsupported
+  3.14; preserve the shared `version:` config block.
+- Update the five agent-facing `requires-python >=3.9` contracts.
+
+## Gates
+
+- Each repository's required suite passes on Python 3.12 and 3.13.
+- Clean isolated install of the dependency-ordered branch chain resolves.
+- No behavior-driven JAX, nufftax, SciPy, Astropy, TensorFlow Probability, or
+  sampler cap is loosened.
+- API-change summary explicitly states metadata/compatibility changes and that
+  Python 3.14 remains experimental.
+
+## Out of scope
+
+JAX 0.11 migration, the Python 3.14 factor-graph fix, scheduled build/Heart
+matrices, workspaces, generated docs, release execution, and archival papers.
+
+## Feature Agent split
+
+The Feature Agent scored this five-repository phase `too-large` (20). Execute as
+five directly shippable library tasks in dependency order:
+
+1. `python_312_floor_phase_1a_nerves.md`
+2. `python_312_floor_phase_1b_array.md`
+3. `python_312_floor_phase_1c_fit.md`
+4. `python_312_floor_phase_1d_galaxy.md`
+5. `python_312_floor_phase_1e_lens.md`
+
+## Original series prompt (phase 4 independent)
+
+# Python 3.12 floor — Phase 4: independent packages
+
+Type: feature
+Target: PyAutoCTI
+Difficulty: large
+Autonomy: supervised
+Priority: normal
+Status: formalised
+
+Parent: `python_312_ecosystem_floor.md`
+
+## Scope
+
+Raise and test the metadata/living-doc floor in @PyAutoCTI, @PyAutoReduce,
+@PyAutoHeart, and @euclid_assistant. AutoCTI and AutoReduce keep independent
+release histories; do not release either until its own readiness gates pass.
+Published paper text remains archival unless a paper is confirmed still draft.
+
+## Original series prompt (phase 5 workspaces)
+
+# Python 3.12 floor — Phase 5: workspaces, assistants, and tooling
+
+Type: feature
+Target: autolens_workspace
+Difficulty: too-large
+Autonomy: supervised
+Priority: normal
+Status: formalised
+
+Parent: `python_312_ecosystem_floor.md`
+Depends on: coordinated core release
+
+## Scope
+
+Align @autofit_workspace, @autogalaxy_workspace, @autolens_workspace,
+@HowToFit, @HowToGalaxy, @HowToLens, @autocti_workspace,
+@autofit_workspace_test, @autogalaxy_workspace_test,
+@autolens_workspace_test, @autocti_assistant, @autofit_assistant,
+@autolens_assistant, @PyAutoMemory, @autolens_profiling,
+@autofit_workspace_developer, and @autolens_workspace_developer. Move all
+seven below-floor runtime declarations to Python 3.12 and update only live
+version assumptions, preserving historical benchmark/provenance records.
+
+## Gates
+
+Baseline-aware smoke tests run sequentially; every diff is checked for generated
+data/output leakage and active-work overlap before shipping.
+
+## Original series prompt (phase 6 docs)
+
+# Python 3.12 floor — Phase 6: living docs and generated artifacts
+
+Type: docs
+Target: PyAutoLens
+Difficulty: large
+Autonomy: supervised
+Priority: normal
+Status: formalised
+
+Parent: `python_312_ecosystem_floor.md`
+Depends on: coordinated core release
+
+## Scope
+
+Update all living installation, migration, contributor, workspace, assistant,
+Colab/conda, build, and HPC claims to the accepted wording and verified
+last-compatible releases. Edit guide `.py` owners first and regenerate their
+notebook/Markdown derivatives through @PyAutoHands. Do not rewrite published
+JOSS papers or historical benchmark/provenance artifacts.
+
+Reconcile every pip guide against the live PyPI release history. In particular,
+PyAutoGalaxy had multiple unyanked `>=3.9` releases after its earlier 3.12-floor
+release, so Python 3.9-3.11 can silently resolve backwards. If usable historical
+wheels remain unyanked, document the rollback and the verified last-compatible
+pin; do not promise a `no matching distribution` error.
+
+## Gates
+
+Documentation navigation/link checks pass and generated diffs are confined to
+the expected cells/files.
+
+## Original series prompt (phase 7 close-out)
+
+# Python 3.12 floor — Phase 7: close-out
+
+Type: feature
+Target: PyAutoMind
+Difficulty: small
+Autonomy: supervised
+Priority: normal
+Status: formalised
+
+Parent: `python_312_ecosystem_floor.md`
+Depends on: phases 1-6
+
+## Scope
+
+Record final release boundaries, validation evidence, and the superseded April
+policy in @PyAutoMind. Retain separate tasks for Python 3.14 promotion and the
+JAX 0.11 dependency migration; do not silently absorb them into this campaign.

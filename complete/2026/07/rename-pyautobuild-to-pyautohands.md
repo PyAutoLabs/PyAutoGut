@@ -1,3 +1,26 @@
+## rename-pyautobuild-to-pyautohands (repo rename — Build organ becomes Hands)
+
+- completed: 2026-07-19/20 (repo rename landed in the libraries; local dirs,
+  remotes, PYTHONPATH and skill symlinks repointed)
+- summary: renamed the repository **PyAutoBuild → PyAutoHands** (the organism's
+  execution organ), alongside the sibling PyAutoConf → PyAutoNerves rename. The
+  overnight cascade it triggered (Heart release/verify-install harness still
+  pip-installing `autoconf`, org front-door drift, workspace bootstraps) was
+  fixed 2026-07-20 via /wake_up — see project memory
+  `project_autoconf_autonerves_rename_cascade` for the harness/HPC/science-
+  project legs. The **package/CLI seam** (`autobuild` → `autohands`, 18 PRs
+  across 18 repos) closed separately on 2026-07-23 — see
+  [[rename-autobuild-to-autohands]].
+
+## Lifecycle note
+
+Record backfilled 2026-08-06: the rename shipped without a completion record
+and its prompt never left `draft/refactor/pyautobuild/`; retired here dated by
+the repo-rename landing. (The stale `PyAutoConf` repo reference in the
+prompt's repo list predates the Nerves rename.)
+
+## Original prompt
+
 # Rename the repository PyAutoBuild to PyAutoHands
 
 Type: refactor

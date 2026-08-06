@@ -35,14 +35,29 @@ newer mass-profile params, worth mirroring so plots label correctly):**
 `label_format.format.input_multipole_comps_1`,
 `label_format.format.virial_mass`, `label_format.format.virial_overdens`.
 
-**Output toggles (worth mirroring — workspace overrides library output.yaml):**
-- `autofit_workspace/config/general.yaml`: `output.search_internal`
-- `autolens_workspace/config/general.yaml`: `output.fit_dill`
+**autogalaxy_workspace / notation.yaml superscripts (2 more found 2026-08-06):**
+`label.superscript.GaussianRandomField` (`grf`), `label.superscript.InputPotential`
+(`input`) — both real, currently-defined mass-profile classes.
 
-**Review — test/logging namespace, likely intentional omissions:**
-- `autofit_workspace/config/general.yaml`: `test.check_likelihood_function`
-- `autofit_workspace/config/logging.yaml`: `total_files_open`
-- `autogalaxy_workspace/config/general.yaml`: `test.exception_override`
+**REFUTED 2026-08-06 (re-audit traced each key to code — do NOT mirror):**
+- `autofit_workspace general.yaml output.search_internal` — the code reads
+  `conf.instance["output"]["search_internal"]` (top-level `output.yaml`, which
+  the workspace already carries); the `general.yaml` copy is a dead duplicate
+  key in the LIBRARY itself. Library-side hygiene: delete it from
+  `PyAutoFit/autofit/config/general.yaml`.
+- `autolens_workspace general.yaml output.fit_dill` — zero code references in
+  any library; dead key in `PyAutoLens/autolens/config/general.yaml` itself.
+  Delete upstream, don't mirror.
+
+**Review — test/logging namespace:**
+- `autofit_workspace/config/general.yaml`: `test.check_likelihood_function` —
+  upgraded to WORTH MIRRORING 2026-08-06: autogalaxy_workspace already carries
+  this exact key/comment, so its absence is sibling drift, not intent. Real
+  user-facing toggle (`fitness.py` resume-consistency check).
+- `autofit_workspace/config/logging.yaml`: `total_files_open` — uniformly
+  omitted by all three workspaces; reads as deliberate, leave out.
+- `autogalaxy_workspace/config/general.yaml`: `test.exception_override` —
+  weak-mirror for sibling consistency only (autofit_workspace has it).
 
 ## Scope
 

@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-896 records across 7 buckets.
+897 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -42,6 +42,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [potential-correction-validation](2026/08/potential-correction-validation.md)
 - [pr-ci-for-own-test-suite](2026/08/pr-ci-for-own-test-suite.md)
 - [pyautobrain-pr-test-ci](2026/08/pyautobrain-pr-test-ci.md) — auto-closed by the merge
+- [pyautogalaxy-mge-sigma-test](2026/08/pyautogalaxy-mge-sigma-test.md)
 - [simulator-util-to-af-ex](2026/08/simulator-util-to-af-ex.md) — moved the four 1D-Gaussian simulator helpers out of the duplicated
 - [small-datasets-loader-pixel-scales](2026/08/small-datasets-loader-pixel-scales.md)
 - [smoke-runner-jupyter-guard](2026/08/smoke-runner-jupyter-guard.md)

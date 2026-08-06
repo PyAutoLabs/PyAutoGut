@@ -18,6 +18,7 @@
 - worktree: ~/Code/PyAutoLabs-wt/astropy-cap-bump
 - parallel-override: PyAutoGalaxy also claimed by yang24-sidm-gravothermal-profile; human approved parallel run 2026-08-06 (overlap nil — pyproject.toml + cosmology/model.py docstrings vs new dark-mass profile). Serialise at merge if both PRs land together.
 - sizing-note: Brain scored 13/too-large + 4-phase split; prose-driven artifact, actual scope 2 repos / 3 files / no API change — kept single-task (repos_affected check).
+- heart-ack (2026-08-06): shipped under human-authorized RED override. Exact RED reason: "release validation FAILED (stage integrate)" (v2026.8.6.1.dev70501, profile=release, score 50) — a release-drive artifact unrelated to this diff (dependency floors + docstrings, verified 929+1027 tests green, clean-venv resolve control-tested). YELLOW alongside: "manifest drift: tenant firewall (organ code) — 1 mismatch(es) vs PyAutoMind/repos.yaml". The ack covers THIS reason set only; PR-open only, merge stays human.
 - repos:
   - PyAutoArray: feature/astropy-cap-bump
   - PyAutoGalaxy: feature/astropy-cap-bump

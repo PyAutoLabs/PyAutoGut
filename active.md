@@ -1,15 +1,5 @@
 # Active Tasks
 
-## yang24-sidm-gravothermal-profile
-- issue: https://github.com/PyAutoLabs/PyAutoLens/issues/631
-- user-facing: true
-- session: claude --resume 64899e6a-b4b3-4eca-8ac5-633a7202549e
-- status: library-dev
-- worktree: ~/Code/PyAutoLabs-wt/yang24-sidm-gravothermal-profile
-- repos:
-  - PyAutoGalaxy: feature/yang24-sidm-gravothermal-profile
-  - PyAutoLens: feature/yang24-sidm-gravothermal-profile
-
 ## mge-sigma-min-workspace-sweep
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/466
 - status: BOTH PHASES MERGED 2026-08-04. Phase 1 autolens_workspace#467 -> 92019316 (issue #466 auto-closed). Phase 2 autogalaxy_workspace#203 -> 8a7df7a6, HowToLens#67 -> 4ff3135c, HowToGalaxy#61 -> 51eed3d6, autogalaxy_assistant#10 -> f6966a64. Upstream PyAutoGalaxy#549 -> 13d3023c. All worktrees removed, all branches deleted local+origin, all five canonical checkouts back on main. Code work COMPLETE; two debts remain (below).

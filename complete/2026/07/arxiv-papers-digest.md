@@ -1,5 +1,57 @@
 # Daily arXiv strong-lensing paper digest → Slack #papers
 
+Type: feature
+Target: pyautomind
+Repos:
+- PyAutoMind
+Difficulty: small
+Autonomy: safe
+Status: shipped
+
+Daily GitHub Actions job that fetches new strong-lensing papers from arXiv,
+has Claude curate and summarise them (1–3 highlights + compact list of the
+rest), and posts to Slack **#papers** on weekday mornings — a sibling of
+`morning_status.yml` (the commit digest), same fetch → claude-code-action
+summarise → POST-to-webhook shape.
+
+## What shipped
+
+- `.github/workflows/arxiv_papers.yml` + `.github/scripts/arxiv_fetch.py`,
+  cron `0 6 * * 1-5` with `workflow_dispatch` for test-fires.
+- Issue #57, PR #58 (merged-unchanged, user-directed merge, 2026-07-10, built
+  under `--auto`) + PR #59 (manual-dispatch `lookback_hours` override input).
+- Runs on the **Claude subscription** (`CLAUDE_CODE_OAUTH_TOKEN`, same secret
+  as the commit digest — no metered API billing, per the user's explicit
+  requirement). New secret `PYAUTO_PAPERS_WEBHOOK_URL` (Slack incoming webhook
+  for #papers) created by the user 2026-07-10.
+- **Live-proven** the same day: `workflow_dispatch` with `lookback_hours=168`
+  ran green and posted 5 papers to #papers at 19:06 UTC.
+- Recall-first query over `cat:astro-ph.CO OR cat:astro-ph.GA` matching
+  strong-lensing vocabulary (not just the literal phrase — "lensed quasar",
+  "Einstein ring", "quadruply imaged", …); Claude drops the rare keyword
+  false-positives. Validated pre-ship against the live API (the phrase-only
+  query missed the Li+Collett WFI2033 paper).
+
+## Follow-ups (own records)
+
+- [[arxiv-digest-announcement-window]] — the original rolling 24h/72h
+  submission-anchored window silently dropped papers (searchable only at
+  *announcement*, 1–3 days later); replaced with announcement bands.
+- [[arxiv-digest-strong-lensing-term]] — recall gap: added
+  `abs:"strong gravitational lensing"` after a missed paper; `--livecheck`
+  regression pins every past-missed paper against the production query.
+
+## Lifecycle note
+
+Record backfilled 2026-08-06: the task shipped under `--auto` on 2026-07-10
+(autonomy_log row flipped to merged-unchanged) but the prompt never advanced
+out of `draft/feature/pyautomind/` — removed from `draft/` with this record,
+dated by the actual ship date.
+
+## Original prompt
+
+# Daily arXiv strong-lensing paper digest → Slack #papers
+
 **Target:** @PyAutoMind
 **Work type:** feature (Slack/digest infrastructure)
 **Autonomy:** safe

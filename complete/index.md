@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-900 records across 7 buckets.
+901 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -81,6 +81,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [api-gate-clause-scope](2026/07/api-gate-clause-scope.md) — fixed the F5 API-gate false positive (docs/agent_failure_modes.md). The PreToolUse gate latched saw_python for…
 - [arxiv-digest-announcement-window](2026/07/arxiv-digest-announcement-window.md)
 - [arxiv-digest-strong-lensing-term](2026/07/arxiv-digest-strong-lensing-term.md)
+- [arxiv-papers-digest](2026/07/arxiv-papers-digest.md)
 - [assistant-benchmarks](2026/07/assistant-benchmarks.md)
 - [assistant-brain-ref](2026/07/assistant-brain-ref.md)
 - [assistant-deep-audit](2026/07/assistant-deep-audit.md)

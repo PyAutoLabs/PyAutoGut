@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-897 records across 7 buckets.
+898 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -38,6 +38,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [nufft-parity-full-datasets](2026/08/nufft-parity-full-datasets.md)
 - [plot-array-stale-kwargs](2026/08/plot-array-stale-kwargs.md)
 - [point-source-defaults-campaign](2026/08/point-source-defaults-campaign.md) — took the point-source likelihood options from "several undocumented
+- [pointmass-smbh-jax](2026/08/pointmass-smbh-jax.md) — `al.mp.PointMass` and `al.mp.SMBH` failed every JAX-mode fit (user report on 2026.8.4.1). Two independent bugs…
 - [potential-correction-env-declaration](2026/08/potential-correction-env-declaration.md)
 - [potential-correction-validation](2026/08/potential-correction-validation.md)
 - [pr-ci-for-own-test-suite](2026/08/pr-ci-for-own-test-suite.md)

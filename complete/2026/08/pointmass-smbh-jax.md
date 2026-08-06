@@ -1,3 +1,14 @@
+## pointmass-smbh-jax
+- issue: https://github.com/PyAutoLabs/PyAutoGalaxy/issues/553
+- completed: 2026-08-06
+- library-pr: https://github.com/PyAutoLabs/PyAutoGalaxy/pull/554 (merged b68df8b0)
+- summary: `al.mp.PointMass` and `al.mp.SMBH` failed every JAX-mode fit (user report on 2026.8.4.1). Two independent bugs in `autogalaxy/profiles/mass/point/`: (1) `PointMass.deflections_yx_2d_from` routed through the legacy `radial_grid_from` → `_cartesian_grid_via_radial_from` helpers, which return an `ArrayIrregular` wrapper under `xp=jnp` on the irregular PSF-evaluation grids — `jnp.multiply` rejects it; (2) `SMBH.__init__` used `np.sqrt` on the traced `mass` → `TracerArrayConversionError`. Fixed with raw `xp` ops (mirroring `IsothermalSph`), tracer-safe `** 0.5`, and hardened `potential_2d_from`/`convergence_2d_from` (whose dead central-pixel `argmin` code was deleted).
+- validation: `test_autogalaxy/` 1017 passed; PyAutoLens `test_autolens/point/` 115 passed against the branch; jitted `AnalysisImaging.log_likelihood_function` with stock `PointMass` (θ_E free) and `SMBH` (mass free) finite — both reproduced the user errors on unfixed main as controls; deflections parity vs analytic formula 8.7e-19; `jax.grad` finite for all point-mass params.
+- traps: (a) `PowerLawSph(slope=3.0)` is NOT a point-mass substitute — the `(3 - slope)` normalisation is NaN at exactly 3. (b) A non-finite `Isothermal.ell_comps` gradient at exactly `(0.0, 0.0)` exists independent of the point mass — pre-existing, not this task. (c) Heart was RED at ship (release-validation integrate stage, unrelated in-flight release arc) — PR-open and merge both explicitly human-authorized; merge also pre-empted PR CI (pending, not failing) and the six-workspace smoke run (only parallel-race false failures observed, none serially confirmed) on human instruction "feels like overkill for a small feature".
+- follow-up (unrouted): no CI covers the JAX path for point-mass profiles — consider adding `PointMass`/`SMBH` to an `autogalaxy_workspace_test` JAX parity script so this regression class is caught automatically.
+
+## Original prompt
+
 # al.mp.PointMass and al.mp.SMBH break every JAX fit
 
 Type: bug

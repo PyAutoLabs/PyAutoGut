@@ -248,3 +248,19 @@
     was always wrong or should_simulate changed the predicate (the latter would
     be a much wider bug), THEN sweep all 116 migrated guards for the same
     mismatch.
+
+## sph-transform-name-check
+- issue: https://github.com/PyAutoLabs/PyAutoGalaxy/issues/555
+- prompt: active/spherical_bug.md
+- planned: 2026-08-06
+- classification: library
+- suggested-branch: feature/sph-transform-name-check
+- blocked-by: yang24-sidm-gravothermal-profile (using PyAutoGalaxy)
+- summary: |
+    geometry_profiles.py:392 checks startswith("Sph") while its mirror at 371
+    checks endswith("Sph") — spherical classes are suffix-named, so the inverse
+    transform's spherical branch never fires. Plan on the issue: fix asymmetry
+    (prefer isinstance(SphProfile) to also cover IsothermalSphMLR), regression
+    round-trip unit test, NumPy only. Disjoint files from the blocking task.
+- affected-repos:
+  - PyAutoGalaxy

@@ -1,18 +1,5 @@
 # Active Tasks
 
-## hygiene-howto-refs-docstrings
-- issue: https://github.com/PyAutoLabs/HowToGalaxy/issues/63
-- status: workspace-shipped, awaiting-merge
-- workspace-prs: https://github.com/PyAutoLabs/HowToGalaxy/pull/64 (706920c3, `pending-release`) + https://github.com/PyAutoLabs/HowToLens/pull/69 (1b544645, `pending-release`)
-- heart-ack (2026-08-06): shipped under human-authorized RED override ("ok that all sounds good push and open PRs to get this work in", after the reason set was surfaced verbatim). Exact RED reasons: "release validation FAILED (stage integrate)" / "manifest drift: tenant firewall (organ code) — 1 mismatch(es) vs PyAutoMind/repos.yaml" / "test run status unknown" — release-drive artifacts unrelated to this prose-only diff (compile-checked, notebooks regenerated 1:1). Ack covers THIS reason set only; PR-open done, merge stays human.
-- prompt: active/hygiene-howto-refs-docstrings-batch.md
-- worktree: ~/Code/PyAutoLabs-wt/hygiene-howto-refs-docstrings
-- sizing-note: Brain scored 9/large + split-into-phases; prose-driven artifact, actual scope 2 repos / 3 files / 4 mechanical edits, no API change — kept single-task (astropy-cap-bump precedent).
-- source: 2026-08-06 /hygiene run (refs + docstrings modes); user pre-approved batch, autonomous execution authorized this session.
-- repos:
-  - HowToGalaxy: feature/hygiene-howto-refs-docstrings
-  - HowToLens: feature/hygiene-howto-refs-docstrings
-
 ## mge-sigma-min-workspace-sweep
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/466
 - status: BOTH PHASES MERGED 2026-08-04. Phase 1 autolens_workspace#467 -> 92019316 (issue #466 auto-closed). Phase 2 autogalaxy_workspace#203 -> 8a7df7a6, HowToLens#67 -> 4ff3135c, HowToGalaxy#61 -> 51eed3d6, autogalaxy_assistant#10 -> f6966a64. Upstream PyAutoGalaxy#549 -> 13d3023c. All worktrees removed, all branches deleted local+origin, all five canonical checkouts back on main. Code work COMPLETE; two debts remain (below).

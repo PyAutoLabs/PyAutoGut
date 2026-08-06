@@ -7,6 +7,8 @@
 - status: library-dev
 - worktree: ~/Code/PyAutoLabs-wt/yang24-sidm-gravothermal-profile
 - repos:
+  - PyAutoGalaxy: feature/yang24-sidm-gravothermal-profile
+  - PyAutoLens: feature/yang24-sidm-gravothermal-profile
 
 ## mge-sigma-min-workspace-sweep
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/466

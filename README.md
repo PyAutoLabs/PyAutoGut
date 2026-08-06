@@ -28,5 +28,5 @@ reabsorbed (recovered) right up until the sweep that voids it.
   to sweep; PyAutoGut holds and voids. Same split as Heart ↔ vitals: the organ
   does the work, the conductor reasons.
 
-Full rationale and boundaries: `PyAutoMind/research/pyautobrain/pyautogut_organ_decision.md`.
+Full rationale and boundaries: `PyAutoMind/complete/2026/07/pyautogut-organ-decision.md`.
 Operating guidance for agents: [`AGENTS.md`](AGENTS.md).

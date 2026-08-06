@@ -15,7 +15,8 @@
 ## astropy-cap-bump
 - issue: https://github.com/PyAutoLabs/PyAutoArray/issues/434
 - session: claude --resume 775b7f06-4c97-467b-982b-a1e6e3323283
-- status: library-dev
+- status: library-shipped, smoke-running
+- library-pr: https://github.com/PyAutoLabs/PyAutoArray/pull/435 (b90a284f, pending-release, 929 tests green) + https://github.com/PyAutoLabs/PyAutoGalaxy/pull/558 (e3a8c600, pending-release, 1027 tests green)
 - prompt: active/astropy_cap_bump.md
 - worktree: ~/Code/PyAutoLabs-wt/astropy-cap-bump
 - parallel-override: PyAutoGalaxy also claimed by yang24-sidm-gravothermal-profile; human approved parallel run 2026-08-06 (overlap nil — pyproject.toml + cosmology/model.py docstrings vs new dark-mass profile). Serialise at merge if both PRs land together.

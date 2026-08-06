@@ -1,3 +1,13 @@
+## probe-reg-logdet-justification
+- completed: 2026-07-17
+- summary: Probe verdict: JUSTIFIED BUT NOT AS PROPOSED — independent reviewer confirmed C1/C4 (d log det/d log lam = 1798 to machine precision; current evidence scientifically sound), C6/C7/C8; refuted C10 (ConstantZeroth is dead code, filed as constant_zeroth_broken_dead_code.md). Proposed alternatives rejected (relative lift = regression; pseudo-determinant breaks archived comparability).
+
+## Lifecycle note
+
+Record backfilled 2026-08-06 (draft resolution-banner sweep): the work shipped with a RESOLVED banner written into the draft, but the prompt never advanced out of draft/; retired here dated by resolution day.
+
+## Original prompt (PROBE_reg_logdet_justification)
+
 > **RESOLVED 2026-07-17 — verdict: JUSTIFIED BUT NOT AS PROPOSED.** An independent
 > reviewer ran every check on their own machine. Confirmed C1, C4 (d log det/d log lam
 > = 1798 to machine precision — the current evidence is scientifically sound), C6/C7,

@@ -1,3 +1,13 @@
+## notebook-skip-guard-systemexit
+- completed: 2026-07-25
+- summary: Runner-side `is_clean_skip_exit` classifier in build_util.execute_notebook (PyAutoHands#198 f924785, merged): clean `SystemExit: 0` → PASS, real errors stay FAIL; 9 tests + live blackjax-absent check. Remainder (adoption across 9 drifted run_smoke.py copies) tracked in draft/maintenance/ci/run_smoke_copy_drift.md.
+
+## Lifecycle note
+
+Record backfilled 2026-08-06 (draft resolution-banner sweep): the work shipped with a RESOLVED banner written into the draft, but the prompt never advanced out of draft/; retired here dated by resolution day.
+
+## Original prompt (notebook_skip_guard_systemexit)
+
 > **RESOLVED 2026-07-25 — implemented as PyAutoHands#198 commit f924785
 > (merged).** Runner-side `is_clean_skip_exit` classifier in the authoritative
 > executor (`build_util.execute_notebook`): ANSI-aware, last CellExecutionError

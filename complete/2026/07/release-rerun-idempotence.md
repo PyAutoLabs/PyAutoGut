@@ -1,3 +1,13 @@
+## release-rerun-idempotence
+- completed: 2026-07-25
+- summary: Release re-runs made idempotent (PyAutoHands#198 e662af4, merged): peeled-tag remote check (skip if same commit, loud-fail on mismatch), PyPI --skip-existing + 3-attempt retry, workspace tag step matched; exercised against scratch repos.
+
+## Lifecycle note
+
+Record backfilled 2026-08-06 (draft resolution-banner sweep): the work shipped with a RESOLVED banner written into the draft, but the prompt never advanced out of draft/; retired here dated by resolution day.
+
+## Original prompt (release_rerun_idempotence)
+
 > **RESOLVED 2026-07-25 — implemented as PyAutoHands#198 commit e662af4
 > (merged).** Tag step now remote-checks with peeled-tag comparison (skip if
 > same commit, loud-fail on mismatch), PyPI uploads gain --skip-existing + a

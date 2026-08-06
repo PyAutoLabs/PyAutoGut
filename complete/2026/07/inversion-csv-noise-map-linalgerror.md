@@ -1,3 +1,13 @@
+## inversion-csv-noise-map-linalgerror
+- completed: 2026-07-25
+- summary: Guarded the second LinAlgError call site in inversion CSV export (PyAutoArray#406, merged): NaN-filled noise_map column + logged warning, chosen after auditing every CSV consumer; non-vacuous regression test, suite green (895).
+
+## Lifecycle note
+
+Record backfilled 2026-08-06 (draft resolution-banner sweep): the work shipped with a RESOLVED banner written into the draft, but the prompt never advanced out of draft/; retired here dated by resolution day.
+
+## Original prompt (inversion_csv_noise_map_unguarded_linalgerror)
+
 > **RESOLVED 2026-07-25 — implemented as PyAutoArray#406 (merged).** NaN-filled
 > noise_map column + logged warning, chosen from analysis of every CSV consumer
 > (all read by column name; omission would KeyError downstream). Non-vacuous

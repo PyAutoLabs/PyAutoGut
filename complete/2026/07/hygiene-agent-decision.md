@@ -60,3 +60,10 @@ repo to hold — it is an orchestrator, not an organ. (This is the user's
 absorbs repo_cleanup + cli_noise_clean, consults dep_audit + audit_docs;
 updates profiling's `## vs hygiene` boundary; may add Heart legs). -->
 
+
+## Lifecycle note
+
+Research deliverable fulfilled in-document (decision written 2026-07-11); the
+conductor it authorised shipped the same day — see [[hygiene-agent]]. Record
+backfilled 2026-08-06: the prompt predated the draft/active/complete migration
+and never left `draft/research/pyautobrain/`; retired here dated by decision day.

@@ -15,7 +15,7 @@ and pushed under the archive namespace `refs/heads/archive/condemned/<name>`
 — *before* the local copy is deleted. Recovery is a checkout. The organ (PyAutoGut) holds
 and voids; the Brain hygiene conductor drives (decides what to condemn, triggers
 a sweep), mirroring the Heart ↔ vitals template. See the decision:
-`research/pyautobrain/pyautogut_organ_decision.md`.
+`complete/2026/07/pyautogut-organ-decision.md`.
 
 ## Lifecycle
 

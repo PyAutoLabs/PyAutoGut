@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-903 records across 7 buckets.
+905 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -231,6 +231,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [human-led-tone-sweep](2026/07/human-led-tone-sweep.md) — human-led natural-language framing landed on the agentic-AI pitch surfaces — org front page (.github PRs #1+#2…
 - [hygiene-adjacent-docstrings](2026/07/hygiene-adjacent-docstrings.md) — Phase 2 of the adjacent-docstrings arc: read-only AST-backed Hygiene mode reporting adjacent-docstring boundar…
 - [hygiene-agent](2026/07/hygiene-agent.md) — Phases 1-3 — conductor complete
+- [hygiene-agent-decision](2026/07/hygiene-agent-decision.md)
 - [hygiene-file-modes](2026/07/hygiene-file-modes.md) — crlf / config / artifacts — complete
 - [hygiene-orphan-config-files](2026/07/hygiene-orphan-config-files.md)
 - [hygiene-perf-phase4](2026/07/hygiene-perf-phase4.md) — unit-test / workspace-testmode / function profiling — complete
@@ -397,6 +398,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [py314-fork-context](2026/07/py314-fork-context.md)
 - [py314-promotion](2026/07/py314-promotion.md)
 - [pyautogut-organ](2026/07/pyautogut-organ.md) — Gut organ + hygiene drive seam — complete
+- [pyautogut-organ-decision](2026/07/pyautogut-organ-decision.md)
 - [pyautolens-assistant-joss-paper](2026/07/pyautolens-assistant-joss-paper.md) — JOSS paper #2 scaffolded next to the software — SHIPPED
 - [pyautolens-jax-joss-paper](2026/07/pyautolens-jax-joss-paper.md) — PyAutoLens-JAX JOSS paper scaffold — MERGED
 - [pyautoreduce-hst-design](2026/07/pyautoreduce-hst-design.md)

@@ -152,3 +152,11 @@ not filed here)
      earlier doc's "no repo for hygiene" holds; PyAutoGut is a separate peer organ
      that passes the same persistent-reusable-artifact-lifecycle test hygiene
      failed. Organ settled by elimination: gut (owns voiding), not spleen. -->
+
+## Lifecycle note
+
+Research deliverable fulfilled in-document (decision written 2026-07-12); the
+organ it authorised was bootstrapped the same day — see [[pyautogut-organ]].
+Record backfilled 2026-08-06: the prompt predated the draft/active/complete
+migration and never left `draft/research/pyautobrain/`; retired here dated by
+decision day.

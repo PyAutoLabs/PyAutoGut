@@ -7,20 +7,25 @@ Repos:
 Difficulty: small
 Autonomy: supervised
 Priority: normal
-Status: in-flight
+Status: shipped
 
 Filed 2026-07-12 from a `/hygiene docs` (`/audit_docs`) audit.
 
-## Status 2026-08-07 — PR open, CI green, NOT merged
+## Shipped 2026-08-07 — PyAutoFit#1455 MERGED (`75bbc76a1`)
 
-Branch `claude/automind-simple-task-y079sm` on PyAutoFit → **PyAutoFit#1455**,
-two commits (`4e23d8ab7` docs, `25054c085` baseline ratchet), docs-only.
-**No GitHub issue** — picked up directly rather than through `/start_dev`, so
-nothing was ever issued; the PR is the only tracker. Merging is a human call
-and has not happened.
+Branch `claude/automind-simple-task-y079sm`, two docs-only commits
+(`4e23d8ab7` the fix, `25054c085` the baseline ratchet), merged to main as
+`75bbc76a1`. **No GitHub issue** — picked up directly rather than through
+`/start_dev`, so nothing was ever issued and the PR was the only tracker.
 
-CI on `4e23d8ab7`: `docs / docs-build`, `unittest (3.12)`, `unittest (3.13)`
-all SUCCESS. Paired Mind PR **PyAutoMind#149**, `drift` SUCCESS.
+CI green on both pushes: `docs / docs-build`, `unittest (3.12)`,
+`unittest (3.13)` all SUCCESS, and the second run confirms the ratchet holds
+(`Sphinx warnings: 31 (baseline: 31)` — the gate passes at equality, failing
+only above). Paired Mind PR **PyAutoMind#149**, `drift` SUCCESS.
+
+No release is owed: docs-only, no library code and no public API touched,
+so nothing here needs to reach PyPI for a user to benefit — ReadTheDocs
+rebuilds from main.
 
 Delivered: `docs/api/plot.rst` rewritten against `autofit/plot/__init__.py` —
 corner plots (`corner_cornerpy`, `corner_anesthetic`), sampling traces

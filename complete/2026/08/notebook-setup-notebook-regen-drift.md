@@ -1,3 +1,36 @@
+Regenerated the 285 autolens_workspace notebooks that had drifted from
+PyAutoHands generator output. autolens_workspace#481 MERGED 2026-08-07
+(f3006b3d), closing issue #480. Branch `claude/dev-script-title-underline-5d3c3p`,
+restarted from main 573bde8 after #478 merged (same session-designated branch,
+new PR — merged-branch restart rule).
+
+- **The drift:** PyAutoHands build_util.py uncomments
+  `# from autolens import setup_notebook; setup_notebook()` when generating
+  notebook cells, but committed notebooks carried the commented form — so
+  none of them called setup_notebook() on main, and every notebook-touching
+  PR either dragged the churn or hand-restored around it (as #478 did).
+- **Sweep:** clean-main `generate.py autolens`, notebooks-only, 285 files /
+  288±288 lines. Audited: 285 setup_notebook flips + 2 JSON-indent
+  normalizations of a hand-inserted batch_size comment line (imaging/ and
+  multi_galaxy/ start_here.ipynb) — direct evidence committed notebooks were
+  hand-edited rather than generated. Catalogue zero diff. Count came in at 285,
+  not the prompt's ~290 estimate.
+- **Verification:** second regeneration on the swept tree is a no-op (same
+  285-file set, stable); check_navigator --banners fail green; underline state
+  from #478 preserved (0 typos / 14 banners); CI both smoke legs + all three
+  navigator checks green (~9 min).
+- **SIBLING DRIFT MEASURED AND FILED (not fixed):** clean-tree dry-runs
+  2026-08-07 with PyAutoHands 2a4fb11 — autogalaxy_workspace 127 modified
+  (126 flips + 6 OTHER diff lines, audit before committing),
+  autofit_workspace 31 (32 flips), HowToFit 13 (13 flips); HowToLens and
+  HowToGalaxy CLEAN. Follow-up prompt:
+  `draft/maintenance/workspaces/notebook_setup_notebook_drift_siblings.md`
+  (one task, three PRs — mge-sigma phase-2 precedent).
+- **Environment trap (repeat of #478's):** ipynb-py-convert cannot pip-install
+  on modern setuptools; vendor the package into site-packages + a CLI shim.
+
+## Original prompt
+
 # Regenerate 331 autolens_workspace notebooks drifted from generator output (setup_notebook line)
 
 Difficulty: small

@@ -1,5 +1,15 @@
 # Active Tasks
 
+## notebook-setup-notebook-regen-drift
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/480
+- session: Claude Code web (remote), designated branch claude/dev-script-title-underline-5d3c3p (restarted from main 573bde8 after #478 merged)
+- status: workspace-dev — sweep computed and verified locally 2026-08-07, commit+PR in flight. Measured 285 files (not the prompt's ~290 estimate): 285 setup_notebook flips + 2 JSON-indent normalizations of a hand-edited batch_size line (imaging/ + multi_galaxy/ start_here.ipynb) — proof committed notebooks were hand-edited. Catalogue zero diff. Second regeneration on the swept tree is a no-op (same 285, stable); check_navigator green; underline state preserved (0 typos / 14 banners).
+- sibling-check PENDING: autogalaxy_workspace / autofit_workspace / HowTo repos may carry the same drift — file sibling prompts if so, NOT swept into this task.
+- prompt: active/notebook_setup_notebook_regen_drift.md
+- worktree: (none — web session)
+- repos:
+  - autolens_workspace
+
 ## mge-sigma-min-workspace-sweep
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/466
 - status: BOTH PHASES MERGED 2026-08-04. Phase 1 autolens_workspace#467 -> 92019316 (issue #466 auto-closed). Phase 2 autogalaxy_workspace#203 -> 8a7df7a6, HowToLens#67 -> 4ff3135c, HowToGalaxy#61 -> 51eed3d6, autogalaxy_assistant#10 -> f6966a64. Upstream PyAutoGalaxy#549 -> 13d3023c. All worktrees removed, all branches deleted local+origin, all five canonical checkouts back on main. Code work COMPLETE; two debts remain (below).

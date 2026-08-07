@@ -175,6 +175,17 @@ One `##` block per item. Fields:
 - breaks-if-wrong: loses the exact historical noise realizations only; regenerated copies are equivalent by construction
 - archive-ref: n/a — committed deletion; pre-purge SHA 272bae3 VOIDED by the 2026-07-27 leg-7 autocti rewrite — bytes recoverable ONLY from the local mirror backup ~/Code/PyAutoLabs-backups/autocti_workspace-pre-rewrite-2026-07-27.git
 
+## release-datasets/autocti-dataset-1d-overview
+- type: file
+- locator: autocti_workspace dataset/dataset_1d/{simple,species_x1_continuum_0,species_x3,temporal} + dataset/overview/{dataset_1d,imaging_ci}/ (282 files, 5.35 MB, PR#18)
+- confidence: 0.98
+- reason: committed simulated 1D CTI calibration + overview datasets, each regenerated in seconds by its sole write-site simulator (scripts/dataset_1d/simulators/** and scripts/imaging_ci/simulators/overview/calibrate.py); clean-tree regeneration proven per dataset pre-purge and re-witnessed post-purge with clean git status; 21 auto-simulate guards added to 18 consumers. The dataset-bulk leftover recorded in complete/2026/08/autocti-util-dataset-export.md. The 5 non-simulated overview media files (ccd.gif, ccd_schematic.png, cti.gif, cti_time_evolution.png, what_is_cti.png) stay committed — no write site.
+- merged: no
+- condemned: 2026-08-07
+- sweep-after: 2026-09-07
+- breaks-if-wrong: loses the exact historical noise realizations only; regenerated copies are equivalent by construction
+- archive-ref: n/a — committed deletion; pre-purge SHA 50b701d on autocti_workspace main (post-rewrite history — reachable on the remote)
+
 ## pyautogalaxy/docs-cite-prodigy
 - type: branch
 - locator: docs/cite-prodigy (PyAutoGalaxy, tip e06a527)

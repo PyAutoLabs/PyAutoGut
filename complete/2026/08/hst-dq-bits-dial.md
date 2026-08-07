@@ -1,3 +1,117 @@
+- issue: https://github.com/PyAutoLabs/PyAutoReduce/issues/65
+- library-pr: https://github.com/PyAutoLabs/PyAutoReduce/pull/70 (merge 99558128e)
+- mind-pr: https://github.com/PyAutoLabs/PyAutoMind/pull/148
+- shipped: 2026-08-07
+- repos: PyAutoReduce
+- tests: 281 passed / 15 skipped, up from the 265/15 baseline (+16). CI green on unittest 3.12 + 3.13.
+
+Every HST reduction the pipeline had ever produced rejected **every** DQ-flagged
+pixel. `drizzle_kwargs_for` never set `final_bits`/`driz_sep_bits`, and no
+adapter did either — the strings appeared nowhere in the repo — so every run
+silently inherited drizzlepac's package default `final_bits="0"`
+(`drizzlepac/pars/astrodrizzle.cfg:101`), which treats no bit as good. Hot, warm
+and blob pixels that `calacs`/`calwf3` had *already corrected* were thrown away.
+An unintended inheritance, never a chosen deviation, and it had been shipping
+since phase 1.
+
+Two visible symptoms, one root cause, one fix site: zero-coverage **holes** on
+WFC3/IR (PJ011646, DQ 512 blobs at the same detector pixels in all five
+exposures) and high-noise **stripes through deflector cores** on ACS/WFC F814W
+SLACS-gold that the legacy SLACS reductions lack.
+
+## What shipped
+
+**Leg 2 first, deliberately — it is the detector for leg 1.**
+`drizzle/diagnostics.py` gains `local_weight_deficit` / `check_local_weight_deficit`:
+inside the same 1.5" radius as `protect_radius_arcsec`, it reports the
+science-region median weight and the worst row/column median as fractions of the
+cutout median, recorded in `reduction.json` at `drizzle.local_weight_deficit`.
+Both axes, because a detector-column defect lands on an image row or column
+depending on the frame's orientation on the sky.
+
+**Leg 1** puts STScI's own MDRIZTAB rows on the adapters as
+`(min_exposures, driz_sep_bits, final_bits)` with MDRIZTAB's semantics (the last
+row whose `min_exposures <= N`):
+
+    acs_wfc, wfc3_uvis:  (1, 65535, 65535), (2, 336, 336)
+    wfc3_ir:             (1, 65535, 65535), (2, 65535, 528), (4, 528, 528)
+
+`336 = 16+64+256` (hot, warm, saturated); `528 = 512+16` (blob, hot).
+`TargetSpec.final_bits`/`driz_sep_bits` override at every N;
+`dq_bits_provenance` records each value **and** its source
+(`adapter_mdriztab` / `target_spec` / `unset`) so datasets stay re-derivable as
+the tables move.
+
+## Traps and findings worth keeping
+
+- **The bits are genuinely N-dependent; a flat constant is wrong.**
+  Single-exposure data uses 65535 — every bit good — because with one exposure
+  there is nothing to fill a masked pixel with, so the standard recipe keeps
+  flagged pixels rather than punching holes. This is also an independent
+  explanation for why the legacy SLACS SNAP maps look clean: SNAP data *is* the
+  N=1 regime.
+- **The two bits columns DIFFER, so rows carry both.** `wfc3_ir` at N=2-3 has
+  `driz_sep_bits` 65535 with `final_bits` 528 — the separate (median-building)
+  drizzle still keeps every bit while the final drizzle is already at 528. The
+  issue's own shorthand ("65535 at N=1, 528 at N>=2") flattened its own
+  evidence table; the reference rows won.
+- **Unset must mean the key is ABSENT, not 0.** `0` is precisely drizzlepac's
+  "no bit is good" default — writing it explicitly would re-enact the bug. The
+  non-AstroDrizzle backends (`jwst_image3`, `nirc2_native`) declare no table and
+  emit no keyword; pinned by test.
+- **Do NOT use `mdriztab=True` to get the bits.** It imports the whole parameter
+  set — `final_scale`, `final_pixfrac`, `final_kernel`, `final_rot` — and would
+  silently revert the deliberate, justified lensing deviations in
+  `hst_acs_pipeline.md` stage 3 (0.05"/pix, pixfrac 0.8, north-up).
+- **The blindness was structural, not an oversight in one guard.**
+  `mask_isolated_bad_pixels` tests `~isfinite | <= 0`, so a *degraded* pixel was
+  never even a candidate — not for the clustering check, and not for the 1.5"
+  protection whose entire purpose is "the lens itself must be clean";
+  `weight_uniformity` is a global RMS/median (slacs0008 measured 0.066 against a
+  0.2 limit) that a few columns cannot move. Between the two sat a whole defect
+  class. `test_the_existing_guards_are_blind_to_the_same_map` pins it: one
+  synthetic striped map both old guards pass and the new one catches.
+- **`star_pass_kwargs_for` was carrying the fingerprint all along.** Its
+  `int(kwargs.get("final_bits", 0)) | CR_DQ_BIT` only needed a `.get` fallback
+  because nothing ever set the key. It picked up the fix for free.
+- **`reduce_pj011646.py` does not exist** anywhere in PyAutoReduce. The issue's
+  claim that it "carries a documented monkeypatch workaround until this ships"
+  was stale — there was nothing to unwind.
+
+## STILL OWED — the control test gates leg 1's defaults
+
+**Not run.** It needs `drizzlepac`, the CRDS cache (`scripts/cache/crds/`, which
+is gitignored) and archive data; the cloud session that wrote this had none of
+them. #65 asked for it *first*, and it remains the gate before these defaults
+reach a release:
+
+> Re-drizzle one striped SLACS target at the old `0` and at the MDRIZTAB value,
+> diff the weight and noise maps. If the stripes do not move, the cause is
+> elsewhere — exposure count, dither geometry, or genuine bad columns — and
+> **revert the adapter defaults rather than shipping the dial.**
+
+Leg 2's diagnostic now scores that comparison objectively instead of by eye, and
+is also what calibrates its own provisional 0.9 limit (derivation: one lost
+exposure of N leaves weight `(N-1)/N`, so 0.9 catches a single loss for any
+N <= 9 — the regime where `sqrt(N/(N-1))` noise inflation is visible). The
+obligation is recorded in `docs/design/hst_acs_pipeline.md` stage 3, not only
+here. The leg-2 verdict is **recorded, never raised**, precisely because the
+limit is uncalibrated.
+
+## Follow-ups
+
+- `draft/research/pyautoreduce/acceptance_noise_rebaseline.md` must run **after**
+  this — the bits move the IVM weights and therefore the noise maps, so its
+  SLACS parity numbers would need redoing.
+- `autoreduce_workspace` may want to surface the new dial; both `TargetSpec`
+  fields are additive with `None` defaults, so nothing there breaks.
+- Related but deliberately untouched: PyAutoReduce#61 (driz_cr erodes flux at
+  steep-gradient cores) and #62 (tier-1 ePSF from the CR-rejected mosaic). All
+  three concern how DQ/CR masking degrades products, but they touch different
+  stages.
+
+## Original prompt
+
 # HST needs a DQ-bits dial — we mask every DQ-flagged pixel where STScI keeps most of them
 
 Type: bug

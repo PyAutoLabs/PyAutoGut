@@ -29,6 +29,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [group-data-preparation-readme](2026/08/group-data-preparation-readme.md)
 - [health-conductor-stale-verdict](2026/08/health-conductor-stale-verdict.md)
 - [howto-smoke-all-tutorials](2026/08/howto-smoke-all-tutorials.md)
+- [howtofit-stub-fork-cleanup](2026/08/howtofit-stub-fork-cleanup.md)
 - [hygiene-coverage-drift](2026/08/hygiene-coverage-drift.md)
 - [hygiene-detail-flag](2026/08/hygiene-detail-flag.md)
 - [hygiene-howto-refs-docstrings](2026/08/hygiene-howto-refs-docstrings.md)

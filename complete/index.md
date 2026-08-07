@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-931 records across 7 buckets.
+933 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -31,6 +31,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [health-conductor-stale-verdict](2026/08/health-conductor-stale-verdict.md)
 - [howto-smoke-all-tutorials](2026/08/howto-smoke-all-tutorials.md)
 - [howtofit-stub-fork-cleanup](2026/08/howtofit-stub-fork-cleanup.md)
+- [hst-dq-bits-dial](2026/08/hst-dq-bits-dial.md)
 - [hygiene-coverage-drift](2026/08/hygiene-coverage-drift.md)
 - [hygiene-detail-flag](2026/08/hygiene-detail-flag.md)
 - [hygiene-howto-refs-docstrings](2026/08/hygiene-howto-refs-docstrings.md)
@@ -54,6 +55,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [pr-ci-for-own-test-suite](2026/08/pr-ci-for-own-test-suite.md)
 - [purge-autocti-dataset-1d-overview](2026/08/purge-autocti-dataset-1d-overview.md) — no GitHub issue — the leftover from `autocti-util-dataset-export`, executed on direct human instruction "do th…
 - [pyautobrain-pr-test-ci](2026/08/pyautobrain-pr-test-ci.md) — auto-closed by the merge
+- [pyautofit_plot_rst_dead_plotters](2026/08/pyautofit_plot_rst_dead_plotters.md)
 - [pyautogalaxy-mge-sigma-test](2026/08/pyautogalaxy-mge-sigma-test.md)
 - [script-title-underline-off-by-one](2026/08/script-title-underline-off-by-one.md)
 - [simulator-util-to-af-ex](2026/08/simulator-util-to-af-ex.md) — moved the four 1D-Gaussian simulator helpers out of the duplicated

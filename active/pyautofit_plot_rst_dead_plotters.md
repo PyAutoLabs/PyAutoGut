@@ -11,12 +11,16 @@ Status: in-flight
 
 Filed 2026-07-12 from a `/hygiene docs` (`/audit_docs`) audit.
 
-## Status 2026-08-07 — implemented, pushed, no PR
+## Status 2026-08-07 — PR open, CI green, NOT merged
 
-Branch `claude/automind-simple-task-y079sm` on PyAutoFit, commit `4e23d8ab7`,
-one commit, docs-only. **No GitHub issue and no PR** — this was picked up
-directly rather than through `/start_dev`, so nothing was issued. Opening the
-PR is the next step and needs a human ask.
+Branch `claude/automind-simple-task-y079sm` on PyAutoFit → **PyAutoFit#1455**,
+two commits (`4e23d8ab7` docs, `25054c085` baseline ratchet), docs-only.
+**No GitHub issue** — picked up directly rather than through `/start_dev`, so
+nothing was ever issued; the PR is the only tracker. Merging is a human call
+and has not happened.
+
+CI on `4e23d8ab7`: `docs / docs-build`, `unittest (3.12)`, `unittest (3.13)`
+all SUCCESS. Paired Mind PR **PyAutoMind#149**, `drift` SUCCESS.
 
 Delivered: `docs/api/plot.rst` rewritten against `autofit/plot/__init__.py` —
 corner plots (`corner_cornerpy`, `corner_anesthetic`), sampling traces
@@ -56,11 +60,20 @@ functions), and a repo-wide grep confirms no `NestPlotter`/`MCMCPlotter`/
 `MLEPlotter`/`EmceePlotter` reference survives anywhere under `docs/`.
 The Docs CI job is the real check.
 
-`docs/sphinx_warning_baseline.txt` (67) is a **ceiling**: PyAutoHeart's
+`docs/sphinx_warning_baseline.txt` is a **ceiling**: PyAutoHeart's
 `docs-build.yml` fails only when the count *exceeds* it and merely emits a
-notice when it drops. Removing three broken autosummary stubs can only move it
-down, so no baseline edit was needed — but the job prints the new count, and
-ratcheting the file down once that is known is a clean follow-up.
+notice when it drops — so the fix could never have been blocked by it.
+
+**Ratcheted 67 → 31 in `25054c085`,** which the job explicitly asked for
+(`::notice::Warning count 31 is below baseline 67 — consider ratcheting`). The
+drop is attributable to this branch rather than to drift: the same job on
+`main` at `1eb27733` the same day, same dependency chain, reports 67, and this
+branch was byte-identical to main before the docs commit. Sphinx's own count
+moves 37 → 31; the CI-counted *line* total moves 67 → 31, because each of the
+three dead-class autosummary failures emitted a multi-line warning. Leaving the
+ceiling at 67 would have let 36 lines of new warnings land undetected.
+
+The 31 that remain are pre-existing debt this task did not touch.
 
 The `feature/ep-graphical-docs` coordination note below is **stale**: no such
 branch exists on PyAutoFit any more, so the collision it warns about cannot

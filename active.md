@@ -1,8 +1,9 @@
 # Active Tasks
 
 ## pyautofit-plot-rst-dead-plotters
-- issue: (none — picked up directly, not via /start_dev, so nothing was issued)
-- status: IMPLEMENTED + PUSHED 2026-08-07, **no PR opened** (opening one needs a human ask). Branch `claude/automind-simple-task-y079sm` on PyAutoFit at `4e23d8ab7`, one docs-only commit, 4 files.
+- issue: (none — picked up directly, not via /start_dev, so nothing was issued; the PR is the only tracker)
+- pr: https://github.com/PyAutoLabs/PyAutoFit/pull/1455 (+ paired Mind PR https://github.com/PyAutoLabs/PyAutoMind/pull/149)
+- status: PR OPEN, **CI GREEN, NOT MERGED** 2026-08-07 (merging is a human call). Branch `claude/automind-simple-task-y079sm` on PyAutoFit, two docs-only commits: `4e23d8ab7` (the fix, 4 files) + `25054c085` (baseline ratchet). CI on `4e23d8ab7`: docs-build + unittest 3.12 + unittest 3.13 all SUCCESS; Mind#149 `drift` SUCCESS.
 - filed: 2026-07-12 · started+finished 2026-08-07
 - classification: library (PyAutoFit) — docs
 - prompt: active/pyautofit_plot_rst_dead_plotters.md (carries the full record incl. verification limits)
@@ -10,7 +11,7 @@
 - scope-grew: the same dead classes were **called** in three prose snippets (`overview/the_basics.md`, `cookbooks/samples.md`, `cookbooks/search.md`) — a reader copying them got an AttributeError, so they were repointed too; plus two dead workspace notebook paths in `search.md`.
 - duplicate-merged: `draft/docs/autofit/api_plot_rst_stale_plotter_classes.md` (filed 2026-07-30, same defect) deleted in this change.
 - verification-limit: no numpy/autonerves/sphinx in the container, so no import check and no docs build — names were checked against `autofit/plot/__init__.py` and a repo-wide grep. Docs CI is the real check.
-- baseline-note: `docs/sphinx_warning_baseline.txt` (67) is a ceiling — Heart's `docs-build.yml` fails only above it and notices below, so this needs no baseline edit, but the printed count is worth ratcheting to afterwards.
+- baseline-ratcheted: `docs/sphinx_warning_baseline.txt` 67 -> 31 in `25054c085`, which the job asked for by notice. Attributable, not drift: same job on main at `1eb27733` the same day reports 67 and this branch was byte-identical to main beforehand. Sphinx's own count 37 -> 31; the CI-counted *line* total 67 -> 31, because each dead-class autosummary failure emitted a multi-line warning. The remaining 31 are pre-existing debt.
 - spun-off: `corner_cornerpy`/`corner_anesthetic` accept `**kwargs` and silently discard them while the workspace plot scripts pass a full corner.py kwargs list — a library/workspace bug, deliberately not fixed here, wants its own prompt.
 - stale-note-cleared: the prompt's `feature/ep-graphical-docs` collision warning no longer applies — that branch exists neither locally nor on origin.
 - repos-none-claimed: no worktree was taken (edited the canonical PyAutoFit checkout on its own branch) — listed on one line deliberately, NOT as `  - Repo` bullets, because `worktree_check_conflict` reads any such bullet as a live claim.

@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-924 records across 7 buckets.
+925 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -19,6 +19,7 @@ _(curate hard-won records here — survives regeneration.)_
 ## 2026/08
 
 - [astropy-cap-bump](2026/08/astropy-cap-bump.md) — closed manually post-merge — "Part of" in the PR bodies does not auto-close
+- [autocti-util-dataset-export](2026/08/autocti-util-dataset-export.md) — no GitHub issue — worked directly from the draft prompt in a cloud session on explicit human instruction; the …
 - [autogalaxy-assistant](2026/08/autogalaxy-assistant.md) — epic; human to close
 - [autohands-firewall-allowlist](2026/08/autohands-firewall-allowlist.md) — auto-closed by the merge
 - [covariance-interpolator-rng-seed](2026/08/covariance-interpolator-rng-seed.md) — auto-closed by the merge
@@ -56,7 +57,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [spawn-drift-self-heal](2026/08/spawn-drift-self-heal.md)
 - [spawn-empty-body-privacy-fix](2026/08/spawn-empty-body-privacy-fix.md)
 - [spawn-github-instance-automation](2026/08/spawn-github-instance-automation.md)
-- [sph-transform-name-check](2026/08/sph-transform-name-check.md) — `EllProfile.transformed_from_reference_frame_grid_from` checked `startswith("Sph")` while its mirror checks `e…
+- [sph-transform-name-check](2026/08/sph-transform-name-check.md) — auto-closed by the merge via "Closes #555"
 - [tenant-firewall-hygiene-extras](2026/08/tenant-firewall-hygiene-extras.md) — auto-closed by the merge
 - [test-mode-samples-info-hook-contract](2026/08/test-mode-samples-info-hook-contract.md) — `NonLinearSearch._test_mode_samples_info()`'s docstring told subclasses
 - [yang24-sidm-gravothermal-profile](2026/08/yang24-sidm-gravothermal-profile.md)

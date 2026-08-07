@@ -3,8 +3,9 @@
 ## file-path-guard-decision
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/475
 - session: remote (Claude Code web, 2026-08-07)
-- status: workspace-dev
+- status: workspace-dev — IMPLEMENTED AND PUSHED 2026-08-07: autolens_workspace 7956b54 (7 sites + paired notebooks), autofit_workspace 6ccc697 (2 sites + paired notebooks). Validation: py_compile 9/9, check_sizes clean, navigator catalogue unchanged. Remaining: ship_workspace (open the two PRs) + merge.
 - branch: claude/file-path-guard-decision-50mwce (session-designated, used in place of feature/<name>; no local worktree — web-github environment)
+- notebook-note: the 9 regenerated notebooks carry the setup_notebook activation from PyAutoHands 596967e; the other ~330 notebooks per repo predate that fix and were deliberately NOT swept in — left to the next wholesale regeneration.
 - prompt: active/file_path_guard_decision.md
 - decision: all 9 live sites KEEP the raw file guard, marked with a one-line intentional-raw-guard comment. The 7 autolens positions.json sites sit below a dataset-level should_simulate guard that rmtree's the whole dataset folder under PYAUTO_SMALL_DATASETS, so the file guard re-fires after every regeneration — raw is correct, conversion would crash (rmtree on a file) or double-delete the fresh dataset. The 2 autofit data.json sites: no should_simulate namespace / no PYAUTO_SMALL_DATASETS in that repo (recorded leg-3 rejection). 2 of the census 11 were already resolved before this task: interferometer many_visibilities_preparation.py normalized onto a dir guard in fe9031e; guides/plot plotters.py guard removed in the a198c7c restructure.
 - repos:

@@ -31,6 +31,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [health-conductor-stale-verdict](2026/08/health-conductor-stale-verdict.md)
 - [howto-smoke-all-tutorials](2026/08/howto-smoke-all-tutorials.md)
 - [howtofit-stub-fork-cleanup](2026/08/howtofit-stub-fork-cleanup.md)
+- [hst-dq-bits-dial](2026/08/hst-dq-bits-dial.md)
 - [hygiene-coverage-drift](2026/08/hygiene-coverage-drift.md)
 - [hygiene-detail-flag](2026/08/hygiene-detail-flag.md)
 - [hygiene-howto-refs-docstrings](2026/08/hygiene-howto-refs-docstrings.md)

@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-924 records across 7 buckets.
+925 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -28,6 +28,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [group-data-preparation-readme](2026/08/group-data-preparation-readme.md)
 - [health-conductor-stale-verdict](2026/08/health-conductor-stale-verdict.md)
 - [howto-smoke-all-tutorials](2026/08/howto-smoke-all-tutorials.md)
+- [howtofit-stub-fork-cleanup](2026/08/howtofit-stub-fork-cleanup.md)
 - [hygiene-coverage-drift](2026/08/hygiene-coverage-drift.md)
 - [hygiene-detail-flag](2026/08/hygiene-detail-flag.md)
 - [hygiene-howto-refs-docstrings](2026/08/hygiene-howto-refs-docstrings.md)
@@ -56,7 +57,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [spawn-drift-self-heal](2026/08/spawn-drift-self-heal.md)
 - [spawn-empty-body-privacy-fix](2026/08/spawn-empty-body-privacy-fix.md)
 - [spawn-github-instance-automation](2026/08/spawn-github-instance-automation.md)
-- [sph-transform-name-check](2026/08/sph-transform-name-check.md) — `EllProfile.transformed_from_reference_frame_grid_from` checked `startswith("Sph")` while its mirror checks `e…
+- [sph-transform-name-check](2026/08/sph-transform-name-check.md) — auto-closed by the merge via "Closes #555"
 - [tenant-firewall-hygiene-extras](2026/08/tenant-firewall-hygiene-extras.md) — auto-closed by the merge
 - [test-mode-samples-info-hook-contract](2026/08/test-mode-samples-info-hook-contract.md) — `NonLinearSearch._test_mode_samples_info()`'s docstring told subclasses
 - [yang24-sidm-gravothermal-profile](2026/08/yang24-sidm-gravothermal-profile.md)

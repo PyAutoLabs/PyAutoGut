@@ -1,5 +1,18 @@
 # Active Tasks
 
+## script-title-underline-off-by-one
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/476
+- session: Claude Code web (remote), designated branch claude/dev-script-title-underline-5d3c3p
+- status: workspace-dev — IMPLEMENTED AND PUSHED 2026-08-07 (commit 5844ad5 on the designated branch, at origin/main tip 8f1965c). Awaiting PR-open + CI (ship_workspace); no PR opened yet.
+- result: 41 scripts fixed (prompt's 2026-07-30 measurement said 29; 12 more off-by-ones landed since with the scaling-relation + datacube families), each a one-line `=`-rule change. Banner guard held: 14 wide banners on current main (was 15 at the reference commit — one block removed upstream since), byte-untouched. Classifier control-tested at 726d060d reproducing the recorded 29/15 split exactly before being trusted on main.
+- notebooks: the 41 paired notebooks regenerated via PyAutoHands generate.py; 39 of them also pick up the setup_notebook uncomment (generator truth). Catalogue (llms-full.txt / workspace_index.json) regenerated with zero diff — rules do not flow into summaries. check_navigator --banners fail green; check_sizes green; all 41 scripts byte-compile. Smoke deferred to PR CI (no autolens install in the session).
+- side-observation FILED: 331 committed notebooks drift from generator output by the setup_notebook line (main's notebooks never call it). Deliberately NOT swept into this task — new draft prompt draft/maintenance/workspaces/notebook_setup_notebook_regen_drift.md.
+- branch-note: session-designated `claude/dev-script-title-underline-5d3c3p` used in place of the `feature/<name>` convention (harness constraint: only that branch may be pushed). Mind state for this task lives on the same-named PyAutoMind branch until merged to Mind main.
+- prompt: active/script_title_underline_off_by_one.md
+- worktree: (none — web session, no local worktree root)
+- repos:
+  - autolens_workspace
+
 ## mge-sigma-min-workspace-sweep
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/466
 - status: BOTH PHASES MERGED 2026-08-04. Phase 1 autolens_workspace#467 -> 92019316 (issue #466 auto-closed). Phase 2 autogalaxy_workspace#203 -> 8a7df7a6, HowToLens#67 -> 4ff3135c, HowToGalaxy#61 -> 51eed3d6, autogalaxy_assistant#10 -> f6966a64. Upstream PyAutoGalaxy#549 -> 13d3023c. All worktrees removed, all branches deleted local+origin, all five canonical checkouts back on main. Code work COMPLETE; two debts remain (below).

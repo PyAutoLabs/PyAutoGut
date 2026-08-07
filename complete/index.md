@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-928 records across 7 buckets.
+930 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -42,6 +42,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [missing-auto-simulate-guards](2026/08/missing-auto-simulate-guards.md)
 - [multi-start-auto-convergence-real-search](2026/08/multi-start-auto-convergence-real-search.md) — `scripts/jax_assertions/multi_start_gradient_auto_convergence.py` failed
 - [nautilus-1core-serial-pool](2026/08/nautilus-1core-serial-pool.md) — corrective for the Heart RED "release validation FAILED (stage
+- [notebook-setup-notebook-regen-drift](2026/08/notebook-setup-notebook-regen-drift.md)
 - [nufft-parity-full-datasets](2026/08/nufft-parity-full-datasets.md)
 - [plot-array-stale-kwargs](2026/08/plot-array-stale-kwargs.md)
 - [point-source-defaults-campaign](2026/08/point-source-defaults-campaign.md) — took the point-source likelihood options from "several undocumented
@@ -53,6 +54,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [purge-autocti-dataset-1d-overview](2026/08/purge-autocti-dataset-1d-overview.md) — no GitHub issue — the leftover from `autocti-util-dataset-export`, executed on direct human instruction "do th…
 - [pyautobrain-pr-test-ci](2026/08/pyautobrain-pr-test-ci.md) — auto-closed by the merge
 - [pyautogalaxy-mge-sigma-test](2026/08/pyautogalaxy-mge-sigma-test.md)
+- [script-title-underline-off-by-one](2026/08/script-title-underline-off-by-one.md)
 - [simulator-util-to-af-ex](2026/08/simulator-util-to-af-ex.md) — moved the four 1D-Gaussian simulator helpers out of the duplicated
 - [small-datasets-loader-pixel-scales](2026/08/small-datasets-loader-pixel-scales.md)
 - [smoke-runner-jupyter-guard](2026/08/smoke-runner-jupyter-guard.md)

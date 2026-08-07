@@ -1,5 +1,20 @@
 # Active Tasks
 
+## interferometer-delaunay-flaky-fitexception
+- issue: https://github.com/PyAutoLabs/PyAutoLens/issues/640
+- status: PHASE 2 IN FLIGHT (pushed, no PR yet) — root cause RE-POINTED and fixed in PyAutoArray. Phase 1 remains merged (PyAutoFit#1408 + autolens_workspace#311); this is the correctness half.
+- ROOT CAUSE (re-pointed, NOT the filed candidate): the producer is `cholesky_funcs.py` `cholinsertlast`, NOT `fnnls.py:134`. Line 134 was exercised 599 times across 600 constraint-binding draws with ZERO degenerate denominators — the 45/250 RuntimeWarnings from phase 1 are a downstream symptom, not the producer. `cholinsertlast` took `math.sqrt` of an unchecked Schur complement; on a (near-)singular normal-equations matrix that value is zero to within rounding (measured +-1.776e-15 = 8*eps) and lands on either side of zero purely by FP summation order — which IS the observed CI-thread/BLAS dependence.
+- CAUSAL CHAIN (closes the loop to the failing stage): tiny-negative schur -> ValueError (caught, visible); exact-zero -> zero pivot; tiny-positive -> pivot amplified by cho_solve. The last two returned NaN WITHOUT RAISING. `inversion_util.py:365` guards on exceptions only, so a NaN reconstruction escaped -> poisoned `adapt_data` -> `hilbert.py:275-284` builds mesh vertices from adapt_data with no NaN guard -> scipy.spatial.Delaunay "Points cannot contain NaN" in source_pix_2. That is why the failure surfaced a stage away from its cause.
+- FIX: reject a non-positive Schur complement (`np.linalg.LinAlgError`, a ValueError subclass so existing handlers still catch it) + assert finiteness at the fnnls solver boundary as a backstop. `inversion_util.py` needed NO edit — its existing except-tuple already catches LinAlgError.
+- LIKELIHOOD-INVARIANCE (human constraint, verified not asserted): the test is `schur > 0` and nothing stricter. A relative-tolerance version was written FIRST, measured to convert 7/300 finite reconstructions (max 0.26-0.46) into exceptions, and DISCARDED for exactly that reason. Final version verified over 800 old-vs-new problems: 708 bitwise identical, 92 raise in both, 0 finite->raise, 0 numerically different. Jitter-sweep `clean` counts identical pre/post (115/82/71/71/120). Full suite 855->887 passed with the SAME 16 pre-existing failures (env: py3.11 + missing optional deps), i.e. +32 new tests and zero regressions.
+- repro: unit-level and DETERMINISTIC (thread-independent), which is stronger than the CI-only flake. NOT executed end-to-end through source_pix_2 — this container has no autolens stack and is py3.11 vs the required >=3.12; the source_pix_2 link is established by code reading, not by a run. Stated as a limit, not a claim.
+- branch: claude/interferometer-delaunay-phase-2-1p53vk (PyAutoArray, pushed 9e9a3360). NO PR opened — next human step.
+- autonomy: supervised
+- prompt: active/interferometer_delaunay_intermittent_qhull_nan.md
+- note: follow-up to Delaunay cleanup #301/#307. Consolidates closed autolens_workspace#300/#308/#309. Complements PyAutoLens#639 raise_fit_exception. Phase 1 made the flake non-fatal; this makes the fit correct.
+- repos:
+  - PyAutoArray: claude/interferometer-delaunay-phase-2-1p53vk (Phase 2, pushed, PR pending)
+
 ## mge-sigma-min-workspace-sweep
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/466
 - status: BOTH PHASES MERGED 2026-08-04. Phase 1 autolens_workspace#467 -> 92019316 (issue #466 auto-closed). Phase 2 autogalaxy_workspace#203 -> 8a7df7a6, HowToLens#67 -> 4ff3135c, HowToGalaxy#61 -> 51eed3d6, autogalaxy_assistant#10 -> f6966a64. Upstream PyAutoGalaxy#549 -> 13d3023c. All worktrees removed, all branches deleted local+origin, all five canonical checkouts back on main. Code work COMPLETE; two debts remain (below).

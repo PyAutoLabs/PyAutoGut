@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-927 records across 7 buckets.
+928 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -32,6 +32,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [howtofit-stub-fork-cleanup](2026/08/howtofit-stub-fork-cleanup.md)
 - [hygiene-coverage-drift](2026/08/hygiene-coverage-drift.md)
 - [hygiene-detail-flag](2026/08/hygiene-detail-flag.md)
+- [hygiene-gone-ref-counter](2026/08/hygiene-gone-ref-counter.md) — the hygiene conductor's `prescan_tidy` counted gone upstream refs with
 - [hygiene-howto-refs-docstrings](2026/08/hygiene-howto-refs-docstrings.md)
 - [interferometer-start-here-integrate-oom](2026/08/interferometer-start-here-integrate-oom.md)
 - [intra-family-dep-floors](2026/08/intra-family-dep-floors.md)

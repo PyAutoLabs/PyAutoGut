@@ -1,3 +1,41 @@
+## hygiene-gone-ref-counter
+- issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/205 (auto-closed on merge)
+- completed: 2026-08-07
+- pr: https://github.com/PyAutoLabs/PyAutoBrain/pull/206 (MERGED 2026-08-07, merge commit 0bca1b00)
+- summary: the hygiene conductor's `prescan_tidy` counted gone upstream refs with
+  `git branch -vv | grep -c '\[gone\]'`, but porcelain prints the upstream as
+  `[origin/<branch>: gone]`, never the bare `[gone]`, so the count was 0 in every
+  repo, always — and it folds into the tidy row's prioritisable total, so `tidy`
+  systematically under-ranked itself against the other hygiene modes. Fixed by
+  counting via `git for-each-ref --format='%(upstream:track)' refs/heads`, the
+  idiom `enumerate_condemn_candidates` (same file) and `repo_cleanup`'s audit
+  already used. One line + comment in `agents/conductors/hygiene/hygiene.sh`,
+  plus regression test `test_tidy_prescan_counts_gone_upstream_refs`.
+- evidence: control run per the prompt's own acceptance test — fixture repo with
+  a genuinely gone upstream: buggy grep 0, `for-each-ref` true count; the new
+  regression test FAILS on the unfixed counter and passes on the fix; full Brain
+  suite 237 passed locally; CI green on both pytest legs (3.12/3.13).
+- test-trick: a `[gone]` fixture needs no live remote — `git remote add origin
+  <nonexistent-path>` + `git config branch.<b>.remote origin` +
+  `branch.<b>.merge refs/heads/<b>` yields `%(upstream:track)` = `[gone]`.
+  (Upstream config WITHOUT the remote existing shows nothing — the remote must
+  be configured for git to consider the upstream set.)
+- superseded-finding: the prompt's Defect 2 (hard-coded `LIB_REPOS`/`ORG_REPOS`
+  limiting the scan to 9 repos) was independently fixed on main before this task
+  ran — repo sets now derive from the body map via `_hygiene_repos.py` (PR #200
+  lineage). Always re-verify a filed defect against current main before planning.
+- open-question (posed on #205, NOT decided here): `prescan_tidy` iterates
+  `CODE_REPOS` (libraries + organs, ~13 repos) while the body map declares ~36
+  across 10 categories; the 2026-08-04 sweep found all 4 stashes and all 3 dirty
+  trees in repos tidy never scans. Widening the scan set (recommended: derive an
+  every-checkout-bearing-category set, applied to `prescan_tidy`, `run_tidy` and
+  `enumerate_condemn_candidates`) changes the conductor's reported numbers and
+  awaits a human call — a candidate follow-up prompt.
+- session: Claude Code cloud session, branch claude/pyautomind-simple-issue-rvfp2b
+  (no local worktree flow).
+
+## Original prompt
+
 # The hygiene tidy pre-scan reports 0 [gone] refs unconditionally, and scans only 9 of ~28 repos
 
 Type: bug

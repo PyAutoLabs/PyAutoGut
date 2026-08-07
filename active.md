@@ -2,8 +2,9 @@
 
 ## hygiene-gone-ref-counter
 - issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/205
+- pr: https://github.com/PyAutoLabs/PyAutoBrain/pull/206 (OPEN — fix + regression test pushed 2026-08-07, 237/237 Brain tests green locally; awaiting CI + human merge)
 - session: Claude Code cloud session (no local worktree flow)
-- status: library-dev (infrastructure — PyAutoBrain organ code)
+- status: pr-open (infrastructure — PyAutoBrain organ code)
 - worktree: (none — cloud session; branch claude/pyautomind-simple-issue-rvfp2b on PyAutoBrain)
 - prompt: active/hygiene_gone_ref_counter_always_zero.md
 - scope-note: prompt Defect 2 (hard-coded 9-repo scan) superseded on main by the body-map derivation; remaining remnant (prescan_tidy iterates CODE_REPOS, not the full body map) posed as an open question on the issue, NOT changed in this task.

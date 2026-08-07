@@ -1,5 +1,15 @@
 # Active Tasks
 
+## hygiene-gone-ref-counter
+- issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/205
+- session: Claude Code cloud session (no local worktree flow)
+- status: library-dev (infrastructure — PyAutoBrain organ code)
+- worktree: (none — cloud session; branch claude/pyautomind-simple-issue-rvfp2b on PyAutoBrain)
+- prompt: active/hygiene_gone_ref_counter_always_zero.md
+- scope-note: prompt Defect 2 (hard-coded 9-repo scan) superseded on main by the body-map derivation; remaining remnant (prescan_tidy iterates CODE_REPOS, not the full body map) posed as an open question on the issue, NOT changed in this task.
+- repos:
+  - PyAutoBrain
+
 ## mge-sigma-min-workspace-sweep
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/466
 - status: BOTH PHASES MERGED 2026-08-04. Phase 1 autolens_workspace#467 -> 92019316 (issue #466 auto-closed). Phase 2 autogalaxy_workspace#203 -> 8a7df7a6, HowToLens#67 -> 4ff3135c, HowToGalaxy#61 -> 51eed3d6, autogalaxy_assistant#10 -> f6966a64. Upstream PyAutoGalaxy#549 -> 13d3023c. All worktrees removed, all branches deleted local+origin, all five canonical checkouts back on main. Code work COMPLETE; two debts remain (below).

@@ -1,5 +1,16 @@
 # Active Tasks
 
+## file-path-guard-decision
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/475
+- session: remote (Claude Code web, 2026-08-07)
+- status: workspace-dev
+- branch: claude/file-path-guard-decision-50mwce (session-designated, used in place of feature/<name>; no local worktree — web-github environment)
+- prompt: active/file_path_guard_decision.md
+- decision: all 9 live sites KEEP the raw file guard, marked with a one-line intentional-raw-guard comment. The 7 autolens positions.json sites sit below a dataset-level should_simulate guard that rmtree's the whole dataset folder under PYAUTO_SMALL_DATASETS, so the file guard re-fires after every regeneration — raw is correct, conversion would crash (rmtree on a file) or double-delete the fresh dataset. The 2 autofit data.json sites: no should_simulate namespace / no PYAUTO_SMALL_DATASETS in that repo (recorded leg-3 rejection). 2 of the census 11 were already resolved before this task: interferometer many_visibilities_preparation.py normalized onto a dir guard in fe9031e; guides/plot plotters.py guard removed in the a198c7c restructure.
+- repos:
+  - autolens_workspace
+  - autofit_workspace
+
 ## mge-sigma-min-workspace-sweep
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/466
 - status: BOTH PHASES MERGED 2026-08-04. Phase 1 autolens_workspace#467 -> 92019316 (issue #466 auto-closed). Phase 2 autogalaxy_workspace#203 -> 8a7df7a6, HowToLens#67 -> 4ff3135c, HowToGalaxy#61 -> 51eed3d6, autogalaxy_assistant#10 -> f6966a64. Upstream PyAutoGalaxy#549 -> 13d3023c. All worktrees removed, all branches deleted local+origin, all five canonical checkouts back on main. Code work COMPLETE; two debts remain (below).

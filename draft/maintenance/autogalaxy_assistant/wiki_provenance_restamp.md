@@ -89,7 +89,9 @@ evidence is not retrievable from a phone session and the artifact eventually exp
 ## Related, not folded in
 
 `wiki_currency_check` for **autolens** failed separately on a PyPI
-index-propagation race and never got as far as checking anything — so autolens
-wiki-currency status is UNKNOWN, not clean. Re-running that job is what
-determines whether an equivalent autolens prompt is needed. Do not assume it is
-clean, and do not assume it is drifted.
+index-propagation race and never got as far as checking anything. RESOLVED
+2026-08-07: graded locally against a clean venv on released `autolens==2026.8.7.1`
+(PYTHONPATH cleared, all four libraries verified resolving to venv site-packages)
+— **all five legs clean**: version drift clean, 0 missing/broken symbols, idioms
+clean, 0 missing citations, 0 provenance errors. **No equivalent autolens prompt
+is needed.** This task is autogalaxy_assistant only.

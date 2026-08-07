@@ -1,3 +1,112 @@
+Phase 2 (the correctness half) of the intermittent interferometer-Delaunay
+`FitException`. Phase 1 had already made the flake non-fatal; this fixes the
+numerical producer so the fit is correct rather than merely tolerated.
+
+## PRs
+
+- **PyAutoArray#436** MERGED 2026-08-07 (`efaf3041`) — Phase 2, the producer fix.
+  CI green first run on both matrix legs (3.12 + 3.13), `mergeable_state: clean`,
+  3 files +229/-2.
+- Phase 1 (earlier, both merged): **PyAutoFit#1408** (TEST_MODE=2 bypass tolerates
+  a single-eval `FitException` as a resample-to-reject sentinel) and
+  **autolens_workspace#311** (un-park the script + add it to smoke).
+
+## The finding that mattered: the filed root cause was wrong
+
+The issue and prompt both named `fnnls.py:134` (`alpha = np.min(d[q] / (d[q] -
+s_chol[q]))`) as "the smoking gun", on the evidence that 45/250 phase-1 draws
+emitted divide-by-zero `RuntimeWarning`s there. **It is not the producer.** Line
+134 was exercised 599 times across 600 constraint-binding draws with *zero*
+degenerate denominators. Those warnings are a downstream symptom. The line is
+unchanged by this fix. Anyone resuming from the issue text alone would have
+chased it — #640 now carries a correction comment.
+
+## Actual producer: `cholesky_funcs.py` -> `cholinsertlast`
+
+    S[index, index] = s22 = math.sqrt(x[index] - S12.dot(S12))   # unchecked
+
+Two (near-)coincident source-mesh vertices give (near-)identical mapping-matrix
+columns, so the normal-equations matrix is singular to working precision and the
+Schur complement is **zero to within rounding** — measured at +-1.776e-15 (8*eps).
+Which side of zero it lands on is decided purely by floating-point summation
+order, i.e. **by the BLAS thread count**. That is the whole explanation for the
+CI-vs-local thread dependence, and why phase 1's 250 local draws came back clean.
+
+Measured over 60 exactly-singular draws, the same matrix failed three ways:
+tiny-negative -> `ValueError` (raised, visible); **exactly 0.0 (27/60)** -> zero
+pivot; **tiny-positive (19/60)** -> pivot ~4e-8 amplified by `cho_solve`. The last
+two returned **NaN without raising**.
+
+## Why it surfaced a stage away from its cause
+
+`inversion_util.py:365` guards the solver with `except (RuntimeError,
+LinAlgError, ValueError)` — a NaN raises none of those. So the NaN escaped as a
+valid-looking reconstruction -> poisoned `adapt_data` -> `hilbert.py:275-284`
+places mesh vertices from `adapt_data` with no NaN guard -> `scipy.spatial.Delaunay`
+rejected them in `source_pix_2`. Cause and symptom sat in different files, in
+different repos' call paths, one pixelization stage apart.
+
+## TRAP: the first fix changed likelihood evaluations
+
+The first implementation gated on a **relative tolerance** (`eps * index *
+abs(diagonal)`). It looked principled and was wrong: measured against the old
+code it converted **7/300 degenerate cases that had returned finite, plausible
+reconstructions (max 0.26-0.46) into exceptions**. That is a silent change to
+every likelihood evaluation touching a near-singular matrix. It was caught only
+because a bitwise old-vs-new harness was built to check, on a mid-flight human
+instruction ("make sure this won't change likelihood evaluations") — not by
+reasoning. **Discarded.**
+
+The shipped test is `schur > 0` and nothing stricter: `schur < 0` already raised
+(`LinAlgError` subclasses `ValueError`, so existing handlers still catch it),
+`schur == 0` yields NaN with certainty so there is no finite result to preserve,
+and any positive Schur complement passes through returning a **bitwise identical**
+pivot. Lesson: for a numerical guard, "reject the provably-broken condition" beats
+"reject the suspicious-looking region" — and the difference is only visible if you
+diff old-vs-new outputs bitwise.
+
+## Invariance evidence (verified, not asserted)
+
+- 800 old-vs-new problems (realistic + degenerate): **708 bitwise identical, 92
+  raise in both, 0 finite->raise, 0 numerically different**.
+- jitter-sweep `clean` counts identical pre/post: 115 / 82 / 71 / 71 / 120.
+- full `test_autoarray` locally: 855 -> 887 passed with the **same 16 pre-existing
+  failures** (env artefact: py3.11 vs the >=3.12 requirement, plus missing optional
+  deps — baselined by stashing the diff and re-running).
+- CI (the real 3.12/3.13 matrix, full deps): green on both legs first run, which
+  is what actually validated the 32 new tests on supported Python.
+
+## Tests
+
+`test_autoarray/util/test_cholesky_degenerate.py` — 32 deterministic NumPy-only
+tests: the pivot invariant (raise, or a strictly positive finite pivot — never
+zero/non-finite), rejection of a non-positive Schur complement, bitwise
+pass-through of a positive one, no non-finite solution across the near-degenerate
+jitter band, no false positives on well-conditioned constraint-binding problems,
+and that the raised type falls inside the inversion guard's except-tuple.
+
+## Limit — stated, not papered over
+
+The repro is **unit-level and deterministic** (thread-independent), which is
+stronger than the CI-only flake for regression purposes. It was **NOT** executed
+end-to-end through `source_pix_2`: the session container had no autolens stack and
+ran py3.11 against a >=3.12 requirement. The `source_pix_2` link is established by
+code reading (`inversion_util` guard -> `adapt_data` -> `hilbert.py:275-284`), not
+by a run. Whether the workspace script still ever flakes is now only provable by
+CI over time; the phase-1 tolerance means a residual occurrence would be
+non-fatal.
+
+## Environment note (web-github session)
+
+No worktree root; operated on the `/home/user/` clones with
+`PYTHONPATH=/home/user/PyAutoNerves:/home/user/PyAutoArray` and numpy/scipy/pytest/
+matplotlib/dill/astropy pip-installed into the container. `prompt_sync_push` tried
+to push PyAutoMind `main` (rejected non-fast-forward — local main is behind
+origin); left alone deliberately rather than forced, work pushed to the designated
+branch instead.
+
+## Original prompt
+
 # Interferometer Delaunay intermittent FitException (qhull NaN vertices + non-PD inversion)
 
 Type: bug

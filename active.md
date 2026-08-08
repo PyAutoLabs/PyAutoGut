@@ -2,7 +2,9 @@
 
 ## ep-optimise-updater
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1456
-- status: library-dev
+- status: library-shipped, workspace-pending
+- library-pr: https://github.com/PyAutoLabs/PyAutoFit/pull/1457
+- workspace-gate: parked — Jupyter kernels fail with ZMQError Operation not permitted; broad AutoLens integration rerun ended with fatal library error lookup self after JAX/NUFFT checks. Heart's web-clone layout also reports PyAutoFit on feature/ep-optimise-updater (not main).
 - repos:
   - PyAutoFit: feature/ep-optimise-updater
   - autofit_workspace: feature/ep-optimise-updater

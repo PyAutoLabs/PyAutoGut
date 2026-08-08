@@ -2,10 +2,10 @@
 
 ## ep-optimise-updater
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1456
-- status: workspace-shipped, awaiting-library-merge
+- status: COMPLETE 2026-08-08 — PyAutoFit #1457 merged first as 3b960609; autofit_workspace #136 then merged as cf8b4077. Required CI was green on both tested heads.
 - library-pr: https://github.com/PyAutoLabs/PyAutoFit/pull/1457
 - workspace-pr: https://github.com/PyAutoLabs/autofit_workspace/pull/136
-- workspace-gate: shipped under explicit human acknowledgement — Jupyter kernels fail with ZMQError Operation not permitted; broad AutoLens integration rerun ended with fatal library error lookup self after JAX/NUFFT checks. Heart's web-clone layout also reports PyAutoFit on feature/ep-optimise-updater (not main). Library-first gate remains: workspace PR #136 must not merge before PyAutoFit PR #1457.
+- workspace-gate: cleared under explicit human acknowledgement — sandbox-only notebook IPC, broad AutoLens runtime, and branch-sensitive Heart limitations were documented before shipping. Library-first order was preserved.
 - repos:
   - PyAutoFit: feature/ep-optimise-updater
   - autofit_workspace: feature/ep-optimise-updater

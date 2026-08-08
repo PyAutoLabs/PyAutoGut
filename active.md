@@ -1,5 +1,19 @@
 # Active Tasks
 
+## ep-optimise-updater
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1456
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/ep-optimise-updater
+- repos:
+  - PyAutoFit: feature/ep-optimise-updater
+  - autofit_workspace: feature/ep-optimise-updater
+- summary: |
+    Expose the existing EP updater hierarchy through the declarative
+    FactorGraphModel.optimise() API. The public default remains updater=None,
+    so damping is opt-in and existing fits retain their current behaviour.
+    Library changes and seam tests land first; the workspace follows with an
+    undamped-by-default tutorial example showing the optional keyword.
+
 ## mge-sigma-min-workspace-sweep
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/466
 - status: BOTH PHASES MERGED 2026-08-04. Phase 1 autolens_workspace#467 -> 92019316 (issue #466 auto-closed). Phase 2 autogalaxy_workspace#203 -> 8a7df7a6, HowToLens#67 -> 4ff3135c, HowToGalaxy#61 -> 51eed3d6, autogalaxy_assistant#10 -> f6966a64. Upstream PyAutoGalaxy#549 -> 13d3023c. All worktrees removed, all branches deleted local+origin, all five canonical checkouts back on main. Code work COMPLETE; two debts remain (below).

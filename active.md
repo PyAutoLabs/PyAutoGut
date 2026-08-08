@@ -3,7 +3,6 @@
 ## ep-optimise-updater
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1456
 - status: library-dev
-- worktree: ~/Code/PyAutoLabs-wt/ep-optimise-updater
 - repos:
   - PyAutoFit: feature/ep-optimise-updater
   - autofit_workspace: feature/ep-optimise-updater

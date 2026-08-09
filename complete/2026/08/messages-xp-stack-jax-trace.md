@@ -1,3 +1,34 @@
+## messages-xp-stack-jax-trace
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1458
+- completed: 2026-08-09
+- library-pr: https://github.com/PyAutoLabs/PyAutoFit/pull/1460 (squash-MERGED as be9c6c9204df87c987694313f460c37764d6963a)
+- summary: replaced ten fixed-shape `xp.array([...])` message constructors
+  with `xp.stack([...])`, and changed `GammaMessage.to_canonical_form` from
+  literal `np.log` to `xp.log`, keeping traced inputs inside the selected
+  NumPy/JAX backend. Added direct scalar and batched `jax.jit` regression
+  coverage for every changed constructor with NumPy shape/value parity.
+- evidence: focused message suite 32 passed; full PyAutoFit suite 1689 passed / 4
+  skipped locally. GitHub Docs and Tests workflows both passed on the exact PR
+  head `bc4fe9461c2451223ca909eb8e946b5d464d3414` before the guarded merge.
+  Running the new tests against untouched `main` produced the two expected
+  `GammaMessage.to_canonical_form` `TracerArrayConversionError` failures;
+  all 20 JIT cases passed on the feature branch.
+- compatibility finding: on currently supported JAX 0.7.0 and 0.10.2, the nine
+  non-Gamma `jnp.array` sites already traced successfully in isolation. Their
+  `xp.stack` conversions are cross-backend hardening with unchanged scalar and
+  batched output. The demonstrated current regression was the literal NumPy log
+  in Gamma canonical-form construction.
+- integration limitation: the private `z_projects/concr` hierarchical fit named
+  in the prompt was unavailable in the web implementation environment, so its
+  end-to-end run was not claimed. The full public library test suite and direct
+  JIT before/after proof were used as the merge gate.
+- adjacent audit: four separate traced-backend leaks were independently
+  reproduced in `GammaMessage.log_partition`, `BetaMessage.log_partition`, and
+  compound-prior `Log` / `Log10`. They remain intentionally outside this PR and
+  are tracked in https://github.com/PyAutoLabs/PyAutoFit/issues/1459.
+
+## Original prompt
+
 # Make autofit.messages safe under JAX jit trace (xp.array → xp.stack)
 
 Type: bug

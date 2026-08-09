@@ -1,5 +1,17 @@
 # Active Tasks
 
+## message-prior-xp-jax-trace
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1459
+- status: library-dev
+- location: codex-work-mode
+- repos:
+  - PyAutoFit: feature/message-prior-xp-jax-trace
+- summary: |
+    Make Gamma/Beta message log partitions and compound-prior log/log10
+    transformations respect their selected NumPy/JAX backend under jit.
+    Implement in two internal phases with direct scalar, batched, nested-prior,
+    and NumPy-parity regression coverage.
+
 ## release-drive-2026-08-03
 - issue: (no issue — a human-authorized manual release drive, not a dev task)
 - session: claude --resume e0105850-b98b-47ff-9ada-cba04a455a65

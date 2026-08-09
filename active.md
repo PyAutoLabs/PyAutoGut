@@ -1,5 +1,18 @@
 # Active Tasks
 
+## messages-xp-stack-jax-trace
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1458
+- status: library-dev
+- location: codex-work-mode
+- repos:
+  - PyAutoFit: feature/messages-xp-stack-jax-trace
+- summary: |
+    Replace the ten fixed-shape xp.array constructors in autofit.messages
+    with JAX-trace-safe xp.stack calls, fix GammaMessage.to_canonical_form's
+    literal NumPy log, and add direct jax.jit plus NumPy-parity regression
+    coverage. Audit adjacent prior/message xp dispatch and existing issues
+    #1262/#1331; keep unrelated statistical findings as follow-up tasks.
+
 ## release-drive-2026-08-03
 - issue: (no issue — a human-authorized manual release drive, not a dev task)
 - session: claude --resume e0105850-b98b-47ff-9ada-cba04a455a65

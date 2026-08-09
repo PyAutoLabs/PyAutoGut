@@ -1,5 +1,13 @@
 # Active Tasks
 
+## point-source-light
+- issue: https://github.com/PyAutoLabs/PyAutoGalaxy/issues/561
+- status: library-dev
+- prompt: active/point_source_light.md
+- branch: feature/point-source-light
+- repos:
+  - PyAutoGalaxy: feature/point-source-light
+
 ## release-drive-2026-08-03
 - issue: (no issue — a human-authorized manual release drive, not a dev task)
 - session: claude --resume e0105850-b98b-47ff-9ada-cba04a455a65

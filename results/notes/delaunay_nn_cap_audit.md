@@ -2,9 +2,10 @@
 
 ## Decision
 
-Keep both `DelaunayNN` static limits at **32**. Caps 16 and 24 are too low for
-the tested lensing geometries; 64 roughly doubles the cap-32 geometry cost
-without being required by the audit.
+Keep both `DelaunayNN` static limits at **32**. Cap 16 is demonstrably too low.
+Cap 24 overflowed in the local audit but sat exactly on the platform-sensitive
+boundary in GitHub CI, so it does not provide a robust safety margin. Cap 64
+roughly doubles the cap-32 geometry cost without being required by the audit.
 
 ## Correctness audit
 
@@ -18,20 +19,24 @@ draws, and a fixed stress geometry. It audits ordinary mapper queries and all
 
 The untruncated cap-64 reference observed:
 
-| Quantity | Maximum | Rows above 16 |
-|---|---:|---:|
-| Main natural neighbours | 27 | 198 |
-| Main cavity triangles | 25 | 107 |
-| Split natural neighbours | 21 | 28 |
-| Split cavity triangles | 19 | 12 |
+| Quantity | Local maximum | Rows above 16 | Rows above 24 |
+|---|---:|---:|---:|
+| Main natural neighbours | 27 | 198 | 8 |
+| Main cavity triangles | 25 | 107 | 2 |
+| Split natural neighbours | 21 | 28 | 0 |
+| Split cavity triangles | 19 | 12 | 0 |
 
 The main-neighbour 99th, 99.9th and 99.99th percentiles were 9, 14 and 22;
 the corresponding split-neighbour percentiles were 9, 11 and 15. Thus 16 is
 usually sufficient but fails in the tail—the precise failure mode that would
 otherwise create rare NaN likelihood samples as the mass model changes.
 
-The worst geometry was rerun explicitly at caps 16, 24 and 32. Both 16 and 24
-reported fixed-shape overflow; 32 completed without main or split overflow.
+The worst geometry was rerun explicitly at caps 16, 24 and 32. Locally, caps
+16 and 24 reported 94 and 4 overflow rows respectively; 32 completed without
+main or split overflow. On the GitHub Actions runners the cap-24 rerun produced
+zero overflow rows, while cap 16 still overflowed. This small qhull/platform
+difference makes 24 a boundary result rather than a dependable production cap;
+32 covered both environments.
 
 ## Runtime trade-off
 
@@ -47,5 +52,6 @@ the full mapper path, including split regularization:
 | DelaunayNN cap 64 | 0.5624 s | 8.43× |
 
 These are local CPU measurements, not A100 results. The cap-32 choice is the
-smallest tested static shape that covers the broad mass-model audit. The A100
-profile should be rerun before drawing sampler-throughput conclusions.
+smallest tested static shape with a robust margin across the local and CI
+audits. The A100 profile should be rerun before drawing sampler-throughput
+conclusions.

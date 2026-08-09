@@ -1,3 +1,34 @@
+## message-prior-xp-jax-trace
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1459
+- completed: 2026-08-09
+- library-pr: https://github.com/PyAutoLabs/PyAutoFit/pull/1461 (squash-MERGED as fbe9f45deac2f8f4646d61bdf5f4cb75ac950e30)
+- summary: made the remaining message and compound-prior array-namespace paths
+  JAX-traceable. Beta/Gamma constructors now select JAX broadcasting for traced
+  parameters; their log partitions dispatch special functions through SciPy or
+  `jax.scipy`; arithmetic and modified priors propagate `xp` recursively; and
+  `Log` / `Log10` use the selected backend.
+- API impact: `Prior.instance_for_arguments` gained the optional `xp=np` keyword,
+  aligning direct priors with `AbstractPriorModel.instance_for_arguments` so
+  nested compound expressions can preserve their backend. This is additive and
+  defaults to the existing NumPy behaviour; no workspace migration is required.
+- root-cause extension: the issue originally named four direct NumPy/SciPy
+  leaks, but the exact JIT regression first failed earlier in
+  `AbstractMessage.__init__`: Beta/Gamma always used `np.broadcast` even for
+  traced parameters. The established `NormalMessage` backend-selection pattern
+  closed that constructor boundary before the special-function fixes could run.
+- evidence: the exact new tests produced 12 expected failures and 20 passes on
+  untouched post-#1460 `main`; all 32 cases passed on the branch with both JAX
+  0.7.0 (supported minimum) and 0.10.2. Focused prior/message suites passed 317
+  tests; the full local PyAutoFit suite passed 1701 tests with 4 skipped. GitHub
+  Docs and Tests both passed on exact head
+  `28fe9862d37a40b7c25333d137a106a58db80c82` before the guarded merge.
+- scope: six files, including direct scalar/batched NumPy-parity tests for
+  Gamma/Beta partitions and direct, child-compound, and nested-modifier tests
+  for prior arithmetic. No workspace source changes or remaining follow-up are
+  required for this issue.
+
+## Original prompt
+
 # Make remaining message and compound-prior xp paths JAX-traceable
 
 Type: bug

@@ -144,3 +144,18 @@ Single PR against PyAutoFit `main`. Suggested branch:
 `Use xp.stack in autofit.messages so JAX jit can trace small fixed arrays`.
 
 <!-- formalised retroactively by the Intake (Conception) Agent on 2026-07-08 -->
+
+## Implementation progress (2026-08-09)
+
+- PyAutoFit issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1458
+- Draft PR: https://github.com/PyAutoLabs/PyAutoFit/pull/1460
+- Verification: 32 focused message tests passed; full PyAutoFit suite passed
+  with 1689 passed and 4 skipped. The new JAX regression test produces two
+  expected `GammaMessage.to_canonical_form` failures on untouched `main` and
+  all 20 cases pass on the branch.
+- Integration limitation: the private `z_projects/concr` reproducer was not
+  available in the implementation environment.
+- Adjacent prior/message audit: four separate JAX backend leaks were reproduced
+  in Gamma/Beta `log_partition` and compound-prior `log`/`log10`; follow-up
+  issue https://github.com/PyAutoLabs/PyAutoFit/issues/1459 keeps them out of
+  the focused PR.

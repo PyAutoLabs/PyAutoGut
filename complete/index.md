@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-948 records across 7 buckets.
+953 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -50,6 +50,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [missing-auto-simulate-guards](2026/08/missing-auto-simulate-guards.md)
 - [multi-start-auto-convergence-real-search](2026/08/multi-start-auto-convergence-real-search.md) — `scripts/jax_assertions/multi_start_gradient_auto_convergence.py` failed
 - [nautilus-1core-serial-pool](2026/08/nautilus-1core-serial-pool.md) — corrective for the Heart RED "release validation FAILED (stage
+- [normalise-auto-simulate-guard-idiom](2026/08/normalise-auto-simulate-guard-idiom.md)
 - [notebook-setup-notebook-regen-drift](2026/08/notebook-setup-notebook-regen-drift.md)
 - [nufft-parity-full-datasets](2026/08/nufft-parity-full-datasets.md)
 - [plot-array-stale-kwargs](2026/08/plot-array-stale-kwargs.md)
@@ -311,6 +312,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [kxs-refactor](2026/07/kxs-refactor.md)
 - [kxs-surface-refactor](2026/07/kxs-surface-refactor.md)
 - [kxs-workspace-tests](2026/07/kxs-workspace-tests.md)
+- [latent-samples-none-on-resumed-fit](2026/07/latent-samples-none-on-resumed-fit.md)
 - [lenstool-example](2026/07/lenstool-example.md)
 - [lenstool-scaling-reference-magnitude](2026/07/lenstool-scaling-reference-magnitude.md) — PR1 cluster + PR2 group/imaging — complete; PR3 SLaM deferred
 - [lifecycle-drift-self-heal](2026/07/lifecycle-drift-self-heal.md)
@@ -384,6 +386,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [optional-none-default-typos](2026/07/optional-none-default-typos.md) — Fixed three PyAutoLens sites using the typing construct
 - [opus-wrapup](2026/07/opus-wrapup.md) — executed on Fable
 - [over-sample-trailing-one-to-two](2026/07/over-sample-trailing-one-to-two.md) — Replaced every trailing sub_size 1 in adaptive over-sampling schemes across five repos (169 files, 186 sites: …
+- [oversampling-kxs-coupling](2026/07/oversampling-kxs-coupling.md)
 - [parked-sweep](2026/07/parked-sweep.md)
 - [per-frame-psf](2026/07/per-frame-psf.md) — per-frame native ePSFs live (psf/frame_epsf.py: sky-subtracted, DQ local-median patch in ESTIMATOR input only …
 - [per-project-literature](2026/07/per-project-literature.md) — task 3 of the autolens_assistant batch — hybrid literature rule live: Create scaffolds wiki/project/bibliograp…
@@ -466,6 +469,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [python_312_floor_phase_4d_euclid_assistant](2026/07/python_312_floor_phase_4d_euclid_assistant.md)
 - [raw-guard-migration](2026/07/raw-guard-migration.md) — Leg 3 of the dataset-bulk series. Migrated 116 (autolens, 113 scripts) + 61 (autogalaxy, 59 scripts) raw `if n…
 - [rect-adapt](2026/07/rect-adapt.md) — rectangular adaptive-mesh edges — MERGED
+- [rectangular-adapt-constant-split-guard](2026/07/rectangular-adapt-constant-split-guard.md)
 - [rectangular-kernel-cdf-mesh](2026/07/rectangular-kernel-cdf-mesh.md) — kernel-density CDF meshes RectangularKernelAdapt{Density,Image} (Enzi RTU) shipped opt-in — strict FD certifie…
 - [rectangular-mesh-consolidation](2026/07/rectangular-mesh-consolidation.md) — Consolidated PyAutoArray's rectangular mesh family from 8 mesh classes / 5 interpolators / 2 geometries down t…
 - [refactor-conductor](2026/07/refactor-conductor.md)
@@ -543,6 +547,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [tenant-firewall-drift](2026/07/tenant-firewall-drift.md)
 - [test-mirror-restructure](2026/07/test-mirror-restructure.md)
 - [test-mode-bypass-completed](2026/07/test-mode-bypass-completed.md) — One-line fix — _fit_bypass_test_mode now calls paths.completed() before returning (mirrors start_resume_fit), …
+- [test-mode-representative-outputs-size-realistic](2026/07/test-mode-representative-outputs-size-realistic.md)
 - [test-mode-representative-samples-phase-1-design](2026/07/test-mode-representative-samples-phase-1-design.md)
 - [test-mode-representative-samples-phase-2-core-api](2026/07/test-mode-representative-samples-phase-2-core-api.md)
 - [test-results-relayout](2026/07/test-results-relayout.md) — Hands#193 + Heart#106, lockstep pair

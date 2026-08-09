@@ -5,7 +5,7 @@ Target: autoarray
 Repos:
 - PyAutoArray
 - autolens_workspace_test
-Difficulty: medium
+Difficulty: small
 Autonomy: supervised
 Priority: normal
 Status: draft
@@ -53,6 +53,65 @@ Reformulation candidates (in the spirit of the opt-in slogdet, PyAutoArray#391):
 - Cheaper interim: scale the fixed `1e-8` diagonal jitter with the kernel's
   dynamic range / N, and expose it as a kwarg.
 
+### Status of leg 2, re-derived against main `efaf3041` (2026-08-09)
+
+The two candidates above were written before #391 landed and are now partly
+stale. Checked against source rather than assumed:
+
+- **`log det H` implicit — ALREADY SHIPPED.** `log_det_regularization_matrix_term_from`
+  exists on all four kernel schemes (`MaternKernel`, `MaternAdaptKernel`,
+  `GaussianKernel`, `ExponentialKernel`), gated behind
+  `Settings.log_det_method == "slogdet"` (PyAutoArray#391). Nothing owed.
+- **jitter as a kwarg — ALREADY SHIPPED.** All four carry
+  `jitter: Optional[float] = None` + a `jitter_value` property. Only the
+  *scaling* is missing: the default is still a bare `1e-8`. Note
+  `gaussian_kernel.py` already trace-scales (`1e-8 * abs(diag_mean)`), but on
+  the formed `H` rather than on `C`, and no other scheme does — an
+  inconsistency to resolve when the scaling is done. **Split out as leg 2b, a
+  separate task: it moves a numerical default and deserves its own gate.**
+- **"Keep `H` implicit" in general — NOT ACHIEVABLE, do not re-open.**
+  `curvature_reg_matrix` (`inversion/abstract.py:366`) is a dense
+  `xp.add(curvature_matrix, regularization_matrix)` feeding the dense solve for
+  the reconstruction. `H` must still be formed there. Only the *evidence* terms
+  can avoid the explicit inverse. Any future attempt needs an iterative-solver
+  design first, which is a different task.
+
+**Leg 2a — `s^T H s` implicit — SHIPPED 2026-08-09** on branch
+`claude/automind-task-planning-gm4flt` (PyAutoArray). The one genuinely open
+piece: `regularization_term` (`inversion/abstract.py:698`) contracted the formed
+`H`. For the kernel schemes the term is `coefficient * s^T C^-1 s`, from one
+Cholesky solve against `s` instead of forming `C^-1` and contracting it.
+
+Built to the exact shape of the shipped log-det shortcut: a
+`regularization_term_from` hook on `AbstractRegularization` returning `None` by
+default, overridden by the four kernel schemes, consulted by
+`AbstractInversion.regularization_term` behind a new opt-in
+`Settings.regularization_term_method` (`"matmul"` default, `"cho_solve"`
+opt-in). Deliberately a *separate* setting from `log_det_method` so the two
+evidence terms can move onto their exact factorizations independently — that is
+what makes an evidence shift attributable to one term rather than both. Default
+evidence values unchanged, so archived comparability holds (the constraint the
+#391 adversarial probe verdict imposed).
+
+Measured gain on a clustered fixture at `cond(C) = 3.2e9`, graded against an
+exactly-known reference (`s = C v` makes `C^-1 s = v`, so the true form is
+`s^T v`): relative error **5.99e-08 explicit vs 2.93e-16 implicit** — the
+implicit path is at machine precision, confirming this prompt's
+~1e-6..4e-5 noise-floor measurement was the explicit inverse.
+
+Two traps found and pinned by tests: `MaternAdaptKernel` passes
+`coefficient=0.0` to `MaternKernel.__init__` (its weights live inside `C_w`), so
+inheriting the parent term would silently zero it — it needs its own override;
+and `GaussianKernel`'s formed matrix carries a symmetrisation + trace-scaled
+jitter the shortcut excludes, matching how its log-det shortcut already behaves.
+Schemes with no factorization return `None`, and one `None` falls the whole
+computation back to the formed matrix, so mixed inversions stay correct.
+
+9 new tests in `test_autoarray/inversion/regularizations/test_kernel_regularization_term.py`.
+Full inversion suite green (244 passed, 9 skipped).
+
+**Remaining open work in this prompt: leg 2b (jitter scaling) only.**
+
 Gate any change on the `regularization.py` jax_grad script re-passing and
 on FoM parity on the numpy path.
 
@@ -70,7 +129,8 @@ implemented — the capability is absent by design. The
 `rectangular_adapt_constant_split_guard.md` merge question this section raises is
 therefore moot; that prompt was recorded as complete on 2026-08-09
 ([[rectangular-adapt-constant-split-guard]]). Verified by the draft/ sweep against
-main `efaf3041`. **Leg 2 is now the only open work in this prompt.***
+main `efaf3041`. **Leg 2b (jitter scaling) is now the only open work in this
+prompt — see the status block under leg 2.***
 
 `ConstantSplit`/`AdaptSplit`/`AdaptSplitZeroth` on a rectangular mesh fail
 with a raw broadcasting `TypeError` ((784,784) vs (3808,3808)): the split

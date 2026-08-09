@@ -2,9 +2,10 @@
 
 ## point-source-light
 - issue: https://github.com/PyAutoLabs/PyAutoGalaxy/issues/561
-- status: library-dev
+- status: library-shipped, awaiting-merge
 - prompt: active/point_source_light.md
 - branch: feature/point-source-light
+- library-pr: https://github.com/PyAutoLabs/PyAutoGalaxy/pull/562
 - repos:
   - PyAutoGalaxy: feature/point-source-light
 

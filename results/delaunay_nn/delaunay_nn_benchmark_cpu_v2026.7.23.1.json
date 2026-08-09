@@ -1,0 +1,113 @@
+{
+  "pyautolens_version": "2026.7.23.1",
+  "backend": "cpu",
+  "device": "cpu",
+  "mesh_points": 1200,
+  "queries": 15000,
+  "query_chunk": 256,
+  "repeats": 5,
+  "rows": [
+    {
+      "name": "Delaunay",
+      "cap": null,
+      "compile_and_first_seconds": 0.3508444019998933,
+      "warm_median_seconds": 0.0667459289998078,
+      "warm_seconds": [
+        0.06326032399920223,
+        0.0667459289998078,
+        0.06692990099963936,
+        0.0668505190005817,
+        0.06327970300026209
+      ],
+      "ratio_to_delaunay": 1.0
+    },
+    {
+      "name": "DelaunayNN cap 16",
+      "cap": 16,
+      "compile_and_first_seconds": 1.330291995999687,
+      "warm_median_seconds": 0.19231454999953712,
+      "warm_seconds": [
+        0.19774434400005703,
+        0.20188686700021208,
+        0.19175842699951318,
+        0.19044281399965257,
+        0.19231454999953712
+      ],
+      "ratio_to_delaunay": 2.881292580407277,
+      "main_max_neighbors": 13,
+      "main_max_cavity": 11,
+      "split_max_neighbors": 11,
+      "split_max_cavity": 9,
+      "main_overflow_rows": 0,
+      "split_overflow_rows": 0,
+      "main_degenerate_rows": 0,
+      "split_degenerate_rows": 0
+    },
+    {
+      "name": "DelaunayNN cap 24",
+      "cap": 24,
+      "compile_and_first_seconds": 1.2141758490006396,
+      "warm_median_seconds": 0.23995153800024127,
+      "warm_seconds": [
+        0.23995153800024127,
+        0.23690873500072485,
+        0.23717795999982627,
+        0.24465054699976463,
+        0.24186520599960204
+      ],
+      "ratio_to_delaunay": 3.5949988500561916,
+      "main_max_neighbors": 13,
+      "main_max_cavity": 11,
+      "split_max_neighbors": 11,
+      "split_max_cavity": 9,
+      "main_overflow_rows": 0,
+      "split_overflow_rows": 0,
+      "main_degenerate_rows": 0,
+      "split_degenerate_rows": 0
+    },
+    {
+      "name": "DelaunayNN cap 32",
+      "cap": 32,
+      "compile_and_first_seconds": 1.241680672000257,
+      "warm_median_seconds": 0.3176600659999167,
+      "warm_seconds": [
+        0.33976070000062464,
+        0.32011838699963846,
+        0.3176600659999167,
+        0.30417247700006556,
+        0.31641388699972595
+      ],
+      "ratio_to_delaunay": 4.7592425599594455,
+      "main_max_neighbors": 13,
+      "main_max_cavity": 11,
+      "split_max_neighbors": 11,
+      "split_max_cavity": 9,
+      "main_overflow_rows": 0,
+      "split_overflow_rows": 0,
+      "main_degenerate_rows": 0,
+      "split_degenerate_rows": 0
+    },
+    {
+      "name": "DelaunayNN cap 64",
+      "cap": 64,
+      "compile_and_first_seconds": 1.5097327220000807,
+      "warm_median_seconds": 0.5624023139998826,
+      "warm_seconds": [
+        0.5624023139998826,
+        0.5757860489993618,
+        0.5676023759997406,
+        0.4991818990001775,
+        0.49036738100039656
+      ],
+      "ratio_to_delaunay": 8.426016723828985,
+      "main_max_neighbors": 13,
+      "main_max_cavity": 11,
+      "split_max_neighbors": 11,
+      "split_max_cavity": 9,
+      "main_overflow_rows": 0,
+      "split_overflow_rows": 0,
+      "main_degenerate_rows": 0,
+      "split_degenerate_rows": 0
+    }
+  ]
+}

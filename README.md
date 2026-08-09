@@ -9,6 +9,7 @@ This repository is the single home for PyAutoLens performance measurement. It ex
 **What is profiled:**
 
 - **Likelihood functions** — imaging, interferometer, point-source, and datacube paths, across the MGE, pixelization, and Delaunay model compositions used in real science cases.
+- **Mesh kernels** — full mapper-table profiling for Delaunay and Sibson natural-neighbour `DelaunayNN`, including static-cap scaling and split regularization.
 - **Simulators** — run-time tracking for the imaging, interferometer, point-source, cluster, group, and multi-plane simulators.
 - **Searches / samplers** — sampler-level profiling, starting with Nautilus. Other samplers (Dynesty, Emcee, BlackJAX, NumPyro, LBFGS, PocoMC) follow in later sweeps.
 
@@ -136,6 +137,7 @@ auto-tables) live under `scripts/misc/<task>/`; dataset-agnostic tooling lives u
 | `quick_update/` · [README](./scripts/misc/quick_update/README.md) | Fast incremental re-profiling helpers. |
 | [`scripts/misc/jax_compile/`](./scripts/misc/jax_compile/README.md) | JAX/XLA **compile-time** profiling — trace / compile / first-call / steady split per likelihood × transform. *How long before this fit starts running?* |
 | [`scripts/misc/vram/`](./scripts/misc/vram/README.md) | GPU memory profiling + the per-cell vmap batch-size table for the A100. |
+| [`scripts/misc/delaunay_nn/`](./scripts/misc/delaunay_nn/README.md) | DelaunayNN full-mapper runtime and fixed-shape cap scaling. |
 | [`scripts/misc/simulators/`](./scripts/misc/simulators/README.md) | Run-time tracking for the PyAutoLens simulators. |
 | [`scripts/misc/pipeline_resume/`](./scripts/misc/pipeline_resume/README.md) | SLaM pipeline resume overhead — the wall time a re-run pays per completed stage. |
 | [`instruments/`](./instruments/README.md) | Instrument presets (pixel scale, shape) that frame every result. |

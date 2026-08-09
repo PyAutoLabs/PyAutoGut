@@ -63,12 +63,11 @@ stale. Checked against source rather than assumed:
   `GaussianKernel`, `ExponentialKernel`), gated behind
   `Settings.log_det_method == "slogdet"` (PyAutoArray#391). Nothing owed.
 - **jitter as a kwarg — ALREADY SHIPPED.** All four carry
-  `jitter: Optional[float] = None` + a `jitter_value` property. Only the
-  *scaling* is missing: the default is still a bare `1e-8`. Note
-  `gaussian_kernel.py` already trace-scales (`1e-8 * abs(diag_mean)`), but on
-  the formed `H` rather than on `C`, and no other scheme does — an
-  inconsistency to resolve when the scaling is done. **Split out as leg 2b, a
-  separate task: it moves a numerical default and deserves its own gate.**
+  `jitter: Optional[float] = None` + a `jitter_value` property. The *scaling*
+  was the remaining half — tracked as leg 2b and now shipped too (see its block
+  below). Note `gaussian_kernel.py` already trace-scales
+  (`1e-8 * abs(diag_mean)`), but on the formed `H` rather than on `C`; that
+  stabilisation is a separate guard on the explicit inverse and was left alone.
 - **"Keep `H` implicit" in general — NOT ACHIEVABLE, do not re-open.**
   `curvature_reg_matrix` (`inversion/abstract.py:366`) is a dense
   `xp.add(curvature_matrix, regularization_matrix)` feeding the dense solve for
@@ -110,7 +109,48 @@ computation back to the formed matrix, so mixed inversions stay correct.
 9 new tests in `test_autoarray/inversion/regularizations/test_kernel_regularization_term.py`.
 Full inversion suite green (244 passed, 9 skipped).
 
-**Remaining open work in this prompt: leg 2b (jitter scaling) only.**
+**Leg 2b — jitter scaling — SHIPPED 2026-08-09** on the same branch.
+
+Investigated before designing, and the prompt's framing ("scale with the
+kernel's dynamic range / N") turned out to point at a real and more serious
+problem than "cheaper interim" suggests. The jitter is a fixed absolute
+`1e-8 * I`, which is only meaningful when `diag(C) ~ 1`. That holds for the
+three unweighted kernels (`K(0) == 1`, measured) but NOT for
+`MaternAdaptKernel`, whose `C_ii = w_i²` spans the adaptive-weight dynamic
+range. Measured distortion of the faintest pixel on a 40-pixel fixture:
+
+| inner/outer | faintest `C_ii` | distortion |
+|---|---|---|
+| 1.0 / 1.0 | 1.0e+00 | 1.0e-08 |
+| 0.5 / 4.0 | 3.9e-03 | 2.6e-06 |
+| 1.0 / 20.0 | 6.3e-06 | 1.6e-03 |
+| 0.1 / 100.0 | 1.0e-08 | **1.0e+00** |
+
+`inner_coefficient`/`outer_coefficient` are **free model parameters**, so a
+sampler can walk into the bottom row mid-fit, at which point the jitter is 100%
+of the faintest pixels' variance and their kernel structure is gone. Silent —
+no exception, no NaN, just wrong smoothing.
+
+Fix: `jitter_relative=True` applies `jitter * diag(diag(C))` (`C_ii *= 1 + jitter`).
+With `C = D^½ R D^½` for correlation matrix `R`, that is exactly
+`D^½ (R + jitter·I) D^½` — the jitter lands on the *correlation* matrix, so every
+pixel gets the same relative protection whatever its scale.
+
+One rejected design worth recording so it is not retried: `jitter = N·eps·max(diag)`
+("as small as possible above the round-off floor") fixes the distortion but lets
+`cond(C)` reach **3.2e15** on smooth clustered vertices — the edge of float64,
+reintroducing exactly the noise leg 2 exists to remove. The correlation-relative
+rule instead leaves conditioning *unchanged* (3.16e9 both ways, measured).
+
+Default `False` everywhere, byte-identical to previous behaviour. Threaded
+through all three covariance call sites per scheme, not just the constructor
+(pinned by a test). 7 new tests in `test_kernel_jitter_relative.py`.
+
+**This prompt now has no open work.** Both remaining legs are shipped; the file
+is ready to advance to `complete/` once the branch merges. Note the JAX leg of
+the gate (`jax_grad/regularization.py` re-passing) is still owed — it lives in
+`autolens_workspace_test` and needs `tfp-nightly`, neither available in the
+session that did this work.
 
 Gate any change on the `regularization.py` jax_grad script re-passing and
 on FoM parity on the numpy path.
@@ -129,8 +169,7 @@ implemented — the capability is absent by design. The
 `rectangular_adapt_constant_split_guard.md` merge question this section raises is
 therefore moot; that prompt was recorded as complete on 2026-08-09
 ([[rectangular-adapt-constant-split-guard]]). Verified by the draft/ sweep against
-main `efaf3041`. **Leg 2b (jitter scaling) is now the only open work in this
-prompt — see the status block under leg 2.***
+main `efaf3041`. **All legs are now shipped — see the status block under leg 2.***
 
 `ConstantSplit`/`AdaptSplit`/`AdaptSplitZeroth` on a rectangular mesh fail
 with a raw broadcasting `TypeError` ((784,784) vs (3808,3808)): the split

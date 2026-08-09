@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-955 records across 7 buckets.
+956 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -68,6 +68,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [pyautofit_plot_rst_dead_plotters](2026/08/pyautofit_plot_rst_dead_plotters.md)
 - [pyautogalaxy-mge-sigma-test](2026/08/pyautogalaxy-mge-sigma-test.md)
 - [registry-integrity-check](2026/08/registry-integrity-check.md)
+- [regularization-jax-gradient-gaps](2026/08/regularization-jax-gradient-gaps.md)
 - [script-title-underline-off-by-one](2026/08/script-title-underline-off-by-one.md)
 - [simulator-util-to-af-ex](2026/08/simulator-util-to-af-ex.md) — moved the four 1D-Gaussian simulator helpers out of the duplicated
 - [small-datasets-loader-pixel-scales](2026/08/small-datasets-loader-pixel-scales.md)

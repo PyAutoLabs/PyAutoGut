@@ -38,3 +38,18 @@ traced value through `__array__` and raising
 
 This is a separate follow-up to PyAutoFit#1458/#1460 so the completed fixed-array
 repair remains focused.
+
+## Implementation progress (2026-08-09)
+
+- Draft PR: https://github.com/PyAutoLabs/PyAutoFit/pull/1461
+- Root-cause extension: traced Beta/Gamma construction failed first in
+  `AbstractMessage.__init__` because both classes always selected NumPy
+  broadcasting. They now use the same backend-selection pattern as
+  `NormalMessage` before dispatching their log-partition special functions.
+- Recursive prior fix: direct priors accept the optional `xp` keyword and
+  arithmetic / modified priors propagate it to nested children; `Log` and
+  `Log10` use the selected backend.
+- Verification: the new exact tests give 12 expected failures on untouched
+  post-#1460 `main` and all 32 cases pass on both JAX 0.7.0 and 0.10.2. Focused
+  prior/message suites: 317 passed. Full PyAutoFit suite: 1701 passed, 4
+  skipped.

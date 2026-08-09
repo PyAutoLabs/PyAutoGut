@@ -2,7 +2,8 @@
 
 ## message-prior-xp-jax-trace
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1459
-- status: library-dev
+- pr: https://github.com/PyAutoLabs/PyAutoFit/pull/1461
+- status: draft-pr
 - location: codex-work-mode
 - repos:
   - PyAutoFit: feature/message-prior-xp-jax-trace
@@ -10,7 +11,8 @@
     Make Gamma/Beta message log partitions and compound-prior log/log10
     transformations respect their selected NumPy/JAX backend under jit.
     Implement in two internal phases with direct scalar, batched, nested-prior,
-    and NumPy-parity regression coverage.
+    and NumPy-parity regression coverage. The constructor audit also closed the
+    earlier traced `np.broadcast` failure in Beta/Gamma message creation.
 
 ## release-drive-2026-08-03
 - issue: (no issue — a human-authorized manual release drive, not a dev task)

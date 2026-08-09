@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-956 records across 7 buckets.
+960 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -20,9 +20,13 @@ _(curate hard-won records here — survives regeneration.)_
 
 - [active-prompt-orphan-triage](2026/08/active-prompt-orphan-triage.md)
 - [astropy-cap-bump](2026/08/astropy-cap-bump.md) — closed manually post-merge — "Part of" in the PR bodies does not auto-close
+- [autoarray-adapt-images-precondition](2026/08/autoarray-adapt-images-precondition.md)
+- [autoarray-input-validation-guards](2026/08/autoarray-input-validation-guards.md)
 - [autocti-util-dataset-export](2026/08/autocti-util-dataset-export.md) — no GitHub issue — worked directly from the draft prompt in a cloud session on explicit human instruction; the …
 - [autogalaxy-assistant](2026/08/autogalaxy-assistant.md) — epic; human to close
+- [autogalaxy-profile-validation-guards](2026/08/autogalaxy-profile-validation-guards.md)
 - [autohands-firewall-allowlist](2026/08/autohands-firewall-allowlist.md) — auto-closed by the merge
+- [autolens-tracer-validation-guards](2026/08/autolens-tracer-validation-guards.md)
 - [conductor-discovery-lifecycle-split](2026/08/conductor-discovery-lifecycle-split.md) — closed on merge
 - [covariance-interpolator-rng-seed](2026/08/covariance-interpolator-rng-seed.md) — auto-closed by the merge
 - [database-guide-sample-weight-threshold](2026/08/database-guide-sample-weight-threshold.md) — `guides/results/database/start_here.py` ran its own Nautilus fits capped at n_like_max=300 then indexed sample…

@@ -50,12 +50,15 @@
 - issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/223
 - session: Claude Code cloud session (no local worktree — see note below)
 - status: library-dev
-- worktree: ~/Code/PyAutoLabs-wt/reconcile-upstream-repo-mode
 - prompt: active/reconcile_upstream_repo_mode.md
-- branch: feature/reconcile-upstream-repo-mode (not yet created)
+- branch: feature/reconcile-upstream-repo-mode (pushed, 875330f)
 - classification: library (PyAutoBrain primary; PyAutoMind docs only)
 - split-from: draft/feature/pyautomind/draft_staleness_detection_signals.md — legs 1-2 DELIVERED 2026-08-09, this is leg 3
-- conflict-check: `worktree_check_conflict reconcile-upstream-repo-mode PyAutoBrain PyAutoMind` exit 0 at registration time; no other task claims either repo
-- cloud-session-note: registered from a cloud session, where the `~/Code/PyAutoLabs-wt/` worktree model does not exist — the checkouts are /workspace/pyautobrain and /home/user/PyAutoMind. The `worktree:` path above is the laptop path `/start_library` would create; it does NOT exist yet. Mind changes for this task go to branch `claude/automind-task-planning-wxq004`, not to main.
+- conflict-check: CLEAN, but re-verified — the first run was VACUOUS. `worktree_check_conflict` resolves `active.md` under `$PYAUTO_MAIN` (default `$HOME/Code/PyAutoLabs`), which does not exist in a cloud session, so it read no file and returned 0 = "no conflict". Re-run with `PYAUTO_MAIN=/workspace` it works and confirms the real answer: the only other live claim is profile-validation-resample-recovery on PyAutoGalaxy, no overlap. With this entry's `repos:` bullet in place, a competing task on PyAutoBrain now correctly exits 1 and this same task resuming exits 0.
+- GUARD-BUG (worth its own prompt): `worktree_check_conflict` FAILS OPEN when `$PYAUTO_MAIN` does not resolve — it returns 0 rather than erroring. Any cloud/CI session running the documented command gets a green light that means nothing, and two sessions could claim the same repo. Same root cause class as the `prompt_sync_push` hardcoded-`main` issue noted below.
+- cloud-session-note: registered from a cloud session, where the `~/Code/PyAutoLabs-wt/` worktree model does not exist — the checkouts are /workspace/pyautobrain and /home/user/PyAutoMind. Per `start_library` step 4 (web-github / ci-only), the repos are claimed below with NO `worktree:` field. Mind changes for this task go to branch `claude/automind-task-planning-wxq004`, not to main.
 - baselines-at-planning: reconcile flags 29 of 136 scanned (7 high); no `--repo` in `_intake.py` argparse; no network access anywhere under PyAutoBrain/agents/
+- implemented: 2026-08-10 on `feature/reconcile-upstream-repo-mode` (875330f), pushed, NOT yet a PR. 8 new hermetic tests, 330 passed. Verified end-to-end against PyAutoFit fbe9f45d: `test_mode_bypass_ordered_assertion_ties.md` lands in `needs-review` with overlap_score 0.0 despite all five of its identifiers being present upstream — the acceptance criterion, met.
+- known-preexisting: `tests/test_skill_install.py` has 2 failures on clean main in this environment (the installer takes the web-github path, so the asserted "SKIP intake (Codex skill" line is never printed). NOT caused by this task; verified by stashing.
 - repos:
+  - PyAutoBrain: feature/reconcile-upstream-repo-mode

@@ -34,11 +34,23 @@ prompt_sync_push() {
 ```
 
 `create_issue` step 6 and `start_dev` step 7 both instruct the agent to call it.
-A branch-scoped session — a cloud session with a designated branch, or any
-PR-based flow — that follows the documented steps verbatim pushes Mind straight
-to `main`, bypassing review entirely. In the 2026-08-10 session this was caught
-only because the branch requirement was read carefully and the helper inspected
-before use; the documented path would have violated it.
+
+**Corrected 2026-08-10 after measuring the old script against real bare
+remotes.** The first write-up of this defect said it "pushes Mind straight to
+`main`". That is only half of it, and not the half that fires most often.
+`git push origin main` pushes the local `main` *ref* — never the commit just
+made on a feature branch. So the old behaviour splits by the state of local
+`main`:
+
+| local `main` vs remote | what the old script did |
+|---|---|
+| **equal** (the normal case — session branched from it) | push is a **no-op**, exits **0**, and the committed work **never leaves the machine**. The caller is told the sync succeeded. |
+| **ahead** (unpushed commits on `main`) | publishes those commits to remote `main` — unreviewed work bypassing review — **and still** leaves the branch work local. |
+
+The first row is the common one and the quieter danger: in an ephemeral cloud
+container, "committed, reported synced, never pushed" is silent loss. The second
+row is the review-bypass. Both are the same root cause and both are fixed by
+pushing `HEAD`.
 
 Fix: push the current branch (`git push -u origin HEAD`), or refuse with a clear
 error when the checkout is not on `main`. Do not leave this to operator
@@ -109,8 +121,10 @@ closed. None of the three should silently do the wrong thing.
 
 ## Acceptance
 
-- `prompt_sync_push` on a non-`main` branch pushes that branch, or refuses;
-  it never pushes to `main` from a branch-scoped checkout. Covered by a test.
+- `prompt_sync_push` on a non-`main` branch pushes **that branch** — so the
+  committed work actually reaches the remote — and never advances `main` as a
+  side effect. Both halves covered by their own test, since they are separate
+  failures of the same bug.
 - `worktree_check_conflict` returns **non-zero** when it cannot resolve
   `active.md`, naming the path it tried. Covered by a test that points
   `$PYAUTO_MAIN` at an empty dir. The "registry present, no claim" case still

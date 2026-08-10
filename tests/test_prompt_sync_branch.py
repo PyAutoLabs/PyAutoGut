@@ -76,6 +76,54 @@ def test_push_from_a_feature_branch_does_not_touch_main(tmp_path):
         "main moved — the helper pushed the wrong branch")
 
 
+def test_committed_work_actually_reaches_the_remote(tmp_path):
+    """The failure the old script hit MOST often, and the quietest one.
+
+    `git push origin main` from a feature branch pushes the local `main` ref —
+    not the commit just made. When local `main` already matches the remote (the
+    normal case for a session that branched from it) the push is a no-op, exits
+    0, and the committed work never leaves the machine. The caller is told the
+    sync succeeded. In an ephemeral cloud container that is silent loss.
+
+    Leaking to `main` is the other half of the same bug and needs local `main`
+    to be ahead — see `test_a_branch_push_never_advances_main` below. This test
+    is the common case: the work must be ON the remote afterwards.
+    """
+    repo, remote = _repo_with_remote(tmp_path)
+    _git(repo, "checkout", "-b", "claude/some-task")
+    (repo / "active.md").write_text("# Active\n\n## a-task\n")
+
+    res = _run(repo, 'prompt_sync_push "prompt: a subject"')
+    assert res.returncode == 0, res.stderr
+
+    local_head = _git(repo, "rev-parse", "HEAD")
+    assert _git(remote, "rev-parse", "claude/some-task") == local_head, (
+        "the commit never reached the remote")
+
+
+def test_a_branch_push_never_advances_main(tmp_path):
+    """The other half: an unpushed commit sitting on local `main` must not be
+    published as a side effect of syncing a feature branch.
+
+    The old script pushed it — unreviewed work onto `main`, while the branch
+    work it was actually asked to sync stayed local.
+    """
+    repo, remote = _repo_with_remote(tmp_path)
+    (repo / "secret.md").write_text("unreviewed local work\n")
+    _git(repo, "add", "-A")
+    _git(repo, "commit", "-m", "local main work")
+    main_before = _git(remote, "rev-parse", "main")
+
+    _git(repo, "checkout", "-b", "claude/some-task")
+    (repo / "active.md").write_text("# Active\n")
+    res = _run(repo, 'prompt_sync_push "prompt: a subject"')
+    assert res.returncode == 0, res.stderr
+
+    assert _git(remote, "rev-parse", "main") == main_before, (
+        "an unpushed local main commit was published as a side effect")
+    assert "claude/some-task" in _remote_branches(remote)
+
+
 def test_push_on_main_still_pushes_main(tmp_path):
     """The single-branch laptop flow must be unchanged: there the current
     branch IS main, so the fix is a no-op for it."""

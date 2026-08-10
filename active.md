@@ -55,7 +55,9 @@
 ## persist-smoke-environments
 - issue: https://github.com/PyAutoLabs/PyAutoHeart/issues/141
 - session: current Codex task
-- status: library-dev
+- status: shipped, awaiting-merge
+- pr: https://github.com/PyAutoLabs/PyAutoHeart/pull/142
+- validation: Heart pytest 3.12 + 3.13 GREEN; local 351 passed; real autogalaxy prepare/reuse PASS with dill 0.4.1, numba 0.66.0, nufftax 0.6.1
 - worktree: /home/jammy/Code/PyAutoLabs/.worktrees/persist-smoke-environments
 - prompt: active/smoke_dependency_environment_persistence.md
 - branch: fix/persist-smoke-environments

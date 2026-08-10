@@ -34,3 +34,13 @@
 - artifacts-are-laptop-only: Actions artifact downloads are blocked from cloud/mobile sessions (egress policy 403s `productionresultssa2.blob.core.windows.net` on CONNECT) — this is what stopped the cloud session finishing the ingest. Both wiki drift reports were captured to `~/.pyauto-heart/release_20260807_wiki_drift/` while on the laptop.
 - do-not: do NOT use the nightly driver for a manual release — AUTONOMY.md forbids converting a manual release into the scheduled-nightly exception.
 - repos-none-claimed: this entry claims NO repos — deliberately on one line, NOT as 2-space `  - Repo` bullets, because `worktree_check_conflict` treats any such bullet as a live claim.
+
+## profile-validation-resample-recovery
+- issue: https://github.com/PyAutoLabs/PyAutoGalaxy/issues/567
+- session: current Codex task
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/profile-validation-resample-recovery
+- prompt: active/profile_validation_resample_recovery.md
+- branch: feature/profile-validation-resample-recovery
+- classification: both (library first, then workspaces)
+- repos:

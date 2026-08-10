@@ -51,3 +51,14 @@
   - autolens_workspace: feature/profile-validation-resample-recovery
   - autogalaxy_workspace_test: feature/profile-validation-resample-recovery
   - autolens_workspace_test: feature/profile-validation-resample-recovery
+
+## persist-smoke-environments
+- issue: https://github.com/PyAutoLabs/PyAutoHeart/issues/141
+- session: current Codex task
+- status: library-dev
+- worktree: /home/jammy/Code/PyAutoLabs/.worktrees/persist-smoke-environments
+- prompt: active/smoke_dependency_environment_persistence.md
+- branch: fix/persist-smoke-environments
+- classification: direct PyAutoHeart validation-tooling bug
+- repos:
+  - PyAutoHeart: fix/persist-smoke-environments

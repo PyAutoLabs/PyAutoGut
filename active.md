@@ -46,6 +46,22 @@
 - repos:
   - PyAutoGalaxy: feature/profile-validation-resample-recovery
 
+## dev-workflow-helpers-laptop-paths
+- issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/225
+- prs: PyAutoBrain#226 (guard + installer tests) · PyAutoMind#178 (prompt_sync)
+- session: Claude Code cloud session
+- status: library-dev — both PRs OPEN, issue stays open until both land
+- prompt: draft/bug/pyautobrain/dev_workflow_helpers_assume_laptop_paths.md
+- branch: PyAutoBrain `feature/dev-workflow-helpers-laptop-paths` (off main, files disjoint from #224 so ordering is free); PyAutoMind `claude/automind-task-planning-wxq004`
+- classification: bug (PyAutoBrain primary; PyAutoMind scripts/prompt_sync.sh)
+- found: 2026-08-10, three defects hit in sequence while shipping PyAutoBrain#224 — all one root cause, the helpers resolving paths under `$HOME/Code/PyAutoLabs`, which no cloud/web/CI session has.
+- fixed: (1) `prompt_sync_push`/`prompt_sync_new_prompts` pushed a hardcoded `main` — now push HEAD, detached HEAD refused. (2) `worktree_check_conflict` FAILED OPEN — now exits 3 `CANNOT VERIFY`, with an explicit `--allow-missing-registry` hatch. (3) `test_skill_install.py` depended on the checkout being NAMED PyAutoBrain under `PYAUTO_ROOT` (default `bin/../..`) — now pins a fixture root.
+- diagnosis-correction: the first read of (3) blamed the installer's `web-github` branch. Wrong — the real cause is `PYAUTO_ROOT` defaulting to the repo's grandparent, so a clone at lowercase `pyautobrain` never resolves `PyAutoBrain/skills` and `intake` is never installed. The environment line is a symptom of the same path resolution, not the cause. PyAutoBrain#225's body was corrected before implementation.
+- test-evidence: both fixes verified to FAIL against their pre-fix code (Mind 3 of 5 new tests fail pre-fix, including the old script pushing `main -> main` from a detached HEAD; Brain guard exercised across all five paths). PyAutoBrain `pytest tests/` now 331 passed with NOTHING ignored — green in a cloud session for the first time, which retires the false-RED ship gate.
+- note: `test_missing_active_md_yields_no_claims` asserted the fail-open behaviour, so it was rewritten to the corrected contract rather than worked around — it was pinning the defect.
+- repos:
+  - PyAutoBrain: feature/dev-workflow-helpers-laptop-paths
+
 ## reconcile-upstream-repo-mode
 - issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/223
 - session: Claude Code cloud session (no local worktree — see note below)

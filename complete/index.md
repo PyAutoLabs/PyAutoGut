@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-968 records across 7 buckets.
+970 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -65,6 +65,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [normalise-auto-simulate-guard-idiom](2026/08/normalise-auto-simulate-guard-idiom.md)
 - [notebook-setup-notebook-regen-drift](2026/08/notebook-setup-notebook-regen-drift.md)
 - [nufft-parity-full-datasets](2026/08/nufft-parity-full-datasets.md)
+- [persist-smoke-environments](2026/08/persist-smoke-environments.md) — Made smoke dependency environments durable and isolated per library and Python version, with version-handshake…
 - [plot-array-stale-kwargs](2026/08/plot-array-stale-kwargs.md)
 - [point-source-defaults-campaign](2026/08/point-source-defaults-campaign.md) — took the point-source likelihood options from "several undocumented
 - [point-source-light](2026/08/point-source-light.md) — Added standard and linear point-source light profiles with total-flux normalization and oversampled PSF convol…
@@ -73,6 +74,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [potential-correction-env-declaration](2026/08/potential-correction-env-declaration.md)
 - [potential-correction-validation](2026/08/potential-correction-validation.md)
 - [pr-ci-for-own-test-suite](2026/08/pr-ci-for-own-test-suite.md)
+- [profile-validation-resample-recovery](2026/08/profile-validation-resample-recovery.md) — Restored profile-validation compatibility across resampling and recovery by enforcing physical values through …
 - [purge-autocti-dataset-1d-overview](2026/08/purge-autocti-dataset-1d-overview.md) — no GitHub issue — the leftover from `autocti-util-dataset-export`, executed on direct human instruction "do th…
 - [pyautobrain-pr-test-ci](2026/08/pyautobrain-pr-test-ci.md) — auto-closed by the merge
 - [pyautofit_plot_rst_dead_plotters](2026/08/pyautofit_plot_rst_dead_plotters.md)

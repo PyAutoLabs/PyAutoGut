@@ -1,3 +1,14 @@
+## profile-validation-resample-recovery
+- issue: https://github.com/PyAutoLabs/PyAutoGalaxy/issues/567
+- completed: 2026-08-10
+- library-pr: https://github.com/PyAutoLabs/PyAutoGalaxy/pull/568
+- workspace-prs: https://github.com/PyAutoLabs/autogalaxy_workspace/pull/209, https://github.com/PyAutoLabs/autolens_workspace/pull/483, https://github.com/PyAutoLabs/autogalaxy_workspace_test/pull/104, https://github.com/PyAutoLabs/autolens_workspace_test/pull/256
+- summary: Restored profile-validation compatibility across resampling and recovery by enforcing physical values through priors, then aligned the galaxy/lens example and regression workspaces. All 143 affected smoke scripts passed, and the library-first merge gate was observed before the four workspace merges.
+- merge-commits: PyAutoGalaxy `be61b8d`; autogalaxy_workspace `5326f93`; autolens_workspace `fc7570a`; autogalaxy_workspace_test `40beb30`; autolens_workspace_test `95124df`.
+- note: Keep physical-domain enforcement in priors so invalid values cannot re-enter through alternate search or recovery paths.
+
+## Original prompt
+
 # Profile validation: restore search and results compatibility
 
 Type: bug

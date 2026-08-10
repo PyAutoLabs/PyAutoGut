@@ -38,7 +38,8 @@
 ## profile-validation-resample-recovery
 - issue: https://github.com/PyAutoLabs/PyAutoGalaxy/issues/567
 - session: current Codex task
-- status: library-dev
+- status: library-shipped, workspace-pending
+- library-pr: https://github.com/PyAutoLabs/PyAutoGalaxy/pull/568
 - worktree: ~/Code/PyAutoLabs-wt/profile-validation-resample-recovery
 - prompt: active/profile_validation_resample_recovery.md
 - branch: feature/profile-validation-resample-recovery

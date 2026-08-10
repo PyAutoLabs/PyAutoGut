@@ -45,3 +45,17 @@
 - classification: both (library first, then workspaces)
 - repos:
   - PyAutoGalaxy: feature/profile-validation-resample-recovery
+
+## reconcile-upstream-repo-mode
+- issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/223
+- session: Claude Code cloud session (no local worktree — see note below)
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/reconcile-upstream-repo-mode
+- prompt: active/reconcile_upstream_repo_mode.md
+- branch: feature/reconcile-upstream-repo-mode (not yet created)
+- classification: library (PyAutoBrain primary; PyAutoMind docs only)
+- split-from: draft/feature/pyautomind/draft_staleness_detection_signals.md — legs 1-2 DELIVERED 2026-08-09, this is leg 3
+- conflict-check: `worktree_check_conflict reconcile-upstream-repo-mode PyAutoBrain PyAutoMind` exit 0 at registration time; no other task claims either repo
+- cloud-session-note: registered from a cloud session, where the `~/Code/PyAutoLabs-wt/` worktree model does not exist — the checkouts are /workspace/pyautobrain and /home/user/PyAutoMind. The `worktree:` path above is the laptop path `/start_library` would create; it does NOT exist yet. Mind changes for this task go to branch `claude/automind-task-planning-wxq004`, not to main.
+- baselines-at-planning: reconcile flags 29 of 136 scanned (7 high); no `--repo` in `_intake.py` argparse; no network access anywhere under PyAutoBrain/agents/
+- repos:

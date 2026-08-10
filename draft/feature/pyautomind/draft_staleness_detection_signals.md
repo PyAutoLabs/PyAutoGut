@@ -180,6 +180,11 @@ is already reconcile's stated contract. Keep it.
 >
 > Leg 3 remains open and is now better motivated: it is the *only* route to the
 > last two findings.
+>
+> **Leg 3 was split out on 2026-08-10** to
+> `draft/feature/pyautobrain/reconcile_upstream_repo_mode.md` — one prompt is
+> one task is one PR, and legs 1-2 here are delivered. Track leg 3 there; do
+> not re-open this prompt for it.
 
 - Re-running the ranker against PyAutoMind `f25e154e` (the pre-sweep tree, which
   is the labelled set this prompt establishes) puts every **Mind-reachable**

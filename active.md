@@ -38,13 +38,19 @@
 ## profile-validation-resample-recovery
 - issue: https://github.com/PyAutoLabs/PyAutoGalaxy/issues/567
 - session: current Codex task
-- status: library-dev
+- status: workspace-dev
+- library-pr: https://github.com/PyAutoLabs/PyAutoGalaxy/pull/568
 - worktree: ~/Code/PyAutoLabs-wt/profile-validation-resample-recovery
 - prompt: active/profile_validation_resample_recovery.md
 - branch: feature/profile-validation-resample-recovery
 - classification: both (library first, then workspaces)
 - repos:
   - PyAutoGalaxy: feature/profile-validation-resample-recovery
+  - autogalaxy_workspace: feature/profile-validation-resample-recovery
+  - autolens_workspace: feature/profile-validation-resample-recovery
+  - autogalaxy_workspace_test: feature/profile-validation-resample-recovery
+  - autolens_workspace_test: feature/profile-validation-resample-recovery
+
 
 ## dev-workflow-helpers-laptop-paths
 - issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/225
@@ -57,7 +63,7 @@
 - found: 2026-08-10, three defects hit in sequence while shipping PyAutoBrain#224 — all one root cause, the helpers resolving paths under `$HOME/Code/PyAutoLabs`, which no cloud/web/CI session has.
 - fixed: (1) `prompt_sync_push`/`prompt_sync_new_prompts` pushed a hardcoded `main` — now push HEAD, detached HEAD refused. (2) `worktree_check_conflict` FAILED OPEN — now exits 3 `CANNOT VERIFY`, with an explicit `--allow-missing-registry` hatch. (3) `test_skill_install.py` depended on the checkout being NAMED PyAutoBrain under `PYAUTO_ROOT` (default `bin/../..`) — now pins a fixture root.
 - diagnosis-correction: the first read of (3) blamed the installer's `web-github` branch. Wrong — the real cause is `PYAUTO_ROOT` defaulting to the repo's grandparent, so a clone at lowercase `pyautobrain` never resolves `PyAutoBrain/skills` and `intake` is never installed. The environment line is a symptom of the same path resolution, not the cause. PyAutoBrain#225's body was corrected before implementation.
-- test-evidence: both fixes verified to FAIL against their pre-fix code (Mind 3 of 5 new tests fail pre-fix, including the old script pushing `main -> main` from a detached HEAD; Brain guard exercised across all five paths). PyAutoBrain `pytest tests/` now 331 passed with NOTHING ignored — green in a cloud session for the first time, which retires the false-RED ship gate.
+- test-evidence: both fixes verified to FAIL against their pre-fix code (Mind **5 of 7** new tests fail pre-fix, including the old script pushing `main -> main` from a detached HEAD; Brain guard exercised across all five paths). Corrected from '3 of 5' after the audit added a test per half of the prompt_sync defect. PyAutoBrain `pytest tests/` now 331 passed with NOTHING ignored — green in a cloud session for the first time, which retires the false-RED ship gate.
 - note: `test_missing_active_md_yields_no_claims` asserted the fail-open behaviour, so it was rewritten to the corrected contract rather than worked around — it was pinning the defect.
 - repos:
   - PyAutoBrain: feature/dev-workflow-helpers-laptop-paths
@@ -80,3 +86,4 @@
 - ship-gate: the documented fallback gate (`pytest -x`, Heart unreachable here) returned RED on `tests/test_skill_install.py` (`assert "SKIP intake (Codex skill" in result.stdout`, 2 failures). Human acknowledged and authorized the PR. **CI then vindicated that call**: both `pytest (3.12)` and `pytest (3.13)` legs SUCCESS on 875330f, so the failures were purely local to the cloud container — `bin/install.sh` takes its `web-github / ci-only` branch (`:282`) when `$HOME/Code/PyAutoLabs` is absent, and never does the work the test asserts on. Also proven pre-existing at merge-base a50efc3 with the diff absent.
 - repos:
   - PyAutoBrain: feature/reconcile-upstream-repo-mode
+

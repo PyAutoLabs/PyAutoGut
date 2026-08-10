@@ -44,3 +44,4 @@
 - branch: feature/profile-validation-resample-recovery
 - classification: both (library first, then workspaces)
 - repos:
+  - PyAutoGalaxy: feature/profile-validation-resample-recovery

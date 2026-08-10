@@ -31,6 +31,93 @@ first measurements taken on a loaded machine were wrong by up to **7×** (851 s
 vs 117 s for the same compile) and are retained in `results/` only with their
 original tags for provenance.
 
+## Pinned warm compile (auto-generated)
+
+The regression surface: what a **warm** compile costs per cell/transform, so a
+cache or autotune setting that stops applying shows up as a number moving rather
+than as nobody noticing. Derived by `update_pins.py` from the corpus's warm rows
+(most recent wins — a pin states what warm costs *now*).
+
+Grouped by comparability key and never merged across it. A warm compile is only
+comparable within `(hardware, jax_version, mixed_precision, cache_state)`; a
+single ranked table would invite exactly the cross-key comparison the pins exist
+to prevent. A `jax_version` bump recompiles once **by design**, so it is a new
+key, not drift.
+
+<!-- BEGIN auto-table:jax-compile-warm -->
+**`local_cpu` · `DESKTOP-H143S82` · jax 0.10.2**
+
+| Cell | Transform | Warm compile | Source |
+|---|---|---|---|
+| `datacube_img/mge/hst` | `vag` | 2.40 s | `mb_homo_warm` 2026-07-21T19:43:03 |
+| `datacube_img_hetero/mge/hst` | `vag` | 6.96 s | `mb_hetero_warm` 2026-07-21T19:44:20 |
+| `imaging/delaunay_matern/hst` | `jit` | 12.96 s | `prodigy-census-warm` 2026-07-28T17:44:17 |
+| `imaging/delaunay_matern/hst` | `laxmap_vag` | 27.74 s | `prodigy-census-warm` 2026-07-28T18:38:08 |
+| `imaging/delaunay_matern/hst` | `pyloop_vag` | 26.30 s | `prodigy-census-warm` 2026-07-28T18:10:11 |
+| `imaging/delaunay_matern/hst` | `vag` | 27.79 s | `prodigy-census-warm` 2026-07-28T17:47:37 |
+| `imaging/knn/hst` | `jit` | 263.0 ms | `prodigy-census-warm` 2026-07-28T16:28:21 |
+| `imaging/knn/hst` | `laxmap_vag` | 1.79 s | `prodigy-census-warm-retry` 2026-07-28T18:58:25 |
+| `imaging/knn/hst` | `pyloop_vag` | 1.73 s | `prodigy-census-warm` 2026-07-28T17:11:53 |
+| `imaging/knn/hst` | `vag` | 1.32 s | `prodigy-census-warm` 2026-07-28T16:31:15 |
+| `imaging/mge/hst` | `jit` | 312.0 ms | `prodigy-census-warm` 2026-07-28T16:01:24 |
+| `imaging/mge/hst` | `laxmap_vag` | 2.32 s | `prodigy-census-warm` 2026-07-28T16:17:06 |
+| `imaging/mge/hst` | `pyloop_vag` | 2.81 s | `prodigy-census-warm` 2026-07-28T16:13:44 |
+| `imaging/mge/hst` | `vag` | 4.30 s | `prodigy-census-warm` 2026-07-28T16:04:53 |
+| `imaging/mge/hst` | `vmap_vag` | 2.95 s | `prodigy-census-warm` 2026-07-28T16:09:52 |
+| `imaging/pixelization/hst` | `jit` | 216.0 ms | `prodigy-census-warm` 2026-07-28T16:19:07 |
+| `imaging/pixelization/hst` | `vag` | 1.04 s | `prodigy-census-warm` 2026-07-28T16:24:46 |
+
+**`local_cpu` · `euclid-ral-compute-22` · jax 0.10.2**
+
+| Cell | Transform | Warm compile | Source |
+|---|---|---|---|
+| `imaging/delaunay_matern/hst` | `laxmap_vag` | 21.16 s | `prodigy-census-ral32-warm` 2026-07-28T20:13:59 |
+| `imaging/delaunay_matern/hst` | `vag` | 16.29 s | `prodigy-census-ral32-warm` 2026-07-28T20:04:53 |
+| `imaging/knn/hst` | `laxmap_vag` | 1.37 s | `prodigy-census-ral32-warm` 2026-07-28T20:29:12 |
+| `imaging/mge/hst` | `laxmap_vag` | 1.81 s | `prodigy-census-ral32-warm` 2026-07-28T20:30:57 |
+| `imaging/pixelization/hst` | `laxmap_vag` | 1.16 s | `prodigy-census-ral32-warm` 2026-07-28T20:03:15 |
+| `imaging/pixelization/hst` | `pyloop_vag` | 1.00 s | `prodigy-census-ral32-warm` 2026-07-28T19:21:06 |
+
+**`local_gpu_NVIDIA_A100_80GB_PCIe` · `euclid-ral-gpu-2` · jax 0.10.2**
+
+| Cell | Transform | Warm compile | Source |
+|---|---|---|---|
+| `imaging/pixelization/hst` | `jit` | 357.0 ms | `a100-census-warm` 2026-07-17T10:00:32 |
+| `imaging/pixelization/hst` | `vag` | 1.82 s | `a100-census-warm` 2026-07-17T10:00:39 |
+<!-- END auto-table:jax-compile-warm -->
+
+## Record schema — `cache_state` and `host_state`
+
+Each record carries `cache_state`, **derived from what the compile did** rather
+than from its `tag`:
+
+| value | meaning |
+|---|---|
+| `cold` | the compile wrote a new cache entry — a MISS |
+| `warm` | the compile wrote nothing into a populated cache — a HIT |
+| `none` | no `--cache-dir`, so the persistent cache was not in play |
+| `unknown` | cache configured, empty, and nothing written |
+
+It is derived **per transform**, not per run: each transform compiles its own
+module, so one invocation can legitimately miss on one and hit on another —
+something the old per-run tag could not express.
+
+Why not parse the tag? It carries ~40 ad-hoc spellings across this corpus
+(`census-warm`, `census-warm2`, `prodigy-census-warm-retry`, `mb_homo_cold`, …),
+and the obvious shortcut is a trap: **`cache_dir` is non-empty on cold rows
+too**, because the cold run is the one that populates the cache.
+
+`host_state` records `cpu_count` and the 1-minute load average. XLA compiles on
+the HOST cores, so this is load-bearing rather than bookkeeping — see the 7x
+measurement-discipline warning above.
+
+Records written before these fields were backfilled by
+`backfill_cache_state.py`: exact where `cache_dir` was empty (`none`), inferred
+only from an END-ANCHORED cold/warm tag, and left `unknown` otherwise — 33 cold,
+34 warm, 19 none, 3 unknown. The three left `unknown` include
+`mb_homo_cold_laxmap_gpu`, which *contains* "cold" mid-tag and is exactly the
+false match an unanchored parse would have made.
+
 ## Established before this task (do not re-derive)
 
 - ~~Autotuning ruled out (2026-07-15)~~ **downgraded to unproven 2026-07-17**:

@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-966 records across 7 buckets.
+968 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -35,6 +35,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [covariance-interpolator-rng-seed](2026/08/covariance-interpolator-rng-seed.md) — auto-closed by the merge
 - [database-guide-sample-weight-threshold](2026/08/database-guide-sample-weight-threshold.md) — `guides/results/database/start_here.py` ran its own Nautilus fits capped at n_like_max=300 then indexed sample…
 - [dep-floors-source-chain-ci](2026/08/dep-floors-source-chain-ci.md)
+- [dev-workflow-helpers-laptop-paths](2026/08/dev-workflow-helpers-laptop-paths.md)
 - [empty-backlog-vs-broken-discovery](2026/08/empty-backlog-vs-broken-discovery.md) — closed on merge
 - [ep-initializer-exception-should-not-abort](2026/08/ep-initializer-exception-should-not-abort.md)
 - [ep-optimise-updater](2026/08/ep-optimise-updater.md)
@@ -76,6 +77,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [pyautobrain-pr-test-ci](2026/08/pyautobrain-pr-test-ci.md) — auto-closed by the merge
 - [pyautofit_plot_rst_dead_plotters](2026/08/pyautofit_plot_rst_dead_plotters.md)
 - [pyautogalaxy-mge-sigma-test](2026/08/pyautogalaxy-mge-sigma-test.md)
+- [reconcile-upstream-repo-mode](2026/08/reconcile-upstream-repo-mode.md)
 - [registry-integrity-check](2026/08/registry-integrity-check.md)
 - [regularization-jax-gradient-gaps](2026/08/regularization-jax-gradient-gaps.md)
 - [samplers-surface-autolens-tiers](2026/08/samplers-surface-autolens-tiers.md) — the samplers faculty's SamplerSurface now scans the findings

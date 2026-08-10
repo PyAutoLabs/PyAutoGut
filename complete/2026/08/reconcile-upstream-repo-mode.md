@@ -1,3 +1,119 @@
+Leg 3 of the draft-staleness work: `intake reconcile --repo TARGET`, an opt-in
+upstream read — the only signal that reaches a prompt with **no Mind-side trace
+at all**.
+
+- issue: PyAutoBrain#223 (closed completed)
+- pr: PyAutoBrain#224, MERGED as `f518b24` (squash), 467+/12- across 6 files
+- split-from: `draft/feature/pyautomind/draft_staleness_detection_signals.md` —
+  legs 1-2 were DELIVERED 2026-08-09 (the `lifecycle.py` gate keys and the
+  reconcile re-rank); this was the remaining leg, split out rather than
+  re-opening a delivered prompt.
+
+## Why the leg existed
+
+The 2026-08-09 `draft/` sweep confirmed five stale prompts. Legs 1-2 read only
+Mind-local evidence (`complete/` records + `active/`), which is structurally
+blind to two of the five: one whose evidence sat inside a sibling **prompt**
+rather than a record, and one whose fix shipped as PyAutoFit#1418 with no record
+ever written. The parent prompt had already measured that re-ranking cannot
+reach them — every attempt cost precision without gaining truth. Only reading
+the target repo can.
+
+## What shipped
+
+`resolve_repo` (body map `github:` + the sizing faculty's existing
+`repo_aliases` — no third mapping), `_clone_upstream` (cached `--depth 1`,
+records the sha), `_grep_source`, and a `source_reader` seam on `reconcile()`.
+New band `needs-review`; result dict gains `upstream` (slug/sha/date) and
+per-suspect `upstream_score`.
+
+## The trap this is built around — the reason for the whole design
+
+`draft/bug/autofit/test_mode_bypass_ordered_assertion_ties.md` names five
+identifiers — `FitException`, `check_assertions`, `ignore_assertions`,
+`instance_for_arguments`, `instance_from_vector` — and **all five are on
+PyAutoFit `main`**. The prompt is confirmed NOT shipped: main catches
+`exc.FitException` in the TEST_MODE bypass, which looks exactly like the
+requested fix, but the catch wraps only the likelihood call while
+`model.instance_from_vector` (where `check_assertions` raises on an ordering
+tie) sits on the line **before** the `try`.
+
+So upstream hits deliberately do **not** feed `overlap_score`. They get their own
+weaker band and ordering key, which makes it structurally impossible for any
+number of upstream matches to reach a Mind-local verdict. Verified against
+PyAutoFit `fbe9f45d`: the prompt lands in `needs-review` at `overlap_score 0.0`
+— surfaced with its evidence, never called shipped.
+
+**Presence of a name is not presence of the fix.** That sentence is the whole
+design.
+
+## Traps and findings
+
+- **Noise filter — two named classes, not a spread threshold.** The first real
+  run matched `TypeError` (37 files in PyAutoFit) and `autofit_workspace` (26):
+  builtins and repo names. Filtering by upstream file-spread was tried and
+  REJECTED — the counts do not separate, because `instance_from_vector` is a
+  real signal at 22 files, just under `autofit_workspace` at 26. Any threshold
+  dropping the noise also drops one of the trap's own identifiers.
+- **Treeless clone is a false economy here.** The parent prompt suggested
+  `--depth 1 --filter=blob:none`. This leg greps source, so a treeless clone
+  refetches every blob on demand. Plain `--depth 1` with
+  `GIT_LFS_SKIP_SMUDGE=1`; ~3.6s warm against PyAutoFit.
+- **Multi-repo targets are refused, not guessed.** `workspaces` (23 prompts
+  across four work-types), `health_fixes`, `priors`, `graphical_ep` are topic
+  clusters and among the largest buckets in `draft/`. `--repo` exits 5 naming
+  the real candidates; guessing would be confidently wrong at scale.
+- **First network access in PyAutoBrain.** Nothing under `agents/` previously
+  used `urllib`, `requests`, `gh` or `git clone`. Strictly opt-in;
+  `test_default_path_makes_no_network_access` monkeypatches both
+  `socket.socket` and `subprocess.run` to detonate if that changes.
+  `AUTONOMY.md` records the surface and that widening it is a new decision.
+- **Regression caught by auditing the branch against `main` before merge.**
+  Widening the band column to fit `needs-review` had changed the DEFAULT path's
+  printed output too — six extra columns of indent on runs that can never emit
+  that band. The suspects were unaffected (verified identical against main, 29
+  of 135, no result keys removed), but the text a human reads had shifted for
+  unrelated work. Fixed in `c7c8b17`: width follows the widest band actually
+  present. Default output now diffs byte-identical to main.
+
+## Process findings from this task (all three since fixed — see
+## dev-workflow-helpers-laptop-paths)
+
+- The `worktree_check_conflict` run recorded at start_dev time was **vacuous** —
+  the guard read no file and returned 0. That is what motivated PyAutoBrain#225.
+- The `ship_library` fallback gate went RED on two pre-existing
+  `test_skill_install.py` failures unrelated to this diff; a human acknowledged
+  and authorised the PR, and CI then went green on both legs, vindicating the
+  call.
+- `prompt_sync_push` was NOT used for this task's Mind writes: it hardcoded
+  `git push origin main`, which would have violated the session's branch scope.
+
+## GitHub markdown trap (cost two rewrites)
+
+Both the issue and the PR were created with `<target>` in the title and body.
+GitHub parsed those as unknown HTML tags and **silently deleted them**, taking
+the `<details>` collapsibles with them — issue #223's title became
+`--repo  —` with a hole in it. Use `TARGET` or backticked prose placeholders in
+any issue/PR body written through the API.
+
+## Verification
+
+8 new tests, all hermetic via the injected `source_reader` — nothing under
+`tests/` clones. PyAutoBrain `main` after merge: **339 passed**. Smoke-tested
+from merged main: default path `29 suspect(s) of 135 scanned` with original
+column widths; upstream mode reads PyAutoFit `fbe9f45d` and puts the trap in
+`needs-review`.
+
+## Follow-up left open
+
+The parent prompt's `## Scope` / `## Acceptance` section-scoping idea was NOT
+adopted: the trap prompt has neither heading, so a strictly section-scoped
+extraction no-ops on exactly the prompts that matter most. Identifiers are taken
+from the whole prompt body, minus the noise classes above. Revisit only with a
+stated fallback.
+
+## Original prompt
+
 # `intake reconcile --repo <target>` — read the target repo, the only route to the findings the Mind cannot see
 
 Type: feature

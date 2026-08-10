@@ -51,7 +51,7 @@
 - prs: PyAutoBrain#226 (guard + installer tests) · PyAutoMind#178 (prompt_sync)
 - session: Claude Code cloud session
 - status: library-dev — both PRs OPEN, issue stays open until both land
-- prompt: draft/bug/pyautobrain/dev_workflow_helpers_assume_laptop_paths.md
+- prompt: active/dev_workflow_helpers_assume_laptop_paths.md
 - branch: PyAutoBrain `feature/dev-workflow-helpers-laptop-paths` (off main, files disjoint from #224 so ordering is free); PyAutoMind `claude/automind-task-planning-wxq004`
 - classification: bug (PyAutoBrain primary; PyAutoMind scripts/prompt_sync.sh)
 - found: 2026-08-10, three defects hit in sequence while shipping PyAutoBrain#224 — all one root cause, the helpers resolving paths under `$HOME/Code/PyAutoLabs`, which no cloud/web/CI session has.

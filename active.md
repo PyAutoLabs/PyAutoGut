@@ -1,14 +1,5 @@
 # Active Tasks
 
-## test-mode-fit-exception-finalization
-- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1462
-- session: codex current task
-- status: library-shipped, awaiting-merge
-- library-pr: https://github.com/PyAutoLabs/PyAutoFit/pull/1463
-- worktree: ~/Code/PyAutoLabs-wt/test-mode-fit-exception-finalization
-- repos:
-  - PyAutoFit: feature/test-mode-fit-exception-finalization
-
 ## release-drive-2026-08-03
 - issue: (no issue — a human-authorized manual release drive, not a dev task)
 - session: claude --resume e0105850-b98b-47ff-9ada-cba04a455a65

@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-970 records across 7 buckets.
+971 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -93,6 +93,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [spawn-github-instance-automation](2026/08/spawn-github-instance-automation.md)
 - [sph-transform-name-check](2026/08/sph-transform-name-check.md) — auto-closed by the merge via "Closes #555"
 - [tenant-firewall-hygiene-extras](2026/08/tenant-firewall-hygiene-extras.md) — auto-closed by the merge
+- [test-mode-fit-exception-finalization](2026/08/test-mode-fit-exception-finalization.md) — `PYAUTO_TEST_MODE=1` no longer finalizes a model point whose reconstruction raises `FitException`; it substitu…
 - [test-mode-samples-info-hook-contract](2026/08/test-mode-samples-info-hook-contract.md) — `NonLinearSearch._test_mode_samples_info()`'s docstring told subclasses
 - [wiki-provenance-restamp](2026/08/wiki-provenance-restamp.md)
 - [worktree-claim-parser-forms](2026/08/worktree-claim-parser-forms.md) — CLOSED completed

@@ -1,3 +1,16 @@
+## test-mode-fit-exception-finalization
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1462
+- completed: 2026-08-10
+- library-pr: https://github.com/PyAutoLabs/PyAutoFit/pull/1463
+- merge-commit: `18aae0f32d59dcc9221d5e218310948849b02e44`
+- summary: `PYAUTO_TEST_MODE=1` no longer finalizes a model point whose reconstruction raises `FitException`; it substitutes bounded deterministic representative samples that are all validated before result creation and chaining.
+- safety: normal searches and non-`FitException` failures are unchanged, and an impossible model fails clearly after a bounded 100 attempts instead of hanging.
+- root-cause: the newer physical profile constructor guard correctly exposed invalid samples that previously passed silently, while reduced Nautilus mode stopped after one rejected evaluation and rebuilt that rejected point during finalization.
+- validation: focused regression 4 passed; surrounding search tests 32 passed; full PyAutoFit suite 1707 passed / 2 skipped; GitHub docs, Python 3.12, and Python 3.13 checks all passed.
+- downstream: no public symbol migration or workspace edit required; no live release was performed.
+
+## Original prompt
+
 # TEST_MODE=1 must not finalize rejected samples
 
 Type: bug

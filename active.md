@@ -6,6 +6,7 @@
 - status: workspace-dev
 - worktree: ~/Code/PyAutoLabs-wt/pix-prodigy-gpu-compat
 - repos:
+  - autolens_workspace_developer: feature/pix-prodigy-gpu-compat
 
 ## delaunay-nn-laptop-gpu-profile
 - issue: https://github.com/PyAutoLabs/autolens_profiling/issues/105

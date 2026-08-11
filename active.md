@@ -2,7 +2,8 @@
 
 ## ep-hierarchical-scale-collapse-guard
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1464
-- status: library-dev
+- status: library-shipped, awaiting-merge
+- library-pr: https://github.com/PyAutoLabs/PyAutoFit/pull/1465 (label `pending-release` verified present)
 - worktree: (cloud session — no local worktree; branch pushed from /workspace/pyautofit)
 - repos:
   - PyAutoFit: feature/ep-hierarchical-scale-collapse-guard
@@ -11,12 +12,30 @@
   deliberately NOT in this task and stays in the prompt for a separate issue.
   Leg 3 (the standing damping hint) was found ALREADY SHIPPED on PyAutoFit main
   (`diagnostics.py:250`, `graphical/README.md:158`) — the prompt was stale on it.
-- state: implemented and pushed, NOT yet a PR. Branch commit 0d304fd. Tests:
-  test_diagnostics.py 16 passed; full test_autofit/graphical 240 passed, 1 failed
-  (`test_messages.py::test_beta`, `ModuleNotFoundError: No module named 'jax'`) —
-  pre-existing, fails identically on unmodified main. 5 of the 9 new tests fail on
-  unmodified main, so they pin new behaviour rather than passing either way.
-- next: open the PR via `/ship_library`, then close out to `complete/`.
+- state: PR open, awaiting merge. Branch commit 0d304fd (+275/-13, 3 files).
+- ship-gate: Heart was UNREACHABLE in this cloud session (`pyauto-brain vitals` →
+  "'pyauto-heart' not found on PATH"), so the documented fallback gate was used:
+  the full per-repo suite. `pytest test_autofit/` = **1714 passed, 4 skipped, 0
+  failed**. Two earlier failures were environment gaps in the session venv, not
+  regressions, and were removed by installing the declared optional extras
+  (`jax`, then `astropy`, then `nautilus-sampler==1.0.5`); both failed identically
+  on unmodified main before that. **This task has NOT been graded by Heart** — a
+  Heart readiness tick is still owed before release.
+- test-strength: 5 of the 9 new tests fail against unmodified main, so they pin new
+  behaviour rather than passing either way; the other 4 are negative
+  (no-false-positive) guards.
+- workspace-impact: assessed **(iii) none** — the API change is additive only (one
+  new method, one new attribute, two new defaulted kwargs; nothing removed,
+  renamed, or made required), so no downstream script can break. NOT verified by
+  grep: the workspace repos are not cloned in this session and org-wide code
+  search is out of this session's repo scope. A grep of
+  `check_sigma_collapse` / `register_hierarchical_scales` across the workspaces is
+  cheap and worth doing on a laptop session before merge.
+- smoke: NOT run — `/smoke_test` needs the workspace repos and PyAutoHands, neither
+  available here.
+- next: merge is a human decision (not offered automatically). On merge, close out
+  with `lifecycle.py record` to `complete/`. Leg 2 (curing the basin) then wants a
+  fresh prompt/issue — do NOT reuse #1464 or this branch for it.
 
 ## release-drive-2026-08-03
 - issue: (no issue — a human-authorized manual release drive, not a dev task)

@@ -8,7 +8,7 @@ Difficulty: medium
 Autonomy: supervised
 Priority: high
 Status: formalised — PLANNED 2026-08-11 (leg 0 already shipped on main; ship leg 1 first, leg 2 deferred)
-Issue: (none yet — parent report is https://github.com/PyAutoLabs/PyAutoFit/issues/1405)
+Issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1464 (leg 1 only; parent report is https://github.com/PyAutoLabs/PyAutoFit/issues/1405)
 
 ## The defect
 

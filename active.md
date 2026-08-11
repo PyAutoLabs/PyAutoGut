@@ -1,5 +1,23 @@
 # Active Tasks
 
+## ep-hierarchical-scale-collapse-guard
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1464
+- status: library-dev
+- worktree: (cloud session — no local worktree; branch pushed from /workspace/pyautofit)
+- repos:
+  - PyAutoFit: feature/ep-hierarchical-scale-collapse-guard
+- prompt: active/ep_hierarchical_scale_collapse_moment_match.md
+- scope: leg 1 only — the detection guard. Leg 2 (curing the collapse basin) is
+  deliberately NOT in this task and stays in the prompt for a separate issue.
+  Leg 3 (the standing damping hint) was found ALREADY SHIPPED on PyAutoFit main
+  (`diagnostics.py:250`, `graphical/README.md:158`) — the prompt was stale on it.
+- state: implemented and pushed, NOT yet a PR. Branch commit 0d304fd. Tests:
+  test_diagnostics.py 16 passed; full test_autofit/graphical 240 passed, 1 failed
+  (`test_messages.py::test_beta`, `ModuleNotFoundError: No module named 'jax'`) —
+  pre-existing, fails identically on unmodified main. 5 of the 9 new tests fail on
+  unmodified main, so they pin new behaviour rather than passing either way.
+- next: open the PR via `/ship_library`, then close out to `complete/`.
+
 ## release-drive-2026-08-03
 - issue: (no issue — a human-authorized manual release drive, not a dev task)
 - session: claude --resume e0105850-b98b-47ff-9ada-cba04a455a65

@@ -1,17 +1,21 @@
-# SHELVED — EP hierarchical parent-scale collapse: cure the basin
+# EP hierarchical parent-scale collapse: cure the basin, or document the caveat
 
 Type: bug
 Target: PyAutoFit
 Repos:
 - PyAutoFit
-Difficulty: large
-Autonomy: supervised
+Difficulty: too-large
+Autonomy: human-required
 Priority: high
-Status: SHELVED 2026-08-11 — research-grade, deliberately deferred. NOT abandoned;
-        the evidence below is the expensive part and it is banked.
+Status: formalised — NOT started. Research-grade: the answer may be "inherent to
+        EP", so do not pick this up as ordinary work. The evidence below is the
+        expensive part and it is already paid for.
 Issue: (none — never issued. Parent report https://github.com/PyAutoLabs/PyAutoFit/issues/1405 stays open.)
 
-## Why this is shelved
+## Why this is `too-large` / `human-required` — read before starting
+
+**`too-large` here means "outcome unknown", not "big".** Nobody knows whether a
+cure exists.
 
 **Leg 1 shipped** (PyAutoFit#1465 / issue #1464, record
 `complete/2026/08/ep-hierarchical-scale-collapse-guard.md`): a collapsed parent
@@ -23,8 +27,9 @@ needs a *loop* of runs to judge (the failure is intermittent), each loop is ~35-
 min of CPU on this toy alone, and a lever that looked good here would still need
 validating across N, across truth values, and against the stickier near-boundary
 `slope_hierarchy` case before it could change EP's defaults. That is days of work
-with a real chance the answer is "inherent to EP". Shelved on that basis, on human
-call, 2026-08-11.
+with a real chance the answer is "inherent to EP". Work on it was started and then
+stopped on that basis, on human call, 2026-08-11 — the three lever sweeps below
+were killed mid-flight.
 
 **The prompt's own acceptance already sanctions the exit:** if the basin is
 inherent, the deliverable converts to a documented methods caveat (EP is fast and
@@ -32,7 +37,7 @@ correct for the parent **mean**; use a joint sampler for the **scatter**) plus t
 leg-1 guard. That caveat is now **nearly writable from the evidence below** — see
 "If you pick this up".
 
-## The evidence — this is why the prompt is shelved and not deleted
+## The evidence — already paid for, do not redo it
 
 ### A working repro (the original cannot be run)
 
@@ -115,7 +120,7 @@ failed (`slope_hierarchy` `delta=0.5` → full collapse, 67 `BAD_PROJECTION`,
 log-evidence to 5e7): uniform damping also cripples the drawn variables, which are
 not the problem. `run_once.py` supports it via `TOY_UPDATER=dynamic`.
 
-### Sweeps that were running when this was shelved
+### Sweeps that were running when work stopped
 
 Three 20-seed conditions were in flight and were **not** completed:
 `TOY_DELTA=0.5` (uniform damping), `TOY_OPT=laplace` (deterministic per-factor
@@ -133,7 +138,7 @@ Cheapest order, and the first item is not research:
    `autofit/graphical/README.md`, which already carries the damping caveat from
    leg 3. Recommend repeated fits and/or a joint-sampler cross-check for the
    **scatter**; the parent **mean** is fine.
-2. **Run the three shelved sweeps** (~35-60 min each, banked scripts) — the
+2. **Run the three unfinished sweeps** (~35-60 min each, banked scripts) — the
    caveat is stronger if it can say which levers were tried and failed.
 3. **Only then** attempt a cure, starting with `DynamicUpdater`.
 
@@ -153,6 +158,6 @@ standalone run — the exact trap recorded in
 hides this bug completely"). Its verdict was PATHOLOGICAL either way, so the tally
 is unaffected, but clear `output/` between conditions when re-running.
 
-<!-- shelved 2026-08-11 on human call ("this isn't a casual feature to do right
+<!-- stopped 2026-08-11 on human call ("this isn't a casual feature to do right
      now"). Leg 1 shipped; leg 2 never issued. The draft/ prompt filed earlier the
      same day is superseded by this file. -->

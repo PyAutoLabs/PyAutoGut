@@ -59,7 +59,22 @@ jobs:
         working-directory: PyAutoMind
         run: |
           BRAIN=../PyAutoBrain/agents/conductors/intake/_intake.py
-          if python3 "$BRAIN" --mind . dashboard --check; then
+          # Exit 1 is drift and nothing else. Any other non-zero code means the
+          # renderer itself could not run — a Brain/Mind version skew, say —
+          # and reporting that as "the page is stale" sends whoever reads the
+          # log to fix the wrong file. (This PR's own first run: PyAutoBrain
+          # main had no `--check` yet, argparse exited 2, and the step blamed
+          # dashboard.md.)
+          check() {
+            local rc=0
+            python3 "$BRAIN" --mind . dashboard --check || rc=$?
+            if [ "$rc" -gt 1 ]; then
+              echo "::error::the dashboard renderer exited ${rc} — that is not drift. Check that PyAutoBrain main still provides 'intake dashboard --check'."
+              exit 1
+            fi
+            return "$rc"
+          }
+          if check; then
             exit 0
           fi
           if [ "${GITHUB_EVENT_NAME}" != "push" ]; then
@@ -76,12 +91,12 @@ jobs:
           for attempt in 1 2 3; do
             git fetch origin main
             git reset --hard FETCH_HEAD
-            if python3 "$BRAIN" --mind . dashboard --check; then
+            if check; then
               echo "tip of main is already fresh (healed by a concurrent push)"
               exit 0
             fi
             python3 "$BRAIN" --mind . --apply dashboard
-            if ! python3 "$BRAIN" --mind . dashboard --check; then
+            if ! check; then
               echo "::error::'--apply dashboard' did not converge — renderer bug, repair by hand"
               exit 1
             fi

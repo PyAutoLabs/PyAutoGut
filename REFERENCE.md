@@ -134,6 +134,8 @@ over the registry without starting work:
 ```
 PyAutoMind/
 ├── README.md                ← short front page
+├── dashboard.md             ← GENERATED task page (picks / in flight / parked / planned / backlog)
+│                              `pyauto-brain intake --apply dashboard`; CI self-heals it on main
 ├── REFERENCE.md             ← this file (schemas + conventions)
 ├── .gitignore
 │

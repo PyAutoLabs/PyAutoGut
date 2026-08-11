@@ -3,9 +3,10 @@
 - completed: 2026-08-10
 - library-pr: https://github.com/PyAutoLabs/PyAutoGalaxy/pull/568
 - workspace-prs: https://github.com/PyAutoLabs/autogalaxy_workspace/pull/209, https://github.com/PyAutoLabs/autolens_workspace/pull/483, https://github.com/PyAutoLabs/autogalaxy_workspace_test/pull/104, https://github.com/PyAutoLabs/autolens_workspace_test/pull/256
-- summary: Restored profile-validation compatibility across resampling and recovery by enforcing physical values through priors, then aligned the galaxy/lens example and regression workspaces. All 143 affected smoke scripts passed, and the library-first merge gate was observed before the four workspace merges.
+- summary: Shipped the approved narrow compatibility fix: invalid profile construction is now both a direct `ValueError` and a PyAutoFit `FitException`, while deterministic result summaries and deliberately invalid workspace fixtures were corrected. All 143 targeted smoke scripts passed, and the library-first merge gate was observed before the four workspace merges. The explicitly out-of-scope joint-prior redesign was not implemented.
 - merge-commits: PyAutoGalaxy `be61b8d`; autogalaxy_workspace `5326f93`; autolens_workspace `fc7570a`; autogalaxy_workspace_test `40beb30`; autolens_workspace_test `95124df`.
-- note: Keep physical-domain enforcement in priors so invalid values cannot re-enter through alternate search or recovery paths.
+- post-merge-validation: PyAutoHeart release-integration run 31441556729 exercised the TestPyPI wheels at release fidelity and reported 660 passed, 1 failed, 101 skipped, 0 timeouts; install checks A–F all passed. The sole remaining failure is `autolens_workspace/scripts/imaging/features/extra_galaxies/slam.py`, where an unphysical `ell_comps` draw still escapes a downstream search/update path. Issue #567 was reopened with the exact evidence; no live release was performed.
+- note: The merged guard correctly rejects the invalid profile. A follow-up must determine whether the escape is in PyAutoFit's post-likelihood/quick-update reconstruction or requires a narrower workspace prior; do not claim global prior coverage without that diagnosis.
 
 ## Original prompt
 

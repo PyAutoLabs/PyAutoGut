@@ -48,3 +48,25 @@ fixed. Do not rebaseline assertions or edit tutorials to conceal a library regre
 
 None of the five remaining prompts was graded shipped. What this sweep could establish
 offline is recorded in each file; the reproduction legs all need real runs.
+
+## 2026-08-11 batch — the nightly-release block
+
+A **separate, current** batch from the one above. The nightly release has been blocked
+at Stage 3 since 2026-08-10; these two prompts are its whole cause. Unlike the 2026-07
+batch, both are pinned to a specific merged PR, so neither needs a bisect.
+
+| Prompt | Scripts | Root cause | First bad night |
+|---|---:|---|---|
+| [test_mode_representative_multi_analysis.md](test_mode_representative_multi_analysis.md) | 17 | PyAutoFit [#1463](https://github.com/PyAutoLabs/PyAutoFit/pull/1463) — mode-1 fallback samples are not structure-preserving for multi-analysis models | 2026-08-11 |
+| [profile_validation_aggregator_reconstruction.md](profile_validation_aggregator_reconstruction.md) | 1 (was 4) | PyAutoGalaxy [#566](https://github.com/PyAutoLabs/PyAutoGalaxy/pull/566) guards vs. stored samples; [#568](https://github.com/PyAutoLabs/PyAutoGalaxy/pull/568) fixed the sampling path but not the aggregator path | 2026-08-10 |
+
+Two facts worth carrying into any triage of this batch:
+
+1. **The nightly run is green on both nights.** A blocked night is rendered as a
+   successful run by design (`PyAutoBrain/.github/workflows/nightly-release.yml`,
+   OUTCOME CONTRACT) — the signal is the `Blocked at a gate` step, not the run colour.
+2. **The failing script set moves between nights, and that is not flakiness.** It is two
+   independent regressions with different arrival dates, one of them
+   (`ell_comps`/`sersic_index`) depending on which sampled values happen to land out of
+   bounds. Counting scripts rather than causes is what made this look like one large
+   non-deterministic breakage.

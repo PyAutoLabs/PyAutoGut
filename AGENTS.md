@@ -48,6 +48,11 @@ For the full workflow narrative, conventions, and registry schemas, read
   input for `register_and_iterate --queue`), `ideas.md` (raw inbox swept by
   `$intake`, `/intake` in Claude). Mutate these only via the skills in `skills/` so commit
   messages stay consistent.
+  `dashboard.md` is the **generated** read-only view over all of it (the page
+  the README links): regenerate with `pyauto-brain intake --apply dashboard`
+  after any registry or `draft/` change you want reflected immediately — never
+  hand-edit it. `dashboard_refresh.yml` self-heals it on pushes to `main`, so a
+  missed regeneration is drift that fixes itself, not a broken page.
   `parked.md` holds tasks that were started or scoped but are not currently
   in flight (e.g. work parked in a stash, orphan worktrees); move back to
   `active.md` (or `planned.md` if re-scoping) when resuming.

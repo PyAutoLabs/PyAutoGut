@@ -8,6 +8,11 @@
 
 📖 **Full documentation → <https://pyautoscientist.readthedocs.io>** — the whole PyAutoScientist organism, including how to fork and run your own.
 
+📋 **[Task dashboard → `dashboard.md`](dashboard.md)** — every task the Mind is
+holding, on one page: what to pick up now, what is in flight, and the whole
+backlog. Reads on a phone; regenerated from this repo, so it is never a
+second copy of the truth.
+
 The Mind of the PyAuto organism: every piece of work in the ecosystem starts
 here, as a markdown file describing what you want in plain English. An AI
 agent (or a human) picks the file up and turns it into a tracked GitHub
@@ -19,6 +24,7 @@ What lives here:
 
 | File / folder | What it is |
 |---------------|------------|
+| [`dashboard.md`](dashboard.md) | **generated** — every task on one page, to pick from |
 | `ideas.md` | raw incubating ideas, no structure required |
 | `draft/<work-type>/<target>/*.md` | scoped prompts, **not started** (`feature/`, `bug/`, `docs/`, …) |
 | `active/<name>.md` | **issued** prompts — an open issue, in flight |

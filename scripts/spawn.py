@@ -88,8 +88,11 @@ MIND_RULES = [
     ("complete/AGENTS.md", "KEEP"),
     ("active/*", "DROP"), ("complete/*", "DROP"),
     ("docs/*", "DROP"),
-    # Instance root docs:
-    ("dashboard.md", "DROP"), ("overview.md", "DROP"),
+    # Instance root docs. `dashboard.md` is EMPTY rather than DROP: README.md
+    # ships verbatim and links it, so dropping it would hand every spawned org
+    # a broken front-page link. The emptied page carries the regenerate
+    # command, which is the whole of what a fresh Mind can truthfully say.
+    ("dashboard.md", "EMPTY"), ("overview.md", "DROP"),
     ("skills/*", "KEEP"), ("policy/*", "KEEP"),
     # .github is decided PER FILE by the spec's fresh-repo invariant (rule 9):
     # a shipped workflow must succeed on a freshly-spawned repo with no secrets
@@ -108,6 +111,11 @@ MIND_RULES = [
     # 9c — instance automation: sibling repo lists, organ-specific workflow
     # names, org secrets, strong-lensing vocabulary. Every one of the 13 failing
     # runs in the published template came from these.
+    # 9c also: the dashboard is rendered by PyAutoBrain, so this workflow
+    # checks out a sibling repo by name. A fresh org has no such sibling (and
+    # under owner substitution the name is the literal YOURORG placeholder), so
+    # every run of it there fails on checkout.
+    (".github/workflows/dashboard_refresh.yml", "DROP"),
     (".github/workflows/morning_status.yml", "DROP"),
     (".github/workflows/morning_health.yml", "DROP"),
     (".github/workflows/arxiv_papers.yml", "DROP"),
@@ -172,6 +180,7 @@ CANARY_TOKENS = (
 # SHARES a name (e.g. Memory's `bibliography/active.md`, caught by the broad
 # `bibliography/*` EMPTY rule) does not silently inherit a root file's title.
 EMPTY_TITLES = {
+    "dashboard.md": "# PyAutoMind task dashboard",
     "active.md": "# Active Tasks",
     "planned.md": "# Planned",
     "parked.md": "# Parked tasks",

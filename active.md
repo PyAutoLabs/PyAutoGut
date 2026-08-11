@@ -16,6 +16,18 @@
 - repos:
   - autolens_profiling: feature/delaunay-nn-laptop-gpu-profile
 
+## heart-green-validation-ingest
+- issue: https://github.com/PyAutoLabs/PyAutoGalaxy/issues/567 (open, reopened 2026-08-11T00:22Z)
+- session: none — the Codex session that did the work ran out of credits after merging, before any bookkeeping. Registered 2026-08-11 by a cloud session reconstructing its state from GitHub.
+- status: EVIDENCE PENDING INGEST — not a code task. All four fixes are MERGED (see complete/2026/08/heart-red-guarded-sample-escape.md); the green run exists; only the ingest is owed.
+- what is owed: PyAutoHeart `Release Integrate` run **31534325304** (dispatched 2026-08-11T20:42:55Z on main `b7634e2c`, finished 21:50:07Z) came back **SUCCESS** — 53 jobs, 52 green, `integrate / run_notebooks` skipped by design. Its `release-stage-report` artifact has never been consumed, so Heart's verdict does not yet reflect it.
+- resume (LAPTOP ONLY): `gh run download 31534325304 -R PyAutoLabs/PyAutoHeart -n release-stage-report -D <artifacts-dir>` then `pyauto-brain release validate --ingest <artifacts-dir>`. Then close PyAutoGalaxy#567 with the run link, so the close and the GREEN verdict land together.
+- deadline: the artifact expires **2026-11-09**. After that the evidence is gone and the run must be re-dispatched from scratch.
+- why not from a cloud session: Actions artifact downloads 403 at the egress proxy (`productionresultssa14.blob.core.windows.net` CONNECT refused) even though the GitHub API returns a valid signed URL — the `artifacts-are-laptop-only` trap already recorded under release-drive-2026-08-07. Retrying from the cloud will not work; do it from the laptop.
+- current verdict: Heart's last committed dashboard (2026-08-11T05:51Z, i.e. BEFORE the green run) reads STALE score 65, listing `no release validation for current source` among its evidence gaps. That is the STALE tier behaving correctly — an evidence gap, not a fault, and this ingest is its remedy.
+- do-not: do NOT re-dispatch `Release Integrate` to "refresh" this. The run is green and its artifact is live; a re-dispatch costs ~70 minutes of CI and proves nothing new. Only re-dispatch if the artifact has expired or main has moved.
+- repos-none-claimed: this entry claims NO repos — deliberately on one line, NOT as 2-space `  - Repo` bullets, because `worktree_check_conflict` treats any such bullet as a live claim.
+
 ## release-drive-2026-08-03
 - issue: (no issue — a human-authorized manual release drive, not a dev task)
 - session: claude --resume e0105850-b98b-47ff-9ada-cba04a455a65

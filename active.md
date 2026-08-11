@@ -6,6 +6,7 @@
 - status: library-dev
 - worktree: ~/Code/PyAutoLabs-wt/test-mode-fit-exception-finalization
 - repos:
+  - PyAutoFit: feature/test-mode-fit-exception-finalization
 
 ## release-drive-2026-08-03
 - issue: (no issue — a human-authorized manual release drive, not a dev task)

@@ -18,6 +18,18 @@ Run the production-shaped CPU/GPU benchmark from the repository root:
 python scripts/misc/delaunay_nn/benchmark.py
 ```
 
+For the laptop GPU, activate the CUDA environment first:
+
+```bash
+PyAutoGPU
+JAX_PLATFORMS=cuda,cpu python scripts/misc/delaunay_nn/benchmark.py --repeats 10
+```
+
+The CPU backend remains registered because the Delaunay connectivity callback
+runs qhull on the host even when the mapped JAX work targets CUDA. Ten warm
+repeats give a more representative median across the laptop GPU's dynamic clock
+states than the five-repeat CPU default.
+
 Useful overrides:
 
 ```bash
@@ -26,7 +38,9 @@ python scripts/misc/delaunay_nn/benchmark.py \
 ```
 
 The script writes a versioned JSON and PNG pair under
-`results/delaunay_nn/`. The cap sweep exposes the speed/headroom trade-off;
+`results/delaunay_nn/`. GPU filenames include the JAX device identity so a
+laptop result cannot overwrite a later A100 run; the JSON also records the
+same hardware key. The cap sweep exposes the speed/headroom trade-off;
 the separate workspace assertion
 `scripts/misc/jax_assertions/delaunay_nn_caps.py` decides correctness using
 actual Hilbert meshes ray-traced through a mass-model ensemble.

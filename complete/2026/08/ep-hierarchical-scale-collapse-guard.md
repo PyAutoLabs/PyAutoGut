@@ -1,3 +1,108 @@
+A collapsed hierarchical parent **scale** hyperparameter is no longer reported
+as a confident answer. Leg 1 of PyAutoFit#1405 follow-up 2.
+
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1464 (leg 1 only; the
+  umbrella #1405 stays **open** — leg 2, curing the collapse basin, is untouched)
+- pr: PyAutoFit#1465 — MERGED as `26470dbf`, base `18aae0f3`, +275/-13 across 3
+  files. All three checks green (docs-build, unittest 3.12, unittest 3.13).
+- shipped: `EPDiagnostics.register_hierarchical_scales` + `scale_variables`; a
+  relative, boundary-aware limb in `check_sigma_collapse` for parent scale
+  variables; and a repair to the existing monotone limb.
+
+## Why F10 was silent — the substance of this task
+
+The prompt asked an open question: is F10's threshold wrong, or do parent scale
+hyperparameters need their own check? **The latter**, and the reason is
+structural rather than a mis-set number. `check_sigma_collapse` missed on *both*
+limbs:
+
+- **Floor limb** requires `stds[-1] < 1e-8`. The measured collapses sit at std
+  `0.11` and `~1e-5` against a parent hyper-prior of mean 10 — a miss by orders
+  of magnitude.
+- **Monotone limb** requires `stds[-1] < 1e-3 × stds[0]` (= `5e-3` here, so `0.11`
+  misses on magnitude alone) **and** `np.all(np.diff(tail) < 0)` over 5 steps.
+
+**The monotone limb was effectively dead code in any multi-factor graph** — the
+most reusable finding here. `EPDiagnostics.snapshot` appends a row for *every*
+variable on *every* factor update, but a factor update only moves the marginals
+of the variables adjacent to *that* factor. A variable's history is therefore
+dominated by steps at which it did not move, which give `diff == 0` and defeat
+the strict `< 0` test. Five *consecutive* strictly-decreasing updates is close to
+unreachable in practice. It fired in `test_sigma_collapse_monotone` only because
+that test hand-builds a `np.geomspace` sequence directly into `variable_rows` —
+**a test that passed while the code it covered could not fire on real data.**
+
+The deeper mismatch: F10 was written for **#1332**, where *every* std shrinks to
+zero around the starting means, so it is **absolute** and **variable-agnostic**.
+This collapse has a different shape — the parent scale's **mean** goes to ~0
+while its std stays moderate in absolute terms and is over-confident only
+*relative to that mean*. No absolute std test can see a confident claim of "zero
+scatter".
+
+## Traps worth carrying forward
+
+- **A guard's unit test can hide that the guard cannot fire.** The monotone limb
+  was covered, green, and inert. When a check is fed by a *recorder*, test it
+  against the recorder's real output shape, not a hand-built ideal series.
+- **Grade thresholds against measured data, not intuition.** The separation here
+  is clean only because the toy's numbers were on record: collapses at mean
+  `0.80` (8% of the `10` hyper-prior mean) and `0.0030`, recoveries at
+  `9.1–12.8 ± 0.9–2.4`. Both collapses flag; neither end of the recover band
+  does. Those values are the test fixtures.
+- **Check that new tests fail on the base.** 5 of the 9 fail on unmodified main;
+  the other 4 are negative no-false-positive guards and pass on main by
+  construction. Without that check a guard test can pass in both directions and
+  prove nothing.
+- **The prompt was STALE on one of its three legs.** Leg 3 (revise the standing
+  damping hint) was already shipped on main at `diagnostics.py:250` and
+  `graphical/README.md:158`, carrying this prompt's own finding that damping
+  *worsened* hierarchical scale collapse. Grading a prompt against upstream main
+  before starting cut a third of the task.
+
+## What was NOT done — read before assuming this is finished
+
+- **Heart never graded this.** `pyauto-brain vitals` returned `'pyauto-heart' not
+  found on PATH` in the cloud session, so the documented fallback gate was used:
+  the full `pytest test_autofit/` = **1714 passed, 4 skipped, 0 failed**. A Heart
+  readiness tick is still owed before release. (Two earlier local failures —
+  `test_beta`, `test_nautilus` — were session-venv gaps that failed identically on
+  unmodified main; fixed by installing the declared optional extras `jax`,
+  `astropy`, `nautilus-sampler==1.0.5`, not by touching code.)
+- **Workspace impact was reasoned, not grepped.** Assessed (iii) none because the
+  API change is additive only — one new method, one new attribute, two new
+  defaulted kwargs; nothing removed, renamed or made required — so no downstream
+  script can break. The workspace repos were not in the session and org-wide code
+  search was out of scope. A grep for `check_sigma_collapse` /
+  `register_hierarchical_scales` across the workspaces is cheap and still worth
+  doing.
+- **No smoke tests** — `/smoke_test` needs the workspace repos and PyAutoHands.
+- **Leg 2 (curing the collapse basin) is untouched** and needs a fresh prompt and
+  issue; do not reuse #1464 or the merged branch. One structural lead recorded
+  during planning, explicitly a lead and **not** a finding:
+  `_HierarchicalFactor.message_dict` (`hierarchical.py:195`) overrides the base
+  and drops its `1/(count - 1)` tempering, with the comment "*Does not account for
+  inverse cavity behaviour as this caused bugs for hierarchical factors*". A
+  `HierarchicalFactor` generates one `_HierarchicalFactor` per drawn variable, all
+  sharing the parent's scale prior — the geometry tempering exists to protect
+  against, and over-counting shared information is the confirmed mechanism. **But
+  `FactorGraphModel` inherits the tempered base `message_dict`, so the override
+  may be inert for the global mean field.** Trace it before believing it.
+
+## Verification
+
+- `pytest test_autofit/` — 1714 passed, 4 skipped, 0 failed.
+- `test_diagnostics.py` — 16 passed (7 pre-existing + 9 new).
+- End-to-end on a real 5-drawn-variable hierarchical graph: the parent `sigma`
+  registers and the parent `mean` correctly does not; the shallow collapse main
+  passed silently now emits a specific `scale-collapse:` warning naming #1405.
+- CI on the PR: docs-build, unittest 3.12, unittest 3.13 all green.
+
+The change **reports; it never alters the fit** — the prompt's stated trap, and
+the acceptance bar it set ("a collapsed parent scale is never *silently* reported
+as a confident answer") is met.
+
+## Original prompt
+
 # EP: cure the hierarchical parent-scale collapse basin (and make F10 fire on it)
 
 Type: bug

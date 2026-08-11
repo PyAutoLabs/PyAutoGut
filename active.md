@@ -1,5 +1,12 @@
 # Active Tasks
 
+## pix-prodigy-gpu-compat
+- issue: https://github.com/PyAutoLabs/autolens_workspace_developer/issues/125
+- session: codex
+- status: workspace-dev
+- worktree: ~/Code/PyAutoLabs-wt/pix-prodigy-gpu-compat
+- repos:
+
 ## delaunay-nn-laptop-gpu-profile
 - issue: https://github.com/PyAutoLabs/autolens_profiling/issues/105
 - session: codex

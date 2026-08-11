@@ -7,7 +7,7 @@ Repos:
 Difficulty: large
 Autonomy: human-required
 Priority: high
-Status: draft
+Status: formalised (phased 2026-08-11; work proceeds through the phase prompts)
 
 Continue the shipped CPU investigation of `af.MultiStartProdigy` on pixelized
 source meshes using the laptop NVIDIA RTX 2060 Max-Q through the `PyAutoGPU`
@@ -33,6 +33,15 @@ four-mesh recommendation table.
 Keep the existing `autolens_profiling` DelaunayNN runtime task and its dirty
 worktree separate. Mature winning configurations into profiling only after
 the experiment-tier evidence is settled.
+
+## Phases
+
+1. `pixelized_prodigy_laptop_gpu_phase_1_compatibility.md` — establish
+   four-mesh truth bars, GPU feasibility, and matched fixed/inherited-reg
+   compatibility results.
+2. `pixelized_prodigy_laptop_gpu_phase_2_settings.md` — use phase 1's valid
+   configurations to optimize starts, batching, and regularization for
+   likelihood quality, steps-to-bar, and wall time.
 
 ## Original request
 

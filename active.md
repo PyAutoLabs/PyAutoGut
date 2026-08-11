@@ -6,6 +6,7 @@
 - status: workspace-dev
 - worktree: ~/Code/PyAutoLabs-wt/delaunay-nn-laptop-gpu-profile
 - repos:
+  - autolens_profiling: feature/delaunay-nn-laptop-gpu-profile
 
 ## release-drive-2026-08-03
 - issue: (no issue — a human-authorized manual release drive, not a dev task)

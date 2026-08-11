@@ -1,5 +1,12 @@
 # Active Tasks
 
+## delaunay-nn-laptop-gpu-profile
+- issue: https://github.com/PyAutoLabs/autolens_profiling/issues/105
+- session: codex
+- status: workspace-dev
+- worktree: ~/Code/PyAutoLabs-wt/delaunay-nn-laptop-gpu-profile
+- repos:
+
 ## release-drive-2026-08-03
 - issue: (no issue — a human-authorized manual release drive, not a dev task)
 - session: claude --resume e0105850-b98b-47ff-9ada-cba04a455a65

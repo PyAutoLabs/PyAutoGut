@@ -2,8 +2,12 @@
 
 ## pix-prodigy-gpu-compat
 - issue: https://github.com/PyAutoLabs/autolens_workspace_developer/issues/125
-- session: codex
-- status: workspace-dev
+- pr: https://github.com/PyAutoLabs/autolens_workspace_developer/pull/126 (OPEN, mergeable)
+- session: codex (phase 1) -> claude 2026-08-11 evening (n_starts control + phase 2)
+- status: workspace-dev — PAUSED 2026-08-11 ~22:40 for the night, safe to resume
+- resume: read `searches_minimal/pix_prodigy_laptop_gpu_RESUME.md` in the worktree FIRST. All results to date are committed+pushed (d887a0a). Phase-1 item 2 (16-start claim) CONFIRMED on GPU; phase 2 substantially done (starts curve, VRAM ceiling, revised recommendations, one correction to the phase-1 settings table). 11 of 13 cells landed.
+- in-flight-at-pause: two detached cells (`dnn_s8_b4_300_freereg`, `d_s16_b2_300`) may or may not have survived laptop sleep. No corruption risk — the runner only writes its artifact on completion, so a dead run leaves nothing and is simply re-run (exact commands in the RESUME note).
+- open-question: Delaunay 16-start GPU optimum is ~5.6k nats below the CPU reference at identical reg; the `d_s16_b2_300` cell is the test for whether batch-4 divergence explains it.
 - worktree: ~/Code/PyAutoLabs-wt/pix-prodigy-gpu-compat
 - repos:
   - autolens_workspace_developer: feature/pix-prodigy-gpu-compat

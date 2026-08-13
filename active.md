@@ -5,8 +5,8 @@
 - pr: https://github.com/PyAutoLabs/autolens_profiling/pull/110
 - prompt: active/hazard_profiling_likelihood_tier.md
 - session: chatgpt-work
-- status: awaiting-ci — Phase 2 implemented; PR #110 open with pending-release, no merge or release authorized
-- validation: local 22 tests + Ruff + compile + smoke green; full NumPy/JAX scan produced 5 persistent findings
+- status: awaiting-merge — PR #110 is mergeable/clean and GitHub lint run 31740669618 succeeded; pending-release, no merge or release authorized
+- validation: local 22 tests + Ruff + compile + smoke green; full NumPy/JAX scan produced 5 persistent findings; GitHub lint green
 - repos:
   - autolens_profiling: feature/hazard-profiling-likelihood-tier
 

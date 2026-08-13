@@ -11,7 +11,7 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 | [In flight](#in-flight) (`active/`) | 8 |
 | [Parked](#parked) (`parked.md`) | 6 |
 | [Planned](#planned) (`planned.md`) | 7 |
-| [Backlog](#backlog) (`draft/`) | 135 |
+| [Backlog](#backlog) (`draft/`) | 136 |
 
 Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3Aissue+is%3Aopen&type=issues) · [open pull requests](https://github.com/search?q=org%3APyAutoLabs+is%3Apr+is%3Aopen&type=prs)
 
@@ -95,7 +95,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**135** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**136** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 39</summary>
@@ -143,7 +143,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>feature</b> — 25</summary>
+<summary><b>feature</b> — 26</summary>
 
 - [Make draft/ staleness detectable — `intake reconcile` measured, and the](draft/feature/pyautomind/draft_staleness_detection_signals.md) — pyautomind · medium · supervised · high
 - [LACosmic per-frame CR masking option + decouple PSF-star pass from](draft/feature/pyautoreduce/lacosmic_cr_option_and_star_pass_decoupling.md) — pyautoreduce · medium · supervised · high
@@ -161,6 +161,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 - [Remote-MCP deployment tiers (2 + 3) for the results-inspector server](draft/feature/autofit_assistant/remote_mcp_deployment_tiers.md) — autofit_assistant · large · human-required · normal
 - [Search settings-estimation + profiling infrastructure (n_starts / batch_size / n_batch)](draft/feature/autolens_profiling/search_settings_estimation_infrastructure.md) — autolens_profiling · large · supervised · normal
 - [Adopt oversampled PSFs in the start-here dataset chain (option a)](draft/feature/autolens_workspace/oversampled_psf_dataset_adoption.md) — autolens_workspace · large · supervised · normal
+- [Add a numerical-hazard profiling package to autolens_profiling](draft/feature/workspaces/add_a_numerical_hazard_profiling_package_to.md) — workspaces · large · supervised · normal
 - [Follow-up to `rectangular_adapt_cdf.md` (issue #322) and Path A](draft/feature/autoarray/rectangular_multi_submesh.md) — autoarray · too-large · supervised · normal
 - [`PIEMass.potential_2d_from`: implement the missing lensing potential](draft/feature/autogalaxy/piemass_potential.md) — autogalaxy · too-large · supervised · normal
 - [autolens_jax_joss benchmark repo + real-data start_here pairing](draft/feature/autolens_jax_joss/autolens_jax_joss_benchmark_repo.md) — autolens_jax_joss · too-large · supervised · normal

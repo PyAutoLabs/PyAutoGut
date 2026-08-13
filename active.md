@@ -2,10 +2,12 @@
 
 ## curvature-floor-scale-aware-prototype
 - issue: https://github.com/PyAutoLabs/autolens_profiling/issues/111
+- pr: https://github.com/PyAutoLabs/autolens_profiling/pull/112
 - prompt: active/curvature_floor_scale_aware_prototype.md
 - session: chatgpt-work
-- status: workspace-dev
-- validation: pending
+- status: awaiting-merge
+- validation: 24 tests passed; ruff, scoped format, compile, NumPy/JAX scan, README and smoke passed; GitHub lint pending
+- result: corrected the Phase 2 denominator to the entries actually floored; max affected-entry fraction 4.457e-5, so no production-default change is recommended from this fixture
 - repos:
   - autolens_profiling: feature/curvature-floor-scale-aware-prototype
 

@@ -63,19 +63,59 @@ warm calls to span the device's dynamic clock states:
 | DelaunayNN cap 32 | 0.3177 s | 0.2396 s | 1.33× | 5.44× |
 | DelaunayNN cap 64 | 0.5624 s | 0.4422 s | 1.27× | 10.04× |
 
-Thus the production cap-32 mapper is faster in absolute terms on the laptop GPU
-(0.2396 s rather than 0.3177 s), but ordinary Delaunay benefits more: the
-DelaunayNN overhead grows from 4.76× on CPU to 5.44× on GPU. Clean five-repeat
-GPU sweeps put cap 32 at 0.243--0.255 s; their ratio moved from 4.93× to 5.92×
-because the much shorter Delaunay baseline was more sensitive to device clock
-state. The ten-repeat result is the canonical comparison.
+On the laptop GPU the production cap-32 mapper is faster in absolute terms
+(0.2396 s rather than 0.3177 s), but ordinary Delaunay appeared to benefit
+more, the overhead reading 5.44× against 4.76× on CPU. **The A100 run below
+shows that reading was an RTX 2060 artifact — do not carry it forward.**
 
-Compilation is not accelerated: compile plus first call was 0.788 s for
-Delaunay and 3.900 s for cap-32 DelaunayNN on the GPU, versus 0.351 s and
-1.242 s on CPU. This is a one-off cost; the warm timings above are the relevant
-per-likelihood geometry cost.
+## A100 (SLURM job 334949, 2026-08-13)
+
+Same configuration again — 1,200 vertices, 15,000 queries, query chunk 256, ten
+warm repeats — on an NVIDIA A100 80GB PCIe on the RAL `gpu` partition, at the
+same source revisions as the CPU and laptop columns (PyAutoArray `5dedb5e9`,
+PyAutoLens `13a4655c`; the job log records all five).
+
+| Mapper | CPU | RTX 2060 | **A100** | A100 vs CPU | A100 vs 2060 |
+|---|---:|---:|---:|---:|---:|
+| Barycentric Delaunay | 0.0667 s | 0.0440 s | **0.0366 s** | 1.82× | 1.20× |
+| DelaunayNN cap 16 | 0.1923 s | 0.1194 s | **0.0975 s** | 1.97× | 1.22× |
+| DelaunayNN cap 24 | 0.2400 s | 0.1966 s | **0.1283 s** | 1.87× | 1.53× |
+| DelaunayNN cap 32 | 0.3177 s | 0.2396 s | **0.1573 s** | 2.02× | 1.52× |
+| DelaunayNN cap 64 | 0.5624 s | 0.4422 s | **0.2677 s** | 2.10× | 1.65× |
+
+Overhead relative to ordinary Delaunay on each device:
+
+| Mapper | CPU | RTX 2060 | **A100** |
+|---|---:|---:|---:|
+| DelaunayNN cap 16 | 2.88× | 2.71× | **2.66×** |
+| DelaunayNN cap 24 | 3.59× | 4.46× | **3.51×** |
+| DelaunayNN cap 32 | 4.76× | 5.44× | **4.30×** |
+| DelaunayNN cap 64 | 8.43× | 10.04× | **7.32×** |
+
+**The DelaunayNN overhead does not grow on GPU — it shrinks.** On the A100 the
+production cap-32 mapper costs 4.30× ordinary Delaunay, *lower* than the 4.76×
+measured on CPU, and well under the laptop's 5.44×. Every cap improves on its
+CPU ratio.
+
+The laptop reading inverted because its Delaunay baseline was unstable, not
+because the GPU disadvantages DelaunayNN. Across the ten warm calls the
+RTX 2060's baseline spanned a factor of **1.58** (0.0363--0.0573 s, dynamic
+clock states on a Max-Q part) while the A100's spanned **1.007**
+(0.03651--0.03675 s). A noisy denominator inflated the ratio; this is the same
+instability that moved the five-repeat laptop ratio from 4.93× to 5.92×. The
+A100 numbers are the ones to quote for HPC throughput.
+
+Compilation does not follow the warm trend and is not accelerated by the
+better card: compile plus first call on the A100 was 6.604 s for Delaunay and
+3.650 s for cap-32 DelaunayNN, against 0.788 s / 3.900 s on the laptop GPU and
+0.351 s / 1.242 s on CPU. The A100's slower cold Delaunay compile is
+first-call XLA autotuning on the node, a one-off; the warm timings above remain
+the relevant per-likelihood geometry cost.
+
+Capacity was identical on all three devices — max cavity 11 and 13 neighbours
+(main), 9 and 11 (split), with every overflow and degeneracy count zero — so
+the cap-32 static shape carries the same margin on HPC as locally.
 
 The cap-32 choice remains the smallest tested static shape with a robust margin
-across the local and CI audits. These GPU measurements are for the RTX 2060,
-not an A100; the A100 profile should still be run before drawing HPC
-sampler-throughput conclusions.
+across the local and CI audits, and the A100 profile this note previously said
+was owed is now done.

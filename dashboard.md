@@ -51,7 +51,7 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 
 Issued — each has an open GitHub issue and usually a branch. The full record for each is in [`active.md`](active.md).
 
-- [Add a numerical-hazard profiling package to autolens_profiling](active/add_a_numerical_hazard_profiling_package_to.md) — [issue #107](https://github.com/PyAutoLabs/autolens_profiling/issues/107) — workspace-dev
+- [Add a numerical-hazard profiling package to autolens_profiling](active/add_a_numerical_hazard_profiling_package_to.md) — [issue #107](https://github.com/PyAutoLabs/autolens_profiling/issues/107) — awaiting-merge — implementation complete, 62 tests + focused smoke green; PR opened under explicit human authorization while…
 - [First benchmark calibration campaign — run the 4 assistant benchmarks](active/benchmark_calibration_runs.md)
 - [Address ECEB editorial comments on ECLIPSE-C](active/euclid_eceb_editorial_revision.md)
 - [JAX-native posterior sampler wave — ranked shortlist from the 2026-07-16](active/jax_native_posterior_sampler_wave.md) — [issue #113](https://github.com/PyAutoLabs/autolens_workspace_developer/issues/113) — PARKED 2026-07-24 — stage (a) POSITIVE: warm-started gradient SMC SAMPLES (acc 0.80->0.17 across tempering, einstein_radius…

@@ -1,3 +1,11 @@
+## delaunay-nn-laptop-gpu-profile
+- issue: https://github.com/PyAutoLabs/autolens_profiling/issues/105
+- completed: 2026-08-13
+- workspace-pr: https://github.com/PyAutoLabs/autolens_profiling/pull/106
+- summary: Added the CPU, RTX 2060, and A100 DelaunayNN profiling sweep and result artifacts at matched PyAuto source revisions. The A100 evidence corrected the interim laptop conclusion: production cap-32 overhead is 4.30x on A100 rather than the RTX 2060's noisy 5.44x, with zero overflow or degeneracy. The merged submit script also records all five source revisions in future job logs.
+
+## Original prompt
+
 # Profile DelaunayNN against Delaunay on the laptop GPU
 
 Type: feature

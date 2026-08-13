@@ -1,5 +1,14 @@
 # Active Tasks
 
+## numerical-hazard-profiling
+- issue: https://github.com/PyAutoLabs/autolens_profiling/issues/107
+- prompt: active/add_a_numerical_hazard_profiling_package_to.md
+- session: codex
+- status: workspace-dev
+- worktree: ~/Code/PyAutoLabs-wt/numerical-hazard-profiling
+- repos:
+  - autolens_profiling: feature/numerical-hazard-profiling
+
 ## pix-prodigy-gpu-compat
 - issue: https://github.com/PyAutoLabs/autolens_workspace_developer/issues/125
 - pr: https://github.com/PyAutoLabs/autolens_workspace_developer/pull/126 (OPEN, mergeable)
@@ -12,14 +21,6 @@
 - worktree: ~/Code/PyAutoLabs-wt/pix-prodigy-gpu-compat
 - repos:
   - autolens_workspace_developer: feature/pix-prodigy-gpu-compat
-
-## delaunay-nn-laptop-gpu-profile
-- issue: https://github.com/PyAutoLabs/autolens_profiling/issues/105
-- session: codex
-- status: workspace-dev
-- worktree: ~/Code/PyAutoLabs-wt/delaunay-nn-laptop-gpu-profile
-- repos:
-  - autolens_profiling: feature/delaunay-nn-laptop-gpu-profile
 
 ## heart-green-validation-ingest
 - issue: https://github.com/PyAutoLabs/PyAutoGalaxy/issues/567 (open, reopened 2026-08-11T00:22Z)

@@ -1,5 +1,14 @@
 # Active Tasks
 
+## positive-solver-divergence-diagnosis
+- issue: https://github.com/PyAutoLabs/autolens_profiling/issues/113
+- prompt: active/positive_solver_divergence_diagnosis.md
+- session: chatgpt-work
+- status: workspace-dev
+- validation: pending
+- repos:
+  - autolens_profiling: feature/positive-solver-divergence-diagnosis
+
 ## pix-prodigy-gpu-compat
 - issue: https://github.com/PyAutoLabs/autolens_workspace_developer/issues/125
 - pr: https://github.com/PyAutoLabs/autolens_workspace_developer/pull/126 (OPEN, mergeable)

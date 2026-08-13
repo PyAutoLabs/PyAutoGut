@@ -1,3 +1,20 @@
+## hazard-profiling-likelihood-tier
+- issue: https://github.com/PyAutoLabs/autolens_profiling/issues/109
+- completed: 2026-08-13
+- workspace-pr: https://github.com/PyAutoLabs/autolens_profiling/pull/110
+- merge-commit: 60b8eef67582a0d305788e5640e9093ef94f72fb
+- summary: Tier-2 likelihood profiling landed with five persistent findings and corrected NNLS continuity semantics.
+- validation: 22 local tests, Ruff, compile, smoke, and the full NumPy/JAX scan passed; GitHub lint run 31740669618 succeeded.
+- findings:
+  - NNLS support transitions create active-set and derivative kinks, while the well-posed convex reconstruction remains continuous.
+  - Absolute conditioning floors are dataset-scale-sensitive; the measured curvature floor was about 0.115 of the fitted diagonal scale.
+  - The curvature helper documentation says 1e-8 while the configured default is 1e-3, a 1e5 ratio.
+  - NumPy active-set and JAX interior-point positive solvers diverged by about 8.99e-3 in the measured case.
+  - Circular Sersic orientation is structurally degenerate, with zero likelihood span.
+- boundary: profiling only; no source-library numerical behavior was changed. Each corrective is a separate task.
+
+## Original prompt
+
 # Hazard profiling — the likelihood tier (tier 2)
 
 Type: feature

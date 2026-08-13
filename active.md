@@ -1,15 +1,5 @@
 # Active Tasks
 
-## hazard-profiling-likelihood-tier
-- issue: https://github.com/PyAutoLabs/autolens_profiling/issues/109
-- pr: https://github.com/PyAutoLabs/autolens_profiling/pull/110
-- prompt: active/hazard_profiling_likelihood_tier.md
-- session: chatgpt-work
-- status: awaiting-merge — PR #110 is mergeable/clean and GitHub lint run 31740669618 succeeded; pending-release, no merge or release authorized
-- validation: local 22 tests + Ruff + compile + smoke green; full NumPy/JAX scan produced 5 persistent findings; GitHub lint green
-- repos:
-  - autolens_profiling: feature/hazard-profiling-likelihood-tier
-
 ## pix-prodigy-gpu-compat
 - issue: https://github.com/PyAutoLabs/autolens_workspace_developer/issues/125
 - pr: https://github.com/PyAutoLabs/autolens_workspace_developer/pull/126 (OPEN, mergeable)

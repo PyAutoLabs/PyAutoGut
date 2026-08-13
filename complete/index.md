@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-976 records across 7 buckets.
+977 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -45,6 +45,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [feature-ranker-ignores-header-keys](2026/08/feature-ranker-ignores-header-keys.md) — the Feature Agent's ranker now reads the prompt metadata header it was
 - [file-path-guard-decision](2026/08/file-path-guard-decision.md) — The file-path leg split from raw-guard-migration (leg 3 of the dataset-bulk series, autolens_workspace#354). D…
 - [group-data-preparation-readme](2026/08/group-data-preparation-readme.md)
+- [hazard-profiling-likelihood-tier](2026/08/hazard-profiling-likelihood-tier.md) — Tier-2 likelihood profiling landed with five persistent findings and corrected NNLS continuity semantics.
 - [health-conductor-stale-verdict](2026/08/health-conductor-stale-verdict.md)
 - [heart-red-guarded-sample-escape](2026/08/heart-red-guarded-sample-escape.md) — Closed the escape path that kept release validation RED after
 - [howto-smoke-all-tutorials](2026/08/howto-smoke-all-tutorials.md)

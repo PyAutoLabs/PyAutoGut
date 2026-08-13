@@ -1,15 +1,5 @@
 # Active Tasks
 
-## numerical-hazard-profiling
-- issue: https://github.com/PyAutoLabs/autolens_profiling/issues/107
-- pr: https://github.com/PyAutoLabs/autolens_profiling/pull/108 (OPEN, mergeable; CI running)
-- prompt: active/add_a_numerical_hazard_profiling_package_to.md
-- session: codex
-- status: awaiting-merge — implementation complete, 62 tests + focused smoke green; PR opened under explicit human authorization while Heart RED
-- worktree: ~/Code/PyAutoLabs-wt/numerical-hazard-profiling
-- repos:
-  - autolens_profiling: feature/numerical-hazard-profiling
-
 ## pix-prodigy-gpu-compat
 - issue: https://github.com/PyAutoLabs/autolens_workspace_developer/issues/125
 - pr: https://github.com/PyAutoLabs/autolens_workspace_developer/pull/126 (OPEN, mergeable)

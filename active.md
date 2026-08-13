@@ -1,5 +1,14 @@
 # Active Tasks
 
+## curvature-floor-scale-aware-prototype
+- issue: https://github.com/PyAutoLabs/autolens_profiling/issues/111
+- prompt: active/curvature_floor_scale_aware_prototype.md
+- session: chatgpt-work
+- status: workspace-dev
+- validation: pending
+- repos:
+  - autolens_profiling: feature/curvature-floor-scale-aware-prototype
+
 ## pix-prodigy-gpu-compat
 - issue: https://github.com/PyAutoLabs/autolens_workspace_developer/issues/125
 - pr: https://github.com/PyAutoLabs/autolens_workspace_developer/pull/126 (OPEN, mergeable)

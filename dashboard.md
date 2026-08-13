@@ -53,7 +53,7 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 - [Add a numerical-hazard profiling package to autolens_profiling](active/add_a_numerical_hazard_profiling_package_to.md)
 - [First benchmark calibration campaign — run the 4 assistant benchmarks](active/benchmark_calibration_runs.md)
-- [Align curvature-diagonal floor documentation with configuration](active/curvature_diag_doc_config_drift.md) — [issue #443](https://github.com/PyAutoLabs/PyAutoArray/issues/443) — library-dev
+- [Align curvature-diagonal floor documentation with configuration](active/curvature_diag_doc_config_drift.md) — [issue #443](https://github.com/PyAutoLabs/PyAutoArray/issues/443) — awaiting-merge — PR #444 is mergeable and GitHub Actions run 31743635821 succeeded; pending-release, no merge or release…
 - [Address ECEB editorial comments on ECLIPSE-C](active/euclid_eceb_editorial_revision.md)
 - [JAX-native posterior sampler wave — ranked shortlist from the 2026-07-16](active/jax_native_posterior_sampler_wave.md) — [issue #113](https://github.com/PyAutoLabs/autolens_workspace_developer/issues/113) — PARKED 2026-07-24 — stage (a) POSITIVE: warm-started gradient SMC SAMPLES (acc 0.80->0.17 across tempering, einstein_radius…
 - [Remove standalone matplotlib-inline comments](active/matplotlib_inline_standalones.md)

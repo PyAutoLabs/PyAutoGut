@@ -1,0 +1,58 @@
+#!/bin/bash -l
+#
+# DelaunayNN vs barycentric Delaunay full-mapper benchmark on an A100.
+#
+# The A100 counterpart to the laptop RTX 2060 profile in
+# results/notes/delaunay_nn_cap_audit.md (autolens_profiling#105). That note
+# states plainly that its numbers are RTX 2060 and that the A100 profile is
+# still owed before any HPC sampler-throughput conclusion is drawn — this is
+# that run.
+#
+# Matches the CPU/laptop-GPU configuration exactly so the three columns are
+# comparable: 1,200 mesh points, 15,000 queries, query chunk 256, caps
+# 16/24/32/64. Ten warm repeats, as used for the laptop GPU, because a single
+# median over five is noisy against the very short Delaunay baseline.
+#
+# Writes results/delaunay_nn/delaunay_nn_benchmark_gpu_<device-slug>_v<ver>.{json,png}.
+# The device slug in the stem (and the matching `hardware` key in the JSON) is
+# what stops this A100 result overwriting the laptop one — do not run this with
+# a benchmark.py predating that change.
+
+#SBATCH -J delaunay_nn_bench_a100
+#SBATCH --partition=gpu
+#SBATCH --gres=gpu:1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=64gb
+#SBATCH --time=2:00:00
+#SBATCH -o output/output.%A.out
+#SBATCH -e error/error.%A.err
+#SBATCH --mail-type=END,FAIL
+#SBATCH --mail-user=james.w.nightingale@durham.ac.uk
+
+export AP_ROOT=/mnt/ral/jnightin/autolens_profiling
+source $AP_ROOT/activate.sh
+
+export JAX_PLATFORM_NAME=cuda
+export JAX_PLATFORMS=cuda,cpu
+export XLA_PYTHON_CLIENT_PREALLOCATE=false
+export JAX_ENABLE_X64=True
+export NUMBA_CACHE_DIR=/tmp/numba_cache
+export MPLCONFIGDIR=/tmp/matplotlib
+
+nvidia-smi
+cd $AP_ROOT
+
+# Provenance: the laptop columns were taken at PyAutoFit 08f73c31 /
+# PyAutoArray 5dedb5e9 / PyAutoLens 13a4655c. Print what this job actually
+# ran against so a mismatch is visible in the log rather than inferred later.
+echo "=== source revisions ==="
+for r in PyAutoNerves PyAutoFit PyAutoArray PyAutoGalaxy PyAutoLens; do
+    printf '%-14s %s\n' "$r" "$(git -C /mnt/ral/jnightin/PyAuto/$r rev-parse HEAD 2>&1)"
+done
+
+echo "=== benchmark ==="
+date
+python3 -u scripts/misc/delaunay_nn/benchmark.py --repeats 10
+echo "Finished."
+date

@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 
 from hazards._record import Finding
@@ -17,6 +17,7 @@ class ScanContext:
     backends: tuple[str, ...]
     sample_count: int
     seed: int
+    cache: dict[str, object] = field(default_factory=dict, compare=False, repr=False)
 
 
 class HazardCheck(ABC):

@@ -51,7 +51,7 @@ def render_finding_plot(finding: Finding, path: Path) -> None:
         ax.set_yscale("log")
         ax.set_xlabel("factor = (1-q)/(1+q)")
         ax.set_ylabel("relative deflection error")
-    elif finding.hazard_class == "conditioning_floor":
+    elif finding.hazard_class == "conditioning_floor" and "matrix_scale" in data:
         scale = np.asarray(data["matrix_scale"], dtype=float)
         for backend, curves in data["backends"].items():
             ax.plot(
@@ -65,6 +65,61 @@ def render_finding_plot(finding: Finding, path: Path) -> None:
         ax.set_xlabel("synthetic matrix scale")
         ax.set_ylabel("floor / matrix scale")
         ax.legend()
+    elif finding.hazard_class == "conditioning_floor" and "noise_scale" in data:
+        noise_scale = np.asarray(data["noise_scale"], dtype=float)
+        ax.plot(
+            noise_scale,
+            data["curvature_floor_fraction"],
+            marker="o",
+            label="curvature floor",
+        )
+        ax.plot(
+            noise_scale,
+            data["regularization_jitter_fraction"],
+            marker="o",
+            label="regularization jitter",
+        )
+        ax.set_yscale("log")
+        ax.set_xlabel("noise-map scale")
+        ax.set_ylabel("absolute floor / matrix scale")
+        ax.legend()
+    elif finding.hazard_class == "active_set":
+        parameter = np.asarray(data["parameter"], dtype=float)
+        ax.plot(parameter, np.zeros_like(parameter), color="0.7")
+        for index, location in enumerate(data["transition_locations"]):
+            ax.axvline(
+                location,
+                color="tab:red",
+                label="support transition" if index == 0 else None,
+            )
+        ax.set_xlabel("Einstein radius")
+        ax.set_yticks(())
+        ax.legend()
+    elif finding.hazard_class == "solver_divergence":
+        for backend, curve in data["curves"].items():
+            ax.plot(
+                curve["parameter"],
+                curve["figure_of_merit"],
+                marker="o",
+                label=f"{backend} figure of merit",
+            )
+            ax.plot(
+                curve["parameter"],
+                curve["reconstruction"],
+                marker=".",
+                linestyle="--",
+                label=f"{backend} reconstruction",
+            )
+        ax.set_yscale("log")
+        ax.set_xlabel(data["parameter"])
+        ax.set_ylabel("relative error vs NumPy")
+        ax.legend()
+    elif finding.hazard_class == "structural_degeneracy":
+        spans = data["axis_ratio_to_figure_of_merit_span"]
+        axis_ratio = np.asarray(sorted(float(value) for value in spans), dtype=float)
+        ax.plot(axis_ratio, [spans[value] for value in axis_ratio], marker="o")
+        ax.set_xlabel("axis ratio")
+        ax.set_ylabel("figure-of-merit span over orientation")
     else:
         ax.text(0.5, 0.5, finding.summary, ha="center", va="center", wrap=True)
         ax.set_axis_off()

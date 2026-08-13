@@ -51,7 +51,11 @@ from hazards.checks._base import ScanContext  # noqa: E402
 
 def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    parser.add_argument("--subject", choices=("all", "component", "matrix"), default="all")
+    parser.add_argument(
+        "--subject",
+        choices=("all", "component", "matrix", "likelihood"),
+        default="all",
+    )
     parser.add_argument("--backend", choices=("both", "numpy", "jax"), default="both")
     parser.add_argument("--sample-count", type=int, default=1_000_000)
     parser.add_argument("--seed", type=int, default=107)
@@ -147,10 +151,17 @@ def main(argv: list[str] | None = None) -> int:
     if seed is not None:
         write_ell_comps_seed_summary(seed, seed_path)
 
+    import autolens as al
+
+    from hazards._profiles import discover_profile_registry, write_coverage
+
+    coverage_path = args.output_root / "component" / "profile_registry_coverage.json"
+    write_coverage(discover_profile_registry(al), coverage_path)
+
     print(render_markdown_table(payload))
     print(
         f"\nwrote {len(written)} record(s), {len(plots)} plot(s), "
-        f"{index_path.relative_to(REPO_ROOT)}"
+        f"{index_path.relative_to(REPO_ROOT)} and {coverage_path.relative_to(REPO_ROOT)}"
         + (f", and {seed_path.relative_to(REPO_ROOT)}" if seed is not None else "")
     )
     return 0

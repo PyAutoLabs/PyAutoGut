@@ -1,0 +1,97 @@
+{
+  "findings": [
+    {
+      "affects_science": null,
+      "anchors": [],
+      "backend_reachability": {
+        "numpy": {
+          "full_likelihood": "reachable"
+        }
+      },
+      "backends": [
+        "numpy"
+      ],
+      "blocked_by": [],
+      "code_exists": true,
+      "finding_id": "likelihood.imaging-pixelization.absolute-conditioning-floors",
+      "hazard_class": "conditioning_floor",
+      "measurements": [
+        {
+          "basis": "error_curve",
+          "details": {
+            "absolute_floor": 0.001,
+            "fraction": [
+              0.007183877930847692,
+              0.02873551172339077,
+              0.11494204689356308
+            ],
+            "noise_scale": [
+              0.5,
+              1.0,
+              2.0
+            ]
+          },
+          "unit": "curvature_floor_over_diagonal_scale",
+          "value": 0.11494204689356308
+        },
+        {
+          "basis": "error_curve",
+          "details": {
+            "absolute_jitter": 1e-08,
+            "fraction": [
+              3.3333333222222224e-09,
+              3.3333333222222224e-09,
+              3.3333333222222224e-09
+            ],
+            "noise_scale": [
+              0.5,
+              1.0,
+              2.0
+            ],
+            "scale_free_counterexample": "GaussianKernel trace-scaled h_jitter"
+          },
+          "unit": "regularization_jitter_over_diagonal_scale",
+          "value": 3.3333333222222224e-09
+        },
+        {
+          "basis": "reachability",
+          "details": {
+            "blocked_paths": {},
+            "reachable_via": [
+              "FitImaging.linear-light-plus-RectangularUniform.Constant"
+            ]
+          },
+          "unit": "boolean",
+          "value": 1.0
+        }
+      ],
+      "reachable_via": [
+        "FitImaging.linear-light-plus-RectangularUniform.Constant"
+      ],
+      "reproducer": {
+        "curvature_floor_fraction": [
+          0.007183877930847692,
+          0.02873551172339077,
+          0.11494204689356308
+        ],
+        "noise_scale": [
+          0.5,
+          1.0,
+          2.0
+        ],
+        "regularization_jitter_fraction": [
+          3.3333333222222224e-09,
+          3.3333333222222224e-09,
+          3.3333333222222224e-09
+        ]
+      },
+      "schema_version": 1,
+      "subject": "likelihood",
+      "subject_name": "imaging_pixelization",
+      "summary": "The complete likelihood expresses curvature and constant-regularization floors as fractions of the fitted matrices over a noise-map scaling sweep.",
+      "tier": 2,
+      "title": "Absolute inversion floors move with dataset scale"
+    }
+  ],
+  "schema_version": 1
+}

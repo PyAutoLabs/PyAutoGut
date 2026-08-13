@@ -27,12 +27,14 @@ from hazards.checks.saturation import (  # noqa: E402
 )
 
 
-def test_registry_resolves_component_matrix_and_all_scopes():
+def test_registry_resolves_component_matrix_likelihood_and_all_scopes():
     components = resolve_subjects("component")
     matrices = resolve_subjects("matrix")
+    likelihoods = resolve_subjects("likelihood")
     assert {subject.subject for subject in components} == {"component"}
     assert {subject.subject for subject in matrices} == {"matrix"}
-    assert len(resolve_subjects("all")) == len(components) + len(matrices)
+    assert {subject.subject for subject in likelihoods} == {"likelihood"}
+    assert len(resolve_subjects("all")) == len(components) + len(matrices) + len(likelihoods)
 
 
 def test_plateau_detector_finds_both_edges_without_threshold_special_cases():

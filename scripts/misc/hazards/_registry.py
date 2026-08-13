@@ -23,6 +23,11 @@ SUBJECTS = {
         SubjectSpec("component", "spherical_geometry", "Radial geometry at profile centre"),
         SubjectSpec("component", "power_law", "Elliptical power-law deflections"),
         SubjectSpec("matrix", "curvature_matrix", "Synthetic inversion curvature matrices"),
+        SubjectSpec(
+            "likelihood",
+            "imaging_pixelization",
+            "Complete 7x7 imaging likelihood with a rectangular source inversion",
+        ),
     )
 }
 

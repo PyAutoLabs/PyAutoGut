@@ -1,0 +1,137 @@
+{
+  "findings": [
+    {
+      "affects_science": false,
+      "anchors": [
+        {
+          "commit": "be61b8d0546c5d933ff9ef4bf9d445ba4595e03b",
+          "config_key": null,
+          "end_line": 116,
+          "path": "autogalaxy/profiles/geometry_profiles.py",
+          "repo": "PyAutoGalaxy",
+          "start_line": 115,
+          "symbol": "autogalaxy.profiles.geometry_profiles.SphProfile.radial_grid_from",
+          "token_fingerprint": "1cbac173e3a5af4e79b9ef5b23de84fc2c45aa12ef20a6e79aa12749414ddeec",
+          "tokens": [
+            "return",
+            "xp.sqrt",
+            "(",
+            "xp.add",
+            "(",
+            "xp.square",
+            "(",
+            "grid.array",
+            "[",
+            ":",
+            ",",
+            "0",
+            "]",
+            ")",
+            ",",
+            "xp.square",
+            "(",
+            "grid.array",
+            "[",
+            ":",
+            ",",
+            "1",
+            "]",
+            ")",
+            ")",
+            ")"
+          ]
+        }
+      ],
+      "backend_reachability": {
+        "jax": {
+          "gradient_at_r=0": "non_finite",
+          "value_at_r=0": "finite"
+        },
+        "numpy": {
+          "value_at_r=0": "finite"
+        }
+      },
+      "backends": [
+        "jax"
+      ],
+      "blocked_by": [],
+      "code_exists": true,
+      "finding_id": "component.spherical-geometry.radial-sqrt-gradient-at-zero",
+      "hazard_class": "nonfinite_gradient",
+      "measurements": [
+        {
+          "basis": "epsilon_neighbourhood",
+          "details": {
+            "centre": [
+              0.0,
+              0.0
+            ],
+            "domain": {
+              "dimensions": 2,
+              "lower": [
+                -1.0,
+                -1.0
+              ],
+              "note": "coordinate measure, not a model-parameter prior",
+              "type": "uniform_coordinate_window",
+              "upper": [
+                1.0,
+                1.0
+              ]
+            },
+            "epsilon": 1e-06
+          },
+          "unit": "fraction",
+          "value": 7.853981633974483e-13
+        },
+        {
+          "basis": "reachability",
+          "details": {
+            "blocked_paths": {},
+            "reachable_via": [
+              "grid_alignment",
+              "jax_autodiff"
+            ]
+          },
+          "unit": "boolean",
+          "value": 1.0
+        }
+      ],
+      "reachable_via": [
+        "grid_alignment",
+        "jax_autodiff"
+      ],
+      "reproducer": {
+        "gradient_norm": [
+          null,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "jax_gradient_at_zero": [
+          null,
+          null
+        ],
+        "jax_value_at_zero": 0.0,
+        "numpy_value_at_zero": 0.0,
+        "radius": [
+          0.0,
+          1e-12,
+          1e-10,
+          1e-08,
+          1e-06,
+          0.0001
+        ]
+      },
+      "schema_version": 1,
+      "subject": "component",
+      "subject_name": "spherical_geometry",
+      "summary": "The spherical radial coordinate returns the correct finite value zero at the profile centre, but JAX differentiation of sqrt(y^2+x^2) returns a non-finite gradient there.",
+      "tier": 1,
+      "title": "Radial sqrt has a non-finite gradient at r=0"
+    }
+  ],
+  "schema_version": 1
+}

@@ -1,0 +1,405 @@
+{
+  "findings": [
+    {
+      "affects_science": null,
+      "anchors": [
+        {
+          "commit": "5dedb5e90c3ac5957f4288f1968d34f9f4618a95",
+          "config_key": null,
+          "end_line": 51,
+          "path": "autoarray/inversion/inversion/inversion_util.py",
+          "repo": "PyAutoArray",
+          "start_line": 39,
+          "symbol": "autoarray.inversion.inversion.inversion_util.curvature_matrix_with_added_to_diag_from",
+          "token_fingerprint": "e355f9007906e717389b4a4340dee27dd5b660c47d040bcd21eed276e16797f3",
+          "tokens": [
+            "def",
+            "curvature_matrix_with_added_to_diag_from",
+            "(",
+            "curvature_matrix",
+            ":",
+            "np.ndarray",
+            ",",
+            "value",
+            ":",
+            "float",
+            ",",
+            "no_regularization_index_list",
+            ":",
+            "optional",
+            "[",
+            "list",
+            "]",
+            "=",
+            "none",
+            ",",
+            "xp",
+            "=",
+            "np",
+            ",",
+            ")",
+            "-",
+            ">",
+            "np.ndarray",
+            ":",
+            "it",
+            "is",
+            "common",
+            "for",
+            "the",
+            "curvature_matrix",
+            "computed",
+            "to",
+            "not",
+            "be",
+            "positive",
+            "-",
+            "definite",
+            ",",
+            "leading",
+            "for",
+            "the",
+            "inversion",
+            "via",
+            "np.linalg.solve",
+            "to",
+            "fail",
+            "and",
+            "raise",
+            "a",
+            "linalgerror",
+            ".",
+            "in",
+            "many",
+            "circumstances",
+            ",",
+            "adding",
+            "a",
+            "small",
+            "numerical",
+            "value",
+            "of",
+            "1.0e-8",
+            "to",
+            "the",
+            "diagonal",
+            "of",
+            "the",
+            "curvature_matrix",
+            "makes",
+            "it",
+            "positive",
+            "definite",
+            ",",
+            "such",
+            "that",
+            "the",
+            "inversion",
+            "is",
+            "performed",
+            "without",
+            "raising",
+            "an",
+            "error."
+          ]
+        },
+        {
+          "commit": "5dedb5e90c3ac5957f4288f1968d34f9f4618a95",
+          "config_key": "general.inversion.no_regularization_add_to_curvature_diag_value",
+          "end_line": 7,
+          "path": "autoarray/config/general.yaml",
+          "repo": "PyAutoArray",
+          "start_line": 7,
+          "symbol": null,
+          "token_fingerprint": "f7e17be4a78fbb0606d67e41b269b23b0acb32e16c1da994431b6b6b2a1f944d",
+          "tokens": [
+            "no_regularization_add_to_curvature_diag_value",
+            ":",
+            "1.0e-3"
+          ]
+        }
+      ],
+      "backend_reachability": {
+        "jax": {
+          "synthetic_matrix": "reachable"
+        },
+        "numpy": {
+          "synthetic_matrix": "reachable"
+        }
+      },
+      "backends": [
+        "numpy",
+        "jax"
+      ],
+      "blocked_by": [],
+      "code_exists": true,
+      "finding_id": "matrix.curvature.absolute-diagonal-floor",
+      "hazard_class": "conditioning_floor",
+      "measurements": [
+        {
+          "basis": "error_curve",
+          "details": {
+            "curves": {
+              "jax": {
+                "condition_after": [
+                  1.001999997999,
+                  1.0199999799000026,
+                  1.1999997900000379,
+                  2.9999970000019998,
+                  20.999880000627492,
+                  200.98980051249598,
+                  1999.9985009998716,
+                  19901.477636711195,
+                  190477.00226376898,
+                  1333333.1111160389
+                ],
+                "condition_before": [
+                  3999998.0008096346,
+                  3999997.9991325927,
+                  3999997.9995159158,
+                  3999997.999822574,
+                  3999998.001294537,
+                  3999998.0003132294,
+                  3999998.0006272495,
+                  3999997.99999921,
+                  3999997.999396294,
+                  3999998.0000394057
+                ],
+                "floor_over_matrix_scale": [
+                  1000.00050000025,
+                  100.000050000025,
+                  10.000005000002501,
+                  1.00000050000025,
+                  0.10000005000002499,
+                  0.010000005000002499,
+                  0.00100000050000025,
+                  0.000100000050000025,
+                  1.00000050000025e-05,
+                  1.00000050000025e-06
+                ],
+                "observed_diagonal_add": [
+                  0.001,
+                  0.001,
+                  0.001,
+                  0.001,
+                  0.001,
+                  0.0010000000000000009,
+                  0.0009999999999999454,
+                  0.0009999999999994458,
+                  0.0010000000000047748,
+                  0.0009999999999763531
+                ]
+              },
+              "numpy": {
+                "condition_after": [
+                  1.001999997999,
+                  1.0199999799000026,
+                  1.1999997900000379,
+                  2.9999970000019998,
+                  20.999880000627492,
+                  200.98980051249598,
+                  1999.9985009998716,
+                  19901.477636711195,
+                  190477.00226376898,
+                  1333333.1111160389
+                ],
+                "condition_before": [
+                  3999998.0008096346,
+                  3999997.9991325927,
+                  3999997.9995159158,
+                  3999997.999822574,
+                  3999998.001294537,
+                  3999998.0003132294,
+                  3999998.0006272495,
+                  3999997.99999921,
+                  3999997.999396294,
+                  3999998.0000394057
+                ],
+                "floor_over_matrix_scale": [
+                  1000.00050000025,
+                  100.000050000025,
+                  10.000005000002501,
+                  1.00000050000025,
+                  0.10000005000002499,
+                  0.010000005000002499,
+                  0.00100000050000025,
+                  0.000100000050000025,
+                  1.00000050000025e-05,
+                  1.00000050000025e-06
+                ],
+                "observed_diagonal_add": [
+                  0.001,
+                  0.001,
+                  0.001,
+                  0.001,
+                  0.001,
+                  0.0010000000000000009,
+                  0.0009999999999999454,
+                  0.0009999999999994458,
+                  0.0010000000000047748,
+                  0.0009999999999763531
+                ]
+              }
+            },
+            "floor": 0.001,
+            "parameter": [
+              1e-06,
+              1e-05,
+              0.0001,
+              0.001,
+              0.01,
+              0.1,
+              1.0,
+              10.0,
+              100.0,
+              1000.0
+            ],
+            "parameter_name": "matrix_scale"
+          },
+          "unit": "floor_over_matrix_scale",
+          "value": 1000.00050000025
+        },
+        {
+          "basis": "reachability",
+          "details": {
+            "blocked_paths": {},
+            "reachable_via": [
+              "jax_synthetic_matrix",
+              "numpy_synthetic_matrix"
+            ]
+          },
+          "unit": "boolean",
+          "value": 1.0
+        }
+      ],
+      "reachable_via": [
+        "numpy_synthetic_matrix",
+        "jax_synthetic_matrix"
+      ],
+      "reproducer": {
+        "backends": {
+          "jax": {
+            "condition_after": [
+              1.001999997999,
+              1.0199999799000026,
+              1.1999997900000379,
+              2.9999970000019998,
+              20.999880000627492,
+              200.98980051249598,
+              1999.9985009998716,
+              19901.477636711195,
+              190477.00226376898,
+              1333333.1111160389
+            ],
+            "condition_before": [
+              3999998.0008096346,
+              3999997.9991325927,
+              3999997.9995159158,
+              3999997.999822574,
+              3999998.001294537,
+              3999998.0003132294,
+              3999998.0006272495,
+              3999997.99999921,
+              3999997.999396294,
+              3999998.0000394057
+            ],
+            "floor_over_matrix_scale": [
+              1000.00050000025,
+              100.000050000025,
+              10.000005000002501,
+              1.00000050000025,
+              0.10000005000002499,
+              0.010000005000002499,
+              0.00100000050000025,
+              0.000100000050000025,
+              1.00000050000025e-05,
+              1.00000050000025e-06
+            ],
+            "observed_diagonal_add": [
+              0.001,
+              0.001,
+              0.001,
+              0.001,
+              0.001,
+              0.0010000000000000009,
+              0.0009999999999999454,
+              0.0009999999999994458,
+              0.0010000000000047748,
+              0.0009999999999763531
+            ]
+          },
+          "numpy": {
+            "condition_after": [
+              1.001999997999,
+              1.0199999799000026,
+              1.1999997900000379,
+              2.9999970000019998,
+              20.999880000627492,
+              200.98980051249598,
+              1999.9985009998716,
+              19901.477636711195,
+              190477.00226376898,
+              1333333.1111160389
+            ],
+            "condition_before": [
+              3999998.0008096346,
+              3999997.9991325927,
+              3999997.9995159158,
+              3999997.999822574,
+              3999998.001294537,
+              3999998.0003132294,
+              3999998.0006272495,
+              3999997.99999921,
+              3999997.999396294,
+              3999998.0000394057
+            ],
+            "floor_over_matrix_scale": [
+              1000.00050000025,
+              100.000050000025,
+              10.000005000002501,
+              1.00000050000025,
+              0.10000005000002499,
+              0.010000005000002499,
+              0.00100000050000025,
+              0.000100000050000025,
+              1.00000050000025e-05,
+              1.00000050000025e-06
+            ],
+            "observed_diagonal_add": [
+              0.001,
+              0.001,
+              0.001,
+              0.001,
+              0.001,
+              0.0010000000000000009,
+              0.0009999999999999454,
+              0.0009999999999994458,
+              0.0010000000000047748,
+              0.0009999999999763531
+            ]
+          }
+        },
+        "floor": 0.001,
+        "matrix_scale": [
+          1e-06,
+          1e-05,
+          0.0001,
+          0.001,
+          0.01,
+          0.1,
+          1.0,
+          10.0,
+          100.0,
+          1000.0
+        ]
+      },
+      "schema_version": 1,
+      "subject": "matrix",
+      "subject_name": "curvature_matrix",
+      "summary": "The configured 1.0e-03 diagonal add ranges from dominant to negligible as synthetic curvature scale changes. Detection needs no dataset; judging scientific relevance does.",
+      "tier": 2,
+      "title": "Absolute curvature-diagonal floor is scale dependent"
+    }
+  ],
+  "schema_version": 1
+}

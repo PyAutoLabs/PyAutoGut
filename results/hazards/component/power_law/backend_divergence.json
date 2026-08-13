@@ -1,0 +1,295 @@
+{
+  "findings": [
+    {
+      "affects_science": true,
+      "anchors": [
+        {
+          "commit": "be61b8d0546c5d933ff9ef4bf9d445ba4595e03b",
+          "config_key": null,
+          "end_line": 143,
+          "path": "autogalaxy/profiles/mass/total/power_law.py",
+          "repo": "PyAutoGalaxy",
+          "start_line": 135,
+          "symbol": "autogalaxy.profiles.mass.total.power_law.PowerLaw.deflections_yx_2d_from",
+          "token_fingerprint": "1b695f5b19d846e5bb01ee6857293619f170f896254614e2964b929ab0d76e23",
+          "tokens": [
+            "complex_angle",
+            "=",
+            "(",
+            "2.0",
+            "*",
+            "b",
+            "/",
+            "(",
+            "1.0",
+            "+",
+            "self.axis_ratio",
+            "(",
+            "xp",
+            ")",
+            ")",
+            "*",
+            "(",
+            "b",
+            "/",
+            "r",
+            ")",
+            "**",
+            "(",
+            "slope",
+            "-",
+            "1.0",
+            ")",
+            "*",
+            "z",
+            "*",
+            "special.hyp2f1",
+            "(",
+            "1.0",
+            ",",
+            "0.5",
+            "*",
+            "slope",
+            ",",
+            "2.0",
+            "-",
+            "0.5",
+            "*",
+            "slope",
+            ",",
+            "-",
+            "factor",
+            "*",
+            "z",
+            "**",
+            "2",
+            ")",
+            ")"
+          ]
+        },
+        {
+          "commit": "be61b8d0546c5d933ff9ef4bf9d445ba4595e03b",
+          "config_key": null,
+          "end_line": 20,
+          "path": "autogalaxy/profiles/mass/total/jax_utils.py",
+          "repo": "PyAutoGalaxy",
+          "start_line": 14,
+          "symbol": "autogalaxy.profiles.mass.total.jax_utils.omega",
+          "token_fingerprint": "684792b0b2c2cc40dd87466a44aca1c1adb9fcd1ef0686fa16dbd970a456df31",
+          "tokens": [
+            "def",
+            "omega",
+            "(",
+            "eiphi",
+            ",",
+            "slope",
+            ",",
+            "factor",
+            ",",
+            "n_terms",
+            "=",
+            "20",
+            ",",
+            "xp",
+            "=",
+            "np",
+            ")",
+            ":",
+            "jax",
+            "implementation",
+            "of",
+            "the",
+            "numerical",
+            "evaluation",
+            "of",
+            "the",
+            "angular",
+            "component",
+            "of",
+            "the",
+            "complex",
+            "deflection",
+            "angle",
+            "for",
+            "the",
+            "elliptical",
+            "power",
+            "law",
+            "profile",
+            "as",
+            "given",
+            "as",
+            "given",
+            "by",
+            "tessore",
+            "and",
+            "metcalf",
+            "2015.",
+            "based",
+            "on",
+            "equation",
+            "29",
+            ",",
+            "and",
+            "gives",
+            "omega",
+            "(",
+            "e.g.",
+            "can",
+            "be",
+            "used",
+            "as",
+            "a",
+            "drop",
+            "in",
+            "replacement",
+            "for",
+            "the",
+            "exp",
+            "(",
+            "i",
+            "*",
+            "phi",
+            ")",
+            "*",
+            "special.hyp2f1",
+            "term",
+            "in",
+            "equation",
+            "13",
+            ")",
+            "."
+          ]
+        }
+      ],
+      "backend_reachability": {
+        "jax": {
+          "implementation": "omega series",
+          "n_terms": 20
+        },
+        "numpy": {
+          "implementation": "scipy.special.hyp2f1"
+        }
+      },
+      "backends": [
+        "numpy",
+        "jax"
+      ],
+      "blocked_by": [],
+      "code_exists": true,
+      "finding_id": "component.power-law.series-vs-hyp2f1-divergence",
+      "hazard_class": "backend_divergence",
+      "measurements": [
+        {
+          "basis": "error_curve",
+          "details": {
+            "maximum_parameter": 0.99,
+            "parameter": [
+              0.0,
+              0.1,
+              0.2,
+              0.3,
+              0.4,
+              0.5,
+              0.6,
+              0.7,
+              0.8,
+              0.9,
+              0.95,
+              0.99
+            ],
+            "parameter_name": "factor=(1-q)/(1+q)",
+            "relative_error": [
+              0.0,
+              2.2616458701150935e-16,
+              7.089605656843349e-16,
+              1.9912902893382096e-12,
+              6.657784605646536e-10,
+              6.252888429249803e-08,
+              2.6644478731897106e-06,
+              6.706243723348468e-05,
+              0.0011889143875994702,
+              0.017667895888441355,
+              0.07170171342337797,
+              0.29691916747928476
+            ]
+          },
+          "unit": "relative_error",
+          "value": 0.29691916747928476
+        },
+        {
+          "basis": "reachability",
+          "details": {
+            "blocked_paths": {},
+            "reachable_via": [
+              "jax_deflections",
+              "numpy_deflections"
+            ]
+          },
+          "unit": "boolean",
+          "value": 1.0
+        }
+      ],
+      "reachable_via": [
+        "numpy_deflections",
+        "jax_deflections"
+      ],
+      "reproducer": {
+        "coordinates": [
+          [
+            0.3,
+            0.7
+          ],
+          [
+            -0.4,
+            0.6
+          ],
+          [
+            0.8,
+            -0.2
+          ],
+          [
+            -0.7,
+            -0.3
+          ]
+        ],
+        "factor": [
+          0.0,
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.95,
+          0.99
+        ],
+        "relative_error": [
+          0.0,
+          2.2616458701150935e-16,
+          7.089605656843349e-16,
+          1.9912902893382096e-12,
+          6.657784605646536e-10,
+          6.252888429249803e-08,
+          2.6644478731897106e-06,
+          6.706243723348468e-05,
+          0.0011889143875994702,
+          0.017667895888441355,
+          0.07170171342337797,
+          0.29691916747928476
+        ],
+        "slope": 2.2
+      },
+      "schema_version": 1,
+      "subject": "component",
+      "subject_name": "power_law",
+      "summary": "The JAX backend replaces the exact SciPy hyp2f1 angular factor with a fixed 20-term omega series. Relative deflection error grows continuously to 0.297 over the measured factor curve.",
+      "tier": 1,
+      "title": "PowerLaw's 20-term JAX series diverges from hyp2f1 at high ellipticity"
+    }
+  ],
+  "schema_version": 1
+}

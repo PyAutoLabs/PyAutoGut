@@ -1,0 +1,1371 @@
+{
+  "findings": {
+    "component.ell_comps.magnitude-saturation": {
+      "affects_science": true,
+      "anchors": [
+        {
+          "commit": "be61b8d0546c5d933ff9ef4bf9d445ba4595e03b",
+          "config_key": null,
+          "end_line": 77,
+          "path": "autogalaxy/convert.py",
+          "repo": "PyAutoGalaxy",
+          "start_line": 71,
+          "symbol": "autogalaxy.convert.axis_ratio_and_angle_from",
+          "token_fingerprint": "244242025d2db16d4aeb9eaed153b476c2ed7210557e37e5d068c34760a3e8f6",
+          "tokens": [
+            "fac",
+            "=",
+            "xp.sqrt",
+            "(",
+            "ell_comps",
+            "[",
+            "1",
+            "]",
+            "**",
+            "2",
+            "+",
+            "ell_comps",
+            "[",
+            "0",
+            "]",
+            "**",
+            "2",
+            ")",
+            "if",
+            "xp.__name__.startswith",
+            "(",
+            "jax",
+            ")",
+            ":",
+            "import",
+            "jax",
+            "fac",
+            "=",
+            "jax.lax.min",
+            "(",
+            "fac",
+            ",",
+            "0.999",
+            ")",
+            "else",
+            ":",
+            "fac",
+            "=",
+            "np.minimum",
+            "(",
+            "fac",
+            ",",
+            "0.999",
+            ")"
+          ]
+        },
+        {
+          "commit": "be61b8d0546c5d933ff9ef4bf9d445ba4595e03b",
+          "config_key": null,
+          "end_line": 160,
+          "path": "autogalaxy/profiles/validate.py",
+          "repo": "PyAutoGalaxy",
+          "start_line": 154,
+          "symbol": "autogalaxy.profiles.validate.validate_ell_comps",
+          "token_fingerprint": "9971e6026aba80d2d4640f9e538390443dbc8f8b3e8d86327dad008bf5104e18",
+          "tokens": [
+            "return",
+            "magnitude_squared",
+            "=",
+            "ell_y",
+            "*",
+            "ell_y",
+            "+",
+            "ell_x",
+            "*",
+            "ell_x",
+            "if",
+            "not",
+            "np.isfinite",
+            "(",
+            "magnitude_squared",
+            ")",
+            "or",
+            "magnitude_squared",
+            ">=",
+            "1.0",
+            ":",
+            "raise",
+            "exc.modelparameterexception",
+            "(",
+            "f",
+            "{",
+            "name",
+            "}",
+            "must",
+            "satisfy",
+            "{",
+            "name",
+            "}",
+            "[",
+            "0",
+            "]",
+            "**",
+            "2",
+            "+",
+            "{",
+            "name",
+            "}",
+            "[",
+            "1",
+            "]",
+            "**",
+            "2",
+            "<",
+            "1",
+            "got"
+          ]
+        }
+      ],
+      "backend_reachability": {
+        "jax": {
+          "magnitude >= 0.999": "reachable",
+          "probes": [
+            {
+              "blocked_by": null,
+              "error": null,
+              "path": "jax_construction_beyond_unit_circle",
+              "reachable": true,
+              "value": 0.0005002501250625317
+            },
+            {
+              "blocked_by": null,
+              "error": null,
+              "path": "jax_trace_beyond_unit_circle",
+              "reachable": true,
+              "value": 0.0005002501250625317
+            }
+          ]
+        },
+        "numpy": {
+          "0.999 <= magnitude < 1": "reachable",
+          "magnitude >= 1": "blocked_by_validate_ell_comps",
+          "probes": [
+            {
+              "blocked_by": null,
+              "error": null,
+              "path": "numpy_construction_inner_annulus",
+              "reachable": true,
+              "value": 0.0005002501250625317
+            },
+            {
+              "blocked_by": "validate_ell_comps",
+              "error": "ModelParameterException: ell_comps must satisfy ell_comps[0]**2 + ell_comps[1]**2 < 1; got (1.2, 0.0), whose magnitude is np.float64(1.2). The axis ratio is q = (1 - f) / (1 + f) with f the magnitude of ell_comps, so f must be below 1 for q to be a valid axis ratio \u2014 at f = 1 the ellipse degenerates to q = 0 and beyond it q is negative and the profile has no geometric meaning",
+              "path": "numpy_construction_beyond_unit_circle",
+              "reachable": false,
+              "value": null
+            }
+          ]
+        }
+      },
+      "backends": [
+        "numpy",
+        "jax"
+      ],
+      "blocked_by": [
+        {
+          "commit": "be61b8d0546c5d933ff9ef4bf9d445ba4595e03b",
+          "config_key": null,
+          "end_line": 160,
+          "path": "autogalaxy/profiles/validate.py",
+          "repo": "PyAutoGalaxy",
+          "start_line": 154,
+          "symbol": "autogalaxy.profiles.validate.validate_ell_comps",
+          "token_fingerprint": "9971e6026aba80d2d4640f9e538390443dbc8f8b3e8d86327dad008bf5104e18",
+          "tokens": [
+            "return",
+            "magnitude_squared",
+            "=",
+            "ell_y",
+            "*",
+            "ell_y",
+            "+",
+            "ell_x",
+            "*",
+            "ell_x",
+            "if",
+            "not",
+            "np.isfinite",
+            "(",
+            "magnitude_squared",
+            ")",
+            "or",
+            "magnitude_squared",
+            ">=",
+            "1.0",
+            ":",
+            "raise",
+            "exc.modelparameterexception",
+            "(",
+            "f",
+            "{",
+            "name",
+            "}",
+            "must",
+            "satisfy",
+            "{",
+            "name",
+            "}",
+            "[",
+            "0",
+            "]",
+            "**",
+            "2",
+            "+",
+            "{",
+            "name",
+            "}",
+            "[",
+            "1",
+            "]",
+            "**",
+            "2",
+            "<",
+            "1",
+            "got"
+          ]
+        }
+      ],
+      "code_exists": true,
+      "finding_id": "component.ell_comps.magnitude-saturation",
+      "hazard_class": "saturation",
+      "measurements": [
+        {
+          "basis": "prior_mass",
+          "details": {
+            "confidence": 0.95,
+            "confidence_interval": [
+              0.0021041882848829873,
+              0.0022876363029244056
+            ],
+            "prior": {
+              "dimensions": 2,
+              "lower": -1.0,
+              "mean": 0.0,
+              "sigma": 0.3,
+              "type": "independent_truncated_gaussian",
+              "upper": 1.0
+            },
+            "sample_count": 1000000,
+            "seed": 107,
+            "successes": 2194
+          },
+          "unit": "fraction",
+          "value": 0.002194
+        },
+        {
+          "basis": "prior_mass",
+          "details": {
+            "confidence": 0.95,
+            "confidence_interval": [
+              0.05026974585779952,
+              0.05112970607920213
+            ],
+            "prior": {
+              "dimensions": 2,
+              "lower": -1.0,
+              "mean": 0.0,
+              "sigma": 0.5,
+              "type": "independent_truncated_gaussian",
+              "upper": 1.0
+            },
+            "sample_count": 1000000,
+            "seed": 107,
+            "successes": 50698
+          },
+          "unit": "fraction",
+          "value": 0.050698
+        },
+        {
+          "basis": "prior_mass",
+          "details": {
+            "confidence": 0.95,
+            "confidence_interval": [
+              0.21354478912977987,
+              0.21515340550257972
+            ],
+            "prior": {
+              "dimensions": 2,
+              "lower": -1.0,
+              "type": "independent_uniform",
+              "upper": 1.0
+            },
+            "sample_count": 1000000,
+            "seed": 107,
+            "successes": 214348
+          },
+          "unit": "fraction",
+          "value": 0.214348
+        },
+        {
+          "basis": "reachability",
+          "details": {
+            "blocked_paths": {
+              "numpy:magnitude>=1": "validate_ell_comps"
+            },
+            "reachable_via": [
+              "jax_construction_beyond_unit_circle",
+              "jax_trace_beyond_unit_circle",
+              "numpy_construction_inner_annulus"
+            ]
+          },
+          "unit": "boolean",
+          "value": 1.0
+        }
+      ],
+      "reachable_via": [
+        "jax_construction_beyond_unit_circle",
+        "jax_trace_beyond_unit_circle",
+        "numpy_construction_inner_annulus"
+      ],
+      "record": "component/ell_comps/saturation.json",
+      "reproducer": {
+        "axis_ratio": {
+          "jax": [
+            0.0010010010010010019,
+            0.0005002501250625317,
+            0.0005002501250625317,
+            0.0005002501250625317,
+            0.0005002501250625317,
+            0.0005002501250625317
+          ],
+          "numpy": [
+            0.0010010010010010019,
+            0.0005002501250625317,
+            0.0005002501250625317,
+            0.0005002501250625317,
+            0.0005002501250625317,
+            0.0005002501250625317
+          ]
+        },
+        "detected_plateau": {
+          "end": 1.2,
+          "samples": 5,
+          "start": 0.999,
+          "value": 0.0005002501250625317
+        },
+        "parameter": "ell_comps_magnitude",
+        "parameter_values": [
+          0.998,
+          0.999,
+          0.9995,
+          0.9999,
+          1.0,
+          1.2
+        ],
+        "probes": [
+          {
+            "blocked_by": null,
+            "error": null,
+            "path": "numpy_construction_inner_annulus",
+            "reachable": true,
+            "value": 0.0005002501250625317
+          },
+          {
+            "blocked_by": "validate_ell_comps",
+            "error": "ModelParameterException: ell_comps must satisfy ell_comps[0]**2 + ell_comps[1]**2 < 1; got (1.2, 0.0), whose magnitude is np.float64(1.2). The axis ratio is q = (1 - f) / (1 + f) with f the magnitude of ell_comps, so f must be below 1 for q to be a valid axis ratio \u2014 at f = 1 the ellipse degenerates to q = 0 and beyond it q is negative and the profile has no geometric meaning",
+            "path": "numpy_construction_beyond_unit_circle",
+            "reachable": false,
+            "value": null
+          },
+          {
+            "blocked_by": null,
+            "error": null,
+            "path": "jax_construction_beyond_unit_circle",
+            "reachable": true,
+            "value": 0.0005002501250625317
+          },
+          {
+            "blocked_by": null,
+            "error": null,
+            "path": "jax_trace_beyond_unit_circle",
+            "reachable": true,
+            "value": 0.0005002501250625317
+          }
+        ]
+      },
+      "schema_version": 1,
+      "subject": "component",
+      "subject_name": "ell_comps",
+      "summary": "The conversion maps every magnitude at or above 0.999 to q=0.000500250125062532. NumPy reaches the thin valid annulus below one but its constructor guard blocks the beyond-unit region; JAX arrays and tracers bypass that concrete-scalar guard.",
+      "tier": 1,
+      "title": "ell_comps magnitude saturates at 0.999"
+    },
+    "component.isothermal.near-spherical-saturation": {
+      "affects_science": true,
+      "anchors": [
+        {
+          "commit": "be61b8d0546c5d933ff9ef4bf9d445ba4595e03b",
+          "config_key": null,
+          "end_line": 99,
+          "path": "autogalaxy/profiles/mass/total/isothermal.py",
+          "repo": "PyAutoGalaxy",
+          "start_line": 97,
+          "symbol": "autogalaxy.profiles.mass.total.isothermal.Isothermal.axis_ratio",
+          "token_fingerprint": "82aad20845b4db675705c423973895b550ad5a368ad2945c5709455c10b60625",
+          "tokens": [
+            "def",
+            "axis_ratio",
+            "(",
+            "self",
+            ",",
+            "xp",
+            "=",
+            "np",
+            ")",
+            ":",
+            "axis_ratio",
+            "=",
+            "super",
+            "(",
+            ")",
+            ".",
+            "axis_ratio",
+            "(",
+            "xp",
+            "=",
+            "xp",
+            ")",
+            "return",
+            "xp.minimum",
+            "(",
+            "axis_ratio",
+            ",",
+            "0.99999",
+            ")"
+          ]
+        }
+      ],
+      "backend_reachability": {
+        "jax": {
+          "magnitude <= epsilon": "reachable"
+        },
+        "numpy": {
+          "magnitude <= epsilon": "reachable"
+        }
+      },
+      "backends": [
+        "numpy",
+        "jax"
+      ],
+      "blocked_by": [],
+      "code_exists": true,
+      "finding_id": "component.isothermal.near-spherical-saturation",
+      "hazard_class": "saturation",
+      "measurements": [
+        {
+          "basis": "epsilon_neighbourhood",
+          "details": {
+            "centre": [
+              0.0,
+              0.0
+            ],
+            "domain": {
+              "dimensions": 2,
+              "lower": -1.0,
+              "sigma": 0.3,
+              "type": "independent_truncated_gaussian",
+              "upper": 1.0
+            },
+            "epsilon": 5.000025000102246e-06
+          },
+          "unit": "fraction",
+          "value": 1.391289541885129e-10
+        },
+        {
+          "basis": "reachability",
+          "details": {
+            "blocked_paths": {},
+            "reachable_via": [
+              "jax_construction_near_spherical",
+              "numpy_construction_near_spherical"
+            ]
+          },
+          "unit": "boolean",
+          "value": 1.0
+        }
+      ],
+      "reachable_via": [
+        "numpy_construction_near_spherical",
+        "jax_construction_near_spherical"
+      ],
+      "record": "component/isothermal/saturation.json",
+      "reproducer": {
+        "axis_ratio": {
+          "jax": [
+            0.99999,
+            0.99999,
+            0.99999,
+            0.99999,
+            0.99999,
+            0.9999898000520197,
+            0.999980000199998
+          ],
+          "numpy": [
+            0.99999,
+            0.99999,
+            0.99999,
+            0.99999,
+            0.99999,
+            0.9999898000520197,
+            0.999980000199998
+          ]
+        },
+        "derived_epsilon": 5.000025000102246e-06,
+        "detected_plateau": {
+          "end": 5e-06,
+          "samples": 5,
+          "start": 0.0,
+          "value": 0.99999
+        },
+        "parameter": "ell_comps_magnitude",
+        "parameter_values": [
+          0.0,
+          1e-07,
+          1e-06,
+          4e-06,
+          5e-06,
+          5.1e-06,
+          1e-05
+        ]
+      },
+      "schema_version": 1,
+      "subject": "component",
+      "subject_name": "isothermal",
+      "summary": "A second, load-bearing saturation prevents the q=1 divisions in the elliptical Isothermal deflection from becoming 0/0. Its affected ell_comps disk is too small for prior-sampling discovery.",
+      "tier": 1,
+      "title": "Isothermal caps near-spherical axis ratios at 0.99999"
+    },
+    "component.power-law.series-vs-hyp2f1-divergence": {
+      "affects_science": true,
+      "anchors": [
+        {
+          "commit": "be61b8d0546c5d933ff9ef4bf9d445ba4595e03b",
+          "config_key": null,
+          "end_line": 143,
+          "path": "autogalaxy/profiles/mass/total/power_law.py",
+          "repo": "PyAutoGalaxy",
+          "start_line": 135,
+          "symbol": "autogalaxy.profiles.mass.total.power_law.PowerLaw.deflections_yx_2d_from",
+          "token_fingerprint": "1b695f5b19d846e5bb01ee6857293619f170f896254614e2964b929ab0d76e23",
+          "tokens": [
+            "complex_angle",
+            "=",
+            "(",
+            "2.0",
+            "*",
+            "b",
+            "/",
+            "(",
+            "1.0",
+            "+",
+            "self.axis_ratio",
+            "(",
+            "xp",
+            ")",
+            ")",
+            "*",
+            "(",
+            "b",
+            "/",
+            "r",
+            ")",
+            "**",
+            "(",
+            "slope",
+            "-",
+            "1.0",
+            ")",
+            "*",
+            "z",
+            "*",
+            "special.hyp2f1",
+            "(",
+            "1.0",
+            ",",
+            "0.5",
+            "*",
+            "slope",
+            ",",
+            "2.0",
+            "-",
+            "0.5",
+            "*",
+            "slope",
+            ",",
+            "-",
+            "factor",
+            "*",
+            "z",
+            "**",
+            "2",
+            ")",
+            ")"
+          ]
+        },
+        {
+          "commit": "be61b8d0546c5d933ff9ef4bf9d445ba4595e03b",
+          "config_key": null,
+          "end_line": 20,
+          "path": "autogalaxy/profiles/mass/total/jax_utils.py",
+          "repo": "PyAutoGalaxy",
+          "start_line": 14,
+          "symbol": "autogalaxy.profiles.mass.total.jax_utils.omega",
+          "token_fingerprint": "684792b0b2c2cc40dd87466a44aca1c1adb9fcd1ef0686fa16dbd970a456df31",
+          "tokens": [
+            "def",
+            "omega",
+            "(",
+            "eiphi",
+            ",",
+            "slope",
+            ",",
+            "factor",
+            ",",
+            "n_terms",
+            "=",
+            "20",
+            ",",
+            "xp",
+            "=",
+            "np",
+            ")",
+            ":",
+            "jax",
+            "implementation",
+            "of",
+            "the",
+            "numerical",
+            "evaluation",
+            "of",
+            "the",
+            "angular",
+            "component",
+            "of",
+            "the",
+            "complex",
+            "deflection",
+            "angle",
+            "for",
+            "the",
+            "elliptical",
+            "power",
+            "law",
+            "profile",
+            "as",
+            "given",
+            "as",
+            "given",
+            "by",
+            "tessore",
+            "and",
+            "metcalf",
+            "2015.",
+            "based",
+            "on",
+            "equation",
+            "29",
+            ",",
+            "and",
+            "gives",
+            "omega",
+            "(",
+            "e.g.",
+            "can",
+            "be",
+            "used",
+            "as",
+            "a",
+            "drop",
+            "in",
+            "replacement",
+            "for",
+            "the",
+            "exp",
+            "(",
+            "i",
+            "*",
+            "phi",
+            ")",
+            "*",
+            "special.hyp2f1",
+            "term",
+            "in",
+            "equation",
+            "13",
+            ")",
+            "."
+          ]
+        }
+      ],
+      "backend_reachability": {
+        "jax": {
+          "implementation": "omega series",
+          "n_terms": 20
+        },
+        "numpy": {
+          "implementation": "scipy.special.hyp2f1"
+        }
+      },
+      "backends": [
+        "numpy",
+        "jax"
+      ],
+      "blocked_by": [],
+      "code_exists": true,
+      "finding_id": "component.power-law.series-vs-hyp2f1-divergence",
+      "hazard_class": "backend_divergence",
+      "measurements": [
+        {
+          "basis": "error_curve",
+          "details": {
+            "maximum_parameter": 0.99,
+            "parameter": [
+              0.0,
+              0.1,
+              0.2,
+              0.3,
+              0.4,
+              0.5,
+              0.6,
+              0.7,
+              0.8,
+              0.9,
+              0.95,
+              0.99
+            ],
+            "parameter_name": "factor=(1-q)/(1+q)",
+            "relative_error": [
+              0.0,
+              2.2616458701150935e-16,
+              7.089605656843349e-16,
+              1.9912902893382096e-12,
+              6.657784605646536e-10,
+              6.252888429249803e-08,
+              2.6644478731897106e-06,
+              6.706243723348468e-05,
+              0.0011889143875994702,
+              0.017667895888441355,
+              0.07170171342337797,
+              0.29691916747928476
+            ]
+          },
+          "unit": "relative_error",
+          "value": 0.29691916747928476
+        },
+        {
+          "basis": "reachability",
+          "details": {
+            "blocked_paths": {},
+            "reachable_via": [
+              "jax_deflections",
+              "numpy_deflections"
+            ]
+          },
+          "unit": "boolean",
+          "value": 1.0
+        }
+      ],
+      "reachable_via": [
+        "numpy_deflections",
+        "jax_deflections"
+      ],
+      "record": "component/power_law/backend_divergence.json",
+      "reproducer": {
+        "coordinates": [
+          [
+            0.3,
+            0.7
+          ],
+          [
+            -0.4,
+            0.6
+          ],
+          [
+            0.8,
+            -0.2
+          ],
+          [
+            -0.7,
+            -0.3
+          ]
+        ],
+        "factor": [
+          0.0,
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9,
+          0.95,
+          0.99
+        ],
+        "relative_error": [
+          0.0,
+          2.2616458701150935e-16,
+          7.089605656843349e-16,
+          1.9912902893382096e-12,
+          6.657784605646536e-10,
+          6.252888429249803e-08,
+          2.6644478731897106e-06,
+          6.706243723348468e-05,
+          0.0011889143875994702,
+          0.017667895888441355,
+          0.07170171342337797,
+          0.29691916747928476
+        ],
+        "slope": 2.2
+      },
+      "schema_version": 1,
+      "subject": "component",
+      "subject_name": "power_law",
+      "summary": "The JAX backend replaces the exact SciPy hyp2f1 angular factor with a fixed 20-term omega series. Relative deflection error grows continuously to 0.297 over the measured factor curve.",
+      "tier": 1,
+      "title": "PowerLaw's 20-term JAX series diverges from hyp2f1 at high ellipticity"
+    },
+    "component.spherical-geometry.radial-sqrt-gradient-at-zero": {
+      "affects_science": false,
+      "anchors": [
+        {
+          "commit": "be61b8d0546c5d933ff9ef4bf9d445ba4595e03b",
+          "config_key": null,
+          "end_line": 116,
+          "path": "autogalaxy/profiles/geometry_profiles.py",
+          "repo": "PyAutoGalaxy",
+          "start_line": 115,
+          "symbol": "autogalaxy.profiles.geometry_profiles.SphProfile.radial_grid_from",
+          "token_fingerprint": "1cbac173e3a5af4e79b9ef5b23de84fc2c45aa12ef20a6e79aa12749414ddeec",
+          "tokens": [
+            "return",
+            "xp.sqrt",
+            "(",
+            "xp.add",
+            "(",
+            "xp.square",
+            "(",
+            "grid.array",
+            "[",
+            ":",
+            ",",
+            "0",
+            "]",
+            ")",
+            ",",
+            "xp.square",
+            "(",
+            "grid.array",
+            "[",
+            ":",
+            ",",
+            "1",
+            "]",
+            ")",
+            ")",
+            ")"
+          ]
+        }
+      ],
+      "backend_reachability": {
+        "jax": {
+          "gradient_at_r=0": "non_finite",
+          "value_at_r=0": "finite"
+        },
+        "numpy": {
+          "value_at_r=0": "finite"
+        }
+      },
+      "backends": [
+        "jax"
+      ],
+      "blocked_by": [],
+      "code_exists": true,
+      "finding_id": "component.spherical-geometry.radial-sqrt-gradient-at-zero",
+      "hazard_class": "nonfinite_gradient",
+      "measurements": [
+        {
+          "basis": "epsilon_neighbourhood",
+          "details": {
+            "centre": [
+              0.0,
+              0.0
+            ],
+            "domain": {
+              "dimensions": 2,
+              "lower": [
+                -1.0,
+                -1.0
+              ],
+              "note": "coordinate measure, not a model-parameter prior",
+              "type": "uniform_coordinate_window",
+              "upper": [
+                1.0,
+                1.0
+              ]
+            },
+            "epsilon": 1e-06
+          },
+          "unit": "fraction",
+          "value": 7.853981633974483e-13
+        },
+        {
+          "basis": "reachability",
+          "details": {
+            "blocked_paths": {},
+            "reachable_via": [
+              "grid_alignment",
+              "jax_autodiff"
+            ]
+          },
+          "unit": "boolean",
+          "value": 1.0
+        }
+      ],
+      "reachable_via": [
+        "grid_alignment",
+        "jax_autodiff"
+      ],
+      "record": "component/spherical_geometry/nonfinite_gradient.json",
+      "reproducer": {
+        "gradient_norm": [
+          null,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "jax_gradient_at_zero": [
+          null,
+          null
+        ],
+        "jax_value_at_zero": 0.0,
+        "numpy_value_at_zero": 0.0,
+        "radius": [
+          0.0,
+          1e-12,
+          1e-10,
+          1e-08,
+          1e-06,
+          0.0001
+        ]
+      },
+      "schema_version": 1,
+      "subject": "component",
+      "subject_name": "spherical_geometry",
+      "summary": "The spherical radial coordinate returns the correct finite value zero at the profile centre, but JAX differentiation of sqrt(y^2+x^2) returns a non-finite gradient there.",
+      "tier": 1,
+      "title": "Radial sqrt has a non-finite gradient at r=0"
+    },
+    "matrix.curvature.absolute-diagonal-floor": {
+      "affects_science": null,
+      "anchors": [
+        {
+          "commit": "5dedb5e90c3ac5957f4288f1968d34f9f4618a95",
+          "config_key": null,
+          "end_line": 51,
+          "path": "autoarray/inversion/inversion/inversion_util.py",
+          "repo": "PyAutoArray",
+          "start_line": 39,
+          "symbol": "autoarray.inversion.inversion.inversion_util.curvature_matrix_with_added_to_diag_from",
+          "token_fingerprint": "e355f9007906e717389b4a4340dee27dd5b660c47d040bcd21eed276e16797f3",
+          "tokens": [
+            "def",
+            "curvature_matrix_with_added_to_diag_from",
+            "(",
+            "curvature_matrix",
+            ":",
+            "np.ndarray",
+            ",",
+            "value",
+            ":",
+            "float",
+            ",",
+            "no_regularization_index_list",
+            ":",
+            "optional",
+            "[",
+            "list",
+            "]",
+            "=",
+            "none",
+            ",",
+            "xp",
+            "=",
+            "np",
+            ",",
+            ")",
+            "-",
+            ">",
+            "np.ndarray",
+            ":",
+            "it",
+            "is",
+            "common",
+            "for",
+            "the",
+            "curvature_matrix",
+            "computed",
+            "to",
+            "not",
+            "be",
+            "positive",
+            "-",
+            "definite",
+            ",",
+            "leading",
+            "for",
+            "the",
+            "inversion",
+            "via",
+            "np.linalg.solve",
+            "to",
+            "fail",
+            "and",
+            "raise",
+            "a",
+            "linalgerror",
+            ".",
+            "in",
+            "many",
+            "circumstances",
+            ",",
+            "adding",
+            "a",
+            "small",
+            "numerical",
+            "value",
+            "of",
+            "1.0e-8",
+            "to",
+            "the",
+            "diagonal",
+            "of",
+            "the",
+            "curvature_matrix",
+            "makes",
+            "it",
+            "positive",
+            "definite",
+            ",",
+            "such",
+            "that",
+            "the",
+            "inversion",
+            "is",
+            "performed",
+            "without",
+            "raising",
+            "an",
+            "error."
+          ]
+        },
+        {
+          "commit": "5dedb5e90c3ac5957f4288f1968d34f9f4618a95",
+          "config_key": "general.inversion.no_regularization_add_to_curvature_diag_value",
+          "end_line": 7,
+          "path": "autoarray/config/general.yaml",
+          "repo": "PyAutoArray",
+          "start_line": 7,
+          "symbol": null,
+          "token_fingerprint": "f7e17be4a78fbb0606d67e41b269b23b0acb32e16c1da994431b6b6b2a1f944d",
+          "tokens": [
+            "no_regularization_add_to_curvature_diag_value",
+            ":",
+            "1.0e-3"
+          ]
+        }
+      ],
+      "backend_reachability": {
+        "jax": {
+          "synthetic_matrix": "reachable"
+        },
+        "numpy": {
+          "synthetic_matrix": "reachable"
+        }
+      },
+      "backends": [
+        "numpy",
+        "jax"
+      ],
+      "blocked_by": [],
+      "code_exists": true,
+      "finding_id": "matrix.curvature.absolute-diagonal-floor",
+      "hazard_class": "conditioning_floor",
+      "measurements": [
+        {
+          "basis": "error_curve",
+          "details": {
+            "curves": {
+              "jax": {
+                "condition_after": [
+                  1.001999997999,
+                  1.0199999799000026,
+                  1.1999997900000379,
+                  2.9999970000019998,
+                  20.999880000627492,
+                  200.98980051249598,
+                  1999.9985009998716,
+                  19901.477636711195,
+                  190477.00226376898,
+                  1333333.1111160389
+                ],
+                "condition_before": [
+                  3999998.0008096346,
+                  3999997.9991325927,
+                  3999997.9995159158,
+                  3999997.999822574,
+                  3999998.001294537,
+                  3999998.0003132294,
+                  3999998.0006272495,
+                  3999997.99999921,
+                  3999997.999396294,
+                  3999998.0000394057
+                ],
+                "floor_over_matrix_scale": [
+                  1000.00050000025,
+                  100.000050000025,
+                  10.000005000002501,
+                  1.00000050000025,
+                  0.10000005000002499,
+                  0.010000005000002499,
+                  0.00100000050000025,
+                  0.000100000050000025,
+                  1.00000050000025e-05,
+                  1.00000050000025e-06
+                ],
+                "observed_diagonal_add": [
+                  0.001,
+                  0.001,
+                  0.001,
+                  0.001,
+                  0.001,
+                  0.0010000000000000009,
+                  0.0009999999999999454,
+                  0.0009999999999994458,
+                  0.0010000000000047748,
+                  0.0009999999999763531
+                ]
+              },
+              "numpy": {
+                "condition_after": [
+                  1.001999997999,
+                  1.0199999799000026,
+                  1.1999997900000379,
+                  2.9999970000019998,
+                  20.999880000627492,
+                  200.98980051249598,
+                  1999.9985009998716,
+                  19901.477636711195,
+                  190477.00226376898,
+                  1333333.1111160389
+                ],
+                "condition_before": [
+                  3999998.0008096346,
+                  3999997.9991325927,
+                  3999997.9995159158,
+                  3999997.999822574,
+                  3999998.001294537,
+                  3999998.0003132294,
+                  3999998.0006272495,
+                  3999997.99999921,
+                  3999997.999396294,
+                  3999998.0000394057
+                ],
+                "floor_over_matrix_scale": [
+                  1000.00050000025,
+                  100.000050000025,
+                  10.000005000002501,
+                  1.00000050000025,
+                  0.10000005000002499,
+                  0.010000005000002499,
+                  0.00100000050000025,
+                  0.000100000050000025,
+                  1.00000050000025e-05,
+                  1.00000050000025e-06
+                ],
+                "observed_diagonal_add": [
+                  0.001,
+                  0.001,
+                  0.001,
+                  0.001,
+                  0.001,
+                  0.0010000000000000009,
+                  0.0009999999999999454,
+                  0.0009999999999994458,
+                  0.0010000000000047748,
+                  0.0009999999999763531
+                ]
+              }
+            },
+            "floor": 0.001,
+            "parameter": [
+              1e-06,
+              1e-05,
+              0.0001,
+              0.001,
+              0.01,
+              0.1,
+              1.0,
+              10.0,
+              100.0,
+              1000.0
+            ],
+            "parameter_name": "matrix_scale"
+          },
+          "unit": "floor_over_matrix_scale",
+          "value": 1000.00050000025
+        },
+        {
+          "basis": "reachability",
+          "details": {
+            "blocked_paths": {},
+            "reachable_via": [
+              "jax_synthetic_matrix",
+              "numpy_synthetic_matrix"
+            ]
+          },
+          "unit": "boolean",
+          "value": 1.0
+        }
+      ],
+      "reachable_via": [
+        "numpy_synthetic_matrix",
+        "jax_synthetic_matrix"
+      ],
+      "record": "matrix/curvature_matrix/conditioning_floor.json",
+      "reproducer": {
+        "backends": {
+          "jax": {
+            "condition_after": [
+              1.001999997999,
+              1.0199999799000026,
+              1.1999997900000379,
+              2.9999970000019998,
+              20.999880000627492,
+              200.98980051249598,
+              1999.9985009998716,
+              19901.477636711195,
+              190477.00226376898,
+              1333333.1111160389
+            ],
+            "condition_before": [
+              3999998.0008096346,
+              3999997.9991325927,
+              3999997.9995159158,
+              3999997.999822574,
+              3999998.001294537,
+              3999998.0003132294,
+              3999998.0006272495,
+              3999997.99999921,
+              3999997.999396294,
+              3999998.0000394057
+            ],
+            "floor_over_matrix_scale": [
+              1000.00050000025,
+              100.000050000025,
+              10.000005000002501,
+              1.00000050000025,
+              0.10000005000002499,
+              0.010000005000002499,
+              0.00100000050000025,
+              0.000100000050000025,
+              1.00000050000025e-05,
+              1.00000050000025e-06
+            ],
+            "observed_diagonal_add": [
+              0.001,
+              0.001,
+              0.001,
+              0.001,
+              0.001,
+              0.0010000000000000009,
+              0.0009999999999999454,
+              0.0009999999999994458,
+              0.0010000000000047748,
+              0.0009999999999763531
+            ]
+          },
+          "numpy": {
+            "condition_after": [
+              1.001999997999,
+              1.0199999799000026,
+              1.1999997900000379,
+              2.9999970000019998,
+              20.999880000627492,
+              200.98980051249598,
+              1999.9985009998716,
+              19901.477636711195,
+              190477.00226376898,
+              1333333.1111160389
+            ],
+            "condition_before": [
+              3999998.0008096346,
+              3999997.9991325927,
+              3999997.9995159158,
+              3999997.999822574,
+              3999998.001294537,
+              3999998.0003132294,
+              3999998.0006272495,
+              3999997.99999921,
+              3999997.999396294,
+              3999998.0000394057
+            ],
+            "floor_over_matrix_scale": [
+              1000.00050000025,
+              100.000050000025,
+              10.000005000002501,
+              1.00000050000025,
+              0.10000005000002499,
+              0.010000005000002499,
+              0.00100000050000025,
+              0.000100000050000025,
+              1.00000050000025e-05,
+              1.00000050000025e-06
+            ],
+            "observed_diagonal_add": [
+              0.001,
+              0.001,
+              0.001,
+              0.001,
+              0.001,
+              0.0010000000000000009,
+              0.0009999999999999454,
+              0.0009999999999994458,
+              0.0010000000000047748,
+              0.0009999999999763531
+            ]
+          }
+        },
+        "floor": 0.001,
+        "matrix_scale": [
+          1e-06,
+          1e-05,
+          0.0001,
+          0.001,
+          0.01,
+          0.1,
+          1.0,
+          10.0,
+          100.0,
+          1000.0
+        ]
+      },
+      "schema_version": 1,
+      "subject": "matrix",
+      "subject_name": "curvature_matrix",
+      "summary": "The configured 1.0e-03 diagonal add ranges from dominant to negligible as synthetic curvature scale changes. Detection needs no dataset; judging scientific relevance does.",
+      "tier": 2,
+      "title": "Absolute curvature-diagonal floor is scale dependent"
+    }
+  },
+  "schema_version": 1
+}

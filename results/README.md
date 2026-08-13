@@ -15,10 +15,11 @@ packages; the dashboard tables in every README are rendered from this tree by
 | `pipeline_resume/` | [`pipeline_resume/`](../scripts/misc/pipeline_resume/README.md) | Versioned SLaM resume-overhead summaries (cold + resume run records) |
 | `quick_update/` | [`quick_update/`](../scripts/misc/quick_update/README.md) | Unversioned fast re-profiling snapshots (scratch tier) |
 | `delaunay_nn/` | [`delaunay_nn/`](../scripts/misc/delaunay_nn/README.md) | Versioned full-mapper cap and runtime benchmarks |
+| `hazards/` | [`hazards/`](../scripts/misc/hazards/README.md) | Semantic finding records, reproducer plots, generated seed summary, and consumer index |
 | `notes/` | humans + agents | Narrative findings and design notes (e.g. [`design_lock_in.md`](./notes/design_lock_in.md)) |
 | `baselines/` | campaign snapshots | Named, frozen baselines (e.g. `PreOptimizationTimes/`) — see below |
 
-## The two artifact shapes
+## Performance artifact shapes
 
 **Versioned summaries** — written by per-cell scripts run standalone; history
 is retained side-by-side so cross-release trends stay inspectable:
@@ -41,6 +42,23 @@ runtime/<class>/<model>[/<instrument>]/comparison.{json,png}
 
 Config names: `local_cpu_fp64 | local_cpu_mp | local_gpu_fp64 | local_gpu_mp |
 hpc_a100_fp64 | hpc_a100_mp`, with `_sparse` as a filename suffix.
+
+## Semantic hazard findings
+
+Numerical-hazard records are keyed by stable semantic finding ID rather than by
+release-version filename. Their reproducers decide whether the same finding
+persists after source code moves:
+
+```
+hazards/<subject>/<name>/<hazard_class>.{json,png}
+hazards/hazards_index.json
+hazards/ell_comps_clamp.md
+```
+
+The per-check JSON carries typed measurements, backend reachability, scientific
+impact, and source anchors. `hazards_index.json` is the consumer-facing view;
+the markdown file is a generated worked example. See
+[`scripts/misc/hazards/`](../scripts/misc/hazards/README.md).
 
 ## Named baselines
 

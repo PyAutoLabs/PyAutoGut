@@ -1,0 +1,400 @@
+{
+  "findings": [
+    {
+      "affects_science": true,
+      "anchors": [
+        {
+          "commit": "be61b8d0546c5d933ff9ef4bf9d445ba4595e03b",
+          "config_key": null,
+          "end_line": 77,
+          "path": "autogalaxy/convert.py",
+          "repo": "PyAutoGalaxy",
+          "start_line": 71,
+          "symbol": "autogalaxy.convert.axis_ratio_and_angle_from",
+          "token_fingerprint": "244242025d2db16d4aeb9eaed153b476c2ed7210557e37e5d068c34760a3e8f6",
+          "tokens": [
+            "fac",
+            "=",
+            "xp.sqrt",
+            "(",
+            "ell_comps",
+            "[",
+            "1",
+            "]",
+            "**",
+            "2",
+            "+",
+            "ell_comps",
+            "[",
+            "0",
+            "]",
+            "**",
+            "2",
+            ")",
+            "if",
+            "xp.__name__.startswith",
+            "(",
+            "jax",
+            ")",
+            ":",
+            "import",
+            "jax",
+            "fac",
+            "=",
+            "jax.lax.min",
+            "(",
+            "fac",
+            ",",
+            "0.999",
+            ")",
+            "else",
+            ":",
+            "fac",
+            "=",
+            "np.minimum",
+            "(",
+            "fac",
+            ",",
+            "0.999",
+            ")"
+          ]
+        },
+        {
+          "commit": "be61b8d0546c5d933ff9ef4bf9d445ba4595e03b",
+          "config_key": null,
+          "end_line": 160,
+          "path": "autogalaxy/profiles/validate.py",
+          "repo": "PyAutoGalaxy",
+          "start_line": 154,
+          "symbol": "autogalaxy.profiles.validate.validate_ell_comps",
+          "token_fingerprint": "9971e6026aba80d2d4640f9e538390443dbc8f8b3e8d86327dad008bf5104e18",
+          "tokens": [
+            "return",
+            "magnitude_squared",
+            "=",
+            "ell_y",
+            "*",
+            "ell_y",
+            "+",
+            "ell_x",
+            "*",
+            "ell_x",
+            "if",
+            "not",
+            "np.isfinite",
+            "(",
+            "magnitude_squared",
+            ")",
+            "or",
+            "magnitude_squared",
+            ">=",
+            "1.0",
+            ":",
+            "raise",
+            "exc.modelparameterexception",
+            "(",
+            "f",
+            "{",
+            "name",
+            "}",
+            "must",
+            "satisfy",
+            "{",
+            "name",
+            "}",
+            "[",
+            "0",
+            "]",
+            "**",
+            "2",
+            "+",
+            "{",
+            "name",
+            "}",
+            "[",
+            "1",
+            "]",
+            "**",
+            "2",
+            "<",
+            "1",
+            "got"
+          ]
+        }
+      ],
+      "backend_reachability": {
+        "jax": {
+          "magnitude >= 0.999": "reachable",
+          "probes": [
+            {
+              "blocked_by": null,
+              "error": null,
+              "path": "jax_construction_beyond_unit_circle",
+              "reachable": true,
+              "value": 0.0005002501250625317
+            },
+            {
+              "blocked_by": null,
+              "error": null,
+              "path": "jax_trace_beyond_unit_circle",
+              "reachable": true,
+              "value": 0.0005002501250625317
+            }
+          ]
+        },
+        "numpy": {
+          "0.999 <= magnitude < 1": "reachable",
+          "magnitude >= 1": "blocked_by_validate_ell_comps",
+          "probes": [
+            {
+              "blocked_by": null,
+              "error": null,
+              "path": "numpy_construction_inner_annulus",
+              "reachable": true,
+              "value": 0.0005002501250625317
+            },
+            {
+              "blocked_by": "validate_ell_comps",
+              "error": "ModelParameterException: ell_comps must satisfy ell_comps[0]**2 + ell_comps[1]**2 < 1; got (1.2, 0.0), whose magnitude is np.float64(1.2). The axis ratio is q = (1 - f) / (1 + f) with f the magnitude of ell_comps, so f must be below 1 for q to be a valid axis ratio \u2014 at f = 1 the ellipse degenerates to q = 0 and beyond it q is negative and the profile has no geometric meaning",
+              "path": "numpy_construction_beyond_unit_circle",
+              "reachable": false,
+              "value": null
+            }
+          ]
+        }
+      },
+      "backends": [
+        "numpy",
+        "jax"
+      ],
+      "blocked_by": [
+        {
+          "commit": "be61b8d0546c5d933ff9ef4bf9d445ba4595e03b",
+          "config_key": null,
+          "end_line": 160,
+          "path": "autogalaxy/profiles/validate.py",
+          "repo": "PyAutoGalaxy",
+          "start_line": 154,
+          "symbol": "autogalaxy.profiles.validate.validate_ell_comps",
+          "token_fingerprint": "9971e6026aba80d2d4640f9e538390443dbc8f8b3e8d86327dad008bf5104e18",
+          "tokens": [
+            "return",
+            "magnitude_squared",
+            "=",
+            "ell_y",
+            "*",
+            "ell_y",
+            "+",
+            "ell_x",
+            "*",
+            "ell_x",
+            "if",
+            "not",
+            "np.isfinite",
+            "(",
+            "magnitude_squared",
+            ")",
+            "or",
+            "magnitude_squared",
+            ">=",
+            "1.0",
+            ":",
+            "raise",
+            "exc.modelparameterexception",
+            "(",
+            "f",
+            "{",
+            "name",
+            "}",
+            "must",
+            "satisfy",
+            "{",
+            "name",
+            "}",
+            "[",
+            "0",
+            "]",
+            "**",
+            "2",
+            "+",
+            "{",
+            "name",
+            "}",
+            "[",
+            "1",
+            "]",
+            "**",
+            "2",
+            "<",
+            "1",
+            "got"
+          ]
+        }
+      ],
+      "code_exists": true,
+      "finding_id": "component.ell_comps.magnitude-saturation",
+      "hazard_class": "saturation",
+      "measurements": [
+        {
+          "basis": "prior_mass",
+          "details": {
+            "confidence": 0.95,
+            "confidence_interval": [
+              0.0021041882848829873,
+              0.0022876363029244056
+            ],
+            "prior": {
+              "dimensions": 2,
+              "lower": -1.0,
+              "mean": 0.0,
+              "sigma": 0.3,
+              "type": "independent_truncated_gaussian",
+              "upper": 1.0
+            },
+            "sample_count": 1000000,
+            "seed": 107,
+            "successes": 2194
+          },
+          "unit": "fraction",
+          "value": 0.002194
+        },
+        {
+          "basis": "prior_mass",
+          "details": {
+            "confidence": 0.95,
+            "confidence_interval": [
+              0.05026974585779952,
+              0.05112970607920213
+            ],
+            "prior": {
+              "dimensions": 2,
+              "lower": -1.0,
+              "mean": 0.0,
+              "sigma": 0.5,
+              "type": "independent_truncated_gaussian",
+              "upper": 1.0
+            },
+            "sample_count": 1000000,
+            "seed": 107,
+            "successes": 50698
+          },
+          "unit": "fraction",
+          "value": 0.050698
+        },
+        {
+          "basis": "prior_mass",
+          "details": {
+            "confidence": 0.95,
+            "confidence_interval": [
+              0.21354478912977987,
+              0.21515340550257972
+            ],
+            "prior": {
+              "dimensions": 2,
+              "lower": -1.0,
+              "type": "independent_uniform",
+              "upper": 1.0
+            },
+            "sample_count": 1000000,
+            "seed": 107,
+            "successes": 214348
+          },
+          "unit": "fraction",
+          "value": 0.214348
+        },
+        {
+          "basis": "reachability",
+          "details": {
+            "blocked_paths": {
+              "numpy:magnitude>=1": "validate_ell_comps"
+            },
+            "reachable_via": [
+              "jax_construction_beyond_unit_circle",
+              "jax_trace_beyond_unit_circle",
+              "numpy_construction_inner_annulus"
+            ]
+          },
+          "unit": "boolean",
+          "value": 1.0
+        }
+      ],
+      "reachable_via": [
+        "jax_construction_beyond_unit_circle",
+        "jax_trace_beyond_unit_circle",
+        "numpy_construction_inner_annulus"
+      ],
+      "reproducer": {
+        "axis_ratio": {
+          "jax": [
+            0.0010010010010010019,
+            0.0005002501250625317,
+            0.0005002501250625317,
+            0.0005002501250625317,
+            0.0005002501250625317,
+            0.0005002501250625317
+          ],
+          "numpy": [
+            0.0010010010010010019,
+            0.0005002501250625317,
+            0.0005002501250625317,
+            0.0005002501250625317,
+            0.0005002501250625317,
+            0.0005002501250625317
+          ]
+        },
+        "detected_plateau": {
+          "end": 1.2,
+          "samples": 5,
+          "start": 0.999,
+          "value": 0.0005002501250625317
+        },
+        "parameter": "ell_comps_magnitude",
+        "parameter_values": [
+          0.998,
+          0.999,
+          0.9995,
+          0.9999,
+          1.0,
+          1.2
+        ],
+        "probes": [
+          {
+            "blocked_by": null,
+            "error": null,
+            "path": "numpy_construction_inner_annulus",
+            "reachable": true,
+            "value": 0.0005002501250625317
+          },
+          {
+            "blocked_by": "validate_ell_comps",
+            "error": "ModelParameterException: ell_comps must satisfy ell_comps[0]**2 + ell_comps[1]**2 < 1; got (1.2, 0.0), whose magnitude is np.float64(1.2). The axis ratio is q = (1 - f) / (1 + f) with f the magnitude of ell_comps, so f must be below 1 for q to be a valid axis ratio \u2014 at f = 1 the ellipse degenerates to q = 0 and beyond it q is negative and the profile has no geometric meaning",
+            "path": "numpy_construction_beyond_unit_circle",
+            "reachable": false,
+            "value": null
+          },
+          {
+            "blocked_by": null,
+            "error": null,
+            "path": "jax_construction_beyond_unit_circle",
+            "reachable": true,
+            "value": 0.0005002501250625317
+          },
+          {
+            "blocked_by": null,
+            "error": null,
+            "path": "jax_trace_beyond_unit_circle",
+            "reachable": true,
+            "value": 0.0005002501250625317
+          }
+        ]
+      },
+      "schema_version": 1,
+      "subject": "component",
+      "subject_name": "ell_comps",
+      "summary": "The conversion maps every magnitude at or above 0.999 to q=0.000500250125062532. NumPy reaches the thin valid annulus below one but its constructor guard blocks the beyond-unit region; JAX arrays and tracers bypass that concrete-scalar guard.",
+      "tier": 1,
+      "title": "ell_comps magnitude saturates at 0.999"
+    }
+  ],
+  "schema_version": 1
+}

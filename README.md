@@ -12,6 +12,7 @@ This repository is the single home for PyAutoLens performance measurement. It ex
 - **Mesh kernels** — full mapper-table profiling for Delaunay and Sibson natural-neighbour `DelaunayNN`, including static-cap scaling and split regularization.
 - **Simulators** — run-time tracking for the imaging, interferometer, point-source, cluster, group, and multi-plane simulators.
 - **Searches / samplers** — sampler-level profiling, starting with Nautilus. Other samplers (Dynesty, Emcee, BlackJAX, NumPyro, LBFGS, PocoMC) follow in later sweeps.
+- **Numerical hazards** — saturations, non-finite gradients, backend divergence, and scale-dependent conditioning mechanisms that shape sampler behavior.
 
 **Hardware tiers covered:**
 
@@ -109,7 +110,8 @@ separately per likelihood × transform. Standing conclusions:
 
 ## How to read this repo
 
-Profiling scripts write two artifact shapes under `results/` (full reference: [`results/README.md`](./results/README.md)):
+Performance profiling scripts write two timing artifact shapes under `results/`
+(full reference: [`results/README.md`](./results/README.md)):
 
 ```
 # Versioned summaries — standalone runs; history retained side-by-side
@@ -120,6 +122,11 @@ results/runtime/<class>/<model>[/<instrument>]/<config_name>[_sparse].{json,png,
 ```
 
 The version string matches the PyAutoLens release that produced the numbers (e.g. `v2026.5.29.4`). The JSON carries structured timings; the PNG is the at-a-glance plot. Cross-release **trend** questions read the versioned summaries; cross-hardware **comparison** questions read `comparison.json`.
+
+Numerical hazards use a third, semantic shape under `results/hazards/`: stable
+finding IDs, typed measurements, source anchors, reproducer plots, and a
+consumer-facing `hazards_index.json`. Those records are re-verified by behavior,
+not versioned by filename.
 
 ## Section index
 
@@ -138,6 +145,7 @@ auto-tables) live under `scripts/misc/<task>/`; dataset-agnostic tooling lives u
 | [`scripts/misc/jax_compile/`](./scripts/misc/jax_compile/README.md) | JAX/XLA **compile-time** profiling — trace / compile / first-call / steady split per likelihood × transform. *How long before this fit starts running?* |
 | [`scripts/misc/vram/`](./scripts/misc/vram/README.md) | GPU memory profiling + the per-cell vmap batch-size table for the A100. |
 | [`scripts/misc/delaunay_nn/`](./scripts/misc/delaunay_nn/README.md) | DelaunayNN full-mapper runtime and fixed-shape cap scaling. |
+| [`scripts/misc/hazards/`](./scripts/misc/hazards/README.md) | Numerical-hazard profiling — saturations, non-finite gradients, backend divergence, and conditioning mechanisms. |
 | [`scripts/misc/simulators/`](./scripts/misc/simulators/README.md) | Run-time tracking for the PyAutoLens simulators. |
 | [`scripts/misc/pipeline_resume/`](./scripts/misc/pipeline_resume/README.md) | SLaM pipeline resume overhead — the wall time a re-run pays per completed stage. |
 | [`instruments/`](./instruments/README.md) | Instrument presets (pixel scale, shape) that frame every result. |

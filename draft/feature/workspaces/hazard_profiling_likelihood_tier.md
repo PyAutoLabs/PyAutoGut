@@ -65,14 +65,19 @@ dataset-independent number to report.
 
 ## Also in scope
 
-The one tier-1 check deferred from phase 1: **`PowerLaw` backend divergence** —
-JAX uses a 20-term series `omega` (`PyAutoGalaxy/autogalaxy/profiles/mass/total/jax_utils.py:14`)
-where numpy uses exact `scipy.special.hyp2f1`
-(`profiles/mass/total/power_law.py:123-143`). Series convergence degrades as
-`factor = (1-q)/(1+q)` approaches 1 — i.e. exactly where the tier-1 `ell_comps`
-clamp is pushing the sampler. `PowerLaw` is the base class of `Isothermal`, so
-every SIE/EPL fit is affected. This check belongs in `scripts/misc/hazards/` with
-the other tier-1 checks.
+**Breadth across the profile registry.** Phase 1 is deliberately one case per
+subject shape; this phase widens the `component` subject across the light and mass
+profiles, reusing the phase-1 detectors rather than writing new ones.
+
+**A named first consumer.** Phase 1 emits `results/hazards/hazards_index.json`
+keyed by stable finding ID. This phase must wire at least one existing profiling
+report to cross-reference it for the cells it profiles, so the index has a reader
+rather than existing on principle. Pick the consumer explicitly when planning —
+an index nothing reads is the main way this package dies.
+
+Note: the `PowerLaw` backend-divergence check (`hyp2f1` vs the 20-term `omega`
+series — `jax_utils.py:14`, `power_law.py:123-143`) was **pulled forward into
+phase 1** as its `error_curve` reference case, so it is no longer owed here.
 
 ## Layout
 

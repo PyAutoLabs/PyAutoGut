@@ -133,20 +133,65 @@ already fully characterised:
   `TruncatedGaussian(0, 0.3)` per component, 5.1% at sigma 0.5, 21.4% under
   `Uniform(-1, 1)` per component.
 
+## Subject scope vs. where code lives
+
+Refined after an adversarial plan review (Codex, 2026-08-13). The two tiers stay,
+but as **metadata on a finding** rather than as the thing deciding where a
+detector's code lives:
+
+- **All reusable detectors live in `scripts/misc/hazards/`**, whatever their
+  subject — detector logic is never duplicated per dataset.
+- **`scripts/<dataset>/hazards/` holds dataset-specific cells and fixtures only.**
+
+A finding declares one of three subject scopes: `component` (a profile, no data),
+`matrix` (synthetic matrices, no dataset), `likelihood` (a real dataset). The
+middle one exists because `reconstruction_positive_only_from` takes `data_vector`
+and `curvature_reg_matrix` directly — a dataset is needed to judge a floor's
+**scientific relevance**, not to **detect the mechanism**. The linear algebra is
+still tied to the whole likelihood function where it *means* something, which is
+the `likelihood` subject in `scripts/imaging/hazards/`.
+
+## Risk is typed, not one universal predicate
+
+Each hazard class declares its own risk basis. Prior mass is one of four, not the
+contract for all:
+
+- `prior_mass` — finite-measure regions; report MC estimate + sample count + CI.
+- `epsilon_neighbourhood` — measure-zero sites; report prior mass of an
+  **explicit** ε-ball with ε stated.
+- `reachability` — sites reached only via construction or grid alignment.
+- `error_curve` — continuous discrepancies, as a function of the driving parameter.
+
+A uniform predicate would be wrong for most of the taxonomy: a non-finite
+*gradient* site has measure zero, so MC reports 0% whether or not it exists, and
+the `0.99999` clamp spans only ~5e-6 of ellipticity magnitude, which random prior
+sampling would never find.
+
+## Reachability is recorded, not assumed
+
+`EllProfile.__init__` calls `validate_ell_comps` at construction
+(`geometry_profiles.py:237`), so the `ell_comps` clamp is **not reachable on the
+public numpy path at all** — while JAX tracing skips the guard and reaches it.
+Every finding therefore records `code_exists`, `reachable_via`, `blocked_by`
+(with the guard's anchor) and `affects_science` as distinct states.
+
 ## Phasing
 
-Sized `large` and split along the tier boundary:
+Sized `large`. Phase 1 is a **vertical slice** — one case per subject shape, so
+the schema is proven against all of them before the scaffolding is built:
 
-- **Phase 1 (this prompt).** The framework in `scripts/misc/hazards/` — check API,
-  tier-1 registry, prior-volume engine, record schema and results convention —
-  plus the three tier-1 detectors that need only profile evaluation and autodiff
-  (saturating reparametrisation, non-finite value, non-finite gradient), plus the
-  seed result. Also stubs `scripts/imaging/hazards/` with a README stating the
-  tier boundary.
+- **Phase 1 (this prompt).** (1) `component`/saturation — the `ell_comps` clamp;
+  (2) `component`/non-finite-gradient — the radial `sqrt` at r=0, the measure-zero
+  case; (3) `component`/backend-divergence — `PowerLaw` `hyp2f1` vs the 20-term
+  series; (4) `matrix`/conditioning-floor — the `1.0e-3` curvature-diagonal add
+  from synthetic matrices. Plus the minimum record/report schema those four need,
+  the regenerated seed result, a `--check` regression mode, and
+  `hazards_index.json` as the consumer-facing artifact.
 - **Phase 2** (`draft/feature/workspaces/hazard_profiling_likelihood_tier.md`).
-  The tier-2 cell under `scripts/imaging/hazards/`: active-set kinks, conditioning
-  floors, structural degeneracies and solver backend divergence — plus the tier-1
-  `PowerLaw` series-vs-`hyp2f1` divergence check.
+  The `likelihood` subject under `scripts/imaging/hazards/` — active-set kinks,
+  the floors judged against real flux/noise, structural degeneracies, solver
+  backend divergence — plus breadth across the profile registry, and a named
+  first consumer of `hazards_index.json`.
 
 Neither phase runs the full `component x backend` matrix; that is deferred by
 design (see the top of this prompt).

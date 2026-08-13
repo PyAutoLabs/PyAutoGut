@@ -1,3 +1,18 @@
+## numerical-hazard-profiling
+- issue: https://github.com/PyAutoLabs/autolens_profiling/issues/107
+- prompt: add_a_numerical_hazard_profiling_package_to.md
+- planned: 2026-08-13
+- classification: workspace (autolens_profiling) — difficulty large, autonomy supervised
+- suggested-branch: feature/numerical-hazard-profiling
+- worktree: ~/Code/PyAutoLabs-wt/numerical-hazard-profiling (not yet created)
+- blocked-by: delaunay-nn-laptop-gpu-profile (using autolens_profiling) — `worktree_check_conflict` exits 1. That task holds `feature/delaunay-nn-laptop-gpu-profile` at commit `cf79107` (pushed 2026-08-11) with issue #105 OPEN and **PR #106 OPEN**. Unblocks when #106 merges and its worktree is released; nothing else is owed.
+- summary: build the numerical-hazard profiling instrument + results convention in `autolens_profiling`. Phase 1 = the tier-1 framework in `scripts/misc/hazards/` (check API, component/backend registry, prior-volume engine, record schema) plus three detectors that need only profile evaluation + autodiff (saturating reparametrisation, non-finite value, non-finite gradient), plus the regenerated `ell_comps` seed result. Does NOT run the full `component x backend` matrix and does NOT fix any source-library finding.
+- architecture: hazards split into TWO TIERS by whether they need a dataset — tier 1 (components: profiles/lensing, no likelihood) in `scripts/misc/hazards/`, tier 2 (likelihood: linear algebra, residuals, chi-squared) in `scripts/<dataset>/hazards/`. The linear algebra is deliberately NOT its own axis; it is lumped with the data-specific tier because the conditioning floors are absolute constants added to matrices whose entries scale as (flux/noise)², so they cannot be evaluated without a dataset. Matches the repo's dataset-first/task-second layout law.
+- phase-2: draft/feature/workspaces/hazard_profiling_likelihood_tier.md (tier-2 imaging cell + the tier-1 `PowerLaw` series-vs-`hyp2f1` divergence check). Do not start before phase 1 merges — it consumes phase 1's check API and record schema.
+- verified-at-planning: both prompt-cited anchors are accurate (`PyAutoGalaxy/autogalaxy/convert.py:71-77` clamps `fac` at 0.999 on BOTH backends → `q = 5.0025e-4`; `profiles/validate.py:145-167` raises but returns early at `:153` when `is_concrete_scalar` is false, which is why it no-ops under JAX tracing). Three additions the original audit lacked: (a) a SECOND clamp stacked on the first at `profiles/mass/total/isothermal.py:97-99` (`q <= 0.99999`, load-bearing against a 0/0 in the `sqrt(1-q**2)` divides at `:117,:126,:132`) — the saturation check must catch it without special-casing; (b) docstring/config drift of FIVE orders of magnitude — `inversion_util.py:49` says `1.0e-8`, actual default is `1.0e-3` (`PyAutoArray/autoarray/config/general.yaml:7`), itself a phase-2 finding; (c) the unguarded radial `sqrt` at `geometry_profiles.py:115` feeds every light profile while the mass counterparts already carry `+1e-16`.
+- affected-repos:
+  - autolens_profiling
+
 ## isothermal-ell-sph-oversampling-at-the-cusp
 - status: planned — NOT yet a prompt file; file one via `/intake` before starting
 - found: 2026-08-09, while pinning B10 of the @rhayes777 audit (`complete/2026/08/autogalaxy-profile-validation-guards.md`)

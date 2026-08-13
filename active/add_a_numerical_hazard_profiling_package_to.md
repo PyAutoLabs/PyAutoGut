@@ -19,6 +19,29 @@ not generate the full result set in this task (it will be re-run in
 autolens_profiling once the package exists). The one exception is the written
 summary described under "Seed result" below.
 
+## Two tiers (structure)
+
+Hazards divide by whether they need a dataset, and that division follows the
+repo's existing layout law (`AGENTS.md`: dataset-first, task-second; `misc/`
+holds each task's shared framework):
+
+- **Tier 1 — component hazards.** Light/mass profiles and lensing calculations,
+  evaluated with no likelihood and no data. Dataset-agnostic, so the framework
+  and these checks live in `scripts/misc/hazards/`.
+- **Tier 2 — likelihood hazards.** Everything wrapped on top of that: the linear
+  algebra (inversion, NNLS, regularization), residuals and chi-squared. These
+  are dataset-specific and live in `scripts/<dataset>/hazards/` —
+  `scripts/imaging/hazards/` first, later `interferometer/` and `point_source/`.
+
+The linear algebra is therefore **not** its own axis; it is lumped in with the
+data-specific tier, because it only exists inside a full likelihood function.
+This is forced rather than stylistic: the conditioning floors are absolute
+constants added to matrices whose entries scale as (flux/noise)², so their
+effective strength cannot be evaluated without a dataset.
+
+The hazard analysis must run in both modes — on the lensing calculation alone,
+and on the same components encased in a full likelihood function.
+
 ## Why this is needed
 
 Downstream profiling tasks measure likelihood evaluation and gradient
@@ -42,30 +65,34 @@ Extend coverage to **all light and mass profiles and their combinations**, on
 profile or a new hazard class a small, local change rather than a new script.
 
 Support these hazard classes as the initial taxonomy — each derived from a real
-finding, none speculative:
+finding, none speculative. The tier tag says where the check lives:
 
-- **Saturating reparametrisations.** A clamp that maps an unbounded region of
-  parameter space onto one value, producing an exactly flat likelihood with zero
-  gradient. The `ell_comps` magnitude clamp is the reference case.
-- **Active-set kinks.** The non-negative linear solver pins basis components at
-  exactly zero, so the likelihood is piecewise-smooth and a pinned component
-  contributes no gradient. This is the core of the linear-solver interaction.
-- **Conditioning floors.** Absolute values added to a curvature-matrix diagonal
-  to make an ill-conditioned solve tractable, whose effective strength depends
-  on the data's flux and noise scale rather than being scale-free.
-- **Non-finite value sites.** Parameter values inside the prior at which the
-  model returns NaN or inf — including exact prior boundaries, which samplers do
-  reach.
-- **Non-finite gradient sites.** Points where the value is finite and correct
-  but the derivative is not, typically a square root evaluated at zero. These
-  are invisible to any check that only inspects likelihood values.
-- **Backend divergence.** Places where the numpy and JAX paths implement
-  different approximations of the same quantity and disagree by more than
-  round-off. Report as relative error against the more exact path, as a function
-  of the parameter that drives the divergence.
-- **Structural degeneracies.** Directions in which a parameter stops affecting
-  the likelihood as another approaches a prior edge — funnels that waste live
-  points and defeat mass-matrix adaptation.
+- **Saturating reparametrisations.** *(tier 1)* A clamp that maps an unbounded
+  region of parameter space onto one value, producing an exactly flat likelihood
+  with zero gradient. The `ell_comps` magnitude clamp is the reference case.
+- **Active-set kinks.** *(tier 2)* The non-negative linear solver pins basis
+  components at exactly zero, so the likelihood is piecewise-smooth and a pinned
+  component contributes no gradient. This is the core of the linear-solver
+  interaction, and only exists inside a full likelihood.
+- **Conditioning floors.** *(tier 2)* Absolute values added to a curvature-matrix
+  diagonal to make an ill-conditioned solve tractable, whose effective strength
+  depends on the data's flux and noise scale rather than being scale-free — which
+  is precisely why they cannot be measured without a dataset.
+- **Non-finite value sites.** *(tier 1)* Parameter values inside the prior at
+  which the model returns NaN or inf — including exact prior boundaries, which
+  samplers do reach.
+- **Non-finite gradient sites.** *(tier 1)* Points where the value is finite and
+  correct but the derivative is not, typically a square root evaluated at zero.
+  These are invisible to any check that only inspects likelihood values.
+- **Backend divergence.** *(both tiers)* Places where the numpy and JAX paths
+  implement different approximations of the same quantity and disagree by more
+  than round-off. Report as relative error against the more exact path, as a
+  function of the parameter that drives the divergence. Tier 1 covers profile
+  math (e.g. `PowerLaw`'s exact `hyp2f1` vs its 20-term series); tier 2 covers
+  the solver (active-set FNNLS vs interior-point PDIP).
+- **Structural degeneracies.** *(tier 2)* Directions in which a parameter stops
+  affecting the likelihood as another approaches a prior edge — funnels that
+  waste live points and defeat mass-matrix adaptation.
 
 Each check should report the parameter region affected, the fraction of prior
 volume it covers under that component's default priors, and which backends it
@@ -105,6 +132,24 @@ already fully characterised:
 - Prior volume beyond the unit circle: 0.22% under the default
   `TruncatedGaussian(0, 0.3)` per component, 5.1% at sigma 0.5, 21.4% under
   `Uniform(-1, 1)` per component.
+
+## Phasing
+
+Sized `large` and split along the tier boundary:
+
+- **Phase 1 (this prompt).** The framework in `scripts/misc/hazards/` — check API,
+  tier-1 registry, prior-volume engine, record schema and results convention —
+  plus the three tier-1 detectors that need only profile evaluation and autodiff
+  (saturating reparametrisation, non-finite value, non-finite gradient), plus the
+  seed result. Also stubs `scripts/imaging/hazards/` with a README stating the
+  tier boundary.
+- **Phase 2** (`draft/feature/workspaces/hazard_profiling_likelihood_tier.md`).
+  The tier-2 cell under `scripts/imaging/hazards/`: active-set kinks, conditioning
+  floors, structural degeneracies and solver backend divergence — plus the tier-1
+  `PowerLaw` series-vs-`hyp2f1` divergence check.
+
+Neither phase runs the full `component x backend` matrix; that is deferred by
+design (see the top of this prompt).
 
 ## Boundary
 

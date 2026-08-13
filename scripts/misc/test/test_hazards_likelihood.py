@@ -5,6 +5,7 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+import numpy as np
 import pytest
 
 
@@ -22,6 +23,8 @@ if str(_misc) not in sys.path:
 from hazards._likelihood import (  # noqa: E402
     LikelihoodProbeRow,
     backend_error_curves,
+    calibrated_scale_aware_floors,
+    conditioning_policy_metrics,
     epsilon_neighbourhood_mass,
     floor_fraction,
     orientation_spans,
@@ -78,3 +81,54 @@ def test_conditioning_and_structural_helpers_use_physical_scales():
         LikelihoodProbeRow(1.0, "axis_ratio", "numpy", -3.0, metadata={"axis_ratio": 1.0}),
     ]
     assert orientation_spans(rows) == {0.7: 3.0, 1.0: 0.0}
+
+
+def _conditioning_row(noise_scale, policy, floor, curvature, reconstruction, fom):
+    return LikelihoodProbeRow(
+        parameter=0.9,
+        parameter_name="einstein_radius",
+        backend="numpy",
+        figure_of_merit=fom,
+        reconstruction=tuple(reconstruction),
+        curvature_diagonal=tuple(curvature),
+        conditioned_curvature_diagonal=tuple(curvature),
+        noise_scale=noise_scale,
+        metadata={
+            "curvature_floor_policy": policy,
+            "curvature_floor_value": floor,
+        },
+    )
+
+
+def test_scale_aware_floor_is_calibrated_from_unfloored_rows():
+    controls = [
+        _conditioning_row(0.5, "none", 0.0, (4.0, 8.0), (1.0,), -10.0),
+        _conditioning_row(1.0, "none", 0.0, (1.0, 2.0), (1.0,), -10.0),
+        _conditioning_row(2.0, "none", 0.0, (0.25, 0.5), (1.0,), -10.0),
+    ]
+    fraction, values = calibrated_scale_aware_floors(controls, configured_floor=1.5e-3)
+    assert fraction == pytest.approx(1.0e-3)
+    assert values == pytest.approx({0.5: 6.0e-3, 1.0: 1.5e-3, 2.0: 3.75e-4})
+
+
+def test_conditioning_policies_share_unfloored_denominator_and_report_errors():
+    rows = []
+    for noise_scale, curvature in ((1.0, (1.0, 2.0)), (2.0, (0.25, 0.5))):
+        rows.extend(
+            (
+                _conditioning_row(noise_scale, "none", 0.0, curvature, (1.0, 2.0), -10.0),
+                _conditioning_row(noise_scale, "absolute", 1.5e-3, curvature, (1.0, 2.0), -10.0),
+                _conditioning_row(
+                    noise_scale,
+                    "scale_aware",
+                    1.0e-3 * float(np.median(curvature)),
+                    curvature,
+                    (1.0, 2.1),
+                    -9.0,
+                ),
+            )
+        )
+    metrics = conditioning_policy_metrics(rows)
+    assert metrics["absolute"]["floor_fraction"] == pytest.approx([1.0e-3, 4.0e-3])
+    assert metrics["scale_aware"]["floor_fraction"] == pytest.approx([1.0e-3, 1.0e-3])
+    assert metrics["scale_aware"]["figure_of_merit_relative_error"] == pytest.approx([0.1, 0.1])

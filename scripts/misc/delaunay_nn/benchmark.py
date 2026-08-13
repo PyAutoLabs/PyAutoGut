@@ -156,16 +156,18 @@ for cap in args.caps:
 device = jax.devices()[0]
 device_label = getattr(device, "device_kind", str(device))
 backend = jax.default_backend()
+hardware = backend if backend == "cpu" else f"{backend}_{slug(device_label)}"
 version = getattr(al, "__version__", "unknown")
 output_dir = args.output_dir or ROOT / "results" / "delaunay_nn"
 output_dir.mkdir(parents=True, exist_ok=True)
-stem = f"delaunay_nn_benchmark_{slug(backend)}_v{version}"
+stem = f"delaunay_nn_benchmark_{hardware}_v{version}"
 json_path = output_dir / f"{stem}.json"
 png_path = output_dir / f"{stem}.png"
 
 payload = {
     "pyautolens_version": version,
     "backend": backend,
+    "hardware": hardware,
     "device": device_label,
     "mesh_points": args.mesh_points,
     "queries": args.queries,

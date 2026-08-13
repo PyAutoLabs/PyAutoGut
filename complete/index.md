@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-975 records across 7 buckets.
+976 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -69,6 +69,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [normalise-auto-simulate-guard-idiom](2026/08/normalise-auto-simulate-guard-idiom.md)
 - [notebook-setup-notebook-regen-drift](2026/08/notebook-setup-notebook-regen-drift.md)
 - [nufft-parity-full-datasets](2026/08/nufft-parity-full-datasets.md)
+- [numerical-hazard-profiling](2026/08/numerical-hazard-profiling.md) — Phase 1 established the reusable detector framework, five persisted findings, regression checking, and the consumer-facing hazard index.
 - [persist-smoke-environments](2026/08/persist-smoke-environments.md) — Made smoke dependency environments durable and isolated per library and Python version, with version-handshake…
 - [plot-array-stale-kwargs](2026/08/plot-array-stale-kwargs.md)
 - [point-source-defaults-campaign](2026/08/point-source-defaults-campaign.md) — took the point-source likelihood options from "several undocumented

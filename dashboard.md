@@ -8,9 +8,9 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 9 |
+| [In flight](#in-flight) (`active/`) | 8 |
 | [Parked](#parked) (`parked.md`) | 6 |
-| [Planned](#planned) (`planned.md`) | 8 |
+| [Planned](#planned) (`planned.md`) | 7 |
 | [Backlog](#backlog) (`draft/`) | 136 |
 
 Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3Aissue+is%3Aopen&type=issues) · [open pull requests](https://github.com/search?q=org%3APyAutoLabs+is%3Apr+is%3Aopen&type=prs)
@@ -51,9 +51,8 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 
 Issued — each has an open GitHub issue and usually a branch. The full record for each is in [`active.md`](active.md).
 
-- [Add a numerical-hazard profiling package to autolens_profiling](active/add_a_numerical_hazard_profiling_package_to.md)
+- [Add a numerical-hazard profiling package to autolens_profiling](active/add_a_numerical_hazard_profiling_package_to.md) — [issue #107](https://github.com/PyAutoLabs/autolens_profiling/issues/107) — workspace-dev
 - [First benchmark calibration campaign — run the 4 assistant benchmarks](active/benchmark_calibration_runs.md)
-- [Profile DelaunayNN against Delaunay on the laptop GPU](active/delaunay_nn_laptop_gpu_profile.md)
 - [Address ECEB editorial comments on ECLIPSE-C](active/euclid_eceb_editorial_revision.md)
 - [JAX-native posterior sampler wave — ranked shortlist from the 2026-07-16](active/jax_native_posterior_sampler_wave.md) — [issue #113](https://github.com/PyAutoLabs/autolens_workspace_developer/issues/113) — PARKED 2026-07-24 — stage (a) POSITIVE: warm-started gradient SMC SAMPLES (acc 0.80->0.17 across tempering, einstein_radius…
 - [Remove standalone matplotlib-inline comments](active/matplotlib_inline_standalones.md)
@@ -82,9 +81,8 @@ Started or scoped, not currently in flight — resume by moving the row back to 
 Scoped but not started; some are not yet prompt files. Full detail in [`planned.md`](planned.md).
 
 <details>
-<summary><b>8</b> task(s)</summary>
+<summary><b>7</b> task(s)</summary>
 
-- **numerical-hazard-profiling** — [issue #107](https://github.com/PyAutoLabs/autolens_profiling/issues/107)
 - **isothermal-ell-sph-oversampling-at-the-cusp** — planned — NOT yet a prompt file; file one via `/intake` before starting
 - **remote-mcp-deployment-tiers** — [issue #20](https://github.com/PyAutoLabs/autofit_assistant/issues/20) — DESIGN-COMPLETE, build BLOCKED-ON-DEMAND — issue #20 holds the full auth/transport/hosting design + Richard/PyAutoMCP…
 - **samples-parameter-paths** — [issue #1327](https://github.com/PyAutoLabs/PyAutoFit/issues/1327) — parked

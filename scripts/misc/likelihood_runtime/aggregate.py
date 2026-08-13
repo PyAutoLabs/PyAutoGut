@@ -42,6 +42,7 @@ if _misc_dir not in _sys.path:
 import argparse
 import json
 import sys
+import warnings
 from pathlib import Path
 
 import matplotlib
@@ -52,6 +53,7 @@ import numpy as np
 
 _REPO_ROOT = _profiling_root()
 _DEFAULT_OUTPUT_ROOT = _REPO_ROOT / "results" / "runtime"
+_DEFAULT_HAZARD_INDEX = _REPO_ROOT / "results" / "hazards" / "hazards_index.json"
 
 
 # Stable ordering — keep the same row order as sweep_likelihood + the prior
@@ -191,6 +193,29 @@ def _aggregate_cell(cell_dir: Path) -> dict:
         ordered[name] = data
 
     return {"configs": ordered}
+
+
+def _hazard_findings_for_cell(index_path: Path, cell_id: str) -> list[str]:
+    """Return stable finding IDs relevant to a runtime cell."""
+
+    try:
+        payload = json.loads(index_path.read_text())
+        findings = payload["findings"]
+        if not isinstance(findings, dict):
+            raise TypeError("findings must be an object")
+    except (OSError, ValueError, KeyError, TypeError) as exc:
+        warnings.warn(f"hazard index unavailable at {index_path}: {exc}", stacklevel=2)
+        return []
+
+    cell = "/".join(cell_id.split("/")[:2])
+    subject_names = {
+        "imaging/pixelization": {"imaging_pixelization", "curvature_matrix"},
+    }.get(cell, set())
+    return sorted(
+        finding_id
+        for finding_id, finding in findings.items()
+        if isinstance(finding, dict) and finding.get("subject_name") in subject_names
+    )
 
 
 def _format_seconds(t: float | None) -> str:
@@ -364,6 +389,8 @@ def main() -> int:
         if not comparison["configs"]:
             sys.stderr.write(f"  skipping {cell_id}: no per-config JSONs found\n")
             continue
+
+        comparison["hazard_findings"] = _hazard_findings_for_cell(_DEFAULT_HAZARD_INDEX, cell_id)
 
         comparison_path = cell_dir / "comparison.json"
         png_path = cell_dir / "comparison.png"

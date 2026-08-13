@@ -1,0 +1,999 @@
+{
+  "counts": {
+    "families": {
+      "light": 51,
+      "light_mass": 17,
+      "mass": 72
+    },
+    "geometries": {
+      "elliptical": 78,
+      "spherical": 62
+    },
+    "total": 140
+  },
+  "matrix_policy": "discovery_only; representative detectors are not multiplied by backend",
+  "profiles": [
+    {
+      "class_name": "Chameleon",
+      "family": "light",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light.standard.chameleon.Chameleon",
+      "registry": "lp"
+    },
+    {
+      "class_name": "ChameleonSph",
+      "family": "light",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.light.standard.chameleon.ChameleonSph",
+      "registry": "lp"
+    },
+    {
+      "class_name": "DevVaucouleurs",
+      "family": "light",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light.standard.dev_vaucouleurs.DevVaucouleurs",
+      "registry": "lp"
+    },
+    {
+      "class_name": "DevVaucouleursSph",
+      "family": "light",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.light.standard.dev_vaucouleurs.DevVaucouleursSph",
+      "registry": "lp"
+    },
+    {
+      "class_name": "ElsonFreeFall",
+      "family": "light",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light.standard.eff.ElsonFreeFall",
+      "registry": "lp"
+    },
+    {
+      "class_name": "ElsonFreeFallSph",
+      "family": "light",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.light.standard.eff.ElsonFreeFallSph",
+      "registry": "lp"
+    },
+    {
+      "class_name": "Exponential",
+      "family": "light",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light.standard.exponential.Exponential",
+      "registry": "lp"
+    },
+    {
+      "class_name": "ExponentialCore",
+      "family": "light",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light.standard.exponential_core.ExponentialCore",
+      "registry": "lp"
+    },
+    {
+      "class_name": "ExponentialCoreSph",
+      "family": "light",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.light.standard.exponential_core.ExponentialCoreSph",
+      "registry": "lp"
+    },
+    {
+      "class_name": "ExponentialSph",
+      "family": "light",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.light.standard.exponential.ExponentialSph",
+      "registry": "lp"
+    },
+    {
+      "class_name": "Gaussian",
+      "family": "light",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light.standard.gaussian.Gaussian",
+      "registry": "lp"
+    },
+    {
+      "class_name": "GaussianMultipole",
+      "family": "light",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light.standard.gaussian_multipole.GaussianMultipole",
+      "registry": "lp"
+    },
+    {
+      "class_name": "GaussianSph",
+      "family": "light",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.light.standard.gaussian.GaussianSph",
+      "registry": "lp"
+    },
+    {
+      "class_name": "Moffat",
+      "family": "light",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light.standard.moffat.Moffat",
+      "registry": "lp"
+    },
+    {
+      "class_name": "MoffatSph",
+      "family": "light",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.light.standard.moffat.MoffatSph",
+      "registry": "lp"
+    },
+    {
+      "class_name": "Sersic",
+      "family": "light",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light.standard.sersic.Sersic",
+      "registry": "lp"
+    },
+    {
+      "class_name": "SersicCore",
+      "family": "light",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light.standard.sersic_core.SersicCore",
+      "registry": "lp"
+    },
+    {
+      "class_name": "SersicCoreSph",
+      "family": "light",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.light.standard.sersic_core.SersicCoreSph",
+      "registry": "lp"
+    },
+    {
+      "class_name": "SersicMultipole",
+      "family": "light",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light.standard.sersic_multipole.SersicMultipole",
+      "registry": "lp"
+    },
+    {
+      "class_name": "SersicSph",
+      "family": "light",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.light.standard.sersic.SersicSph",
+      "registry": "lp"
+    },
+    {
+      "class_name": "ShapeletCartesian",
+      "family": "light",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light.standard.shapelets.cartesian.ShapeletCartesian",
+      "registry": "lp"
+    },
+    {
+      "class_name": "ShapeletCartesianSph",
+      "family": "light",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.light.standard.shapelets.cartesian.ShapeletCartesianSph",
+      "registry": "lp"
+    },
+    {
+      "class_name": "ShapeletExponential",
+      "family": "light",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light.standard.shapelets.exponential.ShapeletExponential",
+      "registry": "lp"
+    },
+    {
+      "class_name": "ShapeletExponentialSph",
+      "family": "light",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.light.standard.shapelets.exponential.ShapeletExponentialSph",
+      "registry": "lp"
+    },
+    {
+      "class_name": "ShapeletPolar",
+      "family": "light",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light.standard.shapelets.polar.ShapeletPolar",
+      "registry": "lp"
+    },
+    {
+      "class_name": "ShapeletPolarSph",
+      "family": "light",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.light.standard.shapelets.polar.ShapeletPolarSph",
+      "registry": "lp"
+    },
+    {
+      "class_name": "DevVaucouleurs",
+      "family": "light",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light.linear.dev_vaucouleurs.DevVaucouleurs",
+      "registry": "lp_linear"
+    },
+    {
+      "class_name": "DevVaucouleursSph",
+      "family": "light",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.light.linear.dev_vaucouleurs.DevVaucouleursSph",
+      "registry": "lp_linear"
+    },
+    {
+      "class_name": "Exponential",
+      "family": "light",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light.linear.exponential.Exponential",
+      "registry": "lp_linear"
+    },
+    {
+      "class_name": "ExponentialCore",
+      "family": "light",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light.linear.exponential_core.ExponentialCore",
+      "registry": "lp_linear"
+    },
+    {
+      "class_name": "ExponentialCoreSph",
+      "family": "light",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.light.linear.exponential_core.ExponentialCoreSph",
+      "registry": "lp_linear"
+    },
+    {
+      "class_name": "ExponentialSph",
+      "family": "light",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.light.linear.exponential.ExponentialSph",
+      "registry": "lp_linear"
+    },
+    {
+      "class_name": "Gaussian",
+      "family": "light",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light.linear.gaussian.Gaussian",
+      "registry": "lp_linear"
+    },
+    {
+      "class_name": "GaussianMultipole",
+      "family": "light",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light.linear.gaussian_multipole.GaussianMultipole",
+      "registry": "lp_linear"
+    },
+    {
+      "class_name": "GaussianSph",
+      "family": "light",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.light.linear.gaussian.GaussianSph",
+      "registry": "lp_linear"
+    },
+    {
+      "class_name": "LightProfile",
+      "family": "light",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light.abstract.LightProfile",
+      "registry": "lp_linear"
+    },
+    {
+      "class_name": "LightProfileLinear",
+      "family": "light",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light.linear.abstract.LightProfileLinear",
+      "registry": "lp_linear"
+    },
+    {
+      "class_name": "LightProfileLinearObjFuncList",
+      "family": "light",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light.linear.abstract.LightProfileLinearObjFuncList",
+      "registry": "lp_linear"
+    },
+    {
+      "class_name": "Moffat",
+      "family": "light",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light.linear.moffat.Moffat",
+      "registry": "lp_linear"
+    },
+    {
+      "class_name": "MoffatSph",
+      "family": "light",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.light.linear.moffat.MoffatSph",
+      "registry": "lp_linear"
+    },
+    {
+      "class_name": "Sersic",
+      "family": "light",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light.linear.sersic.Sersic",
+      "registry": "lp_linear"
+    },
+    {
+      "class_name": "SersicCore",
+      "family": "light",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light.linear.sersic_core.SersicCore",
+      "registry": "lp_linear"
+    },
+    {
+      "class_name": "SersicCoreSph",
+      "family": "light",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.light.linear.sersic_core.SersicCoreSph",
+      "registry": "lp_linear"
+    },
+    {
+      "class_name": "SersicMultipole",
+      "family": "light",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light.linear.sersic_multipole.SersicMultipole",
+      "registry": "lp_linear"
+    },
+    {
+      "class_name": "SersicSph",
+      "family": "light",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.light.linear.sersic.SersicSph",
+      "registry": "lp_linear"
+    },
+    {
+      "class_name": "ShapeletCartesian",
+      "family": "light",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light.linear.shapelets.cartesian.ShapeletCartesian",
+      "registry": "lp_linear"
+    },
+    {
+      "class_name": "ShapeletCartesianSph",
+      "family": "light",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.light.linear.shapelets.cartesian.ShapeletCartesianSph",
+      "registry": "lp_linear"
+    },
+    {
+      "class_name": "ShapeletExponential",
+      "family": "light",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light.linear.shapelets.exponential.ShapeletExponential",
+      "registry": "lp_linear"
+    },
+    {
+      "class_name": "ShapeletExponentialSph",
+      "family": "light",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.light.linear.shapelets.exponential.ShapeletExponentialSph",
+      "registry": "lp_linear"
+    },
+    {
+      "class_name": "ShapeletPolar",
+      "family": "light",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light.linear.shapelets.polar.ShapeletPolar",
+      "registry": "lp_linear"
+    },
+    {
+      "class_name": "ShapeletPolarSph",
+      "family": "light",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.light.linear.shapelets.polar.ShapeletPolarSph",
+      "registry": "lp_linear"
+    },
+    {
+      "class_name": "Chameleon",
+      "family": "light_mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light_and_mass_profiles.Chameleon",
+      "registry": "lmp"
+    },
+    {
+      "class_name": "ChameleonSph",
+      "family": "light_mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.light_and_mass_profiles.ChameleonSph",
+      "registry": "lmp"
+    },
+    {
+      "class_name": "DevVaucouleurs",
+      "family": "light_mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light_and_mass_profiles.DevVaucouleurs",
+      "registry": "lmp"
+    },
+    {
+      "class_name": "DevVaucouleursSph",
+      "family": "light_mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.light_and_mass_profiles.DevVaucouleursSph",
+      "registry": "lmp"
+    },
+    {
+      "class_name": "Exponential",
+      "family": "light_mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light_and_mass_profiles.Exponential",
+      "registry": "lmp"
+    },
+    {
+      "class_name": "ExponentialGradient",
+      "family": "light_mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light_and_mass_profiles.ExponentialGradient",
+      "registry": "lmp"
+    },
+    {
+      "class_name": "ExponentialGradientSph",
+      "family": "light_mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.light_and_mass_profiles.ExponentialGradientSph",
+      "registry": "lmp"
+    },
+    {
+      "class_name": "ExponentialSph",
+      "family": "light_mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.light_and_mass_profiles.ExponentialSph",
+      "registry": "lmp"
+    },
+    {
+      "class_name": "Gaussian",
+      "family": "light_mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light_and_mass_profiles.Gaussian",
+      "registry": "lmp"
+    },
+    {
+      "class_name": "GaussianGradient",
+      "family": "light_mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light_and_mass_profiles.GaussianGradient",
+      "registry": "lmp"
+    },
+    {
+      "class_name": "LightMassProfile",
+      "family": "light_mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light_and_mass_profiles.LightMassProfile",
+      "registry": "lmp"
+    },
+    {
+      "class_name": "Sersic",
+      "family": "light_mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light_and_mass_profiles.Sersic",
+      "registry": "lmp"
+    },
+    {
+      "class_name": "SersicCore",
+      "family": "light_mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light_and_mass_profiles.SersicCore",
+      "registry": "lmp"
+    },
+    {
+      "class_name": "SersicCoreSph",
+      "family": "light_mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.light_and_mass_profiles.SersicCoreSph",
+      "registry": "lmp"
+    },
+    {
+      "class_name": "SersicGradient",
+      "family": "light_mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.light_and_mass_profiles.SersicGradient",
+      "registry": "lmp"
+    },
+    {
+      "class_name": "SersicGradientSph",
+      "family": "light_mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.light_and_mass_profiles.SersicGradientSph",
+      "registry": "lmp"
+    },
+    {
+      "class_name": "SersicSph",
+      "family": "light_mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.light_and_mass_profiles.SersicSph",
+      "registry": "lmp"
+    },
+    {
+      "class_name": "Chameleon",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.stellar.chameleon.Chameleon",
+      "registry": "mp"
+    },
+    {
+      "class_name": "ChameleonSph",
+      "family": "mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.mass.stellar.chameleon.ChameleonSph",
+      "registry": "mp"
+    },
+    {
+      "class_name": "DevVaucouleurs",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.stellar.dev_vaucouleurs.DevVaucouleurs",
+      "registry": "mp"
+    },
+    {
+      "class_name": "DevVaucouleursSph",
+      "family": "mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.mass.stellar.dev_vaucouleurs.DevVaucouleursSph",
+      "registry": "mp"
+    },
+    {
+      "class_name": "Exponential",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.stellar.exponential.Exponential",
+      "registry": "mp"
+    },
+    {
+      "class_name": "ExponentialSph",
+      "family": "mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.mass.stellar.exponential.ExponentialSph",
+      "registry": "mp"
+    },
+    {
+      "class_name": "ExternalPotential",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.sheets.external_potential.ExternalPotential",
+      "registry": "mp"
+    },
+    {
+      "class_name": "ExternalShear",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.sheets.external_shear.ExternalShear",
+      "registry": "mp"
+    },
+    {
+      "class_name": "Gaussian",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.stellar.gaussian.Gaussian",
+      "registry": "mp"
+    },
+    {
+      "class_name": "GaussianGradient",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.stellar.gaussian_gradient.GaussianGradient",
+      "registry": "mp"
+    },
+    {
+      "class_name": "GaussianRandomField",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.input.gaussian_random_field.GaussianRandomField",
+      "registry": "mp"
+    },
+    {
+      "class_name": "InputDeflections",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.input.input_deflections.InputDeflections",
+      "registry": "mp"
+    },
+    {
+      "class_name": "InputPotential",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.input.input_potential.InputPotential",
+      "registry": "mp"
+    },
+    {
+      "class_name": "Isothermal",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.total.isothermal.Isothermal",
+      "registry": "mp"
+    },
+    {
+      "class_name": "IsothermalCore",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.total.isothermal_core.IsothermalCore",
+      "registry": "mp"
+    },
+    {
+      "class_name": "IsothermalCoreSph",
+      "family": "mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.mass.total.isothermal_core.IsothermalCoreSph",
+      "registry": "mp"
+    },
+    {
+      "class_name": "IsothermalSph",
+      "family": "mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.mass.total.isothermal.IsothermalSph",
+      "registry": "mp"
+    },
+    {
+      "class_name": "KaplinghatCoredNFWMCRLudlowSph",
+      "family": "mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.mass.dark.kaplinghat_mcr.KaplinghatCoredNFWMCRLudlowSph",
+      "registry": "mp"
+    },
+    {
+      "class_name": "KaplinghatCoredNFWSph",
+      "family": "mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.mass.dark.kaplinghat.KaplinghatCoredNFWSph",
+      "registry": "mp"
+    },
+    {
+      "class_name": "LinearNDInterpolatorExt",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.input.interp.LinearNDInterpolatorExt",
+      "registry": "mp"
+    },
+    {
+      "class_name": "MGEDecomposer",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.abstract.mge.MGEDecomposer",
+      "registry": "mp"
+    },
+    {
+      "class_name": "MassProfile",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.abstract.abstract.MassProfile",
+      "registry": "mp"
+    },
+    {
+      "class_name": "MassSheet",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.sheets.mass_sheet.MassSheet",
+      "registry": "mp"
+    },
+    {
+      "class_name": "NFW",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.dark.nfw.NFW",
+      "registry": "mp"
+    },
+    {
+      "class_name": "NFWMCRDuffySph",
+      "family": "mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.mass.dark.nfw_mcr.NFWMCRDuffySph",
+      "registry": "mp"
+    },
+    {
+      "class_name": "NFWMCRLudlow",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.dark.nfw_mcr.NFWMCRLudlow",
+      "registry": "mp"
+    },
+    {
+      "class_name": "NFWMCRLudlowSph",
+      "family": "mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.mass.dark.nfw_mcr.NFWMCRLudlowSph",
+      "registry": "mp"
+    },
+    {
+      "class_name": "NFWMCRScatterLudlow",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.dark.nfw_mcr_scatter.NFWMCRScatterLudlow",
+      "registry": "mp"
+    },
+    {
+      "class_name": "NFWMCRScatterLudlowSph",
+      "family": "mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.mass.dark.nfw_mcr_scatter.NFWMCRScatterLudlowSph",
+      "registry": "mp"
+    },
+    {
+      "class_name": "NFWSph",
+      "family": "mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.mass.dark.nfw.NFWSph",
+      "registry": "mp"
+    },
+    {
+      "class_name": "NFWTruncatedMCRDuffySph",
+      "family": "mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.mass.dark.nfw_truncated_mcr.NFWTruncatedMCRDuffySph",
+      "registry": "mp"
+    },
+    {
+      "class_name": "NFWTruncatedMCRLudlowSph",
+      "family": "mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.mass.dark.nfw_truncated_mcr.NFWTruncatedMCRLudlowSph",
+      "registry": "mp"
+    },
+    {
+      "class_name": "NFWTruncatedMCRScatterLudlowSph",
+      "family": "mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.mass.dark.nfw_truncated_mcr_scatter.NFWTruncatedMCRScatterLudlowSph",
+      "registry": "mp"
+    },
+    {
+      "class_name": "NFWTruncatedSph",
+      "family": "mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.mass.dark.nfw_truncated.NFWTruncatedSph",
+      "registry": "mp"
+    },
+    {
+      "class_name": "NFWVirialMassConcSph",
+      "family": "mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.mass.dark.nfw_virial_mass_conc.NFWVirialMassConcSph",
+      "registry": "mp"
+    },
+    {
+      "class_name": "PIEMass",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.total.dual_pseudo_isothermal_mass.PIEMass",
+      "registry": "mp"
+    },
+    {
+      "class_name": "PointMass",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.point.point.PointMass",
+      "registry": "mp"
+    },
+    {
+      "class_name": "PowerLaw",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.total.power_law.PowerLaw",
+      "registry": "mp"
+    },
+    {
+      "class_name": "PowerLawBroken",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.total.power_law_broken.PowerLawBroken",
+      "registry": "mp"
+    },
+    {
+      "class_name": "PowerLawBrokenSph",
+      "family": "mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.mass.total.power_law_broken.PowerLawBrokenSph",
+      "registry": "mp"
+    },
+    {
+      "class_name": "PowerLawCore",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.total.power_law_core.PowerLawCore",
+      "registry": "mp"
+    },
+    {
+      "class_name": "PowerLawCoreSph",
+      "family": "mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.mass.total.power_law_core.PowerLawCoreSph",
+      "registry": "mp"
+    },
+    {
+      "class_name": "PowerLawIntermediate",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.total.power_law.PowerLawIntermediate",
+      "registry": "mp"
+    },
+    {
+      "class_name": "PowerLawMultipole",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.total.power_law_multipole.PowerLawMultipole",
+      "registry": "mp"
+    },
+    {
+      "class_name": "PowerLawSph",
+      "family": "mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.mass.total.power_law.PowerLawSph",
+      "registry": "mp"
+    },
+    {
+      "class_name": "SMBH",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.point.smbh.SMBH",
+      "registry": "mp"
+    },
+    {
+      "class_name": "SMBHBinary",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.point.smbh_binary.SMBHBinary",
+      "registry": "mp"
+    },
+    {
+      "class_name": "Sersic",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.stellar.sersic.Sersic",
+      "registry": "mp"
+    },
+    {
+      "class_name": "SersicCore",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.stellar.sersic_core.SersicCore",
+      "registry": "mp"
+    },
+    {
+      "class_name": "SersicCoreSph",
+      "family": "mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.mass.stellar.sersic_core.SersicCoreSph",
+      "registry": "mp"
+    },
+    {
+      "class_name": "SersicGradient",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.stellar.sersic_gradient.SersicGradient",
+      "registry": "mp"
+    },
+    {
+      "class_name": "SersicGradientSph",
+      "family": "mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.mass.stellar.sersic_gradient.SersicGradientSph",
+      "registry": "mp"
+    },
+    {
+      "class_name": "SersicSph",
+      "family": "mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.mass.stellar.sersic.SersicSph",
+      "registry": "mp"
+    },
+    {
+      "class_name": "YangSIDMMCRLudlowSph",
+      "family": "mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.mass.dark.yang24_mcr.YangSIDMMCRLudlowSph",
+      "registry": "mp"
+    },
+    {
+      "class_name": "YangSIDMSph",
+      "family": "mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.mass.dark.yang24.YangSIDMSph",
+      "registry": "mp"
+    },
+    {
+      "class_name": "cNFW",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.dark.cnfw.cNFW",
+      "registry": "mp"
+    },
+    {
+      "class_name": "cNFWMCRLudlow",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.dark.cnfw_mcr.cNFWMCRLudlow",
+      "registry": "mp"
+    },
+    {
+      "class_name": "cNFWMCRLudlowSph",
+      "family": "mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.mass.dark.cnfw_mcr.cNFWMCRLudlowSph",
+      "registry": "mp"
+    },
+    {
+      "class_name": "cNFWMCRScatterLudlow",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.dark.cnfw_mcr_scatter.cNFWMCRScatterLudlow",
+      "registry": "mp"
+    },
+    {
+      "class_name": "cNFWMCRScatterLudlowSph",
+      "family": "mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.mass.dark.cnfw_mcr_scatter.cNFWMCRScatterLudlowSph",
+      "registry": "mp"
+    },
+    {
+      "class_name": "cNFWSph",
+      "family": "mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.mass.dark.cnfw.cNFWSph",
+      "registry": "mp"
+    },
+    {
+      "class_name": "dPIEMass",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.total.dual_pseudo_isothermal_mass.dPIEMass",
+      "registry": "mp"
+    },
+    {
+      "class_name": "dPIEMassB0",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.total.dual_pseudo_isothermal_mass.dPIEMassB0",
+      "registry": "mp"
+    },
+    {
+      "class_name": "dPIEMassB0Sph",
+      "family": "mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.mass.total.dual_pseudo_isothermal_mass.dPIEMassB0Sph",
+      "registry": "mp"
+    },
+    {
+      "class_name": "dPIEMassSph",
+      "family": "mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.mass.total.dual_pseudo_isothermal_mass.dPIEMassSph",
+      "registry": "mp"
+    },
+    {
+      "class_name": "dPIEPotential",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.total.dual_pseudo_isothermal_potential.dPIEPotential",
+      "registry": "mp"
+    },
+    {
+      "class_name": "dPIEPotentialSph",
+      "family": "mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.mass.total.dual_pseudo_isothermal_potential.dPIEPotentialSph",
+      "registry": "mp"
+    },
+    {
+      "class_name": "gNFW",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.dark.gnfw.gNFW",
+      "registry": "mp"
+    },
+    {
+      "class_name": "gNFWMCRLudlow",
+      "family": "mass",
+      "geometry": "elliptical",
+      "import_path": "autogalaxy.profiles.mass.dark.gnfw_mcr.gNFWMCRLudlow",
+      "registry": "mp"
+    },
+    {
+      "class_name": "gNFWSph",
+      "family": "mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.mass.dark.gnfw.gNFWSph",
+      "registry": "mp"
+    },
+    {
+      "class_name": "gNFWVirialMassConcSph",
+      "family": "mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.mass.dark.gnfw_virial_mass_conc.gNFWVirialMassConcSph",
+      "registry": "mp"
+    },
+    {
+      "class_name": "gNFWVirialMassgNFWConcSph",
+      "family": "mass",
+      "geometry": "spherical",
+      "import_path": "autogalaxy.profiles.mass.dark.gnfw_virial_mass_gnfw_conc.gNFWVirialMassgNFWConcSph",
+      "registry": "mp"
+    }
+  ],
+  "schema_version": 1,
+  "scope": "public_profile_registry"
+}

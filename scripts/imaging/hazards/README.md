@@ -1,11 +1,19 @@
-# Imaging likelihood hazards — phase 2 boundary
+# Imaging likelihood hazards
 
-This directory is reserved for imaging-specific fixtures and cells that wrap
+This directory contains imaging-specific fixtures and cells that wrap
 the reusable detectors in [`scripts/misc/hazards/`](../../misc/hazards/README.md)
 around a complete likelihood.
 
-Phase 1 deliberately contains no imaging cell. Active-set kinks, scientific
-relevance of conditioning floors, structural degeneracies, and solver-backend
-divergence are scoped by the follow-up task
-`hazard_profiling_likelihood_tier.md`, after the phase-one record/check API has
-merged. Reusable detector logic must not be duplicated here.
+`pixelization.py` is the first tier-2 cell. It uses an in-memory 7x7 imaging
+dataset, an Isothermal lens and a 3x3 rectangular source with constant
+regularization. The bounded scan measures active-set support transitions,
+matrix-floor scale, NumPy/JAX solver divergence, and the circular-profile
+orientation degeneracy. Reusable detector logic remains in `misc/hazards`.
+
+Run the cell directly to write its raw probe, or run the shared scanner to
+write semantic findings:
+
+```bash
+python scripts/imaging/hazards/pixelization.py
+python scripts/misc/hazards/scan.py --subject likelihood
+```

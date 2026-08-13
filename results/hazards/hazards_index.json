@@ -965,6 +965,939 @@
       "tier": 1,
       "title": "Radial sqrt has a non-finite gradient at r=0"
     },
+    "likelihood.imaging-pixelization.absolute-conditioning-floors": {
+      "affects_science": null,
+      "anchors": [],
+      "backend_reachability": {
+        "numpy": {
+          "full_likelihood": "reachable"
+        }
+      },
+      "backends": [
+        "numpy"
+      ],
+      "blocked_by": [],
+      "code_exists": true,
+      "finding_id": "likelihood.imaging-pixelization.absolute-conditioning-floors",
+      "hazard_class": "conditioning_floor",
+      "measurements": [
+        {
+          "basis": "error_curve",
+          "details": {
+            "absolute_floor": 0.001,
+            "fraction": [
+              0.007183877930847692,
+              0.02873551172339077,
+              0.11494204689356308
+            ],
+            "noise_scale": [
+              0.5,
+              1.0,
+              2.0
+            ]
+          },
+          "unit": "curvature_floor_over_diagonal_scale",
+          "value": 0.11494204689356308
+        },
+        {
+          "basis": "error_curve",
+          "details": {
+            "absolute_jitter": 1e-08,
+            "fraction": [
+              3.3333333222222224e-09,
+              3.3333333222222224e-09,
+              3.3333333222222224e-09
+            ],
+            "noise_scale": [
+              0.5,
+              1.0,
+              2.0
+            ],
+            "scale_free_counterexample": "GaussianKernel trace-scaled h_jitter"
+          },
+          "unit": "regularization_jitter_over_diagonal_scale",
+          "value": 3.3333333222222224e-09
+        },
+        {
+          "basis": "reachability",
+          "details": {
+            "blocked_paths": {},
+            "reachable_via": [
+              "FitImaging.linear-light-plus-RectangularUniform.Constant"
+            ]
+          },
+          "unit": "boolean",
+          "value": 1.0
+        }
+      ],
+      "reachable_via": [
+        "FitImaging.linear-light-plus-RectangularUniform.Constant"
+      ],
+      "record": "likelihood/imaging_pixelization/conditioning_floor.json",
+      "reproducer": {
+        "curvature_floor_fraction": [
+          0.007183877930847692,
+          0.02873551172339077,
+          0.11494204689356308
+        ],
+        "noise_scale": [
+          0.5,
+          1.0,
+          2.0
+        ],
+        "regularization_jitter_fraction": [
+          3.3333333222222224e-09,
+          3.3333333222222224e-09,
+          3.3333333222222224e-09
+        ]
+      },
+      "schema_version": 1,
+      "subject": "likelihood",
+      "subject_name": "imaging_pixelization",
+      "summary": "The complete likelihood expresses curvature and constant-regularization floors as fractions of the fitted matrices over a noise-map scaling sweep.",
+      "tier": 2,
+      "title": "Absolute inversion floors move with dataset scale"
+    },
+    "likelihood.imaging-pixelization.curvature-floor-doc-config-drift": {
+      "affects_science": null,
+      "anchors": [],
+      "backend_reachability": {},
+      "backends": [
+        "numpy",
+        "jax"
+      ],
+      "blocked_by": [],
+      "code_exists": true,
+      "finding_id": "likelihood.imaging-pixelization.curvature-floor-doc-config-drift",
+      "hazard_class": "documentation_drift",
+      "measurements": [
+        {
+          "basis": "error_curve",
+          "details": {
+            "configured": 0.001,
+            "documented": 1e-08
+          },
+          "unit": "configured_over_documented",
+          "value": 100000.0
+        }
+      ],
+      "reachable_via": [
+        "FitImaging.linear-light-inversion"
+      ],
+      "record": "likelihood/imaging_pixelization/documentation_drift.json",
+      "reproducer": {
+        "configured": 0.001,
+        "documented": 1e-08
+      },
+      "schema_version": 1,
+      "subject": "likelihood",
+      "subject_name": "imaging_pixelization",
+      "summary": "The helper docstring names 1e-8 while live configuration supplies 1.0e-03, a 1e+05 ratio.",
+      "tier": 2,
+      "title": "Curvature-floor documentation trails the live default"
+    },
+    "likelihood.imaging-pixelization.nnls-active-set-kinks": {
+      "affects_science": null,
+      "anchors": [],
+      "backend_reachability": {
+        "numpy": {
+          "full_likelihood": "reachable"
+        }
+      },
+      "backends": [
+        "numpy"
+      ],
+      "blocked_by": [],
+      "code_exists": true,
+      "finding_id": "likelihood.imaging-pixelization.nnls-active-set-kinks",
+      "hazard_class": "active_set",
+      "measurements": [
+        {
+          "basis": "epsilon_neighbourhood",
+          "details": {
+            "centre": [
+              1.025,
+              1.375,
+              1.5750000000000002
+            ],
+            "domain": {
+              "lower": 0.1,
+              "parameter": "einstein_radius",
+              "upper": 1.6
+            },
+            "epsilon": 0.02499999999999991
+          },
+          "unit": "fraction",
+          "value": 0.09999999999999964
+        },
+        {
+          "basis": "error_curve",
+          "details": {
+            "grid_spacing": 0.04999999999999982,
+            "interpretation": "support and derivative are nonsmooth; this finite grid does not show a discontinuous well-posed reconstruction",
+            "relative_steps_at_support_changes": [
+              0.006661594517702756,
+              0.0012593527152558672,
+              0.01403478948025252
+            ],
+            "support": [
+              [
+                true,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false
+              ],
+              [
+                true,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false
+              ],
+              [
+                true,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false
+              ],
+              [
+                true,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false
+              ],
+              [
+                true,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false
+              ],
+              [
+                true,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false
+              ],
+              [
+                true,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false
+              ],
+              [
+                true,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false
+              ],
+              [
+                true,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false
+              ],
+              [
+                true,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false
+              ],
+              [
+                true,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false
+              ],
+              [
+                true,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false
+              ],
+              [
+                true,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false
+              ],
+              [
+                true,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false
+              ],
+              [
+                true,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false
+              ],
+              [
+                true,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false
+              ],
+              [
+                true,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false
+              ],
+              [
+                true,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false
+              ],
+              [
+                true,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false,
+                false,
+                true,
+                false
+              ],
+              [
+                true,
+                false,
+                true,
+                false,
+                false,
+                false,
+                false,
+                false,
+                true,
+                false
+              ],
+              [
+                true,
+                false,
+                true,
+                false,
+                false,
+                false,
+                false,
+                false,
+                true,
+                false
+              ],
+              [
+                true,
+                false,
+                true,
+                false,
+                false,
+                false,
+                false,
+                false,
+                true,
+                false
+              ],
+              [
+                true,
+                false,
+                true,
+                false,
+                false,
+                false,
+                false,
+                false,
+                true,
+                false
+              ],
+              [
+                true,
+                false,
+                true,
+                false,
+                false,
+                false,
+                false,
+                false,
+                true,
+                false
+              ],
+              [
+                true,
+                false,
+                true,
+                false,
+                false,
+                false,
+                false,
+                false,
+                true,
+                false
+              ],
+              [
+                true,
+                false,
+                true,
+                false,
+                false,
+                false,
+                false,
+                false,
+                true,
+                false
+              ],
+              [
+                true,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                true,
+                false
+              ],
+              [
+                true,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                true,
+                false
+              ],
+              [
+                true,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                true,
+                false
+              ],
+              [
+                true,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                true,
+                false
+              ],
+              [
+                true,
+                false,
+                false,
+                false,
+                false,
+                false,
+                false,
+                true,
+                true,
+                true
+              ]
+            ]
+          },
+          "unit": "adjacent_relative_reconstruction_step",
+          "value": 0.01403478948025252
+        }
+      ],
+      "reachable_via": [
+        "FitImaging.RectangularUniform.Constant.numpy"
+      ],
+      "record": "likelihood/imaging_pixelization/active_set.json",
+      "reproducer": {
+        "epsilon": 0.02499999999999991,
+        "parameter": [
+          0.1,
+          0.15000000000000002,
+          0.2,
+          0.25,
+          0.30000000000000004,
+          0.35,
+          0.4,
+          0.45000000000000007,
+          0.5,
+          0.55,
+          0.6,
+          0.65,
+          0.7000000000000001,
+          0.75,
+          0.8,
+          0.85,
+          0.9,
+          0.9500000000000001,
+          1.0,
+          1.05,
+          1.1,
+          1.1500000000000001,
+          1.2000000000000002,
+          1.2500000000000002,
+          1.3000000000000003,
+          1.35,
+          1.4000000000000001,
+          1.4500000000000002,
+          1.5000000000000002,
+          1.5500000000000003,
+          1.6
+        ],
+        "transition_locations": [
+          1.025,
+          1.375,
+          1.5750000000000002
+        ]
+      },
+      "schema_version": 1,
+      "subject": "likelihood",
+      "subject_name": "imaging_pixelization",
+      "summary": "The NumPy full-likelihood scan changes active support at 3 bounded Einstein-radius location(s). The report measures explicit epsilon-neighbourhood mass, not exact-kink prior mass.",
+      "tier": 2,
+      "title": "NNLS support changes create likelihood kinks"
+    },
+    "likelihood.imaging-pixelization.positive-solver-backend-divergence": {
+      "affects_science": null,
+      "anchors": [],
+      "backend_reachability": {
+        "jax": {
+          "algorithm": "PDIP with Jacobi preconditioning"
+        },
+        "numpy": {
+          "algorithm": "active-set FNNLS"
+        }
+      },
+      "backends": [
+        "numpy",
+        "jax"
+      ],
+      "blocked_by": [],
+      "code_exists": true,
+      "finding_id": "likelihood.imaging-pixelization.positive-solver-backend-divergence",
+      "hazard_class": "solver_divergence",
+      "measurements": [
+        {
+          "basis": "error_curve",
+          "details": {
+            "curves": {
+              "jax": {
+                "figure_of_merit": [
+                  9.189003434465737e-16,
+                  6.12633458032503e-16,
+                  3.0633534683941174e-16,
+                  0.0,
+                  1.531915759655476e-16,
+                  0.0,
+                  1.532220265240722e-16,
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.5332273073972557e-16,
+                  1.5335510965143563e-16,
+                  1.5339051530837553e-16,
+                  0.0,
+                  1.5346864147945987e-16,
+                  1.5351397139366464e-16,
+                  1.5356337574602522e-16,
+                  0.0,
+                  1.5366412037191702e-16,
+                  1.5370736136188692e-16,
+                  3.0749840434218295e-16,
+                  2.0498389053950734e-07,
+                  1.9994008500248116e-15,
+                  1.230413968177428e-15,
+                  3.0761338699104145e-16,
+                  3.0758630086444074e-16,
+                  5.246135542613022e-05,
+                  7.686144208304576e-16,
+                  6.60877258304099e-05,
+                  0.00023194288444584193,
+                  1.6441931339655249e-07
+                ],
+                "parameter": [
+                  0.1,
+                  0.15000000000000002,
+                  0.2,
+                  0.25,
+                  0.30000000000000004,
+                  0.35,
+                  0.4,
+                  0.45000000000000007,
+                  0.5,
+                  0.55,
+                  0.6,
+                  0.65,
+                  0.7000000000000001,
+                  0.75,
+                  0.8,
+                  0.85,
+                  0.9,
+                  0.9500000000000001,
+                  1.0,
+                  1.05,
+                  1.1,
+                  1.1500000000000001,
+                  1.2000000000000002,
+                  1.2500000000000002,
+                  1.3000000000000003,
+                  1.35,
+                  1.4000000000000001,
+                  1.4500000000000002,
+                  1.5000000000000002,
+                  1.5500000000000003,
+                  1.6
+                ],
+                "reconstruction": [
+                  5.6121857505049316e-11,
+                  3.806714667699578e-11,
+                  2.7245597461782877e-11,
+                  2.075829826626248e-11,
+                  2.0203409974023662e-11,
+                  2.2592453803103482e-11,
+                  3.127078471758534e-11,
+                  4.846521804291675e-11,
+                  8.044306665976654e-11,
+                  1.4075277919271787e-10,
+                  2.728047572759854e-10,
+                  5.189728194618909e-12,
+                  4.984148451536302e-12,
+                  4.541491055260921e-12,
+                  4.688539734025462e-12,
+                  2.989517986774513e-12,
+                  3.87028158764826e-10,
+                  2.144283810666813e-10,
+                  6.861153403000856e-10,
+                  1.8193912248745166e-11,
+                  2.0678645350886532e-11,
+                  1.6234347248554026e-05,
+                  1.1097687179806726e-10,
+                  4.59584596021116e-11,
+                  1.0401658804281254e-10,
+                  2.7619489095158998e-08,
+                  0.00399642520272944,
+                  1.1564928784075432e-11,
+                  0.0038858669642274878,
+                  0.008989314321732202,
+                  4.5229958336047495e-06
+                ]
+              }
+            },
+            "reference": "numpy_fnnls"
+          },
+          "unit": "relative_error",
+          "value": 0.008989314321732202
+        },
+        {
+          "basis": "reachability",
+          "details": {
+            "blocked_paths": {},
+            "reachable_via": [
+              "FitImaging.jax.pdip-jacobi",
+              "FitImaging.numpy.active-set-fnnls"
+            ]
+          },
+          "unit": "boolean",
+          "value": 1.0
+        }
+      ],
+      "reachable_via": [
+        "FitImaging.numpy.active-set-fnnls",
+        "FitImaging.jax.pdip-jacobi"
+      ],
+      "record": "likelihood/imaging_pixelization/solver_divergence.json",
+      "reproducer": {
+        "curves": {
+          "jax": {
+            "figure_of_merit": [
+              9.189003434465737e-16,
+              6.12633458032503e-16,
+              3.0633534683941174e-16,
+              0.0,
+              1.531915759655476e-16,
+              0.0,
+              1.532220265240722e-16,
+              0.0,
+              0.0,
+              0.0,
+              1.5332273073972557e-16,
+              1.5335510965143563e-16,
+              1.5339051530837553e-16,
+              0.0,
+              1.5346864147945987e-16,
+              1.5351397139366464e-16,
+              1.5356337574602522e-16,
+              0.0,
+              1.5366412037191702e-16,
+              1.5370736136188692e-16,
+              3.0749840434218295e-16,
+              2.0498389053950734e-07,
+              1.9994008500248116e-15,
+              1.230413968177428e-15,
+              3.0761338699104145e-16,
+              3.0758630086444074e-16,
+              5.246135542613022e-05,
+              7.686144208304576e-16,
+              6.60877258304099e-05,
+              0.00023194288444584193,
+              1.6441931339655249e-07
+            ],
+            "parameter": [
+              0.1,
+              0.15000000000000002,
+              0.2,
+              0.25,
+              0.30000000000000004,
+              0.35,
+              0.4,
+              0.45000000000000007,
+              0.5,
+              0.55,
+              0.6,
+              0.65,
+              0.7000000000000001,
+              0.75,
+              0.8,
+              0.85,
+              0.9,
+              0.9500000000000001,
+              1.0,
+              1.05,
+              1.1,
+              1.1500000000000001,
+              1.2000000000000002,
+              1.2500000000000002,
+              1.3000000000000003,
+              1.35,
+              1.4000000000000001,
+              1.4500000000000002,
+              1.5000000000000002,
+              1.5500000000000003,
+              1.6
+            ],
+            "reconstruction": [
+              5.6121857505049316e-11,
+              3.806714667699578e-11,
+              2.7245597461782877e-11,
+              2.075829826626248e-11,
+              2.0203409974023662e-11,
+              2.2592453803103482e-11,
+              3.127078471758534e-11,
+              4.846521804291675e-11,
+              8.044306665976654e-11,
+              1.4075277919271787e-10,
+              2.728047572759854e-10,
+              5.189728194618909e-12,
+              4.984148451536302e-12,
+              4.541491055260921e-12,
+              4.688539734025462e-12,
+              2.989517986774513e-12,
+              3.87028158764826e-10,
+              2.144283810666813e-10,
+              6.861153403000856e-10,
+              1.8193912248745166e-11,
+              2.0678645350886532e-11,
+              1.6234347248554026e-05,
+              1.1097687179806726e-10,
+              4.59584596021116e-11,
+              1.0401658804281254e-10,
+              2.7619489095158998e-08,
+              0.00399642520272944,
+              1.1564928784075432e-11,
+              0.0038858669642274878,
+              0.008989314321732202,
+              4.5229958336047495e-06
+            ]
+          }
+        },
+        "parameter": "einstein_radius"
+      },
+      "schema_version": 1,
+      "subject": "likelihood",
+      "subject_name": "imaging_pixelization",
+      "summary": "A full FitImaging grid compares active-set FNNLS with the JAX interior-point path; maximum measured relative output error is 8.989e-03.",
+      "tier": 2,
+      "title": "Positive solvers are backend-dependent algorithms"
+    },
+    "likelihood.imaging-sersic.circular-orientation-degeneracy": {
+      "affects_science": true,
+      "anchors": [],
+      "backend_reachability": {
+        "numpy": {
+          "full_likelihood": "reachable"
+        }
+      },
+      "backends": [
+        "numpy"
+      ],
+      "blocked_by": [],
+      "code_exists": true,
+      "finding_id": "likelihood.imaging-sersic.circular-orientation-degeneracy",
+      "hazard_class": "structural_degeneracy",
+      "measurements": [
+        {
+          "basis": "error_curve",
+          "details": {
+            "axis_ratio_to_figure_of_merit_span": {
+              "0.7": 0.27117177639382817,
+              "0.9": 0.03236711406694326,
+              "0.99": 0.0017753090628076507,
+              "1.0": 0.0
+            }
+          },
+          "unit": "circular_over_elliptical_orientation_span",
+          "value": 0.0
+        },
+        {
+          "basis": "epsilon_neighbourhood",
+          "details": {
+            "centre": [
+              1.0
+            ],
+            "domain": {
+              "lower": 0.0,
+              "parameter": "axis_ratio",
+              "upper": 1.0
+            },
+            "epsilon": 0.01
+          },
+          "unit": "fraction",
+          "value": 0.01
+        }
+      ],
+      "reachable_via": [
+        "FitImaging.Sersic.axis-ratio-angle-grid"
+      ],
+      "record": "likelihood/imaging_sersic/structural_degeneracy.json",
+      "reproducer": {
+        "axis_ratio_to_figure_of_merit_span": {
+          "0.7": 0.27117177639382817,
+          "0.9": 0.03236711406694326,
+          "0.99": 0.0017753090628076507,
+          "1.0": 0.0
+        }
+      },
+      "schema_version": 1,
+      "subject": "likelihood",
+      "subject_name": "imaging_sersic",
+      "summary": "A complete imaging likelihood loses sensitivity to position angle as the Sersic axis ratio reaches one.",
+      "tier": 2,
+      "title": "Orientation vanishes at the circular profile boundary"
+    },
     "matrix.curvature.absolute-diagonal-floor": {
       "affects_science": null,
       "anchors": [

@@ -1,0 +1,149 @@
+{
+  "findings": [
+    {
+      "affects_science": true,
+      "anchors": [
+        {
+          "commit": "be61b8d0546c5d933ff9ef4bf9d445ba4595e03b",
+          "config_key": null,
+          "end_line": 99,
+          "path": "autogalaxy/profiles/mass/total/isothermal.py",
+          "repo": "PyAutoGalaxy",
+          "start_line": 97,
+          "symbol": "autogalaxy.profiles.mass.total.isothermal.Isothermal.axis_ratio",
+          "token_fingerprint": "82aad20845b4db675705c423973895b550ad5a368ad2945c5709455c10b60625",
+          "tokens": [
+            "def",
+            "axis_ratio",
+            "(",
+            "self",
+            ",",
+            "xp",
+            "=",
+            "np",
+            ")",
+            ":",
+            "axis_ratio",
+            "=",
+            "super",
+            "(",
+            ")",
+            ".",
+            "axis_ratio",
+            "(",
+            "xp",
+            "=",
+            "xp",
+            ")",
+            "return",
+            "xp.minimum",
+            "(",
+            "axis_ratio",
+            ",",
+            "0.99999",
+            ")"
+          ]
+        }
+      ],
+      "backend_reachability": {
+        "jax": {
+          "magnitude <= epsilon": "reachable"
+        },
+        "numpy": {
+          "magnitude <= epsilon": "reachable"
+        }
+      },
+      "backends": [
+        "numpy",
+        "jax"
+      ],
+      "blocked_by": [],
+      "code_exists": true,
+      "finding_id": "component.isothermal.near-spherical-saturation",
+      "hazard_class": "saturation",
+      "measurements": [
+        {
+          "basis": "epsilon_neighbourhood",
+          "details": {
+            "centre": [
+              0.0,
+              0.0
+            ],
+            "domain": {
+              "dimensions": 2,
+              "lower": -1.0,
+              "sigma": 0.3,
+              "type": "independent_truncated_gaussian",
+              "upper": 1.0
+            },
+            "epsilon": 5.000025000102246e-06
+          },
+          "unit": "fraction",
+          "value": 1.391289541885129e-10
+        },
+        {
+          "basis": "reachability",
+          "details": {
+            "blocked_paths": {},
+            "reachable_via": [
+              "jax_construction_near_spherical",
+              "numpy_construction_near_spherical"
+            ]
+          },
+          "unit": "boolean",
+          "value": 1.0
+        }
+      ],
+      "reachable_via": [
+        "numpy_construction_near_spherical",
+        "jax_construction_near_spherical"
+      ],
+      "reproducer": {
+        "axis_ratio": {
+          "jax": [
+            0.99999,
+            0.99999,
+            0.99999,
+            0.99999,
+            0.99999,
+            0.9999898000520197,
+            0.999980000199998
+          ],
+          "numpy": [
+            0.99999,
+            0.99999,
+            0.99999,
+            0.99999,
+            0.99999,
+            0.9999898000520197,
+            0.999980000199998
+          ]
+        },
+        "derived_epsilon": 5.000025000102246e-06,
+        "detected_plateau": {
+          "end": 5e-06,
+          "samples": 5,
+          "start": 0.0,
+          "value": 0.99999
+        },
+        "parameter": "ell_comps_magnitude",
+        "parameter_values": [
+          0.0,
+          1e-07,
+          1e-06,
+          4e-06,
+          5e-06,
+          5.1e-06,
+          1e-05
+        ]
+      },
+      "schema_version": 1,
+      "subject": "component",
+      "subject_name": "isothermal",
+      "summary": "A second, load-bearing saturation prevents the q=1 divisions in the elliptical Isothermal deflection from becoming 0/0. Its affected ell_comps disk is too small for prior-sampling discovery.",
+      "tier": 1,
+      "title": "Isothermal caps near-spherical axis ratios at 0.99999"
+    }
+  ],
+  "schema_version": 1
+}

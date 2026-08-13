@@ -35,6 +35,7 @@ Regions covered today:
   - likelihood_breakdown/README.md  | breakdown
   - simulators/README.md            | simulators
   - searches/README.md              | searches-nautilus
+  - hazards/README.md               | hazards
 
 Artifact-shape reference: `results/notes/design_lock_in.md`.
 """
@@ -554,6 +555,41 @@ def _render_jax_compile_warm_table() -> str:
     return "\n" + "\n".join(out).rstrip() + "\n"
 
 
+def _render_hazards_table() -> str:
+    """Committed numerical findings, keyed by stable semantic ID."""
+
+    index_path = RESULTS_ROOT / "hazards" / "hazards_index.json"
+    if not index_path.is_file():
+        return "\n_No hazard findings yet — run `hazards/scan.py`._\n"
+    try:
+        findings = json.loads(index_path.read_text()).get("findings") or {}
+    except (OSError, ValueError):
+        return "\n_Hazard index unreadable._\n"
+    if not findings:
+        return "\n_No hazard findings yet — run `hazards/scan.py`._\n"
+
+    rows = [
+        "| Finding | Subject | Hazard | Risk basis | Backends |",
+        "|---|---|---|---|---|",
+    ]
+    for finding_id, finding in sorted(findings.items()):
+        bases = ", ".join(
+            sorted(
+                {
+                    measurement.get("basis", "")
+                    for measurement in finding.get("measurements", [])
+                    if measurement.get("basis")
+                }
+            )
+        )
+        rows.append(
+            f"| `{finding_id}` | `{finding.get('subject')}` | "
+            f"`{finding.get('hazard_class')}` | {bases or '—'} | "
+            f"{', '.join(finding.get('backends', [])) or '—'} |"
+        )
+    return "\n" + "\n".join(rows) + "\n"
+
+
 def _build_renderers():
     artifacts = _scan_artifacts()
     cells = _scan_runtime_cells(RUNTIME_ROOT)
@@ -566,6 +602,7 @@ def _build_renderers():
         "searches-nautilus": lambda: _render_nautilus_table(artifacts),
         "pipeline-resume": lambda: _render_pipeline_resume_table(artifacts),
         "jax-compile-warm": _render_jax_compile_warm_table,
+        "hazards": _render_hazards_table,
     }
 
 
@@ -582,6 +619,7 @@ TARGET_READMES = [
     _MISC / "searches" / "README.md",
     _MISC / "pipeline_resume" / "README.md",
     _MISC / "jax_compile" / "README.md",
+    _MISC / "hazards" / "README.md",
 ]
 
 

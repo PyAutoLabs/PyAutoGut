@@ -8,7 +8,12 @@ around a complete likelihood.
 dataset, an Isothermal lens and a 3x3 rectangular source with constant
 regularization. The bounded scan measures active-set support transitions,
 matrix-floor scale, NumPy/JAX solver divergence, and the circular-profile
-orientation degeneracy. Reusable detector logic remains in `misc/hazards`.
+orientation degeneracy. The conditioning leg also runs an unfloored control and
+a scale-aware counterfactual calibrated to the packaged absolute floor at the
+reference noise scale; this is profiling evidence only and does not change the
+PyAutoArray default. Floor fractions use only the curvature-diagonal entries in
+`no_regularization_index_list`, because those are the entries the policy
+actually modifies. Reusable detector logic remains in `misc/hazards`.
 
 Run the cell directly to write its raw probe, or run the shared scanner to
 write semantic findings:

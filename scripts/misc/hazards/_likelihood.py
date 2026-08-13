@@ -20,6 +20,7 @@ class LikelihoodProbeRow:
     figure_of_merit: float
     reconstruction: tuple[float, ...] = ()
     curvature_diagonal: tuple[float, ...] = ()
+    conditioned_curvature_diagonal: tuple[float, ...] = ()
     regularization_diagonal: tuple[float, ...] = ()
     noise_scale: float = 1.0
     metadata: dict = field(default_factory=dict)
@@ -84,6 +85,105 @@ def diagonal_scale(diagonal: tuple[float, ...]) -> float:
 def floor_fraction(floor: float, diagonal: tuple[float, ...]) -> float:
     scale = diagonal_scale(diagonal)
     return float(floor / scale) if scale else float("inf")
+
+
+def conditioned_diagonal(row: LikelihoodProbeRow) -> tuple[float, ...]:
+    """Diagonal entries actually touched by the curvature-floor policy."""
+
+    return row.conditioned_curvature_diagonal or row.curvature_diagonal
+
+
+def calibrated_scale_aware_floors(
+    control_rows: list[LikelihoodProbeRow],
+    *,
+    configured_floor: float,
+    reference_noise_scale: float = 1.0,
+) -> tuple[float, dict[float, float]]:
+    """Calibrate a relative floor against one unfloored likelihood row.
+
+    The returned fraction makes the scale-aware floor equal the configured
+    absolute floor at ``reference_noise_scale``. Every candidate value is
+    derived from an unfloored curvature diagonal, so neither policy defines
+    its own denominator.
+    """
+
+    rows_by_noise = {row.noise_scale: row for row in control_rows}
+    if len(rows_by_noise) != len(control_rows):
+        raise ValueError("control rows must have unique noise scales")
+    try:
+        reference = rows_by_noise[reference_noise_scale]
+    except KeyError as error:
+        raise ValueError("reference noise scale is missing from control rows") from error
+    fraction = floor_fraction(configured_floor, conditioned_diagonal(reference))
+    if not np.isfinite(fraction):
+        raise ValueError("reference curvature diagonal has no finite positive scale")
+    values = {
+        noise_scale: fraction * diagonal_scale(conditioned_diagonal(row))
+        for noise_scale, row in sorted(rows_by_noise.items())
+    }
+    return fraction, values
+
+
+def conditioning_policy_metrics(
+    rows: list[LikelihoodProbeRow], *, reference_policy: str = "absolute"
+) -> dict[str, dict[str, list[float]]]:
+    """Compare conditioning policies against the same unfloored scale."""
+
+    grouped: dict[tuple[str, float], LikelihoodProbeRow] = {}
+    for row in rows:
+        policy = str(row.metadata["curvature_floor_policy"])
+        key = (policy, row.noise_scale)
+        if key in grouped:
+            raise ValueError(f"duplicate conditioning row for {key}")
+        grouped[key] = row
+
+    noise_scales = sorted(
+        noise_scale for policy, noise_scale in grouped if policy == reference_policy
+    )
+    if not noise_scales:
+        raise ValueError(f"reference policy {reference_policy!r} is missing")
+    controls = {noise_scale: grouped.get(("none", noise_scale)) for noise_scale in noise_scales}
+    if any(row is None for row in controls.values()):
+        raise ValueError("an unfloored control is required at every noise scale")
+
+    metrics: dict[str, dict[str, list[float]]] = {}
+    policies = sorted({policy for policy, _ in grouped})
+    for policy in policies:
+        policy_metrics = {
+            "noise_scale": [],
+            "floor_value": [],
+            "floor_fraction": [],
+            "figure_of_merit_relative_error": [],
+            "reconstruction_relative_error": [],
+        }
+        for noise_scale in noise_scales:
+            row = grouped.get((policy, noise_scale))
+            reference = grouped[(reference_policy, noise_scale)]
+            control = controls[noise_scale]
+            if row is None or control is None:
+                raise ValueError(f"policy {policy!r} is incomplete")
+            floor = float(row.metadata["curvature_floor_value"])
+            reference_scale = max(abs(reference.figure_of_merit), 1.0)
+            expected = np.asarray(reference.reconstruction, dtype=float)
+            candidate = np.asarray(row.reconstruction, dtype=float)
+            if candidate.shape != expected.shape:
+                reconstruction_error = float("inf")
+            else:
+                reconstruction_error = float(
+                    np.linalg.norm(candidate - expected)
+                    / max(float(np.linalg.norm(expected)), 1.0e-14)
+                )
+            policy_metrics["noise_scale"].append(float(noise_scale))
+            policy_metrics["floor_value"].append(floor)
+            policy_metrics["floor_fraction"].append(
+                floor_fraction(floor, conditioned_diagonal(control))
+            )
+            policy_metrics["figure_of_merit_relative_error"].append(
+                abs(row.figure_of_merit - reference.figure_of_merit) / reference_scale
+            )
+            policy_metrics["reconstruction_relative_error"].append(reconstruction_error)
+        metrics[policy] = policy_metrics
+    return metrics
 
 
 def backend_error_curves(

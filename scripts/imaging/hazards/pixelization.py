@@ -31,7 +31,10 @@ MISC_ROOT = REPO_ROOT / "scripts" / "misc"
 if str(MISC_ROOT) not in sys.path:
     sys.path.insert(0, str(MISC_ROOT))
 
-from hazards._likelihood import LikelihoodProbeRow  # noqa: E402
+from hazards._likelihood import (  # noqa: E402
+    LikelihoodProbeRow,
+    calibrated_scale_aware_floors,
+)
 
 if os.environ.get("AUTOLENS_PROFILING_SMOKE") == "1":
     print(f"[smoke] {__file__}: imports + module setup OK; exiting.")
@@ -87,7 +90,12 @@ def _array_module(backend: str):
 
 
 def _inversion_row(
-    *, backend: str, einstein_radius: float, noise_scale: float
+    *,
+    backend: str,
+    einstein_radius: float,
+    noise_scale: float,
+    curvature_floor: float | None = None,
+    curvature_floor_policy: str = "absolute",
 ) -> LikelihoodProbeRow:
     xp = _array_module(backend)
     pixelization = al.Pixelization(
@@ -107,26 +115,40 @@ def _inversion_row(
             al.Galaxy(redshift=1.0, pixelization=pixelization),
         )
     )
+    settings = al.Settings(
+        use_positive_only_solver=True,
+        use_edge_zeroed_pixels=False,
+        no_regularization_add_to_curvature_diag_value=curvature_floor,
+    )
+    applied_floor = float(settings.no_regularization_add_to_curvature_diag_value)
     fit = al.FitImaging(
         dataset=_dataset(noise_scale=noise_scale),
         tracer=tracer,
-        settings=al.Settings(use_positive_only_solver=True, use_edge_zeroed_pixels=False),
+        settings=settings,
         xp=xp,
     )
     inversion = fit.inversion
+    curvature_diagonal = np.diag(np.asarray(inversion.curvature_matrix, dtype=float))
+    conditioned_indices = tuple(int(index) for index in inversion.no_regularization_index_list)
     return LikelihoodProbeRow(
         parameter=float(einstein_radius),
         parameter_name="einstein_radius",
         backend=backend,
         figure_of_merit=float(np.asarray(fit.figure_of_merit)),
         reconstruction=tuple(np.asarray(inversion.reconstruction, dtype=float).tolist()),
-        curvature_diagonal=tuple(
-            np.diag(np.asarray(inversion.curvature_matrix, dtype=float)).tolist()
+        curvature_diagonal=tuple(curvature_diagonal.tolist()),
+        conditioned_curvature_diagonal=tuple(
+            curvature_diagonal[list(conditioned_indices)].tolist()
         ),
         regularization_diagonal=tuple(
             np.diag(np.asarray(inversion.regularization_matrix, dtype=float)).tolist()
         ),
         noise_scale=float(noise_scale),
+        metadata={
+            "curvature_floor_policy": curvature_floor_policy,
+            "curvature_floor_value": applied_floor,
+            "conditioned_indices": list(conditioned_indices),
+        },
     )
 
 
@@ -174,13 +196,44 @@ def run_probe(backends: tuple[str, ...] = ("numpy", "jax")) -> dict[str, list]:
         for backend in backends
         for noise_scale in (0.5, 2.0)
     )
+    configured_floor = float(al.Settings().no_regularization_add_to_curvature_diag_value)
+    control_rows = [
+        _inversion_row(
+            backend="numpy",
+            einstein_radius=0.9,
+            noise_scale=noise_scale,
+            curvature_floor=0.0,
+            curvature_floor_policy="none",
+        )
+        for noise_scale in (0.5, 1.0, 2.0)
+    ]
+    _, scale_aware_values = calibrated_scale_aware_floors(
+        control_rows,
+        configured_floor=configured_floor,
+    )
+    absolute_rows = [row for row in inversion if row.backend == "numpy" and row.parameter == 0.9]
+    scale_aware_rows = [
+        _inversion_row(
+            backend="numpy",
+            einstein_radius=0.9,
+            noise_scale=noise_scale,
+            curvature_floor=scale_aware_values[noise_scale],
+            curvature_floor_policy="scale_aware",
+        )
+        for noise_scale in (0.5, 1.0, 2.0)
+    ]
+    conditioning = control_rows + absolute_rows + scale_aware_rows
     structural = [
         _structural_row(backend=backend, axis_ratio=axis_ratio, angle=angle)
         for backend in backends
         for axis_ratio in (0.7, 0.9, 0.99, 1.0)
         for angle in (0.0, 30.0, 60.0, 90.0)
     ]
-    return {"inversion": inversion, "structural": structural}
+    return {
+        "inversion": inversion,
+        "conditioning": conditioning,
+        "structural": structural,
+    }
 
 
 def main() -> int:

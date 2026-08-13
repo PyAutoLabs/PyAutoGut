@@ -1,9 +1,13 @@
-"""Measure absolute inversion floors against scales from a real imaging fit."""
+"""Measure inversion floors and a scale-aware counterfactual in a real fit."""
 
 from __future__ import annotations
 
 from hazards._anchor import maybe_anchor_from_pattern
-from hazards._likelihood import floor_fraction, imaging_pixelization_probe
+from hazards._likelihood import (
+    conditioning_policy_metrics,
+    floor_fraction,
+    imaging_pixelization_probe,
+)
 from hazards._measure import Measurement, reachability_measurement
 from hazards._record import Finding
 from hazards.checks._base import HazardCheck, ScanContext
@@ -16,20 +20,26 @@ class LikelihoodConditioningCheck(HazardCheck):
     def run(self, context: ScanContext) -> list[Finding]:
         from autoarray.settings import Settings
 
-        rows = [
-            row
-            for row in imaging_pixelization_probe(context)["inversion"]
-            if row.backend == "numpy" and row.parameter == 0.9
-        ]
-        rows.sort(key=lambda row: row.noise_scale)
+        probe = imaging_pixelization_probe(context)
+        rows = sorted(
+            (row for row in probe["inversion"] if row.backend == "numpy" and row.parameter == 0.9),
+            key=lambda row: row.noise_scale,
+        )
         configured_floor = float(Settings().no_regularization_add_to_curvature_diag_value)
         regularization_jitter = 1.0e-8
-        curvature_ratios = [
-            floor_fraction(configured_floor, row.curvature_diagonal) for row in rows
-        ]
+        policy_metrics = conditioning_policy_metrics(probe["conditioning"])
+        absolute = policy_metrics["absolute"]
+        scale_aware = policy_metrics["scale_aware"]
+        no_floor = policy_metrics["none"]
+        curvature_ratios = absolute["floor_fraction"]
         regularization_ratios = [
             floor_fraction(regularization_jitter, row.regularization_diagonal) for row in rows
         ]
+        scale_aware_span = max(scale_aware["floor_fraction"]) - min(scale_aware["floor_fraction"])
+        scale_aware_output_error = max(
+            scale_aware["figure_of_merit_relative_error"]
+            + scale_aware["reconstruction_relative_error"]
+        )
 
         curvature_anchor = maybe_anchor_from_pattern(
             context.workspace_root,
@@ -70,8 +80,10 @@ class LikelihoodConditioningCheck(HazardCheck):
                 finding_id="likelihood.imaging-pixelization.absolute-conditioning-floors",
                 title="Absolute inversion floors move with dataset scale",
                 summary=(
-                    "The complete likelihood expresses curvature and constant-regularization "
-                    "floors as fractions of the fitted matrices over a noise-map scaling sweep."
+                    "Using only the diagonal entries the policy actually touches, the "
+                    f"absolute floor reaches {max(curvature_ratios):.3e} of their scale. "
+                    "A reference-calibrated scale-aware counterfactual holds its fraction "
+                    f"fixed with maximum relative output error {scale_aware_output_error:.3e}."
                 ),
                 hazard_class="conditioning_floor",
                 tier=2,
@@ -87,6 +99,10 @@ class LikelihoodConditioningCheck(HazardCheck):
                             "noise_scale": [row.noise_scale for row in rows],
                             "fraction": curvature_ratios,
                             "absolute_floor": configured_floor,
+                            "conditioned_indices": rows[0].metadata["conditioned_indices"],
+                            "denominator": (
+                                "median absolute curvature diagonal at no_regularization_index_list"
+                            ),
                         },
                     ),
                     Measurement(
@@ -98,6 +114,26 @@ class LikelihoodConditioningCheck(HazardCheck):
                             "fraction": regularization_ratios,
                             "absolute_jitter": regularization_jitter,
                             "scale_free_counterexample": "GaussianKernel trace-scaled h_jitter",
+                        },
+                    ),
+                    Measurement(
+                        basis="error_curve",
+                        value=scale_aware_span,
+                        unit="scale_aware_curvature_floor_fraction_span",
+                        details={
+                            "noise_scale": scale_aware["noise_scale"],
+                            "fraction": scale_aware["floor_fraction"],
+                            "floor_value": scale_aware["floor_value"],
+                            "calibration": "matches absolute default at noise_scale=1.0",
+                        },
+                    ),
+                    Measurement(
+                        basis="error_curve",
+                        value=scale_aware_output_error,
+                        unit="max_relative_output_error_vs_absolute_policy",
+                        details={
+                            "scale_aware": scale_aware,
+                            "zero_floor_control": no_floor,
                         },
                     ),
                     reachability,
@@ -120,7 +156,21 @@ class LikelihoodConditioningCheck(HazardCheck):
                 reproducer={
                     "noise_scale": [row.noise_scale for row in rows],
                     "curvature_floor_fraction": curvature_ratios,
+                    "scale_aware_curvature_floor_fraction": scale_aware["floor_fraction"],
                     "regularization_jitter_fraction": regularization_ratios,
+                    "conditioning_policies": policy_metrics,
+                    "zero_floor_solvable": True,
+                    "phase_2_denominator_correction": (
+                        "The earlier 11.5% headline used the median of the full "
+                        "matrix. The floor only touches no_regularization_index_list; "
+                        "this record measures those affected entries."
+                    ),
+                    "recommendation": (
+                        "Do not change the PyAutoArray default from this fixture. "
+                        "Scale dependence is real, but the maximum affected-entry "
+                        "fraction is small; require representative workspace evidence "
+                        "before opening a source-numerics task."
+                    ),
                 },
             ),
             Finding(

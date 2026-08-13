@@ -985,10 +985,14 @@
           "basis": "error_curve",
           "details": {
             "absolute_floor": 0.001,
+            "conditioned_indices": [
+              0
+            ],
+            "denominator": "median absolute curvature diagonal at no_regularization_index_list",
             "fraction": [
-              0.007183877930847692,
-              0.02873551172339077,
-              0.11494204689356308
+              2.785799159350636e-06,
+              1.1143196637402545e-05,
+              4.457278654961018e-05
             ],
             "noise_scale": [
               0.5,
@@ -997,7 +1001,7 @@
             ]
           },
           "unit": "curvature_floor_over_diagonal_scale",
-          "value": 0.11494204689356308
+          "value": 4.457278654961018e-05
         },
         {
           "basis": "error_curve",
@@ -1019,6 +1023,90 @@
           "value": 3.3333333222222224e-09
         },
         {
+          "basis": "error_curve",
+          "details": {
+            "calibration": "matches absolute default at noise_scale=1.0",
+            "floor_value": [
+              0.004,
+              0.001,
+              0.00025
+            ],
+            "fraction": [
+              1.1143196637402545e-05,
+              1.1143196637402545e-05,
+              1.1143196637402545e-05
+            ],
+            "noise_scale": [
+              0.5,
+              1.0,
+              2.0
+            ]
+          },
+          "unit": "scale_aware_curvature_floor_fraction_span",
+          "value": 0.0
+        },
+        {
+          "basis": "error_curve",
+          "details": {
+            "scale_aware": {
+              "figure_of_merit_relative_error": [
+                2.5746140691860365e-11,
+                0.0,
+                1.636768484662602e-11
+              ],
+              "floor_fraction": [
+                1.1143196637402545e-05,
+                1.1143196637402545e-05,
+                1.1143196637402545e-05
+              ],
+              "floor_value": [
+                0.004,
+                0.001,
+                0.00025
+              ],
+              "noise_scale": [
+                0.5,
+                1.0,
+                2.0
+              ],
+              "reconstruction_relative_error": [
+                2.26662211482218e-05,
+                0.0,
+                3.395426089626586e-05
+              ]
+            },
+            "zero_floor_control": {
+              "figure_of_merit_relative_error": [
+                1.7165365020598949e-12,
+                5.39606346033958e-12,
+                1.745896385051532e-11
+              ],
+              "floor_fraction": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "floor_value": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "noise_scale": [
+                0.5,
+                1.0,
+                2.0
+              ],
+              "reconstruction_relative_error": [
+                7.555494434078079e-06,
+                1.33824132924701e-05,
+                4.527285356972125e-05
+              ]
+            }
+          },
+          "unit": "max_relative_output_error_vs_absolute_policy",
+          "value": 3.395426089626586e-05
+        },
+        {
           "basis": "reachability",
           "details": {
             "blocked_paths": {},
@@ -1035,26 +1123,117 @@
       ],
       "record": "likelihood/imaging_pixelization/conditioning_floor.json",
       "reproducer": {
+        "conditioning_policies": {
+          "absolute": {
+            "figure_of_merit_relative_error": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "floor_fraction": [
+              2.785799159350636e-06,
+              1.1143196637402545e-05,
+              4.457278654961018e-05
+            ],
+            "floor_value": [
+              0.001,
+              0.001,
+              0.001
+            ],
+            "noise_scale": [
+              0.5,
+              1.0,
+              2.0
+            ],
+            "reconstruction_relative_error": [
+              0.0,
+              0.0,
+              0.0
+            ]
+          },
+          "none": {
+            "figure_of_merit_relative_error": [
+              1.7165365020598949e-12,
+              5.39606346033958e-12,
+              1.745896385051532e-11
+            ],
+            "floor_fraction": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "floor_value": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "noise_scale": [
+              0.5,
+              1.0,
+              2.0
+            ],
+            "reconstruction_relative_error": [
+              7.555494434078079e-06,
+              1.33824132924701e-05,
+              4.527285356972125e-05
+            ]
+          },
+          "scale_aware": {
+            "figure_of_merit_relative_error": [
+              2.5746140691860365e-11,
+              0.0,
+              1.636768484662602e-11
+            ],
+            "floor_fraction": [
+              1.1143196637402545e-05,
+              1.1143196637402545e-05,
+              1.1143196637402545e-05
+            ],
+            "floor_value": [
+              0.004,
+              0.001,
+              0.00025
+            ],
+            "noise_scale": [
+              0.5,
+              1.0,
+              2.0
+            ],
+            "reconstruction_relative_error": [
+              2.26662211482218e-05,
+              0.0,
+              3.395426089626586e-05
+            ]
+          }
+        },
         "curvature_floor_fraction": [
-          0.007183877930847692,
-          0.02873551172339077,
-          0.11494204689356308
+          2.785799159350636e-06,
+          1.1143196637402545e-05,
+          4.457278654961018e-05
         ],
         "noise_scale": [
           0.5,
           1.0,
           2.0
         ],
+        "phase_2_denominator_correction": "The earlier 11.5% headline used the median of the full matrix. The floor only touches no_regularization_index_list; this record measures those affected entries.",
+        "recommendation": "Do not change the PyAutoArray default from this fixture. Scale dependence is real, but the maximum affected-entry fraction is small; require representative workspace evidence before opening a source-numerics task.",
         "regularization_jitter_fraction": [
           3.3333333222222224e-09,
           3.3333333222222224e-09,
           3.3333333222222224e-09
-        ]
+        ],
+        "scale_aware_curvature_floor_fraction": [
+          1.1143196637402545e-05,
+          1.1143196637402545e-05,
+          1.1143196637402545e-05
+        ],
+        "zero_floor_solvable": true
       },
       "schema_version": 1,
       "subject": "likelihood",
       "subject_name": "imaging_pixelization",
-      "summary": "The complete likelihood expresses curvature and constant-regularization floors as fractions of the fitted matrices over a noise-map scaling sweep.",
+      "summary": "Using only the diagonal entries the policy actually touches, the absolute floor reaches 4.457e-05 of their scale. A reference-calibrated scale-aware counterfactual holds its fraction fixed with maximum relative output error 3.395e-05.",
       "tier": 2,
       "title": "Absolute inversion floors move with dataset scale"
     },

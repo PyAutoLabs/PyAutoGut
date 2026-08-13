@@ -71,8 +71,15 @@ def render_finding_plot(finding: Finding, path: Path) -> None:
             noise_scale,
             data["curvature_floor_fraction"],
             marker="o",
-            label="curvature floor",
+            label="absolute curvature floor",
         )
+        if "scale_aware_curvature_floor_fraction" in data:
+            ax.plot(
+                noise_scale,
+                data["scale_aware_curvature_floor_fraction"],
+                marker="o",
+                label="scale-aware curvature floor",
+            )
         ax.plot(
             noise_scale,
             data["regularization_jitter_fraction"],

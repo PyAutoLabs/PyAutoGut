@@ -8,9 +8,9 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 8 |
+| [In flight](#in-flight) (`active/`) | 9 |
 | [Parked](#parked) (`parked.md`) | 6 |
-| [Planned](#planned) (`planned.md`) | 7 |
+| [Planned](#planned) (`planned.md`) | 8 |
 | [Backlog](#backlog) (`draft/`) | 136 |
 
 Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3Aissue+is%3Aopen&type=issues) · [open pull requests](https://github.com/search?q=org%3APyAutoLabs+is%3Apr+is%3Aopen&type=prs)
@@ -51,6 +51,7 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 
 Issued — each has an open GitHub issue and usually a branch. The full record for each is in [`active.md`](active.md).
 
+- [Add a numerical-hazard profiling package to autolens_profiling](active/add_a_numerical_hazard_profiling_package_to.md)
 - [First benchmark calibration campaign — run the 4 assistant benchmarks](active/benchmark_calibration_runs.md)
 - [Profile DelaunayNN against Delaunay on the laptop GPU](active/delaunay_nn_laptop_gpu_profile.md)
 - [Address ECEB editorial comments on ECLIPSE-C](active/euclid_eceb_editorial_revision.md)
@@ -81,8 +82,9 @@ Started or scoped, not currently in flight — resume by moving the row back to 
 Scoped but not started; some are not yet prompt files. Full detail in [`planned.md`](planned.md).
 
 <details>
-<summary><b>7</b> task(s)</summary>
+<summary><b>8</b> task(s)</summary>
 
+- **numerical-hazard-profiling** — [issue #107](https://github.com/PyAutoLabs/autolens_profiling/issues/107)
 - **isothermal-ell-sph-oversampling-at-the-cusp** — planned — NOT yet a prompt file; file one via `/intake` before starting
 - **remote-mcp-deployment-tiers** — [issue #20](https://github.com/PyAutoLabs/autofit_assistant/issues/20) — DESIGN-COMPLETE, build BLOCKED-ON-DEMAND — issue #20 holds the full auth/transport/hosting design + Richard/PyAutoMCP…
 - **samples-parameter-paths** — [issue #1327](https://github.com/PyAutoLabs/PyAutoFit/issues/1327) — parked
@@ -161,7 +163,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 - [Remote-MCP deployment tiers (2 + 3) for the results-inspector server](draft/feature/autofit_assistant/remote_mcp_deployment_tiers.md) — autofit_assistant · large · human-required · normal
 - [Search settings-estimation + profiling infrastructure (n_starts / batch_size / n_batch)](draft/feature/autolens_profiling/search_settings_estimation_infrastructure.md) — autolens_profiling · large · supervised · normal
 - [Adopt oversampled PSFs in the start-here dataset chain (option a)](draft/feature/autolens_workspace/oversampled_psf_dataset_adoption.md) — autolens_workspace · large · supervised · normal
-- [Add a numerical-hazard profiling package to autolens_profiling](draft/feature/workspaces/add_a_numerical_hazard_profiling_package_to.md) — workspaces · large · supervised · normal
+- [Hazard profiling — the likelihood tier (tier 2)](draft/feature/workspaces/hazard_profiling_likelihood_tier.md) — workspaces · large · supervised · normal
 - [Follow-up to `rectangular_adapt_cdf.md` (issue #322) and Path A](draft/feature/autoarray/rectangular_multi_submesh.md) — autoarray · too-large · supervised · normal
 - [`PIEMass.potential_2d_from`: implement the missing lensing potential](draft/feature/autogalaxy/piemass_potential.md) — autogalaxy · too-large · supervised · normal
 - [autolens_jax_joss benchmark repo + real-data start_here pairing](draft/feature/autolens_jax_joss/autolens_jax_joss_benchmark_repo.md) — autolens_jax_joss · too-large · supervised · normal

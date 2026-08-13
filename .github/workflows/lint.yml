@@ -131,5 +131,6 @@ jobs:
           # import-graph breakage without running the full profile.
           python scripts/imaging/likelihood_runtime/mge.py
           python scripts/imaging/likelihood_breakdown/mge.py
+          python scripts/imaging/hazards/pixelization.py
           python scripts/misc/simulators/imaging.py
           python scripts/imaging/searches/nautilus/mge.py

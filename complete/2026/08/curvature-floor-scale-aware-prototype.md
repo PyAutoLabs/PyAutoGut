@@ -1,3 +1,15 @@
+## curvature-floor-scale-aware-prototype
+- issue: https://github.com/PyAutoLabs/autolens_profiling/issues/111
+- completed: 2026-08-13
+- workspace-pr: https://github.com/PyAutoLabs/autolens_profiling/pull/112
+- merge-commit: 4456ac6f1fb663775c3f14cf182b582017fc3db2
+- summary: Corrected the Phase 2 conditioning denominator to the curvature entries actually floored. The absolute policy reaches at most 4.457e-5 of their scale; a calibrated scale-aware counterfactual is stable, but this fixture does not justify changing the PyAutoArray default.
+- validation: GitHub Actions lint run 31755169773 succeeded; 24 local tests passed; ruff, scoped format, compile, NumPy/JAX scan, README, and smoke checks passed; no review threads.
+- source-changes: none; profiling and generated evidence only.
+- release: not performed; the merged PR retains the pending-release label.
+
+## Original prompt
+
 # Prototype a scale-aware curvature-diagonal floor
 
 Type: research

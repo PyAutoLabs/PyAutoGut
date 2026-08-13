@@ -1,5 +1,14 @@
 # Active Tasks
 
+## curvature-diag-doc-config-drift
+- issue: https://github.com/PyAutoLabs/PyAutoArray/issues/443
+- prompt: active/curvature_diag_doc_config_drift.md
+- session: chatgpt-work
+- status: library-dev
+- validation: pending
+- repos:
+  - PyAutoArray: feature/curvature-diag-doc-config-drift
+
 ## pix-prodigy-gpu-compat
 - issue: https://github.com/PyAutoLabs/autolens_workspace_developer/issues/125
 - pr: https://github.com/PyAutoLabs/autolens_workspace_developer/pull/126 (OPEN, mergeable)

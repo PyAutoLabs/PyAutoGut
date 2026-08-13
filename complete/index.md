@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-977 records across 7 buckets.
+978 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -34,6 +34,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [compile-warm-baseline-dashboard](2026/08/compile-warm-baseline-dashboard.md)
 - [conductor-discovery-lifecycle-split](2026/08/conductor-discovery-lifecycle-split.md) — closed on merge
 - [covariance-interpolator-rng-seed](2026/08/covariance-interpolator-rng-seed.md) — auto-closed by the merge
+- [curvature-diag-doc-config-drift](2026/08/curvature-diag-doc-config-drift.md) — Aligned PyAutoArray's curvature-diagonal helper and Settings docs with the packaged 1e-3 default; numerical behavior unchanged.
 - [database-guide-sample-weight-threshold](2026/08/database-guide-sample-weight-threshold.md) — `guides/results/database/start_here.py` ran its own Nautilus fits capped at n_like_max=300 then indexed sample…
 - [delaunay-nn-laptop-gpu-profile](2026/08/delaunay-nn-laptop-gpu-profile.md) — Added the CPU, RTX 2060, and A100 DelaunayNN profiling sweep and result artifacts at matched PyAuto source rev…
 - [dep-floors-source-chain-ci](2026/08/dep-floors-source-chain-ci.md)

@@ -1,3 +1,15 @@
+## curvature-diag-doc-config-drift
+- issue: https://github.com/PyAutoLabs/PyAutoArray/issues/443
+- completed: 2026-08-13
+- library-pr: https://github.com/PyAutoLabs/PyAutoArray/pull/444
+- merge-commit: 61844927ce4e6dd060847adb2cf925910f69e93a
+- summary: Aligned PyAutoArray's curvature-diagonal helper and Settings docs with the packaged 1e-3 default; numerical behavior unchanged.
+- validation: GitHub Actions run 31743635821 succeeded on Python 3.12 and 3.13; one-commit, two-file documentation-only diff; no review threads.
+- api-changes: none
+- release: not performed; PR remains part of the pending-release queue.
+
+## Original prompt
+
 # Align curvature-diagonal floor documentation with configuration
 
 Type: bug

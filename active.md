@@ -1,15 +1,5 @@
 # Active Tasks
 
-## curvature-diag-doc-config-drift
-- issue: https://github.com/PyAutoLabs/PyAutoArray/issues/443
-- pr: https://github.com/PyAutoLabs/PyAutoArray/pull/444
-- prompt: active/curvature_diag_doc_config_drift.md
-- session: chatgpt-work
-- status: awaiting-merge — PR #444 is mergeable and GitHub Actions run 31743635821 succeeded; pending-release, no merge or release authorized
-- validation: Python 3.12 and 3.13 test jobs green; exact one-commit, two-file documentation-only diff inspected; no review threads
-- repos:
-  - PyAutoArray: feature/curvature-diag-doc-config-drift
-
 ## pix-prodigy-gpu-compat
 - issue: https://github.com/PyAutoLabs/autolens_workspace_developer/issues/125
 - pr: https://github.com/PyAutoLabs/autolens_workspace_developer/pull/126 (OPEN, mergeable)

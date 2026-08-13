@@ -2,9 +2,11 @@
 
 ## hazard-profiling-likelihood-tier
 - issue: https://github.com/PyAutoLabs/autolens_profiling/issues/109
+- pr: https://github.com/PyAutoLabs/autolens_profiling/pull/110
 - prompt: active/hazard_profiling_likelihood_tier.md
 - session: chatgpt-work
-- status: workspace-dev — Phase 2 implementation in progress after Phase 1 merged in PR #108
+- status: awaiting-ci — Phase 2 implemented; PR #110 open with pending-release, no merge or release authorized
+- validation: local 22 tests + Ruff + compile + smoke green; full NumPy/JAX scan produced 5 persistent findings
 - repos:
   - autolens_profiling: feature/hazard-profiling-likelihood-tier
 

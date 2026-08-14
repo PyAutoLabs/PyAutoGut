@@ -11,7 +11,7 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 | [In flight](#in-flight) (`active/`) | 8 |
 | [Parked](#parked) (`parked.md`) | 6 |
 | [Planned](#planned) (`planned.md`) | 7 |
-| [Backlog](#backlog) (`draft/`) | 135 |
+| [Backlog](#backlog) (`draft/`) | 136 |
 
 Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3Aissue+is%3Aopen&type=issues) · [open pull requests](https://github.com/search?q=org%3APyAutoLabs+is%3Apr+is%3Aopen&type=prs)
 
@@ -95,10 +95,10 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**135** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**136** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
-<summary><b>bug</b> — 39</summary>
+<summary><b>bug</b> — 40</summary>
 
 - [pre_build stages untracked files, publishing uncommitted human work](draft/bug/pyautohands/pre_build_stages_untracked_wip.md) — pyautohands · small · supervised · high
 - [Release does not sync __version__ stamps and workspace pins back](draft/bug/pyautobuild/release_version_sync_back_to_main.md) — pyautobuild · medium · supervised · high
@@ -115,6 +115,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 - [jax_grad scripts fail assertions locally that PASS in CI](draft/bug/autolens_workspace_test/jax_grad_local_assertions_fail_but_pass_in_ci.md) — autolens_workspace_test · medium · supervised · medium
 - [ConstantZeroth regularization is broken twice over — dead code presenting](draft/bug/autoarray/constant_zeroth_broken_dead_code.md) — autoarray · small · supervised · normal
 - [PyNUFFT dev extra is incompatible with current SciPy on Python](draft/bug/autoarray/pynufft_scipy_pinv2_dev_extra.md) — autoarray · small · supervised · normal
+- [MultiStartGradient cannot resume a killed mid-run search — FoM sanity](draft/bug/autofit/multistart_gradient_resume_fom_sanity_check.md) — autofit · small · supervised · normal
 - [`autofit.plot` functions accept `**kwargs` and silently discard them](draft/bug/autofit/plot_functions_discard_kwargs.md) — autofit · small · supervised · normal
 - [TEST_MODE bypass crashes on ordered-parameter assertion ties](draft/bug/autofit/test_mode_bypass_ordered_assertion_ties.md) — autofit · small · supervised · normal
 - [python_matrix smoke fails: autofit_workspace searches/mle.py needs optax not in smoke](draft/bug/autofit_workspace/searches_mle_optax_smoke_dependency.md) — autofit_workspace · small · safe · normal

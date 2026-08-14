@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-984 records across 7 buckets.
+985 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -35,6 +35,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [conductor-discovery-lifecycle-split](2026/08/conductor-discovery-lifecycle-split.md) — closed on merge
 - [covariance-interpolator-rng-seed](2026/08/covariance-interpolator-rng-seed.md) — auto-closed by the merge
 - [curvature-diag-doc-config-drift](2026/08/curvature-diag-doc-config-drift.md) — Aligned PyAutoArray's curvature-diagonal helper and Settings docs with the packaged 1e-3 default; numerical behavior unchanged.
+- [correct-circular-sersic-hazard](2026/08/correct-circular-sersic-hazard.md) — Resolved a q-angle false positive and isolated the real JAX non-finite gradient at the Cartesian ell_comps origin.
 - [curvature-floor-scale-aware-prototype](2026/08/curvature-floor-scale-aware-prototype.md) — Corrected the conditioning denominator to the entries actually floored and found no evidence for changing the production default from this fixture.
 - [positive-solver-divergence-diagnosis](2026/08/positive-solver-divergence-diagnosis.md) — Proved NumPy FNNLS and JAX PDIP agree on identical systems; the native gap originates in backend system construction.
 - [border-relocator-backend-parity](2026/08/border-relocator-backend-parity.md) — Isolated the native NumPy/JAX likelihood gap to non-unique PCA axes in near-isotropic border relocation and validated a deterministic-axis remedy.

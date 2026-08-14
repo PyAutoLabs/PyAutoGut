@@ -1,3 +1,16 @@
+## correct-circular-sersic-hazard
+- issue: https://github.com/PyAutoLabs/autolens_profiling/issues/121
+- completed: 2026-08-14
+- workspace-pr: https://github.com/PyAutoLabs/autolens_profiling/pull/122
+- merge-commit: dfa47a1d0f16653daf36dc33549c9fcee2214ff3
+- summary: Corrected the circular Sersic hazard in the actual fitted ell_comps coordinates. The q-angle structural finding was a sampler-parameterization false positive; the exact Cartesian origin instead has a finite likelihood and non-finite JAX gradient while its bounded neighbourhood is finite.
+- validation: GitHub Actions lint run 31760350197 succeeded across lint, format, tests, README, links, and smoke; 38 local tests, compile, the three-finding NumPy/JAX scan, README, smoke, and plot review passed; no review threads.
+- evidence: q >= 0.99 contains 1.403e-4 of the default two-component Gaussian prior, not 1%; the explicit 1e-8 neighbourhood contains 5.56e-16; the exact origin gradient is [NaN, NaN], versus finite norm ~1.27892 nearby.
+- follow-up: https://github.com/PyAutoLabs/PyAutoGalaxy/issues/570
+- release: not performed; the merged workspace PR remains in the pending-release queue.
+
+## Original prompt
+
 # Correct the circular Sersic hazard parameterization
 
 Type: research
@@ -25,3 +38,4 @@ limits.
 
 Do not modify PyAutoGalaxy or its priors in this task. Open a bounded source task
 only if the profiling evidence isolates a removable implementation singularity.
+

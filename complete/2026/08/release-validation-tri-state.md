@@ -1,3 +1,93 @@
+# Heart graded an absent rehearsal as RED "release validation FAILED"
+
+Surfaced by `/wake_up` on 2026-08-14. Heart reported **RED score 45** against a
+`Release Integrate` run that was entirely green — 661 passed / 0 failed,
+`failures: []`, GitHub conclusion `success`, zero non-success jobs.
+
+- issue: https://github.com/PyAutoLabs/PyAutoHeart/issues/144 (closed completed)
+- pr: https://github.com/PyAutoLabs/PyAutoHeart/pull/145 — MERGED 2026-08-14T18:01:36Z as `a0113dc` (squash, 6 commits)
+- repos: PyAutoHeart only
+
+## Root cause
+
+`release_run.py` auto-refreshes the release channel every tick by downloading the
+latest `release-integrate` run's `release-stage-report` and calling
+`validate.run([td])` on **that directory alone, no merge base**. The workflow
+emits `--stage integrate` and uploads a single `stage_report.json`
+(`workspace-validation.yml:575,600`), and `to_stage_report()` writes one
+top-level `stage` key, so a `rehearse` stage is structurally impossible on this
+path. `_Accumulator.release_ready()` required one, so `release_ready` was `false`
+**by construction**, and `readiness.py` mapped every `false` onto the RED axis.
+
+Both modules' own docstrings said the opposite: absence is the STALE axis,
+failure is the RED axis. Reproduced on clean main before any edit.
+
+## What shipped
+
+`validation_outcome: pass | fail | incomplete` is the severity axis;
+`release_ready` is derived from it (`== "pass"`) so a self-contradictory report
+cannot be produced. `validate.report_outcome()` is the single normaliser every
+consumer reads — readiness, dashboard, the `validate` CLI summary, and the tick
+status line — and it reconciles the report's **evidence** before its declared
+verdict. `fail` covers any adverse signal: a failed stage, failing/timed-out
+counts in `totals` or any `per_project` entry, a non-empty `failures` list, the
+producing run's own conclusion (`force_fail`), a malformed discriminator, or one
+contradicting the boolean beside it. Reports predating the field fail closed.
+
+`release_run.decide()` re-folds once when the stored report predates the
+discriminator, so the RED self-heals; that migration is blocked by any adverse
+evidence in the stored report and by a `rehearse` stage the integrate-only
+artifact cannot reproduce.
+
+Merged base reports are ordered: fresh stage artifacts subordinate a base in
+full (its stages, counts and verdict all skipped — only scalars seed through);
+otherwise the newest base by `ts` wins; only an equal or unparseable `ts` lets a
+base escalate to adverse, never soften.
+
+## Verification
+
+- **Live, against the real state and the real artifact, no CI re-dispatched:**
+  RED 45 `release validation FAILED` → **YELLOW 70**, `red_reasons: []`,
+  `stale_reasons: ["release validation incomplete: no rehearsal for current
+  source"]`. Confirmed on the canonical dev-box checkout post-merge.
+- 452 tests; every guard mutation-verified (reverting each fails 1–4 tests).
+- Flows re-checked as unaffected: the manual release-drive ingest, idempotent
+  legacy re-ingest, and the M2 rehearsal-only report all still yield `pass` /
+  `release_ready: true`.
+
+## Review
+
+Five adversarial Codex rounds (`codex exec --sandbox read-only`), findings
+6/4/3/3/5. Every finding was reproduced against the branch before being acted
+on. Several were regressions introduced by the *previous* round's fix — most
+instructively, deriving one field from the other fixed a false-STALE and created
+a false-RED at the same time, because the two fields were still computed
+independently.
+
+One finding closed a **pre-existing** fail-open that reaches GREEN on `main`
+today: a legacy report stating `release_ready: true` beside a failed stage was
+trusted on the strength of the boolean alone.
+
+Human decision 2026-08-14: merge at round 5 rather than continue. Findings were
+not converging and the diff had grown to +1577/-69 across 11 files, most of it
+hardening paths `main` had always mishandled, well beyond the reported bug.
+
+## Traps worth remembering
+
+- `readiness.compute` reads the **snapshot's embedded copy** of the report
+  (`state.py:86` folds `validation_report.json` in at `state.aggregate()` time),
+  so re-ingesting alone changes nothing until state is re-aggregated — and
+  `readiness.main()` prints the **cached** `release_ready.json` via
+  `load_verdict()`, not a live compute.
+- "report ts >= run created" does **not** identify a manual ingest; every ingest
+  happens after the run it ingests.
+- `_classify` needs both `release_ready` and `stages` keys — a payload missing
+  one is silently `unknown` and never ingested, which invalidated one of my own
+  probes mid-review.
+- `(x or {}).items()` guards an **empty** list but not a populated one.
+
+## Original prompt
+
 # Heart grades an absent rehearsal stage as RED "release validation FAILED"
 
 Type: bug

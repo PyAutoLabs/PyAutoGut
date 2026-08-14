@@ -57,7 +57,7 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 - [Remove standalone matplotlib-inline comments](active/matplotlib_inline_standalones.md)
 - [Pixelized Prodigy laptop-GPU compatibility across four meshes](active/pixelized_prodigy_laptop_gpu_phase_1_compatibility.md) — [issue #125](https://github.com/PyAutoLabs/autolens_workspace_developer/issues/125) — workspace-dev — phase 1 and phase 2 COMPLETE 2026-08-13, all 13 cells landed, PR #126 ready for review
 - [PyAutoReduce validation: slacs1430+4105 ACS reduction vs trusted legacy dataset](active/pyautoreduce_slacs1430_acs_comparison.md)
-- [Heart grades an absent rehearsal stage as RED "release validation](active/release_validation_absent_rehearsal_graded_red.md) — [issue #144](https://github.com/PyAutoLabs/PyAutoHeart/issues/144) — library-dev — issue filed, worktree next
+- [Heart grades an absent rehearsal stage as RED "release validation](active/release_validation_absent_rehearsal_graded_red.md) — [issue #144](https://github.com/PyAutoLabs/PyAutoHeart/issues/144) — library-dev — IMPLEMENTED 2026-08-14, PR #145 open, full Heart suite 380 passed
 - [Research profiling experiment in the autolens_profiling repo](active/research_profiling_experiment_in_the_autolens_pr.md) — [issue #82](https://github.com/PyAutoLabs/autolens_profiling/issues/82)
 
 ## Parked

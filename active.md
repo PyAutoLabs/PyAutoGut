@@ -61,3 +61,15 @@
 - artifacts-are-laptop-only: Actions artifact downloads are blocked from cloud/mobile sessions (egress policy 403s `productionresultssa2.blob.core.windows.net` on CONNECT) — this is what stopped the cloud session finishing the ingest. Both wiki drift reports were captured to `~/.pyauto-heart/release_20260807_wiki_drift/` while on the laptop.
 - do-not: do NOT use the nightly driver for a manual release — AUTONOMY.md forbids converting a manual release into the scheduled-nightly exception.
 - repos-none-claimed: this entry claims NO repos — deliberately on one line, NOT as 2-space `  - Repo` bullets, because `worktree_check_conflict` treats any such bullet as a live claim.
+
+## multistart-nan-step-diagnostics
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1472
+- prompt: active/multistart_gradient_nan_step_diagnostics.md
+- session: claude 2026-08-14 (start_dev; feature agent -> library workflow)
+- status: library-dev — worktree created, ready for edits
+- classification: library (PyAutoFit, primary) + profiling artifact (autolens_profiling)
+- plan: fused-in-jit gradient-finiteness reduction (variant B). CPU microbenchmark showed the eager-outside-the-jit variant is the WORST of three (+3.3% vs a +1.5% noise floor on a 1.9ms/step objective); fused measured +0.05%, below noise. CPU understates the host-pull variant — on CPU device→host is a same-address-space memcpy — so re-run under the GPU profile before merging.
+- worktree: ~/Code/PyAutoLabs-wt/multistart-nan-step-diagnostics
+- repos:
+  - PyAutoFit: feature/multistart-nan-step-diagnostics
+  - autolens_profiling: feature/multistart-nan-step-diagnostics

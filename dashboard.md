@@ -8,7 +8,7 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 8 |
+| [In flight](#in-flight) (`active/`) | 9 |
 | [Parked](#parked) (`parked.md`) | 6 |
 | [Planned](#planned) (`planned.md`) | 7 |
 | [Backlog](#backlog) (`draft/`) | 135 |
@@ -59,6 +59,7 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 - [Pixelized Prodigy laptop-GPU compatibility across four meshes](active/pixelized_prodigy_laptop_gpu_phase_1_compatibility.md)
 - [PyAutoReduce validation: slacs1430+4105 ACS reduction vs trusted legacy dataset](active/pyautoreduce_slacs1430_acs_comparison.md)
 - [Research profiling experiment in the autolens_profiling repo](active/research_profiling_experiment_in_the_autolens_pr.md) — [issue #82](https://github.com/PyAutoLabs/autolens_profiling/issues/82)
+- [Reconcile the resolved Sersic ell_comps gradient finding](active/resolve_sersic_ell_comps_gradient.md) — [issue #123](https://github.com/PyAutoLabs/autolens_profiling/issues/123) — workspace-dev
 
 ## Parked
 

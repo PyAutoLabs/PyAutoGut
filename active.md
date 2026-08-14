@@ -1,5 +1,19 @@
 # Active Tasks
 
+## release-validation-tri-state
+- issue: https://github.com/PyAutoLabs/PyAutoHeart/issues/144
+- prompt: active/release_validation_absent_rehearsal_graded_red.md
+- session: claude 2026-08-14 (surfaced by /wake_up)
+- status: library-dev — issue filed, worktree next
+- classification: bug / infrastructure (Heart organ code), difficulty medium, autonomy supervised
+- problem: Heart grades a fully-green integrate-only ingest as RED `release validation FAILED`. `release_ready` is `false` by construction on the tick auto-ingest path (`release_run.py:151` ingests the integrate stage report alone; a `rehearse` stage is structurally impossible there), and `readiness.py:461` maps every `false` to the RED axis. Reproduced on clean main.
+- design: explicit tri-state `validation_outcome: pass|fail|incomplete` in `validate.py`, `release_ready` kept for compatibility; `fail`→RED, `incomplete`→STALE, and **legacy reports lacking the discriminator stay RED** (fail closed). Plus `_norm_status` in `add_report`, `stale_reasons` in `dashboard.to_dict()`, WARN row for `incomplete`, and the tick line reworded.
+- cross-review: a Codex read-only cross-review REJECTED the first (readiness-only) plan and its findings were each re-verified. Load-bearing: `_norm_status` runs only in `add_stage` (`validate.py:243`) and maps unknown→`skip`, and `release_ready()` never reads `totals`/`failures` — so "no stage says fail" is not a sound proxy for "nothing failed". Combined with `AUTONOMY.md:162-168` (leg 4 passes on STALE), the naive fix would have let autonomous ships clear a gate that should block them.
+- do-not: do NOT re-dispatch the release to clear the RED (~70min CI, identical verdict); do NOT `--force` past it.
+- worktree: ~/Code/PyAutoLabs-wt/release-validation-tri-state
+- repos:
+  - PyAutoHeart: feature/release-validation-tri-state
+
 ## pix-prodigy-gpu-compat
 - issue: https://github.com/PyAutoLabs/autolens_workspace_developer/issues/125
 - prompt: active/pixelized_prodigy_laptop_gpu_phase_1_compatibility.md

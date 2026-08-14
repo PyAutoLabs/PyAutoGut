@@ -32,11 +32,13 @@ if str(MISC_ROOT) not in sys.path:
     sys.path.insert(0, str(MISC_ROOT))
 
 from hazards._likelihood import (  # noqa: E402
+    BorderRelocatorComparisonRow,
     LikelihoodProbeRow,
     SolverDiagnosticRow,
     calibrated_scale_aware_floors,
     nnls_optimality_metrics,
     relative_l2_error,
+    stable_ellipse_parameters_from_border,
     support_mask,
 )
 
@@ -102,7 +104,8 @@ def _inversion_evaluation(
     curvature_floor_policy: str = "absolute",
     nnls_solver_tol: float | None = None,
     nnls_max_iter: int | None = None,
-) -> tuple[LikelihoodProbeRow, np.ndarray, np.ndarray]:
+    use_border_relocator: bool | None = None,
+) -> tuple[LikelihoodProbeRow, np.ndarray, np.ndarray, dict]:
     xp = _array_module(backend)
     pixelization = al.Pixelization(
         mesh=al.mesh.RectangularUniform(shape=(3, 3)),
@@ -127,6 +130,7 @@ def _inversion_evaluation(
         no_regularization_add_to_curvature_diag_value=curvature_floor,
         nnls_solver_tol=nnls_solver_tol,
         nnls_max_iter=nnls_max_iter,
+        use_border_relocator=use_border_relocator,
     )
     applied_floor = float(settings.no_regularization_add_to_curvature_diag_value)
     fit = al.FitImaging(
@@ -160,10 +164,33 @@ def _inversion_evaluation(
             "nnls_max_iter": nnls_max_iter,
         },
     )
+    mapper = inversion.linear_obj_list[-1]
+    raw_source_grid = np.asarray(
+        fit.tracer_to_inversion.traced_grid_2d_list_of_inversion[-1], dtype=float
+    )
+    border_indexes = np.asarray(fit.dataset.mask.derive_indexes.border_slim, dtype=int)
+    from autoarray.inversion.mesh.border_relocator import (
+        ellipse_params_via_border_pca_from,
+    )
+
+    pca_origin, pca_a, pca_b, pca_phi = ellipse_params_via_border_pca_from(
+        xp.asarray(raw_source_grid[border_indexes]), xp=xp
+    )
+    details = {
+        "raw_source_grid": raw_source_grid,
+        "relocated_source_grid": np.asarray(mapper.source_plane_data_grid, dtype=float),
+        "source_mesh_grid": np.asarray(mapper.source_plane_mesh_grid, dtype=float),
+        "mapping_matrix": np.asarray(mapper.mapping_matrix, dtype=float),
+        "pca_origin": tuple(np.asarray(pca_origin, dtype=float).tolist()),
+        "pca_axes": (float(np.asarray(pca_a)), float(np.asarray(pca_b))),
+        "pca_phi": float(np.asarray(pca_phi)),
+        "border_indexes": border_indexes,
+    }
     return (
         row,
         np.asarray(inversion.curvature_reg_matrix, dtype=float),
         np.asarray(inversion.data_vector, dtype=float),
+        details,
     )
 
 
@@ -220,8 +247,8 @@ def _solver_diagnostic_rows() -> list[SolverDiagnosticRow]:
             )
             for backend in ("numpy", "jax")
         }
-        numpy_fit, numpy_matrix, numpy_vector = evaluations["numpy"]
-        for system_backend, (native_fit, matrix, vector) in evaluations.items():
+        numpy_fit, numpy_matrix, numpy_vector, _ = evaluations["numpy"]
+        for system_backend, (native_fit, matrix, vector, _) in evaluations.items():
             numpy_solution = _solve_nnls_system(
                 matrix,
                 vector,
@@ -278,6 +305,129 @@ def _solver_diagnostic_rows() -> list[SolverDiagnosticRow]:
                         numpy_fit_support=support_mask(numpy_fit.reconstruction),
                     )
                 )
+    return rows
+
+
+def _relocated_grid_with_stable_ellipse(details: dict) -> tuple[np.ndarray, dict]:
+    from autoarray.inversion.mesh.border_relocator import (
+        relocated_grid_via_ellipse_border_from,
+    )
+
+    raw_grid = details["raw_source_grid"]
+    border_grid = raw_grid[details["border_indexes"]]
+    parameters = stable_ellipse_parameters_from_border(border_grid)
+    relocated = relocated_grid_via_ellipse_border_from(
+        grid=raw_grid,
+        origin=np.asarray(parameters["origin"]),
+        a=parameters["a"],
+        b=parameters["b"],
+        phi=parameters["phi"],
+        xp=np,
+    )
+    return np.asarray(relocated, dtype=float), parameters
+
+
+def _border_relocator_comparison_rows() -> list[BorderRelocatorComparisonRow]:
+    centre = 1.55
+    radii = (
+        float(np.nextafter(centre, -np.inf)),
+        centre,
+        float(np.nextafter(centre, np.inf)),
+    )
+    rows: list[BorderRelocatorComparisonRow] = []
+    for radius in radii:
+        for use_border_relocator in (True, False):
+            evaluations = {
+                backend: _inversion_evaluation(
+                    backend=backend,
+                    einstein_radius=radius,
+                    noise_scale=1.0,
+                    use_border_relocator=use_border_relocator,
+                )
+                for backend in ("numpy", "jax")
+            }
+            numpy_row, numpy_matrix, numpy_vector, numpy_details = evaluations["numpy"]
+            jax_row, jax_matrix, jax_vector, jax_details = evaluations["jax"]
+            raw_error = relative_l2_error(
+                jax_details["raw_source_grid"], numpy_details["raw_source_grid"]
+            )
+            relocated_error = relative_l2_error(
+                jax_details["relocated_source_grid"],
+                numpy_details["relocated_source_grid"],
+            )
+            mesh_error = relative_l2_error(
+                jax_details["source_mesh_grid"], numpy_details["source_mesh_grid"]
+            )
+            mapping_error = relative_l2_error(
+                jax_details["mapping_matrix"], numpy_details["mapping_matrix"]
+            )
+            matrix_error = relative_l2_error(jax_matrix, numpy_matrix)
+            vector_error = relative_l2_error(jax_vector, numpy_vector)
+            reconstruction_error = relative_l2_error(
+                jax_row.reconstruction, numpy_row.reconstruction
+            )
+            stable_numpy_grid, stable_numpy = _relocated_grid_with_stable_ellipse(numpy_details)
+            stable_jax_grid, stable_jax = _relocated_grid_with_stable_ellipse(jax_details)
+            stages = (
+                ("traced_source_grid", raw_error),
+                ("border_pca_relocation", relocated_error),
+                ("source_mesh", mesh_error),
+                ("mapping_matrix", mapping_error),
+                ("curvature_regularization_matrix", matrix_error),
+                ("data_vector", vector_error),
+                ("reconstruction", reconstruction_error),
+            )
+            first_divergent_stage = next(
+                (stage for stage, error in stages if error > 1.0e-12), None
+            )
+            rows.append(
+                BorderRelocatorComparisonRow(
+                    parameter=radius,
+                    parameter_hex=radius.hex(),
+                    use_border_relocator=use_border_relocator,
+                    raw_source_grid_relative_error=raw_error,
+                    relocated_source_grid_relative_error=relocated_error,
+                    source_mesh_grid_relative_error=mesh_error,
+                    mapping_matrix_relative_error=mapping_error,
+                    curvature_reg_matrix_relative_error=matrix_error,
+                    data_vector_relative_error=vector_error,
+                    reconstruction_relative_error=reconstruction_error,
+                    figure_of_merit_relative_error=abs(
+                        jax_row.figure_of_merit - numpy_row.figure_of_merit
+                    )
+                    / max(abs(numpy_row.figure_of_merit), 1.0),
+                    supports_equal=(
+                        support_mask(jax_row.reconstruction)
+                        == support_mask(numpy_row.reconstruction)
+                    ),
+                    first_divergent_stage=first_divergent_stage,
+                    numpy_pca_axes=numpy_details["pca_axes"],
+                    jax_pca_axes=jax_details["pca_axes"],
+                    numpy_pca_phi=numpy_details["pca_phi"],
+                    jax_pca_phi=jax_details["pca_phi"],
+                    numpy_pca_relative_eigenvalue_gap=float(
+                        stable_numpy["relative_eigenvalue_gap"]
+                    ),
+                    jax_pca_relative_eigenvalue_gap=float(stable_jax["relative_eigenvalue_gap"]),
+                    stable_relocated_source_grid_relative_error=relative_l2_error(
+                        stable_jax_grid, stable_numpy_grid
+                    ),
+                    stable_numpy_axes=(stable_numpy["a"], stable_numpy["b"]),
+                    stable_jax_axes=(stable_jax["a"], stable_jax["b"]),
+                    raw_numpy_source_grid=tuple(
+                        tuple(value) for value in numpy_details["raw_source_grid"].tolist()
+                    ),
+                    raw_jax_source_grid=tuple(
+                        tuple(value) for value in jax_details["raw_source_grid"].tolist()
+                    ),
+                    relocated_numpy_source_grid=tuple(
+                        tuple(value) for value in numpy_details["relocated_source_grid"].tolist()
+                    ),
+                    relocated_jax_source_grid=tuple(
+                        tuple(value) for value in jax_details["relocated_source_grid"].tolist()
+                    ),
+                )
+            )
     return rows
 
 
@@ -363,6 +513,9 @@ def run_probe(backends: tuple[str, ...] = ("numpy", "jax")) -> dict[str, list]:
         "conditioning": conditioning,
         "solver_diagnostic": (
             _solver_diagnostic_rows() if {"numpy", "jax"}.issubset(set(backends)) else []
+        ),
+        "border_relocator": (
+            _border_relocator_comparison_rows() if {"numpy", "jax"}.issubset(set(backends)) else []
         ),
         "structural": structural,
     }

@@ -30,6 +30,7 @@ from hazards._likelihood import (  # noqa: E402
     nnls_optimality_metrics,
     orientation_spans,
     relative_l2_error,
+    stable_ellipse_parameters_from_border,
     support_transition_locations,
 )
 
@@ -94,6 +95,22 @@ def test_relative_l2_error_supports_vectors_and_matrices():
     assert relative_l2_error([1.0, 2.0], [1.0, 2.0]) == 0.0
     assert relative_l2_error(np.eye(2), 2.0 * np.eye(2)) == pytest.approx(0.5)
     assert relative_l2_error([1.0], [1.0, 2.0]) == float("inf")
+
+
+def test_stable_ellipse_uses_axis_aligned_frame_for_isotropic_covariance():
+    border = np.array(((-1.0, 0.0), (0.0, 1.0), (1.0, 0.0), (0.0, -1.0)))
+    parameters = stable_ellipse_parameters_from_border(border)
+    assert parameters["near_isotropic"] is True
+    assert parameters["phi"] == 0.0
+    assert parameters["a"] == pytest.approx(parameters["b"])
+
+
+def test_stable_ellipse_retains_pca_direction_for_anisotropic_covariance():
+    border = np.array(((-2.0, 0.0), (0.0, 1.0), (2.0, 0.0), (0.0, -1.0)))
+    parameters = stable_ellipse_parameters_from_border(border)
+    assert parameters["near_isotropic"] is False
+    assert abs(parameters["phi"]) == pytest.approx(np.pi / 2.0)
+    assert parameters["a"] > parameters["b"]
 
 
 def test_conditioning_and_structural_helpers_use_physical_scales():

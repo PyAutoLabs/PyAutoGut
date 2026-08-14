@@ -2,10 +2,12 @@
 
 ## positive-solver-divergence-diagnosis
 - issue: https://github.com/PyAutoLabs/autolens_profiling/issues/113
+- pr: https://github.com/PyAutoLabs/autolens_profiling/pull/114
 - prompt: active/positive_solver_divergence_diagnosis.md
 - session: chatgpt-work
-- status: workspace-dev
-- validation: pending
+- status: awaiting-merge
+- validation: 26 tests passed; ruff, scoped format, compile, NumPy/JAX scan, README and smoke passed; GitHub lint pending
+- result: identical-system solvers agree within 1.715e-9 by default and 2.468e-13 tightened; the 8.989e-3 native gap follows an 8.690e-3 backend-built matrix difference at a one-ULP boundary
 - repos:
   - autolens_profiling: feature/positive-solver-divergence-diagnosis
 

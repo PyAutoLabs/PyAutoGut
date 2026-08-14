@@ -107,17 +107,24 @@ class SolverDivergenceCheck(HazardCheck):
                 "jax_pca_relative_eigenvalue_gap": row.jax_pca_relative_eigenvalue_gap,
                 "stable_numpy_axes": list(row.stable_numpy_axes),
                 "stable_jax_axes": list(row.stable_jax_axes),
-                "raw_numpy_source_grid": [list(value) for value in row.raw_numpy_source_grid],
-                "raw_jax_source_grid": [list(value) for value in row.raw_jax_source_grid],
-                "relocated_numpy_source_grid": [
-                    list(value) for value in row.relocated_numpy_source_grid
-                ],
-                "relocated_jax_source_grid": [
-                    list(value) for value in row.relocated_jax_source_grid
-                ],
             }
             for row in relocated
         ]
+        worst_relocation = max(relocated, key=lambda row: row.relocated_source_grid_relative_error)
+        worst_point_coordinates = {
+            "parameter": worst_relocation.parameter,
+            "parameter_hex": worst_relocation.parameter_hex,
+            "raw_numpy_source_grid": [
+                list(value) for value in worst_relocation.raw_numpy_source_grid
+            ],
+            "raw_jax_source_grid": [list(value) for value in worst_relocation.raw_jax_source_grid],
+            "relocated_numpy_source_grid": [
+                list(value) for value in worst_relocation.relocated_numpy_source_grid
+            ],
+            "relocated_jax_source_grid": [
+                list(value) for value in worst_relocation.relocated_jax_source_grid
+            ],
+        }
         numpy_anchor = maybe_anchor_from_pattern(
             context.workspace_root,
             repo="PyAutoArray",
@@ -201,6 +208,7 @@ class SolverDivergenceCheck(HazardCheck):
                             "disabled_maxima": disabled_maxima,
                             "first_divergent_stage": "border_pca_relocation",
                             "pca_records": pca_records,
+                            "worst_point_coordinates": worst_point_coordinates,
                         },
                     ),
                     reachability_measurement(
@@ -252,6 +260,7 @@ class SolverDivergenceCheck(HazardCheck):
                         "enabled_maxima": relocation_maxima,
                         "disabled_maxima": disabled_maxima,
                         "pca_records": pca_records,
+                        "worst_point_coordinates": worst_point_coordinates,
                         "near_isotropic_tolerance": float(np.sqrt(np.finfo(float).eps)),
                     },
                     "recommendation": (

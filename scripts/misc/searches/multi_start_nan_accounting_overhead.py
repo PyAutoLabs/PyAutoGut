@@ -92,6 +92,8 @@ N_STARTS_DEFAULT = 16
 N_STEPS_DEFAULT = 50
 WARMUP_STEPS = 5
 REPS_DEFAULT = 7
+ACCOUNTING_REPS = 2000
+ACCOUNTING_CALL_REPS = 20
 
 VARIANTS = ("baseline", "control", "host", "eager", "fused")
 
@@ -240,6 +242,120 @@ def measure(args, vmapped, fused, params):
     return samples
 
 
+def measure_accounting_only(args, vmapped, fused, params):
+    """Time the accounting op ALONE, at microsecond resolution.
+
+    This is the discriminating measurement, and the reason the script does not
+    simply diff two end-to-end loops. A real lens step costs ~1s; the accounting
+    costs ~10-60us. Differencing whole loops therefore asks a stopwatch with
+    ~10ms of run-to-run jitter to resolve a 30us effect -- a ~200x resolution
+    gap, which shows up as variants coming out NEGATIVE (faster than a baseline
+    that does strictly less work). Such a run cannot distinguish `fused` from a
+    variant costing 9ms; it would call both "below the noise floor".
+
+    So: measure the numerator directly on a cached gradient (no likelihood in
+    the loop, thousands of reps), and divide by the separately-measured real
+    step cost. Both halves are then measured where each is resolvable.
+    """
+    import jax
+    import jax.numpy as jnp
+    import numpy as np
+
+    foms, grads = vmapped(params)
+    jax.block_until_ready((foms, grads))
+
+    def _host():
+        return np.all(np.isfinite(np.asarray(grads)), axis=1)
+
+    def _eager():
+        return np.asarray(jnp.all(jnp.isfinite(grads), axis=1))
+
+    def _noop():
+        return None
+
+    ops = {"control": _noop, "host": _host, "eager": _eager}
+
+    # `fused` has no isolated cost to time: its reduction happens inside the
+    # jitted call, so it is measured as the delta between the two jitted
+    # entry points rather than as a separate op.
+    reps = ACCOUNTING_REPS
+    out = {}
+    for name, op in ops.items():
+        best = None
+        for _ in range(5):
+            t0 = time.perf_counter()
+            for _ in range(reps):
+                op()
+            elapsed = (time.perf_counter() - t0) / reps * 1e6
+            best = elapsed if best is None else min(best, elapsed)
+        out[name] = best
+
+    # fused vs today's call: same work, one extra (n_starts,) bool output.
+    def _time_call(fn):
+        best = None
+        for _ in range(5):
+            t0 = time.perf_counter()
+            for _ in range(ACCOUNTING_CALL_REPS):
+                jax.block_until_ready(fn(params))
+            elapsed = (time.perf_counter() - t0) / ACCOUNTING_CALL_REPS * 1e6
+            best = elapsed if best is None else min(best, elapsed)
+        return best
+
+    # `fused` is measured on a PROXY objective, not by differencing the two real
+    # jitted calls. Differencing two ~1s calls to resolve a ~5us effect hits the
+    # exact resolution collapse this function exists to avoid -- it returns
+    # plausible-looking nonsense, including negative "costs".
+    #
+    # What fused actually adds is a jnp.all(isfinite(.)) reduction over an
+    # (n_starts, ndim) array plus one (n_starts,) bool output. That cost is a
+    # property of the SHAPES, not of the likelihood, so it is measurable at the
+    # same shapes over a trivial objective where the step is short enough to
+    # resolve.
+    #
+    # Caveat this cannot see: XLA fuses the reduction into whatever backward
+    # pass it sits in, so the proxy measures the reduction in isolation rather
+    # than its interaction with the real gradient graph. It is an upper bound on
+    # a fused cost, not the fused cost itself.
+    out["fused"] = _fused_marginal_us(params.shape)
+
+    # The op-only numbers include Python call overhead (the `_noop` control
+    # measures exactly that); subtract it so each figure is the op itself.
+    overhead = out.pop("control")
+    return {k: v - overhead for k, v in out.items()}, overhead
+
+
+def _fused_marginal_us(shape):
+    """Marginal cost of the fused finiteness output, at the real array shapes."""
+    import jax
+    import jax.numpy as jnp
+
+    def cheap(vector):
+        return jnp.sum(vector**2)
+
+    def cheap_finite(vector):
+        fom, grad = jax.value_and_grad(cheap)(vector)
+        return fom, grad, jnp.all(jnp.isfinite(grad))
+
+    plain = jax.jit(jax.vmap(jax.value_and_grad(cheap)))
+    finite = jax.jit(jax.vmap(cheap_finite))
+
+    x = jnp.ones(shape)
+    jax.block_until_ready(plain(x))
+    jax.block_until_ready(finite(x))
+
+    def _best(fn):
+        best = None
+        for _ in range(5):
+            t0 = time.perf_counter()
+            for _ in range(ACCOUNTING_REPS):
+                jax.block_until_ready(fn(x))
+            elapsed = (time.perf_counter() - t0) / ACCOUNTING_REPS * 1e6
+            best = elapsed if best is None else min(best, elapsed)
+        return best
+
+    return _best(finite) - _best(plain)
+
+
 def summarise(samples):
     import numpy as np
 
@@ -299,25 +415,51 @@ def main():
 
     params = jnp.tile(x0, (args.n_starts, 1))
 
+    accounting_us, call_overhead_us = measure_accounting_only(args, vmapped, fused, params)
+
     samples = measure(args, vmapped, fused, params)
     rows, noise_floor = summarise(samples)
 
+    step_us = min(samples["baseline"])
     hardware = hardware_label(jax)
+
     print(f"\n=== NaN accounting overhead ({hardware}) ===")
     print(f"model={args.model_type} n_starts={args.n_starts} ndim={ndim}")
-    print(f"{'variant':<10} {'us/step':>10} {'overhead':>12} {'%':>9}")
+
+    # The measurement that actually resolves the variants.
+    print(f"\nreal step cost: {step_us / 1e6:.3f} s/step")
+    print(f"(python call overhead subtracted: {call_overhead_us:.2f} us)")
+    print(f"\n{'variant':<10} {'accounting':>12} {'% of a step':>14}  source")
+    for name in ("host", "eager", "fused"):
+        us = accounting_us[name]
+        source = "proxy shapes" if name == "fused" else "real gradient"
+        print(f"{name:<10} {us:>10.2f}us {100.0 * us / step_us:>13.5f}%  {source}")
+
+    # The end-to-end loop, kept as a sanity check only -- see
+    # measure_accounting_only for why it cannot resolve these differences.
+    print(f"\nend-to-end loop (resolution ~{abs(noise_floor):.2f}%, sanity check only):")
     for row in rows:
         print(
-            f"{row['variant']:<10} {row['us_per_step']:>10.1f} "
-            f"{row['overhead_us']:>+11.1f} {row['overhead_percent']:>+8.2f}%"
+            f"{row['variant']:<10} {row['us_per_step']:>12.1f}us {row['overhead_percent']:>+8.2f}%"
         )
-    print(f"noise floor (control vs baseline): {noise_floor:+.2f}%")
 
-    fused_overhead = next(r for r in rows if r["variant"] == "fused")
+    fused_pct = 100.0 * accounting_us["fused"] / step_us
+    resolution_us = abs(noise_floor) / 100.0 * step_us
+    # Ratio only means anything against a positive effect; a non-positive
+    # difference means the effect sits below what that method can resolve.
+    largest_us = max(accounting_us.values())
+    if largest_us > 0:
+        ratio = f"{resolution_us / largest_us:,.0f}x larger than the largest effect"
+    else:
+        ratio = "larger than every effect measured"
+    print(
+        f"\nend-to-end resolution: {resolution_us:,.0f}us -- {ratio}, "
+        f"so that loop BOUNDS the overhead rather than measuring it"
+    )
+
     verdict = (
-        "below noise floor"
-        if abs(fused_overhead["overhead_percent"]) <= abs(noise_floor)
-        else "ABOVE noise floor -- investigate"
+        f"fused accounting costs {accounting_us['fused']:.1f}us on a "
+        f"{step_us / 1e6:.3f}s step = {fused_pct:.5f}% of run time"
     )
     print(f"\nshipped variant (fused): {verdict}")
 
@@ -339,6 +481,10 @@ def main():
         "tag": args.tag,
         "rows": rows,
         "noise_floor_percent": noise_floor,
+        "step_us": step_us,
+        "accounting_us": accounting_us,
+        "accounting_percent_of_step": {k: 100.0 * v / step_us for k, v in accounting_us.items()},
+        "python_call_overhead_us": call_overhead_us,
         "verdict": verdict,
     }
 

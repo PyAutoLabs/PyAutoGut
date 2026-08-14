@@ -2,10 +2,12 @@
 
 ## resolve-border-relocator-hazard
 - issue: https://github.com/PyAutoLabs/autolens_profiling/issues/117
+- pr: https://github.com/PyAutoLabs/autolens_profiling/pull/118
 - prompt: active/resolve_border_relocator_hazard.md
 - session: chatgpt-work
-- status: workspace-dev
-- validation: pending
+- status: awaiting-merge
+- validation: 30 tests passed; ruff, scoped format, compile, four-finding NumPy/JAX scan, README and smoke passed; GitHub lint pending
+- result: resolved backend-divergence record/plot removed; stable ID remains gated at 1e-8 for regression detection; active-set evidence refreshed to five transitions
 - repos:
   - autolens_profiling: feature/resolve-border-relocator-hazard
 

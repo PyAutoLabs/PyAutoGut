@@ -1,5 +1,14 @@
 # Active Tasks
 
+## resolve-curvature-floor-doc-drift
+- issue: https://github.com/PyAutoLabs/autolens_profiling/issues/119
+- prompt: active/resolve_curvature_floor_doc_drift.md
+- session: chatgpt-work
+- status: workspace-dev
+- validation: pending
+- repos:
+  - autolens_profiling: feature/resolve-curvature-floor-doc-drift
+
 ## pix-prodigy-gpu-compat
 - issue: https://github.com/PyAutoLabs/autolens_workspace_developer/issues/125
 - pr: https://github.com/PyAutoLabs/autolens_workspace_developer/pull/126 (OPEN, mergeable)

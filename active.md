@@ -2,10 +2,12 @@
 
 ## correct-circular-sersic-hazard
 - issue: https://github.com/PyAutoLabs/autolens_profiling/issues/121
+- pr: https://github.com/PyAutoLabs/autolens_profiling/pull/122
 - prompt: active/correct_circular_sersic_hazard.md
 - session: chatgpt-work
-- status: workspace-dev
-- validation: pending
+- status: awaiting-merge
+- validation: 38 tests passed; ruff, scoped format, compile, three-finding NumPy/JAX scan, README, smoke and plot review passed; GitHub lint pending
+- result: q-angle structural false positive resolved; actual ell_comps origin persists as a finite-value/non-finite-JAX-gradient finding with a 5.56e-16 explicit-neighbourhood prior mass
 - repos:
   - autolens_profiling: feature/correct-circular-sersic-hazard
 

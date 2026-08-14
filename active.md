@@ -1,5 +1,14 @@
 # Active Tasks
 
+## correct-circular-sersic-hazard
+- issue: https://github.com/PyAutoLabs/autolens_profiling/issues/121
+- prompt: active/correct_circular_sersic_hazard.md
+- session: chatgpt-work
+- status: workspace-dev
+- validation: pending
+- repos:
+  - autolens_profiling: feature/correct-circular-sersic-hazard
+
 ## pix-prodigy-gpu-compat
 - issue: https://github.com/PyAutoLabs/autolens_workspace_developer/issues/125
 - pr: https://github.com/PyAutoLabs/autolens_workspace_developer/pull/126 (OPEN, mergeable)

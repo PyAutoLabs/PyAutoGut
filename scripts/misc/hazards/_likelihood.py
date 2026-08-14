@@ -26,6 +26,30 @@ class LikelihoodProbeRow:
     metadata: dict = field(default_factory=dict)
 
 
+@dataclass(frozen=True)
+class SolverDiagnosticRow:
+    """One solver policy graded on one fixed NNLS system."""
+
+    parameter: float
+    parameter_hex: str
+    system_backend: str
+    solver_policy: str
+    reconstruction: tuple[float, ...]
+    support: tuple[bool, ...]
+    objective: float
+    primal_violation: float
+    dual_violation: float
+    complementarity: float
+    reconstruction_relative_error_to_numpy_solver: float
+    objective_relative_gap_to_numpy_solver: float
+    system_matrix_relative_error_to_numpy: float
+    system_data_vector_relative_error_to_numpy: float
+    native_fit_reconstruction_relative_error_to_numpy: float
+    native_fit_figure_of_merit_relative_error_to_numpy: float
+    native_fit_support: tuple[bool, ...]
+    numpy_fit_support: tuple[bool, ...]
+
+
 def support_mask(
     values: tuple[float, ...], *, relative_tolerance: float = 1.0e-8
 ) -> tuple[bool, ...]:
@@ -36,6 +60,47 @@ def support_mask(
         return ()
     threshold = max(float(np.max(np.abs(array))) * relative_tolerance, np.finfo(float).eps)
     return tuple(bool(value > threshold) for value in array)
+
+
+def relative_l2_error(candidate, reference) -> float:
+    """Scale-free L2 error for vectors or matrices with matching shapes."""
+
+    candidate_array = np.asarray(candidate, dtype=float)
+    reference_array = np.asarray(reference, dtype=float)
+    if candidate_array.shape != reference_array.shape:
+        return float("inf")
+    return float(
+        np.linalg.norm(candidate_array - reference_array)
+        / max(float(np.linalg.norm(reference_array)), 1.0e-30)
+    )
+
+
+def nnls_optimality_metrics(curvature_reg_matrix, data_vector, reconstruction) -> dict[str, float]:
+    """Return scale-normalized objective and KKT residuals for an NNLS solve.
+
+    For ``min 0.5 x.T Q x - q.T x`` subject to ``x >= 0``, optimality
+    requires non-negative ``x`` and gradient ``Qx-q`` plus zero
+    complementarity ``x * (Qx-q)``.
+    """
+
+    matrix = np.asarray(curvature_reg_matrix, dtype=float)
+    vector = np.asarray(data_vector, dtype=float)
+    solution = np.asarray(reconstruction, dtype=float)
+    if matrix.shape != (solution.size, solution.size):
+        raise ValueError("curvature-regularization matrix shape does not match solution")
+    if vector.shape != solution.shape:
+        raise ValueError("data vector shape does not match solution")
+
+    gradient = matrix @ solution - vector
+    solution_scale = max(float(np.linalg.norm(solution, ord=np.inf)), 1.0e-30)
+    vector_scale = max(float(np.linalg.norm(vector, ord=np.inf)), 1.0e-30)
+    return {
+        "objective": float(0.5 * solution @ matrix @ solution - vector @ solution),
+        "primal_violation": max(0.0, float(-np.min(solution))) / solution_scale,
+        "dual_violation": max(0.0, float(-np.min(gradient))) / vector_scale,
+        "complementarity": float(np.linalg.norm(solution * gradient, ord=np.inf))
+        / (solution_scale * vector_scale),
+    }
 
 
 def support_transition_locations(rows: list[LikelihoodProbeRow]) -> list[float]:

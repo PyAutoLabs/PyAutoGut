@@ -2,10 +2,12 @@
 
 ## resolve-curvature-floor-doc-drift
 - issue: https://github.com/PyAutoLabs/autolens_profiling/issues/119
+- pr: https://github.com/PyAutoLabs/autolens_profiling/pull/120
 - prompt: active/resolve_curvature_floor_doc_drift.md
 - session: chatgpt-work
-- status: workspace-dev
-- validation: pending
+- status: awaiting-merge
+- validation: 35 tests passed; ruff, scoped format, compile, three-finding NumPy/JAX scan, README and smoke passed; GitHub lint pending
+- result: resolved documentation-drift record/plot removed; stable ID remains conditional on both runtime docstrings agreeing with the live packaged default
 - repos:
   - autolens_profiling: feature/resolve-curvature-floor-doc-drift
 

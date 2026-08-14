@@ -1,3 +1,15 @@
+## border-relocator-backend-parity
+- issue: https://github.com/PyAutoLabs/autolens_profiling/issues/115
+- completed: 2026-08-14
+- workspace-pr: https://github.com/PyAutoLabs/autolens_profiling/pull/116
+- merge-commit: d89abc58f892e656b1ee37524f2d1ad70bc04a24
+- summary: Isolated the native NumPy/JAX likelihood gap to mathematically non-unique PCA axes for a near-isotropic border covariance. Current relocation differs by 2.835e-1; a deterministic near-isotropic axis makes the counterfactual exactly backend-stable.
+- validation: GitHub Actions lint run 31757125323 succeeded; 28 local tests passed; ruff, scoped format, compile, NumPy/JAX scan, README, and smoke checks passed; no review threads.
+- follow-up: PyAutoArray#445, branch feature/border-relocator-degenerate-pca.
+- release: not performed; the merged workspace PR remains in the pending-release queue.
+
+## Original prompt
+
 # Isolate border-relocator backend parity
 
 Type: research

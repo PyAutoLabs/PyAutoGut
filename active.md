@@ -1,15 +1,13 @@
 # Active Tasks
 
-## border-relocator-backend-parity
-- issue: https://github.com/PyAutoLabs/autolens_profiling/issues/115
-- pr: https://github.com/PyAutoLabs/autolens_profiling/pull/116
-- prompt: active/border_relocator_backend_parity.md
+## border-relocator-degenerate-pca
+- issue: https://github.com/PyAutoLabs/PyAutoArray/issues/445
+- prompt: active/border_relocator_degenerate_pca.md
 - session: chatgpt-work
-- status: awaiting-merge
-- validation: 28 tests passed; ruff, scoped format, compile, NumPy/JAX scan, README and smoke passed; GitHub lint pending
-- result: degenerate border PCA selects backend-dependent axes; current relocated-grid error reaches 2.835e-1, while the near-isotropic deterministic-axis counterfactual is exactly backend-stable
+- status: library-dev
+- validation: pending
 - repos:
-  - autolens_profiling: feature/border-relocator-backend-parity
+  - PyAutoArray: feature/border-relocator-degenerate-pca
 
 ## pix-prodigy-gpu-compat
 - issue: https://github.com/PyAutoLabs/autolens_workspace_developer/issues/125

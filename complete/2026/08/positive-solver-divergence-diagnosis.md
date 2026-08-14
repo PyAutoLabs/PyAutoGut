@@ -1,3 +1,15 @@
+## positive-solver-divergence-diagnosis
+- issue: https://github.com/PyAutoLabs/autolens_profiling/issues/113
+- completed: 2026-08-14
+- workspace-pr: https://github.com/PyAutoLabs/autolens_profiling/pull/114
+- merge-commit: 81e8a79a2a15c8526d71f15d2443a2189f9241fe
+- summary: Proved NumPy FNNLS and JAX PDIP agree to 1.715e-9 on identical systems (2.468e-13 tightened). The 8.989e-3 native reconstruction gap follows an 8.690e-3 backend-built matrix difference at a one-ULP boundary, so no positive-solver source change is warranted.
+- validation: GitHub Actions lint run 31756161105 succeeded; 26 local tests passed; ruff, scoped format, compile, NumPy/JAX scan, README, and smoke checks passed; no review threads.
+- source-changes: none; profiling and generated evidence only.
+- release: not performed; the merged PR remains in the pending-release queue.
+
+## Original prompt
+
 # Diagnose positive-solver backend divergence
 
 Type: research

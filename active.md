@@ -2,6 +2,7 @@
 
 ## pix-prodigy-gpu-compat
 - issue: https://github.com/PyAutoLabs/autolens_workspace_developer/issues/125
+- prompt: active/pixelized_prodigy_laptop_gpu_phase_1_compatibility.md
 - pr: https://github.com/PyAutoLabs/autolens_workspace_developer/pull/126 (OPEN, mergeable)
 - session: codex (phase 1) -> claude 2026-08-11 evening (n_starts control + phase 2)
 - status: workspace-dev — phase 1 and phase 2 COMPLETE 2026-08-13, all 13 cells landed, PR #126 ready for review
@@ -60,14 +61,3 @@
 - artifacts-are-laptop-only: Actions artifact downloads are blocked from cloud/mobile sessions (egress policy 403s `productionresultssa2.blob.core.windows.net` on CONNECT) — this is what stopped the cloud session finishing the ingest. Both wiki drift reports were captured to `~/.pyauto-heart/release_20260807_wiki_drift/` while on the laptop.
 - do-not: do NOT use the nightly driver for a manual release — AUTONOMY.md forbids converting a manual release into the scheduled-nightly exception.
 - repos-none-claimed: this entry claims NO repos — deliberately on one line, NOT as 2-space `  - Repo` bullets, because `worktree_check_conflict` treats any such bullet as a live claim.
-
-## power-law-omega-convergence
-- issue: https://github.com/PyAutoLabs/autolens_profiling/issues/125
-- prompt: active/power_law_omega_convergence.md
-- session: chatgpt-work
-- status: research
-- validation: initial term-count convergence sweep complete; full accuracy/cost/prior/likelihood grid pending
-- finding: `component.power-law.series-vs-hyp2f1-divergence`
-- repos:
-  - autolens_profiling: research/power-law-omega-convergence
-

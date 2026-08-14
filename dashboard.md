@@ -53,13 +53,13 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 - [Add a numerical-hazard profiling package to autolens_profiling](active/add_a_numerical_hazard_profiling_package_to.md)
 - [First benchmark calibration campaign — run the 4 assistant benchmarks](active/benchmark_calibration_runs.md)
-- [Stabilize border relocation for degenerate PCA axes](active/border_relocator_degenerate_pca.md) — [issue #445](https://github.com/PyAutoLabs/PyAutoArray/issues/445) — awaiting-merge
 - [Address ECEB editorial comments on ECLIPSE-C](active/euclid_eceb_editorial_revision.md)
 - [JAX-native posterior sampler wave — ranked shortlist from the 2026-07-16](active/jax_native_posterior_sampler_wave.md) — [issue #113](https://github.com/PyAutoLabs/autolens_workspace_developer/issues/113) — PARKED 2026-07-24 — stage (a) POSITIVE: warm-started gradient SMC SAMPLES (acc 0.80->0.17 across tempering, einstein_radius…
 - [Remove standalone matplotlib-inline comments](active/matplotlib_inline_standalones.md)
 - [Pixelized Prodigy laptop-GPU compatibility across four meshes](active/pixelized_prodigy_laptop_gpu_phase_1_compatibility.md)
 - [PyAutoReduce validation: slacs1430+4105 ACS reduction vs trusted legacy dataset](active/pyautoreduce_slacs1430_acs_comparison.md)
 - [Research profiling experiment in the autolens_profiling repo](active/research_profiling_experiment_in_the_autolens_pr.md) — [issue #82](https://github.com/PyAutoLabs/autolens_profiling/issues/82)
+- [Resolve the border-relocator backend hazard after the source fix](active/resolve_border_relocator_hazard.md) — [issue #117](https://github.com/PyAutoLabs/autolens_profiling/issues/117) — workspace-dev
 
 ## Parked
 

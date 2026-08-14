@@ -1,3 +1,16 @@
+## circular-ell-comps-image-gradient
+- issue: https://github.com/PyAutoLabs/PyAutoGalaxy/issues/570
+- completed: 2026-08-14
+- library-pr: https://github.com/PyAutoLabs/PyAutoGalaxy/pull/571
+- merge-commit: fe41d2178a767035ba695e1d1df99164849fcba6
+- summary: Replaced the Sersic image path's Cartesian-to-polar ellipticity conversion with an algebraically equivalent Cartesian eccentric-radius calculation, making the circular ell_comps origin differentiable without changing image values or the existing 0.999 magnitude clamp.
+- validation: GitHub Actions Tests run 31761207506 succeeded on Python 3.12 and 3.13; Docs run 31761207496 succeeded; 8 focused local tests, format and compile checks, NumPy parity, JAX jit/grad finite-difference agreement, and the downstream full FitImaging likelihood probe passed; no reviews or review threads.
+- evidence: maximum NumPy direct/legacy image difference was 1.46e-15; the full-likelihood value remained -15.477240141252718 and its origin gradient changed from [NaN, NaN] to finite [1.1569945714414, -0.5449763942867472].
+- profiling-follow-up: remove the resolved `likelihood.imaging-sersic.ell-comps-origin-nonfinite-gradient` record while retaining its stable detector.
+- release: not performed; the merged library PR remains in the pending-release queue.
+
+## Original prompt
+
 # Make circular ell_comps Sersic image gradients finite
 
 @PyAutoGalaxy

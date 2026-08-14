@@ -50,6 +50,38 @@ class SolverDiagnosticRow:
     numpy_fit_support: tuple[bool, ...]
 
 
+@dataclass(frozen=True)
+class BorderRelocatorComparisonRow:
+    """NumPy/JAX comparison through the border-relocation pipeline."""
+
+    parameter: float
+    parameter_hex: str
+    use_border_relocator: bool
+    raw_source_grid_relative_error: float
+    relocated_source_grid_relative_error: float
+    source_mesh_grid_relative_error: float
+    mapping_matrix_relative_error: float
+    curvature_reg_matrix_relative_error: float
+    data_vector_relative_error: float
+    reconstruction_relative_error: float
+    figure_of_merit_relative_error: float
+    supports_equal: bool
+    first_divergent_stage: str | None
+    numpy_pca_axes: tuple[float, float]
+    jax_pca_axes: tuple[float, float]
+    numpy_pca_phi: float
+    jax_pca_phi: float
+    numpy_pca_relative_eigenvalue_gap: float
+    jax_pca_relative_eigenvalue_gap: float
+    stable_relocated_source_grid_relative_error: float
+    stable_numpy_axes: tuple[float, float]
+    stable_jax_axes: tuple[float, float]
+    raw_numpy_source_grid: tuple[tuple[float, float], ...]
+    raw_jax_source_grid: tuple[tuple[float, float], ...]
+    relocated_numpy_source_grid: tuple[tuple[float, float], ...]
+    relocated_jax_source_grid: tuple[tuple[float, float], ...]
+
+
 def support_mask(
     values: tuple[float, ...], *, relative_tolerance: float = 1.0e-8
 ) -> tuple[bool, ...]:
@@ -100,6 +132,53 @@ def nnls_optimality_metrics(curvature_reg_matrix, data_vector, reconstruction) -
         "dual_violation": max(0.0, float(-np.min(gradient))) / vector_scale,
         "complementarity": float(np.linalg.norm(solution * gradient, ord=np.inf))
         / (solution_scale * vector_scale),
+    }
+
+
+def stable_ellipse_parameters_from_border(
+    border_grid, *, relative_tolerance: float | None = None, eps: float = 1.0e-12
+) -> dict[str, float | tuple[float, float]]:
+    """PCA ellipse parameters with a deterministic near-isotropic branch.
+
+    Eigenvectors are undefined when covariance eigenvalues are equal. This
+    counterfactual uses an axis-aligned frame whenever their relative gap is no
+    larger than ``sqrt(machine epsilon)``; otherwise it retains the PCA major
+    axis.
+    """
+
+    grid = np.asarray(border_grid, dtype=float)
+    if grid.ndim != 2 or grid.shape[1] != 2 or grid.shape[0] < 2:
+        raise ValueError("border grid must have shape (N, 2) with N >= 2")
+    tolerance = (
+        float(np.sqrt(np.finfo(float).eps))
+        if relative_tolerance is None
+        else float(relative_tolerance)
+    )
+    origin = np.mean(grid, axis=0)
+    dy = grid[:, 0] - origin[0]
+    dx = grid[:, 1] - origin[1]
+    coordinates = np.stack((dx, dy), axis=1)
+    covariance = coordinates.T @ coordinates / max(coordinates.shape[0] - 1, 1)
+    eigenvalues, eigenvectors = np.linalg.eigh(covariance)
+    eigenvalue_scale = max(float(np.max(np.abs(eigenvalues))), np.finfo(float).tiny)
+    relative_gap = float((eigenvalues[-1] - eigenvalues[0]) / eigenvalue_scale)
+    if relative_gap <= tolerance:
+        phi = 0.0
+    else:
+        major = eigenvectors[:, -1]
+        phi = float(np.arctan2(major[1], major[0]))
+    cosine = np.cos(phi)
+    sine = np.sin(phi)
+    xprime = cosine * dx + sine * dy
+    yprime = -sine * dx + cosine * dy
+    return {
+        "origin": (float(origin[0]), float(origin[1])),
+        "a": float(np.max(np.abs(xprime)) + eps),
+        "b": float(np.max(np.abs(yprime)) + eps),
+        "phi": phi,
+        "relative_eigenvalue_gap": relative_gap,
+        "relative_tolerance": tolerance,
+        "near_isotropic": bool(relative_gap <= tolerance),
     }
 
 

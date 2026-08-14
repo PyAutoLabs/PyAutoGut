@@ -1,15 +1,13 @@
 # Active Tasks
 
-## border-relocator-degenerate-pca
-- issue: https://github.com/PyAutoLabs/PyAutoArray/issues/445
-- pr: https://github.com/PyAutoLabs/PyAutoArray/pull/446
-- prompt: active/border_relocator_degenerate_pca.md
+## resolve-border-relocator-hazard
+- issue: https://github.com/PyAutoLabs/autolens_profiling/issues/117
+- prompt: active/resolve_border_relocator_hazard.md
 - session: chatgpt-work
-- status: awaiting-merge
-- validation: 2 focused tests, direct JAX jit/vmap, and downstream full-likelihood NumPy/JAX parity passed; GitHub Python 3.12/3.13 tests pending
-- result: deterministic near-isotropic PCA axis restores curvature parity to 1.583e-16 and identical likelihood/support at the worst one-ULP point
+- status: workspace-dev
+- validation: pending
 - repos:
-  - PyAutoArray: feature/border-relocator-degenerate-pca
+  - autolens_profiling: feature/resolve-border-relocator-hazard
 
 ## pix-prodigy-gpu-compat
 - issue: https://github.com/PyAutoLabs/autolens_workspace_developer/issues/125

@@ -11,15 +11,16 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 | [In flight](#in-flight) (`active/`) | 7 |
 | [Parked](#parked) (`parked.md`) | 6 |
 | [Planned](#planned) (`planned.md`) | 7 |
-| [Backlog](#backlog) (`draft/`) | 135 |
+| [Backlog](#backlog) (`draft/`) | 136 |
 
 Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3Aissue+is%3Aopen&type=issues) · [open pull requests](https://github.com/search?q=org%3APyAutoLabs+is%3Apr+is%3Aopen&type=prs)
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 30
+**Highest priority** (filed as `high`) — showing 12 of 31
 
 - [pre_build stages untracked files, publishing uncommitted human work](draft/bug/pyautohands/pre_build_stages_untracked_wip.md) — pyautohands · small · supervised · high
+- [Heart grades an absent rehearsal stage as RED "release validation](draft/bug/pyautoheart/release_validation_absent_rehearsal_graded_red.md) — pyautoheart · small · supervised · high
 - [TRIAGE: needs manual review before routing](draft/triage/jax_zero_contour.md) — medium · safe · high
 - [PyAutoLens RTD docs: three-regime restructure (multi_galaxy / group / cluster)](draft/docs/autolens/docs_three_regime_restructure.md) — autolens · medium · supervised · high
 - [Optimize pixelized Prodigy settings on the laptop GPU](draft/research/autolens_workspace_developer/pixelized_prodigy_laptop_gpu_phase_2_settings.md) — autolens_workspace_developer · medium · human-required · high
@@ -30,7 +31,6 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 - [multi_galaxy package: new regime package in autolens_workspace](draft/docs/autolens/multi_galaxy_package.md) — autolens · large · supervised · high
 - [Tune the JAX multi-start optimizers into a standard option (MGE](draft/experiment/autolens_profiling/jax_optimizer_settings_tuning.md) — autolens_profiling · large · supervised · high
 - [Profile and speed up JAX likelihood-function compile times (all use](draft/feature/autolens_profiling/jax_compile_time_profiling.md) — autolens_profiling · large · supervised · high
-- [Optimize MultiStartProdigy for pixelized meshes on the laptop GPU](draft/research/autolens_workspace_developer/pixelized_prodigy_laptop_gpu.md) — autolens_workspace_developer · large · human-required · high
 
 **Quick wins** (small enough, and safe enough to run unattended)
 
@@ -94,12 +94,13 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**135** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**136** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
-<summary><b>bug</b> — 39</summary>
+<summary><b>bug</b> — 40</summary>
 
 - [pre_build stages untracked files, publishing uncommitted human work](draft/bug/pyautohands/pre_build_stages_untracked_wip.md) — pyautohands · small · supervised · high
+- [Heart grades an absent rehearsal stage as RED "release validation](draft/bug/pyautoheart/release_validation_absent_rehearsal_graded_red.md) — pyautoheart · small · supervised · high
 - [Release does not sync __version__ stamps and workspace pins back](draft/bug/pyautobuild/release_version_sync_back_to_main.md) — pyautobuild · medium · supervised · high
 - [EP hierarchical parent-scale collapse: cure the basin, or document the](draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md) — autofit · too-large · human-required · high
 - [`NFWTruncatedSph.potential_2d_from`: MGE potential fails `grad(psi)=alpha` self-consistency](draft/bug/autogalaxy/nfw_truncated_potential_accuracy.md) — autogalaxy · too-large · supervised · high

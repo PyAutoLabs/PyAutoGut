@@ -1,5 +1,14 @@
 # Active Tasks
 
+## border-relocator-backend-parity
+- issue: https://github.com/PyAutoLabs/autolens_profiling/issues/115
+- prompt: active/border_relocator_backend_parity.md
+- session: chatgpt-work
+- status: workspace-dev
+- validation: pending
+- repos:
+  - autolens_profiling: feature/border-relocator-backend-parity
+
 ## pix-prodigy-gpu-compat
 - issue: https://github.com/PyAutoLabs/autolens_workspace_developer/issues/125
 - pr: https://github.com/PyAutoLabs/autolens_workspace_developer/pull/126 (OPEN, mergeable)

@@ -3,8 +3,12 @@
 ## release-validation-tri-state
 - issue: https://github.com/PyAutoLabs/PyAutoHeart/issues/144
 - prompt: active/release_validation_absent_rehearsal_graded_red.md
+- pr: https://github.com/PyAutoLabs/PyAutoHeart/pull/145 (OPEN)
 - session: claude 2026-08-14 (surfaced by /wake_up)
-- status: library-dev — issue filed, worktree next
+- status: library-dev — IMPLEMENTED 2026-08-14, PR #145 open, full Heart suite 380 passed
+- verified: end-to-end against the REAL state dir (a copy) and the REAL artifact, no CI re-dispatched — RED 45 `release validation FAILED` → YELLOW 70 `release validation incomplete: no rehearsal for current source`, `red_reasons: []`. Remaining yellows are the pre-existing workspace-validation + manifest-drift ones.
+- migration note: the live `~/.pyauto-heart` was NOT mutated (work ran against a copy). The dev box self-heals on its next tick — `release_run.decide()` re-folds once when the stored report predates `validation_outcome`, which the run-id cache would otherwise block forever. That migration is skipped when the report already carries a `rehearse` stage, so a release drive's manual multi-stage ingest is never regressed.
+- test-touched: `test_fresher_local_ingest_is_never_regressed` had its fixture given a `validation_outcome` (now pins the steady state; the one-time migration exception has its own sibling test). `test_validation_failed_is_red` is UNMODIFIED and is the control.
 - classification: bug / infrastructure (Heart organ code), difficulty medium, autonomy supervised
 - problem: Heart grades a fully-green integrate-only ingest as RED `release validation FAILED`. `release_ready` is `false` by construction on the tick auto-ingest path (`release_run.py:151` ingests the integrate stage report alone; a `rehearse` stage is structurally impossible there), and `readiness.py:461` maps every `false` to the RED axis. Reproduced on clean main.
 - design: explicit tri-state `validation_outcome: pass|fail|incomplete` in `validate.py`, `release_ready` kept for compatibility; `fail`→RED, `incomplete`→STALE, and **legacy reports lacking the discriminator stay RED** (fail closed). Plus `_norm_status` in `add_report`, `stale_reasons` in `dashboard.to_dict()`, WARN row for `incomplete`, and the tick line reworded.

@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-986 records across 7 buckets.
+987 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -97,6 +97,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [regularization-jax-gradient-gaps](2026/08/regularization-jax-gradient-gaps.md)
 - [resolve-border-relocator-hazard](2026/08/resolve-border-relocator-hazard.md) — Removed the resolved backend-divergence artifact after deterministic border PCA restored NumPy/JAX likelihood parity.
 - [resolve-curvature-floor-doc-drift](2026/08/resolve-curvature-floor-doc-drift.md) — Reconciled the resolved curvature-floor documentation finding while preserving its stable regression identity.
+- [resolve-sersic-ell-comps-gradient](2026/08/resolve-sersic-ell-comps-gradient.md) — Removed the resolved Sersic gradient evidence after the Cartesian source fix while retaining the stable detector.
 - [samplers-surface-autolens-tiers](2026/08/samplers-surface-autolens-tiers.md) — the samplers faculty's SamplerSurface now scans the findings
 - [script-title-underline-off-by-one](2026/08/script-title-underline-off-by-one.md)
 - [simulator-util-to-af-ex](2026/08/simulator-util-to-af-ex.md) — moved the four 1D-Gaussian simulator helpers out of the duplicated

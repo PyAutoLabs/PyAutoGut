@@ -1,3 +1,16 @@
+## resolve-sersic-ell-comps-gradient
+- issue: https://github.com/PyAutoLabs/autolens_profiling/issues/123
+- completed: 2026-08-14
+- workspace-pr: https://github.com/PyAutoLabs/autolens_profiling/pull/124
+- merge-commit: 27bdb8b0c5cbf35852c1e22e9bbcbea0324e437b
+- source-fix: https://github.com/PyAutoLabs/PyAutoGalaxy/pull/571
+- summary: Reconciled the numerical-hazard evidence after the Sersic Cartesian-radius fix. The stable conditional detector remains for regression detection; the resolved record, plot, semantic-index entry, and generated README row were removed.
+- validation: GitHub Actions lint run 31761926948 succeeded across ruff lint/format, README idempotence, 38 tests, links, and all section smoke tests; the full NumPy/JAX likelihood scan and repeat check found two persistent likelihood findings, zero new IDs, and no Sersic origin finding; no reviews or review threads.
+- evidence: the origin likelihood remained -15.477240141252718 and its JAX gradient is finite at [1.1569945714414, -0.5449763942867472]; the semantic index now contains seven persistent findings.
+- release: not performed; the merged workspace PR remains in the pending-release queue.
+
+## Original prompt
+
 # Reconcile the resolved Sersic ell_comps gradient finding
 
 Type: maintenance

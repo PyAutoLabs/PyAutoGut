@@ -1755,10 +1755,12 @@
       "anchors": [],
       "backend_reachability": {
         "jax": {
-          "algorithm": "PDIP with Jacobi preconditioning"
+          "algorithm": "PDIP with Jacobi preconditioning",
+          "same_system_diagnosis": "agrees with NumPy"
         },
         "numpy": {
-          "algorithm": "active-set FNNLS"
+          "algorithm": "active-set FNNLS",
+          "same_system_diagnosis": "agrees with JAX"
         }
       },
       "backends": [
@@ -1882,6 +1884,221 @@
           "value": 0.008989314321732202
         },
         {
+          "basis": "error_curve",
+          "details": {
+            "policy_maxima": {
+              "jax_default": {
+                "complementarity": 2.8214251073455618e-14,
+                "objective_relative_gap_to_numpy_solver": 1.9539925233402755e-14,
+                "reconstruction_relative_error_to_numpy_solver": 1.715490887073406e-09
+              },
+              "jax_relaxed": {
+                "complementarity": 4.3281705403679967e-08,
+                "objective_relative_gap_to_numpy_solver": 9.90566382252922e-08,
+                "reconstruction_relative_error_to_numpy_solver": 0.0017921606389332916
+              },
+              "jax_tight": {
+                "complementarity": 1.3280183144815582e-16,
+                "objective_relative_gap_to_numpy_solver": 1.1102230246251565e-16,
+                "reconstruction_relative_error_to_numpy_solver": 2.467627579546002e-13
+              }
+            }
+          },
+          "unit": "same_system_solver_relative_error",
+          "value": 1.715490887073406e-09
+        },
+        {
+          "basis": "error_curve",
+          "details": {
+            "curvature_regularization_matrix": 0.008689933926204936,
+            "data_vector": 0.00523445919055786,
+            "ulp_neighbourhood": [
+              {
+                "native_fit_support": [
+                  true,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  true,
+                  true,
+                  true
+                ],
+                "numpy_fit_support": [
+                  true,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  true,
+                  true,
+                  true
+                ],
+                "parameter": 1.5499999999999998,
+                "parameter_hex": "0x1.8ccccccccccccp+0",
+                "system_backend": "numpy",
+                "system_matrix_relative_error_to_numpy": 0.0
+              },
+              {
+                "native_fit_support": [
+                  true,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  true,
+                  true
+                ],
+                "numpy_fit_support": [
+                  true,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  true,
+                  true,
+                  true
+                ],
+                "parameter": 1.5499999999999998,
+                "parameter_hex": "0x1.8ccccccccccccp+0",
+                "system_backend": "jax",
+                "system_matrix_relative_error_to_numpy": 0.004442448770324005
+              },
+              {
+                "native_fit_support": [
+                  true,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  true,
+                  true
+                ],
+                "numpy_fit_support": [
+                  true,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  true,
+                  true
+                ],
+                "parameter": 1.55,
+                "parameter_hex": "0x1.8cccccccccccdp+0",
+                "system_backend": "numpy",
+                "system_matrix_relative_error_to_numpy": 0.0
+              },
+              {
+                "native_fit_support": [
+                  true,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  true,
+                  true
+                ],
+                "numpy_fit_support": [
+                  true,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  true,
+                  true
+                ],
+                "parameter": 1.55,
+                "parameter_hex": "0x1.8cccccccccccdp+0",
+                "system_backend": "jax",
+                "system_matrix_relative_error_to_numpy": 6.285967744248488e-05
+              },
+              {
+                "native_fit_support": [
+                  true,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  true,
+                  false
+                ],
+                "numpy_fit_support": [
+                  true,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  true,
+                  false
+                ],
+                "parameter": 1.5500000000000003,
+                "parameter_hex": "0x1.8cccccccccccep+0",
+                "system_backend": "numpy",
+                "system_matrix_relative_error_to_numpy": 0.0
+              },
+              {
+                "native_fit_support": [
+                  true,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  true,
+                  true,
+                  true
+                ],
+                "numpy_fit_support": [
+                  true,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  false,
+                  true,
+                  false
+                ],
+                "parameter": 1.5500000000000003,
+                "parameter_hex": "0x1.8cccccccccccep+0",
+                "system_backend": "jax",
+                "system_matrix_relative_error_to_numpy": 0.008689933926204936
+              }
+            ]
+          },
+          "unit": "backend_system_relative_error",
+          "value": 0.008689933926204936
+        },
+        {
           "basis": "reachability",
           "details": {
             "blocked_paths": {},
@@ -2003,14 +2220,205 @@
             ]
           }
         },
-        "parameter": "einstein_radius"
+        "native_fit_reconstruction_relative_error_max": 0.008989314321732202,
+        "parameter": "einstein_radius",
+        "recommendation": "Do not open a positive-solver source task from this finding. The solvers agree on identical systems; isolate the backend system-construction discontinuity instead.",
+        "same_system_reconstruction_error_max": {
+          "jax_default": 1.715490887073406e-09,
+          "jax_relaxed": 0.0017921606389332916,
+          "jax_tight": 2.467627579546002e-13
+        },
+        "system_data_vector_relative_error_max": 0.00523445919055786,
+        "system_matrix_relative_error_max": 0.008689933926204936,
+        "ulp_neighbourhood": [
+          {
+            "native_fit_support": [
+              true,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              true,
+              true,
+              true
+            ],
+            "numpy_fit_support": [
+              true,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              true,
+              true,
+              true
+            ],
+            "parameter": 1.5499999999999998,
+            "parameter_hex": "0x1.8ccccccccccccp+0",
+            "system_backend": "numpy",
+            "system_matrix_relative_error_to_numpy": 0.0
+          },
+          {
+            "native_fit_support": [
+              true,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              true,
+              true
+            ],
+            "numpy_fit_support": [
+              true,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              true,
+              true,
+              true
+            ],
+            "parameter": 1.5499999999999998,
+            "parameter_hex": "0x1.8ccccccccccccp+0",
+            "system_backend": "jax",
+            "system_matrix_relative_error_to_numpy": 0.004442448770324005
+          },
+          {
+            "native_fit_support": [
+              true,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              true,
+              true
+            ],
+            "numpy_fit_support": [
+              true,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              true,
+              true
+            ],
+            "parameter": 1.55,
+            "parameter_hex": "0x1.8cccccccccccdp+0",
+            "system_backend": "numpy",
+            "system_matrix_relative_error_to_numpy": 0.0
+          },
+          {
+            "native_fit_support": [
+              true,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              true,
+              true
+            ],
+            "numpy_fit_support": [
+              true,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              true,
+              true
+            ],
+            "parameter": 1.55,
+            "parameter_hex": "0x1.8cccccccccccdp+0",
+            "system_backend": "jax",
+            "system_matrix_relative_error_to_numpy": 6.285967744248488e-05
+          },
+          {
+            "native_fit_support": [
+              true,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              true,
+              false
+            ],
+            "numpy_fit_support": [
+              true,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              true,
+              false
+            ],
+            "parameter": 1.5500000000000003,
+            "parameter_hex": "0x1.8cccccccccccep+0",
+            "system_backend": "numpy",
+            "system_matrix_relative_error_to_numpy": 0.0
+          },
+          {
+            "native_fit_support": [
+              true,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              true,
+              true,
+              true
+            ],
+            "numpy_fit_support": [
+              true,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              false,
+              true,
+              false
+            ],
+            "parameter": 1.5500000000000003,
+            "parameter_hex": "0x1.8cccccccccccep+0",
+            "system_backend": "jax",
+            "system_matrix_relative_error_to_numpy": 0.008689933926204936
+          }
+        ]
       },
       "schema_version": 1,
       "subject": "likelihood",
       "subject_name": "imaging_pixelization",
-      "summary": "A full FitImaging grid compares active-set FNNLS with the JAX interior-point path; maximum measured relative output error is 8.989e-03.",
+      "summary": "The native likelihood paths differ by up to 8.989e-03 over a one-ULP neighbourhood, but the default solvers agree to 1.715e-09 when given the same system. Backend-built matrices differ by up to 8.690e-03.",
       "tier": 2,
-      "title": "Positive solvers are backend-dependent algorithms"
+      "title": "Measured backend divergence originates before the positive solver"
     },
     "likelihood.imaging-sersic.circular-orientation-degeneracy": {
       "affects_science": true,

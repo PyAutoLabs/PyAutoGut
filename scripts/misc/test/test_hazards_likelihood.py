@@ -27,7 +27,9 @@ from hazards._likelihood import (  # noqa: E402
     conditioning_policy_metrics,
     epsilon_neighbourhood_mass,
     floor_fraction,
+    nnls_optimality_metrics,
     orientation_spans,
+    relative_l2_error,
     support_transition_locations,
 )
 
@@ -70,6 +72,28 @@ def test_backend_curves_align_parameters_and_report_both_outputs():
     assert curve["parameter"] == [1.0]
     assert curve["figure_of_merit"] == pytest.approx([0.1])
     assert curve["reconstruction"][0] > 0.0
+
+
+def test_nnls_metrics_grade_primal_dual_and_complementarity_conditions():
+    matrix = np.diag([2.0, 1.0])
+    vector = np.array([2.0, -1.0])
+    optimum = nnls_optimality_metrics(matrix, vector, np.array([1.0, 0.0]))
+    assert optimum == pytest.approx(
+        {
+            "objective": -1.0,
+            "primal_violation": 0.0,
+            "dual_violation": 0.0,
+            "complementarity": 0.0,
+        }
+    )
+    assert nnls_optimality_metrics(matrix, vector, np.zeros(2))["dual_violation"] > 0.0
+    assert nnls_optimality_metrics(matrix, vector, np.array([1.0, -0.1]))["primal_violation"] > 0.0
+
+
+def test_relative_l2_error_supports_vectors_and_matrices():
+    assert relative_l2_error([1.0, 2.0], [1.0, 2.0]) == 0.0
+    assert relative_l2_error(np.eye(2), 2.0 * np.eye(2)) == pytest.approx(0.5)
+    assert relative_l2_error([1.0], [1.0, 2.0]) == float("inf")
 
 
 def test_conditioning_and_structural_helpers_use_physical_scales():

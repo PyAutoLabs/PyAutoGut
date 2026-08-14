@@ -117,6 +117,12 @@ def render_finding_plot(finding: Finding, path: Path) -> None:
                 linestyle="--",
                 label=f"{backend} reconstruction",
             )
+        for policy, value in data.get("same_system_reconstruction_error_max", {}).items():
+            ax.axhline(
+                value,
+                linestyle=":",
+                label=f"same system: {policy}",
+            )
         ax.set_yscale("log")
         ax.set_xlabel(data["parameter"])
         ax.set_ylabel("relative error vs NumPy")

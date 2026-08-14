@@ -7,13 +7,19 @@ around a complete likelihood.
 `pixelization.py` is the first tier-2 cell. It uses an in-memory 7x7 imaging
 dataset, an Isothermal lens and a 3x3 rectangular source with constant
 regularization. The bounded scan measures active-set support transitions,
-matrix-floor scale, NumPy/JAX solver divergence, and the circular-profile
+matrix-floor scale, NumPy/JAX backend divergence, and the circular-profile
 orientation degeneracy. The conditioning leg also runs an unfloored control and
 a scale-aware counterfactual calibrated to the packaged absolute floor at the
 reference noise scale; this is profiling evidence only and does not change the
 PyAutoArray default. Floor fractions use only the curvature-diagonal entries in
 `no_regularization_index_list`, because those are the entries the policy
 actually modifies. Reusable detector logic remains in `misc/hazards`.
+
+The solver-diagnostic leg re-solves each NumPy- and JAX-built NNLS system with
+both positive solvers. It also samples the one-ULP neighbourhood around the
+largest native-path difference and records objective and scale-normalized KKT
+residuals. This separates solver convergence from backend differences already
+present in the curvature-regularization matrix and data vector.
 
 Run the cell directly to write its raw probe, or run the shared scanner to
 write semantic findings:

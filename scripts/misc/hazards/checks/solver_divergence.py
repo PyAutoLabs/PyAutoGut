@@ -22,11 +22,51 @@ class SolverDivergenceCheck(HazardCheck):
         curves = backend_error_curves(rows)
         if not curves:
             return []
-        maximum = max(
+        native_maximum = max(
             max(curve[quantity])
             for curve in curves.values()
             for quantity in ("figure_of_merit", "reconstruction")
         )
+        diagnostic = imaging_pixelization_probe(context)["solver_diagnostic"]
+        policy_maxima = {
+            policy: {
+                "reconstruction_relative_error_to_numpy_solver": max(
+                    row.reconstruction_relative_error_to_numpy_solver
+                    for row in diagnostic
+                    if row.solver_policy == policy
+                ),
+                "objective_relative_gap_to_numpy_solver": max(
+                    abs(row.objective_relative_gap_to_numpy_solver)
+                    for row in diagnostic
+                    if row.solver_policy == policy
+                ),
+                "complementarity": max(
+                    row.complementarity for row in diagnostic if row.solver_policy == policy
+                ),
+            }
+            for policy in ("jax_default", "jax_tight", "jax_relaxed")
+        }
+        system_matrix_maximum = max(row.system_matrix_relative_error_to_numpy for row in diagnostic)
+        system_vector_maximum = max(
+            row.system_data_vector_relative_error_to_numpy for row in diagnostic
+        )
+        native_reconstruction_maximum = max(
+            row.native_fit_reconstruction_relative_error_to_numpy for row in diagnostic
+        )
+        support_boundary = [
+            {
+                "parameter": row.parameter,
+                "parameter_hex": row.parameter_hex,
+                "system_backend": row.system_backend,
+                "native_fit_support": list(row.native_fit_support),
+                "numpy_fit_support": list(row.numpy_fit_support),
+                "system_matrix_relative_error_to_numpy": (
+                    row.system_matrix_relative_error_to_numpy
+                ),
+            }
+            for row in diagnostic
+            if row.solver_policy == "numpy_active_set"
+        ]
         numpy_anchor = maybe_anchor_from_pattern(
             context.workspace_root,
             repo="PyAutoArray",
@@ -54,10 +94,13 @@ class SolverDivergenceCheck(HazardCheck):
         return [
             Finding(
                 finding_id="likelihood.imaging-pixelization.positive-solver-backend-divergence",
-                title="Positive solvers are backend-dependent algorithms",
+                title="Measured backend divergence originates before the positive solver",
                 summary=(
-                    "A full FitImaging grid compares active-set FNNLS with the JAX "
-                    f"interior-point path; maximum measured relative output error is {maximum:.3e}."
+                    f"The native likelihood paths differ by up to {native_reconstruction_maximum:.3e} "
+                    "over a one-ULP neighbourhood, but the default solvers agree to "
+                    f"{policy_maxima['jax_default']['reconstruction_relative_error_to_numpy_solver']:.3e} "
+                    "when given the same system. Backend-built matrices differ by up to "
+                    f"{system_matrix_maximum:.3e}."
                 ),
                 hazard_class="solver_divergence",
                 tier=2,
@@ -67,9 +110,27 @@ class SolverDivergenceCheck(HazardCheck):
                 measurements=(
                     Measurement(
                         basis="error_curve",
-                        value=maximum,
+                        value=native_maximum,
                         unit="relative_error",
                         details={"reference": "numpy_fnnls", "curves": curves},
+                    ),
+                    Measurement(
+                        basis="error_curve",
+                        value=policy_maxima["jax_default"][
+                            "reconstruction_relative_error_to_numpy_solver"
+                        ],
+                        unit="same_system_solver_relative_error",
+                        details={"policy_maxima": policy_maxima},
+                    ),
+                    Measurement(
+                        basis="error_curve",
+                        value=system_matrix_maximum,
+                        unit="backend_system_relative_error",
+                        details={
+                            "curvature_regularization_matrix": system_matrix_maximum,
+                            "data_vector": system_vector_maximum,
+                            "ulp_neighbourhood": support_boundary,
+                        },
                     ),
                     reachability_measurement(
                         reachable_via=(
@@ -91,9 +152,31 @@ class SolverDivergenceCheck(HazardCheck):
                 blocked_by=(),
                 affects_science=None,
                 backend_reachability={
-                    "numpy": {"algorithm": "active-set FNNLS"},
-                    "jax": {"algorithm": "PDIP with Jacobi preconditioning"},
+                    "numpy": {
+                        "algorithm": "active-set FNNLS",
+                        "same_system_diagnosis": "agrees with JAX",
+                    },
+                    "jax": {
+                        "algorithm": "PDIP with Jacobi preconditioning",
+                        "same_system_diagnosis": "agrees with NumPy",
+                    },
                 },
-                reproducer={"parameter": "einstein_radius", "curves": curves},
+                reproducer={
+                    "parameter": "einstein_radius",
+                    "curves": curves,
+                    "same_system_reconstruction_error_max": {
+                        policy: values["reconstruction_relative_error_to_numpy_solver"]
+                        for policy, values in policy_maxima.items()
+                    },
+                    "system_matrix_relative_error_max": system_matrix_maximum,
+                    "system_data_vector_relative_error_max": system_vector_maximum,
+                    "native_fit_reconstruction_relative_error_max": (native_reconstruction_maximum),
+                    "ulp_neighbourhood": support_boundary,
+                    "recommendation": (
+                        "Do not open a positive-solver source task from this finding. "
+                        "The solvers agree on identical systems; isolate the backend "
+                        "system-construction discontinuity instead."
+                    ),
+                },
             )
         ]

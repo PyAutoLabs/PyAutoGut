@@ -2,10 +2,12 @@
 
 ## border-relocator-backend-parity
 - issue: https://github.com/PyAutoLabs/autolens_profiling/issues/115
+- pr: https://github.com/PyAutoLabs/autolens_profiling/pull/116
 - prompt: active/border_relocator_backend_parity.md
 - session: chatgpt-work
-- status: workspace-dev
-- validation: pending
+- status: awaiting-merge
+- validation: 28 tests passed; ruff, scoped format, compile, NumPy/JAX scan, README and smoke passed; GitHub lint pending
+- result: degenerate border PCA selects backend-dependent axes; current relocated-grid error reaches 2.835e-1, while the near-isotropic deterministic-axis counterfactual is exactly backend-stable
 - repos:
   - autolens_profiling: feature/border-relocator-backend-parity
 

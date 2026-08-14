@@ -11,7 +11,7 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 | [In flight](#in-flight) (`active/`) | 8 |
 | [Parked](#parked) (`parked.md`) | 6 |
 | [Planned](#planned) (`planned.md`) | 7 |
-| [Backlog](#backlog) (`draft/`) | 135 |
+| [Backlog](#backlog) (`draft/`) | 136 |
 
 Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3Aissue+is%3Aopen&type=issues) · [open pull requests](https://github.com/search?q=org%3APyAutoLabs+is%3Apr+is%3Aopen&type=prs)
 
@@ -95,7 +95,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**135** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**136** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 39</summary>
@@ -143,13 +143,14 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>feature</b> — 25</summary>
+<summary><b>feature</b> — 26</summary>
 
 - [Make draft/ staleness detectable — `intake reconcile` measured, and the](draft/feature/pyautomind/draft_staleness_detection_signals.md) — pyautomind · medium · supervised · high
 - [LACosmic per-frame CR masking option + decouple PSF-star pass from](draft/feature/pyautoreduce/lacosmic_cr_option_and_star_pass_decoupling.md) — pyautoreduce · medium · supervised · high
 - [Profile and speed up JAX likelihood-function compile times (all use](draft/feature/autolens_profiling/jax_compile_time_profiling.md) — autolens_profiling · large · supervised · high
 - [Give the Profiling Agent a compile-time axis — the arc](draft/feature/profiling/profiling_agent_jax_compile_time_scope.md) — profiling · large · supervised · high
 - [Give PyAutoFit searches a `seed` — today no search can](draft/feature/autofit/search_seed_reproducibility.md) — autofit · medium · supervised · medium
+- [MultiStartGradient value-NaN and gradient-NaN step diagnostics](draft/feature/autofit/multistart_gradient_nan_step_diagnostics.md) — autofit · small · supervised · normal
 - [Can create a list of InversionMatrix objects for each dataset](draft/feature/autoarray/multiwavelength_inversion.md) — autoarray · medium · supervised · normal
 - [The project @z_projects/ic50_workspace is our IC50 use case which we](draft/feature/autofit/ep_lbfgs_jax.md) — autofit · medium · safe · normal
 - [Tune cluster-scale JOSS benchmarks toward their 5-minute targets](draft/feature/autolens_workspace/joss_cluster_benchmark_tuning.md) — autolens_workspace · medium · supervised · normal

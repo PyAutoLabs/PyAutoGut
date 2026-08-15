@@ -57,7 +57,7 @@ The search must produce identical results with the counter present. Do not add a
 penalty term, and do not touch `resurrect`, `apply_if_finite`, the convergence
 check, stepping behaviour, or the clamp itself.
 
-## Use prior-limit escape, not a zero-gradient test
+## Detector: use the saturation predicate, not a zero-gradient test
 
 A JAX toy reproduction (32 starts, 400 Prodigy steps, PyAutoGalaxy's clamp
 verbatim, `apply_if_finite` + unbounded `apply_updates`, truth at
@@ -82,7 +82,58 @@ component is exactly zero does a component itself read zero. Floating-point
 residue from the rotation is also why the radial test scores 6/17 rather than
 17/17: the projection is ~1e-12, not an exact zero.
 
-So detect the **cause** — a lane that has left its priors' support, which is
+### Reuse the guard's predicate, not its exception
+
+`validate_ell_comps` already owns the authoritative constraint, but it cannot
+raise under a trace and deliberately does not try — `validate.py:153-154` returns
+early for non-concrete scalars. That escape hatch is load-bearing: a plain
+`raise` on a traced condition gives `TracerBoolConversionError`, so without it
+every jitted likelihood would crash rather than sample.
+
+Measured on the three candidate mechanisms:
+
+| mechanism | works under `vmap` + `grad`? | shape |
+|---|---|---|
+| plain `raise` | no — `TracerBoolConversionError` | — |
+| `jax.experimental.checkify` | yes, values/grads stay finite | **one error per batch**, abort-shaped |
+| **guard predicate as a traced boolean** | yes | **per-lane verdict** |
+
+`checkify` is the genuine JAX exception mechanism and it does survive
+`vmap`+`value_and_grad`, but it collapses a batch to a single error and is built
+to abort. That is the wrong shape here: the run must continue so the surviving
+lanes finish, and the counter needs 32 independent verdicts, not one.
+
+The predicate as a traced boolean gives exactly that, returned alongside the FoM
+— no exception machinery at all. Scored against the 17 real trapped lanes plus
+three synthetic corner-region lanes (both components inside `(-1, 1)`, magnitude
+above 1):
+
+| detector | caught | missed |
+|---|---:|---:|
+| per-parameter prior-limit escape | 17/20 | 3 |
+| **saturation predicate `|ell_comps| >= 0.999`** | **20/20** | **0** |
+
+**Use the clamp's threshold (0.999), not the guard's (1.0).** They differ, and
+the gap is reachable: at `|ell_comps| = 0.9995` and `0.99999` the radial
+derivative is already exactly zero while `validate_ell_comps` still calls the
+point valid. A detector keyed to the guard's `magnitude_squared >= 1.0` misses
+that annulus; one keyed to the clamp does not.
+
+This supersedes the prior-limit-escape recommendation below, which is provably
+incomplete — the corner region it misses is the whole `4 - pi` area between the
+unit disc and the unit square.
+
+### Scope consequence
+
+Asking the model "is this instance saturated?" is a **validity channel** between
+PyAutoFit and the profile libraries, not something PyAutoFit can answer alone.
+It is also the same hook the later penalty term needs, so building it once serves
+both. If this task stays PyAutoFit-only it must fall back to prior-limit escape
+and accept the corner-region miss; see the open question at the end.
+
+### Superseded: prior-limit escape
+
+Detect the **cause** — a lane that has left its priors' support, which is
 possible at all only because `apply_updates` steps the physical vector with no
 re-projection. That is fully generic (every `Prior` already carries
 `lower_limit`/`upper_limit`), needs no model semantics, no gradient inspection,
@@ -112,4 +163,13 @@ pixelized-mesh regime the counter is meant to observe.
 - Do not force a per-step device sync if it costs measurable run time. The
   existing NaN accounting measured 0.0004% of step time; stay in that class.
 
+
 <!-- formalised by the Intake (Conception) Agent on 2026-08-15 from file:/tmp/claude-0/-home-user/ef0adef1-5fcd-5111-9cdf-bcb1014fc23d/scratchpad/frozen_lane_counter.md -->
+
+## Open question for start_dev
+
+Whether to widen this task to the validity channel (PyAutoFit + PyAutoGalaxy,
+complete detector, shared with the later penalty term) or keep it PyAutoFit-only
+(prior-limit escape, misses the corner region). Widening changes the header:
+`Repos:` gains PyAutoGalaxy and difficulty rises from `medium`. Decide before
+issuing, not during.

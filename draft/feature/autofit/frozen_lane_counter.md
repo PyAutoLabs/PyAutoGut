@@ -148,6 +148,25 @@ valid. The two thresholds answer different questions and both should survive —
 but their relationship should be stated in one place, which this work is the
 opportunity to do.
 
+### What it costs, and what it cannot see
+
+Nothing flows *up* through the likelihood. The saturation predicate is a pure
+function of the parameter vector, so it is evaluated at the top beside the
+likelihood, which is left untouched — measured with the toy's
+`log_likelihood` imported unmodified, gradients bit-identical (`atol=0`).
+
+Cost on the toy: +23 HLO lines (700 -> 723, +3.3%). Wall-clock overhead measured
+at +40 us on a ~1090 us call, which is **below the noise band** on a shared CPU
+(interleaved burst spreads overlapped) — treat it as an upper bound, and expect
+it to be proportionally smaller against a real pixelized likelihood.
+
+The ceiling is worth stating before anyone assumes one mechanism covers the
+whole hazard index: this works *only* for parameter-only properties. The tier-2
+likelihood hazards — which basis components the NNLS active set pinned at zero,
+how a conditioning floor bit against real flux — are genuine likelihood-internal
+state, are not recoverable from the parameter vector, and would need real upward
+plumbing.
+
 ### Scope consequence
 
 Asking the model "is this instance saturated?" is a **validity channel** between

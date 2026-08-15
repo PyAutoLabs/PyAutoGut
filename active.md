@@ -1,5 +1,19 @@
 # Active Tasks
 
+## mge-lane-death
+- issue: https://github.com/PyAutoLabs/autolens_profiling/issues/128
+- prompt: active/mge_lane_death.md
+- status: planned — research/measurement in autolens_profiling; no worktree claimed yet
+- worktree: ~/Code/PyAutoLabs-wt/mge-lane-death (not yet created)
+- repos:
+  - autolens_profiling: research/mge-lane-death (not yet created)
+- finding so far: the `imaging/mge` cell at 16x150 on CPU reports 1498/2400 value-NaN lane-steps (62.42%), 9 gradient-NaN, 0 constrained, 0 resurrections; population falls `alive 16/16` -> `alive 2/16`. The `ell_comps` plateau is CLEARED as a suspect (constrained count is a validated zero — see the positive control in the prompt).
+- what is NOT yet known: the CAUSE. Which parameters/regions and which operation produce the non-finite likelihood. That is the whole task.
+- reading the number: 62% is a survival integral, not a hazard rate — a frozen lane keeps counting every subsequent step, so the same death curve reports ~75% at 300 steps. Inverting it gives a mean death step of ~43 of 150 (mid-descent, not bad initial draws). Grade any re-run on the alive-versus-step CURVE, not on recovering the scalar.
+- ordering (deliberate, do not revert): cause-finding FIRST on the existing ~6-min CPU run, then the `resurrect=True` budget-recovery measurement, then the production/GPU/seed confirmation. Do not queue for a GPU before the cause step has been attempted.
+- boundary: investigation only. Changing the `resurrect` default is a separate PyAutoFit task — it would shift every existing multi-start benchmark.
+- upstream: PyAutoFit#1475 (`004f798`) + PyAutoGalaxy#572 (`695b27c`) shipped the trapped-lane counter; record in `complete/2026/08/frozen-lane-counter.md`.
+
 ## pix-prodigy-gpu-compat
 - issue: https://github.com/PyAutoLabs/autolens_workspace_developer/issues/125
 - prompt: active/pixelized_prodigy_laptop_gpu_phase_1_compatibility.md

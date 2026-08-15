@@ -123,6 +123,31 @@ This supersedes the prior-limit-escape recommendation below, which is provably
 incomplete — the corner region it misses is the whole `4 - pi` area between the
 unit disc and the unit square.
 
+### How it attaches (no new composition call)
+
+The model-composition API does not gain a user-facing call — `af.Model(al.mp.Isothermal)`
+is unchanged. PyAutoFit already discovers class-level metadata off the wrapped
+class during composition (`prior_model.py:200` reads `cls.__default_fields__`),
+and that is the pattern to follow.
+
+Placement is clean because `validate_ell_comps` has exactly **one** call site,
+`geometry_profiles.py:237` in `EllProfile.__init__` — the single base every
+elliptical light and mass profile inherits. The declaration goes on that class,
+beside the existing call.
+
+Do **not** let this become a second statement of the constraint. Extract the
+predicate out of `validate_ell_comps` as a pure `xp`-generic function; leave
+`validate_ell_comps` raising on concrete scalars as it does today, now calling
+that predicate; point the class-level declaration at the same function.
+
+Note that the drift this guards against **already exists**: the clamp is `0.999`
+in `convert.py:71-77`, the guard is `1.0` in `validate.py:158`, in different
+files with nothing relating them. That gap is precisely the reachable annulus
+where the radial gradient is already dead while the guard still calls the point
+valid. The two thresholds answer different questions and both should survive —
+but their relationship should be stated in one place, which this work is the
+opportunity to do.
+
 ### Scope consequence
 
 Asking the model "is this instance saturated?" is a **validity channel** between

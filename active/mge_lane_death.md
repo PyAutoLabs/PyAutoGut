@@ -129,6 +129,76 @@ extra; the runner writes into `dataset/`).
 
 <!-- formalised by the Intake (Conception) Agent on 2026-08-15 from file:/tmp/claude-0/-home-user/ef0adef1-5fcd-5111-9cdf-bcb1014fc23d/scratchpad/nan_death_prompt.md -->
 
+## CAUSE FOUND (2026-08-15, cloud CPU) — it is the prior, not the likelihood
+
+Written up in full on autolens_profiling#128. Summary, so the file stands alone:
+
+`_fit` builds its objective as `Fitness(..., fom_is_log_likelihood=False,
+convert_to_chi_squared=True)`:
+
+```
+fom = -2 * (log_likelihood + sum(log_prior_list))
+```
+
+A `UniformPrior` is `-inf` outside its box, and `MultiStartGradient` steps in
+**physical** parameter space with **no projection back onto that box**. A lane
+crossing a hard prior edge reads as non-finite; `resurrect=False` never redraws
+it; it stays dead for every remaining step. That accumulation is the 62%.
+
+**The likelihood never went non-finite** — not once in ~7200 lane-steps across
+three arms. Every pipeline stage (positions penalty, deflections, convergence,
+model data, residuals, chi-squared, NNLS reconstruction, log-determinants,
+`figure_of_merit`) was finite at every death vector.
+
+| arm (16x150, cloud CPU) | value-NaN | grad-NaN | constrained | dead | alive end |
+|---|---:|---:|---:|---:|---:|
+| reproduction | 1446 (60.25%) | 18 | 0 | 14/16 | 2 |
+| shear box widened to ±1 | 1422 (59.25%) | 36 | 13 | 15/16 | 1 |
+| **prior term neutered** | **215 (8.96%)** | 27 | **667 (27.79%)** | **3/16** | **13** |
+
+Per-lane autopsy at the death vectors: 11/14 finite likelihood with
+`sum(log_prior) = -inf`; 2/14 NaN params; 1/14 unexplained. All three residual
+deaths in the neutered arm are NaN-params, not likelihood deaths.
+
+The survival identity is exact: `sum(150 - k_i) = 14*150 - 654 = 1446`, which is
+`n_value_nan_lane_steps` to the unit — the counter *is* the area under the death
+curve.
+
+**A narrower hypothesis was refuted.** 10 of the 11 box exits were the shear
+`UniformPrior(-0.3, 0.3)`, but widening only those two priors did not collapse
+the deaths — they moved later and got marginally worse. Widening one box only
+moves the wall. Test the mechanism, not the parameter.
+
+### The docstring claim is correct, and irrelevant
+
+The parametric MGE likelihood does appear to have only measure-zero
+singularities. What is wrong is using that to justify `resurrect=False`, since
+the deaths come from the prior, which the claim never covered. And this is not
+MGE-specific: any model with a hard-box prior and unbounded stepping has it.
+
+### Counter-finding: the ell_comps plateau was MASKED, not cleared
+
+The baseline's `n_constrained_lane_steps = 0` was correctly measured and the
+positive control was sound — but it meant *"nothing got that far"*, not
+*"nothing gets trapped there"*. Lanes died of prior-exit before reaching the
+saturation plateau. Remove the prior deaths and the constrained count is **667
+(27.79%)**. #1475's counter is measuring a live failure mode on this cell that
+was hidden behind a larger one. Lanes stop being dead and start being **stuck**.
+
+### Out of this task's boundary, now owed elsewhere
+
+1. **PyAutoFit** — bounded stepping (projection/clipping onto prior support) or
+   soft-walled priors. `resurrect=True` is *not* the fix: it redraws a lane that
+   then walks out again.
+2. **The ell_comps trapping at 27.79%**, now that it is visible.
+
+### Still owed here
+
+GPU / float64 / multi-seed confirmation, graded on the alive-versus-step curve.
+One caveat: baseline lane 9 (step 39) re-evaluates finite in every term with all
+params inside their boxes — the jitted/vmapped float32 path differs from the
+eager recompute there, unexplained.
+
 ## Reproducer
 
 Both scripts below are self-contained and were used to produce the numbers in

@@ -29,17 +29,32 @@ characterises the parametric MGE-class cell as having only a **measure-zero
 singularity** — lane death should therefore be rare and incidental, not a
 structural property of the likelihood surface.
 
-The human reports a first run of the newly shipped value-NaN / gradient-NaN
-lane-step counters (PyAutoFit#1472 → #1473, `n_value_nan_lane_steps` /
-`n_grad_nan_lane_steps`) on the `imaging/mge` profiling cell that contradicts
-this: **~62% of lane-steps died to value-NaN, and the population fell to alive
-2/16.** The same run is reported to have cleared the `ell_comps` plateau as a
-suspect for that cell, and to have carried a positive control validating the
-zero.
+The claim is verbatim, at `search.py:119` under the `resurrect` parameter:
 
-**These figures are reported, not yet reproduced, and are not present in the
-PyAutoMind record** — see "Provenance gap" below. Reproducing them is step 1 of
-this task, not an assumption of it.
+> Default ``False`` — the parametric (MGE-class) cell has only the measure-zero
+> singularity, so the ``apply_if_finite`` guard suffices and behaviour/results
+> are unchanged.
+
+The human reports that the first run of the **trapped-lane counter** — shipped
+today as PyAutoFit#1475 (`_constrained_lane_count`, merged `004f798`) with its
+PyAutoGalaxy leg #572 (`EllProfile.__model_constraint__`, merged `695b27c`) —
+contradicts this on the `imaging/mge` cell: **~62% of lane-steps died to
+value-NaN, and the population fell to alive 2/16.**
+
+The same run reportedly **cleared the `ell_comps` plateau as a suspect** for
+this cell, which is coherent with what #1475/#572 do: #572 declares the
+`ell_comps` saturation constraint, #1475 counts lanes sitting outside it, and a
+near-zero `constrained N/16` reading on the MGE cell exonerates the plateau. The
+"positive control validating the zero" is the load-bearing part of that — a zero
+reading only means something if the detector is proven able to fire, which is
+exactly the point of #1475's note that a component-wise gradient test *"caught 0
+of 17 genuinely trapped lanes in a JAX reproduction"* while the declared-
+constraint detector caught them.
+
+So the plateau is cleared and the value-NaN rate is the finding. **The 62% and
+alive 2/16 figures themselves are reported from a local run log and are not in
+any pushed artefact** — see "Provenance gap" below. Reproducing them is step 1
+of this task, not an assumption of it.
 
 If the 62% holds at production budget, it is not a measurement curiosity: it
 means the MGE cell's likelihood is undefined over a *set of positive measure*
@@ -48,45 +63,50 @@ produced by a search running on 2 of 16 lanes, and the resurrection policy
 deliberately deferred in #1472 ("decide AFTER the counters show how often frozen
 lanes actually occur") now has its answer.
 
+## Three counters, not one — keep them straight
+
+The lane accounting shipped in two waves, and the second is a day old. Anything
+written about "the counter" needs to say which:
+
+| Counter | Failure mode | Shipped as |
+|---|---|---|
+| `n_value_nan_lane_steps` | likelihood **undefined** (today's `resurrect` trigger) | PyAutoFit#1472 → **#1473** (`fbfcece`) |
+| `n_grad_nan_lane_steps` | likelihood defined but **not differentiable** — the frozen zombie lane | same PR |
+| `_constrained_lane_count` | finite **and** differentiable, but **trapped** on a saturating plateau with no restoring force | PyAutoFit **#1475** (`004f798`) + PyAutoGalaxy **#572** (`695b27c`) |
+
+All three are disjoint by construction ("one lane, one bucket") and all three are
+**measurement only** — none gates a redraw or changes stepping. The reported 62%
+is in the **first** bucket, which is the one whose resurrection policy already
+exists. That matters for step 3.
+
 ## Provenance gap — resolve before or during step 1
 
-The launch context cites a completion record `complete/2026/08/frozen-lane-counter.md`
-and PRs **PyAutoFit#1475 / PyAutoGalaxy#572**. None of these exist in PyAutoMind
-as of `origin/main` @ `1f7cca8`:
+The PRs are real and merged; the **write-up and the run artefacts are not
+pushed**.
 
-- The frozen-lane (gradient-NaN) counter shipped as
-  `complete/2026/08/multistart-nan-step-diagnostics.md` — issue PyAutoFit#1472,
-  library PR **PyAutoFit#1473** (merged `fbfcece3`), profiling PR
-  **autolens_profiling#127** (merged `a34d6191`). There is **no PyAutoGalaxy leg**:
-  the change was confined to `search.py` and `autofit/text/text_util.py`.
-- No record anywhere in the repo mentions a 62% rate, `alive 2/16`, an
-  `ell_comps` plateau clearance for the MGE cell, or a positive control for this
-  run. The most recent counter work
-  (`complete/2026/08/multistart-gradient-resume-fom-sanity-check.md`, updated
-  2026-08-15) is **resume-accumulation** verification on a clean Gaussian fit
-  with synthetic NaN traps — not a production MGE run.
+- `complete/2026/08/frozen-lane-counter.md` does not exist. PyAutoMind
+  `origin/main` is at `1f7cca8`, which predates both #1475 and #572 (merged
+  2026-08-15 ~15:52 UTC), so no completion record for that wave has been written
+  yet. The nearest existing records are
+  `complete/2026/08/multistart-nan-step-diagnostics.md` (the #1473 wave) and
+  `complete/2026/08/multistart-gradient-resume-fom-sanity-check.md` (resume
+  accumulation, verified on a clean Gaussian fit with synthetic NaN traps — not
+  a production MGE run).
+- No pushed artefact anywhere carries the 62% or the `alive 2/16`.
+  `autolens_profiling` `main` is at `a34d6191` (the #127 merge) with nothing
+  since and no lane-death branch; PyAutoFit has no such branch either. The only
+  MGE NaN artefact in the profiling repo is
+  `results/searches/multi_start_nan_accounting/local_cpu.json`, and that is the
+  **overhead benchmark** — `imaging`/`mge`/`hst`, `n_starts: 16`, `n_steps: 5`,
+  `reps: 3`, `local_cpu`, verdict `"fused accounting costs 4.1us on a 1.027s
+  step"`. It reports no NaN counts and no alive-lane trajectory, and at 5 steps
+  it could not resolve a rate that accumulates along a descent path anyway.
 
-`autolens_profiling` was checked too, and does not have the run either. Its
-`main` is at `a34d6191` — exactly the #127 merge the Mind record cites, so
-nothing has landed since. The only MGE NaN-accounting artefact in the repo is
-`results/searches/multi_start_nan_accounting/local_cpu.json`, and that is the
-**overhead benchmark**, not a lane-death rate: `imaging`/`mge`/`hst`,
-`n_starts: 16`, `n_steps: 5`, `reps: 3` on `local_cpu`, whose only verdict is
-`"fused accounting costs 4.1us on a 1.027s step = 0.00039% of run time"`. It
-reports no NaN counts and no alive-lane trajectory. No remote branch in
-autolens_profiling carries lane-death work.
-
-So the 62% run exists in no pushed artefact in either repo. Either it was run in
-a session whose results were never pushed, or the identifiers and figures are
-misremembered. Recover the actual run artefacts (`search.summary`,
-`samples_info`, the `results/searches/**` JSON) before treating 62% as a
-baseline; if they cannot be recovered, step 1 *establishes* the number rather
-than reproducing it.
-
-Note also that the 5-step, 3-rep budget of the one real artefact is far too
-short to say anything about a rate that accumulates along a descent path — which
-is consistent with the launch context's own warning not to let a reduced-budget
-CPU number generalise.
+So the figures live in a local run log. **Recover and commit that log (or the
+`search.summary` / `samples_info` / `results/searches/**` JSON behind it) as the
+first act of step 1** — otherwise the reproduction has nothing to be graded
+against, and a disagreement between the GPU run and the remembered number will
+be unresolvable.
 
 ## Step 1 — reproduce at production budget on GPU (do this first)
 
@@ -95,8 +115,12 @@ untested.
 
 - Run `imaging/mge` at **production** `SEARCHES_N_STARTS` / `SEARCHES_N_STEPS`
   on GPU, across **at least two seeds**, and record
-  `n_value_nan_lane_steps`, `n_grad_nan_lane_steps`, `n_resurrections` and the
-  alive-lane trajectory for each.
+  `n_value_nan_lane_steps`, `n_grad_nan_lane_steps`, the `_constrained_lane_count`
+  reading, `n_resurrections`, and the `alive N/16` + `constrained N/16`
+  trajectory for each. Record **all three** counters even though only the first
+  is expected to be large — a step-3 argument that "the plateau is cleared"
+  needs the constrained column present and near zero on the production run, not
+  inherited from the reduced-budget one.
 - Report the counters as **rates** normalised by `n_starts * total_steps` —
   raw counts are not comparable across budgets (this is the normalisation
   `search.summary` already applies).
@@ -124,22 +148,31 @@ Only if step 1 confirms a materially non-zero rate.
   underflow in the likelihood normalisation, and genuine model-space
   singularities. These have different fixes and only one of them is
   "measure-zero".
-- The `ell_comps` plateau is reported as already cleared for this cell; confirm
-  that from the run artefacts rather than inheriting it
-  (cf. `complete/2026/08/circular-ell-comps-image-gradient.md`,
+- The `ell_comps` plateau is reported as already cleared for this cell by the
+  #1475/#572 constrained counter; confirm that from the production run artefacts
+  rather than inheriting it (cf.
+  `complete/2026/08/circular-ell-comps-image-gradient.md`,
   `complete/2026/08/resolve-sersic-ell-comps-gradient.md`).
+- **A cleared plateau does not clear the constraint mechanism generally.** #572
+  declares `__model_constraint__` on `EllProfile` only. If a *different*
+  saturating clamp is in play on this cell, the constrained counter reads zero
+  because nothing declared it — not because nothing is trapped. Enumerate which
+  classes in the MGE cell's model declare a constraint before reading a zero as
+  an all-clear.
 
 ## Step 3 — what the answer changes
 
 - **The docstring.** If the singularity is not measure-zero, the `resurrect`
   docstring is wrong and misleads every future reader about which cells are safe.
-- **The resurrection policy.** #1472 deferred the decision to make `resurrect`
-  trigger on non-finite *gradients* until the counters spoke. A 62% value-NaN
-  rate with alive 2/16 is a much stronger signal than that deferral anticipated —
-  but note that value-NaN is *already* today's resurrection trigger, so a high
-  value-NaN rate means resurrection is firing and failing to keep the population
-  alive, which is a different problem from the frozen-lane one and needs stating
-  separately.
+- **The `resurrect` default, not the resurrection trigger.** This is the
+  distinction to get right. #1472 deferred whether `resurrect` should *also*
+  trigger on non-finite gradients. But a 62% **value**-NaN rate says nothing
+  about that deferral — value-NaN is already the trigger. What it says is that
+  the MGE cell's `resurrect=False` **default** is wrong: the docstring justifies
+  that default by asserting the cell has only a measure-zero singularity, and if
+  62% holds, the justification is false and the cell has been running with
+  resurrection off through a landscape that needs it. Recommend on the default;
+  leave the gradient-trigger question where #1472 left it.
 - **Every MGE benchmark number to date.** If the population is routinely 2/16,
   the wsdev #117/#125 comparisons and the sampler benchmark rows are measuring a
   crippled search. Scope the re-run implications; do not silently invalidate.
@@ -178,7 +211,12 @@ gets made explicitly rather than by accident.
 - `complete/2026/07/pixelized-multistart-prodigy-cpu.md` and the DelaunayNN
   free-AdaptSplit open question in `active.md` (109 resurrections, NaN death vs
   over-regularized-floor death) — the same question, different cell.
+- PyAutoFit `004f798` and PyAutoGalaxy `695b27c` themselves — the constrained
+  counter and the `EllProfile` constraint have no completion record yet, so the
+  commit messages are currently the only write-up.
 
-<!-- filed by /start_dev on 2026-08-15 from human launch context; the 62% /
-alive-2/16 figures and the frozen-lane-counter.md / #1475 / #572 identifiers are
-the human's report and are NOT corroborated by the PyAutoMind record -->
+<!-- filed by /start_dev on 2026-08-15 from human launch context. PyAutoFit#1475
+(004f798) and PyAutoGalaxy#572 (695b27c) verified merged; the resurrect
+measure-zero claim verified verbatim at search.py:119. The 62% / alive-2/16
+figures are the human's report from a local run log and appear in no pushed
+artefact in PyAutoMind, autolens_profiling or PyAutoFit. -->

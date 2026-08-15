@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-990 records across 7 buckets.
+991 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -72,6 +72,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [mge-sigma-min-workspace-sweep](2026/08/mge-sigma-min-workspace-sweep.md)
 - [missing-auto-simulate-guards](2026/08/missing-auto-simulate-guards.md)
 - [multi-start-auto-convergence-real-search](2026/08/multi-start-auto-convergence-real-search.md) — `scripts/jax_assertions/multi_start_gradient_auto_convergence.py` failed
+- [multistart-gradient-resume-fom-sanity-check](2026/08/multistart-gradient-resume-fom-sanity-check.md)
 - [multistart-nan-step-diagnostics](2026/08/multistart-nan-step-diagnostics.md)
 - [nautilus-1core-serial-pool](2026/08/nautilus-1core-serial-pool.md) — corrective for the Heart RED "release validation FAILED (stage
 - [normalise-auto-simulate-guard-idiom](2026/08/normalise-auto-simulate-guard-idiom.md)

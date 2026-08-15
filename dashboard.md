@@ -11,7 +11,7 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 | [In flight](#in-flight) (`active/`) | 7 |
 | [Parked](#parked) (`parked.md`) | 6 |
 | [Planned](#planned) (`planned.md`) | 7 |
-| [Backlog](#backlog) (`draft/`) | 136 |
+| [Backlog](#backlog) (`draft/`) | 137 |
 
 Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3Aissue+is%3Aopen&type=issues) · [open pull requests](https://github.com/search?q=org%3APyAutoLabs+is%3Apr+is%3Aopen&type=prs)
 
@@ -32,11 +32,12 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 - [Profile and speed up JAX likelihood-function compile times (all use](draft/feature/autolens_profiling/jax_compile_time_profiling.md) — autolens_profiling · large · supervised · high
 - [Optimize MultiStartProdigy for pixelized meshes on the laptop GPU](draft/research/autolens_workspace_developer/pixelized_prodigy_laptop_gpu.md) — autolens_workspace_developer · large · human-required · high
 
-**Quick wins** (small enough, and safe enough to run unattended)
+**Quick wins** (small enough, and safe enough to run unattended) — showing 12 of 13
 
 - [python_matrix smoke fails: autofit_workspace searches/mle.py needs optax not in smoke](draft/bug/autofit_workspace/searches_mle_optax_smoke_dependency.md) — autofit_workspace · small · safe · normal
 - [hpc/sync first-push race — parallel rsyncs before remote base dir](draft/bug/autolens_assistant/hpc_sync_first_push_race.md) — autolens_assistant · small · safe · normal
 - [Audit HowTo tutorials for missing setup_notebook() line](draft/bug/howto/missing_setup_notebook_audit.md) — howto · small · safe · normal
+- [Has the falsified-by checkpoint stage gone rote after ten ships](draft/research/pyautobrain/has_the_falsified_by_checkpoint_stage_gone.md) — pyautobrain · small · safe · normal
 - [PyAutoFit CLI-noise batch: unclosed search.log handler + four small warning](draft/maintenance/pyautofit/cli_noise_pyautofit_batch.md) — pyautofit · small · safe · normal
 - [Tenant firewall: release_run.py carries an unlisted 'PyAutoLabs' instance fact](draft/bug/pyautoheart/tenant_firewall_release_run_instance_fact.md) — pyautoheart · small · safe · normal
 - [Silence the three autonerves-rooted CLI-noise sources (fits leak, pytest collection,](draft/maintenance/pyautonerves/cli_noise_autonerves_batch.md) — pyautonerves · small · safe · normal
@@ -45,7 +46,6 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 - [PyAutoNerves committed version stamp behind sibling consensus](draft/maintenance/libraries/nerves_version_stamp_behind_consensus.md) — libraries · small · safe · low
 - [Markdown renderings batch 2a — leftovers (ellipse/modeling + PNG size)](draft/docs/pyautobuild/markdown_renderings_2a_leftovers.md) — pyautobuild · small · safe · low
 - [Raw-string the LaTeX docstrings emitting SyntaxWarnings (HowToFit + HowToLens)](draft/maintenance/workspaces/latex_raw_string_docstrings.md) — workspaces · small · safe · low
-- [Refresh the stale `.script_sizes.json` snapshot in @autolens_workspace](draft/maintenance/workspaces/script_sizes_snapshot_drift.md) — workspaces · small · safe · low
 
 ## In flight
 
@@ -94,7 +94,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**136** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**137** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 40</summary>
@@ -201,7 +201,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>research</b> — 20</summary>
+<summary><b>research</b> — 21</summary>
 
 - [Optimize pixelized Prodigy settings on the laptop GPU](draft/research/autolens_workspace_developer/pixelized_prodigy_laptop_gpu_phase_2_settings.md) — autolens_workspace_developer · medium · human-required · high
 - [Optimize MultiStartProdigy for pixelized meshes on the laptop GPU](draft/research/autolens_workspace_developer/pixelized_prodigy_laptop_gpu.md) — autolens_workspace_developer · large · human-required · high
@@ -212,6 +212,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 - [Delaunay-family JAX modules never hit the persistent compilation cache](draft/research/autoarray/delaunay_callback_persistent_cache_miss.md) — autoarray · medium · supervised · medium
 - [Quick-update plotting cost — minutes per update, and it is](draft/research/autolens/quick_update_plotting_cost.md) — autolens · medium · supervised · medium
 - [Use readthedocs or migrate to GitHub docs](draft/research/autobuild/git_docs.md) — autobuild · small · supervised · normal
+- [Has the falsified-by checkpoint stage gone rote after ten ships](draft/research/pyautobrain/has_the_falsified_by_checkpoint_stage_gone.md) — pyautobrain · small · safe · normal
 - [Re-baseline the slacs0008 acceptance parity after the HAP-dedupe fix](draft/research/pyautoreduce/acceptance_noise_rebaseline.md) — pyautoreduce · small · supervised · normal
 - [Kernel-CDF bandwidth defaults — config-dependent quality, investigate adaptivity](draft/research/autoarray/rectangular_kernel_bandwidth_defaults.md) — autoarray · medium · supervised · normal
 - [We have lots of examples which profile how long JAX](draft/research/autolens_workspace_developer/jax_jit_profiling.md) — autolens_workspace_developer · medium · supervised · normal

@@ -66,11 +66,27 @@ as of `origin/main` @ `1f7cca8`:
   2026-08-15) is **resume-accumulation** verification on a clean Gaussian fit
   with synthetic NaN traps — not a production MGE run.
 
-So either the run happened in a session whose write-up was never pushed, or the
-identifiers are misremembered. Recover the actual run artefacts
-(`search.summary`, `samples_info`, the `results/searches/**` JSON) before
-treating 62% as a baseline; if they cannot be recovered, step 1 *establishes*
-the number rather than reproducing it.
+`autolens_profiling` was checked too, and does not have the run either. Its
+`main` is at `a34d6191` — exactly the #127 merge the Mind record cites, so
+nothing has landed since. The only MGE NaN-accounting artefact in the repo is
+`results/searches/multi_start_nan_accounting/local_cpu.json`, and that is the
+**overhead benchmark**, not a lane-death rate: `imaging`/`mge`/`hst`,
+`n_starts: 16`, `n_steps: 5`, `reps: 3` on `local_cpu`, whose only verdict is
+`"fused accounting costs 4.1us on a 1.027s step = 0.00039% of run time"`. It
+reports no NaN counts and no alive-lane trajectory. No remote branch in
+autolens_profiling carries lane-death work.
+
+So the 62% run exists in no pushed artefact in either repo. Either it was run in
+a session whose results were never pushed, or the identifiers and figures are
+misremembered. Recover the actual run artefacts (`search.summary`,
+`samples_info`, the `results/searches/**` JSON) before treating 62% as a
+baseline; if they cannot be recovered, step 1 *establishes* the number rather
+than reproducing it.
+
+Note also that the 5-step, 3-rep budget of the one real artefact is far too
+short to say anything about a rate that accumulates along a descent path — which
+is consistent with the launch context's own warning not to let a reduced-budget
+CPU number generalise.
 
 ## Step 1 — reproduce at production budget on GPU (do this first)
 

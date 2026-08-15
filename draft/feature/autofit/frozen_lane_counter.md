@@ -126,9 +126,30 @@ unit disc and the unit square.
 ### How it attaches (no new composition call)
 
 The model-composition API does not gain a user-facing call — `af.Model(al.mp.Isothermal)`
-is unchanged. PyAutoFit already discovers class-level metadata off the wrapped
-class during composition (`prior_model.py:200` reads `cls.__default_fields__`),
-and that is the pattern to follow.
+is unchanged.
+
+What makes that possible is that `Model.__init__` is **already** a class
+introspection site: it runs `gather_namespaces(cls)` and
+`typing.get_type_hints(cls.__init__, ...)`, walks the constructor signature and
+resolves a prior per argument. Per-class knowledge is already gathered there, so
+this is one more lookup in an existing mechanism, not a new one.
+
+Do **not** build this on `__default_fields__`. That is a narrow escape hatch —
+`prior_model.py:200` consults it only when `make_prior` returns a
+`ConfigException`, and it has exactly two usages (`messages/normal.py:412`,
+`truncated_normal.py:485`, both `("log_norm", "id_")`). It marks "this argument
+is not a model parameter"; it is not a constraint registry.
+
+The real relative is **`add_assertion`** (`abstract.py:441`), PyAutoFit's
+existing constraint concept. It is wrong here on exactly two counts: it attaches
+per *model instance* rather than per class (so every elliptical profile would
+need the user to remember it), and it raises `FitException`, which is numpy-only
+for the reasons above.
+
+So frame the work as **assertions with two changes** — class-declared rather than
+per-model, and a traced predicate rather than a raise — not as a new validity
+subsystem. The two should likely share a home rather than sit as unrelated
+features.
 
 Placement is clean because `validate_ell_comps` has exactly **one** call site,
 `geometry_profiles.py:237` in `EllProfile.__init__` — the single base every

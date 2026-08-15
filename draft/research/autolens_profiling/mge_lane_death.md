@@ -79,18 +79,39 @@ scalar percentage only within a fixed budget.**
 
 ## What to establish
 
-- **Where the NaNs come from.** Which parameters/regions produce a non-finite
-  likelihood in the MGE cell — the mask edge, a Gaussian `sigma` collapsing, the
-  linear inversion, the `sqrt` at r=0, something else. The hazard index in this
-  repo is the natural place to look first and to record the answer.
-- **When they happen.** Deaths concentrated in the first steps (bad draws that
-  `_broad_starts` should have filtered) mean something different from deaths
-  accumulating throughout (trajectories walking into a wall).
-- **Whether `resurrect=True` recovers the budget** on this cell, and what it
-  costs. The docstring says it is for pixelized sources; this evidence suggests
-  the parametric cell may need it too.
-- **Whether it reproduces at production budget and on GPU**, and across seeds.
-  The measurement above is one seed at reduced budget.
+Ordered by information per unit time, which is **not** the order they were
+originally listed in. The cause is the unanswered question and it is the cheap
+one; the GPU reproduction confirms an effect that has already been measured once.
+Do not queue for a GPU before step 1 has been attempted.
+
+1. **Where the NaNs come from** — the actual question. Which parameters/regions
+   produce a non-finite likelihood in the MGE cell: the mask edge, a Gaussian
+   `sigma` collapsing, the linear inversion / NNLS solve, the `sqrt` at r=0,
+   something else. **This does not need production budget or a GPU.** The
+   existing ~6-minute 16x150 CPU run already produces 1498 deaths; instrument it
+   to dump each lane's parameter vector at the step its value first goes
+   non-finite, and the distribution of those vectors is the answer. That is a
+   minutes-long iteration loop, not a queued one. Record the finding in this
+   repo's hazard index.
+2. **Whether `resurrect=True` recovers the budget** on this cell, and what it
+   costs. The docstring says resurrection is for pixelized sources; this evidence
+   suggests the parametric cell may need it too. Measurement of the candidate
+   remedy — not adoption of it (see Boundary).
+3. **Whether it holds at production budget, on GPU, across seeds.** The
+   measurement above is one seed at reduced budget on CPU, and the float64 GPU
+   path is not the same numerics. **Grade this on the alive-versus-step curve,
+   not on recovering "62%"** — per the survival-curve section above, the scalar
+   is budget-dependent by construction and the same landscape reports ~75% at 300
+   steps. Log `alive N/16` per step so the curves can be overlaid across budgets;
+   a run that only reports the final percentage cannot be compared to this one.
+
+**When they happen** is already partly answered and should not be re-derived from
+scratch: inverting the 1498 gives a mean death step of ~43 of 150, so deaths
+concentrate in the first third — trajectories walking into a wall mid-descent,
+not bad initial draws that `_broad_starts` failed to filter. Step 1's per-lane
+death steps should confirm or overturn that inversion; if they disagree with a
+mean of ~43, the disagreement is itself a finding (it would mean lanes are
+recovering and re-dying, which `resurrect=False` says they cannot).
 
 ## Boundary
 

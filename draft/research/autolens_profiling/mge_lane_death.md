@@ -72,3 +72,247 @@ that validates the zero, and the environment notes (`jaxnnls` is a required
 extra; the runner writes into `dataset/`).
 
 <!-- formalised by the Intake (Conception) Agent on 2026-08-15 from file:/tmp/claude-0/-home-user/ef0adef1-5fcd-5111-9cdf-bcb1014fc23d/scratchpad/nan_death_prompt.md -->
+
+## Reproducer
+
+Both scripts below are self-contained and were used to produce the numbers in
+this prompt. They live here rather than in `@autolens_profiling` because they
+are throwaway measurement drivers, not part of that repo's script tiers — copy
+them out to run, do not commit them there.
+
+### The measured result (verbatim)
+
+```json
+{
+  "cell": "imaging/mge",
+  "instrument": "hst",
+  "hardware": "cloud_cpu",
+  "n_starts": 16,
+  "n_steps": 150,
+  "batch_size": null,
+  "lane_steps": 2400,
+  "wall_s": 352.21100759506226,
+  "free_parameters": 15,
+  "counters": {
+    "n_value_nan_lane_steps": 1498,
+    "n_grad_nan_lane_steps": 9,
+    "n_constrained_lane_steps": 0,
+    "n_resurrections": 0
+  }
+}```
+
+### `rerun_cell.py` — runs one production cell at reduced budget
+
+Invoke as `SEARCHES_DISABLE_VIZ=1 N_STARTS=16 N_STEPS=150 python rerun_cell.py mge`.
+Environment: Python 3.12+, `pip install jaxnnls`, and install `autolens` with
+`--no-deps` if using editable local `autofit`/`autogalaxy`.
+
+```python
+"""Re-run one autolens_profiling search cell on CPU at reduced budget, to read
+the new constrained-lane counter.
+
+Uses the repo's own `build_for_cell` so the dataset, model and analysis are
+exactly the production ones. Only the search budget is reduced (n_starts,
+n_steps, batch_size) — that changes how thoroughly the space is explored, not
+the shape of the likelihood surface, which is what the counter reports on.
+"""
+
+import os, sys, time, json
+from pathlib import Path
+
+ROOT = Path("/workspace/pyautolabs/autolens_profiling")
+sys.path.insert(0, str(ROOT / "scripts" / "misc"))
+sys.path.insert(0, str(ROOT))
+
+# Dataset paths in `_setup.py` are relative to the repo root.
+os.chdir(ROOT)
+
+import numpy as np
+import autofit as af
+
+from searches import _setup
+from searches._setup import build_for_cell
+
+# Optional mesh shrink. The production fiducial is a (39, 39) = 1521-pixel mesh
+# with 1500 Hilbert pixels, whose JIT compile alone exceeds an hour on CPU. A
+# shrunken mesh is NOT the production cell — the landscape differs — but it
+# keeps the same clamp, the same unbounded stepping, and the same mesh-shaped
+# likelihood, so it can still say whether lanes reach the plateau at all.
+MESH = os.environ.get("MESH_SHAPE")
+HILBERT = os.environ.get("HILBERT_PIXELS")
+if MESH:
+    n = int(MESH)
+    _setup._PIXELIZATION_MESH_SHAPE = (n, n)
+    print(f"  [shrunk] pixelization mesh {(n, n)} (production is (39, 39))")
+if HILBERT:
+    _setup._HILBERT_PIXELS = int(HILBERT)
+    print(f"  [shrunk] hilbert pixels {HILBERT} (production is 1500)")
+
+MODEL_TYPE = sys.argv[1] if len(sys.argv) > 1 else "mge"
+N_STARTS = int(os.environ.get("N_STARTS", "16"))
+N_STEPS = int(os.environ.get("N_STEPS", "150"))
+BATCH = os.environ.get("BATCH_SIZE")
+INSTRUMENT = os.environ.get("INSTRUMENT", "hst")
+
+print(f"=== cell: imaging/{MODEL_TYPE} [{INSTRUMENT}] "
+      f"starts={N_STARTS} steps={N_STEPS} batch={BATCH or 'all'} ===")
+
+t0 = time.time()
+dataset, model, analysis = build_for_cell(
+    dataset_class="imaging",
+    model_type=MODEL_TYPE,
+    instrument=INSTRUMENT,
+    use_jax=True,
+    use_mixed_precision=False,
+)
+print(f"  build: {time.time() - t0:.1f}s   free parameters: {model.total_free_parameters}")
+
+constrained = model.constrained_model_tuples()
+print(f"  components declaring a model constraint: {len(constrained)}")
+for path, sub in constrained[:8]:
+    print(f"    {'.'.join(p for p in path if p) or '<root>'} -> {sub.cls.__name__}")
+
+kwargs = dict(
+    name=f"rerun_{MODEL_TYPE}",
+    n_starts=N_STARTS,
+    n_steps=N_STEPS,
+    iterations_per_log=25,
+    convergence=af.MultiStartGradientConvergence(check_for_convergence=False),
+)
+if BATCH:
+    kwargs["batch_size"] = int(BATCH)
+
+search = af.MultiStartProdigy(**kwargs)
+
+t0 = time.time()
+result = search.fit(model=model, analysis=analysis)
+wall = time.time() - t0
+
+primary = result[0] if isinstance(result, list) else result
+si = primary.search_internal
+if not isinstance(si, dict):
+    si = getattr(si, "__dict__", {}) or {}
+
+counters = {
+    k: si.get(k)
+    for k in (
+        "n_value_nan_lane_steps",
+        "n_grad_nan_lane_steps",
+        "n_constrained_lane_steps",
+        "n_resurrections",
+    )
+}
+lane_steps = N_STARTS * N_STEPS
+
+print(f"\n=== imaging/{MODEL_TYPE} — {wall:.1f}s wall, {lane_steps} lane-steps ===")
+for k, v in counters.items():
+    pct = f"({100.0 * v / lane_steps:.2f}% of lane-steps)" if isinstance(v, int) and lane_steps else ""
+    print(f"  {k:<28} {v}  {pct}")
+
+out = {
+    "cell": f"imaging/{MODEL_TYPE}",
+    "instrument": INSTRUMENT,
+    "hardware": "cloud_cpu",
+    "n_starts": N_STARTS,
+    "n_steps": N_STEPS,
+    "batch_size": int(BATCH) if BATCH else None,
+    "lane_steps": lane_steps,
+    "wall_s": wall,
+    "free_parameters": model.total_free_parameters,
+    "counters": counters,
+}
+dest = Path(f"/tmp/claude-0/-home-user/ef0adef1-5fcd-5111-9cdf-bcb1014fc23d/scratchpad/rerun_{MODEL_TYPE}.json")
+dest.write_text(json.dumps(out, indent=2))
+print(f"\nwrote {dest}")
+```
+
+### `validate_zero.py` — the positive control that makes the zero meaningful
+
+Proves the counter was watching that exact model and would have fired. Note it
+probes with `jnp` arrays: concrete Python floats trip `validate_ell_comps` and
+raise before the constraint is ever reached.
+
+```python
+"""Positive control: prove the zero from imaging/mge is a real zero.
+
+A count of 0 is only evidence if the counter would have fired had a lane been
+trapped. This builds the SAME production model the mge cell used, then checks:
+
+  1. the constraint is discovered on it at all;
+  2. a vector inside the valid region reports zero violation;
+  3. a vector placed beyond the clamp reports a positive violation;
+  4. the lane-count predicate turns that into a counted lane.
+
+If (1) failed, the zero would mean "nothing was watching", not "nothing happened".
+"""
+
+import os, sys
+from pathlib import Path
+
+ROOT = Path("/workspace/pyautolabs/autolens_profiling")
+sys.path.insert(0, str(ROOT / "scripts" / "misc"))
+sys.path.insert(0, str(ROOT))
+os.chdir(ROOT)
+
+import numpy as np
+import jax.numpy as jnp
+import autofit as af
+from autofit.non_linear.search.mle.multi_start_gradient.search import (
+    AbstractMultiStartGradient,
+)
+from searches._setup import build_for_cell
+
+dataset, model, analysis = build_for_cell(
+    dataset_class="imaging",
+    model_type="mge",
+    instrument="hst",
+    use_jax=True,
+    use_mixed_precision=False,
+)
+
+# --- 1. discovery on the real production model
+constrained = model.constrained_model_tuples()
+print(f"1. constrained components discovered: {len(constrained)}")
+for path, sub in constrained:
+    print(f"     {'.'.join(p for p in path if p) or '<root>'} -> {sub.cls.__name__}")
+assert constrained, "NOTHING WAS WATCHING — the zero would be meaningless"
+
+# JAX arrays, not Python floats: concrete scalars trip the component's own
+# `validate_ell_comps` guard before the constraint is ever reached (exactly as
+# the method's docstring warns). The real search path is traced, where that
+# guard returns early — jnp arrays reproduce that.
+vector = [jnp.asarray(float(v)) for v in model.physical_values_from_prior_medians]
+
+# --- 2. valid region -> zero
+inside = float(model.model_constraint_from_vector(vector, xp=jnp))
+print(f"\n2. violation at prior medians: {inside}")
+
+# --- 3. beyond the clamp -> positive.
+# Brute-force which parameters drive the constraint rather than guessing names:
+# push each one past the clamp in turn and see which move the violation.
+responders = []
+for i in range(len(vector)):
+    probe = list(vector)
+    probe[i] = jnp.asarray(3.0)
+    v = float(model.model_constraint_from_vector(probe, xp=jnp))
+    if v > 0.0:
+        responders.append((i, v))
+
+print(f"3. parameters that drive the constraint when pushed to 3.0: "
+      f"{len(responders)} of {len(vector)}")
+for i, v in responders[:6]:
+    print(f"     index {i:>3} -> violation {v:.4f}")
+outside = responders[0][1] if responders else 0.0
+
+# --- 4. the predicate counts it
+counted = AbstractMultiStartGradient._constrained_lane_count(
+    alive=np.array([True, True]),
+    grad_finite=np.array([True, True]),
+    constraint_violation=np.array([inside, outside]),
+)
+print(f"4. lanes counted from [valid, trapped]: {counted}")
+
+ok = bool(constrained) and inside == 0.0 and outside > 0.0 and counted == 1
+print(f"\nVERDICT: the mge zero is {'a REAL zero' if ok else 'NOT TRUSTWORTHY'}")
+sys.exit(0 if ok else 1)
+```

@@ -145,6 +145,37 @@ To change the channel count, edit `_DATACUBE_N_CHANNELS` in `_setup.py`
 (34 matches the existing ALMA cube fiducial; 4 keeps profiling
 turnaround sane).
 
+## Standalone instruments
+
+- **`multi_start_nan_accounting_overhead.py`** — does `MultiStartGradient`'s
+  per-step value-NaN / gradient-NaN accounting (PyAutoFit#1472) cost any run
+  time? Times four ways of obtaining per-lane gradient finiteness against a
+  real likelihood, with a duplicate-baseline **control** so the measurement
+  noise floor is reported alongside the overhead — the shipped `fused` variant
+  is meant to sit below it. Counter-intuitively the `eager` variant (reduce on
+  device but outside the jit) is the *worst*, not the best: an un-jitted
+  reduction buys a kernel dispatch plus a host round-trip to save a few KB that
+  were never the cost. Run it on **both** CPU and GPU — on CPU a device→host
+  copy is a same-address-space memcpy, so the `host` variant's true cost is
+  invisible there.
+
+  Local CPU row (`mge`, 16 starts, ndim 15, 1.03 s/step): **fused 4.1 us
+  (0.0004% of a step)**, host 7.0 us, eager 29.4 us. Absolute values move ~50%
+  between CPU runs; the *ordering* (fused < host < eager) has been stable across
+  three independent measurements, so read the ranking as the result and the
+  magnitudes as order-of-magnitude.
+
+  The `fused` figure comes from a proxy objective at the real array shapes, not
+  from the real likelihood — differencing two ~1 s jitted calls cannot resolve a
+  ~4 us effect (it returns negative "costs"). That makes it an upper bound on
+  the reduction in isolation; XLA's fusion into the real backward pass is not
+  captured. The end-to-end loop is ~1200x too coarse to see any of this and
+  reports itself as bounding, not measuring.
+
+  Related but distinct: `misc/hazards/checks/nonfinite_gradient.py` *detects*
+  non-finite gradients on a likelihood surface; this one measures what it costs
+  to *count* them during a fit.
+
 ## What this *doesn't* profile (yet)
 
 - **Pool scaling.** `number_of_cores > 1` sweeps are future work.

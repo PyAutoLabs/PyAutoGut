@@ -17,27 +17,31 @@ Add a third lane counter to `AbstractMultiStartGradient._nan_lane_counts`
 It counts two disjoint failure modes today — **value-NaN** (likelihood
 undefined; the death `resurrect` triggers on) and **gradient-NaN** (defined but
 not differentiable; `apply_if_finite` zeroes the update). A third mode escapes
-both: a lane whose value is finite and whose gradient is finite but **exactly
-zero**, sitting on a saturating plateau.
+both: a lane whose value and gradient are both finite, but which sits on a
+saturating plateau with **no gradient along the saturated direction**, so it can
+never leave.
 
 ## Why it matters
 
 The reference case is the ellipticity magnitude clamp `jax.lax.min(fac, 0.999)`
 in PyAutoGalaxy's `convert.py:71-77`. Past `|ell_comps| >= 0.999` the axis ratio
-pins at `q = 5.0025e-4` and the derivative w.r.t. both components is exactly
-zero. For a multi-start gradient search that is an absorbing trap:
+pins at `q = 5.0025e-4`, so the likelihood is exactly constant along the radial
+direction — measured identical to 10 significant figures at `|ell_comps|` of
+1.0, 1.2 and 5.0. For a multi-start gradient search that is an absorbing trap:
 
 - Starts are safe: `_broad_starts` draws in the unit cube at `(0.15, 0.85)`,
   capping start magnitude near 0.44 under the default `TruncatedGaussian(0, 0.3)`.
+  Measured start range in the toy run was 0.087 to 0.362.
 - But `optax.apply_updates(params, updates)` (`search.py:743`) steps the physical
-  vector with no re-projection into prior limits, so trajectories can walk in.
-- Once inside there is no restoring force, so the lane cannot leave.
+  vector with no re-projection into prior limits, so trajectories walk in — 17 of
+  32 lanes did, reaching `|ell_comps|` as high as 6.78.
+- Once inside there is no radial restoring force, so the lane cannot come back.
 - `apply_if_finite` and `resurrect` are both no-ops here — value and gradient are
   finite.
-- `multi_start_prodigy_autoconv` runs `check_for_convergence=True`, so frozen
+- `multi_start_prodigy_autoconv` runs `check_for_convergence=True`, so trapped
   lanes flatten the figure of merit and can false-trigger early stopping.
 
-A frozen lane is therefore indistinguishable from a converged one in the
+A trapped lane is therefore indistinguishable from a converged one in the
 figure-of-merit trace, which is exactly the hazard `_nan_lane_counts` was
 written to expose for the gradient-NaN case.
 
@@ -53,14 +57,58 @@ The search must produce identical results with the counter present. Do not add a
 penalty term, and do not touch `resurrect`, `apply_if_finite`, the convergence
 check, stepping behaviour, or the clamp itself.
 
-## Decisions to make
+## Use prior-limit escape, not a zero-gradient test
+
+A JAX toy reproduction (32 starts, 400 Prodigy steps, PyAutoGalaxy's clamp
+verbatim, `apply_if_finite` + unbounded `apply_updates`, truth at
+`|ell_comps| = 0.90`) settled the detector question empirically. **Do not
+implement a component-wise zero-gradient test — it does not work.**
+
+Measured on the 17 of 32 lanes that ended on the plateau:
+
+| candidate detector | caught | false pos |
+|---|---:|---:|
+| gradient component exactly zero | **0/17** | 0 |
+| all gradient components exactly zero | **0/17** | 0 |
+| radial derivative exactly zero | 6/17 | 0 |
+| **per-parameter prior-limit escape** | **17/17** | **0** |
+
+The reason is that the clamp kills only the *radial* derivative. The angle still
+comes from an unclamped `arctan2`, so in general position both `ell_comps`
+components carry a large non-zero gradient while their radial projection is zero
+— at `ell_comps = (0.867, 0.593)` the components are `+2.7e4` and `-3.9e4` while
+the radial projection is `-3.4e-12`. Only on the measure-zero axis where one
+component is exactly zero does a component itself read zero. Floating-point
+residue from the rotation is also why the radial test scores 6/17 rather than
+17/17: the projection is ~1e-12, not an exact zero.
+
+So detect the **cause** — a lane that has left its priors' support, which is
+possible at all only because `apply_updates` steps the physical vector with no
+re-projection. That is fully generic (every `Prior` already carries
+`lower_limit`/`upper_limit`), needs no model semantics, no gradient inspection,
+and no tolerance.
+
+Record its limit honestly in the docstring: it is a proxy for the cause, not the
+effect. It caught every trapped lane here because Prodigy overshoots grossly
+(trapped `|ell_comps|` ran 1.62 to 6.78, max component 6.45), not because it is
+complete. A lane in the corner region — both components inside `(-1, 1)` but
+magnitude above 1, which is the whole of the `4 - pi` area between the unit disc
+and the unit square — is beyond the clamp yet inside every per-parameter limit,
+and this detector will miss it.
+
+## Severity, for prioritisation
+
+The same run shows the trap **wastes budget rather than corrupting results**:
+17/32 lanes died on the plateau, yet the surviving lanes still recovered the
+truth (best lane `|ell_comps| = 0.9001`, logL −427.5 against a truth logL of
+−430.4). Multi-start redundancy absorbs it. It becomes a correctness risk only
+when `n_starts` is small or the good basin is rare — which is exactly the
+pixelized-mesh regime the counter is meant to observe.
+
+## Other decisions
 
 - Keep the buckets disjoint: a lane already counted as value-NaN or gradient-NaN
-  must not also count as frozen.
-- Define "exactly zero" — all coordinates versus any coordinate, and exact `== 0`
-  versus a threshold. An exact test is the honest default for a `lax.min`
-  plateau, but the realistic case is a partially frozen lane (ellipticity dead,
-  other coordinates live), which is the more useful signal.
+  must not also count as escaped.
 - Do not force a per-step device sync if it costs measurable run time. The
   existing NaN accounting measured 0.0004% of step time; stay in that class.
 

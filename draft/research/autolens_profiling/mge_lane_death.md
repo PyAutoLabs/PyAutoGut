@@ -1,222 +1,372 @@
-# MGE-cell lane death: is the parametric MGE likelihood only measure-zero singular?
+# Find what kills MGE multi-start lanes — it is not the ell_comps plateau
 
 Type: research
 Target: autolens_profiling
 Repos:
 - autolens_profiling
-- PyAutoFit
-Difficulty: large
+Difficulty: medium
 Autonomy: supervised
-Priority: normal
+Priority: high
 Status: formalised
 
-## Phasing (one prompt = one task = one PR)
+# Find what kills MGE multi-start lanes — it is not the ell_comps plateau
 
-Only **step 1 is issued from this prompt** — reproduce the rate at production
-budget on GPU across seeds, with the control, and write up the number. That is
-one task and one autolens_profiling PR.
+@autolens_profiling
 
-Steps 2 and 3 are gated on step 1's result and are spun off as their own prompts
-when it lands: if the rate comes back near zero, step 2 never happens and the
-task closes as "the docstring was right, the reported 62% was a
-reduced-budget/CPU artefact". Do not open all three as one PR.
+The frozen-lane counter shipped (PyAutoFit #1475, PyAutoGalaxy #572) and its
+first run cleared the ell_comps plateau as a suspect for the MGE cell — and
+surfaced a much larger effect nobody has characterised.
 
-## The claim under test
+Real `imaging/mge` cell (production dataset, model and analysis via
+`build_for_cell`; 16 starts x 150 steps, cloud CPU, 352s):
 
-The `resurrect` docstring in
-`@PyAutoFit/autofit/non_linear/search/mle/multi_start_gradient/search.py`
-characterises the parametric MGE-class cell as having only a **measure-zero
-singularity** — lane death should therefore be rare and incidental, not a
-structural property of the likelihood surface.
+| counter | lane-steps | share |
+|---|---:|---:|
+| `n_value_nan_lane_steps` | 1498 | **62.42%** |
+| `n_grad_nan_lane_steps` | 9 | 0.38% |
+| `n_constrained_lane_steps` | 0 | 0.00% |
 
-The claim is verbatim, at `search.py:119` under the `resurrect` parameter:
+The population fell from `alive 16/16` to `alive 2/16`. **Roughly seven of every
+eight starts die, and the best-fit is being found by two survivors.**
 
-> Default ``False`` — the parametric (MGE-class) cell has only the measure-zero
-> singularity, so the ``apply_if_finite`` guard suffices and behaviour/results
-> are unchanged.
+## Why this is worth a task
 
-The human reports that the first run of the **trapped-lane counter** — shipped
-today as PyAutoFit#1475 (`_constrained_lane_count`, merged `004f798`) with its
-PyAutoGalaxy leg #572 (`EllProfile.__model_constraint__`, merged `695b27c`) —
-contradicts this on the `imaging/mge` cell: **~62% of lane-steps died to
-value-NaN, and the population fell to alive 2/16.**
+It contradicts a documented assumption. `AbstractMultiStartGradient`'s
+`resurrect` docstring states the default `resurrect=False` is safe because "the
+parametric (MGE-class) cell has only the measure-zero singularity, so the
+`apply_if_finite` guard suffices". The measurement says otherwise: value-NaN,
+not gradient-NaN, dominates at 62% of lane-steps, and `apply_if_finite` does not
+rescue a value-NaN lane — it only zeroes the step, so the lane stays dead and
+`resurrect=False` never redraws it.
 
-The same run reportedly **cleared the `ell_comps` plateau as a suspect** for
-this cell, which is coherent with what #1475/#572 do: #572 declares the
-`ell_comps` saturation constraint, #1475 counts lanes sitting outside it, and a
-near-zero `constrained N/16` reading on the MGE cell exonerates the plateau. The
-"positive control validating the zero" is the load-bearing part of that — a zero
-reading only means something if the detector is proven able to fire, which is
-exactly the point of #1475's note that a component-wise gradient test *"caught 0
-of 17 genuinely trapped lanes in a JAX reproduction"* while the declared-
-constraint detector caught them.
+If that holds at production budget, the MGE cell is running at a small fraction
+of its nominal start count, and `n_starts` is not buying what it appears to.
 
-So the plateau is cleared and the value-NaN rate is the finding. **The 62% and
-alive 2/16 figures themselves are reported from a local run log and are not in
-any pushed artefact** — see "Provenance gap" below. Reproducing them is step 1
-of this task, not an assumption of it.
+`n_resurrections: 0` in the JSON closes the mechanism: the counter fired 1498
+times and nothing was ever redrawn, which is exactly `resurrect=False` behaving
+as documented. Nothing is broken — the default is simply wrong for this cell.
 
-If the 62% holds at production budget, it is not a measurement curiosity: it
-means the MGE cell's likelihood is undefined over a *set of positive measure*
-along the descent path, every benchmark number produced on that cell was
-produced by a search running on 2 of 16 lanes, and the resurrection policy
-deliberately deferred in #1472 ("decide AFTER the counters show how often frozen
-lanes actually occur") now has its answer.
+## Read 62% as a survival curve, not a hazard rate
 
-## Three counters, not one — keep them straight
+**The percentage is budget-dependent by construction, so it is not a portable
+number and must not be compared across budgets as if it were.** A value-NaN lane
+is frozen by `apply_if_finite` and never redrawn, so it keeps counting a
+value-NaN lane-step on *every* subsequent step. The 1498 is therefore the
+integral under the death curve, not a per-step hazard.
 
-The lane accounting shipped in two waves, and the second is a day old. Anything
-written about "the counter" needs to say which:
+That makes the number invertible, which is worth doing before spending GPU time.
+With 14 of 16 lanes dead at the end and no resurrections, a lane dying at step
+`k` contributes `150 - k`:
 
-| Counter | Failure mode | Shipped as |
-|---|---|---|
-| `n_value_nan_lane_steps` | likelihood **undefined** (today's `resurrect` trigger) | PyAutoFit#1472 → **#1473** (`fbfcece`) |
-| `n_grad_nan_lane_steps` | likelihood defined but **not differentiable** — the frozen zombie lane | same PR |
-| `_constrained_lane_count` | finite **and** differentiable, but **trapped** on a saturating plateau with no restoring force | PyAutoFit **#1475** (`004f798`) + PyAutoGalaxy **#572** (`695b27c`) |
+```
+sum(150 - k_i) = 1498   over 14 lanes
+  =>  sum(k_i) = 14*150 - 1498 = 602
+  =>  mean death step ≈ 43 of 150
+```
 
-All three are disjoint by construction ("one lane, one bucket") and all three are
-**measurement only** — none gates a redraw or changes stepping. The reported 62%
-is in the **first** bucket, which is the one whose resurrection policy already
-exists. That matters for step 3.
+So the deaths are **neither at step 0 nor spread evenly** — they concentrate in
+roughly the first third. That already discriminates between the two hypotheses in
+"When they happen" below: it is not bad initial draws (`_broad_starts` filtered
+those, and they would give mean ≈ 0), it is trajectories walking into a wall
+early in the descent.
 
-## Provenance gap — resolve before or during step 1
+The corollary matters for step planning: hold that same death curve fixed and run
+300 steps instead of 150, and the *same physics* reports **75%**, not 62%. A
+production-budget run that comes back higher than 62% is therefore not
+automatically a worse result — it may be the identical landscape measured over a
+longer window. **Compare the alive-versus-step curve across budgets; use the
+scalar percentage only within a fixed budget.**
 
-The PRs are real and merged; the **write-up and the run artefacts are not
-pushed**.
+## What to establish
 
-- `complete/2026/08/frozen-lane-counter.md` does not exist. PyAutoMind
-  `origin/main` is at `1f7cca8`, which predates both #1475 and #572 (merged
-  2026-08-15 ~15:52 UTC), so no completion record for that wave has been written
-  yet. The nearest existing records are
-  `complete/2026/08/multistart-nan-step-diagnostics.md` (the #1473 wave) and
-  `complete/2026/08/multistart-gradient-resume-fom-sanity-check.md` (resume
-  accumulation, verified on a clean Gaussian fit with synthetic NaN traps — not
-  a production MGE run).
-- No pushed artefact anywhere carries the 62% or the `alive 2/16`.
-  `autolens_profiling` `main` is at `a34d6191` (the #127 merge) with nothing
-  since and no lane-death branch; PyAutoFit has no such branch either. The only
-  MGE NaN artefact in the profiling repo is
-  `results/searches/multi_start_nan_accounting/local_cpu.json`, and that is the
-  **overhead benchmark** — `imaging`/`mge`/`hst`, `n_starts: 16`, `n_steps: 5`,
-  `reps: 3`, `local_cpu`, verdict `"fused accounting costs 4.1us on a 1.027s
-  step"`. It reports no NaN counts and no alive-lane trajectory, and at 5 steps
-  it could not resolve a rate that accumulates along a descent path anyway.
+- **Where the NaNs come from.** Which parameters/regions produce a non-finite
+  likelihood in the MGE cell — the mask edge, a Gaussian `sigma` collapsing, the
+  linear inversion, the `sqrt` at r=0, something else. The hazard index in this
+  repo is the natural place to look first and to record the answer.
+- **When they happen.** Deaths concentrated in the first steps (bad draws that
+  `_broad_starts` should have filtered) mean something different from deaths
+  accumulating throughout (trajectories walking into a wall).
+- **Whether `resurrect=True` recovers the budget** on this cell, and what it
+  costs. The docstring says it is for pixelized sources; this evidence suggests
+  the parametric cell may need it too.
+- **Whether it reproduces at production budget and on GPU**, and across seeds.
+  The measurement above is one seed at reduced budget.
 
-So the figures live in a local run log. **Recover and commit that log (or the
-`search.summary` / `samples_info` / `results/searches/**` JSON behind it) as the
-first act of step 1** — otherwise the reproduction has nothing to be graded
-against, and a disagreement between the GPU run and the remembered number will
-be unresolvable.
+## Boundary
 
-## Step 1 — reproduce at production budget on GPU (do this first)
+Investigation and measurement, in `@autolens_profiling`. Do not change the
+`resurrect` default or any search behaviour as part of this — if the evidence
+supports a change, that is a separate PyAutoFit task with its own benchmark
+impact, since it would shift every existing multi-start result.
 
-The reported 62% is a reduced-budget CPU number. Do not let it generalise
-untested.
+## Provenance
 
-- Run `imaging/mge` at **production** `SEARCHES_N_STARTS` / `SEARCHES_N_STEPS`
-  on GPU, across **at least two seeds**, and record
-  `n_value_nan_lane_steps`, `n_grad_nan_lane_steps`, the `_constrained_lane_count`
-  reading, `n_resurrections`, and the `alive N/16` + `constrained N/16`
-  trajectory for each. Record **all three** counters even though only the first
-  is expected to be large — a step-3 argument that "the plateau is cleared"
-  needs the constrained column present and near zero on the production run, not
-  inherited from the reduced-budget one.
-- Report the counters as **rates** normalised by `n_starts * total_steps` —
-  raw counts are not comparable across budgets (this is the normalisation
-  `search.summary` already applies).
-- Include the reduced-budget CPU configuration as one arm, so the
-  budget-dependence of the rate is measured rather than assumed. If the rate is
-  strongly budget-dependent, that is itself the finding.
-- Positive control: an analysis with a known-zero NaN rate must report zero
-  through the same path, on the same hardware. `_broad_starts` rejects
-  non-finite draws, so lanes always *begin* healthy — a control that only proves
-  the counter can read zero is weak; pair it with a trap **on the descent path**
-  (the `where`/`sqrt` pattern in the `Fitness.call` docstring gives a finite
-  value with a NaN gradient) so the counters are proven to fire on the same run
-  shape.
+Measured 2026-08-15 with the frozen-lane counter; see
+`complete/2026/08/frozen-lane-counter.md` for the full run, the positive control
+that validates the zero, and the environment notes (`jaxnnls` is a required
+extra; the runner writes into `dataset/`).
 
-## Step 2 — locate the deaths on the likelihood surface
+<!-- formalised by the Intake (Conception) Agent on 2026-08-15 from file:/tmp/claude-0/-home-user/ef0adef1-5fcd-5111-9cdf-bcb1014fc23d/scratchpad/nan_death_prompt.md -->
 
-Only if step 1 confirms a materially non-zero rate.
+## Reproducer
 
-- Which parameters are the dying lanes in when the value goes non-finite?
-  The counters are per-step aggregates; getting from a rate to a *cause* needs
-  the lane parameter vectors at the death step.
-- Distinguish the candidate mechanisms: MGE sigma range degeneracy (cf.
-  `complete/2026/08/mge-sigma-min-workspace-sweep.md` and
-  `complete/2026/05/mge-cse-fallback.md`), NNLS solver failure on the JAX path,
-  underflow in the likelihood normalisation, and genuine model-space
-  singularities. These have different fixes and only one of them is
-  "measure-zero".
-- The `ell_comps` plateau is reported as already cleared for this cell by the
-  #1475/#572 constrained counter; confirm that from the production run artefacts
-  rather than inheriting it (cf.
-  `complete/2026/08/circular-ell-comps-image-gradient.md`,
-  `complete/2026/08/resolve-sersic-ell-comps-gradient.md`).
-- **A cleared plateau does not clear the constraint mechanism generally.** #572
-  declares `__model_constraint__` on `EllProfile` only. If a *different*
-  saturating clamp is in play on this cell, the constrained counter reads zero
-  because nothing declared it — not because nothing is trapped. Enumerate which
-  classes in the MGE cell's model declare a constraint before reading a zero as
-  an all-clear.
+Both scripts below are self-contained and were used to produce the numbers in
+this prompt. They live here rather than in `@autolens_profiling` because they
+are throwaway measurement drivers, not part of that repo's script tiers — copy
+them out to run, do not commit them there.
 
-## Step 3 — what the answer changes
+### The measured result (verbatim)
 
-- **The docstring.** If the singularity is not measure-zero, the `resurrect`
-  docstring is wrong and misleads every future reader about which cells are safe.
-- **The `resurrect` default, not the resurrection trigger.** This is the
-  distinction to get right. #1472 deferred whether `resurrect` should *also*
-  trigger on non-finite gradients. But a 62% **value**-NaN rate says nothing
-  about that deferral — value-NaN is already the trigger. What it says is that
-  the MGE cell's `resurrect=False` **default** is wrong: the docstring justifies
-  that default by asserting the cell has only a measure-zero singularity, and if
-  62% holds, the justification is false and the cell has been running with
-  resurrection off through a landscape that needs it. Recommend on the default;
-  leave the gradient-trigger question where #1472 left it.
-- **Every MGE benchmark number to date.** If the population is routinely 2/16,
-  the wsdev #117/#125 comparisons and the sampler benchmark rows are measuring a
-  crippled search. Scope the re-run implications; do not silently invalidate.
+```json
+{
+  "cell": "imaging/mge",
+  "instrument": "hst",
+  "hardware": "cloud_cpu",
+  "n_starts": 16,
+  "n_steps": 150,
+  "batch_size": null,
+  "lane_steps": 2400,
+  "wall_s": 352.21100759506226,
+  "free_parameters": 15,
+  "counters": {
+    "n_value_nan_lane_steps": 1498,
+    "n_grad_nan_lane_steps": 9,
+    "n_constrained_lane_steps": 0,
+    "n_resurrections": 0
+  }
+}```
 
-Deliberately out of scope: changing resurrection behaviour. This prompt is
-research — it produces the evidence and a recommendation. A behaviour change is
-a separate feature/bug prompt so the benchmark comparability argument from #1472
-gets made explicitly rather than by accident.
+### `rerun_cell.py` — runs one production cell at reduced budget
 
-## Environment (human-supplied; cost real time last session)
+Invoke as `SEARCHES_DISABLE_VIZ=1 N_STARTS=16 N_STEPS=150 python rerun_cell.py mge`.
+Environment: Python 3.12+, `pip install jaxnnls`, and install `autolens` with
+`--no-deps` if using editable local `autofit`/`autogalaxy`.
 
-- **Python 3.12+** required (autonerves).
-- **`jaxnnls` is a required extra** for the JAX NNLS solver path — not pulled in
-  by default.
-- Install `autolens` with **`--no-deps`** when running editable local
-  autofit/autogalaxy, or the released wheels clobber them.
-- **`build_for_cell` writes into `dataset/`** — it rewrites the HST FITS, adds
-  `positions.json`, and emits `results/simulators/*`. Not read-only.
-- Cell scripts honour `SEARCHES_N_STARTS`, `SEARCHES_N_STEPS`,
-  `SEARCHES_BATCH_SIZE`, `SEARCHES_DISABLE_VIZ`.
-- `imaging/mge` runs on **CPU in ~6 min at 16x150**. The **pixelized mesh cells
-  do not** — two attempts timed out emitting zero steps. It is **JIT compile,
-  not memory** (`batch_size=1` clears the OOM). Those need the GPU.
-- **Shrinking the source mesh is the wrong cost lever** — the image-plane grid
-  at `mask_radius 3.5` dominates, not the mesh.
-- On A100, set `jax_enable_x64` **explicitly** — it is not inherited under
-  `sbatch`, and float32 would understate the quantity under test (carried
-  forward from the #1472 "Still owed" note).
+The `MESH_SHAPE` / `HILBERT_PIXELS` block is **inert for this cell** — it only
+touches the pixelization knobs, and `mge` has no mesh. The 62% was measured on
+the unmodified production MGE cell; nothing was shrunk. The block is there for
+the pixelized cells, and for those the image-plane grid at `mask_radius 3.5`
+dominates the cost anyway, so shrinking the mesh is the wrong lever there too.
+Leave both unset.
 
-## Prior art to read first
+```python
+"""Re-run one autolens_profiling search cell on CPU at reduced budget, to read
+the new constrained-lane counter.
 
-- `complete/2026/08/multistart-nan-step-diagnostics.md` — the counters, what
-  they mean, the normalisation, and the `_broad_starts` trap.
-- `complete/2026/08/multistart-gradient-resume-fom-sanity-check.md` — descent-path
-  NaN injection technique and the equality-vs-`>=` assertion lesson.
-- `complete/2026/07/pixelized-multistart-prodigy-cpu.md` and the DelaunayNN
-  free-AdaptSplit open question in `active.md` (109 resurrections, NaN death vs
-  over-regularized-floor death) — the same question, different cell.
-- PyAutoFit `004f798` and PyAutoGalaxy `695b27c` themselves — the constrained
-  counter and the `EllProfile` constraint have no completion record yet, so the
-  commit messages are currently the only write-up.
+Uses the repo's own `build_for_cell` so the dataset, model and analysis are
+exactly the production ones. Only the search budget is reduced (n_starts,
+n_steps, batch_size) — that changes how thoroughly the space is explored, not
+the shape of the likelihood surface, which is what the counter reports on.
+"""
 
-<!-- filed by /start_dev on 2026-08-15 from human launch context. PyAutoFit#1475
-(004f798) and PyAutoGalaxy#572 (695b27c) verified merged; the resurrect
-measure-zero claim verified verbatim at search.py:119. The 62% / alive-2/16
-figures are the human's report from a local run log and appear in no pushed
-artefact in PyAutoMind, autolens_profiling or PyAutoFit. -->
+import os, sys, time, json
+from pathlib import Path
+
+ROOT = Path("/workspace/pyautolabs/autolens_profiling")
+sys.path.insert(0, str(ROOT / "scripts" / "misc"))
+sys.path.insert(0, str(ROOT))
+
+# Dataset paths in `_setup.py` are relative to the repo root.
+os.chdir(ROOT)
+
+import numpy as np
+import autofit as af
+
+from searches import _setup
+from searches._setup import build_for_cell
+
+# Optional mesh shrink. The production fiducial is a (39, 39) = 1521-pixel mesh
+# with 1500 Hilbert pixels, whose JIT compile alone exceeds an hour on CPU. A
+# shrunken mesh is NOT the production cell — the landscape differs — but it
+# keeps the same clamp, the same unbounded stepping, and the same mesh-shaped
+# likelihood, so it can still say whether lanes reach the plateau at all.
+MESH = os.environ.get("MESH_SHAPE")
+HILBERT = os.environ.get("HILBERT_PIXELS")
+if MESH:
+    n = int(MESH)
+    _setup._PIXELIZATION_MESH_SHAPE = (n, n)
+    print(f"  [shrunk] pixelization mesh {(n, n)} (production is (39, 39))")
+if HILBERT:
+    _setup._HILBERT_PIXELS = int(HILBERT)
+    print(f"  [shrunk] hilbert pixels {HILBERT} (production is 1500)")
+
+MODEL_TYPE = sys.argv[1] if len(sys.argv) > 1 else "mge"
+N_STARTS = int(os.environ.get("N_STARTS", "16"))
+N_STEPS = int(os.environ.get("N_STEPS", "150"))
+BATCH = os.environ.get("BATCH_SIZE")
+INSTRUMENT = os.environ.get("INSTRUMENT", "hst")
+
+print(f"=== cell: imaging/{MODEL_TYPE} [{INSTRUMENT}] "
+      f"starts={N_STARTS} steps={N_STEPS} batch={BATCH or 'all'} ===")
+
+t0 = time.time()
+dataset, model, analysis = build_for_cell(
+    dataset_class="imaging",
+    model_type=MODEL_TYPE,
+    instrument=INSTRUMENT,
+    use_jax=True,
+    use_mixed_precision=False,
+)
+print(f"  build: {time.time() - t0:.1f}s   free parameters: {model.total_free_parameters}")
+
+constrained = model.constrained_model_tuples()
+print(f"  components declaring a model constraint: {len(constrained)}")
+for path, sub in constrained[:8]:
+    print(f"    {'.'.join(p for p in path if p) or '<root>'} -> {sub.cls.__name__}")
+
+kwargs = dict(
+    name=f"rerun_{MODEL_TYPE}",
+    n_starts=N_STARTS,
+    n_steps=N_STEPS,
+    iterations_per_log=25,
+    convergence=af.MultiStartGradientConvergence(check_for_convergence=False),
+)
+if BATCH:
+    kwargs["batch_size"] = int(BATCH)
+
+search = af.MultiStartProdigy(**kwargs)
+
+t0 = time.time()
+result = search.fit(model=model, analysis=analysis)
+wall = time.time() - t0
+
+primary = result[0] if isinstance(result, list) else result
+si = primary.search_internal
+if not isinstance(si, dict):
+    si = getattr(si, "__dict__", {}) or {}
+
+counters = {
+    k: si.get(k)
+    for k in (
+        "n_value_nan_lane_steps",
+        "n_grad_nan_lane_steps",
+        "n_constrained_lane_steps",
+        "n_resurrections",
+    )
+}
+lane_steps = N_STARTS * N_STEPS
+
+print(f"\n=== imaging/{MODEL_TYPE} — {wall:.1f}s wall, {lane_steps} lane-steps ===")
+for k, v in counters.items():
+    pct = f"({100.0 * v / lane_steps:.2f}% of lane-steps)" if isinstance(v, int) and lane_steps else ""
+    print(f"  {k:<28} {v}  {pct}")
+
+out = {
+    "cell": f"imaging/{MODEL_TYPE}",
+    "instrument": INSTRUMENT,
+    "hardware": "cloud_cpu",
+    "n_starts": N_STARTS,
+    "n_steps": N_STEPS,
+    "batch_size": int(BATCH) if BATCH else None,
+    "lane_steps": lane_steps,
+    "wall_s": wall,
+    "free_parameters": model.total_free_parameters,
+    "counters": counters,
+}
+dest = Path(f"/tmp/claude-0/-home-user/ef0adef1-5fcd-5111-9cdf-bcb1014fc23d/scratchpad/rerun_{MODEL_TYPE}.json")
+dest.write_text(json.dumps(out, indent=2))
+print(f"\nwrote {dest}")
+```
+
+### `validate_zero.py` — the positive control that makes the zero meaningful
+
+Proves the counter was watching that exact model and would have fired. Note it
+probes with `jnp` arrays: concrete Python floats trip `validate_ell_comps` and
+raise before the constraint is ever reached.
+
+What it covers, precisely: constraint **discovery** on the production model,
+**evaluation** (zero inside / positive outside), and the **predicate**. All four
+checks call those pieces directly with hand-built arrays, so none of them
+exercises the search loop that actually accumulates the counter. The thing that
+closes that last gap is in the result JSON rather than in this script:
+`n_value_nan_lane_steps` and `n_constrained_lane_steps` come back as integer `0`
+and `1498`, not `null` — and `rerun_cell.py` reads them with `si.get(k)`, which
+would have given `null` had `_fit` never written the key. So the zero is a
+measured zero, not an absent one. **Keep that distinction when re-running: a
+`null` in the counters block means the plumbing broke, and it is not the same
+finding as a `0`.**
+
+```python
+"""Positive control: prove the zero from imaging/mge is a real zero.
+
+A count of 0 is only evidence if the counter would have fired had a lane been
+trapped. This builds the SAME production model the mge cell used, then checks:
+
+  1. the constraint is discovered on it at all;
+  2. a vector inside the valid region reports zero violation;
+  3. a vector placed beyond the clamp reports a positive violation;
+  4. the lane-count predicate turns that into a counted lane.
+
+If (1) failed, the zero would mean "nothing was watching", not "nothing happened".
+"""
+
+import os, sys
+from pathlib import Path
+
+ROOT = Path("/workspace/pyautolabs/autolens_profiling")
+sys.path.insert(0, str(ROOT / "scripts" / "misc"))
+sys.path.insert(0, str(ROOT))
+os.chdir(ROOT)
+
+import numpy as np
+import jax.numpy as jnp
+import autofit as af
+from autofit.non_linear.search.mle.multi_start_gradient.search import (
+    AbstractMultiStartGradient,
+)
+from searches._setup import build_for_cell
+
+dataset, model, analysis = build_for_cell(
+    dataset_class="imaging",
+    model_type="mge",
+    instrument="hst",
+    use_jax=True,
+    use_mixed_precision=False,
+)
+
+# --- 1. discovery on the real production model
+constrained = model.constrained_model_tuples()
+print(f"1. constrained components discovered: {len(constrained)}")
+for path, sub in constrained:
+    print(f"     {'.'.join(p for p in path if p) or '<root>'} -> {sub.cls.__name__}")
+assert constrained, "NOTHING WAS WATCHING — the zero would be meaningless"
+
+# JAX arrays, not Python floats: concrete scalars trip the component's own
+# `validate_ell_comps` guard before the constraint is ever reached (exactly as
+# the method's docstring warns). The real search path is traced, where that
+# guard returns early — jnp arrays reproduce that.
+vector = [jnp.asarray(float(v)) for v in model.physical_values_from_prior_medians]
+
+# --- 2. valid region -> zero
+inside = float(model.model_constraint_from_vector(vector, xp=jnp))
+print(f"\n2. violation at prior medians: {inside}")
+
+# --- 3. beyond the clamp -> positive.
+# Brute-force which parameters drive the constraint rather than guessing names:
+# push each one past the clamp in turn and see which move the violation.
+responders = []
+for i in range(len(vector)):
+    probe = list(vector)
+    probe[i] = jnp.asarray(3.0)
+    v = float(model.model_constraint_from_vector(probe, xp=jnp))
+    if v > 0.0:
+        responders.append((i, v))
+
+print(f"3. parameters that drive the constraint when pushed to 3.0: "
+      f"{len(responders)} of {len(vector)}")
+for i, v in responders[:6]:
+    print(f"     index {i:>3} -> violation {v:.4f}")
+outside = responders[0][1] if responders else 0.0
+
+# --- 4. the predicate counts it
+counted = AbstractMultiStartGradient._constrained_lane_count(
+    alive=np.array([True, True]),
+    grad_finite=np.array([True, True]),
+    constraint_violation=np.array([inside, outside]),
+)
+print(f"4. lanes counted from [valid, trapped]: {counted}")
+
+ok = bool(constrained) and inside == 0.0 and outside > 0.0 and counted == 1
+print(f"\nVERDICT: the mge zero is {'a REAL zero' if ok else 'NOT TRUSTWORTHY'}")
+sys.exit(0 if ok else 1)
+```

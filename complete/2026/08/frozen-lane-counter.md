@@ -411,3 +411,48 @@ The counter shipped: PyAutoFit PR #1475 (branch
 1745 tests pass, +15 new. PyAutoGalaxy declares no constraint yet, so the
 counter reads zero on real lens models until `EllProfile` opts in — a ~4-line
 method at the site that already calls `validate_ell_comps`.
+
+## Follow-up: first rerun with the counter (2026-08-15, cloud CPU)
+
+Half the original question is now answered, and the other half is bounded.
+
+**`imaging/mge` — zero constrained lane-steps.** Run through the repo's own
+`build_for_cell` (real HST dataset, real 15-parameter model, real analysis;
+only the search budget reduced), 16 starts x 150 steps, 352s on 4 CPU cores:
+
+| counter | lane-steps | share |
+|---|---:|---:|
+| `n_value_nan_lane_steps` | 1498 | 62.42% |
+| `n_grad_nan_lane_steps` | 9 | 0.38% |
+| `n_constrained_lane_steps` | **0** | **0.00%** |
+
+So for the MGE cell the flat-gradient region is **not** what hurts it. Read the
+first row alongside the third, though: the population fell to `alive 2/16` and
+NaN death dominates, so lanes are dying by a different mechanism before they
+could reach the plateau. The zero is real but partly "they never got the
+chance". Reduced budget, one seed.
+
+**The pixelized mesh cells cannot run on CPU — compile, not memory.** Two
+attempts, both killed by timeout having emitted **zero steps**:
+
+- production mesh (39x39, 1500 Hilbert), `batch_size=1` — 58 min, no step 1;
+- shrunk mesh (12x12), `batch_size=1` — 40 min, no step 1.
+
+Memory is solvable (`batch_size=1` clears the 18.5 GB OOM); the JIT compile is
+not. These need the GPU, which matches the search's own docstring on compile
+cost. The mesh reruns therefore remain the open tail.
+
+**Shrinking the source mesh is the wrong lever.** Going 39x39 -> 12x12 barely
+moved the allocation (an unbatched 8-start draw still asked for 67 GB). The cost
+is dominated by the image-plane grid and mapping matrices at `mask_radius` 3.5,
+not by the source mesh — worth knowing before anyone tries to make these cells
+cheap by shrinking the mesh.
+
+**Trap: the runner writes to `dataset/`.** Building the imaging cell rewrote
+`dataset/imaging/hst/*.fits` + `tracer.json`, added `positions.json`, and
+emitted `results/simulators/imaging_hst_summary_*`. Harmless in a throwaway
+clone, but do not assume the dataset directory is read-only.
+
+**Environment note.** The stack ran on a cloud box with `autolens` installed
+`--no-deps` over editable local `autofit`/`autogalaxy`; `jaxnnls` is a required
+extra for the JAX NNLS solver path and is not pulled in by default.

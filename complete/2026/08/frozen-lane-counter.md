@@ -1,3 +1,146 @@
+- library-prs: https://github.com/PyAutoLabs/PyAutoFit/pull/1475, https://github.com/PyAutoLabs/PyAutoGalaxy/pull/572
+- merge-commits: PyAutoFit `004f798a89e621ab7320b46fe0494201720260fd`; PyAutoGalaxy `695b27c545fa1328a34366d56e579b1bbc55f95e`
+- issue: none — filed straight from investigation via `/intake`, never issued
+- summary: Added a third disjoint lane counter to the multi-start gradient search
+  for lanes that are finite *and* differentiable but sit on a saturating plateau
+  with no gradient along the saturated direction, so they can never leave. Both
+  existing counters are blind to them and the flat figure of merit reads as
+  convergence. Detection reads a new class-declared `__model_constraint__`
+  protocol; `EllProfile` declares the `ell_comps` saturation region, reaching
+  every elliptical light and mass profile through the one site where `ell_comps`
+  is assigned.
+- validation: PyAutoFit 1745 passed +15 new, CI green on 3.12/3.13/docs;
+  PyAutoGalaxy 1101 passed 1 skipped +12 new, CI green on 3.12/3.13/docs. Five
+  PyAutoFit failures are pre-existing, verified identical on a stashed clean tree
+  (missing `astropy`; a nautilus pool test).
+- release: not performed; both merged PRs remain in the pending-release queue.
+
+## The finding that shaped the design
+
+A component-wise zero-gradient test — the obvious detector, and the one this
+task was originally filed to build — **does not work**, and a JAX reproduction
+proved it before any code was written. The clamp kills only the *radial*
+derivative; the angle still comes from an unclamped `arctan2`, so in general
+position both `ell_comps` components carry a large non-zero gradient while their
+radial projection is zero only to floating-point residue. Scored against 17
+genuinely trapped lanes:
+
+| candidate detector | caught |
+|---|---:|
+| gradient component exactly zero | 0/17 |
+| all components exactly zero | 0/17 |
+| radial derivative exactly zero | 6/17 |
+| per-parameter prior-limit escape | 17/17 |
+| declared model constraint | 17/17 + corner region |
+
+Prior-limit escape scores well only because Prodigy overshoots grossly (trapped
+magnitudes ran 1.62 to 6.78). It provably cannot see the corner region — both
+components inside `(-1, 1)` with magnitude above 1, the whole `4 - pi` area
+between the unit disc and the unit square.
+
+## Why the exception could not be reused
+
+`validate_ell_comps` already owns the geometry but signals by raising, which
+needs a concrete boolean. A `raise` on a traced condition gives
+`TracerBoolConversionError`, which is why `validate.py:153-154` returns early for
+non-concrete scalars — that escape hatch is load-bearing, not an oversight.
+`jax.experimental.checkify` does survive `vmap` + `value_and_grad` with finite
+values and gradients, but collapses a batch to one abort-shaped error, so it
+cannot serve a per-lane counter that must let surviving lanes finish. The
+predicate returned as a traced value gives 32 independent verdicts with no
+exception machinery.
+
+## Two thresholds, and drift that already existed
+
+The clamp saturates at `0.999` (`convert.py`); the guard rejects at `1.0`
+(`validate.py`). They answer different questions — where the *gradient* dies
+versus where the *geometry* stops meaning anything — and the annulus between
+them is reachable: at magnitude 0.9995 the radial derivative is already exactly
+zero while `validate_ell_comps` still calls the point valid. The constraint is
+therefore keyed to the clamp, not the guard.
+
+The clamp was a bare literal at **three** sites — `convert.py`'s JAX and NumPy
+branches and the Sersic Cartesian eccentric-radius path from PyAutoGalaxy#571 —
+with the guard's `1.0` in a fourth file and nothing relating them.
+`ELL_COMPS_MAGNITUDE_CLAMP` now states it once. Value unchanged at every site.
+
+## Architecture
+
+The protocol is **assertions with two changes**: declared on the class rather
+than attached per model instance, and evaluated as a traced non-negative measure
+rather than raised. It attaches through `Model.__init__`, which is already a
+class-introspection site (`gather_namespaces`, `get_type_hints`, per-argument
+prior resolution) — not through `__default_fields__`, which is a narrow
+`ConfigException` escape hatch with two usages and is *not* a constraint
+registry. No user-facing composition call changes.
+
+Nothing flows *up* through the likelihood: the constraint is a pure function of
+the parameter vector, evaluated beside `fitness.call`, which is untouched. It
+rides the fused `value_and_grad` as a fourth output on a device→host sync that
+already happens. Cost is a flat +20 HLO lines at every scale tested (grid
+31→256, starts 32→128) — fixed, not proportional to likelihood cost.
+
+## Evidence the counter fires
+
+End to end on a real `ag.mp.Isothermal` under `af.MultiStartProdigy`, the
+constraint arriving purely through inheritance:
+
+```
+prodigy step 300/300 | best log_post -431.7808 | alive 22/32 | constrained 6/32
+n_value_nan_lane_steps      2344
+n_grad_nan_lane_steps          0
+n_constrained_lane_steps    1057
+best lane einstein_radius = 1.5968   (truth 1.6)
+```
+
+Severity is honest: the trap wastes start budget rather than corrupting results
+— surviving lanes still recovered the truth. It becomes a correctness risk only
+where `n_starts` is small or the good basin is rare, which is the pixelized-mesh
+regime.
+
+## Traps
+
+- **The original question is still unanswered.** Whether the *real* Prodigy mesh
+  or MGE runs entered the region cannot be determined retrospectively:
+  `autolens_profiling` stores summary records with no per-start traces, and the
+  Prodigy mesh cells (`scripts/imaging/searches/multi_start_prodigy/`) were never
+  persisted to `results/searches/multi_start_prodigy/` at all, which holds only
+  `point_source/` and `cluster/`. Re-running those cells with this counter is the
+  follow-up that answers it.
+- **Spherical profiles inherit the constraint.** `IsothermalSph` subclasses
+  `Isothermal`, so it carries the declaration with `ell_comps` pinned at `(0, 0)`
+  — always satisfied, a few wasted ops. A test asserting the opposite failed and
+  was corrected; the real behaviour is now pinned.
+- **A grid with a pixel at the exact centre masks this hazard entirely.** The
+  first reproduction returned NaN gradients everywhere from `sqrt(0)` — the
+  *separate* r=0 non-finite-gradient hazard — hiding the plateau under
+  investigation. Use an off-centre grid, as the hazard scans do.
+- **`black` is not enforced on the PyAutoFit files touched.** It wants to
+  reformat all three at `main` too, so running it would bury the change in
+  unrelated churn. Left alone deliberately.
+
+## What the penalty term inherits
+
+The counter reads only `violation > 0.0`, a sign test, so it is scale-free and
+carries no lambda. That leaves two properties of the measure untested by anything
+shipped, both landing on the penalty task:
+
+- **Units.** The measure is in the constraint's own units (ellipticity
+  magnitude); the figure of merit is in log-likelihood. That mismatch is what a
+  lambda has to absorb, and why a constant cannot work across cells whose scales
+  differ by orders of magnitude.
+- **The reduction.** `model_constraint_from_vector` combines components with
+  `maximum` — correct for counting, wrong for a penalty, where two constraints in
+  different units would let whichever is numerically larger silently dominate.
+  Per-constraint lambdas or normalised measures, not one max.
+
+Also unresolved for the penalty: it must be moved *inside* the differentiated
+call (today the violation is computed after `value_and_grad`, so it has no
+gradient effect), and kept out of the reported likelihood or made invertible in
+`log_likelihood_from`.
+
+## Original prompt
+
 # Count frozen lanes in the multi-start gradient search
 
 Type: feature

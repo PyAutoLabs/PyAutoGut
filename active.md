@@ -66,7 +66,11 @@
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1472
 - prompt: active/multistart_gradient_nan_step_diagnostics.md
 - session: claude 2026-08-14 (start_dev; feature agent -> library workflow)
-- status: library-dev — worktree created, ready for edits
+- status: library-shipped, awaiting-merge — PRs open, smoke clean (3 autolens_test failures reproduced identically on main)
+- library-pr: https://github.com/PyAutoLabs/PyAutoFit/pull/1473
+- profiling-pr: https://github.com/PyAutoLabs/autolens_profiling/pull/127 (merge AFTER the library PR)
+- heart-ack (2026-08-14): shipped on YELLOW score 70, red_reasons []. Acknowledged reasons: "workspace validation not passing (45 failed, cloud#31356506626 ...)" and "manifest drift: tenant firewall (organ code) — 9 mismatch(es) vs PyAutoMind/repos.yaml". Both pre-existing and unrelated; the branch was never pushed when that cloud run executed.
+- spun-off bugs: draft/bug/autofit/multistart_gradient_resume_fom_sanity_check.md (blocks end-to-end resume verification) · draft/bug/workspaces/jax_likelihood_pins_stale_by_1e4.md
 - classification: library (PyAutoFit, primary) + profiling artifact (autolens_profiling)
 - plan: fused-in-jit gradient-finiteness reduction (variant B). CPU microbenchmark showed the eager-outside-the-jit variant is the WORST of three (+3.3% vs a +1.5% noise floor on a 1.9ms/step objective); fused measured +0.05%, below noise. CPU understates the host-pull variant — on CPU device→host is a same-address-space memcpy — so re-run under the GPU profile before merging.
 - worktree: ~/Code/PyAutoLabs-wt/multistart-nan-step-diagnostics

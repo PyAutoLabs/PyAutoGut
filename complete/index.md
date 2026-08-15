@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1007 records across 7 buckets.
+1009 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -111,6 +111,8 @@ _(curate hard-won records here — survives regeneration.)_
 - [reconcile-upstream-repo-mode](2026/08/reconcile-upstream-repo-mode.md)
 - [registry-integrity-check](2026/08/registry-integrity-check.md)
 - [regularization-jax-gradient-gaps](2026/08/regularization-jax-gradient-gaps.md)
+- [release-drive-2026-08-03](2026/08/release-drive-2026-08-03.md)
+- [release-drive-2026-08-07](2026/08/release-drive-2026-08-07.md)
 - [release-validation-tri-state](2026/08/release-validation-tri-state.md)
 - [resolve-border-relocator-hazard](2026/08/resolve-border-relocator-hazard.md) — Reconciled the likelihood hazard instrument after the border-relocator source fix. The resolved backend-diverg…
 - [resolve-curvature-floor-doc-drift](2026/08/resolve-curvature-floor-doc-drift.md) — Reconciled the curvature-floor documentation finding after PyAutoArray#444. The detector now requires both run…

@@ -238,3 +238,33 @@ complete detector, shared with the later penalty term) or keep it PyAutoFit-only
 (prior-limit escape, misses the corner region). Widening changes the header:
 `Repos:` gains PyAutoGalaxy and difficulty rises from `medium`. Decide before
 issuing, not during.
+
+## What the penalty inherits (shipped counter is unaffected)
+
+The counter uses only `violation > 0.0` — a sign test, so it is scale-free and
+no lambda exists anywhere in it. Two properties of the shipped measure are
+therefore **untested by anything shipped**, because only its sign is ever read,
+and both land on the penalty task:
+
+- **Units.** `max(|ell_comps| - 0.999, 0)` is in units of ellipticity magnitude;
+  the figure of merit is in log-likelihood. That mismatch is exactly what a
+  lambda has to absorb, and it is why a single constant cannot work across cells
+  whose likelihood scales differ by orders of magnitude (point-source ~10s,
+  pixelized ~30,000s).
+- **The reduction.** `model_constraint_from_vector` combines components with
+  `xp.maximum`. Correct for counting — any violation makes the lane constrained
+  — but wrong for a penalty: two constraints in different units (ellipticity
+  magnitude vs a radius, say) would be reduced by `max`, so whichever is
+  numerically larger silently dominates. A penalty likely wants per-constraint
+  lambdas, or measures normalised to a common scale, rather than one max.
+
+Neither is a defect in the counter. Both are decisions to make before the
+measure is multiplied into the figure of merit.
+
+## Status
+
+The counter shipped: PyAutoFit PR #1475 (branch
+`claude/jax-sampling-flat-gradients-ptmqnl`), CI green on 3.12, 3.13 and docs.
+1745 tests pass, +15 new. PyAutoGalaxy declares no constraint yet, so the
+counter reads zero on real lens models until `EllProfile` opts in — a ~4-line
+method at the site that already calls `validate_ell_comps`.

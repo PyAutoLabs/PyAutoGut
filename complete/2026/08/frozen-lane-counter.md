@@ -456,3 +456,30 @@ clone, but do not assume the dataset directory is read-only.
 **Environment note.** The stack ran on a cloud box with `autolens` installed
 `--no-deps` over editable local `autofit`/`autogalaxy`; `jaxnnls` is a required
 extra for the JAX NNLS solver path and is not pulled in by default.
+
+## The zero was validated, not assumed
+
+A count of zero is only evidence if the counter would have fired. Positive
+control against the **same production mge model**:
+
+1. **44 constrained components discovered** on it (MGE `Basis` Gaussians, the
+   `Isothermal` mass, `ExternalShear`) — something was watching.
+2. Violation at prior medians: **0.0**.
+3. **6 of 15** free parameters drive the constraint when pushed past the clamp
+   (the three `ell_comps` pairs), each reporting violation 2.001.
+4. The lane predicate turns that into **1 counted lane**.
+
+So `n_constrained_lane_steps = 0` on the mge cell means *nothing entered the
+plateau*, not *nothing was watching*.
+
+Two inheritance cases confirmed benign, both discovered but unable to violate
+because their `ell_comps` are pinned at `(0, 0)`: spherical profiles (they
+subclass their elliptical counterpart) and `ExternalShear` (a subclass of
+`EllProfile` whose free parameters are `gamma_1`/`gamma_2`). Shear magnitude is
+**not** constrained by this rule, which is correct — the unit-disc bound is
+about the axis ratio, not shear.
+
+**Trap worth repeating:** probing the constraint with concrete Python floats
+raises `ModelParameterException` from the component's own `validate_ell_comps`
+before the constraint is ever evaluated. That is the documented NumPy-path
+behaviour, not a fault. Reproduce the traced path with `jnp` arrays.

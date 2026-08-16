@@ -56,9 +56,8 @@ for _p in (str(_ROOT), str(_ROOT / "scripts" / "misc")):
     if _p not in sys.path:
         sys.path.insert(0, _p)
 
-import numpy as np  # noqa: E402
-
 import autofit as af  # noqa: E402
+import numpy as np  # noqa: E402
 from autofit.non_linear.paths.directory import DirectoryPaths  # noqa: E402
 from searches._setup import build_for_cell  # noqa: E402
 
@@ -186,7 +185,7 @@ def run_arm(
         lower, upper = af.ClipperPriorBox().bounds_from_model(model=model)
         p = np.asarray(params)
         atol = 1e-9 + 1e-6 * np.abs(np.where(np.isfinite(upper), upper, 0.0))
-        pinned = (np.isclose(p, lower, atol=atol) | np.isclose(p, upper, atol=atol))
+        pinned = np.isclose(p, lower, atol=atol) | np.isclose(p, upper, atol=atol)
         row["lanes_pinned"] = int(np.count_nonzero(pinned.any(axis=-1)))
         row["pinned_coords"] = int(np.count_nonzero(pinned))
 

@@ -268,8 +268,7 @@ def multi_start_clipper() -> str:
     label = os.environ.get("SEARCHES_CLIPPER", "none").strip().lower()
     if label not in _MULTI_START_CLIPPERS:
         raise ValueError(
-            f"SEARCHES_CLIPPER={label!r} is not one of "
-            f"{sorted(_MULTI_START_CLIPPERS)}"
+            f"SEARCHES_CLIPPER={label!r} is not one of {sorted(_MULTI_START_CLIPPERS)}"
         )
     return label
 

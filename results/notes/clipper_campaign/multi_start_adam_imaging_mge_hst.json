@@ -1,0 +1,45 @@
+{
+  "cell": "multi_start_adam_imaging_mge_hst",
+  "rows": [
+    {
+      "arm": "none",
+      "seed": 0,
+      "n_starts": 16,
+      "n_steps": 150,
+      "total_steps": 150,
+      "steps_complete": true,
+      "max_log_likelihood": -15529.587986751998,
+      "best_fom": 31059.623793641636,
+      "stop_reason": "max_steps",
+      "n_value_nan_lane_steps": 2268,
+      "n_grad_nan_lane_steps": 0,
+      "n_constrained_lane_steps": 0,
+      "n_clipped_lane_steps": 0,
+      "n_resurrections": 0,
+      "wall_s": 286.54,
+      "truth_bar": 31786.782462488976,
+      "gap_to_truth": 47316.370449240974
+    },
+    {
+      "arm": "prior_box",
+      "seed": 0,
+      "n_starts": 16,
+      "n_steps": 150,
+      "total_steps": 150,
+      "steps_complete": true,
+      "max_log_likelihood": -15529.587986751998,
+      "best_fom": 31059.623793641636,
+      "stop_reason": "max_steps",
+      "n_value_nan_lane_steps": 47,
+      "n_grad_nan_lane_steps": 9,
+      "n_constrained_lane_steps": 0,
+      "n_clipped_lane_steps": 1920,
+      "n_resurrections": 0,
+      "wall_s": 249.63,
+      "truth_bar": 31786.782462488976,
+      "gap_to_truth": 47316.370449240974,
+      "lanes_pinned": 11,
+      "pinned_coords": 31
+    }
+  ]
+}

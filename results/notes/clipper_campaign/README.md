@@ -4,8 +4,16 @@ Phase 2 of the prior-support work. Phase 1 (`ClipperPriorBox`) shipped in
 **PyAutoFit#1477** (`1f4b66a`); this measures whether it is worth flipping the
 default in phase 3.
 
-**Status: FIRST ARM PAIR RUN. Two of the four pre-registered falsification
-conditions fired. Do not write phase 3 on this evidence.**
+**Status: FIRST ARM PAIR RUN, on CPU, at a budget where neither arm converges.
+Two of the four pre-registered falsification conditions fired. This is a starting
+point for the campaign, NOT a verdict on the fix, and phase 3 must not be written
+on it.**
+
+The campaign is being re-run from scratch on a laptop/GPU. Treat everything here
+as prior context to check against, not as results to build on: the machinery
+(`clipper_campaign.py`, the `SEARCHES_CLIPPER` knob) is reusable, the numbers are
+a CPU/float32 single-seed data point, and the "What changed" section below lists
+what has already gone stale.
 
 ## The result
 
@@ -81,6 +89,29 @@ prior deaths exposed `ell_comps` trapping that had been masked.
    reset.
 4. **The other cells.** Pixelized meshes (GPU), `point_source`, and the unbounded
    negative control.
+
+## What changed after these numbers were taken
+
+These results predate three PyAutoFit merges from the same day. **Read this before
+reusing the machinery**, because part of the driver's justification is now void:
+
+| PR | merge | effect here |
+|---|---|---|
+| #1478 | `bbceff6` | `search.summary` now reports `Clipper`, `Clipped Lane-Steps`, `Clipped Lane-Step Rate` and `Constrained Lane-Steps`. **Prefer reading the clip count from there** rather than from this driver's capture. |
+| #1479 | `b6e89cd` | the `float32` `save_json` crash is **fixed**, so counters no longer have to be captured out-of-band to survive the end of a successful run. |
+| #1480 | `5c9244b` | crashed-run-poisons-resume is **fixed**. Its real symptom was a hard `JSONDecodeError` on every rerun of the same name — not the "zero-step no-op that reads as a clean result" this note's mitigation was written against. |
+
+What still holds, and is why `clipper_campaign.py` is not simply deletable:
+
+- the **raw** `search_internal` dict is still deleted on successful completion, so
+  anything not surfaced through `samples_info` must be captured as written;
+- `save_search_internal` must be patched at **class** level — `fit()` rebuilds
+  `search.paths`, so an instance-level hook is silently discarded;
+- the arm-collision hazard is unchanged (see the bottom of this note).
+
+A useful consequence of #1478: **a `ClipperPriorBox` arm reporting zero clips has
+not exercised the clipper.** That is a broken arm, not a null result, and it is now
+visible directly in `search.summary`.
 
 ## Reproducing
 

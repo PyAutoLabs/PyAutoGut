@@ -10,8 +10,12 @@ Why this exists rather than the ordinary `searches/` runner:
 - The lane counters (`n_value_nan_lane_steps`, `n_grad_nan_lane_steps`,
   `n_constrained_lane_steps`, and the new `n_clipped_lane_steps`) are written
   into `search_internal`, which the ordinary results JSON does not carry.
-- `search_internal` is **deleted on successful completion**, so it cannot be read
-  back after the fit. It has to be captured as it is written.
+  **Partly superseded by PyAutoFit#1478**, which surfaces the clip count and the
+  constrained count in `search.summary` — prefer reading them from there, and
+  treat a `ClipperPriorBox` arm reporting zero clips as a broken arm rather than
+  a null result.
+- `search_internal` is **deleted on successful completion**, so the raw dict
+  cannot be read back after the fit. It has to be captured as it is written.
 - `save_search_internal` must be patched at **class** level: `fit()` rebuilds
   `search.paths`, so an instance-level hook is silently discarded.
 - The `clipper` does **not** enter the search identifier, so two arms differing

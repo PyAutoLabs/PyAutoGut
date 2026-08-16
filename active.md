@@ -1,5 +1,25 @@
 # Active Tasks
 
+## clipper-validation-campaign
+- issue: https://github.com/PyAutoLabs/autolens_profiling/issues/131
+- prompt: active/clipper_validation_campaign.md
+- status: library-dev + workspace-dev — phase 2 of the prior-support work. PyAutoFit changes committed; GPU sweep running 2026-08-16.
+- worktree: ~/Code/PyAutoLabs-wt/clipper-validation-campaign
+- repos:
+  - PyAutoFit: feature/clipper-validation-campaign
+  - autolens_profiling: feature/clipper-validation-campaign (resumed from origin/claude/clipper-validation-campaign-o3jotv)
+- session: cloud (harness + first CPU arm pair) -> claude CLI 2026-08-16 (GPU/fp64 run)
+- absorbs from mge-lane-death: the GPU/float64/multi-seed confirmation of the #128 result, and the hazard-index entry for the prior-exit failure mode. Both share this campaign's arms, so they are discharged here rather than left orphaned on a task whose cause-finding is done.
+- A100s were checked and are NOT available: 8/8 allocated on euclid-ral-gpu-1/2 (`gres/gpu:a100=4` each) by another user's array, longest job 2d11h against a 27-day limit. Running on the laptop RTX 2060 instead. Re-check before assuming HPC for the pixelized cells, which genuinely need more VRAM.
+- LIBRARY WORK (all default-off / bit-identical, so no existing fit changes):
+  - `seed` on `AbstractMultiStartGradient` — the broad-start draw was a hardcoded `default_rng(0)`, so seeding `random`/`numpy` reached only the initializer and EVERY run drew the same starting population. "At least two seeds per arm" was impossible before this. Streams derived via `SeedSequence`, not `seed + stream`, which would make seed 0's resurrection stream identical to seed 1's start stream.
+  - `alive_history` in `search_internal` — living lanes per step. The lane counters are survival INTEGRALS, so the same death curve reads ~60% at 150 steps and ~75% at 300; the curve is the only budget-independent measure and previously existed solely in the progress log.
+  - `reset_momentum_on_clip` — arm 3. Moment fields targeted BY NAME: Prodigy's `params0`/`grad_sum` share the params shape, and zeroing `params0` corrupts its learning-rate estimate rather than resetting momentum.
+- HEADLINE (GPU/fp64, Prodigy, 16 starts x 105 steps, seed 0, single seed so far): clipping moves the answer TOWARD the Nautilus bar. `none` = 31612.848 (gap 173.93, 787 value-NaN, alive fraction 0.53); `prior_box` = 31726.901 (gap 59.88, 0 value-NaN, 700 clips, alive fraction 1.00). The cloud CPU session found the arms IDENTICAL, but ran where neither was within 47,000 nats of the bar — its "clipping is cosmetic" reading is a budget artefact, not a property of the fix.
+- driver trap found and fixed: `--out` was a no-op unless the path sat under the repo's `output/`, so the per-arm clearing deleted an unrelated directory, a stale `.completed` short-circuited `fit()`, and the arm returned a CACHED result in 2.9s with every counter `None`. The step-count assertion caught it; the output root now goes through `conf`.
+- do NOT write the phase-3 prompt until phase 2 has actually run.
+- follow-on (same arms): `draft/research/autolens_profiling/ell_comps_trapping_unmasked.md` needs `n_constrained_lane_steps` from the CLIPPED run and must not re-derive 27.79% from the prior-neutered diagnostic arm.
+
 ## mge-lane-death
 - issue: https://github.com/PyAutoLabs/autolens_profiling/issues/128
 - prompt: active/mge_lane_death.md

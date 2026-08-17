@@ -167,11 +167,11 @@
 - issue: https://github.com/PyAutoLabs/PyAutoMind/issues/198
 - prompt: active/tenant-firewall-drift-aug.md
 - session: remote (phone/cloud) — planned on the laptop 2026-08-17, execution handed off; no local worktree by design.
-- status: pr-open (https://github.com/PyAutoLabs/PyAutoLens/pull/700)
+- status: prs-open — merge order: PyAutoMind#199 → PyAutoBrain#229 + PyAutoHeart#147 → PyAutoMind#200 (gate workflow, stacked on #199; the organ gate steps need #199 on main first). Hands leg deferred behind PyAutoHands#235 (checklist on #198).
 - worktree: none (remote execution; cloud sessions branch in-clone)
 - repos:
-  - PyAutoMind: feature/tenant-firewall-drift-aug (not yet created)
-  - PyAutoBrain: feature/tenant-firewall-drift-aug (not yet created)
-  - PyAutoHeart: feature/tenant-firewall-drift-aug (not yet created)
+  - PyAutoMind: feature/tenant-firewall-drift-aug (https://github.com/PyAutoLabs/PyAutoMind/pull/199) + feature/tenant-firewall-drift-aug-gate (https://github.com/PyAutoLabs/PyAutoMind/pull/200 — split so every PR in the arc merges green; see #198)
+  - PyAutoBrain: feature/tenant-firewall-drift-aug (https://github.com/PyAutoLabs/PyAutoBrain/pull/229)
+  - PyAutoHeart: feature/tenant-firewall-drift-aug (https://github.com/PyAutoLabs/PyAutoHeart/pull/147)
 - hands-unclaimed: the PyAutoHands leg (test_pre_build_staging.py derivation + tests.yml gate) is deliberately NOT a claim bullet — PyAutoHands is claimed by version-stamp-sync-guards (PyAutoHands#235, entry above). Land the Hands leg after #235 merges, or on its own branch with a rebase check; do not touch the version-stamp files.
 - scope: Phase A refactor-first clear of the 9 tenant-firewall mismatches (extract heart/smoke.py table to Heart config, genericise 5 test fixtures, derive Hands test from SPECS, allowlist only 2) + Phase B PR-time firewall gates (--only selector in repos_sync.py; gate steps in Brain/Heart/Hands/Mind CI). Phase C (repos_sync --write stamper) filed separately, not built here. Full detail on #198.

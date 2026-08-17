@@ -28,6 +28,12 @@ SUBJECTS = {
             "imaging_pixelization",
             "Complete 7x7 imaging likelihood with a rectangular source inversion",
         ),
+        SubjectSpec(
+            "likelihood",
+            "prior_support",
+            "Prior support of the MAP objective, where a bounded prior can make a "
+            "finite likelihood non-finite",
+        ),
     )
 }
 

@@ -247,6 +247,39 @@ def multi_start_n_steps(dataset_class: str | None = None, model_type: str | None
     return v if v is not None else _MULTI_START_N_STEPS
 
 
+# Prior-support enforcement arms (PyAutoFit#1477). ``none`` is the library
+# default and is bit-identical to a search built with no ``clipper`` at all;
+# ``prior_box`` projects each step back onto the prior support.
+#
+# Recorded as a STRING in the sampler config, not as the object: the config dict
+# is serialised straight into the results JSON, and a Clipper instance is not
+# JSON-serialisable. ``build_multi_start`` maps the label to the object.
+_MULTI_START_CLIPPERS: dict[str, str] = {
+    "none": "ClipperNone",
+    "prior_box": "ClipperPriorBox",
+}
+
+
+def multi_start_clipper() -> str:
+    """Resolve the clipper arm label, honouring ``SEARCHES_CLIPPER``.
+
+    Defaults to ``none`` so every pre-existing cell keeps its recorded numbers.
+    """
+    label = os.environ.get("SEARCHES_CLIPPER", "none").strip().lower()
+    if label not in _MULTI_START_CLIPPERS:
+        raise ValueError(
+            f"SEARCHES_CLIPPER={label!r} is not one of {sorted(_MULTI_START_CLIPPERS)}"
+        )
+    return label
+
+
+def _clipper_object(label: str):
+    """The ``af`` clipper instance for a resolved arm label."""
+    if label == "none":
+        return af.ClipperNone()
+    return af.ClipperPriorBox()
+
+
 def multi_start_batch_size(
     dataset_class: str | None = None, model_type: str | None = None
 ) -> int | None:
@@ -332,6 +365,10 @@ def multi_start_settings(
         settings["batch_size"] = batch_size
     if sampler not in _PRODIGY_SAMPLERS:
         settings["learning_rate"] = _MULTI_START_LEARNING_RATE
+    # A string label, so the recorded config stays JSON-serialisable; the arm
+    # is always recorded, including the ``none`` default, so a result file can
+    # never be ambiguous about which arm produced it.
+    settings["clipper"] = multi_start_clipper()
     return settings
 
 
@@ -358,12 +395,17 @@ def build_multi_start(
     metadata (the search runs a single-process vmap loop).
     """
     cls = _MULTI_START_CLASSES[sampler]
+    settings = multi_start_settings(sampler, dataset_class, model_type)
+    # Swap the recorded string label for the live object. Done here rather than
+    # in ``multi_start_settings`` so that function stays serialisable — it is
+    # what ``_sampler_config_dict`` writes into the results JSON.
+    settings["clipper"] = _clipper_object(settings["clipper"])
     kwargs: dict = dict(
         name=config_name,
         path_prefix=f"searches/{sampler}/{dataset_class}/{model_type}/{instrument}",
         number_of_cores=1,
         convergence=_convergence(autoconv=sampler in _MULTI_START_AUTOCONV),
-        **multi_start_settings(sampler, dataset_class, model_type),
+        **settings,
     )
     return cls(**kwargs)
 

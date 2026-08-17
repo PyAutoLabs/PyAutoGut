@@ -280,6 +280,37 @@ def _clipper_object(label: str):
     return af.ClipperPriorBox()
 
 
+# Per-parameter step-scaling arms (PyAutoFit#1483). ``none`` is the library
+# default and is bit-identical to a search built with no ``scaler`` at all;
+# ``prior_width`` derives a diagonal preconditioner from the priors.
+#
+# Recorded as a STRING for the same reason as the clipper: the config dict is
+# serialised straight into the results JSON and a Scaler instance is not
+# JSON-serialisable.
+_MULTI_START_SCALERS: dict[str, str] = {
+    "none": "ScalerNone",
+    "prior_width": "ScalerPriorWidth",
+}
+
+
+def multi_start_scaler() -> str:
+    """Resolve the scaler arm label, honouring ``SEARCHES_SCALER``.
+
+    Defaults to ``none`` so every pre-existing cell keeps its recorded numbers.
+    """
+    label = os.environ.get("SEARCHES_SCALER", "none").strip().lower()
+    if label not in _MULTI_START_SCALERS:
+        raise ValueError(f"SEARCHES_SCALER={label!r} is not one of {sorted(_MULTI_START_SCALERS)}")
+    return label
+
+
+def _scaler_object(label: str):
+    """The ``af`` scaler instance for a resolved arm label."""
+    if label == "none":
+        return af.ScalerNone()
+    return af.ScalerPriorWidth()
+
+
 def multi_start_batch_size(
     dataset_class: str | None = None, model_type: str | None = None
 ) -> int | None:
@@ -369,6 +400,7 @@ def multi_start_settings(
     # is always recorded, including the ``none`` default, so a result file can
     # never be ambiguous about which arm produced it.
     settings["clipper"] = multi_start_clipper()
+    settings["scaler"] = multi_start_scaler()
     return settings
 
 
@@ -400,6 +432,7 @@ def build_multi_start(
     # in ``multi_start_settings`` so that function stays serialisable — it is
     # what ``_sampler_config_dict`` writes into the results JSON.
     settings["clipper"] = _clipper_object(settings["clipper"])
+    settings["scaler"] = _scaler_object(settings["scaler"])
     kwargs: dict = dict(
         name=config_name,
         path_prefix=f"searches/{sampler}/{dataset_class}/{model_type}/{instrument}",

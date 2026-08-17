@@ -1,8 +1,31 @@
 # Active Tasks
 
+## inference-programme-ledger
+- issue: https://github.com/PyAutoLabs/autolens_profiling/issues/134
+- status: pr-open (https://github.com/PyAutoLabs/autolens_profiling/pull/135)
+- worktree: ~/Code/PyAutoLabs-wt/inference-programme-ledger
+- repos:
+  - autolens_profiling: feature/inference-programme-ledger
+- prompt: active/inference_programme_ledger.md
+- note: docs-only (results/notes/inference/ PROGRAMME.md + DECISIONS.md + LITERATURE.md).
+  Disjoint from the registered mge-lane-death claim (research/mge-lane-death, never created).
+  This is the canonical copy of the 2026-08-17 human-approved inference programme.
+
+## constant-zeroth-repair
+- issue: https://github.com/PyAutoLabs/PyAutoArray/issues/448
+- status: remote-handoff (prepared 2026-08-17 for a cloud/phone session; NO local worktree claim)
+- worktree: none (remote session clones PyAutoLabs/PyAutoArray and branches itself)
+- repos:
+  - PyAutoArray: feature/constant-zeroth-repair (to be created by the remote session)
+- prompt: active/constant_zeroth_broken_dead_code.md
+- note: Phase 8C of the inference programme (autolens_profiling#134). CPU-only, numpy-only
+  tests — deliberately chosen for a no-GPU remote session. PyAutoArray's other claim
+  (version-stamp-sync-guards) touches only `autoarray/__init__.py` + `files/release.sh`;
+  this task touches `autoarray/inversion/regularization/` — file-disjoint. Merge is human.
+
 ## positions-lh-penalty-accumulation
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/699
-- status: library-dev
+- status: pr-open (https://github.com/PyAutoLabs/PyAutoLens/pull/700)
 - worktree: ~/Code/PyAutoLabs-wt/positions-lh-penalty-accumulation
 - repos:
   - PyAutoLens: feature/positions-lh-penalty-accumulation
@@ -118,7 +141,7 @@
 ## version-stamp-sync-guards
 - issue: https://github.com/PyAutoLabs/PyAutoHands/issues/235
 - session: claude --resume d73342fb-c33f-4028-8741-30cbe0c856a3
-- status: library-dev
+- status: pr-open (https://github.com/PyAutoLabs/PyAutoLens/pull/700)
 - worktree: ~/Code/PyAutoLabs-wt/version-stamp-sync-guards
 - repos:
   - PyAutoNerves: feature/version-stamp-sync-guards
@@ -132,7 +155,7 @@
 - issue: https://github.com/PyAutoLabs/PyAutoMind/issues/198
 - prompt: active/tenant-firewall-drift-aug.md
 - session: remote (phone/cloud) — planned on the laptop 2026-08-17, execution handed off; no local worktree by design.
-- status: library-dev
+- status: pr-open (https://github.com/PyAutoLabs/PyAutoLens/pull/700)
 - worktree: none (remote execution; cloud sessions branch in-clone)
 - repos:
   - PyAutoMind: feature/tenant-firewall-drift-aug (not yet created)

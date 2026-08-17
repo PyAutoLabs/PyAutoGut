@@ -3,7 +3,7 @@
 ## clipper-validation-campaign
 - issue: https://github.com/PyAutoLabs/autolens_profiling/issues/131
 - prompt: active/clipper_validation_campaign.md
-- status: library-dev + workspace-dev — phase 2 of the prior-support work. PyAutoFit changes committed; GPU sweep running 2026-08-16.
+- status: RESULTS IN 2026-08-16, both branches pushed, PRs not yet opened. VERDICT: recommend AGAINST flipping the clipper default, and DROP the momentum-reset arm. Write-up `results/notes/clipper_campaign/RESULTS.md`; final table on issue #131.
 - worktree: ~/Code/PyAutoLabs-wt/clipper-validation-campaign
 - repos:
   - PyAutoFit: feature/clipper-validation-campaign
@@ -17,7 +17,13 @@
   - `reset_momentum_on_clip` — arm 3. Moment fields targeted BY NAME: Prodigy's `params0`/`grad_sum` share the params shape, and zeroing `params0` corrupts its learning-rate estimate rather than resetting momentum.
 - HEADLINE (GPU/fp64, Prodigy, 16 starts x 105 steps, seed 0, single seed so far): clipping moves the answer TOWARD the Nautilus bar. `none` = 31612.848 (gap 173.93, 787 value-NaN, alive fraction 0.53); `prior_box` = 31726.901 (gap 59.88, 0 value-NaN, 700 clips, alive fraction 1.00). The cloud CPU session found the arms IDENTICAL, but ran where neither was within 47,000 nats of the bar — its "clipping is cosmetic" reading is a budget artefact, not a property of the fix.
 - driver trap found and fixed: `--out` was a no-op unless the path sat under the repo's `output/`, so the per-arm clearing deleted an unrelated directory, a stale `.completed` short-circuited `fit()`, and the arm returned a CACHED result in 2.9s with every counter `None`. The step-count assertion caught it; the output root now goes through `conf`.
-- do NOT write the phase-3 prompt until phase 2 has actually run.
+- RESULT: where the search converges all three arms land on 31787.929, identical to 15 significant figures — the winning lane never left the prior box, so clipping never touched it. Where it fails (seed 1) clipping moves 18,605 nats and is still 152,667 short. Falsification #1 fires. The fix DOES do its job (deaths 31655->2, alive 0.34->1.00, no wall cost, -43% on the bad seed) — the lanes it rescues never mattered.
+- ARM 3 (momentum reset) IS A CLEAN NEGATIVE — drop it. Seed 0: same answer, deaths 2->2523, one MORE lane pinned, +39% wall. Seed 1: gives back nearly all of clipping's gain (-120880.6 -> -137783.6). Falsification #2 ("most lanes pinned") did NOT fire: 6/16 and 4/16 vs the float32 CPU run's 11/16 that motivated the arm.
+- ALIVE CURVE CORRECTS #128's MECHANISM: `none` seed0 reads 16,16,6,4,6,6,5 at steps 1/10/50/100/300/1000/3000. The die-off is an early transient (steps 10-50), not a steady bleed, and lanes RETURN — non-finite is a per-step state, not absorbing. The accounting was right, "stays dead for every remaining step" was not.
+- BIGGEST FINDING, larger than anything the campaign scoped: identical settings, two seeds, outcome swings 171,000 nats (seed 0 beats the Nautilus bar, seed 1 never finds the basin). Structurally invisible before this campaign because `_broad_starts` hardcoded `default_rng(0)` — every run drew the same lucky population. Deserves its own task, ahead of phase 3.
+- do NOT write the phase-3 prompt: phase 2 has run and does NOT support it on accuracy grounds. If it proceeds, argue hygiene (removes a silent two-thirds population loss, costs nothing, unmasks the constrained-lane accounting) and note the re-baseline is free because the converged answer is bit-identical.
+- NOT COVERED, do not read the verdict as general: the pixelized cells (need more VRAM than the 6GB laptop card; A100s were fully allocated all session), `point_source`, the negative control (implemented + wired, stopped before producing numbers), and whether clips PERSIST or settle — `n_clipped_lane_steps` is a lifetime total and no per-step clip history exists, so RESULTS.md argues that from pinned-lane counts. Adding `clipped_history` beside `alive_history` + one short arm would settle it.
+- NEXT: open the two PRs (PyAutoFit library first, then autolens_profiling), then the ell_comps follow-on.
 - follow-on (same arms): `draft/research/autolens_profiling/ell_comps_trapping_unmasked.md` needs `n_constrained_lane_steps` from the CLIPPED run and must not re-derive 27.79% from the prior-neutered diagnostic arm.
 
 ## mge-lane-death

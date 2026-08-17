@@ -20,20 +20,6 @@
 - boundary: investigation only. Changing the `resurrect` default is a separate PyAutoFit task — it would shift every existing multi-start benchmark.
 - upstream: PyAutoFit#1475 (`004f798`) + PyAutoGalaxy#572 (`695b27c`) shipped the trapped-lane counter; record in `complete/2026/08/frozen-lane-counter.md`.
 
-## pix-prodigy-gpu-compat
-- issue: https://github.com/PyAutoLabs/autolens_workspace_developer/issues/125
-- prompt: active/pixelized_prodigy_laptop_gpu_phase_1_compatibility.md
-- pr: https://github.com/PyAutoLabs/autolens_workspace_developer/pull/126 (OPEN, mergeable)
-- session: codex (phase 1) -> claude 2026-08-11 evening (n_starts control + phase 2)
-- status: workspace-dev — phase 1 and phase 2 COMPLETE 2026-08-13, all 13 cells landed, PR #126 ready for review
-- results: `searches_minimal/pix_prodigy_laptop_gpu_findings.md` (§1-6). Phase-1 item 2 (16-start claim) CONFIRMED on GPU. Phase 2 done: DelaunayNN starts curve, VRAM ceiling (batch 8 OOMs family-wide), batch-size comparison, free-vs-fixed regularization, revised four-mesh recommendations, plus two corrections to earlier claims.
-- headline: batch size decides whether plain Delaunay finds truth (b2 +30203.3 @ r_E 1.6001 vs b4 +24581.8 @ 1.6314 — the local max was batch-caused). DelaunayNN is batch-INSENSITIVE (0.5 nats apart), matching its continuous Sibson interpolation through triangulation flips. So "batch 4 wins" is a DelaunayNN result that does NOT generalise.
-- corrections-made: (a) "4 starts too few" over-attributed — that cell moved starts AND batch AND steps; at batch 4/300 steps 4 starts does reach truth. (b) KNN needs ~300 steps with fixed reg, not the >=1500 extrapolated from free AdaptSplit.
-- still-open (documented, not blocking): DelaunayNN free-AdaptSplit beyond 300 steps (still climbing at cap, 109 resurrections); whether those lane deaths are NaN or over-regularized-floor needs a DelaunayNN truth-bar scan at high coefficients.
-- worktree: ~/Code/PyAutoLabs-wt/pix-prodigy-gpu-compat
-- repos:
-  - autolens_workspace_developer: feature/pix-prodigy-gpu-compat
-
 ## heart-green-validation-ingest
 - issue: https://github.com/PyAutoLabs/PyAutoGalaxy/issues/567 (open, reopened 2026-08-11T00:22Z)
 - session: none — the Codex session that did the work ran out of credits after merging, before any bookkeeping. Registered 2026-08-11 by a cloud session reconstructing its state from GitHub.

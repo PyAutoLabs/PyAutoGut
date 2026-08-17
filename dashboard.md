@@ -8,10 +8,10 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 9 |
+| [In flight](#in-flight) (`active/`) | 10 |
 | [Parked](#parked) (`parked.md`) | 6 |
 | [Planned](#planned) (`planned.md`) | 7 |
-| [Backlog](#backlog) (`draft/`) | 142 |
+| [Backlog](#backlog) (`draft/`) | 141 |
 
 Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3Aissue+is%3Aopen&type=issues) · [open pull requests](https://github.com/search?q=org%3APyAutoLabs+is%3Apr+is%3Aopen&type=prs)
 
@@ -53,6 +53,7 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 - [JAX-native posterior sampler wave — ranked shortlist from the 2026-07-16](active/jax_native_posterior_sampler_wave.md) — [issue #113](https://github.com/PyAutoLabs/autolens_workspace_developer/issues/113) — PARKED 2026-07-24 — stage (a) POSITIVE: warm-started gradient SMC SAMPLES (acc 0.80->0.17 across tempering, einstein_radius…
 - [Remove standalone matplotlib-inline comments](active/matplotlib_inline_standalones.md)
 - [Find what kills MGE multi-start lanes — it is not](active/mge_lane_death.md) — [issue #128](https://github.com/PyAutoLabs/autolens_profiling/issues/128) — CAUSE FOUND 2026-08-15 (cloud CPU session) — written up on autolens_profiling#128. Remaining: GPU/float64/multi-seed…
+- [PositionsLH penalty accumulation returns 2x the LAST penalty, discarding the](active/positions_lh_penalty_accumulation_bug.md) — [issue #699](https://github.com/PyAutoLabs/PyAutoLens/issues/699) — library-dev
 - [PyAutoReduce validation: slacs1430+4105 ACS reduction vs trusted legacy dataset](active/pyautoreduce_slacs1430_acs_comparison.md)
 - [Research profiling experiment in the autolens_profiling repo](active/research_profiling_experiment_in_the_autolens_pr.md) — [issue #82](https://github.com/PyAutoLabs/autolens_profiling/issues/82)
 - [Tenant-firewall drift: clear the 9 right + gate recurrence (Aug](active/tenant-firewall-drift-aug.md) — [issue #198](https://github.com/PyAutoLabs/PyAutoMind/issues/198) — library-dev
@@ -93,10 +94,10 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**142** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**141** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
-<summary><b>bug</b> — 43</summary>
+<summary><b>bug</b> — 42</summary>
 
 - [Reconstructing a stored sample raises through `ignore_assertions=True`](draft/bug/autofit/to_instance_guard_gap.md) — autofit · small · supervised · high
 - [pre_build stages untracked files, publishing uncommitted human work](draft/bug/pyautohands/pre_build_stages_untracked_wip.md) — pyautohands · small · supervised · high
@@ -140,7 +141,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 - [Priors & Messages cleanup — tracker](draft/bug/priors/z_features.md) — priors · too-large · supervised · normal
 - [`add_notebook_quotes` mistakes a code string literal's closing delimiter for a](draft/bug/hands/notebook_quotes_string_literal_closing_delimiter.md) — hands · small · safe · low
 - [interferometer/start_here.py OOM in nightly release-validation integrate leg](draft/bug/autolens/interferometer_release_leg_oom.md) — autolens
-- [PositionsLH penalty accumulation returns 2x the LAST penalty, discarding the](draft/bug/autolens/positions_lh_penalty_accumulation_bug.md) — autolens
 
 </details>
 
@@ -299,13 +299,12 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Hygiene
 
-7 prompt(s) without a metadata header — they show no facets above. Re-home or re-run intake on them when touched.
+6 prompt(s) without a metadata header — they show no facets above. Re-home or re-run intake on them when touched.
 
 <details>
 <summary>Headerless prompts</summary>
 
 - `draft/bug/autolens/interferometer_release_leg_oom.md`
-- `draft/bug/autolens/positions_lh_penalty_accumulation_bug.md`
 - `draft/docs/autolens_workspace/sampler_cli_output_workspace_sweep.md`
 - `draft/docs/workspaces/plot_coverage_followups.md`
 - `draft/docs/workspaces/unify_ai_assistant_workspace_readmes.md`

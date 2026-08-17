@@ -1,0 +1,63 @@
+name: Tenant Firewall Gate
+
+# The Mind-side leg of the tenant-firewall PR gates (issue #198). The organ
+# repos gate their own PRs with `repos_sync.py --only "tenant firewall (organ
+# code)"`; this workflow closes the remaining hole — an edit to the CHECKER
+# itself (an allowlist grant, a token-pattern change, an --only regression) is
+# otherwise verified by nothing. It checks Mind out beside the organ repos'
+# mains and runs the full drift check, so an allowlist over-grant or a check
+# that stopped finding real drift fails the PR that authors it.
+#
+# Path-filtered to scripts/repos_sync.py (plus this file): registry/prompt
+# pushes — the overwhelming bulk of Mind traffic — never trigger it.
+#
+# PyAutoHands is deliberately NOT checked out yet: its firewall clear waits
+# behind the version-stamp task that claims the repo (PyAutoHands#235 — see
+# issue #198's checklist). Add its checkout when that leg lands; absent repos
+# are skipped by the check itself.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/repos_sync.py"
+      - ".github/workflows/firewall_gate.yml"
+  pull_request:
+    paths:
+      - "scripts/repos_sync.py"
+      - ".github/workflows/firewall_gate.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: firewall-gate-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+jobs:
+  firewall:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PyAutoMind
+        uses: actions/checkout@v4
+        with:
+          path: PyAutoMind
+      # The organ repos, pinned to main: the checker is verified against the
+      # CURRENT organ code, the same pairing a local workspace has. All
+      # public, so the default GITHUB_TOKEN suffices.
+      - name: Checkout PyAutoBrain
+        uses: actions/checkout@v4
+        with:
+          repository: PyAutoLabs/PyAutoBrain
+          path: PyAutoBrain
+      - name: Checkout PyAutoHeart
+        uses: actions/checkout@v4
+        with:
+          repository: PyAutoLabs/PyAutoHeart
+          path: PyAutoHeart
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install (PyYAML — the whole dependency set)
+        run: pip install PyYAML
+      - name: Drift check (all legs — absent repos are skipped)
+        run: python3 PyAutoMind/scripts/repos_sync.py --check --root "$GITHUB_WORKSPACE"

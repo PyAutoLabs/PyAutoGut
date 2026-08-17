@@ -67,3 +67,10 @@
 - artifacts-are-laptop-only: Actions artifact downloads are blocked from cloud/mobile sessions (egress policy 403s `productionresultssa2.blob.core.windows.net` on CONNECT) — this is what stopped the cloud session finishing the ingest. Both wiki drift reports were captured to `~/.pyauto-heart/release_20260807_wiki_drift/` while on the laptop.
 - do-not: do NOT use the nightly driver for a manual release — AUTONOMY.md forbids converting a manual release into the scheduled-nightly exception.
 - repos-none-claimed: this entry claims NO repos — deliberately on one line, NOT as 2-space `  - Repo` bullets, because `worktree_check_conflict` treats any such bullet as a live claim.
+
+## version-stamp-sync-guards
+- issue: https://github.com/PyAutoLabs/PyAutoHands/issues/235
+- session: claude --resume d73342fb-c33f-4028-8741-30cbe0c856a3
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/version-stamp-sync-guards
+- repos:

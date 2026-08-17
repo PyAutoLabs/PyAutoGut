@@ -1,4 +1,4 @@
-# `@to_instance` materializes stored samples with no `FitException` guard
+# Reconstructing a stored sample raises through `ignore_assertions=True`
 
 Type: bug
 Target: autofit
@@ -11,150 +11,208 @@ Status: formalised
 
 ## What this is
 
-[PyAutoFit#1466](https://github.com/PyAutoLabs/PyAutoFit/issues/1466) ("preserve
-guarded sample lifecycle", merged `b499d4367` 2026-08-11) gave two result-reading
-methods a recovery path for stored samples that a newer model class now rejects
-with `FitException`:
+Two PyAutoFit entry points materialize a **stored search sample** into a model
+instance without any `FitException` recovery, so a sample the model no longer
+accepts raises straight through to the user:
 
-- `Samples.max_log_likelihood` — falls back to the next-highest-likelihood valid
-  sample (`samples.py:405-441`)
-- `SamplesPDF.draw_randomly_via_pdf` — redraws up to
-  `VALID_INSTANCE_MAX_ATTEMPTS = 100` times (`pdf.py:336-367`)
-
-Both were written **by hand, at the call site**. The shared decorator that every
-*other* result-reading method uses to turn a vector into an instance was not
-touched:
+1. `Sample.instance_for_model(model, ignore_assertions=True)`
+   (`autofit/non_linear/samples/sample.py:178-212`) — **the CI failure site.**
+   `ignore_assertions` reaches only `af.Model`'s own assertion mechanism; it
+   cannot stop a downstream profile constructor from raising, despite the
+   parameter's docstring reading *"If True, do not check that the instance is
+   valid"*.
+2. The shared `to_instance` decorator (`interface.py:32-40`), used by
+   `from_sample_index`, `max_log_posterior`, `median_pdf`,
+   `values_at_*_sigma`, `errors_at_*_sigma`:
 
 ```python
-# autofit/non_linear/samples/interface.py:32-40
-def wrapper(self, *args, as_instance=True, as_dict=False, **kwargs):
-    vector = func(self, *args, **kwargs)
-    if as_dict:
-        return {".".join(path[0]): value for path, value in zip(self.paths, vector)}
-    if as_instance:
-        return self._instance_from_vector(vector)   # <-- no try/except
-    return vector
+if as_instance:
+    return self._instance_from_vector(vector)   # <-- no try/except
 ```
 
-So `@to_instance`-decorated methods — `from_sample_index`, `max_log_posterior`,
-`median_pdf`, `values_at_upper_sigma`, `values_at_lower_sigma`,
-`errors_at_*_sigma` — still raise straight through whenever the vector they
-materialize is one the model now rejects. The guarantee #1466 established holds
-for two entry points and silently does not hold for the rest.
+[PyAutoFit#1466](https://github.com/PyAutoLabs/PyAutoFit/issues/1466)
+(`b499d4367`, 2026-08-11) established the recovery contract but wrote it **by
+hand at two call sites only** — `max_log_likelihood` (`samples.py:405-441`) and
+`draw_randomly_via_pdf` (`pdf.py:336-367`). Everything else was left exposed.
 
-Note the escape hatches already differ per path: `as_dict=True` and
-`as_instance=False` never construct an object and are therefore always safe.
-Only the materialization request needs the guard.
+`as_dict=True` and `as_instance=False` never construct an object and are always
+safe; only the materialization request needs the guard.
 
-## Why it started failing on 2026-08-10
+## Why invalid samples are in storage at all
 
-`PyAutoGalaxy` gained a geometric constructor guard on **2026-08-09**
-(`a366f771`, #566): `validate_ell_comps` rejects `ell_comps` whose magnitude is
-not below 1, because `q = (1 - f) / (1 + f)` is only a valid axis ratio while
-`f < 1`. The very next day `be61b8d0` (#568) made that exception a
-`ModelParameterException(ValueError, af.exc.FitException)` specifically so a
-search would **resample** the candidate rather than die.
+This is the part that makes the bug real rather than cosmetic — **the stored
+sample list legitimately contains points the model rejects.**
 
-That closed the fit-time path. It did not close the results-reading path — and
-roughly 21% of the `ell_comps` prior square lies outside the unit circle, so
-invalid points are routinely present in a stored sample list, carrying near-zero
-weight.
+`PyAutoGalaxy` gained a geometric constructor guard on 2026-08-09 (`a366f771`,
+#566): `validate_ell_comps` rejects `ell_comps` whose magnitude is not below 1,
+since `q = (1 - f) / (1 + f)` is a valid axis ratio only while `f < 1`. The next
+day `be61b8d0` (#568) made it a
+`ModelParameterException(ValueError, af.exc.FitException)` so a search would
+*resample* rather than die.
 
-## Reproduction (confirmed on `main`, autofit/autogalaxy 2026.7.23.1)
+**"Resample" is a misnomer.** `fitness.py:252-258` on the NumPy path:
 
-Control test: a three-sample `SamplesPDF` where one sample has the exact
-`ell_comps` from the CI failure, `(0.9781300707301511, -0.23873992910981626)`,
-magnitude `1.006844`. Arm A puts it last with zero weight; arm B makes it the
-maximum-posterior sample.
+```python
+except exc.FitException:
+    return self.resample_figure_of_merit      # -1.0e99 for Nautilus
+```
 
-| call | arm A (invalid = last) | arm B (invalid = max posterior) |
-|---|---|---|
-| `max_log_likelihood()` | ok — recovered | ok — recovered |
-| `draw_randomly_via_pdf()` ×50 | ok — recovered | ok — recovered |
-| `max_log_posterior()` | ok (not hit) | **RAISED** `ModelParameterException` |
-| `from_sample_index(-1)` | **RAISED** `ModelParameterException` | ok (not hit) |
+It does not redraw — it returns a sentinel figure of merit, and the sampler
+**still records the point**. On the JAX path (`fitness.py:244-250`) there is no
+guard at all, and none is needed: `autoarray.validate.is_concrete_scalar`
+returns `False` for tracers, so `validate_ell_comps` passes tracers through
+unvalidated, while `convert.py:86-92` clamps the magnitude to
+`ELL_COMPS_MAGNITUDE_CLAMP = 0.999`. A JAX fit therefore explores |e| >= 1
+freely and stores the raw, unclamped value.
 
-The two hand-guarded methods recover under both arms. The two decorated methods
-raise as soon as the invalid sample is the one they select — which is the whole
-point: the decorator has no opinion about validity, so whether it raises depends
-only on where the invalid sample happens to land.
+Either way the stored parameter vector keeps a value the constructor will later
+refuse. Reconstruction is where it surfaces.
 
-Script: `scratchpad/repro_guard_gap.py` (control test only; recreate from the
-table above — it constructs `af.Sample` kwargs directly and needs no search).
+## The CI failure
 
-## The CI failure this explains
-
-`PyAutoHeart` **Workspace Smoke**, scheduled runs 2026-08-10
-(`31356506626`) and 2026-08-17 (`31992749671`), job
-`run_notebooks (3.12, autogalaxy, guides)` — 1 failure out of 1332 checks:
+`PyAutoHeart` **Workspace Smoke**, scheduled runs 2026-08-10 (`31356506626`)
+and 2026-08-17 (`31992749671`), job `run_notebooks (3.12, autogalaxy, guides)` —
+1 failure in 1332 checks:
 
 ```
 autogalaxy_workspace notebooks/guides/results/aggregator/samples.ipynb
-  FAIL (10.2s) ModelParameterException: ell_comps must satisfy
-  ell_comps[0]**2 + ell_comps[1]**2 < 1; got
-  (0.9781300707301511, -0.23873992910981626), whose magnitude is 1.0068441731558715
+  ModelParameterException: ell_comps must satisfy ell_comps[0]**2 + ell_comps[1]**2 < 1;
+  got (0.9781300707301511, -0.23873992910981626), magnitude 1.0068441731558715
 ```
 
-The failing call is `samples.from_sample_index(sample_index=-1)`
-(`scripts/guides/results/aggregator/samples.py:319`, "create an instance of the
-last accepted model"). That method is `@to_instance`-decorated and takes the
-last sample **unconditionally**.
+Reproduced locally end-to-end (see below); the traceback lands on
+`scripts/guides/results/aggregator/samples.py:451`:
 
-Two pieces of corroborating evidence that this is the site rather than the
-`draw_randomly_via_pdf` call further down at line 482:
+```python
+for sample in samples.sample_list:
+    instance = sample.instance_for_model(model=samples.model, ignore_assertions=True)
+```
 
-1. The reported exception is `ModelParameterException` itself. An exhausted
-   `draw_randomly_via_pdf` raises `SamplesException ... from last_error`, a
-   different type.
-2. The smoke job installs **released wheels** (`autofit-2026.8.15.1`, confirmed
-   from the run log). That wheel was downloaded and inspected directly: it
-   **does** contain `VALID_INSTANCE_MAX_ATTEMPTS` and the retry loop. The guard
-   was present and is not what failed.
+That loop walks **every** stored sample, so it fires deterministically whenever
+any invalid sample exists — which is why it fails every scheduled run rather
+than intermittently.
+
+## Reproduction (local, confirmed)
+
+Ran `_quick_fit.py` then `aggregator/samples.py` under the env PyAutoHands
+resolves from `config/build/profile_smoke.yaml`, then again under a
+production-like env. Script:
+`scratchpad/run_smoke_repro.py`.
+
+| | smoke env | production-like (JAX on, checks on) |
+|---|---|---|
+| invalid stored samples | 2/300, 2/300 | **1/300**, 0/300 |
+| max \|ell_comps\| | 1.124, 1.133 | 1.115 |
+| weight of every invalid sample | `0.0` | `0.0` |
+| tutorial result | **fails** (exact CI error) | invalid samples present |
+
+Invalid samples appear **with checks enabled and JAX on**, so this is not purely
+a smoke-profile artifact.
+
+A second control test (`scratchpad/repro_guard_gap.py`) isolates the
+`to_instance` half against a synthetic sample list — arm A puts the invalid
+sample last, arm B makes it maximum-posterior:
+
+| call | arm A | arm B |
+|---|---|---|
+| `max_log_likelihood()` | ok — recovered | ok — recovered |
+| `draw_randomly_via_pdf()` ×50 | ok — recovered | ok — recovered |
+| `max_log_posterior()` | ok (not selected) | **RAISED** |
+| `from_sample_index(-1)` | **RAISED** | ok (not selected) |
+
+The two hand-guarded methods recover under both arms; the two decorated ones
+raise as soon as they happen to select the invalid sample.
+
+## Test mode is NOT implicated (checked explicitly)
+
+Both scripts declare `ENV: full_datasets real_search`, and
+`PyAutoHands/autohands/env_config.py:63` maps `real_search` to
+`("PYAUTO_TEST_MODE",)` — a token **releases** (unsets) its var. The resolved
+smoke env is:
+
+```
+PYAUTO_DISABLE_JAX=1  PYAUTO_FAST_PLOTS=1  PYAUTO_SKIP_CHECKS=1  PYAUTO_SKIP_VISUALIZATION=1
+```
+
+`PYAUTO_TEST_MODE` is absent, so no sampler bypass runs. Independently,
+`_build_fake_samples` (`abstract_search.py:1111-1171`) synthesizes the prior
+median ±0.1%, which cannot produce |e| = 1.007. Do not re-open this line.
 
 ## Fix locus
 
-**PyAutoFit, in the decorator** — `to_instance` in
-`autofit/non_linear/samples/interface.py`, so every decorated method inherits
-one contract instead of each call site restating it. Patching only
-`from_sample_index` would leave `max_log_posterior` (proven broken in arm B
-above) and the sigma methods still exposed.
+**PyAutoFit library source**, both entry points:
 
-Open design question for the implementer, and the reason this is `supervised`
-rather than autonomous — **the right recovery differs per method and the
-decorator cannot know which applies**:
+- `Sample.instance_for_model` — make `ignore_assertions=True` honour its stated
+  contract, i.e. also tolerate a downstream `FitException`. The caller has
+  explicitly said it accepts invalid points; today the flag silently under-
+  delivers. Decide and document what "tolerate" returns (skip vs. sentinel) —
+  it cannot construct the rejected object.
+- `to_instance` — an explicit **per-method recovery policy**, so every decorated
+  method inherits one contract instead of each call site restating it:
 
-- `from_sample_index(i)` is a request for *one specific* sample. Silently
-  substituting a different one would be a lie; raising a typed, explanatory
-  error is arguably correct here, and `ignore_assertions`-style opt-in may be
-  the better lever.
-- `max_log_posterior` has a natural fallback identical to
-  `max_log_likelihood`'s — the next-best valid sample.
-- `median_pdf` / `values_at_*_sigma` synthesize a vector by marginalizing each
-  parameter **independently**, so their output need not be a physically valid
-  point at all. No stored sample can be substituted. The autogalaxy tutorial
-  already documents this and works around it by requesting `as_dict=True`
-  (`samples.py:271-274`) — evidence the class of failure was known and handled
-  one call site at a time.
+```python
+def to_instance(func=None, *, recover="raise"):
+    ...
 
-Do **not** resolve this by weakening `validate_ell_comps`, and do **not** edit
-the tutorial to route around it — the tutorial is user documentation and the
-guard is correct. A workspace edit would conceal a library contract gap that
-affects every user reading results from a fit.
+@to_instance(recover="next_valid")
+def max_log_posterior(self): ...
 
-## Scope boundary
+@to_instance(recover="raise")
+def from_sample_index(self, sample_index): ...
+```
 
-Unrelated to [PyAutoFit#1484](https://github.com/PyAutoLabs/PyAutoFit/issues/1484)
-(UniformPrior bounds unenforced on the NumPy path) and
-[#1481](https://github.com/PyAutoLabs/PyAutoFit/issues/1481) (prior-support
-coverage after Prodigy), despite the family resemblance. Those concern the
-objective during a search; this concerns reconstructing stored samples after one.
-An initial triage guessed the prior-support family — that guess was wrong and the
-reproduction above supersedes it.
+- `recover="next_valid"` — fall back to the next-best valid stored sample,
+  reusing what `max_log_likelihood` already implements by hand.
+- `recover="raise"` — a typed `SamplesException` naming the offending
+  parameter, explaining why the point is invalid, and stating that
+  `as_dict=True` / `as_instance=False` return the raw values safely.
 
-## Incidental finding (do not fix here)
+Fold #1466's two hand-written guards onto the same mechanism — one
+implementation, not three.
 
-`Samples.from_sample_index` is annotated `-> ModelInstance` and its docstring
-says "returned as a model instance", but the undecorated body returns
-`self.parameter_lists[sample_index]` — a plain list. It only satisfies the
-annotation because `@to_instance` converts it. Harmless today; worth a docstring
-correction if the implementer is already in this file.
+Rejected: a uniform typed error everywhere (leaves `max_log_posterior` without
+the fallback its likelihood twin has); threading an `ignore_assertions` caller
+flag through `to_instance` (pushes a library contract gap onto every user).
+
+Do **not** weaken `validate_ell_comps`, and do **not** edit the tutorial to
+route around this — the tutorial is user documentation and the guard is correct.
+
+### Behaviour change to note in release notes
+
+`ModelParameterException` subclasses **`ValueError`**; `SamplesException`
+subclasses plain `Exception` (`autofit/exc.py:57`). Callers catching `ValueError`
+around these methods would stop catching it. `raise ... from e` preserves the
+cause.
+
+## Split out — do not fix here
+
+Every invalid sample measured carried weight exactly `0.0`, and
+`samples_weight_threshold: 1.0e-10` is set in both the workspace and packaged
+`config/output.yaml`. The prune at `updater.py:220` should therefore have
+removed all 299 zero-weight rows — but **all 300 survived in both runs**, and
+the `"removed from samples.csv"` log line never fired. `PYAUTO_SKIP_CHECKS=1`
+explains it under smoke (`samples.py:505-506` nulls the threshold) but **not**
+the checks-on run. Suspect: the early `return` on `FitException` at
+`updater.py:212-215`, which skips the prune entirely — unconfirmed.
+
+Filed separately: different blast radius (every saved `samples.csv`, not just
+this tutorial). If that prune is repaired, invalid zero-weight samples stop
+being stored and this bug's trigger becomes much rarer — but the contract gap
+above is still real, because a converged fit can carry an invalid sample at
+non-zero weight.
+
+## Context worth carrying
+
+The reproduction fit reports `f_live=1.0000, N_eff=1` — the `n_like_max=300` cap
+in `_quick_fit.py` means the sampler never converges, so those 300 rows are
+near-prior exploration points with a degenerate one-hot weight vector. Any
+attempt to reason about "typical" weights from this fixture will mislead.
+
+## Superseded
+
+An initial triage guessed this was the prior-support family
+([#1484](https://github.com/PyAutoLabs/PyAutoFit/issues/1484),
+[#1481](https://github.com/PyAutoLabs/PyAutoFit/issues/1481)) and attributed the
+failure to `from_sample_index` at `samples.py:319`. Both were wrong; the
+reproduction above supersedes them. Those issues concern the objective *during*
+a search — this concerns reconstructing stored samples *after* one.

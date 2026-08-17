@@ -44,12 +44,15 @@
 
 ## stored-sample-reconstruction-guard
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1486
-- status: library-dev
+- status: library-dev — WORKSPACE HALF SHIPPED; the PyAutoFit hardening (#1486) is what remains
 - worktree: ~/Code/PyAutoLabs-wt/stored-sample-reconstruction-guard
 - repos:
   - PyAutoFit: feature/stored-sample-reconstruction-guard
   - autogalaxy_workspace: feature/stored-sample-reconstruction-guard
-- workspace-PR: https://github.com/PyAutoLabs/autogalaxy_workspace/pull/210 (no pending-release label —
+- workspace-PR: **MERGED 2026-08-17T22:08Z** as `1b5005c8` (squash), branch deleted. All 6 checks green
+  (smoke 3.12 3m37s, smoke 3.13 3m44s, 3x navigator). Verified present on origin/main. This closes the
+  nightly Workspace Smoke red; Heart's `workspace validation not passing` reason should clear on its
+  next tick. Was: https://github.com/PyAutoLabs/autogalaxy_workspace/pull/210 (no pending-release label —
   `valid_sample_instance_pairs` ships in RELEASED autofit 2026.8.15.1, wheel inspected, so the
   library-first gate does not apply)
 - heart-ack (2026-08-17, human): acknowledged YELLOW score 70 to ship PR#210. Exact reasons acked:

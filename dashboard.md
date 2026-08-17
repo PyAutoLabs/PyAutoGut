@@ -8,10 +8,10 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 10 |
+| [In flight](#in-flight) (`active/`) | 12 |
 | [Parked](#parked) (`parked.md`) | 6 |
 | [Planned](#planned) (`planned.md`) | 7 |
-| [Backlog](#backlog) (`draft/`) | 141 |
+| [Backlog](#backlog) (`draft/`) | 140 |
 
 Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3Aissue+is%3Aopen&type=issues) · [open pull requests](https://github.com/search?q=org%3APyAutoLabs+is%3Apr+is%3Aopen&type=prs)
 
@@ -49,14 +49,16 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 Issued — each has an open GitHub issue and usually a branch. The full record for each is in [`active.md`](active.md).
 
 - [First benchmark calibration campaign — run the 4 assistant benchmarks](active/benchmark_calibration_runs.md)
+- [ConstantZeroth regularization is broken twice over — dead code presenting](active/constant_zeroth_broken_dead_code.md) — [issue #448](https://github.com/PyAutoLabs/PyAutoArray/issues/448) — remote-handoff (prepared 2026-08-17 for a cloud/phone session; NO local worktree claim)
 - [Address ECEB editorial comments on ECLIPSE-C](active/euclid_eceb_editorial_revision.md)
+- [Commit the inference-methods programme plan + knowledge ledger into autolens_profiling](active/inference_programme_ledger.md) — [issue #134](https://github.com/PyAutoLabs/autolens_profiling/issues/134) — pr-open (https://github.com/PyAutoLabs/autolens_profiling/pull/135)
 - [JAX-native posterior sampler wave — ranked shortlist from the 2026-07-16](active/jax_native_posterior_sampler_wave.md) — [issue #113](https://github.com/PyAutoLabs/autolens_workspace_developer/issues/113) — PARKED 2026-07-24 — stage (a) POSITIVE: warm-started gradient SMC SAMPLES (acc 0.80->0.17 across tempering, einstein_radius…
 - [Remove standalone matplotlib-inline comments](active/matplotlib_inline_standalones.md)
 - [Find what kills MGE multi-start lanes — it is not](active/mge_lane_death.md) — [issue #128](https://github.com/PyAutoLabs/autolens_profiling/issues/128) — CAUSE FOUND 2026-08-15 (cloud CPU session) — written up on autolens_profiling#128. Remaining: GPU/float64/multi-seed…
-- [PositionsLH penalty accumulation returns 2x the LAST penalty, discarding the](active/positions_lh_penalty_accumulation_bug.md) — [issue #699](https://github.com/PyAutoLabs/PyAutoLens/issues/699) — library-dev
+- [PositionsLH penalty accumulation returns 2x the LAST penalty, discarding the](active/positions_lh_penalty_accumulation_bug.md) — [issue #699](https://github.com/PyAutoLabs/PyAutoLens/issues/699) — pr-open (https://github.com/PyAutoLabs/PyAutoLens/pull/700)
 - [PyAutoReduce validation: slacs1430+4105 ACS reduction vs trusted legacy dataset](active/pyautoreduce_slacs1430_acs_comparison.md)
 - [Research profiling experiment in the autolens_profiling repo](active/research_profiling_experiment_in_the_autolens_pr.md) — [issue #82](https://github.com/PyAutoLabs/autolens_profiling/issues/82)
-- [Tenant-firewall drift: clear the 9 right + gate recurrence (Aug](active/tenant-firewall-drift-aug.md) — [issue #198](https://github.com/PyAutoLabs/PyAutoMind/issues/198) — library-dev
+- [Tenant-firewall drift: clear the 9 right + gate recurrence (Aug](active/tenant-firewall-drift-aug.md) — [issue #198](https://github.com/PyAutoLabs/PyAutoMind/issues/198) — pr-open (https://github.com/PyAutoLabs/PyAutoLens/pull/700)
 - [Version-stamp sync to 2026.8.17.1 + release-sed guards](active/version_stamp_sync_and_release_sed_guards.md)
 
 ## Parked
@@ -94,10 +96,10 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**141** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**140** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
-<summary><b>bug</b> — 42</summary>
+<summary><b>bug</b> — 41</summary>
 
 - [Reconstructing a stored sample raises through `ignore_assertions=True`](draft/bug/autofit/to_instance_guard_gap.md) — autofit · small · supervised · high
 - [pre_build stages untracked files, publishing uncommitted human work](draft/bug/pyautohands/pre_build_stages_untracked_wip.md) — pyautohands · small · supervised · high
@@ -115,7 +117,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 - [`pixel_scales` given as an `int` (or `np.float64`) is never widened](draft/bug/autoarray/pixel_scales_int_not_widened_to_tuple.md) — autoarray · small · supervised · medium
 - [Heart script_timing baselines are orphaned by path moves and filled](draft/bug/pyautoheart/script_timing_baselines_orphaned_and_window_filled.md) — pyautoheart · small · supervised · medium
 - [jax_grad scripts fail assertions locally that PASS in CI](draft/bug/autolens_workspace_test/jax_grad_local_assertions_fail_but_pass_in_ci.md) — autolens_workspace_test · medium · supervised · medium
-- [ConstantZeroth regularization is broken twice over — dead code presenting](draft/bug/autoarray/constant_zeroth_broken_dead_code.md) — autoarray · small · supervised · normal
 - [PyNUFFT dev extra is incompatible with current SciPy on Python](draft/bug/autoarray/pynufft_scipy_pinv2_dev_extra.md) — autoarray · small · supervised · normal
 - [`LogGaussianPrior` misreports its own support as `(-inf, inf)`](draft/bug/autofit/loggaussian_prior_declares_own_support.md) — autofit · small · supervised · normal
 - [`autofit.plot` functions accept `**kwargs` and silently discard them](draft/bug/autofit/plot_functions_discard_kwargs.md) — autofit · small · supervised · normal

@@ -11,7 +11,7 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 | [In flight](#in-flight) (`active/`) | 7 |
 | [Parked](#parked) (`parked.md`) | 6 |
 | [Planned](#planned) (`planned.md`) | 7 |
-| [Backlog](#backlog) (`draft/`) | 142 |
+| [Backlog](#backlog) (`draft/`) | 141 |
 
 Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3Aissue+is%3Aopen&type=issues) · [open pull requests](https://github.com/search?q=org%3APyAutoLabs+is%3Apr+is%3Aopen&type=prs)
 
@@ -34,7 +34,6 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 
 **Quick wins** (small enough, and safe enough to run unattended)
 
-- [python_matrix smoke fails: autofit_workspace searches/mle.py needs optax not in smoke](draft/bug/autofit_workspace/searches_mle_optax_smoke_dependency.md) — autofit_workspace · small · safe · normal
 - [hpc/sync first-push race — parallel rsyncs before remote base dir](draft/bug/autolens_assistant/hpc_sync_first_push_race.md) — autolens_assistant · small · safe · normal
 - [Audit HowTo tutorials for missing setup_notebook() line](draft/bug/howto/missing_setup_notebook_audit.md) — howto · small · safe · normal
 - [PyAutoFit CLI-noise batch: unclosed search.log handler + four small warning](draft/maintenance/pyautofit/cli_noise_pyautofit_batch.md) — pyautofit · small · safe · normal
@@ -94,10 +93,10 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**142** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**141** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
-<summary><b>bug</b> — 43</summary>
+<summary><b>bug</b> — 42</summary>
 
 - [pre_build stages untracked files, publishing uncommitted human work](draft/bug/pyautohands/pre_build_stages_untracked_wip.md) — pyautohands · small · supervised · high
 - [UniformPrior bounds are not enforced in the objective on the](draft/bug/autofit/uniform_prior_bounds_unenforced_on_numpy_path.md) — autofit · medium · human-required · high
@@ -119,7 +118,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 - [`LogGaussianPrior` misreports its own support as `(-inf, inf)`](draft/bug/autofit/loggaussian_prior_declares_own_support.md) — autofit · small · supervised · normal
 - [`autofit.plot` functions accept `**kwargs` and silently discard them](draft/bug/autofit/plot_functions_discard_kwargs.md) — autofit · small · supervised · normal
 - [TEST_MODE bypass crashes on ordered-parameter assertion ties](draft/bug/autofit/test_mode_bypass_ordered_assertion_ties.md) — autofit · small · supervised · normal
-- [python_matrix smoke fails: autofit_workspace searches/mle.py needs optax not in smoke](draft/bug/autofit_workspace/searches_mle_optax_smoke_dependency.md) — autofit_workspace · small · safe · normal
 - [point.py JAX-vmap parity assert is non-deterministic under the smoke env](draft/bug/autolens/point_jax_vmap_parity_nondeterministic.md) — autolens · small · supervised · normal
 - [hpc/sync first-push race — parallel rsyncs before remote base dir](draft/bug/autolens_assistant/hpc_sync_first_push_race.md) — autolens_assistant · small · safe · normal
 - [Scripts derive geometry from a hardcoded pixel_scale while the dataset](draft/bug/autolens_workspace/script_local_pixel_scale_vs_dataset_pixel_scales.md) — autolens_workspace · small · supervised · normal

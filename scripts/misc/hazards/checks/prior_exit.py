@@ -185,9 +185,7 @@ class PriorExitCheck(HazardCheck):
                 "adjudicated": jax_available,
                 "sampled": int(context.sample_count),
                 "outside_box": int(np.count_nonzero(outside)),
-                "non_finite_log_prior": (
-                    int(np.count_nonzero(~finite)) if jax_available else None
-                ),
+                "non_finite_log_prior": (int(np.count_nonzero(~finite)) if jax_available else None),
                 # Every non-finite point is an out-of-box point and vice versa:
                 # the -inf tracks the box edge exactly, which is what makes this
                 # a support boundary rather than a numerical instability.

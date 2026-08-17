@@ -1,9 +1,25 @@
 # Active Tasks
 
+## per-parameter-step-scaling
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1483
+- prompt: active/per_parameter_step_scaling.md
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/per-parameter-step-scaling
+- repos:
+  - PyAutoFit: feature/per-parameter-step-scaling (to be cut from feature/clipper-validation-campaign, NOT main)
+  - autolens_profiling: feature/per-parameter-step-scaling (to be cut from feature/clipper-validation-campaign, NOT main)
+- STACKED, deliberately: this needs `seed`, `alive_history` and `reset_momentum_on_clip`, which are unreleased and exist only on `feature/clipper-validation-campaign` (PyAutoFit#1482 / autolens_profiling#132, both open). `worktree_check_conflict` therefore reports a CONFLICT against clipper-validation-campaign in both repos — that is expected and was accepted by the human, not an unregistered claim. Retarget both PRs to `main` once #1482/#132 merge.
+- the cause side of the clipper arc: phase 2 proved clipping is cosmetic (same answer, 31.5% of lane-steps clipped) and diagnosed a 40x box-width spread against ONE global step scale. This scales per-parameter from the priors. KEEP ClipperPriorBox ON in every arm — clip rate is the primary readout, not a confound.
+- design decisions taken at plan time (do not re-litigate): per-parameter scaling NOT unit-cube/logit (logit sends the 6/16 boundary optima to infinity, inverse-CDF blows up at the cube faces, and it invalidates every stored benchmark); applied as a LINEAR change of variables phi = theta/s with the objective at theta = s*phi, NOT `params += s * updates` (which desyncs Prodigy's own `d` estimate from the trajectory it thinks it took); geometric-mean normalised to 1 so only ratios change; LogUniform → `sqrt(lo*hi)*ln(hi/lo)`, NOT the physical width; TruncatedGaussian → sigma, NOT the truncation width.
+- user ask added at plan time: the derived scale vector must be VISIBLE — appended as a block to the written `model.info` file (not the printed `Model.info` property, which has no access to the search). Mirrors how the initializer already writes `model.start`.
+- deliverable is the MEASUREMENT, not the code: `prior_box_scaled` at seeds 0 and 1, `multi_start_prodigy`/`imaging/mge`/hst, 16x3000, fp64, side by side with the six baseline rows in `results/notes/clipper_campaign/RESULTS.md`. Seed 1 (171,272 nats from the bar) is the real test; seed 0 can only show no-regression against 31787.929.
+- A100s checked 2026-08-17 and NOT available: all 8 on euclid-ral-gpu-1/2 held by another user's array 334968 (`%8`, longest 2d22h left), 335049 queued behind it. Laptop RTX 2060, ~20-35 min per arm.
+
 ## clipper-validation-campaign
 - issue: https://github.com/PyAutoLabs/autolens_profiling/issues/131
 - prompt: active/clipper_validation_campaign.md
-- status: RESULTS IN 2026-08-16, both branches pushed, PRs not yet opened. VERDICT: recommend AGAINST flipping the clipper default, and DROP the momentum-reset arm. Write-up `results/notes/clipper_campaign/RESULTS.md`; final table on issue #131.
+- status: AWAITING MERGE 2026-08-17 — both PRs now open: PyAutoFit#1482 (`seed`, `alive_history`, `reset_momentum_on_clip`) and autolens_profiling#132 (driver, prior-exit hazard, phase-2 verdict). Superseded autolens_profiling#130 closed (its head `d0e4dd5` is an ancestor of #132). VERDICT: recommend AGAINST flipping the clipper default, and DROP the momentum-reset arm. Write-up `results/notes/clipper_campaign/RESULTS.md`; final table on issue #131.
+- NOTE: the worktree stays claimed until #1482/#132 merge — `per-parameter-step-scaling` is STACKED on `feature/clipper-validation-campaign` in both repos rather than waiting, because `seed`/`alive_history`/`reset_momentum_on_clip` are unreleased and live only here. Retarget that task's PRs to `main` once these merge.
 - worktree: ~/Code/PyAutoLabs-wt/clipper-validation-campaign
 - repos:
   - PyAutoFit: feature/clipper-validation-campaign

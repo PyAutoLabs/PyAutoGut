@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-996 records across 7 buckets.
+998 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -33,6 +33,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [border-relocator-degenerate-pca](2026/08/border-relocator-degenerate-pca.md) — Stabilized near-isotropic border PCA axes with a deterministic axis-aligned branch at a scale-aware eigenvalue…
 - [circular-ell-comps-image-gradient](2026/08/circular-ell-comps-image-gradient.md) — Replaced the Sersic image path's Cartesian-to-polar ellipticity conversion with an algebraically equivalent Ca…
 - [clipper-usage-in-search-summary](2026/08/clipper-usage-in-search-summary.md) — `search.summary` now reports prior-support clipping. `n_clipped_lane_steps`
+- [clipper-validation-campaign](2026/08/clipper-validation-campaign.md)
 - [compile-axis-campaign-coverage](2026/08/compile-axis-campaign-coverage.md)
 - [compile-axis-triage-drift](2026/08/compile-axis-triage-drift.md)
 - [compile-warm-baseline-dashboard](2026/08/compile-warm-baseline-dashboard.md)
@@ -82,6 +83,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [notebook-setup-notebook-regen-drift](2026/08/notebook-setup-notebook-regen-drift.md)
 - [nufft-parity-full-datasets](2026/08/nufft-parity-full-datasets.md)
 - [numerical-hazard-profiling](2026/08/numerical-hazard-profiling.md) — Phase 1 established the reusable numerical-hazard profiling framework, typed risk measurements, reachability a…
+- [per-parameter-step-scaling](2026/08/per-parameter-step-scaling.md)
 - [persist-smoke-environments](2026/08/persist-smoke-environments.md) — Made smoke dependency environments durable and isolated per library and Python version, with version-handshake…
 - [plot-array-stale-kwargs](2026/08/plot-array-stale-kwargs.md)
 - [point-source-defaults-campaign](2026/08/point-source-defaults-campaign.md) — took the point-source likelihood options from "several undocumented

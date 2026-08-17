@@ -1,3 +1,83 @@
+Phase 2 of the prior-support work: validate `ClipperPriorBox` against the Nautilus
+bar, on GPU/float64, at a real budget, with more than one seed.
+
+## PRs
+
+- PyAutoFit#1482 — `seed` on `AbstractMultiStartGradient`, `alive_history` in
+  `search_internal`, and `reset_momentum_on_clip`. All additive and default-off, so
+  existing fits are bit-identical.
+- autolens_profiling#132 — the campaign driver (`clipper_campaign.py`), the
+  `SEARCHES_CLIPPER` arm knob, the prior-exit hazard registration, and the results
+  write-up `results/notes/clipper_campaign/RESULTS.md`.
+- Tracking issue autolens_profiling#131 (and #129).
+
+## Verdict: clipping works perfectly and does not improve the answer
+
+`multi_start_prodigy`, `imaging/mge`, `hst`, 16x3000, seeds 0 and 1, fp64, against
+the Nautilus bar `31786.782462488976`.
+
+| arm | seed | max_log_L | gap to bar | value-NaN | clips | alive frac | pinned |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| `none` | 0 | 31787.929 | -1.146 | 31655 | 0 | 0.341 | — |
+| `none` | 1 | -139485.799 | 171272.581 | 27870 | 0 | 0.419 | — |
+| `prior_box` | 0 | 31787.929 | -1.146 | 2 | 15142 | 1.000 | 6/16 |
+| `prior_box` | 1 | -120880.568 | 152667.350 | 0 | 15744 | 1.000 | 4/16 |
+| `prior_box_reset` | 0 | 31787.929 | -1.146 | 2523 | 18611 | 0.947 | 7/16 |
+| `prior_box_reset` | 1 | -137783.609 | 169570.391 | 0 | 8798 | 1.000 | 4/16 |
+
+- Deaths collapse (31655 -> 2) and the alive fraction goes to 1.000, but
+  `max_log_likelihood` does not move a digit on seed 0.
+- **RECOMMENDATION: do not flip the clipper default on accuracy grounds**, and
+  **drop the momentum-reset arm** — it is worse on both seeds (deaths 2 -> 2523,
+  one more lane pinned, +39% wall on seed 0, and on seed 1 it gives back nearly all
+  of plain clipping's gain). It shipped default-off so the row is reproducible, not
+  because it is recommended.
+- The rescued lanes contribute nothing, measured directly: `best_fom` is identical
+  to every digit across all three arms on seed 0 (-63575.67359062914) at final
+  alive counts of 5/16, 16/16 and 14/16. Eleven extra lanes kept alive and not one
+  ever became the best.
+
+## The dominant effect is seed dependence
+
+Identical settings swing the outcome **171,272 nats** between seeds 0 and 1. That
+dwarfs everything the clipper does and is why `seed` had to ship first: before it,
+`_broad_starts` used a hardcoded `default_rng(0)`, so every run of a model drew the
+SAME starting population and a "multi-seed" study was silently single-seed.
+
+## Traps paid for here
+
+- Grade the **alive-versus-step curve**, not the percentage — the lane counters are
+  survival INTEGRALS, so the same death curve reads ~60% at 150 steps and ~75% at
+  300. That is what `alive_history` exists for.
+- **The clipper does not enter the search identifier**, so arms differing only in a
+  search knob collide on one output directory; a short-circuited run reports the
+  PREVIOUS run's counters, not zeros. Unique `name` per arm + clear the directory +
+  assert `total_steps == n_steps`.
+- **`search.summary` is `Key = Value`**, not colon-separated. A colon parser
+  returns an empty dict and every counter reads `None` — indistinguishable from a
+  feature that never fired.
+- **Budget decides the answer.** At 105 steps clipping was worth 114 nats; by 3000
+  it is worth zero. Never state a result without its step budget.
+- **`--out` must actually reach the search** (routed through `conf`); before that
+  fix a stale `.completed` returned a cached result in 2.9 s with every counter
+  `None`.
+- A `ClipperPriorBox` arm reporting **zero clips has not exercised the clipper** —
+  a broken arm, not a null result. (NOTE: this inverts for a scaled arm — see
+  [[per-parameter-step-scaling]].)
+- Streams derived via `SeedSequence`, not `seed + stream`: the latter makes seed
+  0's resurrection stream identical to seed 1's start stream.
+
+## Follow-on
+
+The cause-side phase — per-parameter step scaling — ran as
+[[per-parameter-step-scaling]] and was **falsified**, and in the process found the
+real failure: a degenerate `einstein_radius = 0` "no lens" basin sitting on a prior
+wall. That record also carries the corrected phase-3 recommendation (constrained-
+optimizer semantics, validate across Adam/Lion/ADABelief before flipping the
+default) and the correction that the step-scale spread is 80x, not 40x.
+
+## Original prompt
+
 # Clipper: demonstrate and validate on the profiling search cells
 
 Type: feature

@@ -1,3 +1,133 @@
+Per-parameter step scaling for the multi-start gradient searches. **Shipped
+default-off, and the measurement it existed to produce is NEGATIVE.**
+
+## PRs
+
+- PyAutoFit#1485 — `ScalerPriorWidth` (`autofit/non_linear/scaler.py`), the change
+  of variables in `MultiStartGradient._fit`, `model.info` block, `search.summary`
+  line, `test_autofit/non_linear/test_scaler.py`. Issue PyAutoFit#1483.
+- autolens_profiling#133 — the `prior_box_scaled` arm, `SEARCHES_SCALER`, and the
+  results write-up.
+- Stacked on PyAutoFit#1482 / autolens_profiling#132 (the phase-2 campaign), which
+  merged first.
+
+## The result: falsified
+
+`multi_start_prodigy`, `imaging/mge`, `hst`, 16x3000, seeds 0 and 1, fp64. Three of
+four pre-registered falsification conditions fired.
+
+| arm | seed | max_log_L | gap to bar | value-NaN | clip rate |
+|---|---:|---:|---:|---:|---:|
+| `prior_box` | 0 | 31787.929 | -1.146 | 2 | 31.55% |
+| `prior_box_scaled` | 0 | 31785.186 | **+1.597** | 3215 | **31.45%** |
+| `prior_box` | 1 | -120880.568 | 152667.350 | 0 | 32.80% |
+| `prior_box_scaled` | 1 | -145975.777 | **177762.560** | 5884 | **38.51%** |
+
+Clip rate did not collapse (15142 -> 15097 on seed 0, 0.3% across 48,000
+lane-steps). Seed 0 regressed past the Nautilus bar — the only arm in the campaign
+that fails to exceed it. Seed 1 moved 25,095 nats away from plain clipping. Deaths
+that clipping had eliminated came back (2 -> 3215, 0 -> 5884).
+
+## Why it failed — the reusable insight
+
+The scale is normalised to a **geometric mean of 1** so that only the RATIOS change
+and the A/B is not confounded with a learning-rate change. But the aggregate
+propensity to reach a wall is set by the GLOBAL step magnitude relative to the box
+widths — exactly what that normalisation holds fixed. So scaling **redistributes**
+wall contact instead of reducing it: before, narrow coordinates hit walls and wide
+ones never did; after, every coordinate hits its wall at the same intermediate
+rate. `pinned_coords` 19 -> 6 on seed 0 (same six pinned lanes, a third as many
+coordinates each) is that redistribution directly.
+
+**The experiment as designed could not have shown a clip-rate collapse.** The
+design choice that made the comparison clean is the one that pinned the primary
+readout in place. Worth remembering before building the next normalised A/B.
+
+## The bigger finding: a degenerate theta_E = 0 basin
+
+Inspecting the winning parameters — the first arm in this campaign to do so —
+showed the failure is not wall contact at all. Seed 1 converged to a degenerate
+**"no lens"** solution: `einstein_radius` driven to 0.0000 (the `U(0,8)` lower
+bound) with the source displaced ~1.6" to absorb the image. Once `theta_E = 0`
+there is no deflection and nothing pulls the mass back. It is a genuine local
+optimum that happens to LIVE ON a prior wall, which is why three phases of
+wall-handling work moved nothing.
+
+Scaling made it worse mechanically: `einstein_radius` drew the largest scale in the
+vector by far (23.87 against a 0.298 floor), so it took the biggest physical steps
+straight into the attractor at its own lower bound.
+
+## Traps paid for here
+
+- **The driver's "zero clips = broken arm" validity check INVERTS on a scaled
+  arm**, where zero clips is the hoped-for result. Left uncorrected the campaign
+  would have reported its own success as a broken arm — the exact way a null
+  result gets manufactured. The scaled arm is validated from the recorded SCALE
+  VECTOR instead. Caught by running it, not reading it.
+- **`autofit.__file__` is not optional.** Running the driver without
+  `source activate.sh` resolved `autofit` to the INSTALLED stack and the arm died
+  on `AttributeError`. It only failed loudly because the symbol was new; a knob
+  that already existed would have silently run the wrong code.
+- **The library unit suite never executes `_fit`** (NumPy-only by house rule), so a
+  green suite proves nothing about a JAX search change. Verified separately
+  end-to-end: same optimum to ~1e-9 on/off, Prodigy's `d` estimates genuinely
+  differ, stored per-start params physical, clip count 2 -> 0 on a toy.
+- **Lint sweeps must be repo-wide.** Checking only the files a commit touched
+  declared clean while CI (which checks everything) stayed red on a second file.
+- **Per-lane diagnosis is impossible after the fact**: per-lane rows are stripped
+  from `samples.csv` by the weight threshold, and `search_internal` is deleted on
+  success. Capture per-lane params in the driver's existing spy if this is ever
+  wanted.
+- **A `SIGSTOP` corrupts the recorded wall time** — the driver's clock counts
+  paused time. Seed 1 recorded 5351 s for ~1850 s of compute.
+- **`lint.yml` installs `ruff` unpinned**, so a future ruff release can turn that
+  job red with no source change. Not fixed.
+
+## Corrections issued to earlier records
+
+- The step-scale spread on `imaging/mge` is **80x, not 40x** — the 40x counted the
+  `UniformPrior` widths alone; the Gaussian/TruncatedGaussian sigmas double it.
+- Phase 1's claim that "the MCMC samplers reject `-inf` proposals so the walker
+  stays put" is **wrong** for `UniformPrior` on the NumPy path — filed as
+  PyAutoFit#1484 (see below).
+
+## Spun out, deliberately not absorbed
+
+- **PyAutoFit#1484** — `UniformPrior` bounds are not enforced in the objective on
+  the NumPy path (`log_prior_from_value` returns `0.0` when `xp is np` without
+  evaluating the bound), so Emcee/Zeus/Drawer/LBFGS never see the `-inf` the
+  phase-1 record assumes they reject. Long-standing, not a regression: `git log -L`
+  puts the NumPy `0.0` at `be2dbd0c` (2025-11-30) and the JAX-strict `xp` dispatch
+  at `2e35407` (2026-05-14). Orthogonal — Emcee is immune to the step-scaling
+  problem (affine invariance) and fully exposed to this one.
+- **PyAutoFit#1481 narrowed** — every other search family already adapts
+  per-parameter scale (unit-cube proposals, affine invariance, Zeus `tune=True`,
+  NUTS `window_adaptation` mass matrix, L-BFGS curvature). The multi-start gradient
+  family is the sole exception because Adam rules normalise by GRADIENT magnitude,
+  not PARAMETER scale. Do not spend GPU budget re-testing Emcee.
+
+## Phase-3 (clipper default) consequence
+
+The "collapsed clip rate makes the default nearly free" argument is **unavailable**.
+The case rests on **constrained-optimizer semantics** instead: a search advertising
+hard prior support solves a CONSTRAINED problem, so a state outside support is
+infeasible, not merely poor. Recommendation carried forward: make hard-support
+enforcement the INTENDED default for gradient/MLE searches, validate across
+Adam/Lion/ADABelief first (they are MORE exposed — Adam steps ~lr in physical units
+in every coordinate, Lion exactly it), and never sell it as a long-budget accuracy
+gain. Keep the scaler and clipper separate regardless.
+
+## Open follow-ups (not rescues of this task)
+
+1. Bound `einstein_radius` away from 0 (`U(0.2, 8)`) — one arm, ~30 min, targets
+   the observed failure directly.
+2. `n_starts=64` on seed 1 — tests whether 16 lanes is simply too few for a 15-D
+   model, and yields the reliability curve. The strategic question behind it: if
+   this method needs 64+ lanes to be reliable, is it still faster than Nautilus,
+   which gets the right answer unaided?
+
+## Original prompt
+
 # Per-parameter step scaling for the gradient searches — treat the cause of prior exits
 
 Type: feature

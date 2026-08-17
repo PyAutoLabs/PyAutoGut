@@ -9,8 +9,8 @@ Autonomy: supervised
 Priority: high
 Status: formalised
 Issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1486
-Blocked-by: PyAutoFit claimed by `version-stamp-sync-guards` (PyAutoHands#235) — registered in
-  `planned.md`, not `active.md`. Re-run `worktree_check_conflict` before starting.
+Blocked-by: PyAutoFit claimed by `version-stamp-sync-guards` (PyAutoHands#235) — claimed under
+  `stored-sample-reconstruction-guard` in `active.md`. Re-run `worktree_check_conflict` before starting.
 
 ## What this is
 

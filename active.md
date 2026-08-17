@@ -1,5 +1,24 @@
 # Active Tasks
 
+## positions-lh-penalty-accumulation
+- issue: https://github.com/PyAutoLabs/PyAutoLens/issues/699
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/positions-lh-penalty-accumulation
+- repos:
+  - PyAutoLens: feature/positions-lh-penalty-accumulation
+- prompt: active/positions_lh_penalty_accumulation_bug.md
+- CONFLICT OVERRIDE (deliberate, 2026-08-17): `worktree_check_conflict` exits 1 — PyAutoLens is
+  also claimed by `version-stamp-sync-guards`. FILE-DISJOINT verified: that branch's only commit
+  (`be4c4c8b6`) touches `autolens/__init__.py` + `release.sh`; this task touches
+  `autolens/analysis/analysis/lens.py` + `test_autolens/`. Human-directed session ("get prs and
+  whatnot up", 2026-08-17). If that task starts touching `analysis/`, stop and re-coordinate.
+- summary: `log_likelihood_penalty_from` (`lens.py:163-181`) overwrites its accumulator then adds
+  the variable to itself → analysis subtracts 2x the LAST PositionsLH penalty and discards earlier
+  entries. Fix accumulation to a true sum, repin the 2 tests that encode the bug
+  (`test_analysis_imaging.py:101,:126` assert the same value for 1 and 2 penalties), add a
+  sum-of-penalties regression test, align docstring (keep 0.0-array return, not None).
+  CP-1 of the inference programme (plan §2.1); blocks all PositionsLH benchmarking.
+
 ## stored-sample-reconstruction-guard
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1486
 - status: library-dev

@@ -58,8 +58,8 @@ for _p in (str(_ROOT), str(_ROOT / "scripts" / "misc")):
 
 import autofit as af  # noqa: E402
 import numpy as np  # noqa: E402
-from autonerves import conf  # noqa: E402
 from autofit.non_linear.paths.directory import DirectoryPaths  # noqa: E402
+from autonerves import conf  # noqa: E402
 from searches._setup import build_for_cell  # noqa: E402
 
 # The structurally-immune reference: Nautilus samples in unit-cube coordinates,

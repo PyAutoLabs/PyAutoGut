@@ -80,3 +80,16 @@
   - PyAutoGalaxy: feature/version-stamp-sync-guards
   - PyAutoLens: feature/version-stamp-sync-guards
   - PyAutoHands: feature/version-stamp-sync-guards
+
+## tenant-firewall-drift-aug
+- issue: https://github.com/PyAutoLabs/PyAutoMind/issues/198
+- prompt: active/tenant-firewall-drift-aug.md
+- session: remote (phone/cloud) — planned on the laptop 2026-08-17, execution handed off; no local worktree by design.
+- status: library-dev
+- worktree: none (remote execution; cloud sessions branch in-clone)
+- repos:
+  - PyAutoMind: feature/tenant-firewall-drift-aug (not yet created)
+  - PyAutoBrain: feature/tenant-firewall-drift-aug (not yet created)
+  - PyAutoHeart: feature/tenant-firewall-drift-aug (not yet created)
+- hands-unclaimed: the PyAutoHands leg (test_pre_build_staging.py derivation + tests.yml gate) is deliberately NOT a claim bullet — PyAutoHands is claimed by version-stamp-sync-guards (PyAutoHands#235, entry above). Land the Hands leg after #235 merges, or on its own branch with a rebase check; do not touch the version-stamp files.
+- scope: Phase A refactor-first clear of the 9 tenant-firewall mismatches (extract heart/smoke.py table to Heart config, genericise 5 test fixtures, derive Hands test from SPECS, allowlist only 2) + Phase B PR-time firewall gates (--only selector in repos_sync.py; gate steps in Brain/Heart/Hands/Mind CI). Phase C (repos_sync --write stamper) filed separately, not built here. Full detail on #198.

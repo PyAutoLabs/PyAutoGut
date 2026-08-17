@@ -167,7 +167,7 @@
 - issue: https://github.com/PyAutoLabs/PyAutoMind/issues/198
 - prompt: active/tenant-firewall-drift-aug.md
 - session: remote (phone/cloud) — planned on the laptop 2026-08-17, execution handed off; no local worktree by design.
-- status: prs-open — merge order: PyAutoMind#199 → PyAutoBrain#229 + PyAutoHeart#147 → PyAutoMind#200 (gate workflow, stacked on #199; the organ gate steps need #199 on main first). Hands leg deferred behind PyAutoHands#235 (checklist on #198).
+- status: MERGED 2026-08-17T23:13Z — all four PRs on the canonical mains, each green at merge (order held: PyAutoMind#199 → PyAutoBrain#229 + PyAutoHeart#147 → PyAutoMind#200). Main runs verified green post-merge (Brain tests + gate, Heart tests + gate, Mind Tenant Firewall Gate). Remaining before completion: the PyAutoHands leg (blocked on PyAutoHands#235 — checklist on #198) and Heart's next local tick dropping the tenant-firewall YELLOW reason.
 - worktree: none (remote execution; cloud sessions branch in-clone)
 - repos:
   - PyAutoMind: feature/tenant-firewall-drift-aug (https://github.com/PyAutoLabs/PyAutoMind/pull/199) + feature/tenant-firewall-drift-aug-gate (https://github.com/PyAutoLabs/PyAutoMind/pull/200 — split so every PR in the arc merges green; see #198)

@@ -59,7 +59,7 @@
   "workspace validation not passing (1 failed, cloud#31992749671: autogalaxy notebooks/guides/samples.ipynb)";
   "manifest drift: tenant firewall (organ code) — 9 mismatch(es) vs PyAutoMind/repos.yaml";
   "release validation incomplete: no rehearsal for current source". Ack does NOT extend to new reasons.
-- prompt: draft/bug/autofit/to_instance_guard_gap.md
+- prompt: active/to_instance_guard_gap.md
 - CONFLICT OVERRIDE (deliberate, 2026-08-17): `worktree_check_conflict` exits 1 — PyAutoFit is also
   claimed by `version-stamp-sync-guards` (PyAutoHands#235). Proceeding was authorized by the human
   after verifying the two are FILE-DISJOINT: that branch's only commit (`9ec8a3877`) touches
@@ -151,6 +151,7 @@
 
 ## version-stamp-sync-guards
 - issue: https://github.com/PyAutoLabs/PyAutoHands/issues/235
+- prompt: active/version_stamp_sync_and_release_sed_guards.md
 - session: claude --resume d73342fb-c33f-4028-8741-30cbe0c856a3
 - status: pr-open (https://github.com/PyAutoLabs/PyAutoLens/pull/700)
 - worktree: ~/Code/PyAutoLabs-wt/version-stamp-sync-guards

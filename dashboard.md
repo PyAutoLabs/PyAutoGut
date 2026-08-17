@@ -10,7 +10,7 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 |-------|------:|
 | [In flight](#in-flight) (`active/`) | 9 |
 | [Parked](#parked) (`parked.md`) | 6 |
-| [Planned](#planned) (`planned.md`) | 8 |
+| [Planned](#planned) (`planned.md`) | 7 |
 | [Backlog](#backlog) (`draft/`) | 141 |
 
 Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3Aissue+is%3Aopen&type=issues) · [open pull requests](https://github.com/search?q=org%3APyAutoLabs+is%3Apr+is%3Aopen&type=prs)
@@ -79,9 +79,8 @@ Started or scoped, not currently in flight — resume by moving the row back to 
 Scoped but not started; some are not yet prompt files. Full detail in [`planned.md`](planned.md).
 
 <details>
-<summary><b>8</b> task(s)</summary>
+<summary><b>7</b> task(s)</summary>
 
-- **stored-sample-reconstruction-guard** — [issue #1486](https://github.com/PyAutoLabs/PyAutoFit/issues/1486) — BLOCKED on a worktree conflict — plan approved and issue filed 2026-08-17, no source touched
 - **isothermal-ell-sph-oversampling-at-the-cusp** — planned — NOT yet a prompt file; file one via `/intake` before starting
 - **remote-mcp-deployment-tiers** — [issue #20](https://github.com/PyAutoLabs/autofit_assistant/issues/20) — DESIGN-COMPLETE, build BLOCKED-ON-DEMAND — issue #20 holds the full auth/transport/hosting design + Richard/PyAutoMCP…
 - **samples-parameter-paths** — [issue #1327](https://github.com/PyAutoLabs/PyAutoFit/issues/1327) — parked

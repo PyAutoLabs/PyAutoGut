@@ -11,14 +11,15 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 | [In flight](#in-flight) (`active/`) | 7 |
 | [Parked](#parked) (`parked.md`) | 6 |
 | [Planned](#planned) (`planned.md`) | 7 |
-| [Backlog](#backlog) (`draft/`) | 140 |
+| [Backlog](#backlog) (`draft/`) | 142 |
 
 Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3Aissue+is%3Aopen&type=issues) · [open pull requests](https://github.com/search?q=org%3APyAutoLabs+is%3Apr+is%3Aopen&type=prs)
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 34
+**Highest priority** (filed as `high`) — showing 12 of 35
 
+- [`@to_instance` materializes stored samples with no `FitException` guard](draft/bug/autofit/to_instance_guard_gap.md) — autofit · small · supervised · high
 - [pre_build stages untracked files, publishing uncommitted human work](draft/bug/pyautohands/pre_build_stages_untracked_wip.md) — pyautohands · small · supervised · high
 - [TRIAGE: needs manual review before routing](draft/triage/jax_zero_contour.md) — medium · safe · high
 - [UniformPrior bounds are not enforced in the objective on the](draft/bug/autofit/uniform_prior_bounds_unenforced_on_numpy_path.md) — autofit · medium · human-required · high
@@ -30,7 +31,6 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 - [Release does not sync __version__ stamps and workspace pins back](draft/bug/pyautobuild/release_version_sync_back_to_main.md) — pyautobuild · medium · supervised · high
 - [Make draft/ staleness detectable — `intake reconcile` measured, and the](draft/feature/pyautomind/draft_staleness_detection_signals.md) — pyautomind · medium · supervised · high
 - [LACosmic per-frame CR masking option + decouple PSF-star pass from](draft/feature/pyautoreduce/lacosmic_cr_option_and_star_pass_decoupling.md) — pyautoreduce · medium · supervised · high
-- [Cluster package: point-source-default narrative + extended-source follow-up feature](draft/docs/workspaces/cluster_regime_narrative.md) — workspaces · medium · supervised · high
 
 **Quick wins** (small enough, and safe enough to run unattended)
 
@@ -92,11 +92,12 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**140** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**142** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
-<summary><b>bug</b> — 41</summary>
+<summary><b>bug</b> — 42</summary>
 
+- [`@to_instance` materializes stored samples with no `FitException` guard](draft/bug/autofit/to_instance_guard_gap.md) — autofit · small · supervised · high
 - [pre_build stages untracked files, publishing uncommitted human work](draft/bug/pyautohands/pre_build_stages_untracked_wip.md) — pyautohands · small · supervised · high
 - [UniformPrior bounds are not enforced in the objective on the](draft/bug/autofit/uniform_prior_bounds_unenforced_on_numpy_path.md) — autofit · medium · human-required · high
 - [`ell_comps` magnitude validation REDs the workspace-smoke and python-matrix channels](draft/bug/autogalaxy/ell_comps_magnitude_validation_reds_two_scheduled_channels.md) — autogalaxy · medium · supervised · high
@@ -175,7 +176,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>maintenance</b> — 21</summary>
+<summary><b>maintenance</b> — 22</summary>
 
 - [autolens_workspace_developer rectangular experiments — Gut stash + rename](draft/maintenance/autolens_workspace_developer/rectangular_experiments_gut_stash.md) — autolens_workspace_developer · small · supervised · normal
 - [PyAutoFit CLI-noise batch: unclosed search.log handler + four small warning](draft/maintenance/pyautofit/cli_noise_pyautofit_batch.md) — pyautofit · small · safe · normal
@@ -191,6 +192,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 - [autolens_profiling is now a mature project, with a good separation](draft/maintenance/autolens_profiling/polish.md) — autolens_profiling · large · supervised · normal
 - [Auto-request GitHub Copilot code review on every PR, org-wide](draft/maintenance/ci/copilot_auto_review.md) — ci · large · supervised · normal
 - [autolens_workspace](draft/maintenance/workspaces/read_through_issues.md) — workspaces · too-large · supervised · normal
+- [Tenant-firewall drift: 9 mismatches vs repos.yaml (Aug 2026)](draft/maintenance/pyautomind/tenant-firewall-drift-aug.md) — pyautomind · easy · supervised · normal
 - [dataset/imaging/jwst_lw is untracked because the gitignore was never extended for](draft/maintenance/autolens_profiling/jwst_lw_untracked_gitignore_gap.md) — autolens_profiling · small · supervised · low
 - [cosmos_web_ring stores boolean masks as float64, wasting ~3.4 MB of](draft/maintenance/autolens_workspace/cosmos_web_ring_mask_dtype.md) — autolens_workspace · small · supervised · low
 - [LaTeX in non-raw docstrings emits SyntaxWarning: invalid escape sequence](draft/maintenance/autolens_workspace/latex_docstrings_invalid_escape_warnings.md) — autolens_workspace · small · supervised · low

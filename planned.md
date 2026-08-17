@@ -1,3 +1,29 @@
+## stored-sample-reconstruction-guard
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1486
+- prompt: draft/bug/autofit/to_instance_guard_gap.md
+- status: BLOCKED on a worktree conflict — plan approved and issue filed 2026-08-17, no source touched
+- filed: 2026-08-17
+- classification: bug (PyAutoFit) — library-only, small
+- suggested-branch: feature/stored-sample-reconstruction-guard
+- blocked-by: PyAutoFit is claimed by task `version-stamp-sync-guards` (PyAutoHands#235), worktree
+  `~/Code/PyAutoLabs-wt/version-stamp-sync-guards`, registered 2026-08-17 17:09 by a concurrent session.
+  The two changes are almost certainly file-disjoint (version stamps vs `autofit/non_linear/samples/`),
+  so this should unblock as soon as #235 ships — re-run `worktree_check_conflict` before starting.
+- summary: `Sample.instance_for_model(ignore_assertions=True)` and the shared `to_instance` decorator
+  materialize stored samples with no `FitException` recovery, so a sample the model no longer accepts
+  raises through to the user. Fails PyAutoHeart Workspace Smoke every scheduled night on
+  `autogalaxy_workspace notebooks/guides/results/aggregator/samples.ipynb`; holds Heart's
+  `workspace validation not passing` reason open. #1466 established the contract but hand-wrote it at
+  two call sites only. Reproduced locally end-to-end under the resolved smoke env AND under a
+  production-like JAX run (1-2 invalid samples per 300, all at weight 0.0).
+- split-out: https://github.com/PyAutoLabs/PyAutoFit/issues/1487 — the weight-threshold prune does not
+  remove zero-weight samples even with checks enabled. Different blast radius (every saved samples.csv).
+  If that is repaired first, this bug's trigger becomes much rarer but the contract gap remains real.
+- do-not: do NOT weaken PyAutoGalaxy `validate_ell_comps`, and do NOT edit the tutorial to route around
+  it. Test mode is NOT implicated — `ENV: real_search` releases `PYAUTO_TEST_MODE`; verified, do not re-open.
+- affected-repos:
+  - PyAutoFit
+
 ## isothermal-ell-sph-oversampling-at-the-cusp
 - status: planned — NOT yet a prompt file; file one via `/intake` before starting
 - found: 2026-08-09, while pinning B10 of the @rhayes777 audit (`complete/2026/08/autogalaxy-profile-validation-guards.md`)

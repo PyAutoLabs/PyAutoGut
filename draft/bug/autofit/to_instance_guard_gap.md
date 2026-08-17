@@ -8,6 +8,9 @@ Difficulty: small
 Autonomy: supervised
 Priority: high
 Status: formalised
+Issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1486
+Blocked-by: PyAutoFit claimed by `version-stamp-sync-guards` (PyAutoHands#235) — registered in
+  `planned.md`, not `active.md`. Re-run `worktree_check_conflict` before starting.
 
 ## What this is
 
@@ -195,8 +198,9 @@ explains it under smoke (`samples.py:505-506` nulls the threshold) but **not**
 the checks-on run. Suspect: the early `return` on `FitException` at
 `updater.py:212-215`, which skips the prune entirely — unconfirmed.
 
-Filed separately: different blast radius (every saved `samples.csv`, not just
-this tutorial). If that prune is repaired, invalid zero-weight samples stop
+Filed separately as
+[PyAutoFit#1487](https://github.com/PyAutoLabs/PyAutoFit/issues/1487):
+different blast radius (every saved `samples.csv`, not just this tutorial). If that prune is repaired, invalid zero-weight samples stop
 being stored and this bug's trigger becomes much rarer — but the contract gap
 above is still real, because a converged fit can carry an invalid sample at
 non-zero weight.

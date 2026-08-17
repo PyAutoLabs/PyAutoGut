@@ -272,3 +272,197 @@ At 105 steps on GPU/fp64 the clipped arm was **114 nats** closer to the bar than
 the unclipped one; by 3000 steps that advantage is gone and the two agree exactly.
 So clipping does buy convergence *rate* at short budgets, and nothing at long
 ones. Any statement about this fix has to name the step budget it was measured at.
+
+---
+
+# Phase 3 (cause side): per-parameter step scaling — FALSIFIED
+
+`ScalerPriorWidth` (PyAutoFit#1483) gives every parameter its own step scale,
+derived from its prior and applied as a linear change of variables `phi = theta/s`
+with the objective still evaluated at the physical `theta = s * phi`. It was built
+to treat the **cause** diagnosed in the section above: steps that are sensible for
+a wide prior are wall-crossings for a narrow one.
+
+**It does not work on this cell.** Three of the four pre-registered falsification
+conditions fired. This section records that plainly rather than re-scoping to save
+the idea, per the pre-registration.
+
+## The side-by-side
+
+`multi_start_prodigy`, `imaging/mge`, `hst`, 16 starts x 3000 steps, seeds 0 and
+1, JAX float64, `check_for_convergence=False`. The clipper is **on** in the scaled
+arm, so the clip rate is a clean diagnostic rather than a confound. Truth bar:
+Nautilus `31786.782462488976`; a negative gap means the MAP optimizer exceeded it.
+
+| arm | seed | max_log_likelihood | gap to bar | value-NaN | clips | clip rate | alive frac | pinned lanes | pinned coords |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| `none` | 0 | 31787.929 | **-1.146** | 31655 | 0 | — | 0.341 | — | — |
+| `none` | 1 | -139485.799 | 171272.581 | 27870 | 0 | — | 0.419 | — | — |
+| `prior_box` | 0 | 31787.929 | **-1.146** | 2 | 15142 | 31.55% | 1.000 | 6/16 | 19 |
+| `prior_box` | 1 | -120880.568 | 152667.350 | 0 | 15744 | 32.80% | 1.000 | 4/16 | 6 |
+| `prior_box_reset` | 0 | 31787.929 | **-1.146** | 2523 | 18611 | 38.77% | 0.947 | 7/16 | 30 |
+| `prior_box_reset` | 1 | -137783.609 | 169570.391 | 0 | 8798 | 18.33% | 1.000 | 4/16 | 18 |
+| **`prior_box_scaled`** | **0** | **31785.186** | **+1.597** | 3215 | 15097 | **31.45%** | 0.933 | 6/16 | 6 |
+| **`prior_box_scaled`** | **1** | **-145975.777** | **177762.560** | 5884 | 18487 | **38.51%** | 0.877 | 3/16 | 8 |
+
+## Against the pre-registered readouts
+
+**1. "Clip rate collapses" — FAILED, and this was the primary readout.**
+Seed 0: 31.55% -> **31.45%**. That is not a collapse, it is a 0.3% change — the
+two runs clip at the same rate to three significant figures. Seed 0 clips
+15,142 times unscaled and 15,097 times scaled. Seed 1 goes the **wrong way**:
+32.80% -> 38.51%.
+
+The pre-registration is explicit about what this means: *"Clip rate does not fall
+-> the diagnosis in this prompt is wrong, and the wall contact is not a step-scale
+effect. Say so; do not re-scope to save the idea."*
+
+**2. "Seed 0 must not regress past 31787.929" — FAILED.** It lands at
+**31785.186**, which no longer beats the Nautilus bar (gap `+1.597` where every
+other arm reaches `-1.146`). Small in absolute terms, but it is the one arm in the
+whole campaign that fails to exceed the reference, and the pre-registration reads
+that as *"the preconditioner is fighting Prodigy's own `d` estimate."*
+
+**3. "Seed 1 moves materially toward the bar" — FAILED, it moved away.**
+-145975.777 against plain clipping's -120880.568: **25,095 nats worse**, and worse
+even than the unclipped baseline's -139485.799. This was the test the whole line of
+work was looking for and the answer is negative.
+
+**4. "Pinned lanes fall" — mixed, and the one place scaling did something.**
+Lanes pinned: 6/16 -> 6/16 (seed 0), 4/16 -> 3/16 (seed 1). But pinned
+*coordinates* fall sharply on seed 0: **19 -> 6**. The same number of lanes are
+pinned, in a third as many coordinates each. Scaling did change *where* lanes meet
+walls; it did not change *how often*.
+
+**5. "Wall time does not rise materially" — INCONCLUSIVE, do not cite it.**
+Recorded 1841 s (seed 0) and 5351 s (seed 1) against a 1255/1251 s baseline. **The
+seed-1 number is invalid**: the run was deliberately `SIGSTOP`ed for ~58 minutes
+mid-arm to free the laptop, and the driver's wall clock counts that. Corrected for
+the two pause gaps (3501 s of excess between steps 2140-2150 and 2160-2170 in the
+run log) it is ~1850 s. That leaves a consistent ~+47% on both seeds — but the
+baseline rows were measured in a **different session on a laptop GPU**, and
+within-session spread in that same baseline was already +39% (`prior_box` 1255 s
+vs `prior_box_reset` 1744 s on seed 0). A cross-session laptop wall-time
+comparison at this precision is not evidence. A diagonal multiply should still be
+free; if the cost is real it needs a same-session A/B to establish.
+
+## Why it fails: normalisation conserves the thing being measured
+
+The most striking number above is that seed 0 clips 15,142 times unscaled and
+15,097 times scaled — a 0.3% difference across 48,000 lane-steps. That is too
+close to be luck, and it points at the mechanism.
+
+The scale vector is **normalised to a geometric mean of exactly 1**, a choice made
+so that only the *ratios* between coordinates change and the A/B is not confounded
+with an effective learning-rate change. But the aggregate propensity to reach a
+wall is set by the *global* step magnitude relative to the box widths — and that
+is precisely the quantity the normalisation holds fixed.
+
+So scaling **redistributes** wall contact rather than reducing it. Before, narrow
+coordinates reached their walls quickly and wide ones essentially never did. After,
+the step-to-width ratio is equalised, so every coordinate reaches its wall at the
+same intermediate rate. The total is conserved. The `pinned_coords` 19 -> 6 on seed
+0 is that redistribution showing up directly.
+
+Read that way the experiment, as designed, **could not** have produced a clip-rate
+collapse. The design choice that made the comparison clean is the same one that
+pinned the primary readout in place.
+
+The measured scale vector (15 parameters, geometric mean 1.0):
+
+```
+0.597 0.597 0.895 0.895 0.298 0.298 0.895 0.895 23.871 1.790 1.790 0.895 0.895 0.895 0.895
+```
+
+**Correction to this note's own earlier claim:** the spread is **80x**, not the
+40x quoted in "Why the rescued lanes contribute nothing". 40x counted the
+`UniformPrior` widths alone (`einstein_radius` 8.0 against `bulge.centre` 0.2);
+including the Gaussian and TruncatedGaussian sigmas doubles it. `einstein_radius`
+sits at 23.9 against a 0.298 floor.
+
+## Scaling also undoes clipping's one clear win
+
+Plain clipping drove value-NaN lane-steps to **2** (seed 0) and **0** (seed 1) —
+the cleanest effect in the whole campaign. The scaled arm puts them back:
+**3215** and **5884**, with the alive fraction falling from 1.000 to 0.933/0.877.
+
+Those deaths happen with the clipper **on**, so the lanes are inside their prior
+boxes: it is the *likelihood* going non-finite, not the prior. Scaling moves lanes
+onto trajectories that enter the genuinely NaN regions of this likelihood — the
+`ell_comps`/shear degeneracies #128 identified. So the change is not merely
+ineffective, it costs a property that was already won.
+
+## Verdict
+
+**Do not ship `ScalerPriorWidth` as a default, and do not pursue prior-width
+scaling further on the strength of this cell.** It ships default-off so this row
+stays reproducible, exactly as `reset_momentum_on_clip` did, and for the same
+reason: the measurement is the artefact worth keeping, not the feature.
+
+The diagnosis behind it was *half* right. The 80x step-scale/box-width mismatch is
+real and measured. What is now falsified is the inference that **equalising** it
+reduces wall contact. On this evidence wall contact is a step-**size** effect, not
+a step-**shape** effect: to clip less you must take smaller steps relative to the
+boxes, and redistributing a fixed global step among coordinates cannot do it.
+
+That is a hypothesis this campaign has **not** tested and it must not be presented
+as a rescue of this one. It would need its own pre-registration, and it directly
+trades against convergence rate, which is the reason the normalisation was there in
+the first place.
+
+## What this settles for the clipper default
+
+This arm was meant to feed the phase-3 decision by showing that a collapsed clip
+rate makes defaulting the clipper on nearly free. **It does not show that**, so
+that argument is unavailable.
+
+The case for the default therefore rests where it always more properly did — on
+**constrained-optimizer semantics** rather than on accuracy or cost. A search
+advertising a posterior with hard prior support is solving a *constrained*
+problem; a state outside that support is **infeasible**, not merely a poor
+candidate. Projection onto the box does not alter the constrained optimum, makes
+that invariant explicit, prevents silent invalid trajectories, stops prior exits
+masking later pathologies, and is what makes the lane diagnostics interpretable at
+all. This campaign's own numbers support that framing and not an accuracy one: at
+3000 steps clipping changes the answer by nothing at all.
+
+The remaining blocker is **empirical breadth, not mathematics**. Everything
+measured here is `MultiStartProdigy` on one lens cell, while `MultiStartAdam`,
+`MultiStartLion` and `MultiStartADABelief` are unmeasured — and they are *more*
+exposed to prior exits, not less: Adam's update is `lr * m_hat / (sqrt(v_hat) +
+eps)` with `m_hat/sqrt(v_hat) ~ 1`, so it steps by roughly `lr` in **physical**
+units in every coordinate, and Lion, being sign-based, by exactly `lr`.
+
+Recommendation: make hard-support enforcement the **intended** default for the
+gradient/MLE searches, validate it across the other gradient rules before
+flipping, and do not sell it as a long-budget accuracy improvement.
+
+Keep the scaler and the clipper as separate features regardless. Even had the clip
+rate collapsed to 0.1%, projection would stay as the last-line invariant.
+
+## Reproducing this arm
+
+```bash
+source ~/Code/PyAutoLabs-wt/per-parameter-step-scaling/activate.sh
+python -c "import autofit; print(autofit.__file__)"   # MUST be the task checkout
+
+PYAUTO_SKIP_API_GATE=1 SEARCHES_DISABLE_VIZ=1 \
+JAX_PLATFORM_NAME=cuda JAX_PLATFORMS=cuda,cpu \
+XLA_PYTHON_CLIENT_MEM_FRACTION=0.5 JAX_ENABLE_X64=True \
+~/venv/PyAutoGPU/bin/python scripts/misc/searches/clipper_campaign.py \
+  --sampler multi_start_prodigy --arms prior_box_scaled --seeds 0,1 \
+  --n-starts 16 --n-steps 3000 --out /tmp/gpu_out
+```
+
+Two traps this arm added to the pile:
+
+- **`autofit.__file__` is not optional.** Run without sourcing `activate.sh` and
+  `autofit` resolves to the *installed* stack, where `ScalerPriorWidth` does not
+  exist; the arm dies on `AttributeError` rather than silently mismeasuring, but
+  only because the symbol is new. A knob that already existed would have run the
+  wrong code.
+- **The driver's "zero clips = broken arm" check inverts on a scaled arm**, where
+  zero clips is the *hoped-for result*. Left uncorrected the campaign would have
+  reported its own success as a broken arm — the exact way a null result is
+  manufactured. The scaled arm is validated from the recorded **scale vector**
+  (non-trivial spread) instead of the clip count.

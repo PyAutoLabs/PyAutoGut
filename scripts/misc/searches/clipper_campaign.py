@@ -69,17 +69,29 @@ TRUTH_BAR = {
     ("imaging", "mge", "hst"): 31786.782462488976,
 }
 
-# arm -> (clipper factory, extra search kwargs).
+# arm -> (clipper factory, extra-search-kwargs factory).
 #
-# `prior_box_reset` is the third arm the campaign calls for: projection alone
+# Both halves are FACTORIES, called per run rather than shared. The extras used
+# to be literal dicts, which was safe only because every value in them was a
+# bool; `prior_box_scaled` puts a strategy OBJECT in there, and a module-level
+# instance silently shared by two arms of the same sweep is the kind of thing
+# that only bites once a strategy becomes stateful.
+#
+# `prior_box_reset` is the third arm the campaign called for: projection alone
 # leaves a clipped lane holding the velocity that took it out of the box, so it
-# is re-projected onto the same bound every step. The prototype left 5/16 lanes
-# pinned that way and the first CPU arm pair left 11/16, which is what makes
-# this arm decisive rather than optional.
+# is re-projected onto the same bound every step. Measured at 16x3000 it does NOT
+# pay off (deaths 2 -> 2523, one more lane pinned, +39% wall on seed 0) and the
+# campaign recommends against it; it stays here so that row is reproducible.
+#
+# `prior_box_scaled` is the CAUSE-side arm (PyAutoFit#1483). The clipper stays ON
+# in it deliberately: the two features are complementary, and with clipping on
+# the clip RATE becomes the direct measure of whether steps are now commensurate
+# with prior widths. An arm with the clipper off would confound the two.
 ARMS = {
-    "none": (af.ClipperNone, {}),
-    "prior_box": (af.ClipperPriorBox, {}),
-    "prior_box_reset": (af.ClipperPriorBox, {"reset_momentum_on_clip": True}),
+    "none": (af.ClipperNone, dict),
+    "prior_box": (af.ClipperPriorBox, dict),
+    "prior_box_reset": (af.ClipperPriorBox, lambda: {"reset_momentum_on_clip": True}),
+    "prior_box_scaled": (af.ClipperPriorBox, lambda: {"scaler": af.ScalerPriorWidth()}),
 }
 
 
@@ -194,7 +206,7 @@ def run_arm(
         number_of_cores=1,
         convergence=af.MultiStartGradientConvergence(check_for_convergence=False),
         clipper=ARMS[arm][0](),
-        **ARMS[arm][1],
+        **ARMS[arm][1](),
     )
     # Prodigy is learning-rate-FREE: it estimates its own step scale and its
     # `_default_learning_rate` is None. Passing a rate would override that
@@ -235,6 +247,16 @@ def run_arm(
         "n_constrained_lane_steps": captured.get("n_constrained_lane_steps"),
         "n_clipped_lane_steps": captured.get("n_clipped_lane_steps"),
         "n_resurrections": captured.get("n_resurrections"),
+        # The per-parameter step scale the search actually derived, so the arm's
+        # numbers can be read against the vector that produced them rather than
+        # against a rule re-derived by hand months later. `None` on the unscaled
+        # arms, which is the honest record: they had no scale, as opposed to a
+        # scale of all ones that was computed and applied.
+        "scale": (
+            [float(s) for s in np.asarray(captured["scale"])]
+            if captured.get("scale") is not None
+            else None
+        ),
         "wall_s": round(wall, 2),
         # What the search itself reported, kept alongside the captured dict so a
         # disagreement between the two is visible in the artefact rather than
@@ -295,6 +317,29 @@ def run_arm(
                 f"{row['n_clipped_lane_steps']!r} on an all-Gaussian-prior model. "
                 f"ClipperPriorBox must be a no-op where no prior is bounded — the "
                 f"bounds extraction is wrong"
+            )
+    elif arm == "prior_box_scaled":
+        # The expectation inverts again, and for a THIRD reason. On a scaled arm
+        # zero clips is the hoped-for RESULT — the whole point is that steps
+        # become commensurate with prior widths so lanes stop reaching walls — so
+        # the clip count cannot double as the proof that the arm ran. It has to
+        # be proved from the scale vector instead: the arm is exercised iff a
+        # non-trivial scale was actually derived and applied.
+        #
+        # Without this the campaign would report its own success as a broken arm,
+        # which is precisely the way a null result gets manufactured.
+        scale = row.get("scale")
+        if not scale:
+            problems.append(
+                "no scale vector recorded: the scaler never ran, so this arm "
+                "tests nothing (check that `autofit.__file__` resolves to the "
+                "task checkout — ScalerPriorWidth is unreleased)"
+            )
+        elif max(scale) / min(scale) < 1.5:
+            problems.append(
+                f"scale spread is only {max(scale) / min(scale):.3f}x: the "
+                f"derived scale is effectively uniform, so this arm is not "
+                f"testing per-parameter scaling on this model"
             )
     elif arm != "none" and not row["n_clipped_lane_steps"]:
         problems.append(

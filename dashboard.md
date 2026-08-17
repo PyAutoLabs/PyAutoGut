@@ -8,10 +8,10 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 7 |
+| [In flight](#in-flight) (`active/`) | 8 |
 | [Parked](#parked) (`parked.md`) | 6 |
 | [Planned](#planned) (`planned.md`) | 7 |
-| [Backlog](#backlog) (`draft/`) | 142 |
+| [Backlog](#backlog) (`draft/`) | 141 |
 
 Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3Aissue+is%3Aopen&type=issues) · [open pull requests](https://github.com/search?q=org%3APyAutoLabs+is%3Apr+is%3Aopen&type=prs)
 
@@ -19,7 +19,7 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 
 **Highest priority** (filed as `high`) — showing 12 of 35
 
-- [`@to_instance` materializes stored samples with no `FitException` guard](draft/bug/autofit/to_instance_guard_gap.md) — autofit · small · supervised · high
+- [Reconstructing a stored sample raises through `ignore_assertions=True`](draft/bug/autofit/to_instance_guard_gap.md) — autofit · small · supervised · high
 - [pre_build stages untracked files, publishing uncommitted human work](draft/bug/pyautohands/pre_build_stages_untracked_wip.md) — pyautohands · small · supervised · high
 - [TRIAGE: needs manual review before routing](draft/triage/jax_zero_contour.md) — medium · safe · high
 - [UniformPrior bounds are not enforced in the objective on the](draft/bug/autofit/uniform_prior_bounds_unenforced_on_numpy_path.md) — autofit · medium · human-required · high
@@ -40,7 +40,6 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 - [Silence the three autonerves-rooted CLI-noise sources (fits leak, pytest collection,](draft/maintenance/pyautonerves/cli_noise_autonerves_batch.md) — pyautonerves · small · safe · normal
 - [add-vincken-2026-wiki-and-cite-in-euclid](draft/docs/workspaces/add_vincken_2026_wiki_and_cite_in_euclid.md) — workspaces · small · safe · normal
 - [`add_notebook_quotes` mistakes a code string literal's closing delimiter for a](draft/bug/hands/notebook_quotes_string_literal_closing_delimiter.md) — hands · small · safe · low
-- [PyAutoNerves committed version stamp behind sibling consensus](draft/maintenance/libraries/nerves_version_stamp_behind_consensus.md) — libraries · small · safe · low
 - [Markdown renderings batch 2a — leftovers (ellipse/modeling + PNG size)](draft/docs/pyautobuild/markdown_renderings_2a_leftovers.md) — pyautobuild · small · safe · low
 - [Raw-string the LaTeX docstrings emitting SyntaxWarnings (HowToFit + HowToLens)](draft/maintenance/workspaces/latex_raw_string_docstrings.md) — workspaces · small · safe · low
 - [Refresh the stale `.script_sizes.json` snapshot in @autolens_workspace](draft/maintenance/workspaces/script_sizes_snapshot_drift.md) — workspaces · small · safe · low
@@ -56,6 +55,7 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 - [Find what kills MGE multi-start lanes — it is not](active/mge_lane_death.md) — [issue #128](https://github.com/PyAutoLabs/autolens_profiling/issues/128) — CAUSE FOUND 2026-08-15 (cloud CPU session) — written up on autolens_profiling#128. Remaining: GPU/float64/multi-seed…
 - [PyAutoReduce validation: slacs1430+4105 ACS reduction vs trusted legacy dataset](active/pyautoreduce_slacs1430_acs_comparison.md)
 - [Research profiling experiment in the autolens_profiling repo](active/research_profiling_experiment_in_the_autolens_pr.md) — [issue #82](https://github.com/PyAutoLabs/autolens_profiling/issues/82)
+- [Version-stamp sync to 2026.8.17.1 + release-sed guards](active/version_stamp_sync_and_release_sed_guards.md)
 
 ## Parked
 
@@ -92,12 +92,12 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**142** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**141** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 42</summary>
 
-- [`@to_instance` materializes stored samples with no `FitException` guard](draft/bug/autofit/to_instance_guard_gap.md) — autofit · small · supervised · high
+- [Reconstructing a stored sample raises through `ignore_assertions=True`](draft/bug/autofit/to_instance_guard_gap.md) — autofit · small · supervised · high
 - [pre_build stages untracked files, publishing uncommitted human work](draft/bug/pyautohands/pre_build_stages_untracked_wip.md) — pyautohands · small · supervised · high
 - [UniformPrior bounds are not enforced in the objective on the](draft/bug/autofit/uniform_prior_bounds_unenforced_on_numpy_path.md) — autofit · medium · human-required · high
 - [`ell_comps` magnitude validation REDs the workspace-smoke and python-matrix channels](draft/bug/autogalaxy/ell_comps_magnitude_validation_reds_two_scheduled_channels.md) — autogalaxy · medium · supervised · high
@@ -176,7 +176,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>maintenance</b> — 22</summary>
+<summary><b>maintenance</b> — 21</summary>
 
 - [autolens_workspace_developer rectangular experiments — Gut stash + rename](draft/maintenance/autolens_workspace_developer/rectangular_experiments_gut_stash.md) — autolens_workspace_developer · small · supervised · normal
 - [PyAutoFit CLI-noise batch: unclosed search.log handler + four small warning](draft/maintenance/pyautofit/cli_noise_pyautofit_batch.md) — pyautofit · small · safe · normal
@@ -196,7 +196,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 - [dataset/imaging/jwst_lw is untracked because the gitignore was never extended for](draft/maintenance/autolens_profiling/jwst_lw_untracked_gitignore_gap.md) — autolens_profiling · small · supervised · low
 - [cosmos_web_ring stores boolean masks as float64, wasting ~3.4 MB of](draft/maintenance/autolens_workspace/cosmos_web_ring_mask_dtype.md) — autolens_workspace · small · supervised · low
 - [LaTeX in non-raw docstrings emits SyntaxWarning: invalid escape sequence](draft/maintenance/autolens_workspace/latex_docstrings_invalid_escape_warnings.md) — autolens_workspace · small · supervised · low
-- [PyAutoNerves committed version stamp behind sibling consensus](draft/maintenance/libraries/nerves_version_stamp_behind_consensus.md) — libraries · small · safe · low
 - [Raw-string the LaTeX docstrings emitting SyntaxWarnings (HowToFit + HowToLens)](draft/maintenance/workspaces/latex_raw_string_docstrings.md) — workspaces · small · safe · low
 - [Regenerate setup_notebook-drifted notebooks in autogalaxy/autofit/HowToFit workspaces](draft/maintenance/workspaces/notebook_setup_notebook_drift_siblings.md) — workspaces · small · supervised · low
 - [Refresh the stale `.script_sizes.json` snapshot in @autolens_workspace](draft/maintenance/workspaces/script_sizes_snapshot_drift.md) — workspaces · small · safe · low

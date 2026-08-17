@@ -1,5 +1,33 @@
 # Active Tasks
 
+## stored-sample-reconstruction-guard
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1486
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/stored-sample-reconstruction-guard
+- repos:
+  - PyAutoFit: feature/stored-sample-reconstruction-guard
+- prompt: draft/bug/autofit/to_instance_guard_gap.md
+- CONFLICT OVERRIDE (deliberate, 2026-08-17): `worktree_check_conflict` exits 1 — PyAutoFit is also
+  claimed by `version-stamp-sync-guards` (PyAutoHands#235). Proceeding was authorized by the human
+  after verifying the two are FILE-DISJOINT: that branch's only commit (`9ec8a3877`) touches
+  `autofit/__init__.py` + `files/release.sh`; this task touches `autofit/non_linear/samples/`.
+  Two git worktrees on one repo with different branches is legal; the guard is a workflow
+  convention, not a git limit. If #235 starts touching `non_linear/samples/`, stop and re-coordinate.
+- summary: `Sample.instance_for_model(ignore_assertions=True)` (`sample.py:178-212`, the CI failure
+  site) and the shared `to_instance` decorator (`interface.py:32-40`) materialize stored samples with
+  no `FitException` recovery. PyAutoFit#1466 wrote recovery by hand at two call sites only
+  (`max_log_likelihood`, `draw_randomly_via_pdf`). Fails PyAutoHeart Workspace Smoke nightly on
+  `autogalaxy_workspace guides/results/aggregator/samples.ipynb`; holds Heart's
+  `workspace validation not passing` reason open.
+- design (human-decided): `to_instance` takes a per-method recovery policy — `recover="next_valid"`
+  for `max_log_posterior`, `recover="raise"` (typed `SamplesException`) for `from_sample_index` and
+  the marginalized methods. Release note: raise path changes the user-visible type from
+  `ModelParameterException` (a ValueError) to `SamplesException` (plain Exception).
+- split-out: PyAutoFit#1487 — weight-threshold prune retains zero-weight samples with checks ENABLED.
+  Do not fix here.
+- do-not: do NOT weaken PyAutoGalaxy `validate_ell_comps`; do NOT edit the tutorial. Test mode is NOT
+  implicated (`ENV: real_search` releases `PYAUTO_TEST_MODE`) — verified, do not re-open.
+
 ## mge-lane-death
 - issue: https://github.com/PyAutoLabs/autolens_profiling/issues/128
 - prompt: active/mge_lane_death.md

@@ -8,7 +8,7 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 8 |
+| [In flight](#in-flight) (`active/`) | 7 |
 | [Parked](#parked) (`parked.md`) | 6 |
 | [Planned](#planned) (`planned.md`) | 7 |
 | [Backlog](#backlog) (`draft/`) | 142 |
@@ -56,7 +56,6 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 - [JAX-native posterior sampler wave — ranked shortlist from the 2026-07-16](active/jax_native_posterior_sampler_wave.md) — [issue #113](https://github.com/PyAutoLabs/autolens_workspace_developer/issues/113) — PARKED 2026-07-24 — stage (a) POSITIVE: warm-started gradient SMC SAMPLES (acc 0.80->0.17 across tempering, einstein_radius…
 - [Remove standalone matplotlib-inline comments](active/matplotlib_inline_standalones.md)
 - [Find what kills MGE multi-start lanes — it is not](active/mge_lane_death.md) — [issue #128](https://github.com/PyAutoLabs/autolens_profiling/issues/128) — CAUSE FOUND 2026-08-15 (cloud CPU session) — written up on autolens_profiling#128. Remaining: GPU/float64/multi-seed…
-- [Pixelized Prodigy laptop-GPU compatibility across four meshes](active/pixelized_prodigy_laptop_gpu_phase_1_compatibility.md) — [issue #125](https://github.com/PyAutoLabs/autolens_workspace_developer/issues/125) — workspace-dev — phase 1 and phase 2 COMPLETE 2026-08-13, all 13 cells landed, PR #126 ready for review
 - [PyAutoReduce validation: slacs1430+4105 ACS reduction vs trusted legacy dataset](active/pyautoreduce_slacs1430_acs_comparison.md)
 - [Research profiling experiment in the autolens_profiling repo](active/research_profiling_experiment_in_the_autolens_pr.md) — [issue #82](https://github.com/PyAutoLabs/autolens_profiling/issues/82)
 

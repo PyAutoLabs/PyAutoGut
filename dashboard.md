@@ -11,7 +11,7 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 | [In flight](#in-flight) (`active/`) | 9 |
 | [Parked](#parked) (`parked.md`) | 6 |
 | [Planned](#planned) (`planned.md`) | 7 |
-| [Backlog](#backlog) (`draft/`) | 141 |
+| [Backlog](#backlog) (`draft/`) | 142 |
 
 Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3Aissue+is%3Aopen&type=issues) · [open pull requests](https://github.com/search?q=org%3APyAutoLabs+is%3Apr+is%3Aopen&type=prs)
 
@@ -93,10 +93,10 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**141** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**142** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
-<summary><b>bug</b> — 42</summary>
+<summary><b>bug</b> — 43</summary>
 
 - [Reconstructing a stored sample raises through `ignore_assertions=True`](draft/bug/autofit/to_instance_guard_gap.md) — autofit · small · supervised · high
 - [pre_build stages untracked files, publishing uncommitted human work](draft/bug/pyautohands/pre_build_stages_untracked_wip.md) — pyautohands · small · supervised · high
@@ -140,6 +140,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 - [Priors & Messages cleanup — tracker](draft/bug/priors/z_features.md) — priors · too-large · supervised · normal
 - [`add_notebook_quotes` mistakes a code string literal's closing delimiter for a](draft/bug/hands/notebook_quotes_string_literal_closing_delimiter.md) — hands · small · safe · low
 - [interferometer/start_here.py OOM in nightly release-validation integrate leg](draft/bug/autolens/interferometer_release_leg_oom.md) — autolens
+- [PositionsLH penalty accumulation returns 2x the LAST penalty, discarding the](draft/bug/autolens/positions_lh_penalty_accumulation_bug.md) — autolens
 
 </details>
 
@@ -298,12 +299,13 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Hygiene
 
-6 prompt(s) without a metadata header — they show no facets above. Re-home or re-run intake on them when touched.
+7 prompt(s) without a metadata header — they show no facets above. Re-home or re-run intake on them when touched.
 
 <details>
 <summary>Headerless prompts</summary>
 
 - `draft/bug/autolens/interferometer_release_leg_oom.md`
+- `draft/bug/autolens/positions_lh_penalty_accumulation_bug.md`
 - `draft/docs/autolens_workspace/sampler_cli_output_workspace_sweep.md`
 - `draft/docs/workspaces/plot_coverage_followups.md`
 - `draft/docs/workspaces/unify_ai_assistant_workspace_readmes.md`

@@ -153,6 +153,51 @@ pinned lanes), so the picture is not uniform and this stays an inference.
 **Next step:** add `clipped_history` beside `alive_history` and re-run one arm at
 a short budget. Cheap, and it converts this section from argument to measurement.
 
+## Do the rescued lanes contribute anything? No — and why they end up at the wall
+
+**They contribute nothing, measured directly.** On seed 0 `best_fom` is identical
+to every digit across all three arms — `-63575.67359062914` — at final alive
+counts of 5/16, 16/16 and 14/16. Clipping kept eleven extra lanes alive and not
+one of them ever became the best. Clipping stops the dead-sampling loop (the lane
+reverses off the wall and keeps evaluating) without those lanes ever approaching
+the peak.
+
+**They are not initialised at the edges.** `_broad_starts` draws in the UNIT cube
+at `[0.15, 0.85]`, the middle 70% of every prior:
+
+| parameter | prior | start range | box width | nearest wall |
+|---|---|---|---:|---:|
+| `mass.einstein_radius` | U(0, 8) | [+1.20, +6.80] | 8.00 | 1.20 |
+| `shear.gamma_1/2` | U(-0.3, 0.3) | [-0.21, +0.21] | 0.60 | 0.09 |
+| `bulge.centre_0/1` | U(-0.1, 0.1) | [-0.07, +0.07] | 0.20 | **0.03** |
+
+No lane starts at an edge. They walk there.
+
+**The mechanism is a step-scale / box-width mismatch.** Box widths across this
+15-parameter model span 8.0 down to 0.2 — a **40x range** — while the search steps
+in PHYSICAL space with a single global step scale. Prodigy's `d` grows from
+`1.00e-06` at step 1 to `2.26e-02 / 5.49e-02 / 8.29e-01` by the end. A step scale
+that is sensible for `einstein_radius` is a wall-crossing for `bulge.centre`.
+
+That predicts escapes concentrate in the NARROW-box parameters, and #128's autopsy
+found exactly that: 10 of 11 exits were the shear, at ±0.30-0.35 just outside its
+±0.3 box.
+
+It also explains the null result. Lanes pin in **nuisance** parameters (shear,
+bulge centre), not in the parameters that set fit quality. Rescuing a lane that
+has railed its shear does not make it competitive — it only stops it being NaN.
+
+**Implication: this is evidence for revisiting unit-cube stepping**, which phase 1
+rejected (reasons in `complete/2026/08/prior-support-clipper.md`). A step in unit
+space is automatically commensurate with each box's width, so the 40x disparity
+stops mattering. That addresses the cause; clipping addresses the symptom.
+Per-parameter step scaling is the cheaper variant of the same idea.
+
+**Limit:** which coordinates were pinned is not recorded — per-lane params were
+not saved, the same recording gap as the clip history. Only the totals exist
+(19 pinned coordinates across 6 lanes, of 16x15 = 240, i.e. 7.9%). The shear
+attribution above is #128's, not this campaign's.
+
 ## The bigger finding: seed dependence dwarfs the clipper
 
 Identical settings, two seeds, and the outcome swings **171,000 nats**: seed 0

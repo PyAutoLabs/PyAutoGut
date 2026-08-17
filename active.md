@@ -74,3 +74,9 @@
 - status: library-dev
 - worktree: ~/Code/PyAutoLabs-wt/version-stamp-sync-guards
 - repos:
+  - PyAutoNerves: feature/version-stamp-sync-guards
+  - PyAutoArray: feature/version-stamp-sync-guards
+  - PyAutoFit: feature/version-stamp-sync-guards
+  - PyAutoGalaxy: feature/version-stamp-sync-guards
+  - PyAutoLens: feature/version-stamp-sync-guards
+  - PyAutoHands: feature/version-stamp-sync-guards

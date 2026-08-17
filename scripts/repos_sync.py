@@ -9,6 +9,8 @@ Usage:
     python3 repos_sync.py [--check]      # drift checks only (default)
     python3 repos_sync.py --write        # regenerate doc blocks, then check
     python3 repos_sync.py --root <dir>   # override the workspace root
+    python3 repos_sync.py --only <label> # run one check leg (repeatable) —
+                                         # what an organ's PR CI gate calls
 
 --write regenerates the blocks between `<!-- repos_sync:begin -->` /
 `<!-- repos_sync:end -->` markers in:
@@ -300,6 +302,29 @@ def check_heart(root, repos):
                     f"Heart owner for '{name}' is '{owner}', manifest says "
                     f"'{owner_of(repos[name])}'"
                 )
+    # The smoke: block (heart/smoke.py's workspace table, extracted 2026-08 —
+    # PyAutoMind#198) names repos too, so its identity is checked the same way
+    # version_skew's never was. Soft-skip when absent: a Heart checkout
+    # predating the extraction is not drift (Heart's own strict loader fails
+    # loudly if the block ever disappears after it).
+    smoke = data.get("smoke") or {}
+    for key, spec in (smoke.get("workspaces") or {}).items():
+        if spec.get("directory") not in repos:
+            problems.append(
+                f"Heart smoke workspace '{key}' directory "
+                f"'{spec.get('directory')}' — not in the manifest"
+            )
+        for lib in spec.get("chain", ()):
+            if lib not in repos:
+                problems.append(
+                    f"Heart smoke workspace '{key}' chain entry '{lib}' — "
+                    f"not in the manifest"
+                )
+    for name in smoke.get("import_names") or {}:
+        if name not in repos:
+            problems.append(
+                f"Heart smoke import_names key '{name}' — not in the manifest"
+            )
     return problems
 
 
@@ -613,7 +638,11 @@ FIREWALL_ALLOWLIST = {
     "PyAutoBrain/agents/conductors/clone/_clone.py": {"HowToFit", "PyAutoFit", "PyAutoLabs", "PyAutoLens", "autofit_assistant", "autofit_workspace", "autolens_assistant"},
     "PyAutoBrain/agents/conductors/clone/clone.sh": {"HowToFit", "PyAutoFit", "autofit_workspace", "autolens_assistant"},
     "PyAutoBrain/agents/conductors/community/_community.py": {"Jammy2211", "PyAutoLabs"},
-    "PyAutoBrain/agents/conductors/intake/_intake.py": {"PyAutoArray", "PyAutoNerves", "PyAutoFit", "PyAutoGalaxy", "PyAutoLens", "autolens_workspace"},
+    # autofit_workspace: the `_upstream_noise` docstring cites measured noise
+    # counts ("autofit_workspace in 26 files") as the evidence for rejecting a
+    # file-spread threshold — the names ARE the finding; the code itself
+    # derives its repo sets from the body map.
+    "PyAutoBrain/agents/conductors/intake/_intake.py": {"PyAutoArray", "PyAutoNerves", "PyAutoFit", "PyAutoGalaxy", "PyAutoLens", "autofit_workspace", "autolens_workspace"},
     "PyAutoBrain/agents/conductors/profiling/_profiling.py": {"PyAutoLabs", "autolens_profiling"},
     "PyAutoBrain/agents/conductors/profiling/profiling.sh": {"autolens_profiling"},
     "PyAutoBrain/agents/conductors/release/nightly.sh": {"PyAutoLabs", "PyAutoLens"},
@@ -644,6 +673,10 @@ FIREWALL_ALLOWLIST = {
     "PyAutoBrain/tests/test_clone_conductor.py": {"autofit_assistant", "autolens_assistant"},
     "PyAutoBrain/tests/test_community_conductor.py": {"Jammy2211", "PyAutoFit", "PyAutoLabs", "PyAutoLens", "admin_jammy"},
     "PyAutoBrain/tests/test_hygiene_conductor.py": {"PyAutoArray", "PyAutoFit", "PyAutoGalaxy", "autofit_workspace", "autolens_workspace"},
+    # Load-bearing real names: the ranking tests pin resolution against the
+    # LIVE body map (`slug == "PyAutoLabs/PyAutoFit"`; `_upstream_noise`
+    # filters via KNOWN_REPOS), so synthetic names would test nothing.
+    "PyAutoBrain/tests/test_intake_reconcile_ranking.py": {"PyAutoArray", "PyAutoFit", "PyAutoLabs", "autofit_workspace", "autolens_workspace"},
     "PyAutoBrain/tests/test_mind_commit_guard.py": {"/home/jammy", "PyAutoFit", "PyAutoLabs"},
     "PyAutoBrain/tests/test_policy_seams.py": {"PyAutoFit", "PyAutoLens", "autolens_workspace"},
     "PyAutoBrain/tests/test_review_inplace.py": {"PyAutoArray", "PyAutoLabs"},
@@ -814,6 +847,16 @@ def main():
     parser.add_argument("--write", action="store_true")
     parser.add_argument("--check", action="store_true")
     parser.add_argument("--root", type=Path, default=None)
+    # An organ's PR gate must fail only on the leg that PR can cause — a Brain
+    # PR should not go red because a Mind-side generated block is stale. The
+    # label is the check's printed name, e.g. "tenant firewall (organ code)".
+    parser.add_argument(
+        "--only",
+        action="append",
+        metavar="CHECK",
+        help="run only this drift-check leg (repeatable; use the label the "
+             "check prints)",
+    )
     args = parser.parse_args()
 
     mind_root = Path(__file__).resolve().parents[1]
@@ -843,21 +886,38 @@ def main():
                         ORGANS_BEGIN, ORGANS_END, required=False)
         write_claude_md_pointers(root, repos)
 
+    # Lazy (label -> thunk) so --only pays for exactly the selected legs.
     checks = {
-        "PyAutoHeart/config/repos.yaml": check_heart(root, repos),
-        "PyAutoHands/pre_build.sh": check_pre_build(root, repos),
-        "ensure_workspace_labels.sh": check_labels(root, repos),
-        "hygiene conductor coverage": check_hygiene_coverage(root, repos, mind_root),
-        "local checkout origins": check_origins(root, repos),
-        "tenant firewall (organ code)": check_tenant_firewall(root, repos),
-        "organism-map blocks (generated)": check_map_blocks(root, repos, smap),
-        "never-rewrite-history blocks (generated)": check_history_blocks(root, repos, hpol),
-        "public front-door organ tables (generated)": check_public_tables(root, repos),
-        "hub organism blurb (organs present)": check_hub_blurb(root, repos),
-        "CLAUDE.md → AGENTS.md pointers": check_claude_md_pointers(root, repos),
+        "PyAutoHeart/config/repos.yaml": lambda: check_heart(root, repos),
+        "PyAutoHands/pre_build.sh": lambda: check_pre_build(root, repos),
+        "ensure_workspace_labels.sh": lambda: check_labels(root, repos),
+        "hygiene conductor coverage":
+            lambda: check_hygiene_coverage(root, repos, mind_root),
+        "local checkout origins": lambda: check_origins(root, repos),
+        "tenant firewall (organ code)": lambda: check_tenant_firewall(root, repos),
+        "organism-map blocks (generated)":
+            lambda: check_map_blocks(root, repos, smap),
+        "never-rewrite-history blocks (generated)":
+            lambda: check_history_blocks(root, repos, hpol),
+        "public front-door organ tables (generated)":
+            lambda: check_public_tables(root, repos),
+        "hub organism blurb (organs present)": lambda: check_hub_blurb(root, repos),
+        "CLAUDE.md → AGENTS.md pointers":
+            lambda: check_claude_md_pointers(root, repos),
     }
+    if args.only:
+        unknown = [label for label in args.only if label not in checks]
+        if unknown:
+            raise SystemExit(
+                "repos_sync: unknown --only check(s): "
+                + ", ".join(f"'{u}'" for u in unknown)
+                + "; choose from: "
+                + ", ".join(f"'{label}'" for label in checks)
+            )
+        checks = {label: checks[label] for label in args.only}
     drift = False
-    for label, problems in checks.items():
+    for label, run_check in checks.items():
+        problems = run_check()
         status = "OK" if not problems else f"{len(problems)} mismatch(es)"
         print(f"check {label}: {status}")
         for p in problems:

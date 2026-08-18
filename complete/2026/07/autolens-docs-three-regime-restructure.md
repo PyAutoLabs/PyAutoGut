@@ -1,3 +1,29 @@
+## autolens-docs-three-regime-restructure
+- completed: 2026-07-26
+- summary: PyAutoLens RTD docs restructured around the three above-galaxy-scale regimes (multi_galaxy / group / cluster): New User Guide four-rung ladder + flagship citations, overview_1 regime enumerations, overview_3 section rename, api mass/point/galaxy regime notes + new CSV galaxy-catalogue section, model_cookbook regime recipes. PyAutoLens#652/#653/#654 merged 2026-07-25/26.
+
+## Verification (2026-08-18)
+
+- All planned edits confirmed present on PyAutoLens `main` (overview_1/2/3,
+  api/mass.rst, api/point.rst, api/galaxy.rst, general/model_cookbook.md).
+- Docs CI (`docs.yml` → Heart's reusable docs-build, warning-count gate against
+  `docs/sphinx_warning_baseline.txt`) green on every `main` push since the
+  merge, including current HEAD `5d55825` — the prompt's pending "RTD build
+  confirmation on merge" gate.
+- All nine autolens_workspace notebook links in the sections this task added
+  resolve on `main`. One PRE-EXISTING cookbook link (Model Linking section,
+  `notebooks/imaging/advanced/chaining/start_here.ipynb`) 404s — not this
+  task's edit; re-filed as draft/docs/autolens/cookbook_stale_chaining_link.md
+  (correct target: `notebooks/guides/modeling/chaining.ipynb`).
+
+## Lifecycle note
+
+Record backfilled 2026-08-18: the task shipped 2026-07-26 but its prompt never
+advanced out of draft/ (draft/docs/autolens/docs_three_regime_restructure.md);
+retired here dated by ship day once the RTD-build gate was confirmed.
+
+## Original prompt (docs_three_regime_restructure)
+
 # PyAutoLens RTD docs: three-regime restructure (multi_galaxy / group / cluster)
 
 Type: docs
@@ -7,7 +33,7 @@ Repos:
 Difficulty: medium
 Autonomy: supervised
 Priority: high
-Status: in progress — all planned edits landed 2026-07-26 (branch claude/pyautolens-doc-reorganization-w6a1l5); pending RTD build confirmation on merge
+Status: shipped 2026-07-26 (PyAutoLens#652/#653/#654 merged, branch claude/pyautolens-doc-reorganization-w6a1l5); RTD/docs build confirmed green on main 2026-08-18
 Parent: draft/docs/autolens/split_lensing_regimes.md
 
 Restructure the PyAutoLens Sphinx/RTD documentation (`PyAutoLens/docs/`) around

@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1025 records across 7 buckets.
+1026 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -204,6 +204,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [autogalaxy-multi-galaxy-package](2026/07/autogalaxy-multi-galaxy-package.md) — Created `scripts/multi_galaxy/` in autogalaxy_workspace (light-only counterpart of the lens regime split); shi…
 - [autogalaxy-test-mirror](2026/07/autogalaxy-test-mirror.md) — PR #93
 - [autolens-assistant-audit](2026/07/autolens-assistant-audit.md)
+- [autolens-docs-three-regime-restructure](2026/07/autolens-docs-three-regime-restructure.md) — PyAutoLens RTD docs restructured around the three above-galaxy-scale regimes (multi_galaxy / group / cluster):…
 - [autonerves-verify-install](2026/07/autonerves-verify-install.md)
 - [autonomy-contract](2026/07/autonomy-contract.md)
 - [autotune-off-default](2026/07/autotune-off-default.md)

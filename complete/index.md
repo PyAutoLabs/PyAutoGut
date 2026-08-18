@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1004 records across 7 buckets.
+1005 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -94,6 +94,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [point-source-light](2026/08/point-source-light.md) — Added standard and linear point-source light profiles with total-flux normalization and oversampled PSF convol…
 - [pointmass-smbh-jax](2026/08/pointmass-smbh-jax.md) — `al.mp.PointMass` and `al.mp.SMBH` failed every JAX-mode fit (user report on 2026.8.4.1). Two independent bugs…
 - [pointmass-smbh-jax-ci](2026/08/pointmass-smbh-jax-ci.md) — CI JAX coverage for the PointMass/SMBH regression class (follow-up to PyAutoGalaxy#553/#554). `misc/profiles_j…
+- [positions-lh-penalty-accumulation](2026/08/positions-lh-penalty-accumulation.md) — CLOSED completed
 - [positive-solver-divergence-diagnosis](2026/08/positive-solver-divergence-diagnosis.md) — Proved NumPy FNNLS and JAX PDIP agree to 1.715e-9 on identical systems (2.468e-13 tightened). The 8.989e-3 nat…
 - [potential-correction-env-declaration](2026/08/potential-correction-env-declaration.md)
 - [potential-correction-validation](2026/08/potential-correction-validation.md)

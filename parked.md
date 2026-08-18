@@ -45,6 +45,16 @@ write the dated `complete/<YYYY>/<MM>/<slug>.md` record instead.
   the state the prompt describes. The four frozen prompt cards (`benchmarks/prompts/`) and the
   harness (`autoassistant/benchmark.py`) are in place; only the campaign is missing.
 - note: needs real model runs, so it is a cost decision rather than a coding task.
+- 2026-08-18 (cloud session, read-only clone of autolens_assistant): blocker RE-VERIFIED CLEAR —
+  the four frozen cards and `autoassistant/benchmark.py` are on main; `benchmarks/runs/` is still
+  `.gitkeep` only. The campaign itself remains un-runnable from a cloud session (no push rights to
+  autolens_assistant, no bundled data/GPU, and the protocol requires fresh uncontaminated harness
+  sessions), so it stays parked pending a local run + a cost decision on model x harness combos.
+- 2026-08-18: the prompt's second deliverable (the rubric calibration verdict) was taken early and
+  filed as `draft/bug/autolens_assistant/benchmark_rubric_freeze_and_scoring_gaps.md` — 9 findings,
+  incl. an unenforced prompt-freeze rule. RESEQUENCING RECOMMENDED: land those card `version: 2`
+  bumps BEFORE the campaign. Scores are comparable only within a card version, so fixing the
+  rubrics after the runs (the order the prompt assumes) would split the tables and force a re-run.
 
 ## euclid-eceb-editorial-revision
 - prompt: active/euclid_eceb_editorial_revision.md

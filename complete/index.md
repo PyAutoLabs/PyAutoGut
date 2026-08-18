@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1001 records across 7 buckets.
+1002 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -38,6 +38,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [compile-axis-triage-drift](2026/08/compile-axis-triage-drift.md)
 - [compile-warm-baseline-dashboard](2026/08/compile-warm-baseline-dashboard.md)
 - [conductor-discovery-lifecycle-split](2026/08/conductor-discovery-lifecycle-split.md) — closed on merge
+- [constant-zeroth-repair](2026/08/constant-zeroth-repair.md) — CLOSED completed
 - [correct-circular-sersic-hazard](2026/08/correct-circular-sersic-hazard.md) — Corrected the circular Sersic hazard in the actual fitted ell_comps coordinates. The q-angle structural findin…
 - [covariance-interpolator-rng-seed](2026/08/covariance-interpolator-rng-seed.md) — auto-closed by the merge
 - [crashed-run-poisons-resume](2026/08/crashed-run-poisons-resume.md) — A run interrupted while writing output left a half-written JSON file,

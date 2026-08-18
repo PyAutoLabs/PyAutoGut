@@ -1,3 +1,99 @@
+- library-prs: https://github.com/PyAutoLabs/PyAutoFit/pull/1494
+- merge-commits: PyAutoFit `f3767a79743e6976accd8fd6957afc5f366654fb` (2026-08-18, squash)
+- issue: PyAutoFit#1493 (closed by the PR)
+- summary: The prior-support `Clipper` now enters the search identifier, scoped
+  to the two search families that consume one: `__identifier_fields__ =
+  ("clipper",)` on `AbstractMultiStartGradient` and `AbstractBFGS` — the entire
+  source change. Nested samplers, MCMC searches and `Drawer` are untouched and
+  their identifiers pinned byte-identical by regression tests. Closes follow-up
+  4 of `complete/2026/08/prior-support-clipper.md`.
+- validation: identifier test file 29/29 (23 existing incl. the untouched
+  `test_dynesty_static` pin + 6 new); full suite on py3.13 with jax extras
+  1864 passed, 1 failed = the documented environment-specific
+  `test_nautilus.py::test__single_core_builds_no_pool` (reproduced identically
+  on a clean tree); CI green on 3.12 / 3.13 / docs. Human authorized the merge
+  on green CI.
+- release: not performed; merged PR remains in the pending-release queue.
+
+## The decision (human, 2026-08-18)
+
+The prompt was filed `Autonomy: human-required` because either answer costs
+someone's stored results. The human chose option 2 of the four, scoped:
+**the clipper enters the identifier on the searches that consume one, and the
+nested samplers' identifiers stay byte-for-byte identical** — nested-sampling
+runs are the long-lived, expensive archive; MLE gradient fits are
+minutes-to-hours and re-keying them is an accepted one-time cost. Conditional
+inclusion (option 3) was rejected as a new concept in the identifier machinery
+with unaudited consumers; the loud-collision fix (option 4) is a different,
+larger task and may still be filed separately.
+
+## Why the scoping is structural, not conditional
+
+`clipper` is resolved on `AbstractMLE.__init__` and exists nowhere else;
+`nest/` and `mcmc/` contain zero clipper references and every nested/MCMC
+search declares its own explicit `__identifier_fields__` tuple. So declaring
+the field on the two MLE families cannot touch the nested samplers by
+construction. Three test layers enforce it anyway: the pre-existing
+`test_dynesty_static` hash pin (passed unchanged), new hash-list pins for
+`Nautilus` / `DynestyDynamic` / `Emcee` / `Zeus` captured on `main` at
+`c302f51` *before* the change, and a structural tripwire
+(`assert not hasattr(af.Nautilus(), "clipper")`) that fails loudly if a future
+refactor hoists `clipper` from `AbstractMLE` toward `NonLinearSearch`.
+
+## The finding worth more than the change
+
+Until this PR, `AbstractMultiStartGradient` and `AbstractBFGS` inherited the
+base class's **empty** `__identifier_fields__ = tuple()`, so their identifier
+hash list was literally `['MultiStartAdam']` — the class name and nothing
+else. Not just the clipper but `n_starts`, `total_steps`, `learning_rate` and
+every other result-affecting setting collided. The original prompt knew about
+the clipper collision; the emptiness underneath it was found while grounding
+the decision. Widening the tuple beyond `clipper` was deliberately kept out of
+this PR (one prompt = one task) but re-keys are cheapest paid together —
+raised as an open question on the PR; if wanted it needs its own prompt and a
+field-by-field "does this affect the result?" audit.
+
+## Behaviour change shipped
+
+Every existing `MultiStart*` / `BFGS` / `LBFGS` output directory re-keys,
+**including default-`ClipperNone` runs** — the hash gains the `clipper` field
+itself (`['MultiStartAdam', 'clipper', 'ClipperNone']`). Stored results are
+orphaned on disk, not deleted; re-running recomputes into a fresh directory.
+`ClipperPriorBox`'s constructor args enter the hash via the identifier's
+constructor-args walk, so different `margin`s fork too — no clipper-class
+change was needed for that. Release notes for the next release must state the
+re-key plainly (the PR body carries the text).
+
+## Traps measured
+
+- **`Drawer` inherits a clipper it never uses.** It sits under `AbstractMLE`
+  so it carries the attribute, but `drawer/search.py` never consumes it — a
+  setting that cannot affect the result must not re-key stored results, so
+  `Drawer` deliberately does not declare the field, and a test asserts its
+  identifier ignores an explicitly-passed clipper.
+- **Float resolution in the identifier hash.** `ClipperPriorBox`'s
+  `strict_epsilon=1e-12` hashes as `'0.0'` (the identifier rounds floats to
+  `RESOLUTION`), while `margin=1e-06` survives distinctly. Sub-resolution
+  differences in clipper constants will not fork the identifier — fine for the
+  current constants, worth knowing before anyone adds a tiny tunable.
+- **The phase-2 mitigation retires.** Unique per-arm `name`s to separate
+  clipper arms (`complete/2026/08/clipper-validation-campaign.md`) are no
+  longer needed for clipper comparisons.
+
+## Workflow notes
+
+- `worktree_check_conflict` flagged PyAutoFit as claimed by
+  `stored-sample-reconstruction-guard` and `version-stamp-sync-guards`;
+  proceeded on the human's explicit "go" — cloud session on its own branch, no
+  local worktree contention, disjoint files, and those two tasks already claim
+  PyAutoFit concurrently themselves.
+- Environment: cloud session, no worktree; py3.13 venv with `.[jax]` extras.
+  `pyauto-heart` unreachable → WORKFLOW.md pytest fallback gate.
+- PyAutoFit branch `claude/clipper-search-identifier-4cowi2` (merged,
+  deletable).
+
+## Original prompt
+
 # Put the clipper in the search identifier — MLE searches only, nested samplers untouched
 
 Type: feature

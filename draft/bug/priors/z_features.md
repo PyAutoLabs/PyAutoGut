@@ -95,7 +95,7 @@ expert to ratify the convention before code changes.
 
 | # | Prompt | Scope | Status | Issue | PR |
 |---|--------|-------|--------|-------|----|
-| 09 | [prior_property_tests](09_prior_property_tests.md) | Add property-based correctness sweep over every `Prior` subclass | **unblocked — ready to start** (prerequisite 01-08 landed 2026-07-10) | — | — |
+| 09 | prior_property_tests (→ active/) | Add property-based correctness sweep over every `Prior` subclass | **PR OPEN 2026-08-18** (134 tests; folds in 11 §2) | #1497 | #1499 |
 
 ## Phase 4 — Refactors (only after Phases 1-3)
 
@@ -106,10 +106,11 @@ over them.
 | # | Prompt | Scope | Status | Issue | PR |
 |---|--------|-------|--------|-------|----|
 | 10 | fixed_message_cache_growth (prompt retired) | `FixedMessage.logpdf_cache` is an unbounded class-level dict | **shipped 2026-07-10** (cache removed, aliasing fixed) | #1344 (hub #1331) | #1345 |
-| 11 | [transformed_message_semantics_doc](11_transformed_message_semantics_doc.md) | `TransformedMessage` reversal convention is undocumented foot-gun | **half shipped** — §1 reversal-convention docs landed via #1333/PR#1334; §2 `LinearShiftTransform` docstring remains (small) | #1333 (§1) | #1334 (§1) |
-| 12 | [single_source_density_refactor](12_single_source_density_refactor.md) | Each density is encoded in three places (`value_for` / `logpdf` / `log_prior_from_value`) | unblocked — EP-review Phases 1-2 gate open; bundle with 13 as one design issue | — | — |
-| 13 | [collapse_prior_and_message](13_collapse_prior_and_message.md) | `Prior` and `Message` carry duplicated responsibility | unblocked — bundle with 12 as one design issue | — | — |
-| 14 | [replace_transform_stack_with_bijectors](14_replace_transform_stack_with_bijectors.md) | Replace hand-rolled `AbstractDensityTransform` with `tfp.bijectors` / `numpyro.transforms` | parked — go/no-go decision after the 12+13 design | — | — |
+| 11 | transformed_message_semantics_doc (→ active/) | `TransformedMessage` reversal convention is undocumented foot-gun | §1 shipped via #1333/PR#1334; **§2 rides PR#1499** | #1333, #1497 | #1334, #1499 |
+| 12 | single_source_density_refactor (→ active/) | Each density is encoded in three places (`value_for` / `logpdf` / `log_prior_from_value`) | **design issue FILED 2026-08-18** (bundled with 13) | #1500 | — |
+| 13 | collapse_prior_and_message (→ active/) | `Prior` and `Message` carry duplicated responsibility | **design issue FILED 2026-08-18** (bundled with 12) | #1500 | — |
+| 14 | [replace_transform_stack_with_bijectors](14_replace_transform_stack_with_bijectors.md) | Replace hand-rolled `AbstractDensityTransform` with `tfp.bijectors` / `numpyro.transforms` | parked — go/no-go hangs off the #1500 design decision | — | — |
+| 15 | [transformed_message_logpdf_jacobian](15_transformed_message_logpdf_jacobian.md) | `TransformedMessage.logpdf`/`pdf` omit the transform Jacobian (new finding from the 09 sweep) | **issue filed 2026-08-18** — awaiting contract adjudication (standalone or inside #1500) | #1498 | — |
 
 ---
 

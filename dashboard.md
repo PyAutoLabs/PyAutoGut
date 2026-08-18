@@ -11,7 +11,7 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 | [In flight](#in-flight) (`active/`) | 5 |
 | [Parked](#parked) (`parked.md`) | 1 |
 | [Planned](#planned) (`planned.md`) | 7 |
-| [Backlog](#backlog) (`draft/`) | 125 |
+| [Backlog](#backlog) (`draft/`) | 126 |
 
 Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3Aissue+is%3Aopen&type=issues) · [open pull requests](https://github.com/search?q=org%3APyAutoLabs+is%3Apr+is%3Aopen&type=prs)
 
@@ -45,7 +45,7 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 
 Issued — each has an open GitHub issue and usually a branch. The full record for each is in [`active.md`](active.md).
 
-- [`@PyAutoFit` Add property-based correctness tests for every `Prior` subclass](active/09_prior_property_tests.md) — [issue #1497](https://github.com/PyAutoLabs/PyAutoFit/issues/1497) — library-dev
+- [`@PyAutoFit` Add property-based correctness tests for every `Prior` subclass](active/09_prior_property_tests.md) — [issue #1497](https://github.com/PyAutoLabs/PyAutoFit/issues/1497) — pr-open (https://github.com/PyAutoLabs/PyAutoFit/pull/1499) — CI watched by the cloud session
 - [`@PyAutoFit` `TransformedMessage` reversal convention is undocumented foot-gun](active/11_transformed_message_semantics_doc.md) — [issue #1497](https://github.com/PyAutoLabs/PyAutoFit/issues/1497) — library-dev — NOT a standalone task: only §2 (LinearShiftTransform docstring) remained and it
 - [PyAutoReduce validation: slacs1430+4105 ACS reduction vs trusted legacy dataset](active/pyautoreduce_slacs1430_acs_comparison.md)
 - [Reconstructing a stored sample raises through `ignore_assertions=True`](active/to_instance_guard_gap.md) — [issue #1486](https://github.com/PyAutoLabs/PyAutoFit/issues/1486) — library-dev — WORKSPACE HALF SHIPPED; the PyAutoFit hardening (#1486) is what remains
@@ -81,10 +81,10 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**125** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**126** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
-<summary><b>bug</b> — 33</summary>
+<summary><b>bug</b> — 34</summary>
 
 - [EP hierarchical parent-scale collapse: cure the basin, or document the](draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md) — autofit · too-large · human-required · high
 - [`NFWTruncatedSph.potential_2d_from`: MGE potential fails `grad(psi)=alpha` self-consistency](draft/bug/autogalaxy/nfw_truncated_potential_accuracy.md) — autogalaxy · too-large · supervised · high
@@ -112,6 +112,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 - [interferometer Delaunay pixelization — non-PD FitException in test-mode bypass](draft/bug/autolens/interferometer_delaunay_nonpd_fitexception.md) — autolens · medium · supervised · normal
 - [JAX point-source smoke sentinel: point.py returns -1e99 instead of -83.38](draft/bug/autolens/jax_point_source_point_smoke_sentinel.md) — autolens · medium · supervised · normal
 - [JIT cache not hit in modeling_visualization delaunay/rectangular scripts](draft/bug/autolens/jit_cache_not_hit_modeling_visualization.md) — autolens · medium · supervised · normal
+- [`@PyAutoFit` `TransformedMessage.logpdf`/`pdf` omit the transform Jacobian](draft/bug/priors/15_transformed_message_logpdf_jacobian.md) — priors · medium · supervised · normal
 - [Resolve release-profile timeout scripts deliberately](draft/bug/health_fixes/release_timeout_policy.md) — health_fixes · too-large · supervised · normal
 - [`@PyAutoFit` Refactor: each density should live in one place, not](draft/bug/priors/12_single_source_density_refactor.md) — priors · too-large · supervised · normal
 - [`@PyAutoFit` Refactor: collapse the `Prior` / `Message` two-layer hierarchy](draft/bug/priors/13_collapse_prior_and_message.md) — priors · too-large · supervised · normal

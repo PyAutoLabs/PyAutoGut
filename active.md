@@ -2,7 +2,10 @@
 
 ## prior-property-tests
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1497
-- status: library-dev
+- status: pr-open (https://github.com/PyAutoLabs/PyAutoFit/pull/1499) — CI watched by the cloud session
+- new-finding: TransformedMessage.logpdf/pdf omit the transform Jacobian → PyAutoFit#1498 +
+  draft/bug/priors/15_transformed_message_logpdf_jacobian.md (filed separately per house rule;
+  the property tests assert the physical density via factor() and cite #1498 at the site)
 - session: cloud (claude.ai/code) — census wrap-up session, 2026-08-18
 - worktree: none — cloud session; PyAutoFit clone at /workspace/pyautofit
 - repos:

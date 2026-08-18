@@ -11,7 +11,7 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 | [In flight](#in-flight) (`active/`) | 4 |
 | [Parked](#parked) (`parked.md`) | 1 |
 | [Planned](#planned) (`planned.md`) | 7 |
-| [Backlog](#backlog) (`draft/`) | 139 |
+| [Backlog](#backlog) (`draft/`) | 138 |
 
 Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3Aissue+is%3Aopen&type=issues) · [open pull requests](https://github.com/search?q=org%3APyAutoLabs+is%3Apr+is%3Aopen&type=prs)
 
@@ -34,7 +34,6 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 
 **Quick wins** (small enough, and safe enough to run unattended)
 
-- [Audit HowTo tutorials for missing setup_notebook() line](draft/bug/howto/missing_setup_notebook_audit.md) — howto · small · safe · normal
 - [PyAutoFit CLI-noise batch: unclosed search.log handler + four small warning](draft/maintenance/pyautofit/cli_noise_pyautofit_batch.md) — pyautofit · small · safe · normal
 - [Tenant firewall: release_run.py carries an unlisted 'PyAutoLabs' instance fact](draft/bug/pyautoheart/tenant_firewall_release_run_instance_fact.md) — pyautoheart · small · safe · normal
 - [Silence the three autonerves-rooted CLI-noise sources (fits leak, pytest collection,](draft/maintenance/pyautonerves/cli_noise_autonerves_batch.md) — pyautonerves · small · safe · normal
@@ -83,10 +82,10 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**139** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**138** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
-<summary><b>bug</b> — 40</summary>
+<summary><b>bug</b> — 39</summary>
 
 - [pre_build stages untracked files, publishing uncommitted human work](draft/bug/pyautohands/pre_build_stages_untracked_wip.md) — pyautohands · small · supervised · high
 - [UniformPrior bounds are not enforced in the objective on the](draft/bug/autofit/uniform_prior_bounds_unenforced_on_numpy_path.md) — autofit · medium · human-required · high
@@ -109,7 +108,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 - [TEST_MODE bypass crashes on ordered-parameter assertion ties](draft/bug/autofit/test_mode_bypass_ordered_assertion_ties.md) — autofit · small · supervised · normal
 - [point.py JAX-vmap parity assert is non-deterministic under the smoke env](draft/bug/autolens/point_jax_vmap_parity_nondeterministic.md) — autolens · small · supervised · normal
 - [Scripts derive geometry from a hardcoded pixel_scale while the dataset](draft/bug/autolens_workspace/script_local_pixel_scale_vs_dataset_pixel_scales.md) — autolens_workspace · small · supervised · normal
-- [Audit HowTo tutorials for missing setup_notebook() line](draft/bug/howto/missing_setup_notebook_audit.md) — howto · small · safe · normal
 - [HowToGalaxy small API drifts: ellipse kwargs + plot_grid_lines (parked NEEDS_FIX)](draft/bug/howtogalaxy/small_api_drift_ellipse_and_plot_grid_lines.md) — howtogalaxy · small · supervised · normal
 - [`generate.py` deletes notebooks/ before rejecting an unknown project](draft/bug/pyautohands/generate_rejects_autocti_after_deleting_notebooks.md) — pyautohands · small · supervised · normal
 - [Tenant firewall: release_run.py carries an unlisted 'PyAutoLabs' instance fact](draft/bug/pyautoheart/tenant_firewall_release_run_instance_fact.md) — pyautoheart · small · safe · normal

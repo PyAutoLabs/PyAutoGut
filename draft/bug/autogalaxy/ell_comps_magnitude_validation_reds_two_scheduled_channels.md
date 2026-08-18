@@ -9,7 +9,48 @@ Repos:
 Difficulty: medium
 Autonomy: supervised
 Priority: high
-Status: formalised
+Status: verified-resolved (2026-08-18 — evidence below; retirement pending human confirmation)
+
+## Resolution evidence (start_dev verification, 2026-08-18 — do NOT start dev on this prompt)
+
+A start_dev session routed this prompt through the Bug Agent (BugDecision: severity=high,
+scope=ecosystem, investigate-first) and the investigation found the bug **already fixed or owned
+by in-flight work**. No issue was created, no repos claimed. Evidence:
+
+1. **The guard's introduction is pinned.** `validate_ell_comps` landed in PyAutoGalaxy#566
+   (`a366f77`, merged 2026-08-09, closes #440 — the @rhayes777 API-audit epic), squarely inside
+   the green-08-03 → red-08-10 regression window this prompt asked to search.
+2. **The "what to decide" question was already decided — option (2).** PyAutoGalaxy#568
+   ("fix: resample invalid profile parameters", `be61b8d`, merged 2026-08-10T22:53Z) made
+   `ModelParameterException` subclass `ValueError, af.exc.FitException`
+   (`autogalaxy/exc.py:16`), so a search proposing an invalid `ell_comps` resamples it as a
+   rejected point instead of crashing. The stored/reconstructed-sample escape paths were then
+   closed by PyAutoFit#1466/#1468/#1470 + autolens_workspace#484 (see
+   `complete/2026/08/heart-red-guarded-sample-escape.md`), taking Release Integrate green on
+   2026-08-11 (run 31534325304). Priors were deliberately NOT narrowed (option 3 rejected there).
+3. **python-matrix channel: GREEN.** PyAutoHands `python_matrix.yml` scheduled run 31992457345
+   (2026-08-17T03:50Z) succeeded — the 2026-08-10 red (run 31356134172) did not recur.
+4. **workspace-smoke channel: down to one failure, owned elsewhere.** PyAutoHeart
+   `workspace-smoke.yml` scheduled run 31992749671 (2026-08-17T03:56Z): 136 jobs, every
+   `run_scripts` package green — including `autogalaxy guides` and `autolens multi_galaxy`, the
+   packages this prompt's cascade named. Sole real failure: `run_notebooks (3.12, autogalaxy,
+   guides)` (`notebooks/guides/results/aggregator/samples.ipynb`), which is the
+   `stored-sample-reconstruction-guard` task in `active.md`: its workspace half merged
+   2026-08-17T22:08Z (autogalaxy_workspace#210, after that scheduled run), and its library half
+   (PyAutoFit#1486) is in flight. PyAutoFit#1489 (strict NumPy-path prior bounds) additionally
+   closed the walker-escape source of invalid stored samples.
+
+So the 2026-08-10 one-bug-three-jobs red was fixed by the 08-10/11 arc; the digest that spawned
+this prompt was reading a snapshot that predated the next scheduled runs. Remaining follow-through
+belongs to `stored-sample-reconstruction-guard` (active) and the `ell_comps` boundary research
+prompt (`draft/research/autolens_profiling/ell_comps_trapping_unmasked.md`), not to a new task.
+
+**Disposition (human call):** retire this prompt (e.g. `complete/archive/shelved/` or delete) or
+fold this evidence into the next wake-up digest. Verify the first scheduled runs after
+2026-08-17T22:08Z — workspace-smoke should now be fully green; if `run_notebooks (autogalaxy,
+guides)` reds again, that is PyAutoFit#1486's tail, not this prompt.
+
+## Original problem statement
 
 Two scheduled channels that the 2026-08-16 wake-up digest reported as three separate red jobs are
 in fact **one bug**. Both went red on the same night (2026-08-10) with the same exception:

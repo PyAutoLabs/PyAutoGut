@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1006 records across 7 buckets.
+1008 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -59,6 +59,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [hazard-profiling-likelihood-tier](2026/08/hazard-profiling-likelihood-tier.md) — Tier-2 likelihood profiling landed with five persistent findings and corrected NNLS continuity semantics.
 - [health-conductor-stale-verdict](2026/08/health-conductor-stale-verdict.md)
 - [heart-red-guarded-sample-escape](2026/08/heart-red-guarded-sample-escape.md) — Closed the escape path that kept release validation RED after
+- [howto-setup-notebook-audit](2026/08/howto-setup-notebook-audit.md) — none — run end-to-end from a cloud session; the six PRs are the record
 - [howto-smoke-all-tutorials](2026/08/howto-smoke-all-tutorials.md)
 - [howtofit-stub-fork-cleanup](2026/08/howtofit-stub-fork-cleanup.md)
 - [hpc-sync-first-push-race](2026/08/hpc-sync-first-push-race.md) — `hpc/sync push()` fired the `CODE_DIRS` rsyncs in parallel before
@@ -101,6 +102,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [potential-correction-validation](2026/08/potential-correction-validation.md)
 - [power-law-omega-convergence](2026/08/power-law-omega-convergence.md) — Bounded the fixed 20-term JAX PowerLaw omega recurrence across the packaged slope and ellipticity priors, meas…
 - [pr-ci-for-own-test-suite](2026/08/pr-ci-for-own-test-suite.md)
+- [pre-build-stages-untracked-wip](2026/08/pre-build-stages-untracked-wip.md) — CLOSED completed
 - [prior-support-clipper](2026/08/prior-support-clipper.md) — Shipped `AbstractClipper` / `ClipperNone` / `ClipperPriorBox` in
 - [profile-validation-resample-recovery](2026/08/profile-validation-resample-recovery.md) — Shipped the approved narrow compatibility fix: invalid profile construction is now both a direct `ValueError` …
 - [purge-autocti-dataset-1d-overview](2026/08/purge-autocti-dataset-1d-overview.md) — no GitHub issue — the leftover from `autocti-util-dataset-export`, executed on direct human instruction "do th…

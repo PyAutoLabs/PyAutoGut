@@ -1,17 +1,5 @@
 # Active Tasks
 
-## searches-readme-dashboard
-- issue: https://github.com/PyAutoLabs/autolens_profiling/issues/138
-- session: Claude Code cloud/mobile (no local worktree)
-- status: library-dev
-- worktree: none — cloud session works on the GitHub clone directly
-- repos:
-  - autolens_profiling: feature/searches-readme-dashboard
-- prompt: active/searches_readme_dashboard_no_data.md
-- note: Phase 0(e) of the inference programme (PROGRAMME.md). Root cause verified:
-  build_readme.py scans a flat filename layout; searches artifacts live in nested
-  cells with bare-tier filenames, and the renderer reads a stale payload schema.
-
 ## stored-sample-reconstruction-guard
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1486
 - status: library-dev — WORKSPACE HALF SHIPPED; the PyAutoFit hardening (#1486) is what remains

@@ -11,18 +11,6 @@
   Disjoint from the registered mge-lane-death claim (research/mge-lane-death, never created).
   This is the canonical copy of the 2026-08-17 human-approved inference programme.
 
-## constant-zeroth-repair
-- issue: https://github.com/PyAutoLabs/PyAutoArray/issues/448
-- status: remote-handoff (prepared 2026-08-17 for a cloud/phone session; NO local worktree claim)
-- worktree: none (remote session clones PyAutoLabs/PyAutoArray and branches itself)
-- repos:
-  - PyAutoArray: feature/constant-zeroth-repair (to be created by the remote session)
-- prompt: active/constant_zeroth_broken_dead_code.md
-- note: Phase 8C of the inference programme (autolens_profiling#134). CPU-only, numpy-only
-  tests — deliberately chosen for a no-GPU remote session. PyAutoArray's other claim
-  (version-stamp-sync-guards) touches only `autoarray/__init__.py` + `files/release.sh`;
-  this task touches `autoarray/inversion/regularization/` — file-disjoint. Merge is human.
-
 ## positions-lh-penalty-accumulation
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/699
 - status: pr-open (https://github.com/PyAutoLabs/PyAutoLens/pull/700)

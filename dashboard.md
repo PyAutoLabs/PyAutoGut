@@ -19,9 +19,9 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 
 **Highest priority** (filed as `high`) — showing 12 of 33
 
+- [Put the clipper in the search identifier — MLE searches](draft/feature/autofit/clipper_in_search_identifier.md) — autofit · small · supervised · high
 - [TRIAGE: needs manual review before routing](draft/triage/jax_zero_contour.md) — medium · safe · high
 - [UniformPrior bounds are not enforced in the objective on the](draft/bug/autofit/uniform_prior_bounds_unenforced_on_numpy_path.md) — autofit · medium · human-required · high
-- [Decide whether the clipper belongs in the search identifier](draft/feature/autofit/clipper_in_search_identifier.md) — autofit · medium · human-required · high
 - [`ell_comps` magnitude validation REDs the workspace-smoke and python-matrix channels](draft/bug/autogalaxy/ell_comps_magnitude_validation_reds_two_scheduled_channels.md) — autogalaxy · medium · supervised · high
 - [PyAutoLens RTD docs: three-regime restructure (multi_galaxy / group / cluster)](draft/docs/autolens/docs_three_regime_restructure.md) — autolens · medium · supervised · high
 - [The `ell_comps` trapping was masked, not cleared — characterise it](draft/research/autolens_profiling/ell_comps_trapping_unmasked.md) — autolens_profiling · medium · supervised · high
@@ -132,7 +132,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 <details>
 <summary><b>feature</b> — 28</summary>
 
-- [Decide whether the clipper belongs in the search identifier](draft/feature/autofit/clipper_in_search_identifier.md) — autofit · medium · human-required · high
+- [Put the clipper in the search identifier — MLE searches](draft/feature/autofit/clipper_in_search_identifier.md) — autofit · small · supervised · high
 - [Make draft/ staleness detectable — `intake reconcile` measured, and the](draft/feature/pyautomind/draft_staleness_detection_signals.md) — pyautomind · medium · supervised · high
 - [LACosmic per-frame CR masking option + decouple PSF-star pass from](draft/feature/pyautoreduce/lacosmic_cr_option_and_star_pass_decoupling.md) — pyautoreduce · medium · supervised · high
 - [Profile and speed up JAX likelihood-function compile times (all use](draft/feature/autolens_profiling/jax_compile_time_profiling.md) — autolens_profiling · large · supervised · high

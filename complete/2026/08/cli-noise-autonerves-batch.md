@@ -1,3 +1,62 @@
+# cli-noise-autonerves-batch
+
+**Completed:** 2026-08-18 · **Type:** maintenance · **Target:** PyAutoNerves
+**PRs:** PyAutoNerves#149 (fixes), PyAutoMind#232 (implementation notes) — both
+merged 2026-08-18. No GitHub issue (small `Autonomy: safe` batch, driven
+straight from the draft prompt in a remote session).
+
+## What shipped
+
+The three autonerves-rooted CLI-noise sources from the 2026-08-06
+`/cli_noise_clean` audit, all fixed in one PyAutoNerves PR with regression
+tests:
+
+1. **fits leak** — `fitsable.ndarray_via_fits_from` called `fits.open` without
+   closing, emitting `ResourceWarning: unclosed file` in every downstream repo
+   that loads FITS. Now `with fits.open(...)`. The same fix was applied to
+   `header_obj_from`, which had the identical unclosed-handle pattern a few
+   lines below the one the audit named — an astropy `Header` stays valid after
+   the file closes, so the `with` block is safe there too.
+2. **pytest collection** — `test_test_mode.py` imported the real API functions
+   `test_mode_level`/`test_mode_samples` by bare name, so pytest collected them
+   as tests (`PytestReturnNotNoneWarning`, an ERROR in a future pytest). The
+   unused `test_mode_level` import was dropped; `test_mode_samples` is aliased
+   to `_test_mode_samples`, with a comment so nobody "cleans up" the alias.
+3. **`check_version` false positive** — fix option (b) from the prompt:
+   `check_version` now returns silently when its root (defaulting to cwd) is a
+   package source checkout (`setup.py` or `pyproject.toml` at its top level)
+   and no version floor is recorded. A recorded floor is still enforced even in
+   a source checkout, and a genuine workspace missing its version keys still
+   warns. Chosen over option (a) (per-library conftest env vars) because it is
+   self-contained in autonerves — no changes needed in the five library repos.
+
+Full `test_autonerves` suite green (157/157) under `pytest -W all`; verified
+`check_version()` is silent with cwd at a library repo root and that
+`test_mode_*` no longer appear in `pytest --collect-only`.
+
+## Surface decision (the prompt's item-3 open question)
+
+The prompt flagged that PyAutoArray/PyAutoNerves don't call `check_version` at
+all, unlike autofit/autogalaxy/autolens. Decided: **the asymmetry is intended,
+not drift.** `check_version` is the surface of the *workspace-facing* libraries
+only — users run scripts from workspace clones that import those three.
+autoarray and autonerves are infrastructure layers never driven from a
+workspace cwd directly. No library `__init__` was changed.
+
+## Traps / findings
+
+- The audit named one leak site (`fitsable.py:210`); the sibling
+  `header_obj_from` had the same leak and would have kept a residual
+  ResourceWarning trickle if only the named line were fixed. When fixing a
+  pattern-shaped noise source, grep the module for the pattern, not the line.
+- The downstream ResourceWarning surfaces the audit lists
+  (`autofit/database/aggregator/scrape.py`, `autoarray` visibilities /
+  interferometer dataset, Galaxy/Lens runs) all route through these two
+  helpers, so no downstream-repo changes are needed — re-run the audit after
+  the next release picks up autonerves to confirm the stack-wide clearance.
+
+## Original prompt
+
 # Silence the three autonerves-rooted CLI-noise sources (fits leak, pytest collection, check_version false positive)
 
 Type: maintenance

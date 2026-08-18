@@ -1,18 +1,5 @@
 # Active Tasks
 
-## inference-programme-ledger
-- issue: https://github.com/PyAutoLabs/autolens_profiling/issues/134
-- status: pr-open (https://github.com/PyAutoLabs/autolens_profiling/pull/135)
-- worktree: ~/Code/PyAutoLabs-wt/inference-programme-ledger
-- repos:
-  - autolens_profiling: feature/inference-programme-ledger
-- prompt: active/inference_programme_ledger.md
-- note: docs-only (results/notes/inference/ PROGRAMME.md + DECISIONS.md + LITERATURE.md).
-  The mge-lane-death claim it was recorded as disjoint from is gone — archived
-  2026-08-18 as superseded (`complete/2026/08/mge-lane-death.md`); its
-  `research/mge-lane-death` branch was never created.
-  This is the canonical copy of the 2026-08-17 human-approved inference programme.
-
 ## stored-sample-reconstruction-guard
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1486
 - status: library-dev — WORKSPACE HALF SHIPPED; the PyAutoFit hardening (#1486) is what remains

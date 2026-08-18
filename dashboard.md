@@ -17,9 +17,8 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 33
+**Highest priority** (filed as `high`) — showing 12 of 32
 
-- [pre_build stages untracked files, publishing uncommitted human work](draft/bug/pyautohands/pre_build_stages_untracked_wip.md) — pyautohands · small · supervised · high
 - [TRIAGE: needs manual review before routing](draft/triage/jax_zero_contour.md) — medium · safe · high
 - [Decide whether the clipper belongs in the search identifier](draft/feature/autofit/clipper_in_search_identifier.md) — autofit · medium · human-required · high
 - [`ell_comps` magnitude validation REDs the workspace-smoke and python-matrix channels](draft/bug/autogalaxy/ell_comps_magnitude_validation_reds_two_scheduled_channels.md) — autogalaxy · medium · supervised · high
@@ -31,9 +30,11 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 - [LACosmic per-frame CR masking option + decouple PSF-star pass from](draft/feature/pyautoreduce/lacosmic_cr_option_and_star_pass_decoupling.md) — pyautoreduce · medium · supervised · high
 - [Cluster package: point-source-default narrative + extended-source follow-up feature](draft/docs/workspaces/cluster_regime_narrative.md) — workspaces · medium · supervised · high
 - [multi_galaxy package: new regime package in autolens_workspace](draft/docs/autolens/multi_galaxy_package.md) — autolens · large · supervised · high
+- [Tune the JAX multi-start optimizers into a standard option (MGE](draft/experiment/autolens_profiling/jax_optimizer_settings_tuning.md) — autolens_profiling · large · supervised · high
 
 **Quick wins** (small enough, and safe enough to run unattended)
 
+- [Has the falsified-by checkpoint stage gone rote after ten ships](draft/research/pyautobrain/has_the_falsified_by_checkpoint_stage_gone.md) — pyautobrain · small · safe · normal
 - [PyAutoFit CLI-noise batch: unclosed search.log handler + four small warning](draft/maintenance/pyautofit/cli_noise_pyautofit_batch.md) — pyautofit · small · safe · normal
 - [Tenant firewall: release_run.py carries an unlisted 'PyAutoLabs' instance fact](draft/bug/pyautoheart/tenant_firewall_release_run_instance_fact.md) — pyautoheart · small · safe · normal
 - [Silence the three autonerves-rooted CLI-noise sources (fits leak, pytest collection,](draft/maintenance/pyautonerves/cli_noise_autonerves_batch.md) — pyautonerves · small · safe · normal
@@ -47,7 +48,7 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 
 Issued — each has an open GitHub issue and usually a branch. The full record for each is in [`active.md`](active.md).
 
-- [Commit the inference-methods programme plan + knowledge ledger into autolens_profiling](active/inference_programme_ledger.md) — [issue #134](https://github.com/PyAutoLabs/autolens_profiling/issues/134) — pr-open (https://github.com/PyAutoLabs/autolens_profiling/pull/135)
+- [Re-mainline af.NSS as a proper PyAutoFit search on mainline blackjax](active/nss_remainline_mainline_blackjax.md) — [issue #1491](https://github.com/PyAutoLabs/PyAutoFit/issues/1491) — pr-open (https://github.com/PyAutoLabs/PyAutoFit/pull/1492) — 17/17 nss tests
 - [PyAutoReduce validation: slacs1430+4105 ACS reduction vs trusted legacy dataset](active/pyautoreduce_slacs1430_acs_comparison.md)
 - [Reconstructing a stored sample raises through `ignore_assertions=True`](active/to_instance_guard_gap.md) — [issue #1486](https://github.com/PyAutoLabs/PyAutoFit/issues/1486) — library-dev — WORKSPACE HALF SHIPPED; the PyAutoFit hardening (#1486) is what remains
 - [Version-stamp sync to 2026.8.17.1 + release-sed guards](active/version_stamp_sync_and_release_sed_guards.md) — [issue #235](https://github.com/PyAutoLabs/PyAutoHands/issues/235) — pr-open (https://github.com/PyAutoLabs/PyAutoLens/pull/700)
@@ -85,9 +86,8 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 **137** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
-<summary><b>bug</b> — 38</summary>
+<summary><b>bug</b> — 37</summary>
 
-- [pre_build stages untracked files, publishing uncommitted human work](draft/bug/pyautohands/pre_build_stages_untracked_wip.md) — pyautohands · small · supervised · high
 - [`ell_comps` magnitude validation REDs the workspace-smoke and python-matrix channels](draft/bug/autogalaxy/ell_comps_magnitude_validation_reds_two_scheduled_channels.md) — autogalaxy · medium · supervised · high
 - [Release does not sync __version__ stamps and workspace pins back](draft/bug/pyautobuild/release_version_sync_back_to_main.md) — pyautobuild · medium · supervised · high
 - [EP hierarchical parent-scale collapse: cure the basin, or document the](draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md) — autofit · too-large · human-required · high
@@ -163,7 +163,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>research</b> — 21</summary>
+<summary><b>research</b> — 22</summary>
 
 - [The `ell_comps` trapping was masked, not cleared — characterise it](draft/research/autolens_profiling/ell_comps_trapping_unmasked.md) — autolens_profiling · medium · supervised · high
 - [Optimize pixelized Prodigy settings on the laptop GPU](draft/research/autolens_workspace_developer/pixelized_prodigy_laptop_gpu_phase_2_settings.md) — autolens_workspace_developer · medium · human-required · high
@@ -175,6 +175,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 - [Delaunay-family JAX modules never hit the persistent compilation cache](draft/research/autoarray/delaunay_callback_persistent_cache_miss.md) — autoarray · medium · supervised · medium
 - [Quick-update plotting cost — minutes per update, and it is](draft/research/autolens/quick_update_plotting_cost.md) — autolens · medium · supervised · medium
 - [Use readthedocs or migrate to GitHub docs](draft/research/autobuild/git_docs.md) — autobuild · small · supervised · normal
+- [Has the falsified-by checkpoint stage gone rote after ten ships](draft/research/pyautobrain/has_the_falsified_by_checkpoint_stage_gone.md) — pyautobrain · small · safe · normal
 - [Re-baseline the slacs0008 acceptance parity after the HAP-dedupe fix](draft/research/pyautoreduce/acceptance_noise_rebaseline.md) — pyautoreduce · small · supervised · normal
 - [Kernel-CDF bandwidth defaults — config-dependent quality, investigate adaptivity](draft/research/autoarray/rectangular_kernel_bandwidth_defaults.md) — autoarray · medium · supervised · normal
 - [We have lots of examples which profile how long JAX](draft/research/autolens_workspace_developer/jax_jit_profiling.md) — autolens_workspace_developer · medium · supervised · normal

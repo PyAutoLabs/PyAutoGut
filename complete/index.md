@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1007 records across 7 buckets.
+1014 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -29,6 +29,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [autohands-firewall-allowlist](2026/08/autohands-firewall-allowlist.md) — auto-closed by the merge
 - [autolens-multiplane-redshift-warning](2026/08/autolens-multiplane-redshift-warning.md)
 - [autolens-tracer-validation-guards](2026/08/autolens-tracer-validation-guards.md)
+- [blackjax-16-upgrade-smoke](2026/08/blackjax-16-upgrade-smoke.md)
 - [border-relocator-backend-parity](2026/08/border-relocator-backend-parity.md) — Isolated the native NumPy/JAX likelihood gap to mathematically non-unique PCA axes for a near-isotropic border…
 - [border-relocator-degenerate-pca](2026/08/border-relocator-degenerate-pca.md) — Stabilized near-isotropic border PCA axes with a deterministic axis-aligned branch at a scale-aware eigenvalue…
 - [circular-ell-comps-image-gradient](2026/08/circular-ell-comps-image-gradient.md) — Replaced the Sersic image path's Cartesian-to-polar ellipticity conversion with an algebraically equivalent Ca…
@@ -68,6 +69,8 @@ _(curate hard-won records here — survives regeneration.)_
 - [hygiene-detail-flag](2026/08/hygiene-detail-flag.md)
 - [hygiene-gone-ref-counter](2026/08/hygiene-gone-ref-counter.md) — the prompt was never issued — the defects were fixed under other issues, see below
 - [hygiene-howto-refs-docstrings](2026/08/hygiene-howto-refs-docstrings.md)
+- [inference-method-cards-seed](2026/08/inference-method-cards-seed.md)
+- [inference-programme-ledger](2026/08/inference-programme-ledger.md)
 - [interferometer-delaunay-flaky-fitexception](2026/08/interferometer-delaunay-flaky-fitexception.md)
 - [interferometer-start-here-integrate-oom](2026/08/interferometer-start-here-integrate-oom.md)
 - [intra-family-dep-floors](2026/08/intra-family-dep-floors.md)
@@ -101,6 +104,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [potential-correction-validation](2026/08/potential-correction-validation.md)
 - [power-law-omega-convergence](2026/08/power-law-omega-convergence.md) — Bounded the fixed 20-term JAX PowerLaw omega recurrence across the packaged slope and ellipticity priors, meas…
 - [pr-ci-for-own-test-suite](2026/08/pr-ci-for-own-test-suite.md)
+- [pre-build-stages-untracked-wip](2026/08/pre-build-stages-untracked-wip.md) — CLOSED completed
 - [prior-support-clipper](2026/08/prior-support-clipper.md) — Shipped `AbstractClipper` / `ClipperNone` / `ClipperPriorBox` in
 - [profile-validation-resample-recovery](2026/08/profile-validation-resample-recovery.md) — Shipped the approved narrow compatibility fix: invalid profile construction is now both a direct `ValueError` …
 - [purge-autocti-dataset-1d-overview](2026/08/purge-autocti-dataset-1d-overview.md) — no GitHub issue — the leftover from `autocti-util-dataset-export`, executed on direct human instruction "do th…
@@ -110,6 +114,8 @@ _(curate hard-won records here — survives regeneration.)_
 - [reconcile-upstream-repo-mode](2026/08/reconcile-upstream-repo-mode.md)
 - [registry-integrity-check](2026/08/registry-integrity-check.md)
 - [regularization-jax-gradient-gaps](2026/08/regularization-jax-gradient-gaps.md)
+- [release-drive-2026-08-03](2026/08/release-drive-2026-08-03.md)
+- [release-drive-2026-08-07](2026/08/release-drive-2026-08-07.md)
 - [release-validation-tri-state](2026/08/release-validation-tri-state.md)
 - [resolve-border-relocator-hazard](2026/08/resolve-border-relocator-hazard.md) — Reconciled the likelihood hazard instrument after the border-relocator source fix. The resolved backend-diverg…
 - [resolve-curvature-floor-doc-drift](2026/08/resolve-curvature-floor-doc-drift.md) — Reconciled the curvature-floor documentation finding after PyAutoArray#444. The detector now requires both run…
@@ -117,6 +123,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [samplers-surface-autolens-tiers](2026/08/samplers-surface-autolens-tiers.md) — the samplers faculty's SamplerSurface now scans the findings
 - [save-json-numpy-scalar-typeerror](2026/08/save-json-numpy-scalar-typeerror.md) — Adds `NumpyEncoder` in `autofit/tools/util.py` (`np.ndarray` ->
 - [script-title-underline-off-by-one](2026/08/script-title-underline-off-by-one.md)
+- [searches-readme-dashboard](2026/08/searches-readme-dashboard.md)
 - [simulator-util-to-af-ex](2026/08/simulator-util-to-af-ex.md) — moved the four 1D-Gaussian simulator helpers out of the duplicated
 - [small-datasets-loader-pixel-scales](2026/08/small-datasets-loader-pixel-scales.md)
 - [smoke-runner-jupyter-guard](2026/08/smoke-runner-jupyter-guard.md)

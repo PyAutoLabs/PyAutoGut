@@ -7,7 +7,8 @@ Repos:
 Difficulty: small
 Autonomy: safe
 Priority: normal
-Status: formalised
+Status: implemented — fixes pushed to PyAutoNerves branch
+`claude/autonerves-cli-noise-h1w8sq` (2026-08-18), awaiting PR/merge
 
 Filed 2026-08-06 from a full `/cli_noise_clean` audit (pytest `-W all` across
 all five libraries + workspace script runs). Three root causes live in
@@ -38,3 +39,24 @@ autonerves; the first pollutes the entire downstream stack.
    (b) `check_version` detects it is running from inside a library source tree
    and skips. Note PyAutoArray/PyAutoNerves don't call `check_version` at all —
    inconsistent with the other three; decide the intended surface while here.
+
+## Implementation notes (2026-08-18, branch `claude/autonerves-cli-noise-h1w8sq`)
+
+- **1 (fits leak)**: fixed with `with fits.open(...)` in
+  `ndarray_via_fits_from` **and** `header_obj_from`, which had the identical
+  unclosed-handle pattern. Regression test asserts no `ResourceWarning`.
+- **2 (pytest collection)**: dropped the unused bare-name `test_mode_level`
+  import; aliased `test_mode_samples as _test_mode_samples` with a comment
+  explaining why, so collection skips it.
+- **3 (check_version false positive)**: chose fix (b) — `check_version` now
+  skips silently when the root is a package source checkout (`setup.py` or
+  `pyproject.toml` at its top level) and no version floor is recorded. A
+  recorded floor is still enforced even in a source checkout, and a genuine
+  workspace missing its version keys still warns. Self-contained in
+  autonerves; no per-library conftest changes needed.
+- **Surface decision** (the item-3 note): `check_version` is intentionally the
+  surface of the *workspace-facing* libraries only (autofit / autogalaxy /
+  autolens import it at package init because users run their scripts from
+  workspace clones). autoarray and autonerves are infrastructure layers never
+  driven from a workspace cwd directly, so they correctly do not call it — the
+  asymmetry is intended, not drift. No change made to any library `__init__`.

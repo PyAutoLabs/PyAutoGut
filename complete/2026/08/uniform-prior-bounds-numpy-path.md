@@ -1,3 +1,56 @@
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1489 (auto-closed by the merge's `Closes` line)
+- completed: 2026-08-18
+- pr: https://github.com/PyAutoLabs/PyAutoFit/pull/1490 (MERGED, merge c302f51d, `pending-release`)
+- notes: REGRESSION fix, shape A from the issue — strict NumPy-path bounds restored in the priors
+  themselves. `UniformPrior.log_prior_from_value` and `LogUniformPrior.log_prior_from_value` now
+  return `-inf` outside `[lower_limit, upper_limit]` on the NumPy path, mirroring the JAX path;
+  `Fitness.log_likelihood_from` skips the prior subtraction when the prior sum is non-finite
+  (`-inf - -inf = NaN` guard); dated corrections to the false "MCMC samplers reject -inf" sentence
+  in `clipper.py` and in this repo's `complete/2026/08/prior-support-clipper.md`; stale BFGS
+  comment updated. New `test_autofit/mapper/prior/test_prior_bounds_1489.py` (scalar/array bounds,
+  -inf FoM for out-of-box vectors, NaN-free inversion, end-to-end Emcee containment) plus updates
+  to `test_prior.py` and `test_clipper.py` where they pinned the broken behaviour (the LBFGS test's
+  foil literally asserted the clipper-less fit escapes the box).
+- archaeology (the load-bearing finding, full trail in issue #1489 comments): NOT long-standing
+  behaviour as the prompt claimed — the box was enforced until release 2025.10.16.1 via
+  `assert_within_limits`/`PriorLimitException(FitException)` in `instance_from_vector` (Fitness
+  caught it → resample `-inf` → MCMC rejection; the 2019 docstring said so). The guard was deleted
+  2025-06-20 (`5d85b80c3` + `30d470360`, JAX jit-compat cleanup — its JAX arm was a
+  `jax.debug.callback` hack; its tests were deleted with it so nothing went red), landed on main
+  via PyAutoFit#1155 (2025-10-06), first shipped 2025.10.16.1. `2e3540771` (2026-05-14) then
+  re-added strict bounds on the JAX path only ("NumPy paths preserved exactly"), creating the
+  asymmetry the prompt observed and mis-dated. Exposure window: NumPy-path Emcee/Zeus/Drawer/LBFGS
+  fits on autofit >= 2025.10.16.1 with poorly-constrained parameters under a Uniform/LogUniform box.
+- evidence: reproduced on main @ fe9f813 (identical finite log posterior in/out of box; Emcee
+  30x600 with an unconstrained parameter under UniformPrior(-0.1, 0.1): 100% of accepted samples
+  outside, runaway to |offset| ~ 1e14 — the stretch move grows exponentially in an unpenalised flat
+  direction). Counter-check on autofit 2025.5.10.1 (pre-regression): PriorLimitException raised,
+  objective -inf, 0/630 samples escape. Post-fix (same script/seed): 0/540 escape, contained to
+  [-0.0997, 0.0999]; well-constrained 3-param reference fit posterior statistically unchanged
+  (median shifts ~0.02 against sigma ~0.1-0.5). Full suite 1734 passed / 8 skipped; the 2 failures
+  (test_messages::test_beta, test_nautilus::test__single_core_builds_no_pool) are
+  missing-optional-dependency env failures reproducing identically on untouched main.
+- merge-context: merged 2026-08-18 ~16:11 UTC on explicit human authorization ("pr ci green and
+  merge") with all 3 checks green (unittest 3.12, unittest 3.13, docs-build). Web session — no
+  local worktree; branch `claude/uniformprior-bounds-numpy-1n1u3s` pushed directly. The human also
+  overrode the worktree-conflict guard (PyAutoFit was claimed by stored-sample-reconstruction-guard
+  and version-stamp-sync-guards; change surface disjoint from both).
+- follow-ups (filed/known at completion):
+  1. Shape C deliberately deferred: default `LBFGS` to `ClipperPriorBox` (draft
+     `draft/feature/autofit/clipper_in_search_identifier.md` is adjacent). With strict priors and
+     `ClipperNone`, an LBFGS step out of the box now sees an infinite objective — C gives scipy
+     declarative bounds instead.
+  2. Workspace smoke literal risk: `*_workspace_test` scripts that pin literal values from
+     Emcee/Zeus/LBFGS chains may shift on the next nightly against the merged main — triage any
+     new mismatches against this change before rebaselining.
+  3. Released-results caveat for users: fits run on autofit 2025.10.16.1 → 2026.8.x with Emcee/
+     Zeus/Drawer/LBFGS and poorly-constrained box-bounded parameters may have sampled outside the
+     declared prior; worth a release-notes line when this ships to PyPI.
+  4. `test_beta` + `test__single_core_builds_no_pool` fail on clean main without optional deps
+     (sympy?/nautilus-sampler absence) — hygiene candidate: skip-if-missing markers.
+
+## Original prompt
+
 # UniformPrior bounds are not enforced in the objective on the NumPy path
 
 Type: bug

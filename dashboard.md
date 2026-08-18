@@ -11,13 +11,13 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 | [In flight](#in-flight) (`active/`) | 3 |
 | [Parked](#parked) (`parked.md`) | 1 |
 | [Planned](#planned) (`planned.md`) | 7 |
-| [Backlog](#backlog) (`draft/`) | 132 |
+| [Backlog](#backlog) (`draft/`) | 131 |
 
 Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3Aissue+is%3Aopen&type=issues) · [open pull requests](https://github.com/search?q=org%3APyAutoLabs+is%3Apr+is%3Aopen&type=prs)
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 27
+**Highest priority** (filed as `high`) — showing 12 of 26
 
 - [TRIAGE: needs manual review before routing](draft/triage/jax_zero_contour.md) — medium · safe · high
 - [Decide whether the clipper belongs in the search identifier](draft/feature/autofit/clipper_in_search_identifier.md) — autofit · medium · human-required · high
@@ -26,11 +26,11 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 - [Release does not sync __version__ stamps and workspace pins back](draft/bug/pyautobuild/release_version_sync_back_to_main.md) — pyautobuild · medium · supervised · high
 - [Cluster package: point-source-default narrative + extended-source follow-up feature](draft/docs/workspaces/cluster_regime_narrative.md) — workspaces · medium · supervised · high
 - [multi_galaxy package: new regime package in autolens_workspace](draft/docs/autolens/multi_galaxy_package.md) — autolens · large · supervised · high
-- [Tune the JAX multi-start optimizers into a standard option (MGE](draft/experiment/autolens_profiling/jax_optimizer_settings_tuning.md) — autolens_profiling · large · supervised · high
 - [Profile and speed up JAX likelihood-function compile times (all use](draft/feature/autolens_profiling/jax_compile_time_profiling.md) — autolens_profiling · large · supervised · high
 - [Give the Profiling Agent a compile-time axis — the arc](draft/feature/profiling/profiling_agent_jax_compile_time_scope.md) — profiling · large · supervised · high
 - [Deep research: Can we speed up Delaunay in PyAutoArray?](draft/research/autoarray/delaunay_research.md) — autoarray · too-large · supervised · high
 - [EP hierarchical parent-scale collapse: cure the basin, or document the](draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md) — autofit · too-large · human-required · high
+- [Census of priors and messages — confirmed bugs + redesign](draft/research/autofit/priors_and_messages_math_audit.md) — autofit · too-large · supervised · high
 
 **Quick wins** (small enough, and safe enough to run unattended)
 
@@ -82,7 +82,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**132** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**131** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 36</summary>
@@ -259,13 +259,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 - [TRIAGE: needs manual review before routing](draft/triage/jax_zero_contour.md) — medium · safe · high
 - [Triage: Convolver "No blurring_image provided" warning in canonical workspace scripts](draft/triage/convolver_blurring_image_warning.md) — small · supervised · normal
 - [Nightly release has been blocked 8 nights running — triage](draft/triage/nightly_release_blocked_eight_nights.md) — medium · supervised · normal
-
-</details>
-
-<details>
-<summary><b>experiment</b> — 1</summary>
-
-- [Tune the JAX multi-start optimizers into a standard option (MGE](draft/experiment/autolens_profiling/jax_optimizer_settings_tuning.md) — autolens_profiling · large · supervised · high
 
 </details>
 

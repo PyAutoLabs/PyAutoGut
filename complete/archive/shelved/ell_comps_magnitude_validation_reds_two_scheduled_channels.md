@@ -9,7 +9,7 @@ Repos:
 Difficulty: medium
 Autonomy: supervised
 Priority: high
-Status: verified-resolved (2026-08-18 — evidence below; retirement pending human confirmation)
+Status: retired (2026-08-18 — superseded; resolved by other tasks before it was started, evidence below; human-confirmed)
 
 ## Resolution evidence (start_dev verification, 2026-08-18 — do NOT start dev on this prompt)
 
@@ -45,10 +45,10 @@ this prompt was reading a snapshot that predated the next scheduled runs. Remain
 belongs to `stored-sample-reconstruction-guard` (active) and the `ell_comps` boundary research
 prompt (`draft/research/autolens_profiling/ell_comps_trapping_unmasked.md`), not to a new task.
 
-**Disposition (human call):** retire this prompt (e.g. `complete/archive/shelved/` or delete) or
-fold this evidence into the next wake-up digest. Verify the first scheduled runs after
-2026-08-17T22:08Z — workspace-smoke should now be fully green; if `run_notebooks (autogalaxy,
-guides)` reds again, that is PyAutoFit#1486's tail, not this prompt.
+**Disposition:** human confirmed retirement on 2026-08-18 ("I thought it was done") — moved to
+`complete/archive/shelved/`. Residual watch item: the first scheduled runs after 2026-08-17T22:08Z
+should show workspace-smoke fully green; if `run_notebooks (autogalaxy, guides)` reds again, that
+is PyAutoFit#1486's tail (`stored-sample-reconstruction-guard` in `active.md`), not this prompt.
 
 ## Original problem statement
 

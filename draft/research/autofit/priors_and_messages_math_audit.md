@@ -24,11 +24,13 @@ Status: RETIRED — historical record (2026-08-18); all 9 A-findings shipped, C-
 >   [[ep-priors-fable-reassess]].
 > - **C-findings:** C2 shipped with the A5 decision (PR#1345). C6's
 >   reversal-convention half shipped via #1333/PR#1334 (EP review Phase 2);
->   its `LinearShiftTransform` half remains as `bug/priors/11` (now small).
->   C3 remains as `bug/priors/09` (unblocked). C1+C4 remain as
->   `bug/priors/12`+`13` (bundled design issue, EP-review gate open).
->   C5 remains as `bug/priors/14` (go/no-go after 12/13). C7 shipped as
->   the A9/D5 fix.
+>   its `LinearShiftTransform` half shipped 2026-08-18 via PR#1499
+>   ([[transformed-message-semantics-doc]]). C3 shipped 2026-08-18 as the
+>   property sweep, PR#1499 merged `21288bb` ([[prior-property-tests]]).
+>   C1+C4 are the live design issue PyAutoFit#1500. C5 remains as
+>   `bug/priors/14` (go/no-go behind #1500). C7 shipped as the A9/D5 fix.
+>   New 2026-08-18 finding from the sweep: PyAutoFit#1498 /
+>   `bug/priors/15` (TransformedMessage.logpdf omits the Jacobian).
 > - GitHub hubs #1330/#1331 stay open only as the index for the parked
 >   design items above.
 >

@@ -1,3 +1,53 @@
+Property-based correctness sweep over every concrete `Prior` subclass — census
+finding C3, the Phase 3 safety net of the priors/messages cleanup (hub
+PyAutoFit#1331). Issue PyAutoFit#1497; **PR PyAutoFit#1499, merged 2026-08-18
+as `21288bb` with all checks green** (unittest 3.12 + 3.13, docs). Closes the
+loop the census opened: the nine bug fixes shipped in July (#1345/#1348) are
+now locked as class-wide invariants, not just pointwise regressions.
+
+- New `test_autofit/mapper/prior/test_prior_properties.py` — 134 parametrised
+  tests, five properties over Uniform/LogUniform/Gaussian/LogGaussian/
+  TruncatedGaussian (two parameterisations each): P1 `cdf(value_for(u)) ≈ u`
+  (1e-6); P2 normalisation three ways — `exp(log_prior_from_value +
+  log_normalisation())` integrates to 1 (locks the #1331 Option A contract),
+  the message physical-density path integrates to 1, and the generic
+  exponential-family pdf integrates to 1 for direct messages **including
+  `TruncatedNormalMessage`** (the exclusion that let #1331-04 survive); P3
+  finite-difference gradient parity between `log_prior_from_value` and the
+  physical log density (the #1266 sign-convention canary); P4 `with_limits`
+  constructs for every family with documented semantics (hard-limit families
+  hit the limits exactly; Gaussian families centre between limits, and the
+  LogGaussian keeps positive support per the #1331-01 fix); P5
+  `from_mode(m, V)` reproduces mean and variance at V≠1 discriminating points
+  for Normal and Gamma (locks #1331-D3 — V=1 cannot discriminate the
+  historical inverted formula).
+- Also carried `bug/priors/11` §2 (see [[transformed-message-semantics-doc]]).
+- Every property was numerically validated against clean main before being
+  committed as an assertion; NumPy-only per the house rule (EP-level coverage
+  belongs to the EP framework review, [[ep-framework-review]]).
+
+**Key trap / new finding:** `TransformedMessage.logpdf`/`pdf` omit the
+transform Jacobian — the generic path returns the *base-space* density at
+physical coordinates (`UniformPrior(0,1).message.pdf` integrates to exactly
+1/(2√π) ≈ 0.282, not 1; LogUniform(0.01,100) to 15.83) while `factor()` is
+correct, and the #1334 module docstring claims the opposite. Same failure
+shape as #1331-04. Filed as **PyAutoFit#1498** + intaken as
+`draft/bug/priors/15_transformed_message_logpdf_jacobian.md`; the tests
+assert the physical density via `factor()` (`physical_log_density` helper)
+and cite #1498 at the site so they can be tightened once adjudicated.
+
+**API notes for future sweeps:** `with_limits` is an instance method on
+Uniform (abstract) but a classmethod on the Gaussian families;
+`GammaMessage.value_for` deliberately raises (no inverse CDF) so infinite
+supports are truncated at mean ± 40σ for integration; `prior.cdf` works on
+every family via the message and round-trips exactly.
+
+Sibling work filed the same day: the bundled 12+13 design issue
+PyAutoFit#1500 (single-source density + Prior/Message collapse), which the
+census retirement and this sweep were the groundwork for.
+
+## Original prompt
+
 # `@PyAutoFit` Add property-based correctness tests for every `Prior` subclass
 
 Type: bug

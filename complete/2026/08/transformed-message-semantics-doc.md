@@ -1,3 +1,30 @@
+`TransformedMessage` semantics documentation — census finding C6,
+`bug/priors/11`. Shipped in two halves, both now on PyAutoFit main:
+
+- **§1 (asymmetric reversal convention)** — shipped 2026-07-10 via
+  PyAutoFit#1333 / PR#1334 as part of EP-review Phase 2: docstrings on
+  `_transform` / `_inverse_transform` in `messages/composed_transform.py`
+  plus the module docstring's worked `UniformPrior(0, 2).value_for(0.5)`
+  example and `autofit/graphical/README.md` §2 pointer.
+- **§2 (`LinearShiftTransform` stores the reciprocal of the intuitive
+  scale)** — shipped 2026-08-18 riding PR PyAutoFit#1499 (merged `21288bb`,
+  the [[prior-property-tests]] PR): class docstring stating that
+  `shift`/`scale` describe physical space, the stored parent Jacobian is
+  `DiagonalMatrix(1/scale)` because `transform()` runs physical → base, and
+  `log_det = -log(scale)` follows; cites #1266 as the historical cost of
+  getting the reciprocal backwards.
+
+The prompt's optional `physical_scale=` rename was **not** done — the audit's
+own leaning ("docs alone are fine if the bijector migration stays on the
+roadmap") applied, and the bijector question is now explicitly parked behind
+the PyAutoFit#1500 design decision.
+
+Note: the same PR's test work surfaced that `TransformedMessage.logpdf`
+contradicts the #1334 module docstring (Jacobian never accumulated) — that is
+PyAutoFit#1498 / `draft/bug/priors/15`, deliberately outside this doc task.
+
+## Original prompt
+
 # `@PyAutoFit` `TransformedMessage` reversal convention is undocumented foot-gun
 
 Type: bug

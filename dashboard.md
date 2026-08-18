@@ -8,7 +8,7 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 7 |
+| [In flight](#in-flight) (`active/`) | 5 |
 | [Parked](#parked) (`parked.md`) | 1 |
 | [Planned](#planned) (`planned.md`) | 7 |
 | [Backlog](#backlog) (`draft/`) | 124 |
@@ -45,8 +45,6 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 
 Issued — each has an open GitHub issue and usually a branch. The full record for each is in [`active.md`](active.md).
 
-- [`@PyAutoFit` Add property-based correctness tests for every `Prior` subclass](active/09_prior_property_tests.md) — [issue #1497](https://github.com/PyAutoLabs/PyAutoFit/issues/1497) — pr-open (https://github.com/PyAutoLabs/PyAutoFit/pull/1499) — CI watched by the cloud session
-- [`@PyAutoFit` `TransformedMessage` reversal convention is undocumented foot-gun](active/11_transformed_message_semantics_doc.md) — [issue #1497](https://github.com/PyAutoLabs/PyAutoFit/issues/1497) — library-dev — NOT a standalone task: only §2 (LinearShiftTransform docstring) remained and it
 - [`@PyAutoFit` Refactor: each density should live in one place, not](active/12_single_source_density_refactor.md) — [issue #1500](https://github.com/PyAutoLabs/PyAutoFit/issues/1500) — design-discussion — DESIGN ONLY, no code until the direction is approved on the issue.
 - [`@PyAutoFit` Refactor: collapse the `Prior` / `Message` two-layer hierarchy](active/13_collapse_prior_and_message.md) — [issue #1500](https://github.com/PyAutoLabs/PyAutoFit/issues/1500) — design-discussion — NOT a standalone task: prompt 13 is the hierarchy-collapse half of the
 - [PyAutoReduce validation: slacs1430+4105 ACS reduction vs trusted legacy dataset](active/pyautoreduce_slacs1430_acs_comparison.md)

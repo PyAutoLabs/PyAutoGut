@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1023 records across 7 buckets.
+1025 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -111,6 +111,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [power-law-omega-convergence](2026/08/power-law-omega-convergence.md) — Bounded the fixed 20-term JAX PowerLaw omega recurrence across the packaged slope and ellipticity priors, meas…
 - [pr-ci-for-own-test-suite](2026/08/pr-ci-for-own-test-suite.md)
 - [pre-build-stages-untracked-wip](2026/08/pre-build-stages-untracked-wip.md) — CLOSED completed
+- [prior-property-tests](2026/08/prior-property-tests.md)
 - [prior-support-clipper](2026/08/prior-support-clipper.md) — Shipped `AbstractClipper` / `ClipperNone` / `ClipperPriorBox` in
 - [profile-validation-resample-recovery](2026/08/profile-validation-resample-recovery.md) — Shipped the approved narrow compatibility fix: invalid profile construction is now both a direct `ValueError` …
 - [purge-autocti-dataset-1d-overview](2026/08/purge-autocti-dataset-1d-overview.md) — no GitHub issue — the leftover from `autocti-util-dataset-export`, executed on direct human instruction "do th…
@@ -144,6 +145,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [tenant-firewall-hygiene-extras](2026/08/tenant-firewall-hygiene-extras.md) — auto-closed by the merge
 - [test-mode-fit-exception-finalization](2026/08/test-mode-fit-exception-finalization.md) — `PYAUTO_TEST_MODE=1` no longer finalizes a model point whose reconstruction raises `FitException`; it substitu…
 - [test-mode-samples-info-hook-contract](2026/08/test-mode-samples-info-hook-contract.md) — `NonLinearSearch._test_mode_samples_info()`'s docstring told subclasses
+- [transformed-message-semantics-doc](2026/08/transformed-message-semantics-doc.md)
 - [uniform-prior-bounds-numpy-path](2026/08/uniform-prior-bounds-numpy-path.md) — auto-closed by the merge's `Closes` line
 - [version-skew-yank-awareness](2026/08/version-skew-yank-awareness.md)
 - [wiki-provenance-restamp](2026/08/wiki-provenance-restamp.md)

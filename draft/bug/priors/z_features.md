@@ -5,7 +5,7 @@ Target: priors
 Difficulty: too-large
 Autonomy: supervised
 Priority: normal
-Status: phases 1-2 SHIPPED (2026-07-10); phases 3-4 remain
+Status: phases 1-3 SHIPPED; phase 4 = design (#1500) + parked 14 + finding 15
 
 > **2026-08-18 wrap-up sweep.** All nine confirmed bugs (01-08, 10) are fixed
 > and merged on PyAutoFit main — Phase 1 batch via #1344/PR#1345 (merged
@@ -15,8 +15,9 @@ Status: phases 1-2 SHIPPED (2026-07-10); phases 3-4 remain
 > [[priors-messages-fixes]], [[prior-width-safety]], [[ep-priors-fable-reassess]].
 > Regression suites `test_priors_messages_fixes_1331.py` (12 tests) and
 > `test_prior_width_safety.py` (11 tests) are on main.
-> Remaining: 09 (unblocked, ready), 11 (§2 only — small), 12+13 (bundled
-> design issue, EP-review gate open), 14 (go/no-go after 12/13).
+> 2026-08-18 update: 09+11 SHIPPED (PR#1499 merged `21288bb`); 12+13 filed as
+> design issue #1500 (decisions pending); 14 parked behind #1500; new finding
+> 15 (#1498) awaiting adjudication.
 
 ## Why this folder exists
 
@@ -95,7 +96,7 @@ expert to ratify the convention before code changes.
 
 | # | Prompt | Scope | Status | Issue | PR |
 |---|--------|-------|--------|-------|----|
-| 09 | prior_property_tests (→ active/) | Add property-based correctness sweep over every `Prior` subclass | **PR OPEN 2026-08-18** (134 tests; folds in 11 §2) | #1497 | #1499 |
+| 09 | prior_property_tests (→ complete/, [[prior-property-tests]]) | Add property-based correctness sweep over every `Prior` subclass | **SHIPPED 2026-08-18** (merged `21288bb`, 134 tests; folds in 11 §2) | #1497 | #1499 |
 
 ## Phase 4 — Refactors (only after Phases 1-3)
 
@@ -106,7 +107,7 @@ over them.
 | # | Prompt | Scope | Status | Issue | PR |
 |---|--------|-------|--------|-------|----|
 | 10 | fixed_message_cache_growth (prompt retired) | `FixedMessage.logpdf_cache` is an unbounded class-level dict | **shipped 2026-07-10** (cache removed, aliasing fixed) | #1344 (hub #1331) | #1345 |
-| 11 | transformed_message_semantics_doc (→ active/) | `TransformedMessage` reversal convention is undocumented foot-gun | §1 shipped via #1333/PR#1334; **§2 rides PR#1499** | #1333, #1497 | #1334, #1499 |
+| 11 | transformed_message_semantics_doc (→ complete/, [[transformed-message-semantics-doc]]) | `TransformedMessage` reversal convention is undocumented foot-gun | **SHIPPED** — §1 via #1333/PR#1334 (2026-07-10), §2 via PR#1499 (2026-08-18) | #1333, #1497 | #1334, #1499 |
 | 12 | single_source_density_refactor (→ active/) | Each density is encoded in three places (`value_for` / `logpdf` / `log_prior_from_value`) | **design issue FILED 2026-08-18** (bundled with 13) | #1500 | — |
 | 13 | collapse_prior_and_message (→ active/) | `Prior` and `Message` carry duplicated responsibility | **design issue FILED 2026-08-18** (bundled with 12) | #1500 | — |
 | 14 | [replace_transform_stack_with_bijectors](14_replace_transform_stack_with_bijectors.md) | Replace hand-rolled `AbstractDensityTransform` with `tfp.bijectors` / `numpyro.transforms` | parked — go/no-go hangs off the #1500 design decision | — | — |

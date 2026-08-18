@@ -8,20 +8,19 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 4 |
+| [In flight](#in-flight) (`active/`) | 5 |
 | [Parked](#parked) (`parked.md`) | 1 |
-| [Planned](#planned) (`planned.md`) | 7 |
-| [Backlog](#backlog) (`draft/`) | 138 |
+| [Planned](#planned) (`planned.md`) | 8 |
+| [Backlog](#backlog) (`draft/`) | 137 |
 
 Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3Aissue+is%3Aopen&type=issues) · [open pull requests](https://github.com/search?q=org%3APyAutoLabs+is%3Apr+is%3Aopen&type=prs)
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 34
+**Highest priority** (filed as `high`) — showing 12 of 33
 
 - [pre_build stages untracked files, publishing uncommitted human work](draft/bug/pyautohands/pre_build_stages_untracked_wip.md) — pyautohands · small · supervised · high
 - [TRIAGE: needs manual review before routing](draft/triage/jax_zero_contour.md) — medium · safe · high
-- [UniformPrior bounds are not enforced in the objective on the](draft/bug/autofit/uniform_prior_bounds_unenforced_on_numpy_path.md) — autofit · medium · human-required · high
 - [Decide whether the clipper belongs in the search identifier](draft/feature/autofit/clipper_in_search_identifier.md) — autofit · medium · human-required · high
 - [`ell_comps` magnitude validation REDs the workspace-smoke and python-matrix channels](draft/bug/autogalaxy/ell_comps_magnitude_validation_reds_two_scheduled_channels.md) — autogalaxy · medium · supervised · high
 - [PyAutoLens RTD docs: three-regime restructure (multi_galaxy / group / cluster)](draft/docs/autolens/docs_three_regime_restructure.md) — autolens · medium · supervised · high
@@ -31,6 +30,7 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 - [Make draft/ staleness detectable — `intake reconcile` measured, and the](draft/feature/pyautomind/draft_staleness_detection_signals.md) — pyautomind · medium · supervised · high
 - [LACosmic per-frame CR masking option + decouple PSF-star pass from](draft/feature/pyautoreduce/lacosmic_cr_option_and_star_pass_decoupling.md) — pyautoreduce · medium · supervised · high
 - [Cluster package: point-source-default narrative + extended-source follow-up feature](draft/docs/workspaces/cluster_regime_narrative.md) — workspaces · medium · supervised · high
+- [multi_galaxy package: new regime package in autolens_workspace](draft/docs/autolens/multi_galaxy_package.md) — autolens · large · supervised · high
 
 **Quick wins** (small enough, and safe enough to run unattended)
 
@@ -50,6 +50,7 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 - [Commit the inference-methods programme plan + knowledge ledger into autolens_profiling](active/inference_programme_ledger.md) — [issue #134](https://github.com/PyAutoLabs/autolens_profiling/issues/134) — pr-open (https://github.com/PyAutoLabs/autolens_profiling/pull/135)
 - [PyAutoReduce validation: slacs1430+4105 ACS reduction vs trusted legacy dataset](active/pyautoreduce_slacs1430_acs_comparison.md)
 - [Reconstructing a stored sample raises through `ignore_assertions=True`](active/to_instance_guard_gap.md) — [issue #1486](https://github.com/PyAutoLabs/PyAutoFit/issues/1486) — library-dev — WORKSPACE HALF SHIPPED; the PyAutoFit hardening (#1486) is what remains
+- [UniformPrior bounds are not enforced in the objective on the](active/uniform_prior_bounds_unenforced_on_numpy_path.md) — [issue #1489](https://github.com/PyAutoLabs/PyAutoFit/issues/1489)
 - [Version-stamp sync to 2026.8.17.1 + release-sed guards](active/version_stamp_sync_and_release_sed_guards.md) — [issue #235](https://github.com/PyAutoLabs/PyAutoHands/issues/235) — pr-open (https://github.com/PyAutoLabs/PyAutoLens/pull/700)
 
 ## Parked
@@ -68,7 +69,7 @@ Started or scoped, not currently in flight — resume by moving the row back to 
 Scoped but not started; some are not yet prompt files. Full detail in [`planned.md`](planned.md).
 
 <details>
-<summary><b>7</b> task(s)</summary>
+<summary><b>8</b> task(s)</summary>
 
 - **isothermal-ell-sph-oversampling-at-the-cusp** — planned — NOT yet a prompt file; file one via `/intake` before starting
 - **remote-mcp-deployment-tiers** — [issue #20](https://github.com/PyAutoLabs/autofit_assistant/issues/20) — DESIGN-COMPLETE, build BLOCKED-ON-DEMAND — issue #20 holds the full auth/transport/hosting design + Richard/PyAutoMCP…
@@ -77,18 +78,18 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 - **nfw-truncated-potential-accuracy** — planned
 - **piemass-potential** — planned
 - **latent-nan-guard-honest-run**
+- **uniform-prior-bounds-numpy-path** — [issue #1489](https://github.com/PyAutoLabs/PyAutoFit/issues/1489)
 
 </details>
 
 ## Backlog
 
-**138** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**137** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
-<summary><b>bug</b> — 39</summary>
+<summary><b>bug</b> — 38</summary>
 
 - [pre_build stages untracked files, publishing uncommitted human work](draft/bug/pyautohands/pre_build_stages_untracked_wip.md) — pyautohands · small · supervised · high
-- [UniformPrior bounds are not enforced in the objective on the](draft/bug/autofit/uniform_prior_bounds_unenforced_on_numpy_path.md) — autofit · medium · human-required · high
 - [`ell_comps` magnitude validation REDs the workspace-smoke and python-matrix channels](draft/bug/autogalaxy/ell_comps_magnitude_validation_reds_two_scheduled_channels.md) — autogalaxy · medium · supervised · high
 - [Release does not sync __version__ stamps and workspace pins back](draft/bug/pyautobuild/release_version_sync_back_to_main.md) — pyautobuild · medium · supervised · high
 - [EP hierarchical parent-scale collapse: cure the basin, or document the](draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md) — autofit · too-large · human-required · high

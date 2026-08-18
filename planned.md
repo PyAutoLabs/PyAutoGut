@@ -110,3 +110,24 @@
 - affected-repos:
   - autolens_workspace_test
 - note: latent/latent_nan_robustness.py PASSES but VACUOUSLY under the smoke profile — TEST_MODE=2 yields only 4 bypass samples, and DISABLE_JAX=1 silently flips its deliberate AnalysisImaging(use_jax=True) to False (PyAutoLens analysis/analysis/dataset.py:89), so the JAX column-masking branch the guard exists to catch is never taken. MultiStartAdam/BlackJAXNUTS precedent. Work = (1) config/build/env_vars.yaml override for `latent/latent_nan_robustness` with unset: [PYAUTO_TEST_MODE, PYAUTO_DISABLE_JAX]; (2) trim the script under the 300s cap. MEASURED: honest run = 412s; PYAUTO_TEST_MODE=1 does NOT help (455s) — Nautilus is NOT the bottleneck (~136s post-fit results update + ~56s latent compute on 100 samples), so the lever is sample count. Script is in the curated smoke_tests.txt, which DOES read env_vars.yaml, so this lands in the per-PR gate. Adjacent to the blocker's own follow-up ("re-time the SLOW siblings"). NOT bugs, verified passing from clean output, no change needed: imaging/model_fit.py and latent/latent_variables_smoke.py.
+
+## uniform-prior-bounds-numpy-path
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1489
+- planned: 2026-08-18
+- classification: library
+- suggested-branch: feature/uniform-prior-bounds-numpy-path
+- blocked-by: stored-sample-reconstruction-guard (using PyAutoFit); version-stamp-sync-guards (using PyAutoFit)
+- affected-repos:
+  - PyAutoFit
+- prompt: active/uniform_prior_bounds_unenforced_on_numpy_path.md
+- note: REPRODUCED 2026-08-18 on PyAutoFit main @ fe9f813 (web session; evidence + self-contained
+  script on the issue). Objective check: identical finite log posterior for offset inside vs 50x
+  outside a UniformPrior(-0.1, 0.1) box (no -inf). End-to-end Emcee (30 walkers x 600 steps,
+  unconstrained parameter): 100% of accepted samples outside the box, |offset| ran to ~1e14
+  (stretch move grows exponentially in an unpenalised flat direction), max-lh offset ~2.1e10.
+  Fix decision is HUMAN-REQUIRED (Autonomy: human-required): issue recommends (A) strict NumPy
+  log_prior_from_value mirroring JAX (+ LogUniformPrior upper bound, + guard the
+  Fitness.log_likelihood_from -inf - -inf inversion) with (C) LBFGS ClipperPriorBox default as
+  orthogonal follow-up; (B) clipper for MCMC rejected (breaks detailed balance). Whichever lands
+  must correct the phase-1 record sentence in complete/2026/08/prior-support-clipper.md (~L290)
+  AND its copy in autofit/non_linear/clipper.py docstring (L20-23).

@@ -10,7 +10,7 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 |-------|------:|
 | [In flight](#in-flight) (`active/`) | 5 |
 | [Parked](#parked) (`parked.md`) | 1 |
-| [Planned](#planned) (`planned.md`) | 8 |
+| [Planned](#planned) (`planned.md`) | 7 |
 | [Backlog](#backlog) (`draft/`) | 137 |
 
 Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3Aissue+is%3Aopen&type=issues) · [open pull requests](https://github.com/search?q=org%3APyAutoLabs+is%3Apr+is%3Aopen&type=prs)
@@ -50,7 +50,7 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 - [Commit the inference-methods programme plan + knowledge ledger into autolens_profiling](active/inference_programme_ledger.md) — [issue #134](https://github.com/PyAutoLabs/autolens_profiling/issues/134) — pr-open (https://github.com/PyAutoLabs/autolens_profiling/pull/135)
 - [PyAutoReduce validation: slacs1430+4105 ACS reduction vs trusted legacy dataset](active/pyautoreduce_slacs1430_acs_comparison.md)
 - [Reconstructing a stored sample raises through `ignore_assertions=True`](active/to_instance_guard_gap.md) — [issue #1486](https://github.com/PyAutoLabs/PyAutoFit/issues/1486) — library-dev — WORKSPACE HALF SHIPPED; the PyAutoFit hardening (#1486) is what remains
-- [UniformPrior bounds are not enforced in the objective on the](active/uniform_prior_bounds_unenforced_on_numpy_path.md) — [issue #1489](https://github.com/PyAutoLabs/PyAutoFit/issues/1489)
+- [UniformPrior bounds are not enforced in the objective on the](active/uniform_prior_bounds_unenforced_on_numpy_path.md) — [issue #1489](https://github.com/PyAutoLabs/PyAutoFit/issues/1489) — library-shipped, awaiting-merge
 - [Version-stamp sync to 2026.8.17.1 + release-sed guards](active/version_stamp_sync_and_release_sed_guards.md) — [issue #235](https://github.com/PyAutoLabs/PyAutoHands/issues/235) — pr-open (https://github.com/PyAutoLabs/PyAutoLens/pull/700)
 
 ## Parked
@@ -69,7 +69,7 @@ Started or scoped, not currently in flight — resume by moving the row back to 
 Scoped but not started; some are not yet prompt files. Full detail in [`planned.md`](planned.md).
 
 <details>
-<summary><b>8</b> task(s)</summary>
+<summary><b>7</b> task(s)</summary>
 
 - **isothermal-ell-sph-oversampling-at-the-cusp** — planned — NOT yet a prompt file; file one via `/intake` before starting
 - **remote-mcp-deployment-tiers** — [issue #20](https://github.com/PyAutoLabs/autofit_assistant/issues/20) — DESIGN-COMPLETE, build BLOCKED-ON-DEMAND — issue #20 holds the full auth/transport/hosting design + Richard/PyAutoMCP…
@@ -78,7 +78,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 - **nfw-truncated-potential-accuracy** — planned
 - **piemass-potential** — planned
 - **latent-nan-guard-honest-run**
-- **uniform-prior-bounds-numpy-path** — [issue #1489](https://github.com/PyAutoLabs/PyAutoFit/issues/1489)
 
 </details>
 

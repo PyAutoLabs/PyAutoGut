@@ -290,6 +290,19 @@ Not exposed, and correctly so: the nested samplers already work in unit-cube
 coordinates, and the MCMC samplers reject `-inf` proposals so the walker stays
 put. **Rejection is the restoring mechanism that gradient methods lack.**
 
+> **CORRECTION (2026-08-18, PyAutoFit#1489):** the MCMC sentence above was FALSE
+> when this record was written. On the NumPy path there was no `-inf` to reject:
+> `UniformPrior.log_prior_from_value` returned `0.0` unconditionally after
+> release 2025.10.16.1 removed `assert_within_limits`/`PriorLimitException`
+> (PyAutoFit#1155), so Emcee/Zeus walkers escaped their declared boxes
+> (reproduced: an unconstrained parameter under `UniformPrior(-0.1, 0.1)` ran to
+> |offset| ~ 1e14). The sentence was true before 2025.10.16.1 (exception-driven
+> resampling) and is true again since PyAutoFit#1489 restored strict NumPy-path
+> bounds in the priors themselves. The gradient-search reasoning and the clipper
+> scoping this record justifies were unaffected, but this sentence must not be
+> cited as evidence the MCMC samplers were safe in the 2025.10.16.1 → #1489 fix
+> window. See `active/uniform_prior_bounds_unenforced_on_numpy_path.md`.
+
 ## The design
 
 A `Clipper`, modelled on `@PyAutoFit/autofit/non_linear/initializer.py` — a

@@ -113,3 +113,21 @@
   - PyAutoGalaxy: feature/version-stamp-sync-guards
   - PyAutoLens: feature/version-stamp-sync-guards
   - PyAutoHands: feature/version-stamp-sync-guards
+
+## uniform-prior-bounds-numpy-path
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1489
+- status: library-shipped, awaiting-merge
+- library-pr: https://github.com/PyAutoLabs/PyAutoFit/pull/1490 (pending-release label)
+- worktree: (none — web session; branch pushed directly)
+- repos:
+  - PyAutoFit: claude/uniformprior-bounds-numpy-1n1u3s
+- prompt: active/uniform_prior_bounds_unenforced_on_numpy_path.md
+- note: REGRESSION fix, shape A (strict NumPy-path bounds in UniformPrior + LogUniformPrior,
+  restores pre-2025.10.16.1 enforcement; Fitness.log_likelihood_from -inf guard; clipper.py +
+  phase-1 record corrections). Shape C (LBFGS ClipperPriorBox default) deliberately deferred as
+  orthogonal follow-up — see issue #1489. Measured before/after in the PR body; full suite 1734
+  passed / 8 skipped (2 pre-existing env failures reproduce on untouched main).
+  HUMAN OVERRIDE of the worktree conflict guard (2026-08-18): PyAutoFit is claimed by
+  stored-sample-reconstruction-guard and version-stamp-sync-guards, but the human ordered the fix
+  in this web session; change surface (prior bounds / fitness) is disjoint from both claims and
+  no local worktree was touched.

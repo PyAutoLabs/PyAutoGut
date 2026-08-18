@@ -2,6 +2,39 @@
 
 @euclid_assistant
 
+## SHELVED 2026-08-18 — retired from the Mind board at the author's direction
+
+The ECLIPSE-C manuscript revision is no longer tracked here. Shelved rather than
+recorded as complete: PyAutoMind cannot verify the deliverable either way, so
+this file makes no claim about whether the editorial comments were addressed.
+
+**Why it is untrackable.** The work targets a private paper checkout
+(`/mnt/c/Users/Jammy/Science/euclid`), not a repo in the workspace. The
+2026-08-08 orphaned-prompt triage filed it to `parked.md` as STATE UNVERIFIED
+for exactly this reason, and nothing since has changed that — no session with
+access to that checkout has reported back. A prompt whose state can only ever be
+`unverified` is Mind-side residue, not a task.
+
+**Nothing is open on GitHub.** This prompt carried no issue of its own. Its
+assistant-side half — the `euclid_assistant` wiki/rules changes for the ECEB
+editorial points — already shipped: issue
+https://github.com/Jammy2211/euclid_assistant/issues/6 (CLOSED) via PR
+https://github.com/Jammy2211/euclid_assistant/pull/8 (MERGED squash `2f4f2ee`,
+2026-07-14), recorded at `complete/2026/07/eceb-editorial-revision.md`. That
+record already flagged the manuscript companion as "a separate deliverable
+outside this repo"; this commit closes that thread. Only the Mind-side residue
+survived — this prompt, the `parked.md` entry, and the two dashboard rows — and
+it is removed here.
+
+**Preserved below** is the editorial board's letter verbatim (Peter's comments,
+2026-07), which is the reason this file is archived rather than deleted. It is
+the only copy in a tracked repo. If the revision is ever re-opened as tracked
+work, re-file it from here via `$intake` — note the structural request
+(reduce main-text systems to those actually discussed, move the rest incl. the
+multi-page Fig.3 to an appendix) is the substantial item; the rest is line-level
+copy-editing.
+
+
 ## Original request
 
 You are working in /mnt/c/Users/Jammy/Science/euclid, can you address the comments from the editorial board, update the wiki where appropriate if you think a comment catches something missing, and give me a response to the comments w/ a fresh change log. Dear James,

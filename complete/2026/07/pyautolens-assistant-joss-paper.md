@@ -11,6 +11,7 @@
 - trap avoided: `audit_skill_apis.py` writes a dated report to `autoassistant/audit/` as a side effect, which `git add -A` would sweep up — already gitignored (.gitignore:30), commit stayed clean. See [[feedback_ship_workspace_binary_leak]].
 - heart: shipped at YELLOW score 55 (no RED), author-acknowledged; both reasons ("workspace validation not passing (3 failed, 2026-07-09)"; "58 stale parked script(s)") pre-date the branch and are unrelated to a docs-only change. Ack recorded verbatim on the issue + in active.md.
 - OPEN / needs author: `State of the field` + `Research impact statement` are commented stubs (JOSS requires both; neither draftable without author judgement). Benchmark-results prose stays FUTURE-TENSE because benchmarks/RESULTS.md records ZERO runs for all 4 benchmarks — despite #59 (first calibration campaign) being CLOSED. Either results exist un-ingested or the campaign closed without producing them; worth a look before submission.
+- RESOLVED 2026-08-18: the campaign closed without producing them. Verified against autolens_assistant main — `benchmarks/runs/` holds only `.gitkeep`, so nothing was un-ingested. The campaign prompt has been shelved (`complete/archive/shelved/benchmark_calibration_runs.md`); future-tense benchmark prose in the paper is correct as written.
 
 ## Original prompt
 

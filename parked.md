@@ -36,16 +36,6 @@ write the dated `complete/<YYYY>/<MM>/<slug>.md` record instead.
 - note: do NOT broaden into the old `pyprojroot` bootstrap sweep — the prompt is explicit
   that the dependent AutoCTI follow-up owns that.
 
-## benchmark-calibration-runs
-- prompt: active/benchmark_calibration_runs.md
-- parked: 2026-08-08 — surfaced by the orphaned-prompt triage; VERIFIED NOT STARTED
-- parent-issue: https://github.com/PyAutoLabs/autolens_assistant/issues/57 (the benchmark package itself)
-- classification: research (autolens_assistant)
-- evidence: `benchmarks/runs/` on autolens_assistant main still contains only `.gitkeep`, exactly
-  the state the prompt describes. The four frozen prompt cards (`benchmarks/prompts/`) and the
-  harness (`autoassistant/benchmark.py`) are in place; only the campaign is missing.
-- note: needs real model runs, so it is a cost decision rather than a coding task.
-
 ## euclid-eceb-editorial-revision
 - prompt: active/euclid_eceb_editorial_revision.md
 - parked: 2026-08-08 — surfaced by the orphaned-prompt triage; STATE UNVERIFIED

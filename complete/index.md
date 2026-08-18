@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1021 records across 7 buckets.
+1022 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -34,6 +34,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [border-relocator-degenerate-pca](2026/08/border-relocator-degenerate-pca.md) — Stabilized near-isotropic border PCA axes with a deterministic axis-aligned branch at a scale-aware eigenvalue…
 - [circular-ell-comps-image-gradient](2026/08/circular-ell-comps-image-gradient.md) — Replaced the Sersic image path's Cartesian-to-polar ellipticity conversion with an algebraically equivalent Ca…
 - [cli-noise-autonerves-batch](2026/08/cli-noise-autonerves-batch.md)
+- [cli-noise-pyautofit-batch](2026/08/cli-noise-pyautofit-batch.md)
 - [clipper-usage-in-search-summary](2026/08/clipper-usage-in-search-summary.md) — `search.summary` now reports prior-support clipping. `n_clipped_lane_steps`
 - [clipper-validation-campaign](2026/08/clipper-validation-campaign.md)
 - [compile-axis-campaign-coverage](2026/08/compile-axis-campaign-coverage.md)

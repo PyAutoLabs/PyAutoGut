@@ -11,7 +11,7 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 | [In flight](#in-flight) (`active/`) | 3 |
 | [Parked](#parked) (`parked.md`) | 1 |
 | [Planned](#planned) (`planned.md`) | 7 |
-| [Backlog](#backlog) (`draft/`) | 129 |
+| [Backlog](#backlog) (`draft/`) | 128 |
 
 Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3Aissue+is%3Aopen&type=issues) · [open pull requests](https://github.com/search?q=org%3APyAutoLabs+is%3Apr+is%3Aopen&type=prs)
 
@@ -34,7 +34,6 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 
 **Quick wins** (small enough, and safe enough to run unattended)
 
-- [PyAutoFit CLI-noise batch: unclosed search.log handler + four small warning](draft/maintenance/pyautofit/cli_noise_pyautofit_batch.md) — pyautofit · small · safe · normal
 - [Tenant firewall: release_run.py carries an unlisted 'PyAutoLabs' instance fact](draft/bug/pyautoheart/tenant_firewall_release_run_instance_fact.md) — pyautoheart · small · safe · normal
 - [add-vincken-2026-wiki-and-cite-in-euclid](draft/docs/workspaces/add_vincken_2026_wiki_and_cite_in_euclid.md) — workspaces · small · safe · normal
 - [`add_notebook_quotes` mistakes a code string literal's closing delimiter for a](draft/bug/hands/notebook_quotes_string_literal_closing_delimiter.md) — hands · small · safe · low
@@ -80,7 +79,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**129** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**128** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 35</summary>
@@ -157,31 +156,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>maintenance</b> — 19</summary>
-
-- [autolens_workspace_developer rectangular experiments — Gut stash + rename](draft/maintenance/autolens_workspace_developer/rectangular_experiments_gut_stash.md) — autolens_workspace_developer · small · supervised · normal
-- [PyAutoFit CLI-noise batch: unclosed search.log handler + four small warning](draft/maintenance/pyautofit/cli_noise_pyautofit_batch.md) — pyautofit · small · safe · normal
-- [Mirror drifted library config keys into the workspace configs](draft/maintenance/workspaces/config_key_mirror_drift.md) — workspaces · small · supervised · normal
-- [Un-park imaging/features/scaling_relation/slam once PyAutoArray#431 merges](draft/maintenance/workspaces/unpark_imaging_scaling_relation_slam.md) — workspaces · small · supervised · normal
-- [autolens_workspace_developer: broad stale-API rot (56 symbols, no CI)](draft/maintenance/autolens_workspace_developer/stale_api_rot_audit.md) — autolens_workspace_developer · medium · supervised · normal
-- [run_smoke.py: three runner variants across 10 repos, no sync mechanism](draft/maintenance/ci/run_smoke_copy_drift.md) — ci · medium · supervised · normal
-- [Dependency-cap refresh 2026-08: safe bumps, astropy 8 decision, two dead](draft/maintenance/libraries/dep_cap_refresh_2026_08.md) — libraries · medium · supervised · normal
-- [PyAutoMemory canonical-key TODO sweep](draft/maintenance/pyautomemory/canonical_key_todo_sweep.md) — pyautomemory · medium · supervised · normal
-- [Single-source the "Never rewrite history" policy as a generated AGENTS.md](draft/maintenance/pyautomind/history_policy_generated_block.md) — pyautomind · medium · supervised · normal
-- [Capped smoke datasets were committed as if they were real](draft/maintenance/workspaces/committed_capped_smoke_datasets.md) — workspaces · medium · supervised · normal
-- [autolens_profiling is now a mature project, with a good separation](draft/maintenance/autolens_profiling/polish.md) — autolens_profiling · large · supervised · normal
-- [Auto-request GitHub Copilot code review on every PR, org-wide](draft/maintenance/ci/copilot_auto_review.md) — ci · large · supervised · normal
-- [autolens_workspace](draft/maintenance/workspaces/read_through_issues.md) — workspaces · too-large · supervised · normal
-- [dataset/imaging/jwst_lw is untracked because the gitignore was never extended for](draft/maintenance/autolens_profiling/jwst_lw_untracked_gitignore_gap.md) — autolens_profiling · small · supervised · low
-- [cosmos_web_ring stores boolean masks as float64, wasting ~3.4 MB of](draft/maintenance/autolens_workspace/cosmos_web_ring_mask_dtype.md) — autolens_workspace · small · supervised · low
-- [LaTeX in non-raw docstrings emits SyntaxWarning: invalid escape sequence](draft/maintenance/autolens_workspace/latex_docstrings_invalid_escape_warnings.md) — autolens_workspace · small · supervised · low
-- [Raw-string the LaTeX docstrings emitting SyntaxWarnings (HowToFit + HowToLens)](draft/maintenance/workspaces/latex_raw_string_docstrings.md) — workspaces · small · safe · low
-- [Regenerate setup_notebook-drifted notebooks in autogalaxy/autofit/HowToFit workspaces](draft/maintenance/workspaces/notebook_setup_notebook_drift_siblings.md) — workspaces · small · supervised · low
-- [Refresh the stale `.script_sizes.json` snapshot in @autolens_workspace](draft/maintenance/workspaces/script_sizes_snapshot_drift.md) — workspaces · small · safe · low
-
-</details>
-
-<details>
 <summary><b>research</b> — 19</summary>
 
 - [The `ell_comps` trapping was masked, not cleared — characterise it](draft/research/autolens_profiling/ell_comps_trapping_unmasked.md) — autolens_profiling · medium · supervised · high
@@ -203,6 +177,30 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 - [PyAutoArray Delaunay interpolator's `pure_callback` vs vmap — minor efficiency follow-up](draft/research/autoarray/delaunay_interpolator_pure_callback_vmap_memory.md) — autoarray · too-large · supervised · low
 - [Cluster-scale gradient-search benchmark (Prodigy vs Nautilus, point-source)](draft/research/autolens_profiling/cluster_gradient_search_benchmark.md) — autolens_profiling
 - [Adopt Python 3.12 as the PyAuto ecosystem minimum](draft/research/libraries/python_312_minimum.md) — libraries
+
+</details>
+
+<details>
+<summary><b>maintenance</b> — 18</summary>
+
+- [autolens_workspace_developer rectangular experiments — Gut stash + rename](draft/maintenance/autolens_workspace_developer/rectangular_experiments_gut_stash.md) — autolens_workspace_developer · small · supervised · normal
+- [Mirror drifted library config keys into the workspace configs](draft/maintenance/workspaces/config_key_mirror_drift.md) — workspaces · small · supervised · normal
+- [Un-park imaging/features/scaling_relation/slam once PyAutoArray#431 merges](draft/maintenance/workspaces/unpark_imaging_scaling_relation_slam.md) — workspaces · small · supervised · normal
+- [autolens_workspace_developer: broad stale-API rot (56 symbols, no CI)](draft/maintenance/autolens_workspace_developer/stale_api_rot_audit.md) — autolens_workspace_developer · medium · supervised · normal
+- [run_smoke.py: three runner variants across 10 repos, no sync mechanism](draft/maintenance/ci/run_smoke_copy_drift.md) — ci · medium · supervised · normal
+- [Dependency-cap refresh 2026-08: safe bumps, astropy 8 decision, two dead](draft/maintenance/libraries/dep_cap_refresh_2026_08.md) — libraries · medium · supervised · normal
+- [PyAutoMemory canonical-key TODO sweep](draft/maintenance/pyautomemory/canonical_key_todo_sweep.md) — pyautomemory · medium · supervised · normal
+- [Single-source the "Never rewrite history" policy as a generated AGENTS.md](draft/maintenance/pyautomind/history_policy_generated_block.md) — pyautomind · medium · supervised · normal
+- [Capped smoke datasets were committed as if they were real](draft/maintenance/workspaces/committed_capped_smoke_datasets.md) — workspaces · medium · supervised · normal
+- [autolens_profiling is now a mature project, with a good separation](draft/maintenance/autolens_profiling/polish.md) — autolens_profiling · large · supervised · normal
+- [Auto-request GitHub Copilot code review on every PR, org-wide](draft/maintenance/ci/copilot_auto_review.md) — ci · large · supervised · normal
+- [autolens_workspace](draft/maintenance/workspaces/read_through_issues.md) — workspaces · too-large · supervised · normal
+- [dataset/imaging/jwst_lw is untracked because the gitignore was never extended for](draft/maintenance/autolens_profiling/jwst_lw_untracked_gitignore_gap.md) — autolens_profiling · small · supervised · low
+- [cosmos_web_ring stores boolean masks as float64, wasting ~3.4 MB of](draft/maintenance/autolens_workspace/cosmos_web_ring_mask_dtype.md) — autolens_workspace · small · supervised · low
+- [LaTeX in non-raw docstrings emits SyntaxWarning: invalid escape sequence](draft/maintenance/autolens_workspace/latex_docstrings_invalid_escape_warnings.md) — autolens_workspace · small · supervised · low
+- [Raw-string the LaTeX docstrings emitting SyntaxWarnings (HowToFit + HowToLens)](draft/maintenance/workspaces/latex_raw_string_docstrings.md) — workspaces · small · safe · low
+- [Regenerate setup_notebook-drifted notebooks in autogalaxy/autofit/HowToFit workspaces](draft/maintenance/workspaces/notebook_setup_notebook_drift_siblings.md) — workspaces · small · supervised · low
+- [Refresh the stale `.script_sizes.json` snapshot in @autolens_workspace](draft/maintenance/workspaces/script_sizes_snapshot_drift.md) — workspaces · small · safe · low
 
 </details>
 

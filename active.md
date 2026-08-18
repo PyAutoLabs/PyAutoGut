@@ -1,5 +1,34 @@
 # Active Tasks
 
+## prior-property-tests
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1497
+- status: library-dev
+- session: cloud (claude.ai/code) — census wrap-up session, 2026-08-18
+- worktree: none — cloud session; PyAutoFit clone at /workspace/pyautofit
+- repos:
+  - PyAutoFit: feature/prior-property-tests
+- prompt: active/09_prior_property_tests.md
+- CONFLICT OVERRIDE (deliberate, 2026-08-18): PyAutoFit is also claimed by
+  `stored-sample-reconstruction-guard` (autofit/non_linear/samples/) and
+  `version-stamp-sync-guards` (autofit/__init__.py + files/release.sh). This task is FILE-DISJOINT:
+  it touches only test_autofit/mapper/prior/test_prior_properties.py (new) and
+  autofit/messages/transform.py (docstring). Human authorized proceeding in-session
+  ("do the next high value one", census wrap-up chat). If either task starts touching
+  the prior/message test surface, stop and re-coordinate.
+- summary: bug/priors/09 — parametrised 5-property correctness sweep over every Prior subclass
+  (inverse-CDF round-trip; normalised-pdf integral locking the #1331 Option A
+  log_normalisation contract; log-prior vs message-logpdf finite-difference gradient parity;
+  with_limits round-trip; from_mode mean/variance invariants at V≠1). Plus bug/priors/11 §2:
+  LinearShiftTransform class docstring (physical-space kwargs, stored Jacobian 1/scale).
+  NumPy-only (house rule). Expect green on main; any red is a new finding filed separately.
+
+## transformed-message-semantics-doc
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1497 (shared — folded into prior-property-tests)
+- status: library-dev — NOT a standalone task: only §2 (LinearShiftTransform docstring) remained and it
+  rides the prior-property-tests PR. Completes when that PR merges; retire this entry together with it.
+- prompt: active/11_transformed_message_semantics_doc.md
+- repos-none-claimed: the PyAutoFit claim lives on the prior-property-tests entry; deliberately no repo bullets here.
+
 ## stored-sample-reconstruction-guard
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1486
 - status: library-dev — WORKSPACE HALF SHIPPED; the PyAutoFit hardening (#1486) is what remains

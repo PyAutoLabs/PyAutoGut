@@ -1,5 +1,18 @@
 # Active Tasks
 
+## blackjax-16-upgrade-smoke
+- issue: https://github.com/PyAutoLabs/autolens_profiling/issues/142
+- session: Claude Code cloud/mobile (no local worktree)
+- status: library-dev
+- worktree: none — cloud session works on the GitHub clone directly
+- repos:
+  - autolens_profiling: feature/blackjax-16-upgrade-smoke
+- prompt: active/blackjax_16_upgrade_smoke.md
+- note: Phase 0(b) / CP-2 environment half, CPU-only (human-directed): blackjax
+  >=1.6.2 install validation, blackjax.nss 2D-toy smoke with analytic logZ check,
+  af.BlackJAXNUTS 1.6 API check + PyAutoFit blackjax-cap check. GPU MGE smoke and
+  local/RAL venv upgrades stay laptop work.
+
 ## stored-sample-reconstruction-guard
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1486
 - status: library-dev — WORKSPACE HALF SHIPPED; the PyAutoFit hardening (#1486) is what remains

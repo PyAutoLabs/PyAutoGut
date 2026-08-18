@@ -125,6 +125,13 @@
   outside a UniformPrior(-0.1, 0.1) box (no -inf). End-to-end Emcee (30 walkers x 600 steps,
   unconstrained parameter): 100% of accepted samples outside the box, |offset| ran to ~1e14
   (stretch move grows exponentially in an unpenalised flat direction), max-lh offset ~2.1e10.
+  REGRESSION CONFIRMED (2026-08-18 deep-dive, overturns the prompt's "Not a regression"): the box
+  WAS enforced until release 2025.10.16.1 via assert_within_limits/PriorLimitException in
+  instance_from_vector (Fitness caught it -> -inf -> MCMC rejection); guard deleted 2025-06-20
+  (5d85b80c3 + 30d470360, JAX jit-compat cleanup, tests deleted too), landed via PyAutoFit#1155
+  (2025-10-06). Verified empirically: same script on autofit 2025.5.10.1 -> 0/630 samples escape.
+  Exposure window: NumPy-path Emcee/Zeus/Drawer/LBFGS fits on autofit >= 2025.10.16.1. Full
+  archaeology: PyAutoFit#1489 (comment).
   Fix decision is HUMAN-REQUIRED (Autonomy: human-required): issue recommends (A) strict NumPy
   log_prior_from_value mirroring JAX (+ LogUniformPrior upper bound, + guard the
   Fitness.log_likelihood_from -inf - -inf inversion) with (C) LBFGS ClipperPriorBox default as

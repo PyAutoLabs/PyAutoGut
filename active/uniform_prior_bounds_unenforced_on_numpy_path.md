@@ -118,3 +118,28 @@ not let this be absorbed into `active/per_parameter_step_scaling.md`.
 - Per-parameter step scaling (`active/per_parameter_step_scaling.md`).
 - Changing `Prior` classes in a way that alters the nested samplers, where the
   hard box currently works correctly.
+
+## CORRECTION (2026-08-18, deep-dive on the issue): this IS a regression
+
+The "Not a regression" section above is **wrong** — it looked only at
+`log_prior_from_value`'s own history. The enforcement never lived there: from
+2019 the `return 0.0` docstring said the bound "is check[ed] for when the
+instance is made (in the `instance_from_vector` function)" —
+`Prior.assert_within_limits` raised `PriorLimitException(FitException, ...)`,
+`Fitness` caught `FitException` and returned `-inf`, and the MCMC samplers
+rejected it. The phase-1 sentence was TRUE under that mechanism.
+
+The guard was deleted on 2026-06-20's timeline as follows: commits `5d85b80c3` +
+`30d470360` (2025-06-20, JAX jit-compat cleanup — the guard's JAX arm was a
+`jax.debug.callback` hack; its tests were deleted with it, so nothing went red),
+merged to main in PyAutoFit#1155 (2025-10-06), **first shipped in release
+2025.10.16.1** (previous release 2025.5.10.1). `2e3540771` (2026-05-14) then
+re-added strict bounds on the JAX path only ("NumPy paths preserved exactly"),
+creating the asymmetry this prompt observed and mis-read as long-standing.
+
+Empirical before/after (same script/seed): autofit 2025.5.10.1 →
+`PriorLimitException`, objective `-inf`, 0/630 Emcee samples escape; main
+@ fe9f813 → no error, finite identical objective, 450/450 samples escape to
+~1e14. Exposure window: every NumPy-path Emcee/Zeus/Drawer/LBFGS(-no-clipper)
+fit on autofit >= 2025.10.16.1. Full archaeology:
+https://github.com/PyAutoLabs/PyAutoFit/issues/1489#issuecomment-5329318098

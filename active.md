@@ -3,7 +3,9 @@
 ## cli-noise-pyautofit-batch
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1495
 - session: Claude Code web (remote), branch claude/pyautofit-cli-noise-fixes-vqs7mg
-- status: library-dev
+- status: library-dev — IMPLEMENTATION PUSHED 2026-08-18 as PyAutoFit `7d1fe19` (6 files, +42/−5);
+  full suite 1884 passed / 3 skipped on py3.13 + scipy 1.17.1; all five warnings verified
+  reproduced-then-gone. No PR opened yet.
 - worktree: none (remote web session — session clone, no local worktree)
 - repos:
   - PyAutoFit: claude/pyautofit-cli-noise-fixes-vqs7mg

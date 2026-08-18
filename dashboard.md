@@ -8,8 +8,8 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 7 |
-| [Parked](#parked) (`parked.md`) | 2 |
+| [In flight](#in-flight) (`active/`) | 6 |
+| [Parked](#parked) (`parked.md`) | 1 |
 | [Planned](#planned) (`planned.md`) | 7 |
 | [Backlog](#backlog) (`draft/`) | 139 |
 
@@ -49,7 +49,6 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 Issued — each has an open GitHub issue and usually a branch. The full record for each is in [`active.md`](active.md).
 
 - [Commit the inference-methods programme plan + knowledge ledger into autolens_profiling](active/inference_programme_ledger.md) — [issue #134](https://github.com/PyAutoLabs/autolens_profiling/issues/134) — pr-open (https://github.com/PyAutoLabs/autolens_profiling/pull/135)
-- [Remove standalone matplotlib-inline comments](active/matplotlib_inline_standalones.md)
 - [PositionsLH penalty accumulation returns 2x the LAST penalty, discarding the](active/positions_lh_penalty_accumulation_bug.md) — [issue #699](https://github.com/PyAutoLabs/PyAutoLens/issues/699) — pr-open (https://github.com/PyAutoLabs/PyAutoLens/pull/700)
 - [PyAutoReduce validation: slacs1430+4105 ACS reduction vs trusted legacy dataset](active/pyautoreduce_slacs1430_acs_comparison.md)
 - [Tenant-firewall drift: clear the 9 right + gate recurrence (Aug](active/tenant-firewall-drift-aug.md) — [issue #198](https://github.com/PyAutoLabs/PyAutoMind/issues/198) — MERGED 2026-08-17T23:13Z — all four PRs on the canonical mains, each green at merge (order held: PyAutoMind#199 → PyAutoBrain#229…
@@ -61,9 +60,8 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 Started or scoped, not currently in flight — resume by moving the row back to `active.md`. Full detail in [`parked.md`](parked.md).
 
 <details>
-<summary><b>2</b> task(s)</summary>
+<summary><b>1</b> task(s)</summary>
 
-- **matplotlib-inline-standalones**
 - **pyautoreduce-slacs1430-acs-comparison**
 
 </details>

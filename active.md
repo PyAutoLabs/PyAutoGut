@@ -32,6 +32,27 @@
 - prompt: active/11_transformed_message_semantics_doc.md
 - repos-none-claimed: the PyAutoFit claim lives on the prior-property-tests entry; deliberately no repo bullets here.
 
+## single-source-density-design
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1500
+- status: design-discussion — DESIGN ONLY, no code until the direction is approved on the issue.
+  Bundles census C1+C4 (prompts 12+13) per the Fable verdicts; EP-review Phases 1-2 gate satisfied
+  (#1332 findings + #1334 graphical README are the cited design inputs; PyAutoFit#1498 is fresh evidence).
+  Decisions requested: one-hierarchy-vs-two, #1498 logpdf contract, EP-mixin scope, prompt-14 sequencing.
+- session: cloud (claude.ai/code) — census wrap-up session, 2026-08-18
+- prompt: active/12_single_source_density_refactor.md
+- repos-none-claimed: design discussion claims no repos — deliberately no repo bullets; implementation
+  stages will claim PyAutoFit when the design is approved and staged tasks are cut.
+- next: when a maintainer answers on #1500, cut stage-1 as its own task (Distribution sibling layer,
+  Gaussian family first, #1497 property tests as the safety net). bug/priors/14 stays parked in draft
+  behind this decision; bug/priors/15 (#1498) can be adjudicated inside this design or fixed standalone.
+
+## prior-message-collapse-design
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1500 (shared — bundled into single-source-density-design)
+- status: design-discussion — NOT a standalone task: prompt 13 is the hierarchy-collapse half of the
+  #1500 bundle. Completes with the #1500 design decision; retire together with single-source-density-design.
+- prompt: active/13_collapse_prior_and_message.md
+- repos-none-claimed: see single-source-density-design.
+
 ## stored-sample-reconstruction-guard
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1486
 - status: library-dev — WORKSPACE HALF SHIPPED; the PyAutoFit hardening (#1486) is what remains

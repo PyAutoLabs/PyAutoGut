@@ -8,10 +8,10 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 5 |
+| [In flight](#in-flight) (`active/`) | 7 |
 | [Parked](#parked) (`parked.md`) | 1 |
 | [Planned](#planned) (`planned.md`) | 7 |
-| [Backlog](#backlog) (`draft/`) | 126 |
+| [Backlog](#backlog) (`draft/`) | 124 |
 
 Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3Aissue+is%3Aopen&type=issues) · [open pull requests](https://github.com/search?q=org%3APyAutoLabs+is%3Apr+is%3Aopen&type=prs)
 
@@ -47,6 +47,8 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 - [`@PyAutoFit` Add property-based correctness tests for every `Prior` subclass](active/09_prior_property_tests.md) — [issue #1497](https://github.com/PyAutoLabs/PyAutoFit/issues/1497) — pr-open (https://github.com/PyAutoLabs/PyAutoFit/pull/1499) — CI watched by the cloud session
 - [`@PyAutoFit` `TransformedMessage` reversal convention is undocumented foot-gun](active/11_transformed_message_semantics_doc.md) — [issue #1497](https://github.com/PyAutoLabs/PyAutoFit/issues/1497) — library-dev — NOT a standalone task: only §2 (LinearShiftTransform docstring) remained and it
+- [`@PyAutoFit` Refactor: each density should live in one place, not](active/12_single_source_density_refactor.md) — [issue #1500](https://github.com/PyAutoLabs/PyAutoFit/issues/1500) — design-discussion — DESIGN ONLY, no code until the direction is approved on the issue.
+- [`@PyAutoFit` Refactor: collapse the `Prior` / `Message` two-layer hierarchy](active/13_collapse_prior_and_message.md) — [issue #1500](https://github.com/PyAutoLabs/PyAutoFit/issues/1500) — design-discussion — NOT a standalone task: prompt 13 is the hierarchy-collapse half of the
 - [PyAutoReduce validation: slacs1430+4105 ACS reduction vs trusted legacy dataset](active/pyautoreduce_slacs1430_acs_comparison.md)
 - [Reconstructing a stored sample raises through `ignore_assertions=True`](active/to_instance_guard_gap.md) — [issue #1486](https://github.com/PyAutoLabs/PyAutoFit/issues/1486) — library-dev — WORKSPACE HALF SHIPPED; the PyAutoFit hardening (#1486) is what remains
 - [Version-stamp sync to 2026.8.17.1 + release-sed guards](active/version_stamp_sync_and_release_sed_guards.md) — [issue #235](https://github.com/PyAutoLabs/PyAutoHands/issues/235) — pr-open (https://github.com/PyAutoLabs/PyAutoLens/pull/700)
@@ -81,10 +83,10 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**126** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**124** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
-<summary><b>bug</b> — 34</summary>
+<summary><b>bug</b> — 32</summary>
 
 - [EP hierarchical parent-scale collapse: cure the basin, or document the](draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md) — autofit · too-large · human-required · high
 - [`NFWTruncatedSph.potential_2d_from`: MGE potential fails `grad(psi)=alpha` self-consistency](draft/bug/autogalaxy/nfw_truncated_potential_accuracy.md) — autogalaxy · too-large · supervised · high
@@ -114,8 +116,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 - [JIT cache not hit in modeling_visualization delaunay/rectangular scripts](draft/bug/autolens/jit_cache_not_hit_modeling_visualization.md) — autolens · medium · supervised · normal
 - [`@PyAutoFit` `TransformedMessage.logpdf`/`pdf` omit the transform Jacobian](draft/bug/priors/15_transformed_message_logpdf_jacobian.md) — priors · medium · supervised · normal
 - [Resolve release-profile timeout scripts deliberately](draft/bug/health_fixes/release_timeout_policy.md) — health_fixes · too-large · supervised · normal
-- [`@PyAutoFit` Refactor: each density should live in one place, not](draft/bug/priors/12_single_source_density_refactor.md) — priors · too-large · supervised · normal
-- [`@PyAutoFit` Refactor: collapse the `Prior` / `Message` two-layer hierarchy](draft/bug/priors/13_collapse_prior_and_message.md) — priors · too-large · supervised · normal
 - [`@PyAutoFit` Refactor: replace hand-rolled `AbstractDensityTransform` with `tfp.bijectors` / `numpyro.distributions.transforms`](draft/bug/priors/14_replace_transform_stack_with_bijectors.md) — priors · too-large · supervised · normal
 - [Priors & Messages cleanup — tracker](draft/bug/priors/z_features.md) — priors · too-large · supervised · normal
 - [`add_notebook_quotes` mistakes a code string literal's closing delimiter for a](draft/bug/hands/notebook_quotes_string_literal_closing_delimiter.md) — hands · small · safe · low

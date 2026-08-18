@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1012 records across 7 buckets.
+1013 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -29,6 +29,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [autohands-firewall-allowlist](2026/08/autohands-firewall-allowlist.md) — auto-closed by the merge
 - [autolens-multiplane-redshift-warning](2026/08/autolens-multiplane-redshift-warning.md)
 - [autolens-tracer-validation-guards](2026/08/autolens-tracer-validation-guards.md)
+- [blackjax-16-upgrade-smoke](2026/08/blackjax-16-upgrade-smoke.md)
 - [border-relocator-backend-parity](2026/08/border-relocator-backend-parity.md) — Isolated the native NumPy/JAX likelihood gap to mathematically non-unique PCA axes for a near-isotropic border…
 - [border-relocator-degenerate-pca](2026/08/border-relocator-degenerate-pca.md) — Stabilized near-isotropic border PCA axes with a deterministic axis-aligned branch at a scale-aware eigenvalue…
 - [circular-ell-comps-image-gradient](2026/08/circular-ell-comps-image-gradient.md) — Replaced the Sersic image path's Cartesian-to-polar ellipticity conversion with an algebraically equivalent Ca…

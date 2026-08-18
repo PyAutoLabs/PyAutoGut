@@ -34,18 +34,16 @@ this prompt's core question:
 3. **The docs deliverable is programme §6** (evidence cards → future user
    guides feeding workspace defaults).
 
-**Deltas the programme does NOT carry (preserved here, raise via intake if
-wanted):** the **Sersic lens + Sersic source model case** — a new `sersic`
-model type for `_setup.py` mirroring the simulator truth, as a
-lower-complexity parametric rung. Programme targets v1 registers only
-mge / delaunay / knn / delaunay_matern / delaunay_nn / slam_source_pix, and
-Phase 13 ladders mass-model (multipole) complexity, not source complexity.
+**Delta deliberately dropped (human decision, 2026-08-18):** the **Sersic
+lens + Sersic source model case** (a new `sersic` model type for
+`_setup.py` as a lower-complexity parametric rung) is NOT carried forward —
+programme targets v1 registers only mge / delaunay / knn / delaunay_matern /
+delaunay_nn / slam_source_pix, and that stands. Do not re-file it from this
+record.
 
-**Dangling tracker:** this task's GitHub issue **autolens_profiling#69** is
-still open — the programme's reference map (§1.3) lists it as open and notes
-its "pixelized out of scope" line is stale. Close it pointing at
-PROGRAMME.md Phases 1/3, or repurpose it; retiring this file does not
-close it.
+**Tracker:** this task's GitHub issue **autolens_profiling#69** was closed
+as superseded on 2026-08-18 (human-confirmed), pointing at PROGRAMME.md
+Phases 1/3 and this record.
 
 Goal: make the JAX gradient MAP optimizers (`af.MultiStartAdam` /
 `MultiStartADABelief` / `MultiStartLion`, PyAutoFit#1369/#1374) a **standard,

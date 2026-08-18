@@ -48,7 +48,7 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 
 Issued — each has an open GitHub issue and usually a branch. The full record for each is in [`active.md`](active.md).
 
-- [Put the clipper in the search identifier — MLE searches](active/clipper_in_search_identifier.md) — [issue #1493](https://github.com/PyAutoLabs/PyAutoFit/issues/1493) — library-dev
+- [Put the clipper in the search identifier — MLE searches](active/clipper_in_search_identifier.md) — [issue #1493](https://github.com/PyAutoLabs/PyAutoFit/issues/1493) — library-shipped, awaiting-merge
 - [Seed the inference method evidence cards from the existing benchmark](active/inference_method_cards_seed.md) — [issue #140](https://github.com/PyAutoLabs/autolens_profiling/issues/140) — library-dev
 - [PyAutoReduce validation: slacs1430+4105 ACS reduction vs trusted legacy dataset](active/pyautoreduce_slacs1430_acs_comparison.md)
 - [Reconstructing a stored sample raises through `ignore_assertions=True`](active/to_instance_guard_gap.md) — [issue #1486](https://github.com/PyAutoLabs/PyAutoFit/issues/1486) — library-dev — WORKSPACE HALF SHIPPED; the PyAutoFit hardening (#1486) is what remains

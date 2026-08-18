@@ -2,8 +2,9 @@
 
 ## clipper-search-identifier
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1493
+- library-pr: https://github.com/PyAutoLabs/PyAutoFit/pull/1494
 - session: Claude Code cloud (no local worktree)
-- status: library-dev
+- status: library-shipped, awaiting-merge
 - worktree: none — cloud session works on the GitHub clone directly
 - repos:
   - PyAutoFit: claude/clipper-search-identifier-4cowi2

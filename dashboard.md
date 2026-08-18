@@ -102,6 +102,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 - [point.py JAX-vmap parity assert is non-deterministic under the smoke env](draft/bug/autolens/point_jax_vmap_parity_nondeterministic.md) — autolens · small · supervised · normal
 - [Scripts derive geometry from a hardcoded pixel_scale while the dataset](draft/bug/autolens_workspace/script_local_pixel_scale_vs_dataset_pixel_scales.md) — autolens_workspace · small · supervised · normal
 - [HowToGalaxy small API drifts: ellipse kwargs + plot_grid_lines (parked NEEDS_FIX)](draft/bug/howtogalaxy/small_api_drift_ellipse_and_plot_grid_lines.md) — howtogalaxy · small · supervised · normal
+- [`@PyAutoFit` `TransformedMessage` reversal convention is undocumented foot-gun](draft/bug/priors/11_transformed_message_semantics_doc.md) — priors · small · supervised · normal
 - [`generate.py` deletes notebooks/ before rejecting an unknown project](draft/bug/pyautohands/generate_rejects_autocti_after_deleting_notebooks.md) — pyautohands · small · supervised · normal
 - [Tenant firewall: release_run.py carries an unlisted 'PyAutoLabs' instance fact](draft/bug/pyautoheart/tenant_firewall_release_run_instance_fact.md) — pyautoheart · small · safe · normal
 - [`aplt.Output` stale-API drift in the remaining workspace repos](draft/bug/workspaces/aplt_output_drift_remaining_repos.md) — workspaces · small · supervised · normal
@@ -111,7 +112,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 - [JAX point-source smoke sentinel: point.py returns -1e99 instead of -83.38](draft/bug/autolens/jax_point_source_point_smoke_sentinel.md) — autolens · medium · supervised · normal
 - [JIT cache not hit in modeling_visualization delaunay/rectangular scripts](draft/bug/autolens/jit_cache_not_hit_modeling_visualization.md) — autolens · medium · supervised · normal
 - [`@PyAutoFit` Add property-based correctness tests for every `Prior` subclass](draft/bug/priors/09_prior_property_tests.md) — priors · large · supervised · normal
-- [`@PyAutoFit` `TransformedMessage` reversal convention is undocumented foot-gun](draft/bug/priors/11_transformed_message_semantics_doc.md) — priors · large · supervised · normal
 - [Resolve release-profile timeout scripts deliberately](draft/bug/health_fixes/release_timeout_policy.md) — health_fixes · too-large · supervised · normal
 - [`@PyAutoFit` Refactor: each density should live in one place, not](draft/bug/priors/12_single_source_density_refactor.md) — priors · too-large · supervised · normal
 - [`@PyAutoFit` Refactor: collapse the `Prior` / `Message` two-layer hierarchy](draft/bug/priors/13_collapse_prior_and_message.md) — priors · too-large · supervised · normal

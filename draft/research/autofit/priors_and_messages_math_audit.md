@@ -5,7 +5,35 @@ Target: PyAutoFit
 Difficulty: too-large
 Autonomy: supervised
 Priority: high
-Status: formalised
+Status: RETIRED — historical record (2026-08-18); all 9 A-findings shipped, C-findings tracked in bug/priors/09,11-14
+
+> **2026-08-18 wrap-up.** This census's actionable content has fully
+> graduated; nothing here is left to action from this file. Outcome map:
+>
+> - **A1-A9 (all nine confirmed bugs): FIXED on PyAutoFit main.** Batch 1
+>   (A1, A2, A3, A4, A5, A8) via #1344/PR#1345 (merged `c0b6c94b8`,
+>   2026-07-10); batch 2 (A6, A9) via #1346/PR#1348 (merged `cf0cc4bbb`,
+>   2026-07-10); A7 vectorised in PR#1345. All five open decisions were
+>   resolved on hub #1331 (see its 2026-07-14 comment): Beta clamp → raise;
+>   σ<0 rejected / σ=0 kept; Gamma `from_mode` matches mean+variance;
+>   normalisation → Option A (drop constants + `Prior.log_normalisation()`
+>   hook); width modifier → `abs(mean)` + opt-in floor + `PriorException`.
+>   Regression suites `test_priors_messages_fixes_1331.py` and
+>   `test_prior_width_safety.py` lock the fixes in. Completion records:
+>   [[priors-messages-fixes]], [[prior-width-safety]],
+>   [[ep-priors-fable-reassess]].
+> - **C-findings:** C2 shipped with the A5 decision (PR#1345). C6's
+>   reversal-convention half shipped via #1333/PR#1334 (EP review Phase 2);
+>   its `LinearShiftTransform` half remains as `bug/priors/11` (now small).
+>   C3 remains as `bug/priors/09` (unblocked). C1+C4 remain as
+>   `bug/priors/12`+`13` (bundled design issue, EP-review gate open).
+>   C5 remains as `bug/priors/14` (go/no-go after 12/13). C7 shipped as
+>   the A9/D5 fix.
+> - GitHub hubs #1330/#1331 stay open only as the index for the parked
+>   design items above.
+>
+> Live tracking is `draft/bug/priors/z_features.md`; this file is kept as
+> the historical audit record only.
 
 > **Fable re-validation (2026-07-08, main @ `0f26ff2d8`, PyAutoFit#1330):**
 > all nine A-findings reproduce on clean main — none aged out. Per-finding

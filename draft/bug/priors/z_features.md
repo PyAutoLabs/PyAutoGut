@@ -5,7 +5,18 @@ Target: priors
 Difficulty: too-large
 Autonomy: supervised
 Priority: normal
-Status: formalised
+Status: phases 1-2 SHIPPED (2026-07-10); phases 3-4 remain
+
+> **2026-08-18 wrap-up sweep.** All nine confirmed bugs (01-08, 10) are fixed
+> and merged on PyAutoFit main — Phase 1 batch via #1344/PR#1345 (merged
+> `c0b6c94b8`), Phase 2 width-modifier pair via #1346/PR#1348 (merged
+> `cf0cc4bbb`), verified live 2026-07-14. All five decisions on hub #1331 are
+> taken (see its 2026-07-14 resolution comment). Completion records:
+> [[priors-messages-fixes]], [[prior-width-safety]], [[ep-priors-fable-reassess]].
+> Regression suites `test_priors_messages_fixes_1331.py` (12 tests) and
+> `test_prior_width_safety.py` (11 tests) are on main.
+> Remaining: 09 (unblocked, ready), 11 (§2 only — small), 12+13 (bundled
+> design issue, EP-review gate open), 14 (go/no-go after 12/13).
 
 ## Why this folder exists
 
@@ -62,12 +73,12 @@ Each can be filed independently and verified in minutes.
 
 | # | Prompt | Bug | Status | Issue | PR |
 |---|--------|-----|--------|-------|----|
-| 01 | [log_gaussian_with_limits_crash](01_log_gaussian_with_limits_crash.md) | `LogGaussianPrior.with_limits` will `TypeError` on first call | pending | — | — |
-| 02 | [uniform_logpdf_array_handling](02_uniform_logpdf_array_handling.md) | `UniformPrior.logpdf(np.array(...))` raises ambiguous-truth error | pending | — | — |
-| 03 | [gamma_from_mode_wrong_formula](03_gamma_from_mode_wrong_formula.md) | `GammaMessage.from_mode` formula is dimensionally wrong | pending | — | — |
-| 04 | [truncated_normal_log_partition_incomplete](04_truncated_normal_log_partition_incomplete.md) | `TruncatedNormalMessage` pdf does not integrate to 1 via generic interface | pending | — | — |
-| 05 | [inv_beta_suffstats_clamp_noop](05_inv_beta_suffstats_clamp_noop.md) | `inv_beta_suffstats` negative-clamp branch is a no-op | pending | — | — |
-| 06 | [normal_message_sigma_negative_unchecked](06_normal_message_sigma_negative_unchecked.md) | `NormalMessage` silently accepts negative sigma | pending | — | — |
+| 01 | log_gaussian_with_limits_crash (prompt retired) | `LogGaussianPrior.with_limits` will `TypeError` on first call | **shipped 2026-07-10** | #1344 (hub #1331) | #1345 |
+| 02 | uniform_logpdf_array_handling (prompt retired) | `UniformPrior.logpdf(np.array(...))` raises ambiguous-truth error | **shipped 2026-07-10** | #1344 (hub #1331) | #1345 |
+| 03 | gamma_from_mode_wrong_formula (prompt retired) | `GammaMessage.from_mode` formula is dimensionally wrong | **shipped 2026-07-10** (D3: match mean+variance, α=m²/V) | #1344 (hub #1331) | #1345 |
+| 04 | truncated_normal_log_partition_incomplete (prompt retired) | `TruncatedNormalMessage` pdf does not integrate to 1 via generic interface | **shipped 2026-07-10** (integral 2.27 → 1.0) | #1344 (hub #1331) | #1345 |
+| 05 | inv_beta_suffstats_clamp_noop (prompt retired) | `inv_beta_suffstats` negative-clamp branch is a no-op | **shipped 2026-07-10** (D1: raises `ValueError`) | #1344 (hub #1331) | #1345 |
+| 06 | normal_message_sigma_negative_unchecked (prompt retired) | `NormalMessage` silently accepts negative sigma | **shipped 2026-07-10** (D2: σ<0 rejected, σ=0 point-mass kept) | #1346 (hub #1331) | #1348 |
 
 ## Phase 2 — Convention / safety (require design input)
 
@@ -77,14 +88,14 @@ expert to ratify the convention before code changes.
 
 | # | Prompt | Concern | Status | Issue | PR |
 |---|--------|---------|--------|-------|----|
-| 07 | [log_prior_normalisation_convention](07_log_prior_normalisation_convention.md) | `log_prior_from_value` drops constants inconsistently across priors | pending | — | — |
-| 08 | [relative_width_modifier_safety](08_relative_width_modifier_safety.md) | `RelativeWidthModifier` collapses to 0 / goes negative near zero means | pending | — | — |
+| 07 | log_prior_normalisation_convention (prompt retired) | `log_prior_from_value` drops constants inconsistently across priors | **shipped 2026-07-10** (D4: Option A — drop constants everywhere + `Prior.log_normalisation()` hook) | #1344 (hub #1331) | #1345 |
+| 08 | relative_width_modifier_safety (prompt retired) | `RelativeWidthModifier` collapses to 0 / goes negative near zero means | **shipped 2026-07-10** (D5: `abs(mean)` + opt-in `absolute_floor` + `PriorException` guard) | #1346 (hub #1331) | #1348 |
 
 ## Phase 3 — Testing infrastructure (would have caught everything above)
 
 | # | Prompt | Scope | Status | Issue | PR |
 |---|--------|-------|--------|-------|----|
-| 09 | [prior_property_tests](09_prior_property_tests.md) | Add property-based correctness sweep over every `Prior` subclass | pending | — | — |
+| 09 | [prior_property_tests](09_prior_property_tests.md) | Add property-based correctness sweep over every `Prior` subclass | **unblocked — ready to start** (prerequisite 01-08 landed 2026-07-10) | — | — |
 
 ## Phase 4 — Refactors (only after Phases 1-3)
 
@@ -94,11 +105,11 @@ over them.
 
 | # | Prompt | Scope | Status | Issue | PR |
 |---|--------|-------|--------|-------|----|
-| 10 | [fixed_message_cache_growth](10_fixed_message_cache_growth.md) | `FixedMessage.logpdf_cache` is an unbounded class-level dict | pending | — | — |
-| 11 | [transformed_message_semantics_doc](11_transformed_message_semantics_doc.md) | `TransformedMessage` reversal convention is undocumented foot-gun | pending | — | — |
-| 12 | [single_source_density_refactor](12_single_source_density_refactor.md) | Each density is encoded in three places (`value_for` / `logpdf` / `log_prior_from_value`) | pending | — | — |
-| 13 | [collapse_prior_and_message](13_collapse_prior_and_message.md) | `Prior` and `Message` carry duplicated responsibility | pending | — | — |
-| 14 | [replace_transform_stack_with_bijectors](14_replace_transform_stack_with_bijectors.md) | Replace hand-rolled `AbstractDensityTransform` with `tfp.bijectors` / `numpyro.transforms` | pending | — | — |
+| 10 | fixed_message_cache_growth (prompt retired) | `FixedMessage.logpdf_cache` is an unbounded class-level dict | **shipped 2026-07-10** (cache removed, aliasing fixed) | #1344 (hub #1331) | #1345 |
+| 11 | [transformed_message_semantics_doc](11_transformed_message_semantics_doc.md) | `TransformedMessage` reversal convention is undocumented foot-gun | **half shipped** — §1 reversal-convention docs landed via #1333/PR#1334; §2 `LinearShiftTransform` docstring remains (small) | #1333 (§1) | #1334 (§1) |
+| 12 | [single_source_density_refactor](12_single_source_density_refactor.md) | Each density is encoded in three places (`value_for` / `logpdf` / `log_prior_from_value`) | unblocked — EP-review Phases 1-2 gate open; bundle with 13 as one design issue | — | — |
+| 13 | [collapse_prior_and_message](13_collapse_prior_and_message.md) | `Prior` and `Message` carry duplicated responsibility | unblocked — bundle with 12 as one design issue | — | — |
+| 14 | [replace_transform_stack_with_bijectors](14_replace_transform_stack_with_bijectors.md) | Replace hand-rolled `AbstractDensityTransform` with `tfp.bijectors` / `numpyro.transforms` | parked — go/no-go decision after the 12+13 design | — | — |
 
 ---
 

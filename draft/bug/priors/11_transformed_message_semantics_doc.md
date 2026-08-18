@@ -2,10 +2,10 @@
 
 Type: bug
 Target: priors
-Difficulty: large
+Difficulty: small
 Autonomy: supervised
 Priority: normal
-Status: HALF SHIPPED — edge 1 is documented, edge 2 is not (2026-08-09)
+Status: HALF SHIPPED — edge 1 is documented, edge 2 is not (2026-08-09; Difficulty dropped large → small per the note below, 2026-08-18)
 
 ## 2026-08-09 — the reversal-convention half landed; the reciprocal half did not
 

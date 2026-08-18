@@ -3,7 +3,8 @@
 ## nss-remainline-mainline-blackjax
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1491
 - session: Claude Code cloud/mobile (no local worktree)
-- status: library-dev
+- status: pr-open (https://github.com/PyAutoLabs/PyAutoFit/pull/1492) — 17/17 nss tests
+  pass from checkout; CI + human merge pending; session subscribed to PR activity
 - worktree: none — cloud session works on the GitHub clone directly
 - repos:
   - PyAutoFit: feature/nss-remainline-mainline-blackjax

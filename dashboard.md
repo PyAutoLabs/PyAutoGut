@@ -11,32 +11,30 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 | [In flight](#in-flight) (`active/`) | 3 |
 | [Parked](#parked) (`parked.md`) | 1 |
 | [Planned](#planned) (`planned.md`) | 7 |
-| [Backlog](#backlog) (`draft/`) | 133 |
+| [Backlog](#backlog) (`draft/`) | 128 |
 
 Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3Aissue+is%3Aopen&type=issues) · [open pull requests](https://github.com/search?q=org%3APyAutoLabs+is%3Apr+is%3Aopen&type=prs)
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 28
+**Highest priority** (filed as `high`) — showing 12 of 25
 
 - [TRIAGE: needs manual review before routing](draft/triage/jax_zero_contour.md) — medium · safe · high
 - [Decide whether the clipper belongs in the search identifier](draft/feature/autofit/clipper_in_search_identifier.md) — autofit · medium · human-required · high
 - [PyAutoLens RTD docs: three-regime restructure (multi_galaxy / group / cluster)](draft/docs/autolens/docs_three_regime_restructure.md) — autolens · medium · supervised · high
 - [The `ell_comps` trapping was masked, not cleared — characterise it](draft/research/autolens_profiling/ell_comps_trapping_unmasked.md) — autolens_profiling · medium · supervised · high
-- [Optimize pixelized Prodigy settings on the laptop GPU](draft/research/autolens_workspace_developer/pixelized_prodigy_laptop_gpu_phase_2_settings.md) — autolens_workspace_developer · medium · human-required · high
 - [Cluster package: point-source-default narrative + extended-source follow-up feature](draft/docs/workspaces/cluster_regime_narrative.md) — workspaces · medium · supervised · high
 - [multi_galaxy package: new regime package in autolens_workspace](draft/docs/autolens/multi_galaxy_package.md) — autolens · large · supervised · high
-- [Tune the JAX multi-start optimizers into a standard option (MGE](draft/experiment/autolens_profiling/jax_optimizer_settings_tuning.md) — autolens_profiling · large · supervised · high
 - [Profile and speed up JAX likelihood-function compile times (all use](draft/feature/autolens_profiling/jax_compile_time_profiling.md) — autolens_profiling · large · supervised · high
-- [Optimize MultiStartProdigy for pixelized meshes on the laptop GPU](draft/research/autolens_workspace_developer/pixelized_prodigy_laptop_gpu.md) — autolens_workspace_developer · large · human-required · high
 - [Give the Profiling Agent a compile-time axis — the arc](draft/feature/profiling/profiling_agent_jax_compile_time_scope.md) — profiling · large · supervised · high
 - [Deep research: Can we speed up Delaunay in PyAutoArray?](draft/research/autoarray/delaunay_research.md) — autoarray · too-large · supervised · high
+- [EP hierarchical parent-scale collapse: cure the basin, or document the](draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md) — autofit · too-large · human-required · high
+- [Census of priors and messages — confirmed bugs + redesign](draft/research/autofit/priors_and_messages_math_audit.md) — autofit · too-large · supervised · high
+- [`NFWTruncatedSph.potential_2d_from`: MGE potential fails `grad(psi)=alpha` self-consistency](draft/bug/autogalaxy/nfw_truncated_potential_accuracy.md) — autogalaxy · too-large · supervised · high
 
 **Quick wins** (small enough, and safe enough to run unattended)
 
-- [Has the falsified-by checkpoint stage gone rote after ten ships](draft/research/pyautobrain/has_the_falsified_by_checkpoint_stage_gone.md) — pyautobrain · small · safe · normal
 - [Tenant firewall: release_run.py carries an unlisted 'PyAutoLabs' instance fact](draft/bug/pyautoheart/tenant_firewall_release_run_instance_fact.md) — pyautoheart · small · safe · normal
-- [Silence the three autonerves-rooted CLI-noise sources (fits leak, pytest collection,](draft/maintenance/pyautonerves/cli_noise_autonerves_batch.md) — pyautonerves · small · safe · normal
 - [add-vincken-2026-wiki-and-cite-in-euclid](draft/docs/workspaces/add_vincken_2026_wiki_and_cite_in_euclid.md) — workspaces · small · safe · normal
 - [`add_notebook_quotes` mistakes a code string literal's closing delimiter for a](draft/bug/hands/notebook_quotes_string_literal_closing_delimiter.md) — hands · small · safe · low
 - [Markdown renderings batch 2a — leftovers (ellipse/modeling + PNG size)](draft/docs/pyautobuild/markdown_renderings_2a_leftovers.md) — pyautobuild · small · safe · low
@@ -81,7 +79,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**133** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**128** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 35</summary>
@@ -158,11 +156,9 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>research</b> — 22</summary>
+<summary><b>research</b> — 19</summary>
 
 - [The `ell_comps` trapping was masked, not cleared — characterise it](draft/research/autolens_profiling/ell_comps_trapping_unmasked.md) — autolens_profiling · medium · supervised · high
-- [Optimize pixelized Prodigy settings on the laptop GPU](draft/research/autolens_workspace_developer/pixelized_prodigy_laptop_gpu_phase_2_settings.md) — autolens_workspace_developer · medium · human-required · high
-- [Optimize MultiStartProdigy for pixelized meshes on the laptop GPU](draft/research/autolens_workspace_developer/pixelized_prodigy_laptop_gpu.md) — autolens_workspace_developer · large · human-required · high
 - [Deep research: Can we speed up Delaunay in PyAutoArray?](draft/research/autoarray/delaunay_research.md) — autoarray · too-large · supervised · high
 - [Census of priors and messages — confirmed bugs + redesign](draft/research/autofit/priors_and_messages_math_audit.md) — autofit · too-large · supervised · high
 - [Expectation Propagation Scale-Up — Scoping](draft/research/graphical_ep/ep_scoping.md) — graphical_ep · too-large · supervised · high
@@ -170,7 +166,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 - [Delaunay-family JAX modules never hit the persistent compilation cache](draft/research/autoarray/delaunay_callback_persistent_cache_miss.md) — autoarray · medium · supervised · medium
 - [Quick-update plotting cost — minutes per update, and it is](draft/research/autolens/quick_update_plotting_cost.md) — autolens · medium · supervised · medium
 - [Use readthedocs or migrate to GitHub docs](draft/research/autobuild/git_docs.md) — autobuild · small · supervised · normal
-- [Has the falsified-by checkpoint stage gone rote after ten ships](draft/research/pyautobrain/has_the_falsified_by_checkpoint_stage_gone.md) — pyautobrain · small · safe · normal
 - [Re-baseline the slacs0008 acceptance parity after the HAP-dedupe fix](draft/research/pyautoreduce/acceptance_noise_rebaseline.md) — pyautoreduce · small · supervised · normal
 - [Kernel-CDF bandwidth defaults — config-dependent quality, investigate adaptivity](draft/research/autoarray/rectangular_kernel_bandwidth_defaults.md) — autoarray · medium · supervised · normal
 - [We have lots of examples which profile how long JAX](draft/research/autolens_workspace_developer/jax_jit_profiling.md) — autolens_workspace_developer · medium · supervised · normal
@@ -186,10 +181,9 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>maintenance</b> — 19</summary>
+<summary><b>maintenance</b> — 18</summary>
 
 - [autolens_workspace_developer rectangular experiments — Gut stash + rename](draft/maintenance/autolens_workspace_developer/rectangular_experiments_gut_stash.md) — autolens_workspace_developer · small · supervised · normal
-- [Silence the three autonerves-rooted CLI-noise sources (fits leak, pytest collection,](draft/maintenance/pyautonerves/cli_noise_autonerves_batch.md) — pyautonerves · small · safe · normal
 - [Mirror drifted library config keys into the workspace configs](draft/maintenance/workspaces/config_key_mirror_drift.md) — workspaces · small · supervised · normal
 - [Un-park imaging/features/scaling_relation/slam once PyAutoArray#431 merges](draft/maintenance/workspaces/unpark_imaging_scaling_relation_slam.md) — workspaces · small · supervised · normal
 - [autolens_workspace_developer: broad stale-API rot (56 symbols, no CI)](draft/maintenance/autolens_workspace_developer/stale_api_rot_audit.md) — autolens_workspace_developer · medium · supervised · normal
@@ -259,13 +253,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 - [TRIAGE: needs manual review before routing](draft/triage/jax_zero_contour.md) — medium · safe · high
 - [Triage: Convolver "No blurring_image provided" warning in canonical workspace scripts](draft/triage/convolver_blurring_image_warning.md) — small · supervised · normal
 - [Nightly release has been blocked 8 nights running — triage](draft/triage/nightly_release_blocked_eight_nights.md) — medium · supervised · normal
-
-</details>
-
-<details>
-<summary><b>experiment</b> — 1</summary>
-
-- [Tune the JAX multi-start optimizers into a standard option (MGE](draft/experiment/autolens_profiling/jax_optimizer_settings_tuning.md) — autolens_profiling · large · supervised · high
 
 </details>
 

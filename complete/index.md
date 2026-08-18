@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1019 records across 7 buckets.
+1022 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -33,6 +33,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [border-relocator-backend-parity](2026/08/border-relocator-backend-parity.md) — Isolated the native NumPy/JAX likelihood gap to mathematically non-unique PCA axes for a near-isotropic border…
 - [border-relocator-degenerate-pca](2026/08/border-relocator-degenerate-pca.md) — Stabilized near-isotropic border PCA axes with a deterministic axis-aligned branch at a scale-aware eigenvalue…
 - [circular-ell-comps-image-gradient](2026/08/circular-ell-comps-image-gradient.md) — Replaced the Sersic image path's Cartesian-to-polar ellipticity conversion with an algebraically equivalent Ca…
+- [cli-noise-autonerves-batch](2026/08/cli-noise-autonerves-batch.md)
 - [cli-noise-pyautofit-batch](2026/08/cli-noise-pyautofit-batch.md)
 - [clipper-usage-in-search-summary](2026/08/clipper-usage-in-search-summary.md) — `search.summary` now reports prior-support clipping. `n_clipped_lane_steps`
 - [clipper-validation-campaign](2026/08/clipper-validation-campaign.md)
@@ -55,6 +56,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [ep-hierarchical-scale-collapse-guard](2026/08/ep-hierarchical-scale-collapse-guard.md)
 - [ep-initializer-exception-should-not-abort](2026/08/ep-initializer-exception-should-not-abort.md)
 - [ep-optimise-updater](2026/08/ep-optimise-updater.md)
+- [falsified-by-checkpoint-efficacy-review](2026/08/falsified-by-checkpoint-efficacy-review.md)
 - [feature-ranker-ignores-header-keys](2026/08/feature-ranker-ignores-header-keys.md) — the Feature Agent's ranker now reads the prompt metadata header it was
 - [file-path-guard-decision](2026/08/file-path-guard-decision.md) — The file-path leg split from raw-guard-migration (leg 3 of the dataset-bulk series, autolens_workspace#354). D…
 - [frozen-lane-counter](2026/08/frozen-lane-counter.md) — Added a third disjoint lane counter to the multi-start gradient search
@@ -125,6 +127,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [resolve-border-relocator-hazard](2026/08/resolve-border-relocator-hazard.md) — Reconciled the likelihood hazard instrument after the border-relocator source fix. The resolved backend-diverg…
 - [resolve-curvature-floor-doc-drift](2026/08/resolve-curvature-floor-doc-drift.md) — Reconciled the curvature-floor documentation finding after PyAutoArray#444. The detector now requires both run…
 - [resolve-sersic-ell-comps-gradient](2026/08/resolve-sersic-ell-comps-gradient.md) — Reconciled the numerical-hazard evidence after the Sersic Cartesian-radius fix. The stable conditional detecto…
+- [review-claim-dispositions](2026/08/review-claim-dispositions.md)
 - [samplers-surface-autolens-tiers](2026/08/samplers-surface-autolens-tiers.md) — the samplers faculty's SamplerSurface now scans the findings
 - [save-json-numpy-scalar-typeerror](2026/08/save-json-numpy-scalar-typeerror.md) — Adds `NumpyEncoder` in `autofit/tools/util.py` (`np.ndarray` ->
 - [script-title-underline-off-by-one](2026/08/script-title-underline-off-by-one.md)

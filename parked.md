@@ -36,17 +36,6 @@ write the dated `complete/<YYYY>/<MM>/<slug>.md` record instead.
 - note: do NOT broaden into the old `pyprojroot` bootstrap sweep — the prompt is explicit
   that the dependent AutoCTI follow-up owns that.
 
-## euclid-eceb-editorial-revision
-- prompt: active/euclid_eceb_editorial_revision.md
-- parked: 2026-08-08 — surfaced by the orphaned-prompt triage; STATE UNVERIFIED
-- classification: docs (euclid_assistant / ECLIPSE-C paper)
-- why unverified: the work lives against a local paper checkout
-  (`/mnt/c/Users/Jammy/Science/euclid`), not a repo this session can read. Whether the ECEB
-  editorial comments were addressed can only be confirmed from the laptop.
-- resume: the prompt carries the board's comments verbatim, incl. the structural request to
-  move most systems (esp. the multi-page Fig.3) to an appendix and keep only discussed
-  systems in the main text. Deliverable is the revision plus a response letter and change log.
-
 ## pyautoreduce-slacs1430-acs-comparison
 - prompt: active/pyautoreduce_slacs1430_acs_comparison.md
 - parked: 2026-08-08 — surfaced by the orphaned-prompt triage; STATE UNVERIFIED

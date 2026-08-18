@@ -1,5 +1,17 @@
 # Active Tasks
 
+## inference-method-cards-seed
+- issue: https://github.com/PyAutoLabs/autolens_profiling/issues/140
+- session: Claude Code cloud/mobile (no local worktree)
+- status: library-dev
+- worktree: none — cloud session works on the GitHub clone directly
+- repos:
+  - autolens_profiling: feature/inference-method-cards-seed
+- prompt: active/inference_method_cards_seed.md
+- note: docs-only — seed methods/{nautilus,nss,multi_start_prodigy,multi_start_adam}.md
+  from the existing benchmark record (PROGRAMME §6 template) + tick Phase 0(e) in
+  the PROGRAMME phase table (recorded follow-up from searches-readme-dashboard).
+
 ## stored-sample-reconstruction-guard
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1486
 - status: library-dev — WORKSPACE HALF SHIPPED; the PyAutoFit hardening (#1486) is what remains

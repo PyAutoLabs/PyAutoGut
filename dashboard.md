@@ -11,7 +11,7 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 | [In flight](#in-flight) (`active/`) | 3 |
 | [Parked](#parked) (`parked.md`) | 1 |
 | [Planned](#planned) (`planned.md`) | 7 |
-| [Backlog](#backlog) (`draft/`) | 134 |
+| [Backlog](#backlog) (`draft/`) | 133 |
 
 Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3Aissue+is%3Aopen&type=issues) · [open pull requests](https://github.com/search?q=org%3APyAutoLabs+is%3Apr+is%3Aopen&type=prs)
 
@@ -35,7 +35,6 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 **Quick wins** (small enough, and safe enough to run unattended)
 
 - [Has the falsified-by checkpoint stage gone rote after ten ships](draft/research/pyautobrain/has_the_falsified_by_checkpoint_stage_gone.md) — pyautobrain · small · safe · normal
-- [PyAutoFit CLI-noise batch: unclosed search.log handler + four small warning](draft/maintenance/pyautofit/cli_noise_pyautofit_batch.md) — pyautofit · small · safe · normal
 - [Tenant firewall: release_run.py carries an unlisted 'PyAutoLabs' instance fact](draft/bug/pyautoheart/tenant_firewall_release_run_instance_fact.md) — pyautoheart · small · safe · normal
 - [Silence the three autonerves-rooted CLI-noise sources (fits leak, pytest collection,](draft/maintenance/pyautonerves/cli_noise_autonerves_batch.md) — pyautonerves · small · safe · normal
 - [add-vincken-2026-wiki-and-cite-in-euclid](draft/docs/workspaces/add_vincken_2026_wiki_and_cite_in_euclid.md) — workspaces · small · safe · normal
@@ -82,7 +81,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**134** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**133** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 35</summary>
@@ -187,10 +186,9 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>maintenance</b> — 20</summary>
+<summary><b>maintenance</b> — 19</summary>
 
 - [autolens_workspace_developer rectangular experiments — Gut stash + rename](draft/maintenance/autolens_workspace_developer/rectangular_experiments_gut_stash.md) — autolens_workspace_developer · small · supervised · normal
-- [PyAutoFit CLI-noise batch: unclosed search.log handler + four small warning](draft/maintenance/pyautofit/cli_noise_pyautofit_batch.md) — pyautofit · small · safe · normal
 - [Silence the three autonerves-rooted CLI-noise sources (fits leak, pytest collection,](draft/maintenance/pyautonerves/cli_noise_autonerves_batch.md) — pyautonerves · small · safe · normal
 - [Mirror drifted library config keys into the workspace configs](draft/maintenance/workspaces/config_key_mirror_drift.md) — workspaces · small · supervised · normal
 - [Un-park imaging/features/scaling_relation/slam once PyAutoArray#431 merges](draft/maintenance/workspaces/unpark_imaging_scaling_relation_slam.md) — workspaces · small · supervised · normal

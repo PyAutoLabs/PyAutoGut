@@ -1,28 +1,5 @@
 # Active Tasks
 
-## cli-noise-pyautofit-batch
-- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1495
-- session: Claude Code web (remote), branch claude/pyautofit-cli-noise-fixes-vqs7mg
-- status: library-dev — IMPLEMENTATION PUSHED 2026-08-18 as PyAutoFit `7d1fe19` (6 files, +42/−5);
-  full suite 1884 passed / 3 skipped on py3.13 + scipy 1.17.1; all five warnings verified
-  reproduced-then-gone. No PR opened yet.
-- worktree: none (remote web session — session clone, no local worktree)
-- repos:
-  - PyAutoFit: claude/pyautofit-cli-noise-fixes-vqs7mg
-- prompt: active/cli_noise_pyautofit_batch.md
-- CONFLICT OVERRIDE (deliberate, 2026-08-18): PyAutoFit is also claimed by
-  `stored-sample-reconstruction-guard` (`autofit/non_linear/samples/`) and
-  `version-stamp-sync-guards` (`autofit/__init__.py` + `files/release.sh`). This task is
-  FILE-DISJOINT from both: it touches `non_linear/search/abstract_search.py`,
-  `non_linear/search/nest/nautilus/search.py`, `non_linear/search/mle/bfgs/search.py`,
-  `database/model/array.py` and two test files. Remote session on its own branch; if either
-  in-flight task grows into these files, re-coordinate before merge.
-- summary: five mechanical CLI-noise fixes from the 2026-08-06 `-W all` audit — close the
-  `search.log` FileHandler in `configure_handler`'s `finally`; add SQLAlchemy `overlaps=` to the
-  `Fit.arrays`/`Fit.hdus`/`HDU.fit` relationship overlap; nautilus `evidence()` → `.log_z`;
-  stop passing scipy-deprecated `disp`/`iprint` to L-BFGS-B; module-local fork()
-  DeprecationWarning filter in `test_fork_context.py`.
-
 ## stored-sample-reconstruction-guard
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1486
 - status: library-dev — WORKSPACE HALF SHIPPED; the PyAutoFit hardening (#1486) is what remains

@@ -17,20 +17,20 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 29
+**Highest priority** (filed as `high`) — showing 12 of 28
 
 - [TRIAGE: needs manual review before routing](draft/triage/jax_zero_contour.md) — medium · safe · high
 - [Decide whether the clipper belongs in the search identifier](draft/feature/autofit/clipper_in_search_identifier.md) — autofit · medium · human-required · high
 - [PyAutoLens RTD docs: three-regime restructure (multi_galaxy / group / cluster)](draft/docs/autolens/docs_three_regime_restructure.md) — autolens · medium · supervised · high
 - [The `ell_comps` trapping was masked, not cleared — characterise it](draft/research/autolens_profiling/ell_comps_trapping_unmasked.md) — autolens_profiling · medium · supervised · high
 - [Optimize pixelized Prodigy settings on the laptop GPU](draft/research/autolens_workspace_developer/pixelized_prodigy_laptop_gpu_phase_2_settings.md) — autolens_workspace_developer · medium · human-required · high
-- [Release does not sync __version__ stamps and workspace pins back](draft/bug/pyautobuild/release_version_sync_back_to_main.md) — pyautobuild · medium · supervised · high
 - [Cluster package: point-source-default narrative + extended-source follow-up feature](draft/docs/workspaces/cluster_regime_narrative.md) — workspaces · medium · supervised · high
 - [multi_galaxy package: new regime package in autolens_workspace](draft/docs/autolens/multi_galaxy_package.md) — autolens · large · supervised · high
 - [Tune the JAX multi-start optimizers into a standard option (MGE](draft/experiment/autolens_profiling/jax_optimizer_settings_tuning.md) — autolens_profiling · large · supervised · high
 - [Profile and speed up JAX likelihood-function compile times (all use](draft/feature/autolens_profiling/jax_compile_time_profiling.md) — autolens_profiling · large · supervised · high
 - [Optimize MultiStartProdigy for pixelized meshes on the laptop GPU](draft/research/autolens_workspace_developer/pixelized_prodigy_laptop_gpu.md) — autolens_workspace_developer · large · human-required · high
 - [Give the Profiling Agent a compile-time axis — the arc](draft/feature/profiling/profiling_agent_jax_compile_time_scope.md) — profiling · large · supervised · high
+- [Deep research: Can we speed up Delaunay in PyAutoArray?](draft/research/autoarray/delaunay_research.md) — autoarray · too-large · supervised · high
 
 **Quick wins** (small enough, and safe enough to run unattended)
 
@@ -85,9 +85,8 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 **134** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
-<summary><b>bug</b> — 36</summary>
+<summary><b>bug</b> — 35</summary>
 
-- [Release does not sync __version__ stamps and workspace pins back](draft/bug/pyautobuild/release_version_sync_back_to_main.md) — pyautobuild · medium · supervised · high
 - [EP hierarchical parent-scale collapse: cure the basin, or document the](draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md) — autofit · too-large · human-required · high
 - [`NFWTruncatedSph.potential_2d_from`: MGE potential fails `grad(psi)=alpha` self-consistency](draft/bug/autogalaxy/nfw_truncated_potential_accuracy.md) — autogalaxy · too-large · supervised · high
 - [Investigate eager `FitImaging.figure_of_merit` vs JIT/step-by-step divergence in rectangular pixelization](draft/bug/autolens/pixelization_eager_vs_jit_divergence.md) — autolens · too-large · supervised · high
@@ -127,7 +126,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>feature</b> — 26</summary>
+<summary><b>feature</b> — 27</summary>
 
 - [Decide whether the clipper belongs in the search identifier](draft/feature/autofit/clipper_in_search_identifier.md) — autofit · medium · human-required · high
 - [Profile and speed up JAX likelihood-function compile times (all use](draft/feature/autolens_profiling/jax_compile_time_profiling.md) — autolens_profiling · large · supervised · high
@@ -152,6 +151,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 - [Context: PyAutoLens issue #542 follow-up (Gap 2, deferred during the](draft/feature/jax_substructure/6_deflection_equivalence_test.md) — jax_substructure · too-large · supervised · normal
 - [Once https://github.com/PyAutoLabs/PyAutoLens/issues/480 is fixed (PointSolver](draft/feature/workspaces/restore_multiple_sources_lensing_of_lens.md) — workspaces · too-large · supervised · normal
 - [dPIE: optional central-dispersion (sigma_0) parameterization](draft/feature/autogalaxy/dpie_sigma0_parameterization.md) — autogalaxy · small · supervised · low
+- [version_skew: flag a floor that names a PyPI-yanked release](draft/feature/pyautoheart/version_skew_yank_awareness.md) — pyautoheart · small · supervised · low
 - [Gallery runner: add visualization_upper + decide the modeling_visualization_jit tier](draft/feature/workspaces/gallery_runner_missing_tiers.md) — workspaces · small · supervised · low
 - [Scheduled runs — overnight queue passes with a morning report](draft/feature/autonomy/10_scheduled_runs.md) — autonomy · medium · supervised · low
 - [Teach repos_sync --write to stamp organ config surfaces](draft/feature/pyautomind/repos-sync-config-stamper.md) — pyautomind · hard · supervised · low

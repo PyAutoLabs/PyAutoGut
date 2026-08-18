@@ -1,3 +1,29 @@
+Seeded the inference programme's method-card layer
+(`autolens_profiling/results/notes/inference/methods/`) from the existing
+benchmark record — the PROGRAMME §6 knowledge structure the future
+`autolens_workspace/scripts/guides/searches/` decision tree is generated
+from. Documentation only; done entirely from a mobile/cloud session.
+
+- **PR:** autolens_profiling#141 (merged `f980a0f`, closes #140).
+- **Cards:** `nautilus.md` (CPU reference engine; seeded confidence),
+  `nss.md` (fork-era record + logZ-bias hypothesis; anecdote, Gate A
+  pending), `multi_start_prodigy.md` (θ_E=0 basin story + p_hit reframe;
+  anecdote/seeded, Gate B pending), `multi_start_adam.md` (measured
+  p_hit ≈ 0.18/start precedent; seeded). Template: IDENTITY / EVIDENCE /
+  STRENGTHS & WEAKNESSES / CONFIGURATION / TERMINATION / HAZARDS /
+  PERFORMANCE / RECOMMENDED / REFERENCES; every claim cites a result JSON,
+  notes file, or PROGRAMME section — no new claims introduced.
+- Also ticked Phase 0(e) complete (PR#139) in PROGRAMME.md's phase-state
+  table and stamped 0(d) with its PR numbers — closing the follow-up recorded
+  in the searches-readme-dashboard completion.
+- **Programme state after this:** Phase 0 remaining = (b) blackjax ≥1.6.2
+  upgrade (laptop + RAL) and (c) RAL artifact harvest — both need
+  laptop/SSH, not mobile. Next mobile-feasible programme work: Phase 1
+  `_targets.py` registry skeleton (code, no runs — needs care around heavy
+  imports) or extending method cards as new evidence lands.
+
+## Original prompt
+
 # Seed the inference method evidence cards from the existing benchmark record
 
 Type: docs

@@ -8,7 +8,7 @@ Repos:
 Difficulty: large
 Autonomy: supervised
 Priority: high
-Status: in progress — core landed 2026-07-25; features/fit/jax legs landed 2026-07-26 (branch claude/pyautolens-doc-reorganization-w6a1l5); only the real-data swap-in remains
+Status: in progress — core landed 2026-07-25; features/fit/jax legs landed 2026-07-26 (branch claude/pyautolens-doc-reorganization-w6a1l5); only the real-data swap-in remains (re-confirmed blocked from cloud 2026-08-18; frames pinned to HST GO 10831 — needs a local session)
 Parent: draft/docs/autolens/split_lensing_regimes.md
 
 ## Landed (2026-07-25, this task branch)
@@ -54,6 +54,23 @@ Parent: draft/docs/autolens/split_lensing_regimes.md
   BLOCKED from cloud sessions (2026-07-26): MAST is unreachable through the
   session proxy (`Tunnel connection failed: 403`) — needs a
   local/unrestricted-network session to download + prepare the frames.
+
+  **Re-checked 2026-08-18 (cloud session): still blocked.** `mast.stsci.edu`,
+  `archive.stsci.edu` and the ESA mirrors (`hst.esac.esa.int`,
+  `archives.esac.esa.int`) all 403 at the egress proxy; server-side WebFetch is
+  egress-blocked for those hosts too. Verified `scripts/multi_galaxy/start_here.py`
+  on `main` still fits the simulated look-alike, so this leg is genuinely open.
+
+  **Program ID pinned (was "pin down at implementation time"):** the
+  F555W/F814W frames are **HST GO Program 10831 (PI L. Moustakas)**, ACS/WFC,
+  four 522 s subexposures per filter (2088 s total each), taken 2006 Nov–Dec
+  (per Shu et al. 2016, ApJ 820, 43, §2). Local-session recipe:
+  `astroquery.mast Observations.query_criteria(proposal_id="10831")`, keep the
+  observations at RA ≈ 10h11m, Dec ≈ +01°43′ (target SDSS J1011+0143), download
+  the drizzled/CTE-corrected products (`*_drc.fits`, fall back to `*_drz.fits`)
+  in both filters, then cut out / resample to the workspace dataset format
+  (`data.fits`, `noise_map.fits`, `psf.fits` at 0.05"/pixel) as the
+  `multi_galaxy` start_here dataset.
 - ~~Extra-galaxies / pixelization feature variants remain README cross-links
   (the group/imaging feature scripts apply verbatim with the lens loop).~~
   **CLOSED 2026-07-31.** The feature tier is complete. `extra_galaxies` (PR#391)

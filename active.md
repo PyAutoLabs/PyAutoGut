@@ -13,15 +13,20 @@
 
 ## constant-zeroth-repair
 - issue: https://github.com/PyAutoLabs/PyAutoArray/issues/448
-- status: remote-handoff (prepared 2026-08-17 for a cloud/phone session; NO local worktree claim)
-- worktree: none (remote session clones PyAutoLabs/PyAutoArray and branches itself)
+- status: pr-open (https://github.com/PyAutoLabs/PyAutoArray/pull/449)
+- worktree: none (cloud session; branch pushed to origin — there was never a local claim)
 - repos:
-  - PyAutoArray: feature/constant-zeroth-repair (to be created by the remote session)
+  - PyAutoArray: feature/constant-zeroth-repair (pushed 2026-08-18, tip 143ab43e)
 - prompt: active/constant_zeroth_broken_dead_code.md
 - note: Phase 8C of the inference programme (autolens_profiling#134). CPU-only, numpy-only
   tests — deliberately chosen for a no-GPU remote session. PyAutoArray's other claim
   (version-stamp-sync-guards) touches only `autoarray/__init__.py` + `files/release.sh`;
   this task touches `autoarray/inversion/regularization/` — file-disjoint. Merge is human.
+- handoff: DISCHARGED 2026-08-18 — the cloud session ran, fixed both defects (`eye(P)` -> an
+  `S x S` scaled identity, and threaded `neighbors_sizes` through the class API), added the
+  shape/positive-definiteness tests, and opened PR #449. `main` still carries `eye(P)`, so the
+  task stays in flight until #449 merges; on merge, write the
+  `complete/2026/08/constant-zeroth-repair.md` record via `/ship_library`.
 
 ## positions-lh-penalty-accumulation
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/699

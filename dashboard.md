@@ -8,10 +8,10 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 13 |
-| [Parked](#parked) (`parked.md`) | 6 |
+| [In flight](#in-flight) (`active/`) | 12 |
+| [Parked](#parked) (`parked.md`) | 5 |
 | [Planned](#planned) (`planned.md`) | 7 |
-| [Backlog](#backlog) (`draft/`) | 140 |
+| [Backlog](#backlog) (`draft/`) | 139 |
 
 Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3Aissue+is%3Aopen&type=issues) · [open pull requests](https://github.com/search?q=org%3APyAutoLabs+is%3Apr+is%3Aopen&type=prs)
 
@@ -48,7 +48,6 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 
 Issued — each has an open GitHub issue and usually a branch. The full record for each is in [`active.md`](active.md).
 
-- [First benchmark calibration campaign — run the 4 assistant benchmarks](active/benchmark_calibration_runs.md)
 - [ConstantZeroth regularization is broken twice over — dead code presenting](active/constant_zeroth_broken_dead_code.md) — [issue #448](https://github.com/PyAutoLabs/PyAutoArray/issues/448) — remote-handoff (prepared 2026-08-17 for a cloud/phone session; NO local worktree claim)
 - [Address ECEB editorial comments on ECLIPSE-C](active/euclid_eceb_editorial_revision.md)
 - [Commit the inference-methods programme plan + knowledge ledger into autolens_profiling](active/inference_programme_ledger.md) — [issue #134](https://github.com/PyAutoLabs/autolens_profiling/issues/134) — pr-open (https://github.com/PyAutoLabs/autolens_profiling/pull/135)
@@ -67,12 +66,11 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 Started or scoped, not currently in flight — resume by moving the row back to `active.md`. Full detail in [`parked.md`](parked.md).
 
 <details>
-<summary><b>6</b> task(s)</summary>
+<summary><b>5</b> task(s)</summary>
 
 - **blackjax-smc-gradient-kernel** — [issue #113](https://github.com/PyAutoLabs/autolens_workspace_developer/issues/113) — PARKED 2026-07-24 — stage (a) POSITIVE: warm-started gradient SMC SAMPLES (acc 0.80->0.17 across tempering, einstein_radius…
 - **group4-mge-search-benchmark** — [issue #82](https://github.com/PyAutoLabs/autolens_profiling/issues/82)
 - **matplotlib-inline-standalones**
-- **benchmark-calibration-runs**
 - **euclid-eceb-editorial-revision**
 - **pyautoreduce-slacs1430-acs-comparison**
 
@@ -97,10 +95,10 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**140** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**139** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
-<summary><b>bug</b> — 41</summary>
+<summary><b>bug</b> — 40</summary>
 
 - [pre_build stages untracked files, publishing uncommitted human work](draft/bug/pyautohands/pre_build_stages_untracked_wip.md) — pyautohands · small · supervised · high
 - [UniformPrior bounds are not enforced in the objective on the](draft/bug/autofit/uniform_prior_bounds_unenforced_on_numpy_path.md) — autofit · medium · human-required · high
@@ -133,7 +131,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 - [interferometer Delaunay pixelization — non-PD FitException in test-mode bypass](draft/bug/autolens/interferometer_delaunay_nonpd_fitexception.md) — autolens · medium · supervised · normal
 - [JAX point-source smoke sentinel: point.py returns -1e99 instead of -83.38](draft/bug/autolens/jax_point_source_point_smoke_sentinel.md) — autolens · medium · supervised · normal
 - [JIT cache not hit in modeling_visualization delaunay/rectangular scripts](draft/bug/autolens/jit_cache_not_hit_modeling_visualization.md) — autolens · medium · supervised · normal
-- [Benchmark rubric calibration — freeze integrity + scoring gaps (pre-campaign)](draft/bug/autolens_assistant/benchmark_rubric_freeze_and_scoring_gaps.md) — autolens_assistant · medium · supervised · normal
 - [`@PyAutoFit` Add property-based correctness tests for every `Prior` subclass](draft/bug/priors/09_prior_property_tests.md) — priors · large · supervised · normal
 - [`@PyAutoFit` `TransformedMessage` reversal convention is undocumented foot-gun](draft/bug/priors/11_transformed_message_semantics_doc.md) — priors · large · supervised · normal
 - [Resolve release-profile timeout scripts deliberately](draft/bug/health_fixes/release_timeout_policy.md) — health_fixes · too-large · supervised · normal

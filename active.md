@@ -1,5 +1,18 @@
 # Active Tasks
 
+## clipper-search-identifier
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1493
+- session: Claude Code cloud (no local worktree)
+- status: library-dev
+- worktree: none — cloud session works on the GitHub clone directly
+- repos:
+  - PyAutoFit: claude/clipper-search-identifier-4cowi2
+- prompt: active/clipper_in_search_identifier.md
+- note: two-line change + identifier regression pins per the decided prompt.
+  worktree_check_conflict flagged PyAutoFit claims by stored-sample-reconstruction-guard
+  and version-stamp-sync-guards; proceeded on human "go" — cloud branch, no local
+  worktree contention, disjoint files (mle search classes + test_identifiers.py).
+
 ## inference-method-cards-seed
 - issue: https://github.com/PyAutoLabs/autolens_profiling/issues/140
 - session: Claude Code cloud/mobile (no local worktree)

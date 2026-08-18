@@ -11,7 +11,7 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 | [In flight](#in-flight) (`active/`) | 3 |
 | [Parked](#parked) (`parked.md`) | 1 |
 | [Planned](#planned) (`planned.md`) | 7 |
-| [Backlog](#backlog) (`draft/`) | 128 |
+| [Backlog](#backlog) (`draft/`) | 127 |
 
 Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3Aissue+is%3Aopen&type=issues) · [open pull requests](https://github.com/search?q=org%3APyAutoLabs+is%3Apr+is%3Aopen&type=prs)
 
@@ -79,7 +79,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**128** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**127** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 35</summary>
@@ -123,7 +123,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>feature</b> — 27</summary>
+<summary><b>feature</b> — 26</summary>
 
 - [Decide whether the clipper belongs in the search identifier](draft/feature/autofit/clipper_in_search_identifier.md) — autofit · medium · human-required · high
 - [Profile and speed up JAX likelihood-function compile times (all use](draft/feature/autolens_profiling/jax_compile_time_profiling.md) — autolens_profiling · large · supervised · high
@@ -148,7 +148,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 - [Context: PyAutoLens issue #542 follow-up (Gap 2, deferred during the](draft/feature/jax_substructure/6_deflection_equivalence_test.md) — jax_substructure · too-large · supervised · normal
 - [Once https://github.com/PyAutoLabs/PyAutoLens/issues/480 is fixed (PointSolver](draft/feature/workspaces/restore_multiple_sources_lensing_of_lens.md) — workspaces · too-large · supervised · normal
 - [dPIE: optional central-dispersion (sigma_0) parameterization](draft/feature/autogalaxy/dpie_sigma0_parameterization.md) — autogalaxy · small · supervised · low
-- [version_skew: flag a floor that names a PyPI-yanked release](draft/feature/pyautoheart/version_skew_yank_awareness.md) — pyautoheart · small · supervised · low
 - [Gallery runner: add visualization_upper + decide the modeling_visualization_jit tier](draft/feature/workspaces/gallery_runner_missing_tiers.md) — workspaces · small · supervised · low
 - [Scheduled runs — overnight queue passes with a morning report](draft/feature/autonomy/10_scheduled_runs.md) — autonomy · medium · supervised · low
 - [Teach repos_sync --write to stamp organ config surfaces](draft/feature/pyautomind/repos-sync-config-stamper.md) — pyautomind · hard · supervised · low

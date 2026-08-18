@@ -1,5 +1,18 @@
 # Active Tasks
 
+## nss-remainline-mainline-blackjax
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1491
+- session: Claude Code cloud/mobile (no local worktree)
+- status: library-dev
+- worktree: none — cloud session works on the GitHub clone directly
+- repos:
+  - PyAutoFit: feature/nss-remainline-mainline-blackjax
+- prompt: active/nss_remainline_mainline_blackjax.md
+- note: human-directed early re-mainlining of af.NSS on mainline blackjax >=1.6
+  (removal reason — git-fork pins — is gone). Port pre-validated on CPU toy
+  (chunked bit-identical to unchunked; logZ within 0.6 sigma of analytic).
+  Gate A still decides baseline adoption; DECISIONS.md entry to follow.
+
 ## stored-sample-reconstruction-guard
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1486
 - status: library-dev — WORKSPACE HALF SHIPPED; the PyAutoFit hardening (#1486) is what remains

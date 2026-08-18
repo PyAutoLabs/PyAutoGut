@@ -8,7 +8,12 @@
 - worktree: none — cloud session works on the GitHub clone directly
 - repos:
   - PyAutoFit: feature/nss-remainline-mainline-blackjax
+  - autofit_workspace_test: feature/nss-searches-integration-test
 - prompt: active/nss_remainline_mainline_blackjax.md
+- integration-test-PR: https://github.com/PyAutoLabs/autofit_workspace_test/pull/86
+  (scripts/searches/NSS.py — truth recovery + logZ ensemble + chunked bit-parity;
+  validated against the #1492 branch in direct and TEST_MODE=1 runs; MERGE AFTER
+  PyAutoFit#1492 — af.NSS absent from main until then)
 - note: human-directed early re-mainlining of af.NSS on mainline blackjax >=1.6
   (removal reason — git-fork pins — is gone). Port pre-validated on CPU toy
   (chunked bit-identical to unchunked; logZ within 0.6 sigma of analytic).

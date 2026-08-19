@@ -171,7 +171,7 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
-<details><summary>📋 <a href="active/jax_default_dependency.md">Make JAX a default (non-optional) dependency across the library stack</a> — <a href="https://github.com/PyAutoLabs/PyAutoLens/issues/702">issue #702</a> — workspace-dev — library PRs open + merging (human-authorized 2026-08-19); jax-0.11 cap widen</summary>
+<details><summary>📋 <a href="active/jax_default_dependency.md">Make JAX a default (non-optional) dependency across the library stack</a> — <a href="https://github.com/PyAutoLabs/PyAutoLens/issues/702">issue #702</a> — shipped-awaiting-release-followups — ALL ELEVEN PRs merged 2026-08-19 (human-authorized):</summary>
 
 ```
 /start_dev active/jax_default_dependency.md

@@ -140,18 +140,25 @@ MIND_RULES = [
 ]
 
 MEMORY_RULES = [
-    ("bibliography/*.py", "KEEP"), ("bibliography/README.md", "KEEP"),
+    ("bibliography/README.md", "KEEP"),
     ("scripts/*", "KEEP"), ("tests/*", "KEEP"),
     ("Makefile", "KEEP"), ("LICENSE", "KEEP"),
     ("AGENTS.md", "KEEP"), ("CLAUDE.md", "KEEP"), (".gitignore", "KEEP"),
-    # Same org-wide pointer docs as MIND_RULES — owner substitution.
-    ("AI_POLICY.md", "KEEP_SUB"), ("CONTRIBUTING.md", "KEEP_SUB"),
+    # Same org-wide pointer docs as MIND_RULES — owner substitution; under
+    # .github/ since the 2026-08 root declutter (all five organs match).
+    (".github/AI_POLICY.md", "KEEP_SUB"), (".github/CONTRIBUTING.md", "KEEP_SUB"),
     ("bibliography/*", "EMPTY"),
     # Same fail-closed discipline as MIND_RULES (spec rule 9d). validate.yml is
     # self-contained — no schedule, no secrets, no sibling repos — so it clears
     # the fresh-repo invariant and ships. No catch-all: a new Memory workflow is
     # UNMATCHED and gets an explicit decision.
     (".github/workflows/validate.yml", "KEEP_SUB"),
+    # DROP: the knowledge-board publisher needs a GitHub Pages site the default
+    # token cannot create on a fresh repo (the Hands lesson) and a schedule —
+    # both break the fresh-repo invariant. scripts/board.py itself SHIPS via
+    # the scripts/* KEEP above (it is generic: everything derives from the
+    # checkout + git remote), so an adopter re-adds the workflow deliberately.
+    (".github/workflows/knowledge_board.yml", "DROP"),
     # The shared wiki schema is template content; the sub-wikis are instance
     # content (the generator stamps an empty wiki/example/ instead).
     ("wiki/CLAUDE.md", "KEEP"),

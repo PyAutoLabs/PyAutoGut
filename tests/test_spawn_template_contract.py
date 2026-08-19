@@ -208,7 +208,7 @@ def test_a_new_mind_workflow_is_a_human_decision(tmp_path):
 MINIMAL_MEMORY = {
     "README.md": "# Mem\n", "AGENTS.md": "# A\n", "CLAUDE.md": "# C\n",
     "LICENSE": "MIT\n", ".gitignore": "tmp/\n", "Makefile": "all:\n",
-    "AI_POLICY.md": "p\n", "CONTRIBUTING.md": "c\n",
+    ".github/AI_POLICY.md": "p\n", ".github/CONTRIBUTING.md": "c\n",
     "index.md": "# Index\n", "reading-queue.md": "# Reading queue\n",
     "bibliography/README.md": "# Bib\n",
     "wiki/CLAUDE.md": "# schema\n",

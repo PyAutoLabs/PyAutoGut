@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1031 records across 7 buckets.
+1032 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -623,6 +623,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [survey-cutouts](2026/07/survey-cutouts.md)
 - [task-subfolder-grouping](2026/07/task-subfolder-grouping.md) — PR #217
 - [tenant-firewall-drift](2026/07/tenant-firewall-drift.md)
+- [tenant-firewall-release-run-instance-fact](2026/07/tenant-firewall-release-run-instance-fact.md) — the prompt reported `heart/checks/release_run.py:42` hardcoding the
 - [test-mirror-restructure](2026/07/test-mirror-restructure.md)
 - [test-mode-bypass-completed](2026/07/test-mode-bypass-completed.md) — One-line fix — _fit_bypass_test_mode now calls paths.completed() before returning (mirrors start_resume_fit), …
 - [test-mode-representative-outputs-size-realistic](2026/07/test-mode-representative-outputs-size-realistic.md)

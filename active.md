@@ -35,3 +35,7 @@
 - status: library-dev
 - worktree: ~/Code/PyAutoLabs-wt/sub-312-install-tombstone
 - repos:
+  - PyAutoHands: feature/sub-312-install-tombstone
+- phase-2-repos-not-yet-claimed: PyAutoLens, PyAutoGalaxy, PyAutoFit (docs/installation/pip.md)
+  and PyAutoHeart (verify_install Check B) are claimed via worktree_add_repo when phase 2 starts —
+  deliberately not held idle while phase 1 builds and publishes the tombstones.

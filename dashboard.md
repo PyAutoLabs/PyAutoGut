@@ -10,14 +10,14 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 |-------|------:|
 | [In flight](#in-flight) (`active/`) | 5 |
 | [Parked](#parked) (`parked.md`) | 3 |
-| [Planned](#planned) (`planned.md`) | 7 |
-| [Backlog](#backlog) (`draft/`) | 124 |
+| [Planned](#planned) (`planned.md`) | 6 |
+| [Backlog](#backlog) (`draft/`) | 122 |
 
 Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3Aissue+is%3Aopen&type=issues) · [open pull requests](https://github.com/search?q=org%3APyAutoLabs+is%3Apr+is%3Aopen&type=prs)
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 25
+**Highest priority** (filed as `high`) — showing 12 of 23
 
 - [TRIAGE: needs manual review before routing](draft/triage/jax_zero_contour.md) — medium · safe · high
   <details><summary>📋 copy for Claude</summary>
@@ -33,15 +33,6 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 
   ```
   /start_dev draft/feature/autofit/clipper_in_search_identifier.md
-  ```
-
-  </details>
-
-- [PyAutoLens RTD docs: three-regime restructure (multi_galaxy / group / cluster)](draft/docs/autolens/docs_three_regime_restructure.md) — autolens · medium · supervised · high
-  <details><summary>📋 copy for Claude</summary>
-
-  ```
-  /start_dev draft/docs/autolens/docs_three_regime_restructure.md
   ```
 
   </details>
@@ -118,11 +109,20 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 
   </details>
 
-- [`NFWTruncatedSph.potential_2d_from`: MGE potential fails `grad(psi)=alpha` self-consistency](draft/bug/autogalaxy/nfw_truncated_potential_accuracy.md) — autogalaxy · too-large · supervised · high
+- [`einstein_radius_jit_from`: replace static init_guess with a JAX-native seed finder](draft/refactor/autogalaxy/einstein_radius_jit_native_seed_finder.md) — autogalaxy · too-large · supervised · high
   <details><summary>📋 copy for Claude</summary>
 
   ```
-  /start_dev draft/bug/autogalaxy/nfw_truncated_potential_accuracy.md
+  /start_dev draft/refactor/autogalaxy/einstein_radius_jit_native_seed_finder.md
+  ```
+
+  </details>
+
+- [Investigate eager `FitImaging.figure_of_merit` vs JIT/step-by-step divergence in rectangular pixelization](draft/bug/autolens/pixelization_eager_vs_jit_divergence.md) — autolens · too-large · supervised · high
+  <details><summary>📋 copy for Claude</summary>
+
+  ```
+  /start_dev draft/bug/autolens/pixelization_eager_vs_jit_divergence.md
   ```
 
   </details>
@@ -273,7 +273,7 @@ Started or scoped, not currently in flight — resume by moving the row back to 
 Scoped but not started; some are not yet prompt files. Full detail in [`planned.md`](planned.md).
 
 <details>
-<summary><b>7</b> task(s)</summary>
+<summary><b>6</b> task(s)</summary>
 
 - **isothermal-ell-sph-oversampling-at-the-cusp** — planned — NOT yet a prompt file; file one via `/intake` before starting
   <details><summary>📋 copy for Claude</summary>
@@ -311,15 +311,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
   </details>
 
-- **nfw-truncated-potential-accuracy** — planned
-  <details><summary>📋 copy for Claude</summary>
-
-  ```
-  /start_dev draft/bug/autogalaxy/nfw_truncated_potential_accuracy.md
-  ```
-
-  </details>
-
 - **piemass-potential** — planned
   <details><summary>📋 copy for Claude</summary>
 
@@ -342,25 +333,16 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**124** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**122** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
-<summary><b>bug</b> — 32</summary>
+<summary><b>bug</b> — 31</summary>
 
 - [EP hierarchical parent-scale collapse: cure the basin, or document the](draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md) — autofit · too-large · human-required · high
   <details><summary>📋 copy for Claude</summary>
 
   ```
   /start_dev draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md
-  ```
-
-  </details>
-
-- [`NFWTruncatedSph.potential_2d_from`: MGE potential fails `grad(psi)=alpha` self-consistency](draft/bug/autogalaxy/nfw_truncated_potential_accuracy.md) — autogalaxy · too-large · supervised · high
-  <details><summary>📋 copy for Claude</summary>
-
-  ```
-  /start_dev draft/bug/autogalaxy/nfw_truncated_potential_accuracy.md
   ```
 
   </details>
@@ -1220,16 +1202,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>docs</b> — 17</summary>
-
-- [PyAutoLens RTD docs: three-regime restructure (multi_galaxy / group / cluster)](draft/docs/autolens/docs_three_regime_restructure.md) — autolens · medium · supervised · high
-  <details><summary>📋 copy for Claude</summary>
-
-  ```
-  /start_dev draft/docs/autolens/docs_three_regime_restructure.md
-  ```
-
-  </details>
+<summary><b>docs</b> — 16</summary>
 
 - [Cluster package: point-source-default narrative + extended-source follow-up feature](draft/docs/workspaces/cluster_regime_narrative.md) — workspaces · medium · supervised · high
   <details><summary>📋 copy for Claude</summary>

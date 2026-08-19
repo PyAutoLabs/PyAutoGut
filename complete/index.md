@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1025 records across 7 buckets.
+1028 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -27,6 +27,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [autogalaxy-assistant](2026/08/autogalaxy-assistant.md) — epic; human to close
 - [autogalaxy-profile-validation-guards](2026/08/autogalaxy-profile-validation-guards.md)
 - [autohands-firewall-allowlist](2026/08/autohands-firewall-allowlist.md) — auto-closed by the merge
+- [autolens-cookbook-stale-chaining-link](2026/08/autolens-cookbook-stale-chaining-link.md) — Fixed the stale "Model Linking (Advanced)" chaining notebook link in PyAutoLens docs/general/model_cookbook.md…
 - [autolens-multiplane-redshift-warning](2026/08/autolens-multiplane-redshift-warning.md)
 - [autolens-tracer-validation-guards](2026/08/autolens-tracer-validation-guards.md)
 - [blackjax-16-upgrade-smoke](2026/08/blackjax-16-upgrade-smoke.md)
@@ -91,6 +92,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [multistart-gradient-resume-fom-sanity-check](2026/08/multistart-gradient-resume-fom-sanity-check.md)
 - [multistart-nan-step-diagnostics](2026/08/multistart-nan-step-diagnostics.md)
 - [nautilus-1core-serial-pool](2026/08/nautilus-1core-serial-pool.md) — corrective for the Heart RED "release validation FAILED (stage
+- [nfw-truncated-potential-accuracy](2026/08/nfw-truncated-potential-accuracy.md)
 - [normalise-auto-simulate-guard-idiom](2026/08/normalise-auto-simulate-guard-idiom.md)
 - [notebook-setup-notebook-regen-drift](2026/08/notebook-setup-notebook-regen-drift.md)
 - [nss-remainline-mainline-blackjax](2026/08/nss-remainline-mainline-blackjax.md)
@@ -204,6 +206,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [autogalaxy-multi-galaxy-package](2026/07/autogalaxy-multi-galaxy-package.md) — Created `scripts/multi_galaxy/` in autogalaxy_workspace (light-only counterpart of the lens regime split); shi…
 - [autogalaxy-test-mirror](2026/07/autogalaxy-test-mirror.md) — PR #93
 - [autolens-assistant-audit](2026/07/autolens-assistant-audit.md)
+- [autolens-docs-three-regime-restructure](2026/07/autolens-docs-three-regime-restructure.md) — PyAutoLens RTD docs restructured around the three above-galaxy-scale regimes (multi_galaxy / group / cluster):…
 - [autonerves-verify-install](2026/07/autonerves-verify-install.md)
 - [autonomy-contract](2026/07/autonomy-contract.md)
 - [autotune-off-default](2026/07/autotune-off-default.md)

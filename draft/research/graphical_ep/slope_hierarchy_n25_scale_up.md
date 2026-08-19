@@ -62,6 +62,29 @@ Cost note: RAL GPU contention has been severe (multi-day queues as of
 before committing to it, and consider the CPU `ral` partition for the EP arm
 (finiteness, not throughput).
 
+## Scaling measurements to capture (added 2026-08-19, EP campaign)
+
+While the N=25–50 runs are up anyway, record the graphical-framework scaling
+answers the campaign needs (`research/graphical_ep/ep_campaign.md`, phase 3):
+
+- **VRAM ceiling** — peak GPU memory vs N on the A100 arm; identify the N at
+  which the joint fit no longer fits (the CPU-side RSS already scaled 5×
+  between N=3 and N=30 on the toy).
+- **JAX compile time vs model size** — wall time of the first likelihood/grad
+  call vs N; is compilation becoming a fixed cost worth caring about at
+  N=100+? (The lensing-side compile-time work shipped autotuning; this
+  measures the *graphical factor-graph* trace, which is a different graph.)
+- **Sampler ladder at high dimension** — NUTS is the incumbent; at 3N+1 ≈
+  76–151 dims, also time at least one alternative gradient sampler on the
+  same problem (consult the `/samplers` tiers and the SMC warm-start wave)
+  so "best JAX sampler at N>100 params" gets a measured, not assumed, answer.
+- **Gradient utilisation sanity** — confirm the run actually exercises the
+  JAX gradients end to end (x64 on, no silent float32 — trap 6 above — and
+  no numpy fallback in the hot path).
+
+Each number goes in the committed results table beside the parity numbers;
+these feed the sampler and profiling phases of the campaign.
+
 ## Deliverable
 
 An N=25–50 parity table in the same shape as the N=5 one, committed under

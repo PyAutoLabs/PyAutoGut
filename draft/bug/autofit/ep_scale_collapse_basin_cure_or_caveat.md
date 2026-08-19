@@ -120,6 +120,34 @@ failed (`slope_hierarchy` `delta=0.5` → full collapse, 67 `BAD_PROJECTION`,
 log-evidence to 5e7): uniform damping also cripples the drawn variables, which are
 not the problem. `run_once.py` supports it via `TOY_UPDATER=dynamic`.
 
+### Further levers from the 2026-08-19 EP campaign brief (untried)
+
+Added at intake of the EP campaign (`research/graphical_ep/ep_campaign.md`);
+try these *after* the DynamicUpdater lever above, in this order:
+
+1. **Thorough sampling of the hierarchical-factor update.** The EP loop
+   updates the hierarchical parent with a fast built-in method (Laplace /
+   Newton-style optimiser), not a nested sampler or MCMC. The killed
+   `TOY_OPT=laplace` sweep only compares two *fast* optimisers; the untried
+   condition is a genuinely thorough sampler (nested sampling / MCMC) on the
+   hierarchical factor's update step, so the parent-scale posterior — which
+   is skewed and boundary-adjacent, exactly where a Gaussian/Laplace
+   projection is worst — is actually explored before projection. If this
+   cures the basin, the cost/accuracy trade becomes the design question.
+2. **TruncatedGaussianPrior zero-boundary hypothesis.** The parent scatter
+   may sit on a `TruncatedGaussianPrior` truncated at zero; the collapse may
+   be (partly) a prior-boundary artefact rather than EP-intrinsic shrinkage.
+   Test by (a) rerunning with the truth pulled well off the boundary vs
+   pinned near it, and (b) swapping the prior family while holding all else
+   fixed.
+3. **Analytic referee.** Once
+   `research/graphical_ep/analytic_gaussian_benchmark.md` ships, run its
+   conjugate model — where the scatter's posterior and upper limit are known
+   in closed form — through the same seed sweep. A basin that appears even
+   there is strong evidence for "inherent to EP as implemented"; one that
+   does not localises the pathology to non-conjugate likelihoods or the
+   sampling layer.
+
 ### Sweeps that were running when work stopped
 
 Three 20-seed conditions were in flight and were **not** completed:

@@ -10,16 +10,16 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 4 |
+| [In flight](#in-flight) (`active/`) | 5 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 126 |
+| [Backlog](#backlog) (`draft/`) | 125 |
 
 Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3Aissue+is%3Aopen&type=issues) · [open pull requests](https://github.com/search?q=org%3APyAutoLabs+is%3Apr+is%3Aopen&type=prs)
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 24
+**Highest priority** (filed as `high`) — showing 12 of 23
 
 <details><summary>📋 <a href="draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — medium · safe · high</summary>
 
@@ -41,14 +41,6 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 
 ```
 /start_dev draft/research/autolens_profiling/ell_comps_trapping_unmasked.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/maintenance/pyautomind/mind_readability_pass.md">PyAutoMind human-readability pass — census cleanup, dashboard/README rewrite, registry TOCs</a> — pyautomind · medium · supervised · high</summary>
-
-```
-/start_dev draft/maintenance/pyautomind/mind_readability_pass.md
 ```
 
 </details>
@@ -113,6 +105,14 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 
 ```
 /start_dev draft/refactor/autogalaxy/einstein_radius_jit_native_seed_finder.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/autolens/pixelization_eager_vs_jit_divergence.md">Investigate eager <code>FitImaging.figure_of_merit</code> vs JIT/step-by-step divergence in rectangular pixelization</a> — autolens · too-large · supervised · high</summary>
+
+```
+/start_dev draft/bug/autolens/pixelization_eager_vs_jit_divergence.md
 ```
 
 </details>
@@ -183,6 +183,14 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/jax_default_dependency.md
+```
+
+</details>
+
+<details><summary>📋 <a href="active/mind_readability_pass.md">PyAutoMind human-readability pass — census cleanup, dashboard/README rewrite, registry TOCs</a> — <a href="https://github.com/PyAutoLabs/PyAutoMind/issues/248">issue #248</a> — in-dev — issued 2026-08-19, plan approved; direct-main edits in Mind/Heart,</summary>
+
+```
+/start_dev active/mind_readability_pass.md
 ```
 
 </details>
@@ -287,7 +295,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**126** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**125** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 31</summary>
@@ -945,15 +953,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>maintenance</b> — 19</summary>
-
-<details><summary>📋 <a href="draft/maintenance/pyautomind/mind_readability_pass.md">PyAutoMind human-readability pass — census cleanup, dashboard/README rewrite, registry TOCs</a> — pyautomind · medium · supervised · high</summary>
-
-```
-/start_dev draft/maintenance/pyautomind/mind_readability_pass.md
-```
-
-</details>
+<summary><b>maintenance</b> — 18</summary>
 
 <details><summary>📋 <a href="draft/maintenance/autolens_workspace_developer/rectangular_experiments_gut_stash.md">autolens_workspace_developer rectangular experiments — Gut stash + rename</a> — autolens_workspace_developer · small · supervised · normal</summary>
 

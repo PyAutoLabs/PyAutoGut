@@ -11,7 +11,10 @@
 📋 **[Task dashboard → `dashboard.md`](dashboard.md)** — every task the Mind is
 holding, on one page: what to pick up now, what is in flight, and the whole
 backlog. Reads on a phone; regenerated from this repo, so it is never a
-second copy of the truth.
+second copy of the truth. On a phone, prefer the
+**[one-tap copy version](https://pyautolabs.github.io/PyAutoMind/)** — tap a
+task's 📋 and its `/start_dev` command is on your clipboard, ready to paste
+into a Claude Code chat.
 
 The Mind of the PyAuto organism: every piece of work in the ecosystem starts
 here, as a markdown file describing what you want in plain English. An AI

@@ -5,7 +5,7 @@ Target: priors
 Difficulty: too-large
 Autonomy: supervised
 Priority: normal
-Status: phases 1-3 SHIPPED; phase 4 = design (#1500) + parked 14 + finding 15
+Status: phases 1-3 SHIPPED; phase 4 = design (#1500) + parked 14 + findings 15-16
 
 > **2026-08-18 wrap-up sweep.** All nine confirmed bugs (01-08, 10) are fixed
 > and merged on PyAutoFit main — Phase 1 batch via #1344/PR#1345 (merged
@@ -18,6 +18,9 @@ Status: phases 1-3 SHIPPED; phase 4 = design (#1500) + parked 14 + finding 15
 > 2026-08-18 update: 09+11 SHIPPED (PR#1499 merged `21288bb`); 12+13 filed as
 > design issue #1500 (decisions pending); 14 parked behind #1500; new finding
 > 15 (#1498) awaiting adjudication.
+> 2026-08-19 update: the 15 caller analysis is done (adjudication brief in
+> the prompt file) and turned up finding 16 (`factor_gradient` dead-on-call),
+> drafted but not yet issued.
 
 ## Why this folder exists
 
@@ -111,7 +114,8 @@ over them.
 | 12 | single_source_density_refactor (→ active/) | Each density is encoded in three places (`value_for` / `logpdf` / `log_prior_from_value`) | **design issue FILED 2026-08-18** (bundled with 13) | #1500 | — |
 | 13 | collapse_prior_and_message (→ active/) | `Prior` and `Message` carry duplicated responsibility | **design issue FILED 2026-08-18** (bundled with 12) | #1500 | — |
 | 14 | [replace_transform_stack_with_bijectors](14_replace_transform_stack_with_bijectors.md) | Replace hand-rolled `AbstractDensityTransform` with `tfp.bijectors` / `numpyro.transforms` | parked — go/no-go hangs off the #1500 design decision | — | — |
-| 15 | [transformed_message_logpdf_jacobian](15_transformed_message_logpdf_jacobian.md) | `TransformedMessage.logpdf`/`pdf` omit the transform Jacobian (new finding from the 09 sweep) | **issue filed 2026-08-18** — awaiting contract adjudication (standalone or inside #1500) | #1498 | — |
+| 15 | [transformed_message_logpdf_jacobian](15_transformed_message_logpdf_jacobian.md) | `TransformedMessage.logpdf`/`pdf` omit the transform Jacobian (new finding from the 09 sweep) | **caller analysis complete 2026-08-19** (brief in the prompt: EP loop is coherently base-space; `PriorFactor` is the one hybrid seam; public `Prior.logpdf` mis-promises physical) — awaiting human contract adjudication with #1500 | #1498 | — |
+| 16 | [transformed_message_factor_gradient_unpack](16_transformed_message_factor_gradient_unpack.md) | `TransformedMessage.factor_gradient` crashes on first call (unpacks 4 from a 3-tuple; dead code, found by the 15 caller analysis) | drafted 2026-08-19 — issue via `/create_issue` after review; fix-or-delete hangs off the #1498 contract decision | — | — |
 
 ---
 

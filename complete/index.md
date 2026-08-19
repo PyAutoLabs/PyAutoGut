@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1026 records across 7 buckets.
+1027 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -91,6 +91,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [multistart-gradient-resume-fom-sanity-check](2026/08/multistart-gradient-resume-fom-sanity-check.md)
 - [multistart-nan-step-diagnostics](2026/08/multistart-nan-step-diagnostics.md)
 - [nautilus-1core-serial-pool](2026/08/nautilus-1core-serial-pool.md) — corrective for the Heart RED "release validation FAILED (stage
+- [nfw-truncated-potential-accuracy](2026/08/nfw-truncated-potential-accuracy.md)
 - [normalise-auto-simulate-guard-idiom](2026/08/normalise-auto-simulate-guard-idiom.md)
 - [notebook-setup-notebook-regen-drift](2026/08/notebook-setup-notebook-regen-drift.md)
 - [nss-remainline-mainline-blackjax](2026/08/nss-remainline-mainline-blackjax.md)

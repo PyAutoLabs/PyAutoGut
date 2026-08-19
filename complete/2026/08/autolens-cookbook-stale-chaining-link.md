@@ -1,3 +1,16 @@
+## autolens-cookbook-stale-chaining-link
+- completed: 2026-08-19
+- summary: Fixed the stale "Model Linking (Advanced)" chaining notebook link in PyAutoLens docs/general/model_cookbook.md (imaging/advanced/chaining/start_here.ipynb → guides/modeling/chaining.ipynb). PyAutoLens#701 merged 2026-08-19; docs CI green; all nine autolens_workspace links in the cookbook verified to resolve on main and no other docs/ file references the dead path.
+
+## Lifecycle note
+
+Filed 2026-08-18 during the three-regime restructure close-out link sweep
+(complete/2026/07/autolens-docs-three-regime-restructure.md, PyAutoMind#238);
+shipped the next day straight from draft/ as a trivial autonomous fix, so the
+prompt never advanced to active/ — retired here dated by ship day.
+
+## Original prompt (cookbook_stale_chaining_link)
+
 # PyAutoLens model cookbook: fix stale chaining notebook link
 
 Type: docs
@@ -7,6 +20,7 @@ Repos:
 Difficulty: trivial
 Autonomy: autonomous
 Priority: low
+Status: shipped 2026-08-19 (PyAutoLens#701 merged)
 
 Found during the three-regime restructure close-out link sweep (2026-08-18):
 the pre-existing "Model Linking (Advanced)" section of

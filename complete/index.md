@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1027 records across 7 buckets.
+1028 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -27,6 +27,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [autogalaxy-assistant](2026/08/autogalaxy-assistant.md) — epic; human to close
 - [autogalaxy-profile-validation-guards](2026/08/autogalaxy-profile-validation-guards.md)
 - [autohands-firewall-allowlist](2026/08/autohands-firewall-allowlist.md) — auto-closed by the merge
+- [autolens-cookbook-stale-chaining-link](2026/08/autolens-cookbook-stale-chaining-link.md) — Fixed the stale "Model Linking (Advanced)" chaining notebook link in PyAutoLens docs/general/model_cookbook.md…
 - [autolens-multiplane-redshift-warning](2026/08/autolens-multiplane-redshift-warning.md)
 - [autolens-tracer-validation-guards](2026/08/autolens-tracer-validation-guards.md)
 - [blackjax-16-upgrade-smoke](2026/08/blackjax-16-upgrade-smoke.md)

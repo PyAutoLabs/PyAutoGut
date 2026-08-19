@@ -11,7 +11,7 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 | [In flight](#in-flight) (`active/`) | 5 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 123 |
+| [Backlog](#backlog) (`draft/`) | 122 |
 
 Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3Aissue+is%3Aopen&type=issues) · [open pull requests](https://github.com/search?q=org%3APyAutoLabs+is%3Apr+is%3Aopen&type=prs)
 
@@ -82,7 +82,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**123** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**122** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 31</summary>
@@ -203,7 +203,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>docs</b> — 17</summary>
+<summary><b>docs</b> — 16</summary>
 
 - [Cluster package: point-source-default narrative + extended-source follow-up feature](draft/docs/workspaces/cluster_regime_narrative.md) — workspaces · medium · supervised · high
 - [multi_galaxy package: new regime package in autolens_workspace](draft/docs/autolens/multi_galaxy_package.md) — autolens · large · supervised · high
@@ -218,7 +218,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 - [HowToLens ch4 tutorial 3: mask overlay is never actually drawn](draft/docs/howtolens/ch4_mask_overlay_never_drawn.md) — howtolens · small · supervised · low
 - [Markdown renderings batch 2a — leftovers (ellipse/modeling + PNG size)](draft/docs/pyautobuild/markdown_renderings_2a_leftovers.md) — pyautobuild · small · safe · low
 - [Assistants: regime-aware routing for multi_galaxy / group / cluster (follow-up)](draft/docs/workspaces/assistants_regime_extension.md) — workspaces · medium · supervised · low
-- [PyAutoLens model cookbook: fix stale chaining notebook link](draft/docs/autolens/cookbook_stale_chaining_link.md) — autolens · trivial · autonomous · low
 - [Phase 2 — drop the hand-written quick-update sentence from the](draft/docs/autolens_workspace/sampler_cli_output_workspace_sweep.md) — autolens_workspace
 - [plot coverage — follow-ups deferred from plot-coverage-gaps](draft/docs/workspaces/plot_coverage_followups.md) — workspaces
 - [Phase 2: Make workspace READMEs assistant-first](draft/docs/workspaces/unify_ai_assistant_workspace_readmes.md) — workspaces

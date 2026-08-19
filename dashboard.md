@@ -8,14 +8,14 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 3 |
+| [In flight](#in-flight) (`active/`) | 4 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 129 |
+| [Backlog](#backlog) (`draft/`) | 128 |
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 24
+**Highest priority** (filed as `high`) — showing 12 of 23
 
 <details><summary>📋 <a href="draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — medium · safe · high</summary>
 
@@ -37,14 +37,6 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 ```
 /start_dev draft/research/autolens_profiling/ell_comps_trapping_unmasked.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/maintenance/pyautobrain/brain_readability_pass.md">PyAutoBrain readability pass — README rewrite, root declutter, ORGANISM currency</a> — pyautobrain · medium · supervised · high</summary>
-
-```
-/start_dev draft/maintenance/pyautobrain/brain_readability_pass.md
 ```
 
 </details>
@@ -113,6 +105,14 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 </details>
 
+<details><summary>📋 <a href="draft/bug/autolens/pixelization_eager_vs_jit_divergence.md">Investigate eager <code>FitImaging.figure_of_merit</code> vs JIT/step-by-step divergence in rectangular pixelization</a> — autolens · too-large · supervised · high</summary>
+
+```
+/start_dev draft/bug/autolens/pixelization_eager_vs_jit_divergence.md
+```
+
+</details>
+
 **Quick wins** (small enough, and safe enough to run unattended)
 
 <details><summary>📋 <a href="draft/docs/workspaces/add_vincken_2026_wiki_and_cite_in_euclid.md">add-vincken-2026-wiki-and-cite-in-euclid</a> — workspaces · small · safe · normal</summary>
@@ -163,6 +163,14 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/16_transformed_message_factor_gradient_unpack.md
+```
+
+</details>
+
+<details><summary>📋 <a href="active/brain_readability_pass.md">PyAutoBrain readability pass — README rewrite, root declutter, ORGANISM currency</a> — <a href="https://github.com/PyAutoLabs/PyAutoBrain/issues/237">issue #237</a> — in-dev — issued 2026-08-19, plan approved; implementing on</summary>
+
+```
+/start_dev active/brain_readability_pass.md
 ```
 
 </details>
@@ -275,7 +283,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**129** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**128** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 32</summary>
@@ -941,15 +949,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>maintenance</b> — 19</summary>
-
-<details><summary>📋 <a href="draft/maintenance/pyautobrain/brain_readability_pass.md">PyAutoBrain readability pass — README rewrite, root declutter, ORGANISM currency</a> — pyautobrain · medium · supervised · high</summary>
-
-```
-/start_dev draft/maintenance/pyautobrain/brain_readability_pass.md
-```
-
-</details>
+<summary><b>maintenance</b> — 18</summary>
 
 <details><summary>📋 <a href="draft/maintenance/autolens_workspace_developer/rectangular_experiments_gut_stash.md">autolens_workspace_developer rectangular experiments — Gut stash + rename</a> — autolens_workspace_developer · small · supervised · normal</summary>
 

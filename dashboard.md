@@ -11,11 +11,11 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 | [In flight](#in-flight) (`active/`) | 2 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 141 |
+| [Backlog](#backlog) (`draft/`) | 154 |
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 25
+**Highest priority** (filed as `high`) — showing 12 of 32
 
 <details><summary>📋 <a href="draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — medium · safe · high</summary>
 
@@ -65,6 +65,30 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 </details>
 
+<details><summary>📋 <a href="draft/feature/autolens/area_magnification_leggos.md">Area magnification (LEGGOS-style): per-pixel inversion sum as primary; ShapeSolver rehabilitate-or-retire</a> — autolens · large · supervised · high</summary>
+
+```
+/start_dev draft/feature/autolens/area_magnification_leggos.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/autolens/magnification_maps_visualization.md">Magnification maps: image-plane contour maps, source-plane mesh maps, uncertainty maps</a> — autolens · large · supervised · high</summary>
+
+```
+/start_dev draft/feature/autolens/magnification_maps_visualization.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/autolens/point_magnification_api.md">Magnification at a point: surface the existing API in source_science</a> — autolens · large · supervised · high</summary>
+
+```
+/start_dev draft/feature/autolens/point_magnification_api.md
+```
+
+</details>
+
 <details><summary>📋 <a href="draft/feature/autolens_profiling/jax_compile_time_profiling.md">Profile and speed up JAX likelihood-function compile times (all use</a> — autolens_profiling · large · supervised · high</summary>
 
 ```
@@ -81,34 +105,10 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 </details>
 
-<details><summary>📋 <a href="draft/research/autoarray/delaunay_research.md">Deep research: Can we speed up Delaunay in PyAutoArray?</a> — autoarray · too-large · supervised · high</summary>
+<details><summary>📋 <a href="draft/feature/workspaces/cluster_source_science.md">Cluster source_science.py: robust magnification science at cluster scale (no meshes</a> — workspaces · large · supervised · high</summary>
 
 ```
-/start_dev draft/research/autoarray/delaunay_research.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md">EP hierarchical parent-scale collapse: cure the basin, or document the</a> — autofit · too-large · human-required · high</summary>
-
-```
-/start_dev draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/research/autofit/priors_and_messages_math_audit.md">Census of priors and messages — confirmed bugs + redesign</a> — autofit · too-large · supervised · high</summary>
-
-```
-/start_dev draft/research/autofit/priors_and_messages_math_audit.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/refactor/autogalaxy/einstein_radius_jit_native_seed_finder.md"><code>einstein_radius_jit_from</code>: replace static init_guess with a JAX-native seed finder</a> — autogalaxy · too-large · supervised · high</summary>
-
-```
-/start_dev draft/refactor/autogalaxy/einstein_radius_jit_native_seed_finder.md
+/start_dev draft/feature/workspaces/cluster_source_science.md
 ```
 
 </details>
@@ -275,10 +275,10 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**141** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**154** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
-<summary><b>bug</b> — 36</summary>
+<summary><b>bug</b> — 37</summary>
 
 <details><summary>📋 <a href="draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md">EP hierarchical parent-scale collapse: cure the basin, or document the</a> — autofit · too-large · human-required · high</summary>
 
@@ -292,6 +292,14 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/bug/autolens/pixelization_eager_vs_jit_divergence.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/autolens/point_solver_error_bisect_health.md">PointSolver error-behavior change: bisect the 2025-11→2026-05 candidates, then health-harden</a> — autolens · too-large · supervised · high</summary>
+
+```
+/start_dev draft/bug/autolens/point_solver_error_bisect_health.md
 ```
 
 </details>
@@ -571,12 +579,36 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>feature</b> — 29</summary>
+<summary><b>feature</b> — 36</summary>
 
 <details><summary>📋 <a href="draft/feature/autofit/clipper_in_search_identifier.md">Decide whether the clipper belongs in the search identifier</a> — autofit · medium · human-required · high</summary>
 
 ```
 /start_dev draft/feature/autofit/clipper_in_search_identifier.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/autolens/area_magnification_leggos.md">Area magnification (LEGGOS-style): per-pixel inversion sum as primary; ShapeSolver rehabilitate-or-retire</a> — autolens · large · supervised · high</summary>
+
+```
+/start_dev draft/feature/autolens/area_magnification_leggos.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/autolens/magnification_maps_visualization.md">Magnification maps: image-plane contour maps, source-plane mesh maps, uncertainty maps</a> — autolens · large · supervised · high</summary>
+
+```
+/start_dev draft/feature/autolens/magnification_maps_visualization.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/autolens/point_magnification_api.md">Magnification at a point: surface the existing API in source_science</a> — autolens · large · supervised · high</summary>
+
+```
+/start_dev draft/feature/autolens/point_magnification_api.md
 ```
 
 </details>
@@ -593,6 +625,22 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/feature/profiling/profiling_agent_jax_compile_time_scope.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/workspaces/cluster_source_science.md">Cluster source_science.py: robust magnification science at cluster scale (no meshes</a> — workspaces · large · supervised · high</summary>
+
+```
+/start_dev draft/feature/workspaces/cluster_source_science.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/autolens/source_cluster_arc.md">Source &amp; Cluster arc — magnification science, PointSolver trust, cluster</a> — autolens · too-large · supervised · high</summary>
+
+```
+/start_dev draft/feature/autolens/source_cluster_arc.md
 ```
 
 </details>
@@ -701,6 +749,14 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
+<details><summary>📋 <a href="draft/feature/autolens/magnification_errors_posterior_draws.md">Magnification errors via posterior draws, standalone in source_science</a> — autolens · large · supervised · normal</summary>
+
+```
+/start_dev draft/feature/autolens/magnification_errors_posterior_draws.md
+```
+
+</details>
+
 <details><summary>📋 <a href="draft/feature/autolens_profiling/search_settings_estimation_infrastructure.md">Search settings-estimation + profiling infrastructure (n_starts / batch_size / n_batch)</a> — autolens_profiling · large · supervised · normal</summary>
 
 ```
@@ -713,6 +769,14 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/feature/autolens_workspace/oversampled_psf_dataset_adoption.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/workspaces/cluster_pixelized_analysisfactor.md">Cluster pixelized-source refinement: per-source masks via AnalysisFactor</a> — workspaces · large · supervised · normal</summary>
+
+```
+/start_dev draft/feature/workspaces/cluster_pixelized_analysisfactor.md
 ```
 
 </details>
@@ -808,7 +872,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>research</b> — 24</summary>
+<summary><b>research</b> — 26</summary>
 
 <details><summary>📋 <a href="draft/research/autolens_profiling/ell_comps_trapping_unmasked.md">The <code>ell_comps</code> trapping was masked, not cleared — characterise it</a> — autolens_profiling · medium · supervised · high</summary>
 
@@ -950,6 +1014,22 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/research/autofit/autofit_profiling_bootstrap.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/research/autolens/cluster_extended_source_inference.md">Cluster extended-source inference: gradient-based fitting building on JAX knowledge</a> — autolens · large · supervised · normal</summary>
+
+```
+/start_dev draft/research/autolens/cluster_extended_source_inference.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/research/autolens_profiling/point_solver_profiling_cells.md">PointSolver profiling cells: lensed quasar → cluster runtime tier →</a> — autolens_profiling · large · supervised · normal</summary>
+
+```
+/start_dev draft/research/autolens_profiling/point_solver_profiling_cells.md
 ```
 
 </details>
@@ -1178,7 +1258,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>docs</b> — 17</summary>
+<summary><b>docs</b> — 18</summary>
 
 <details><summary>📋 <a href="draft/docs/workspaces/cluster_regime_narrative.md">Cluster package: point-source-default narrative + extended-source follow-up feature</a> — workspaces · medium · supervised · high</summary>
 
@@ -1268,6 +1348,14 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
+<details><summary>📋 <a href="draft/docs/howtolens/cluster_pixelized_source.md">HowToLens cluster tutorial: show a pixelized source + fix the</a> — howtolens · large · supervised · normal</summary>
+
+```
+/start_dev draft/docs/howtolens/cluster_pixelized_source.md
+```
+
+</details>
+
 <details><summary>📋 <a href="draft/docs/howtolens/ch4_mask_overlay_never_drawn.md">HowToLens ch4 tutorial 3: mask overlay is never actually drawn</a> — howtolens · small · supervised · low</summary>
 
 ```
@@ -1319,7 +1407,15 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>refactor</b> — 6</summary>
+<summary><b>refactor</b> — 7</summary>
+
+<details><summary>📋 <a href="draft/refactor/autogalaxy/critical_curves_dispatch_cluster.md">Critical curves: implement context-aware dispatch, dedupe engines, make clusters honor</a> — autogalaxy · too-large · supervised · high</summary>
+
+```
+/start_dev draft/refactor/autogalaxy/critical_curves_dispatch_cluster.md
+```
+
+</details>
 
 <details><summary>📋 <a href="draft/refactor/autogalaxy/einstein_radius_jit_native_seed_finder.md"><code>einstein_radius_jit_from</code>: replace static init_guess with a JAX-native seed finder</a> — autogalaxy · too-large · supervised · high</summary>
 
@@ -1372,6 +1468,43 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
+<summary><b>test</b> — 4</summary>
+
+<details><summary>📋 <a href="draft/test/autolens_workspace_developer/mge_jit_regression_rebaseline.md">Re-baseline the MGE imaging JIT profiling regression value</a> — autolens_workspace_developer · too-large · supervised · high</summary>
+
+```
+/start_dev draft/test/autolens_workspace_developer/mge_jit_regression_rebaseline.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/test/workspaces/restore_workspace_test_likelihood_baselines.md">Restore absolute NumPy likelihood regression baselines in the <code>_workspace_test</code></a> — workspaces · too-large · supervised · high</summary>
+
+```
+/start_dev draft/test/workspaces/restore_workspace_test_likelihood_baselines.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/test/workspaces/mesh_magnification_correctness.md">Mesh magnification correctness: simulate-and-recover across every mesh variant</a> — workspaces · large · supervised · normal</summary>
+
+```
+/start_dev draft/test/workspaces/mesh_magnification_correctness.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/test/workspaces/smoke_workspace_fixes.md">The new workspace smoke-test GitHub Actions (added via feature/smoke-test-ci) surfaced</a> — workspaces · too-large · supervised · normal</summary>
+
+```
+/start_dev draft/test/workspaces/smoke_workspace_fixes.md
+```
+
+</details>
+
+</details>
+
+<details>
 <summary><b>triage</b> — 4</summary>
 
 <details><summary>📋 <a href="draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — medium · safe · high</summary>
@@ -1402,35 +1535,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/triage/bug_in_autocti_workspace_the_dataset_1d.md
-```
-
-</details>
-
-</details>
-
-<details>
-<summary><b>test</b> — 3</summary>
-
-<details><summary>📋 <a href="draft/test/autolens_workspace_developer/mge_jit_regression_rebaseline.md">Re-baseline the MGE imaging JIT profiling regression value</a> — autolens_workspace_developer · too-large · supervised · high</summary>
-
-```
-/start_dev draft/test/autolens_workspace_developer/mge_jit_regression_rebaseline.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/test/workspaces/restore_workspace_test_likelihood_baselines.md">Restore absolute NumPy likelihood regression baselines in the <code>_workspace_test</code></a> — workspaces · too-large · supervised · high</summary>
-
-```
-/start_dev draft/test/workspaces/restore_workspace_test_likelihood_baselines.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/test/workspaces/smoke_workspace_fixes.md">The new workspace smoke-test GitHub Actions (added via feature/smoke-test-ci) surfaced</a> — workspaces · too-large · supervised · normal</summary>
-
-```
-/start_dev draft/test/workspaces/smoke_workspace_fixes.md
 ```
 
 </details>

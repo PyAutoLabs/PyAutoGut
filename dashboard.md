@@ -11,11 +11,11 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 | [In flight](#in-flight) (`active/`) | 3 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 135 |
+| [Backlog](#backlog) (`draft/`) | 139 |
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 23
+**Highest priority** (filed as `high`) — showing 12 of 25
 
 <details><summary>📋 <a href="draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — medium · safe · high</summary>
 
@@ -37,6 +37,14 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 ```
 /start_dev draft/research/autolens_profiling/ell_comps_trapping_unmasked.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/research/graphical_ep/analytic_gaussian_benchmark.md">Analytic Gaussian benchmark: closed-form validation of graphical + EP</a> — graphical_ep · medium · supervised · high</summary>
+
+```
+/start_dev draft/research/graphical_ep/analytic_gaussian_benchmark.md
 ```
 
 </details>
@@ -101,14 +109,6 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 ```
 /start_dev draft/refactor/autogalaxy/einstein_radius_jit_native_seed_finder.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/autolens/pixelization_eager_vs_jit_divergence.md">Investigate eager <code>FitImaging.figure_of_merit</code> vs JIT/step-by-step divergence in rectangular pixelization</a> — autolens · too-large · supervised · high</summary>
-
-```
-/start_dev draft/bug/autolens/pixelization_eager_vs_jit_divergence.md
 ```
 
 </details>
@@ -283,7 +283,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**135** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**139** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 35</summary>
@@ -800,12 +800,20 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>research</b> — 21</summary>
+<summary><b>research</b> — 25</summary>
 
 <details><summary>📋 <a href="draft/research/autolens_profiling/ell_comps_trapping_unmasked.md">The <code>ell_comps</code> trapping was masked, not cleared — characterise it</a> — autolens_profiling · medium · supervised · high</summary>
 
 ```
 /start_dev draft/research/autolens_profiling/ell_comps_trapping_unmasked.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/research/graphical_ep/analytic_gaussian_benchmark.md">Analytic Gaussian benchmark: closed-form validation of graphical + EP</a> — graphical_ep · medium · supervised · high</summary>
+
+```
+/start_dev draft/research/graphical_ep/analytic_gaussian_benchmark.md
 ```
 
 </details>
@@ -822,6 +830,14 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/research/autofit/priors_and_messages_math_audit.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/research/graphical_ep/ep_campaign.md">EP campaign — phase map for the 2026 Q3 graphical/EP</a> — graphical_ep · too-large · supervised · high</summary>
+
+```
+/start_dev draft/research/graphical_ep/ep_campaign.md
 ```
 
 </details>
@@ -926,6 +942,22 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/research/pyautomemory/checkerboard_psf_mismatch_residual_diagnostic.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/research/autofit/autofit_profiling_bootstrap.md">autofit_profiling: bootstrap the repo + general PyAutoFit profiling epic</a> — autofit · large · supervised · normal</summary>
+
+```
+/start_dev draft/research/autofit/autofit_profiling_bootstrap.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/research/graphical_ep/ic50_ep_scale_up.md">IC50 use case: EP end-to-end with existing derived-variable handling</a> — graphical_ep · large · supervised · normal</summary>
+
+```
+/start_dev draft/research/graphical_ep/ic50_ep_scale_up.md
 ```
 
 </details>

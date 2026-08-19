@@ -8,7 +8,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 4 |
+| [In flight](#in-flight) (`active/`) | 3 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
 | [Backlog](#backlog) (`draft/`) | 128 |
@@ -179,14 +179,6 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/jax_default_dependency.md
-```
-
-</details>
-
-<details><summary>📋 <a href="active/tenth_sample_hardcoded_index.md">Bug in the workspaces: tutorial scripts hardcode stored-sample index 9</a> — <a href="https://github.com/PyAutoLabs/autofit_workspace/issues/140">issue #140</a> — workspace-dev — issued 2026-08-19, plan on the issue; unify the "tenth sample"</summary>
-
-```
-/start_dev active/tenth_sample_hardcoded_index.md
 ```
 
 </details>

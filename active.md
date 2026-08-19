@@ -66,3 +66,11 @@
   sqlalchemy, numba (decoration-time), astropy to first use; dedupe autonerves version warning.
   Target `import autolens` 4.1s → ≤ ~1.9s. Matplotlib deferral deliberately scoped OUT (no
   smoke/user win — scripts import aplt anyway).
+
+## database-guide-info-inline
+- issue: https://github.com/PyAutoLabs/autocti_workspace/issues/20
+- status: workspace-dev — issued 2026-08-19, plan on the issue; inline the database guide's
+  `info` dict (no simulator writes the info.json it reads; fresh checkout FileNotFoundError)
+- repos:
+  - autocti_workspace: feature/database-guide-info-inline
+- prompt: active/database_guide_info_inline.md

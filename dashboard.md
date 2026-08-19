@@ -171,7 +171,7 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
-<details><summary>📋 <a href="active/jax_default_dependency.md">Make JAX a default (non-optional) dependency across the library stack</a> — <a href="https://github.com/PyAutoLabs/PyAutoLens/issues/702">issue #702</a> — library-dev</summary>
+<details><summary>📋 <a href="active/jax_default_dependency.md">Make JAX a default (non-optional) dependency across the library stack</a> — <a href="https://github.com/PyAutoLabs/PyAutoLens/issues/702">issue #702</a> — library-shipped, workspace-pending — six PRs open (all suites green), pending-release on the five</summary>
 
 ```
 /start_dev active/jax_default_dependency.md

@@ -8,7 +8,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 3 |
+| [In flight](#in-flight) (`active/`) | 2 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
 | [Backlog](#backlog) (`draft/`) | 130 |
@@ -163,14 +163,6 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/16_transformed_message_factor_gradient_unpack.md
-```
-
-</details>
-
-<details><summary>📋 <a href="active/import_time_lazy_heavy_imports.md">Slow imports: defer jax chain + 5 heavy eager imports</a> — <a href="https://github.com/PyAutoLabs/PyAutoFit/issues/1505">issue #1505</a> — library-shipped, awaiting-merge — five PRs open 2026-08-19, all pending-release, all</summary>
-
-```
-/start_dev active/import_time_lazy_heavy_imports.md
 ```
 
 </details>

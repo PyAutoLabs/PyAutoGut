@@ -1,16 +1,5 @@
 # Active Tasks
 
-## readme-scientist-buttons
-- issue: https://github.com/PyAutoLabs/PyAutoScientist/issues/11
-- status: workspace-dev — README-only sweep, direct commits to main (no worktree; precedent: the
-  original organ-header block shipped straight to main, commit "Link PyAutoScientist repo at top
-  of README")
-- repos: PyAutoMind, PyAutoBrain, PyAutoHeart, PyAutoHands, PyAutoGut, PyAutoNerves, PyAutoMemory
-  (main each; README.md only)
-- sizing override: Brain scored too-large(15)/4-phases off repo count; uniform two-line cosmetic
-  swap, shipped as one task (see issue body)
-- prompt: active/readme_organ_header_buttons.md
-
 ## jax-default-dependency
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/702
 - status: shipped-awaiting-release-followups — ALL ELEVEN PRs merged 2026-08-19 (human-authorized):

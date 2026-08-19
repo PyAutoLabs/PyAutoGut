@@ -1,18 +1,5 @@
 # Active Tasks
 
-## actionable-health-board
-- issue: https://github.com/PyAutoLabs/PyAutoHeart/issues/151
-- status: in-dev — issued 2026-08-19, plan approved; implementing on
-  PyAutoHeart feature/actionable-health-board (PR to follow)
-- prompt: active/actionable_health_board.md
-- repos:
-  - PyAutoHeart: feature/actionable-health-board
-- summary: board parity with the Mind dashboard and beyond — structured blockers with
-  repo/run links and 📋 /bug prompts on the Pages html (mobile-first); dev-box-only rows
-  self-describe + `pyauto-heart publish` pushes a distilled devbox board the cloud page
-  merges age-stamped; README on the Mind pattern (+ new REFERENCE.md, md-brief README
-  strip); AI_POLICY/CONTRIBUTING → .github/; stale pyautobuild_boundary_audit deleted.
-
 ## jax-default-dependency
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/702
 - status: shipped-awaiting-release-followups — ALL ELEVEN PRs merged 2026-08-19 (human-authorized):

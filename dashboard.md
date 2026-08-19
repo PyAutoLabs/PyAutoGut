@@ -8,10 +8,10 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 5 |
+| [In flight](#in-flight) (`active/`) | 4 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 125 |
+| [Backlog](#backlog) (`draft/`) | 127 |
 
 ## Start here
 
@@ -183,14 +183,6 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
-<details><summary>📋 <a href="active/mind_readability_pass.md">PyAutoMind human-readability pass — census cleanup, dashboard/README rewrite, registry TOCs</a> — <a href="https://github.com/PyAutoLabs/PyAutoMind/issues/248">issue #248</a> — in-dev — issued 2026-08-19, plan approved; direct-main edits in Mind/Heart,</summary>
-
-```
-/start_dev active/mind_readability_pass.md
-```
-
-</details>
-
 <details><summary>📋 <a href="active/to_instance_guard_gap.md">Reconstructing a stored sample raises through <code>ignore_assertions=True</code></a> — <a href="https://github.com/PyAutoLabs/PyAutoFit/issues/1486">issue #1486</a> — library-shipped, workspace-pending — PyAutoFit hardening shipped as PR#1504 (2026-08-19);</summary>
 
 ```
@@ -291,10 +283,10 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**125** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**127** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
-<summary><b>bug</b> — 31</summary>
+<summary><b>bug</b> — 32</summary>
 
 <details><summary>📋 <a href="draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md">EP hierarchical parent-scale collapse: cure the basin, or document the</a> — autofit · too-large · human-required · high</summary>
 
@@ -532,6 +524,14 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/bug/hands/notebook_quotes_string_literal_closing_delimiter.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/pyautomind/status_sh_repos_missing_source.md">status.sh --repos sources a file that no longer exists</a> — pyautomind · small · supervised · low</summary>
+
+```
+/start_dev draft/bug/pyautomind/status_sh_repos_missing_source.md
 ```
 
 </details>
@@ -1231,7 +1231,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>refactor</b> — 4</summary>
+<summary><b>refactor</b> — 5</summary>
 
 <details><summary>📋 <a href="draft/refactor/autogalaxy/einstein_radius_jit_native_seed_finder.md"><code>einstein_radius_jit_from</code>: replace static init_guess with a JAX-native seed finder</a> — autogalaxy · too-large · supervised · high</summary>
 
@@ -1261,6 +1261,14 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/refactor/pyautofit/remove_eden_packaging_tooling.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/refactor/pyautomind/repos_sync_check_dedup.md">Deduplicate repos_sync.py's check/write pairs</a> — pyautomind · medium · safe · low</summary>
+
+```
+/start_dev draft/refactor/pyautomind/repos_sync_check_dedup.md
 ```
 
 </details>

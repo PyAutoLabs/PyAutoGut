@@ -8,7 +8,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 5 |
+| [In flight](#in-flight) (`active/`) | 4 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
 | [Backlog](#backlog) (`draft/`) | 128 |
@@ -163,14 +163,6 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/16_transformed_message_factor_gradient_unpack.md
-```
-
-</details>
-
-<details><summary>📋 <a href="active/actionable_health_board.md">Actionable health board: one-tap prompts, links, dev-box enrichment</a> — <a href="https://github.com/PyAutoLabs/PyAutoHeart/issues/151">issue #151</a> — in-dev — issued 2026-08-19, plan approved; implementing on</summary>
-
-```
-/start_dev active/actionable_health_board.md
 ```
 
 </details>

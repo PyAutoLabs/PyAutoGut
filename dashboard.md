@@ -11,11 +11,11 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 | [In flight](#in-flight) (`active/`) | 3 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 128 |
+| [Backlog](#backlog) (`draft/`) | 129 |
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 23
+**Highest priority** (filed as `high`) — showing 12 of 24
 
 <details><summary>📋 <a href="draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — medium · safe · high</summary>
 
@@ -37,6 +37,14 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 ```
 /start_dev draft/research/autolens_profiling/ell_comps_trapping_unmasked.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/maintenance/pyautobrain/brain_readability_pass.md">PyAutoBrain readability pass — README rewrite, root declutter, ORGANISM currency</a> — pyautobrain · medium · supervised · high</summary>
+
+```
+/start_dev draft/maintenance/pyautobrain/brain_readability_pass.md
 ```
 
 </details>
@@ -101,14 +109,6 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 ```
 /start_dev draft/refactor/autogalaxy/einstein_radius_jit_native_seed_finder.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/autolens/pixelization_eager_vs_jit_divergence.md">Investigate eager <code>FitImaging.figure_of_merit</code> vs JIT/step-by-step divergence in rectangular pixelization</a> — autolens · too-large · supervised · high</summary>
-
-```
-/start_dev draft/bug/autolens/pixelization_eager_vs_jit_divergence.md
 ```
 
 </details>
@@ -275,7 +275,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**128** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**129** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 32</summary>
@@ -941,7 +941,15 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>maintenance</b> — 18</summary>
+<summary><b>maintenance</b> — 19</summary>
+
+<details><summary>📋 <a href="draft/maintenance/pyautobrain/brain_readability_pass.md">PyAutoBrain readability pass — README rewrite, root declutter, ORGANISM currency</a> — pyautobrain · medium · supervised · high</summary>
+
+```
+/start_dev draft/maintenance/pyautobrain/brain_readability_pass.md
+```
+
+</details>
 
 <details><summary>📋 <a href="draft/maintenance/autolens_workspace_developer/rectangular_experiments_gut_stash.md">autolens_workspace_developer rectangular experiments — Gut stash + rename</a> — autolens_workspace_developer · small · supervised · normal</summary>
 

@@ -1,5 +1,38 @@
 # Active Tasks
 
+## memory-surfaces-stale-names
+- issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/239
+- status: in-dev — issued 2026-08-19, plan approved (batch of three knowledge-board
+  follow-ups, executed A→B→C); PyAutoBrain fix/memory-surfaces-stale-names
+- prompt: active/memory_surfaces_stale_names.md
+- repos:
+  - PyAutoBrain: fix/memory-surfaces-stale-names
+- summary: memory faculty gains the PyAutoMemory root surface (index/queue/bib-README/
+  schema); retired *_wiki names renamed across policy.yaml, printed conductor pointers,
+  samplers/sampler_pipeline/MIND_TAXONOMY/adoption prose, Mind REFERENCE; policy-seam
+  tests updated + first memory-faculty tests.
+
+## wiki-hygiene
+- issue: https://github.com/PyAutoLabs/PyAutoMemory/issues/34
+- status: queued behind memory-surfaces-stale-names (same session, sequential)
+- prompt: active/wiki_hygiene.md
+- repos:
+  - PyAutoMemory: maintenance/wiki-hygiene
+- summary: PDF frontmatter paths → new archive: provenance field (human-decided KEEP;
+  schema amended); alias subsystem retired (human-decided); ~19 path-shaped wikilinks
+  → slugs; uncited junk bib keys (SN/ADS/colon classes) deleted.
+
+## paper-management-pipeline
+- issue: https://github.com/PyAutoLabs/PyAutoMemory/issues/35
+- status: queued behind wiki-hygiene (same session, sequential)
+- prompt: active/paper_management_pipeline.md
+- repos:
+  - PyAutoMemory: feature/paper-management-pipeline
+- summary: land the dev-box's uncommitted queue tidy; reading-queue sections → real ##
+  headers with a DONE <date> read-state convention; board shows waiting/read per
+  section; the Mind arXiv Slack digest gains a paste-ready one-tap queue-append block
+  (human-gated).
+
 ## jax-default-dependency
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/702
 - status: shipped-awaiting-release-followups — ALL ELEVEN PRs merged 2026-08-19 (human-authorized):

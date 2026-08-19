@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1038 records across 7 buckets.
+1039 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -153,6 +153,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [stored-sample-reconstruction-guard](2026/08/stored-sample-reconstruction-guard.md) — stored samples that current model validation rejects no longer raise raw
 - [tenant-firewall-drift-aug](2026/08/tenant-firewall-drift-aug.md) — issue #198; 9 → OK, and a green `--check` is only evidence for the organs actually checked out
 - [tenant-firewall-hygiene-extras](2026/08/tenant-firewall-hygiene-extras.md) — auto-closed by the merge
+- [tenth-sample-hardcoded-index](2026/08/tenth-sample-hardcoded-index.md) — results/database/aggregator tutorials hardcoded stored-sample index 9 ("the tenth
 - [test-mode-fit-exception-finalization](2026/08/test-mode-fit-exception-finalization.md) — `PYAUTO_TEST_MODE=1` no longer finalizes a model point whose reconstruction raises `FitException`; it substitu…
 - [test-mode-samples-info-hook-contract](2026/08/test-mode-samples-info-hook-contract.md) — `NonLinearSearch._test_mode_samples_info()`'s docstring told subclasses
 - [transformed-message-semantics-doc](2026/08/transformed-message-semantics-doc.md)

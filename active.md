@@ -53,14 +53,3 @@
   sqlalchemy, numba (decoration-time), astropy to first use; dedupe autonerves version warning.
   Target `import autolens` 4.1s → ≤ ~1.9s. Matplotlib deferral deliberately scoped OUT (no
   smoke/user win — scripts import aplt anyway).
-
-## tenth-sample-hardcoded-index
-- issue: https://github.com/PyAutoLabs/autofit_workspace/issues/140
-- status: workspace-dev — issued 2026-08-19, plan on the issue; unify the "tenth sample"
-  tutorial idiom to `[-1]` + "final sample" prose (8 scripts; crashes when <10 stored samples)
-- repos:
-  - autofit_workspace: feature/tenth-sample-hardcoded-index
-  - autogalaxy_workspace: feature/tenth-sample-hardcoded-index
-  - autolens_workspace: feature/tenth-sample-hardcoded-index
-  - autocti_workspace: feature/tenth-sample-hardcoded-index
-- prompt: active/tenth_sample_hardcoded_index.md

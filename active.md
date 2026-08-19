@@ -28,3 +28,10 @@
 - registered: 2026-08-19 by the wake_up session — the issuing session (claude/autofit-priors-messages-audit-ylvenv)
   filed the prompt + issue but not this entry, tripping Lifecycle Drift on main.
 - repos-none-claimed: this entry claims NO repos — one line deliberately, not 2-space bullets.
+
+## sub-312-install-tombstone
+- issue: https://github.com/PyAutoLabs/PyAutoHands/issues/238
+- session: claude --resume b3ad53ad-8075-440f-af34-a01b950894fb
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/sub-312-install-tombstone
+- repos:

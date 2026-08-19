@@ -5,7 +5,8 @@ Target: priors
 Difficulty: medium
 Autonomy: supervised
 Priority: normal
-Status: formalised — issue filed (PyAutoFit#1498), awaiting adjudication
+Status: formalised — issue filed (PyAutoFit#1498); caller analysis complete
+(2026-08-19, below), awaiting human adjudication of the contract choice
 
 Found 2026-08-18 while implementing the #1497 property sweep (prompt
 `bug/priors/09`). Same failure *shape* as census finding A4 (#1331-04): a
@@ -60,6 +61,92 @@ The #1497 property tests assert the physical density via `factor` and cite
 #1498 at the site (`physical_log_density` helper in
 `test_autofit/mapper/prior/test_prior_properties.py`); tighten them to
 `logpdf` once resolved.
+
+## Caller analysis (2026-08-19, main @ `21288bb`)
+
+The inventory #1498 adjudication point 1 asked for, run over the full
+`autofit/` production tree (tests excluded). Verified numerically:
+`UniformPrior(0,2)` gives `logpdf(1.3) = −0.993174` vs
+`factor(1.3) = −0.693147 = log 0.5`; `∫exp(logpdf)` over the support is
+`0.564190 = 2/(2√π)` while `∫exp(factor)` is `1.000000`.
+
+**Callers expecting a physical density (exposed to the bug):**
+
+- `Prior.logpdf` — the public prior API. `UniformPrior.logpdf`
+  (`uniform.py:124`) calls `message.logpdf` explicitly, and its
+  boundary-epsilon nudge operates in *physical* coordinates, so the method
+  unambiguously intends physical semantics; every other prior reaches
+  `message.logpdf` via `Prior.__getattr__`. Uniform / LogUniform /
+  LogGaussian users are silently handed base-space values.
+- `MessageInterface.pdf` (`interface.py:45`) — **zero production callers**
+  anywhere in `autofit/`; public-API surface only.
+- The non-linear search stack never touches message `logpdf` — sampling and
+  MCMC/MLE go through `value_for` / `log_prior_from_value` / `factor`, all
+  verified correct. Exposure is API-level, not search-level.
+
+**EP-internal callers — all base-space, and mutually consistent:**
+
+- `MeanField.logpdf` / `logpdf_gradient` (`mean_field.py:294,300`), reached
+  from `FactorApproximation.__call__` / `func_gradient`
+  (`mean_field.py:631-633,647`) by the Laplace optimiser; `MeanField` is
+  itself a `Factor` wrapping `_logpdf`, so `projection(mode)` in the
+  `from_mode_covariance` `log_norm` calibration (`mean_field.py:404`) and
+  `AbstractMessage.__call__`/`factor_jacobian` (`abstract.py:392,398`) route
+  the same way.
+- This loop is *coherent*, not buggy: a likelihood factor is a density over
+  data (measure-free in x), so `fval(x) + Σ log q_base(T(x))` is exactly the
+  **base-space tilted log density** at `z = T(x)`. The Laplace mode it finds
+  is the base-space tilted mode, and `from_mode` (`transform_jac` +
+  `jac.quad`) projects mode and covariance into base space consistently.
+  The missing `log_det` is the EP loop's working convention, and base-space
+  Laplace is arguably the better-conditioned choice (unbounded support).
+
+**The one genuine cross-convention seam — `PriorFactor`:**
+
+- `PriorFactor` (`declarative/factor/prior.py:23,62`) wraps `prior.factor` —
+  the *physical* density — as both its factor callable and its
+  `log_likelihood_function`. Its tilted objective under the numerical
+  optimiser is therefore
+  `log π_base(T(x)) + log_det(x) + Σ log q_base(T(x))` — one x-dependent
+  `log_det(x)` *more* than the coherent base-space tilted density (and one
+  short of the coherent physical one). Because the #1337 seam strips the
+  exact-update hooks (`graphical/README.md` roster row), declarative
+  PriorFactors really do take this numerical path: prior-factor EP updates
+  optimise a hybrid objective whose mode is neither the base-space nor the
+  physical tilted mode.
+
+**Correction to adjudication point 2:** `logpdf_gradient` is *not* a third
+convention. Its analytic gradient equals the central-difference derivative
+of `logpdf` exactly (−0.520142 both, at the probe point) — the jacobian
+multiplication is just the chain rule for the base-space composition
+`base.logpdf(T(x))`. So (`logpdf`, `logpdf_gradient`,
+`numerical_logpdf_gradient_hessian`) form one self-consistent base-space
+family and `factor` is the physical one: **two conventions, not three**.
+
+**New finding:** `TransformedMessage.factor_gradient`
+(`composed_transform.py:360-378`) crashes on first call — it unpacks four
+values from `_transform_det_jac`, which returns three. Zero production
+callers (the `line_search.py` `factor_gradient` is an unrelated
+FactorApproximation-level interface). Filed as `bug/priors/16`.
+
+**Recommendation (for the human + #1500 to ratify — not actioned):** the fix
+is a two-sided contract repair, not a one-line `logpdf` patch:
+
+1. *EP-internal:* declare base-space `logpdf` the message contract (fix the
+   `composed_transform.py` module-docstring claim that `logpdf` accumulates
+   the Jacobian) and make `PriorFactor` consume the base-space density
+   (`message.logpdf`) instead of `prior.factor`, making the EP loop fully
+   base-space coherent. This changes prior-factor updates (removes the
+   spurious `log_det`) but preserves the deliberate-looking base-space
+   Laplace everywhere else. Belongs with #1500 Q2/Q3.
+2. *Public API:* `Prior.logpdf` and `pdf` promise a physical density and
+   should route through `factor` (or be renamed/documented). Small,
+   standalone, user-facing correctness fix.
+
+The other coherent option — adding `log_det` to `logpdf` itself so
+everything is physical — touches every EP path at once and shifts EP Laplace
+modes to physical-space MAPs; that is a design change that should only be
+taken inside the #1500 single-source-density decision.
 
 ## Sequencing
 

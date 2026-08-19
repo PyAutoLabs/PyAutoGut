@@ -11,7 +11,7 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 | [In flight](#in-flight) (`active/`) | 1 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 122 |
+| [Backlog](#backlog) (`draft/`) | 121 |
 
 Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3Aissue+is%3Aopen&type=issues) · [open pull requests](https://github.com/search?q=org%3APyAutoLabs+is%3Apr+is%3Aopen&type=prs)
 
@@ -116,14 +116,6 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 </details>
 
 **Quick wins** (small enough, and safe enough to run unattended)
-
-<details><summary>📋 <a href="draft/bug/pyautoheart/tenant_firewall_release_run_instance_fact.md">Tenant firewall: release_run.py carries an unlisted 'PyAutoLabs' instance fact</a> — pyautoheart · small · safe · normal</summary>
-
-```
-/start_dev draft/bug/pyautoheart/tenant_firewall_release_run_instance_fact.md
-```
-
-</details>
 
 <details><summary>📋 <a href="draft/docs/workspaces/add_vincken_2026_wiki_and_cite_in_euclid.md">add-vincken-2026-wiki-and-cite-in-euclid</a> — workspaces · small · safe · normal</summary>
 
@@ -269,10 +261,10 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**122** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**121** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
-<summary><b>bug</b> — 31</summary>
+<summary><b>bug</b> — 30</summary>
 
 <details><summary>📋 <a href="draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md">EP hierarchical parent-scale collapse: cure the basin, or document the</a> — autofit · too-large · human-required · high</summary>
 
@@ -414,14 +406,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/bug/pyautohands/generate_rejects_autocti_after_deleting_notebooks.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/pyautoheart/tenant_firewall_release_run_instance_fact.md">Tenant firewall: release_run.py carries an unlisted 'PyAutoLabs' instance fact</a> — pyautoheart · small · safe · normal</summary>
-
-```
-/start_dev draft/bug/pyautoheart/tenant_firewall_release_run_instance_fact.md
 ```
 
 </details>

@@ -2,7 +2,17 @@
 
 ## jax-default-dependency
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/702
-- status: library-dev
+- status: library-shipped, workspace-pending — six PRs open (all suites green), pending-release on the five
+  library PRs. Workspace half is a docs-only migration: ~30 files recommend the now-aliased `[jax]` extra
+  (start_here prose is tutorial-register → judgment tier). Merge order: PyAutoHeart#150 first (no-jax CI leg),
+  then libraries bottom-up. Post-release follow-up: bump intra-family floors to the first promoted version.
+- library-pr:
+  - PyAutoNerves: https://github.com/PyAutoLabs/PyAutoNerves/pull/150
+  - PyAutoFit: https://github.com/PyAutoLabs/PyAutoFit/pull/1503
+  - PyAutoArray: https://github.com/PyAutoLabs/PyAutoArray/pull/450
+  - PyAutoGalaxy: https://github.com/PyAutoLabs/PyAutoGalaxy/pull/574
+  - PyAutoLens: https://github.com/PyAutoLabs/PyAutoLens/pull/703
+  - PyAutoHeart: https://github.com/PyAutoLabs/PyAutoHeart/pull/150
 - worktree: ~/Code/PyAutoLabs-wt/jax-default-dependency
 - repos:
   - PyAutoNerves: feature/jax-default-dependency

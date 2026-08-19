@@ -52,7 +52,9 @@ Subcommands
         `status: pr-open` PR cross-checked against GitHub. Catches finished
         work still listed as pending — including the crashed-ship case where
         the PR merged but the session died before closing the issue, so the
-        issue leg alone stays green. Run on a schedule by lifecycle_drift.yml.
+        issue leg alone stays green. Run daily by registry_reconcile.yml
+        (instance automation — deliberately not part of the shipped
+        lifecycle_drift.yml, which must stay schedule-free per spawn rule 9).
 
 This file is intentionally stdlib-only (no PyAuto imports) so it runs in any
 environment, including a bare template checkout.

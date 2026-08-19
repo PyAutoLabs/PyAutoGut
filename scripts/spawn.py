@@ -116,6 +116,10 @@ MIND_RULES = [
     # under owner substitution the name is the literal YOURORG placeholder), so
     # every run of it there fails on checkout.
     (".github/workflows/dashboard_refresh.yml", "DROP"),
+    # 9c also: the online lifecycle leg — scheduled, and it reads sibling-repo
+    # issue/PR state across the org. A fresh org has neither the schedule
+    # tolerance (rule 9's no-unattended-trigger condition) nor the siblings.
+    (".github/workflows/registry_reconcile.yml", "DROP"),
     (".github/workflows/morning_status.yml", "DROP"),
     (".github/workflows/morning_health.yml", "DROP"),
     (".github/workflows/arxiv_papers.yml", "DROP"),

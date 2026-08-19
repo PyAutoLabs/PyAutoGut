@@ -13,16 +13,6 @@ name: Lifecycle Drift
 # sessions, so ad-hoc mutations of complete/ (e.g. a manual `git mv`) will
 # keep happening — an alarm-only check emailed the human once per push until
 # the next `record --apply` happened to regenerate the index.
-#
-# The scheduled `reconcile` job is the ONLINE leg (`lifecycle.py issues`):
-# registry entries cross-checked against live GitHub — a tracking issue
-# closed, or a `status: pr-open` PR merged, while the entry still reads
-# pending. That second case is the crashed-ship signature (2026-08-17,
-# version-stamp-sync-guards: six PRs merged, the session died before the
-# bookkeeping, and no offline check could see it). Daily + dispatch only —
-# it needs the network, so it stays out of the hermetic per-push job. A red
-# run means finished work is still listed as pending: run the wrap-up
-# (record + retire + close), don't silence the job.
 
 on:
   push:
@@ -40,8 +30,6 @@ on:
       - "complete.md"
       - "active.md"
       - "scripts/lifecycle.py"
-  schedule:
-    - cron: "23 6 * * *"   # daily 06:23 UTC — offset to dodge top-of-hour load
   workflow_dispatch:
 
 # contents: write is needed by the self-heal push on main; PR runs never push.
@@ -95,16 +83,3 @@ jobs:
           done
           echo "::error::could not push the healed index after 3 attempts"
           exit 1
-
-  # Online reconciliation: registries vs live GitHub. Read-only; never mutates.
-  reconcile:
-    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@v4
-      - name: registry state vs GitHub (closed issues / merged pr-open PRs still listed pending)
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: python3 scripts/lifecycle.py issues

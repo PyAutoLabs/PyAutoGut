@@ -5,7 +5,8 @@ Target: priors
 Difficulty: small
 Autonomy: supervised
 Priority: normal
-Status: found 2026-08-19 during the #1498 caller analysis — not yet issued
+Status: issued 2026-08-19 as PyAutoFit#1501 — awaiting external verification
+(fix-or-delete hangs off the #1498 contract decision); do not start dev
 
 Same shape as census finding A1 (#1331-01): a code path that has never run
 end-to-end, dead on arrival.

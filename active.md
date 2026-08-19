@@ -26,12 +26,14 @@
   - autofit_workspace: https://github.com/PyAutoLabs/autofit_workspace/pull/139
   - HowToLens: https://github.com/PyAutoLabs/HowToLens/pull/71
   - HowToGalaxy: https://github.com/PyAutoLabs/HowToGalaxy/pull/67
-- merged (2026-08-19, human-authorized): PyAutoHeart#150, PyAutoNerves#150, PyAutoArray#450,
-  PyAutoGalaxy#574. PyAutoFit#1503 + PyAutoLens#703 merge on green nojax legs. nojax leg caught one
-  real gap on first run (unmarked jax-requiring test in autolens potential_correction — fixed 94d8f54ba).
-- NEXT (release-blocked): after tonight's nightly ships the promotion, bump intra-family floors
-  `>=2026.7.29.2` → first promoted version in all five pyprojects (small follow-up PR set), then merge
-  the five workspace PRs.
+- merged (2026-08-19, human-authorized): ALL SIX library PRs — PyAutoHeart#150, PyAutoNerves#150,
+  PyAutoFit#1503, PyAutoArray#450, PyAutoGalaxy#574, PyAutoLens#703. main CI green everywhere incl.
+  the new nojax leg. The leg caught two real bugs on day one: unmarked jax-requiring test in autolens
+  potential_correction (94d8f54ba) and NumPy-scalar misrouting in autofit Beta/Gamma/Normal message
+  dispatch — np.generic added (19c679583).
+- NEXT (release-blocked; nightly 02:00 UTC): (1) bump intra-family floors `>=2026.7.29.2` → first
+  promoted version in all five pyprojects; (2) merge the five workspace PRs; (3) later, make
+  unittest-nojax a required check once it has green history.
 - worktree: ~/Code/PyAutoLabs-wt/jax-default-dependency
 - repos:
   - PyAutoNerves: feature/jax-default-dependency

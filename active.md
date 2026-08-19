@@ -1,17 +1,5 @@
 # Active Tasks
 
-## brain-readability-pass
-- issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/237
-- status: in-dev — issued 2026-08-19, plan approved; implementing on
-  PyAutoBrain feature/brain-readability-pass (PR to follow)
-- prompt: active/brain_readability_pass.md
-- repos:
-  - PyAutoBrain: feature/brain-readability-pass
-- summary: README on the Mind/Heart pattern (drifted hand copies replaced by links to
-  ORGANISM.md + the generated AGENTS.md table); ORGANISM.md Nerves rename currency
-  (PyAutoConf -> PyAutoNerves) + docs/example.md + skill-doc prose; AI_POLICY/CONTRIBUTING
-  -> .github/; 14 merged remote branches deleted. NO dashboard (parked in research prompt).
-
 ## jax-default-dependency
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/702
 - status: shipped-awaiting-release-followups — ALL ELEVEN PRs merged 2026-08-19 (human-authorized):

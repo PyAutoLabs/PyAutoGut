@@ -1,3 +1,69 @@
+`NFWTruncatedSph.potential_2d_from` failed the `grad(psi)=alpha` finite-difference
+self-consistency check at med 7.1e-2 (vs ~8e-4 for every other NFW/gNFW/cNFW
+variant) — the MGE decomposition's sigma range (`radii_max = truncation_radius * 5`)
+was the prime suspect.
+
+**Shipped:** [PyAutoGalaxy#564](https://github.com/PyAutoLabs/PyAutoGalaxy/pull/564),
+merged 2026-08-09 (fixes PyAutoGalaxy#563). This ledger entry was reconciled
+retroactively on 2026-08-19 — the fix shipped outside the prompt's dev flow, so the
+draft prompt and `planned.md` entry had gone stale.
+
+## What shipped (and how it differed from the plan)
+
+The prompt's plan was to **widen/refine the MGE sigma range**. The shipped fix went
+further: the MGE approximation was **replaced entirely** by the exact analytic
+lensing potential — equation (18) of Baltz, Marshall & Oguri (2009) for the n=1
+smoothly truncated NFW — which the prompt's step 3 had flagged as a cross-check.
+The analytic form became the implementation:
+
+- `potential_func_sph_from(grid_radius, tau, xp)` — dimensionless analytic BMO
+  potential, with a sixth-order small-radius series below `x = 1e-1` to avoid
+  catastrophic cancellation in NumPy/JAX float32, zero-centred per the paper's
+  convention.
+- `NFWTruncatedSph.potential_2d_from` applies the `2 kappa_s r_s^2` normalisation.
+
+## Validation
+
+From the PR: 48 profile tests + 1054 full `test_autogalaxy/` pass; full-mode
+200×200 workspace checks across three tNFW truncation regimes 9 PASS / 0 FAIL;
+independent comparison against lenstronomy TNFW; JAX JIT/autodiff/float32, centre,
+`x=1` and large-truncation checks. The unit tests the prompt asked for exist in
+`test_autogalaxy/profiles/mass/dark/test_nfw_truncated.py`:
+`test__potential_2d_from__gradient_matches_analytic_deflections` (rel 1e-6),
+`__laplacian_matches_analytic_convergence` (rel 1e-5), an independent-implementation
+match, and an NFW-limit comparison at large truncation radius.
+
+Independent re-verification on `main` (49115ad, 2026-08-19), finite-differencing
+`grad(psi)` against `coord_func_m`-based deflections over r in [1e-3, 20] arcsec:
+
+| tau | median frac err | max |
+|-----|-----------------|-----|
+| 2.0 (defaults) | 1.4e-09 | 4.3e-07 |
+| 10.0 | 2.2e-09 | 4.8e-07 |
+| 0.5 | 1.2e-09 | 4.6e-07 |
+
+The med 7.1e-2 failure is gone — errors are now at the FD-scheme floor, ~5 orders
+below the other profiles' MGE-limited ~8e-4.
+
+## Traps / lessons
+
+- **Analytic beat MGE re-tuning.** The prompt's "widen the sigma range" plan would
+  have kept an approximation where a closed form exists. When a profile has a
+  published analytic potential (BMO 2009 here), port it — the MGE path is for
+  profiles without one.
+- **Ledger drift:** the fix merged 2026-08-09 but the prompt sat in `draft/` and
+  `planned.md` for ten more days, still surfacing on the dashboard as open
+  high-priority work. A fix shipped outside the prompt's own dev flow must
+  reconcile the Mind in the same breath.
+- Related but distinct: the Isothermal Ell/Sph potential disagreement
+  (`planned.md` § `isothermal-ell-sph-oversampling-at-the-cusp`) was once guessed
+  to share this root cause — retracted; MGE is not involved there.
+- `draft/feature/autogalaxy/piemass_potential.md` (PIEMass has *no* potential) is
+  the sibling task and remains open; the BMO-style analytic-port route used here
+  is the template for it.
+
+## Original prompt
+
 # `NFWTruncatedSph.potential_2d_from`: MGE potential fails `grad(psi)=alpha` self-consistency
 
 Type: bug

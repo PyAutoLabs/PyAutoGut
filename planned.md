@@ -68,23 +68,6 @@
     Sibling smoke scripts to check while triaging: image_plane.py,
     source_plane.py in the same dir — they share the seed dataset.
 
-## nfw-truncated-potential-accuracy
-- prompt: draft/bug/autogalaxy/nfw_truncated_potential_accuracy.md
-- status: planned
-- filed: 2026-06-05
-- classification: library (accuracy bug)
-- suggested-branch: feature/nfw-truncated-potential-accuracy
-- summary: |
-    Pre-existing accuracy bug surfaced while shipping dark-matter-potentials.
-    NFWTruncatedSph.potential_2d_from (MGE) fails grad(psi)=alpha self-
-    consistency in autolens_workspace_test/scripts/mass/dark.py (med 7.1e-2 vs
-    ~8e-4 for every other NFW/gNFW/cNFW variant). Deflections pass, only the
-    potential is off — likely the MGE sigma range (radii_max = truncation_radius
-    * 5) is too narrow. Reproduce on clean main first.
-- affected-repos:
-  - PyAutoGalaxy
-
-
 ## piemass-potential
 - prompt: draft/feature/autogalaxy/piemass_potential.md
 - status: planned

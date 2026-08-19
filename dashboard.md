@@ -11,7 +11,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 | [In flight](#in-flight) (`active/`) | 2 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 132 |
+| [Backlog](#backlog) (`draft/`) | 133 |
 
 ## Start here
 
@@ -267,7 +267,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**132** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**133** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 34</summary>
@@ -1247,7 +1247,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>refactor</b> — 5</summary>
+<summary><b>refactor</b> — 6</summary>
 
 <details><summary>📋 <a href="draft/refactor/autogalaxy/einstein_radius_jit_native_seed_finder.md"><code>einstein_radius_jit_from</code>: replace static init_guess with a JAX-native seed finder</a> — autogalaxy · too-large · supervised · high</summary>
 
@@ -1277,6 +1277,14 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/refactor/pyautofit/remove_eden_packaging_tooling.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/refactor/autoarray/remove_pynufft_legacy_transformer.md">Remove pynufft + legacy TransformerNUFFTPyNUFFT (0.23s of import, one fallback</a> — autoarray · low-medium · supervised · normal</summary>
+
+```
+/start_dev draft/refactor/autoarray/remove_pynufft_legacy_transformer.md
 ```
 
 </details>

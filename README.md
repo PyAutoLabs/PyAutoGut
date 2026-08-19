@@ -4,7 +4,7 @@
 
 # PyAutoMind
 
-[![PyAutoScientist GitHub](https://img.shields.io/badge/%F0%9F%94%AD%20PyAutoScientist-GitHub-181717?style=for-the-badge)](https://github.com/PyAutoLabs/PyAutoScientist) [![PyAutoScientist ReadTheDocs](https://img.shields.io/badge/%F0%9F%93%96%20PyAutoScientist-ReadTheDocs-8CA1AF?style=for-the-badge)](https://pyautoscientist.readthedocs.io)
+[![PyAutoScientist GitHub](https://img.shields.io/badge/%F0%9F%94%AD%20PyAutoScientist-GitHub-181717?style=flat-square)](https://github.com/PyAutoLabs/PyAutoScientist) [![PyAutoScientist ReadTheDocs](https://img.shields.io/badge/%F0%9F%93%96%20PyAutoScientist-ReadTheDocs-8CA1AF?style=flat-square)](https://pyautoscientist.readthedocs.io)
 
 📋 **[Task dashboard → `dashboard.md`](dashboard.md)** — every task the Mind is
 holding, on one page: what to pick up now, what is in flight, and the whole

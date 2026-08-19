@@ -8,14 +8,14 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 2 |
+| [In flight](#in-flight) (`active/`) | 3 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 135 |
+| [Backlog](#backlog) (`draft/`) | 134 |
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 24
+**Highest priority** (filed as `high`) — showing 12 of 23
 
 <details><summary>📋 <a href="draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — medium · safe · high</summary>
 
@@ -37,14 +37,6 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 ```
 /start_dev draft/research/autolens_profiling/ell_comps_trapping_unmasked.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/pyautohands/sub_312_pip_install_backtracks_silently.md">Sub-3.12 <code>pip install</code> silently backtracks to the stale pre-floor release</a> — pyautohands · medium · human-required · high</summary>
-
-```
-/start_dev draft/bug/pyautohands/sub_312_pip_install_backtracks_silently.md
 ```
 
 </details>
@@ -113,6 +105,14 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 </details>
 
+<details><summary>📋 <a href="draft/bug/autolens/pixelization_eager_vs_jit_divergence.md">Investigate eager <code>FitImaging.figure_of_merit</code> vs JIT/step-by-step divergence in rectangular pixelization</a> — autolens · too-large · supervised · high</summary>
+
+```
+/start_dev draft/bug/autolens/pixelization_eager_vs_jit_divergence.md
+```
+
+</details>
+
 **Quick wins** (small enough, and safe enough to run unattended)
 
 <details><summary>📋 <a href="draft/docs/workspaces/add_vincken_2026_wiki_and_cite_in_euclid.md">add-vincken-2026-wiki-and-cite-in-euclid</a> — workspaces · small · safe · normal</summary>
@@ -171,6 +171,14 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/jax_default_dependency.md
+```
+
+</details>
+
+<details><summary>📋 <a href="active/sub_312_pip_install_backtracks_silently.md">Sub-3.12 <code>pip install</code> silently backtracks to the stale pre-floor release</a></summary>
+
+```
+/start_dev active/sub_312_pip_install_backtracks_silently.md
 ```
 
 </details>
@@ -267,18 +275,10 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**135** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**134** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
-<summary><b>bug</b> — 36</summary>
-
-<details><summary>📋 <a href="draft/bug/pyautohands/sub_312_pip_install_backtracks_silently.md">Sub-3.12 <code>pip install</code> silently backtracks to the stale pre-floor release</a> — pyautohands · medium · human-required · high</summary>
-
-```
-/start_dev draft/bug/pyautohands/sub_312_pip_install_backtracks_silently.md
-```
-
-</details>
+<summary><b>bug</b> — 35</summary>
 
 <details><summary>📋 <a href="draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md">EP hierarchical parent-scale collapse: cure the basin, or document the</a> — autofit · too-large · human-required · high</summary>
 

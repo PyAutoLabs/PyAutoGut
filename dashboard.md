@@ -175,7 +175,7 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
-<details><summary>📋 <a href="active/import_time_lazy_heavy_imports.md">Slow imports: defer jax chain + 5 heavy eager imports</a> — <a href="https://github.com/PyAutoLabs/PyAutoFit/issues/1505">issue #1505</a> — library-dev — issued 2026-08-19, plan approved; implementation starting</summary>
+<details><summary>📋 <a href="active/import_time_lazy_heavy_imports.md">Slow imports: defer jax chain + 5 heavy eager imports</a> — <a href="https://github.com/PyAutoLabs/PyAutoFit/issues/1505">issue #1505</a> — library-shipped, awaiting-merge — five PRs open 2026-08-19, all pending-release, all</summary>
 
 ```
 /start_dev active/import_time_lazy_heavy_imports.md

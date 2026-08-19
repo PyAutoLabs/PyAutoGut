@@ -8,10 +8,10 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 2 |
+| [In flight](#in-flight) (`active/`) | 5 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 154 |
+| [Backlog](#backlog) (`draft/`) | 151 |
 
 ## Start here
 
@@ -183,6 +183,30 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
+<details><summary>📋 <a href="active/memory_surfaces_stale_names.md">Memory faculty blind spots + retired *_wiki layout names</a> — <a href="https://github.com/PyAutoLabs/PyAutoBrain/issues/239">issue #239</a> — in-dev — issued 2026-08-19, plan approved (batch of three knowledge-board</summary>
+
+```
+/start_dev active/memory_surfaces_stale_names.md
+```
+
+</details>
+
+<details><summary>📋 <a href="active/paper_management_pipeline.md">Paper management pipeline: structured reading queue + arXiv ingest</a> — <a href="https://github.com/PyAutoLabs/PyAutoMemory/issues/35">issue #35</a> — queued behind wiki-hygiene (same session, sequential)</summary>
+
+```
+/start_dev active/paper_management_pipeline.md
+```
+
+</details>
+
+<details><summary>📋 <a href="active/wiki_hygiene.md">Wiki hygiene: PDF-path frontmatter, path-shaped links, bib junk keys</a> — <a href="https://github.com/PyAutoLabs/PyAutoMemory/issues/34">issue #34</a> — queued behind memory-surfaces-stale-names (same session, sequential)</summary>
+
+```
+/start_dev active/wiki_hygiene.md
+```
+
+</details>
+
 ## Parked
 
 Started or scoped, not currently in flight — resume by moving the row back to `active.md`. Full detail in [`parked.md`](parked.md).
@@ -275,10 +299,10 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**154** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**151** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
-<summary><b>bug</b> — 37</summary>
+<summary><b>bug</b> — 36</summary>
 
 <details><summary>📋 <a href="draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md">EP hierarchical parent-scale collapse: cure the basin, or document the</a> — autofit · too-large · human-required · high</summary>
 
@@ -432,14 +456,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/bug/pyautobrain/memory_surfaces_stale_names.md">Memory faculty blind spots + retired *_wiki layout names</a> — pyautobrain · small · supervised · normal</summary>
-
-```
-/start_dev draft/bug/pyautobrain/memory_surfaces_stale_names.md
-```
-
-</details>
-
 <details><summary>📋 <a href="draft/bug/pyautobrain/pyautoconf_rename_functional_leftovers.md">PyAutoConf rename leftovers in Brain functional surfaces</a> — pyautobrain · small · supervised · normal</summary>
 
 ```
@@ -579,7 +595,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>feature</b> — 36</summary>
+<summary><b>feature</b> — 35</summary>
 
 <details><summary>📋 <a href="draft/feature/autofit/clipper_in_search_identifier.md">Decide whether the clipper belongs in the search identifier</a> — autofit · medium · human-required · high</summary>
 
@@ -689,14 +705,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/feature/pyautobrain/one_tap_dashboard_more_surfaces.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/pyautomemory/paper_management_pipeline.md">Paper management pipeline: structured reading queue + arXiv ingest</a> — pyautomemory · medium · supervised · normal</summary>
-
-```
-/start_dev draft/feature/pyautomemory/paper_management_pipeline.md
 ```
 
 </details>
@@ -1085,7 +1093,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>maintenance</b> — 21</summary>
+<summary><b>maintenance</b> — 20</summary>
 
 <details><summary>📋 <a href="draft/maintenance/autolens_workspace_developer/rectangular_experiments_gut_stash.md">autolens_workspace_developer rectangular experiments — Gut stash + rename</a> — autolens_workspace_developer · small · supervised · normal</summary>
 
@@ -1139,14 +1147,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/maintenance/pyautomemory/canonical_key_todo_sweep.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/maintenance/pyautomemory/wiki_hygiene.md">Wiki hygiene: PDF-path frontmatter, path-shaped links, bib junk keys</a> — pyautomemory · medium · supervised · normal</summary>
-
-```
-/start_dev draft/maintenance/pyautomemory/wiki_hygiene.md
 ```
 
 </details>

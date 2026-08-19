@@ -11,7 +11,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 | [In flight](#in-flight) (`active/`) | 4 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 127 |
+| [Backlog](#backlog) (`draft/`) | 129 |
 
 ## Start here
 
@@ -114,6 +114,14 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 </details>
 
 **Quick wins** (small enough, and safe enough to run unattended)
+
+<details><summary>📋 <a href="draft/bug/workspaces/bug_in_autocti_workspace_the_database_guide.md">Bug in autocti_workspace: the database guide chain cannot run from</a> — workspaces · small · safe · normal</summary>
+
+```
+/start_dev draft/bug/workspaces/bug_in_autocti_workspace_the_database_guide.md
+```
+
+</details>
 
 <details><summary>📋 <a href="draft/docs/workspaces/add_vincken_2026_wiki_and_cite_in_euclid.md">add-vincken-2026-wiki-and-cite-in-euclid</a> — workspaces · small · safe · normal</summary>
 
@@ -283,10 +291,10 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**127** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**129** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
-<summary><b>bug</b> — 32</summary>
+<summary><b>bug</b> — 34</summary>
 
 <details><summary>📋 <a href="draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md">EP hierarchical parent-scale collapse: cure the basin, or document the</a> — autofit · too-large · human-required · high</summary>
 
@@ -448,6 +456,14 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
+<details><summary>📋 <a href="draft/bug/workspaces/bug_in_autocti_workspace_the_database_guide.md">Bug in autocti_workspace: the database guide chain cannot run from</a> — workspaces · small · safe · normal</summary>
+
+```
+/start_dev draft/bug/workspaces/bug_in_autocti_workspace_the_database_guide.md
+```
+
+</details>
+
 <details><summary>📋 <a href="draft/bug/workspaces/jax_likelihood_pins_stale_by_1e4.md">Three <code>jax_likelihood</code> pins are stale by ~1.24e-4 and fail the</a> — workspaces · small · supervised · normal</summary>
 
 ```
@@ -492,6 +508,14 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/bug/priors/15_transformed_message_logpdf_jacobian.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/workspaces/bug_in_the_workspaces_tutorial_scripts_hardcode.md">Bug in the workspaces: tutorial scripts hardcode stored-sample index 9</a> — workspaces · medium · supervised · normal</summary>
+
+```
+/start_dev draft/bug/workspaces/bug_in_the_workspaces_tutorial_scripts_hardcode.md
 ```
 
 </details>

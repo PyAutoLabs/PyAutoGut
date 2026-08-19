@@ -1,0 +1,62 @@
+=== START iter_tar 20:46:36 ===
+        XLA GPU autotuning has been disabled by default (--xla_gpu_autotune_level=0):
+        it dominates cold JAX compile times on GPU (measured up to ~7 minutes for a
+        single fusion) while giving no measurable evaluation speed-up on PyAuto
+        likelihoods.
+        To re-enable autotuning, include an explicit --xla_gpu_autotune_level=<n>
+        pre-set level is always respected.
+        on this machine compiles its JAX functions, which can take minutes; the
+Starting Joint Optimization (LM) with 5 iterations...
+Initial Cost: 5.0276e+06
+  Gauge |G@dpsi|_2=0.0000e+00 | max|G@dpsi|=0.0000e+00
+Iter 0: Cost=5.0276e+06 | Chi2=5.0276e+06, RegS=0.0000e+00, mu=1.0e+00
+  Gauge |G@dpsi|_2=0.0000e+00 | max|G@dpsi|=0.0000e+00
+Iter 1: Cost=1.2135e+04 | Chi2=1.0051e+04, RegS=2.0843e+03, mu=3.3e-01
+  Gauge |G@dpsi|_2=1.5884e-13 | max|G@dpsi|=1.4475e-13
+Iter 2: Cost=6.3998e+03 | Chi2=4.2222e+03, RegS=1.9962e+03, mu=1.1e-01
+  Gauge |G@dpsi|_2=1.9589e-14 | max|G@dpsi|=1.8091e-14
+Iter 3: Cost=6.2714e+03 | Chi2=4.0566e+03, RegS=2.0038e+03, mu=3.7e-02
+  Gauge |G@dpsi|_2=3.3036e-15 | max|G@dpsi|=2.4202e-15
+Iter 4: Cost=6.2694e+03 | Chi2=4.0492e+03, RegS=2.0030e+03, mu=1.2e-02
+bash: line 1:  9786 Killed                  env PYAUTO_SKIP_WORKSPACE_VERSION_CHECK=1 NUMBA_CACHE_DIR=/tmp/numba_cache MPLCONFIGDIR=/tmp/matplotlib python -u phase2_sidebyside.py $e 2>&1
+      9787 Done                    | grep -vE "INFO - IMAGING|compilation cache|JAX_COMPILATION|compiled code|later runs|skip this cost|different location|your script|disable the cache|^\s*$"
+=== END iter_tar 21:34:49 ===
+=== START iter_port 21:34:49 ===
+        XLA GPU autotuning has been disabled by default (--xla_gpu_autotune_level=0):
+        it dominates cold JAX compile times on GPU (measured up to ~7 minutes for a
+        single fusion) while giving no measurable evaluation speed-up on PyAuto
+        likelihoods.
+        To re-enable autotuning, include an explicit --xla_gpu_autotune_level=<n>
+        pre-set level is always respected.
+        on this machine compiles its JAX functions, which can take minutes; the
+2026-07-30 21:39:38,321 - autolens.potential_correction.iterative - INFO - Starting joint LM optimization: 5 iterations, initial cost 5.0276e+06
+2026-07-30 21:39:51,460 - autolens.potential_correction.iterative - INFO - Iter 0: cost=5.0276e+06 chi2=5.0276e+06 reg_s=0.0000e+00 mu=1.0e+00
+2026-07-30 21:43:10,782 - autolens.potential_correction.iterative - INFO - Iter 1: cost=9.2339e+04 chi2=8.7670e+04 reg_s=4.6691e+03 mu=3.3e-01
+2026-07-30 21:46:16,731 - autolens.potential_correction.iterative - INFO - Iter 2: cost=1.2802e+04 chi2=1.0289e+04 reg_s=2.5106e+03 mu=1.1e-01
+2026-07-30 21:49:26,438 - autolens.potential_correction.iterative - INFO - Iter 3: cost=1.1461e+04 chi2=9.3565e+03 reg_s=2.0838e+03 mu=3.7e-02
+2026-07-30 21:52:05,997 - autolens.potential_correction.iterative - INFO - Iter 4: cost=1.0367e+04 chi2=8.1955e+03 reg_s=2.0780e+03 mu=1.2e-02
+[iter_port] corr(dkappa)=0.0239 peak_dist=2.583"
+[iter_port] runtime 1166s
+saved /tmp/claude-1000/-home-jammy-Code-PyAutoLabs/0100b7de-da01-4c18-a8b0-9d0080d5e07f/scratchpad/phase2_results/iter_port.npz
+=== END iter_port 21:54:23 ===
+=== START iter_port_iddamp 21:54:23 ===
+        XLA GPU autotuning has been disabled by default (--xla_gpu_autotune_level=0):
+        it dominates cold JAX compile times on GPU (measured up to ~7 minutes for a
+        single fusion) while giving no measurable evaluation speed-up on PyAuto
+        likelihoods.
+        To re-enable autotuning, include an explicit --xla_gpu_autotune_level=<n>
+        pre-set level is always respected.
+        on this machine compiles its JAX functions, which can take minutes; the
+[iter_port_iddamp] identity-damping patch ACTIVE
+2026-07-30 21:57:40,586 - autolens.potential_correction.iterative - INFO - Starting joint LM optimization: 5 iterations, initial cost 5.0276e+06
+2026-07-30 21:57:49,049 - autolens.potential_correction.iterative - INFO - Iter 0: cost=5.0276e+06 chi2=5.0276e+06 reg_s=0.0000e+00 mu=1.0e+00
+2026-07-30 21:59:45,341 - autolens.potential_correction.iterative - INFO - Iter 1: cost=1.2135e+04 chi2=1.0051e+04 reg_s=2.0843e+03 mu=3.3e-01
+2026-07-30 22:01:43,423 - autolens.potential_correction.iterative - INFO - Iter 2: cost=6.4004e+03 chi2=4.2228e+03 reg_s=1.9962e+03 mu=1.1e-01
+2026-07-30 22:03:39,294 - autolens.potential_correction.iterative - INFO - Iter 3: cost=6.2716e+03 chi2=4.0569e+03 reg_s=2.0037e+03 mu=3.7e-02
+2026-07-30 22:05:35,111 - autolens.potential_correction.iterative - INFO - Iter 4: cost=6.2696e+03 chi2=4.0494e+03 reg_s=2.0029e+03 mu=1.2e-02
+2026-07-30 22:52:30,214 - autolens.potential_correction.iterative - WARNING - LM damping parameter exceeded 1e15; stopping.
+[iter_port_iddamp] corr(dkappa)=0.1771 peak_dist=2.325"
+[iter_port_iddamp] runtime 3483s
+saved /tmp/claude-1000/-home-jammy-Code-PyAutoLabs/0100b7de-da01-4c18-a8b0-9d0080d5e07f/scratchpad/phase2_results/iter_port_iddamp.npz
+=== END iter_port_iddamp 22:52:31 ===
+=== START iter_tar_c2000 22:52:31 ===

@@ -1,0 +1,7 @@
+2026-07-31 16:04:46,900 - autolens.potential_correction.iterative - WARNING - 10 consecutive rejected LM steps (each a full Jacobian rebuild); stopping at the current state.
+POINT log10c=6 log10s=1 evidence=4.855369e+03 corr=0.3757 dist=1.152
+2026-07-31 16:22:27,336 - autolens.potential_correction.iterative - WARNING - 10 consecutive rejected LM steps (each a full Jacobian rebuild); stopping at the current state.
+POINT log10c=5 log10s=-0.2 evidence=9.148527e+03 corr=0.2667 dist=0.162
+LOOP_DONE
+POINT log10c=6 log10s=0.6 evidence=7.549056e+03 corr=0.5636 dist=0.800
+CORNER_DONE

@@ -1,0 +1,35 @@
+=== START iter_port_c2000 09:09:04 ===
+        single fusion) while giving no measurable evaluation speed-up on PyAuto
+        likelihoods.
+        on this machine compiles its JAX functions, which can take minutes; the
+2026-07-31 09:12:10,640 - autolens.potential_correction.iterative - INFO - Starting joint LM optimization: 5 iterations, initial cost 5.0276e+06
+2026-07-31 09:12:18,184 - autolens.potential_correction.iterative - INFO - Iter 0: cost=5.0276e+06 chi2=5.0276e+06 reg_s=0.0000e+00 mu=1.0e+00
+2026-07-31 09:15:13,667 - autolens.potential_correction.iterative - INFO - Iter 1: cost=9.2339e+04 chi2=8.7670e+04 reg_s=4.6691e+03 mu=3.3e-01
+2026-07-31 09:18:10,499 - autolens.potential_correction.iterative - INFO - Iter 2: cost=1.2972e+04 chi2=1.0461e+04 reg_s=2.5112e+03 mu=1.1e-01
+2026-07-31 09:20:39,704 - autolens.potential_correction.iterative - INFO - Iter 3: cost=1.2146e+04 chi2=1.0061e+04 reg_s=2.0846e+03 mu=3.7e-02
+2026-07-31 09:22:46,944 - autolens.potential_correction.iterative - INFO - Iter 4: cost=1.2082e+04 chi2=9.9989e+03 reg_s=2.0791e+03 mu=1.2e-02
+[iter_port_c2000] corr(dkappa)=0.0248 peak_dist=2.583"
+[iter_port_c2000] runtime 947s
+saved /tmp/claude-1000/-home-jammy-Code-PyAutoLabs/0100b7de-da01-4c18-a8b0-9d0080d5e07f/scratchpad/phase2_results/iter_port_c2000.npz
+=== END iter_port_c2000 09:24:56 ===
+=== START iter_port_iddamp_c2000 09:24:56 ===
+        single fusion) while giving no measurable evaluation speed-up on PyAuto
+        likelihoods.
+        on this machine compiles its JAX functions, which can take minutes; the
+[iter_port_iddamp_c2000] identity-damping patch ACTIVE
+2026-07-31 09:27:45,933 - autolens.potential_correction.iterative - INFO - Starting joint LM optimization: 5 iterations, initial cost 5.0276e+06
+2026-07-31 09:27:54,822 - autolens.potential_correction.iterative - INFO - Iter 0: cost=5.0276e+06 chi2=5.0276e+06 reg_s=0.0000e+00 mu=1.0e+00
+2026-07-31 09:30:09,206 - autolens.potential_correction.iterative - INFO - Iter 1: cost=1.2135e+04 chi2=1.0051e+04 reg_s=2.0843e+03 mu=3.3e-01
+2026-07-31 09:32:34,227 - autolens.potential_correction.iterative - INFO - Iter 2: cost=6.2883e+03 chi2=4.2195e+03 reg_s=2.0398e+03 mu=1.1e-01
+2026-07-31 09:34:46,531 - autolens.potential_correction.iterative - INFO - Iter 3: cost=6.1522e+03 chi2=4.0827e+03 reg_s=2.0431e+03 mu=3.7e-02
+2026-07-31 09:36:50,613 - autolens.potential_correction.iterative - INFO - Iter 4: cost=6.1469e+03 chi2=4.0779e+03 reg_s=2.0414e+03 mu=1.2e-02
+[iter_port_iddamp_c2000] corr(dkappa)=0.7433 peak_dist=0.205"
+[iter_port_iddamp_c2000] runtime 826s
+saved /tmp/claude-1000/-home-jammy-Code-PyAutoLabs/0100b7de-da01-4c18-a8b0-9d0080d5e07f/scratchpad/phase2_results/iter_port_iddamp_c2000.npz
+=== END iter_port_iddamp_c2000 09:38:45 ===
+=== START iter_tar_c2000 09:38:46 ===
+        single fusion) while giving no measurable evaluation speed-up on PyAuto
+        likelihoods.
+        on this machine compiles its JAX functions, which can take minutes; the
+Terminated
+=== END iter_tar_c2000 09:38:59 ===

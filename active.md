@@ -1,5 +1,18 @@
 # Active Tasks
 
+## knowledge-board
+- issue: https://github.com/PyAutoLabs/PyAutoMemory/issues/32
+- status: in-dev — issued 2026-08-19, plan approved (management-first direction from the
+  human); implementing on PyAutoMemory feature/knowledge-board (PR to follow)
+- prompt: active/knowledge_board.md
+- repos:
+  - PyAutoMemory: feature/knowledge-board
+- summary: management-first knowledge board (scripts/board.py, stdlib local parse; Pages +
+  badge + README strip via knowledge_board.yml, nothing committed — validator bans .html):
+  reading-queue/citation-TODO/maturity work queues with one-tap 📋 workflow prompts +
+  /memory recall chips, contents-level only. Plus pointer-docs → .github/ (validator+spawn
+  lockstep), status: draft fixes, index/bib archaeology trims, AGENTS scope-rule rewording.
+
 ## sub-312-pip-install-backtracks-silently
 - issue: https://github.com/PyAutoLabs/PyAutoHands/issues/238
 - status: in-flight — issued 2026-08-19 by a concurrent session; this entry registered by

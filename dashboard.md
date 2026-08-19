@@ -10,7 +10,7 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 4 |
+| [In flight](#in-flight) (`active/`) | 3 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
 | [Backlog](#backlog) (`draft/`) | 126 |
@@ -175,14 +175,6 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/jax_default_dependency.md
-```
-
-</details>
-
-<details><summary>📋 <a href="active/readme_organ_header_buttons.md">Replace organ-repo README header prose with PyAutoScientist buttons</a> — <a href="https://github.com/PyAutoLabs/PyAutoScientist/issues/11">issue #11</a> — workspace-dev — README-only sweep, direct commits to main (no worktree; precedent: the</summary>
-
-```
-/start_dev active/readme_organ_header_buttons.md
 ```
 
 </details>

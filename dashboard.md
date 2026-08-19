@@ -13,13 +13,13 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 | [In flight](#in-flight) (`active/`) | 2 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 125 |
+| [Backlog](#backlog) (`draft/`) | 126 |
 
 Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3Aissue+is%3Aopen&type=issues) · [open pull requests](https://github.com/search?q=org%3APyAutoLabs+is%3Apr+is%3Aopen&type=prs)
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 23
+**Highest priority** (filed as `high`) — showing 12 of 24
 
 <details><summary>📋 <a href="draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — medium · safe · high</summary>
 
@@ -41,6 +41,14 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 
 ```
 /start_dev draft/research/autolens_profiling/ell_comps_trapping_unmasked.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/maintenance/libraries/jax_default_dependency.md">Make JAX a default (non-optional) dependency across the library stack</a> — libraries · medium · supervised · high</summary>
+
+```
+/start_dev draft/maintenance/libraries/jax_default_dependency.md
 ```
 
 </details>
@@ -105,14 +113,6 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 
 ```
 /start_dev draft/refactor/autogalaxy/einstein_radius_jit_native_seed_finder.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/autolens/pixelization_eager_vs_jit_divergence.md">Investigate eager <code>FitImaging.figure_of_merit</code> vs JIT/step-by-step divergence in rectangular pixelization</a> — autolens · too-large · supervised · high</summary>
-
-```
-/start_dev draft/bug/autolens/pixelization_eager_vs_jit_divergence.md
 ```
 
 </details>
@@ -271,7 +271,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**125** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**126** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 30</summary>
@@ -921,7 +921,15 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>maintenance</b> — 18</summary>
+<summary><b>maintenance</b> — 19</summary>
+
+<details><summary>📋 <a href="draft/maintenance/libraries/jax_default_dependency.md">Make JAX a default (non-optional) dependency across the library stack</a> — libraries · medium · supervised · high</summary>
+
+```
+/start_dev draft/maintenance/libraries/jax_default_dependency.md
+```
+
+</details>
 
 <details><summary>📋 <a href="draft/maintenance/autolens_workspace_developer/rectangular_experiments_gut_stash.md">autolens_workspace_developer rectangular experiments — Gut stash + rename</a> — autolens_workspace_developer · small · supervised · normal</summary>
 

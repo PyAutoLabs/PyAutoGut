@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1041 records across 7 buckets.
+1042 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -132,6 +132,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [rectangular-spline-adapt-image-jit-fix](2026/08/rectangular-spline-adapt-image-jit-fix.md)
 - [registry-integrity-check](2026/08/registry-integrity-check.md)
 - [regularization-jax-gradient-gaps](2026/08/regularization-jax-gradient-gaps.md)
+- [release-board](2026/08/release-board.md) — auto-closed on merge
 - [release-drive-2026-08-03](2026/08/release-drive-2026-08-03.md)
 - [release-drive-2026-08-07](2026/08/release-drive-2026-08-07.md)
 - [release-validation-tri-state](2026/08/release-validation-tri-state.md)

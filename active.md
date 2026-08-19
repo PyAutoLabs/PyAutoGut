@@ -1,17 +1,13 @@
 # Active Tasks
 
-## release-board
-- issue: https://github.com/PyAutoLabs/PyAutoHands/issues/239
-- status: in-dev — issued 2026-08-19, plan approved; implementing on
-  PyAutoHands feature/release-board (PR to follow)
-- prompt: active/release_board.md
-- repos:
-  - PyAutoHands: feature/release-board
-- summary: phone-readable release board (API-first: release.yml runs + nightly outcomes +
-  library tags + PyPI + Releases links) with one-tap 📋 /release · rehearse · validate ·
-  /build chips and /bug prompts on failed train runs; Pages twin + badge + README strip;
-  README on the arc pattern (stale rename banners dropped); AGENTS verb prose fixed;
-  AI_POLICY/CONTRIBUTING → .github/. Past-tense record only — readiness stays the Heart's.
+## sub-312-pip-install-backtracks-silently
+- issue: https://github.com/PyAutoLabs/PyAutoHands/issues/238
+- status: in-flight — issued 2026-08-19 by a concurrent session; this entry registered by
+  the release-board session, which found the prompt in active/ with no ledger entry
+  (lifecycle drift). Verify claims with the issuing session before touching repos.
+- prompt: active/sub_312_pip_install_backtracks_silently.md
+- repos-none-claimed: registered from the ledger side only — the issuing session owns
+  any worktrees/branches; claims not recorded here to avoid conflicting with it.
 
 ## jax-default-dependency
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/702

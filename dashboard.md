@@ -13,7 +13,7 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 | [In flight](#in-flight) (`active/`) | 1 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 122 |
+| [Backlog](#backlog) (`draft/`) | 126 |
 
 Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3Aissue+is%3Aopen&type=issues) · [open pull requests](https://github.com/search?q=org%3APyAutoLabs+is%3Apr+is%3Aopen&type=prs)
 
@@ -271,7 +271,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**122** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**126** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 31</summary>
@@ -527,7 +527,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>feature</b> — 26</summary>
+<summary><b>feature</b> — 28</summary>
 
 <details><summary>📋 <a href="draft/feature/autofit/clipper_in_search_identifier.md">Decide whether the clipper belongs in the search identifier</a> — autofit · medium · human-required · high</summary>
 
@@ -589,6 +589,22 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/feature/autolens_workspace/joss_cluster_benchmark_tuning.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/pyautobrain/one_tap_dashboard_pattern_roll_out_to.md">One-tap dashboard pattern: roll out to more organs</a> — pyautobrain · medium · supervised · normal</summary>
+
+```
+/start_dev draft/feature/pyautobrain/one_tap_dashboard_pattern_roll_out_to.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/pyautohands/implement_a_pyautohands_build_dashboard_with_one.md">Implement a PyAutoHands build dashboard with one-tap copy-for-Claude commands</a> — pyautohands · medium · supervised · normal</summary>
+
+```
+/start_dev draft/feature/pyautohands/implement_a_pyautohands_build_dashboard_with_one.md
 ```
 
 </details>
@@ -740,7 +756,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>research</b> — 19</summary>
+<summary><b>research</b> — 21</summary>
 
 <details><summary>📋 <a href="draft/research/autolens_profiling/ell_comps_trapping_unmasked.md">The <code>ell_comps</code> trapping was masked, not cleared — characterise it</a> — autolens_profiling · medium · supervised · high</summary>
 
@@ -802,6 +818,22 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/research/autobuild/git_docs.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/research/pyautobrain/explore_dashboardify_the_brain_s_operational_sur.md">Explore: dashboardify the Brain's operational surfaces with pasteable conductor prompts</a> — pyautobrain · small · supervised · normal</summary>
+
+```
+/start_dev draft/research/pyautobrain/explore_dashboardify_the_brain_s_operational_sur.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/research/pyautomemory/explore_dashboard_style_surfaces_for_papers_and.md">Explore: dashboard-style surfaces for papers and wiki contents?</a> — pyautomemory · small · supervised · normal</summary>
+
+```
+/start_dev draft/research/pyautomemory/explore_dashboard_style_surfaces_for_papers_and.md
 ```
 
 </details>

@@ -1,3 +1,37 @@
+## stored-sample-reconstruction-guard
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1486 (closed)
+- completed: 2026-08-19
+- library-pr: https://github.com/PyAutoLabs/PyAutoFit/pull/1504 (merged 3b37843b)
+- workspace-prs: autogalaxy_workspace#210 (merged 2026-08-17, cleared the nightly red);
+  autocti_workspace#19 (merged 2026-08-19, catch-tuple migration)
+- summary: stored samples that current model validation rejects no longer raise raw
+  internal exceptions from instance reconstruction. `to_instance` became a decorator
+  factory with a per-method `recover` policy: `max_log_posterior` recovers to the
+  highest-posterior valid stored sample (shared `_instance_from_next_valid_sample`
+  helper with the #1466 `max_log_likelihood` guard); `from_sample_index` and the
+  marginalized methods raise a typed `SamplesException` chained to the rejection.
+  `Samples.instances` now skips rejected samples via `valid_sample_instance_pairs`.
+- breaking: reconstruction failures from `to_instance`-decorated methods surface as
+  `autofit.exc.SamplesException` (plain Exception) instead of `ModelParameterException`
+  (a ValueError); PR body carries `## API Changes` + `### Changed Behaviour`,
+  classifier-verified `breaking`.
+- internal consumers updated: `abstract_search.py` mode-1 rejected-final-sample hook and
+  `updater.py` `_save_samples` guard now catch `(FitException, SamplesException)` —
+  without the updater one, a stale stored sample would hard-fail whole runs.
+- validation: unit 2011 passed/16 skipped (twice); PR CI 4/4; smoke autofit 10/10,
+  autogalaxy 16/16, autolens 37/37 against the worktree; issue-origin aggregator guides
+  4/4 under `ENV: real_search` (autogalaxy + autolens `samples.py` +
+  `samples_via_aggregator.py`, genuine searches).
+- traps: (1) a targeted-runner CWD outside the workspace silently drops in-file
+  `ENV:` tokens → guides ran in test mode and faked failures on both branches — control
+  test caught it; (2) autocti_workspace pre-existing bugs found (no CI there):
+  `database/start_here.py` reads `info.json` no simulator writes; three scripts
+  hardcode `parameter_lists[9]` (breaks under low-sample profiles) — routed to intake.
+- open siblings: PyAutoFit#1487 (weight-threshold prune keeps zero-weight rows with
+  checks enabled) deliberately NOT fixed here.
+
+## Original prompt
+
 # Reconstructing a stored sample raises through `ignore_assertions=True`
 
 Type: bug

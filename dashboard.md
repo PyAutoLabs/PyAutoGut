@@ -10,10 +10,10 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 3 |
+| [In flight](#in-flight) (`active/`) | 4 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 126 |
+| [Backlog](#backlog) (`draft/`) | 125 |
 
 Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3Aissue+is%3Aopen&type=issues) · [open pull requests](https://github.com/search?q=org%3APyAutoLabs+is%3Apr+is%3Aopen&type=prs)
 
@@ -171,6 +171,14 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
+<details><summary>📋 <a href="active/import_time_lazy_heavy_imports.md">Slow imports: defer jax chain + 5 heavy eager imports</a> — <a href="https://github.com/PyAutoLabs/PyAutoFit/issues/1505">issue #1505</a> — library-dev — issued 2026-08-19, plan approved; implementation starting</summary>
+
+```
+/start_dev active/import_time_lazy_heavy_imports.md
+```
+
+</details>
+
 <details><summary>📋 <a href="active/jax_default_dependency.md">Make JAX a default (non-optional) dependency across the library stack</a> — <a href="https://github.com/PyAutoLabs/PyAutoLens/issues/702">issue #702</a> — shipped-awaiting-release-followups — ALL ELEVEN PRs merged 2026-08-19 (human-authorized):</summary>
 
 ```
@@ -279,7 +287,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**126** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**125** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 31</summary>
@@ -1219,7 +1227,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>refactor</b> — 5</summary>
+<summary><b>refactor</b> — 4</summary>
 
 <details><summary>📋 <a href="draft/refactor/autogalaxy/einstein_radius_jit_native_seed_finder.md"><code>einstein_radius_jit_from</code>: replace static init_guess with a JAX-native seed finder</a> — autogalaxy · too-large · supervised · high</summary>
 
@@ -1241,14 +1249,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/refactor/autofit/split_fitness_batch_size_lh_vs_latent.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/refactor/libraries/import_time_lazy_heavy_imports.md">Slow imports: autolens 4.3s, autogalaxy 3.4s (hygiene perf tier, &gt;3s</a> — libraries · medium · supervised · normal</summary>
-
-```
-/start_dev draft/refactor/libraries/import_time_lazy_heavy_imports.md
 ```
 
 </details>

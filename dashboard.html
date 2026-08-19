@@ -37,7 +37,7 @@ summary{cursor:pointer;font-weight:600;padding:.4rem 0}
 <body>
 <h1>📋 PyAutoMind task dashboard</h1>
 <p>Every task the Mind is holding. Tap a task's 📋 and its <code>/start_dev</code> command is on your clipboard — paste it into a Claude Code chat to route Claude straight to that task.</p>
-<p class="muted">In flight 3 · Parked 3 · Planned 6 · Backlog 126 · <a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/dashboard.md">markdown version</a></p>
+<p class="muted">In flight 4 · Parked 3 · Planned 6 · Backlog 125 · <a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/dashboard.md">markdown version</a></p>
 <h2>Start here</h2>
 <h3>Highest priority <span class="facets">(filed as high) — showing 12 of 23</span></h3>
 <div class="task"><button class="copy" data-cmd="/start_dev draft/triage/jax_zero_contour.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — <span class="facets">medium · safe · high</span></p></div>
@@ -61,6 +61,7 @@ summary{cursor:pointer;font-weight:600;padding:.4rem 0}
 <h2>In flight</h2>
 <p class="muted">Issued — each has an open GitHub issue and usually a branch.</p>
 <div class="task"><button class="copy" data-cmd="/start_dev active/16_transformed_message_factor_gradient_unpack.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/active/16_transformed_message_factor_gradient_unpack.md"><code>@PyAutoFit</code> <code>TransformedMessage.factor_gradient</code> crashes on first call</a> — <a href="https://github.com/PyAutoLabs/PyAutoFit/issues/1501">issue #1501</a> — <span class="facets">HOLD — do not start dev. Fix-or-delete hangs off the PyAutoFit#1498 logpdf-contract</span></p></div>
+<div class="task"><button class="copy" data-cmd="/start_dev active/import_time_lazy_heavy_imports.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/active/import_time_lazy_heavy_imports.md">Slow imports: defer jax chain + 5 heavy eager imports</a> — <a href="https://github.com/PyAutoLabs/PyAutoFit/issues/1505">issue #1505</a> — <span class="facets">library-dev — issued 2026-08-19, plan approved; implementation starting</span></p></div>
 <div class="task"><button class="copy" data-cmd="/start_dev active/jax_default_dependency.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/active/jax_default_dependency.md">Make JAX a default (non-optional) dependency across the library stack</a> — <a href="https://github.com/PyAutoLabs/PyAutoLens/issues/702">issue #702</a> — <span class="facets">shipped-awaiting-release-followups — ALL ELEVEN PRs merged 2026-08-19 (human-authorized):</span></p></div>
 <div class="task"><button class="copy" data-cmd="/start_dev active/to_instance_guard_gap.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/active/to_instance_guard_gap.md">Reconstructing a stored sample raises through <code>ignore_assertions=True</code></a> — <a href="https://github.com/PyAutoLabs/PyAutoFit/issues/1486">issue #1486</a> — <span class="facets">library-shipped, workspace-pending — PyAutoFit hardening shipped as PR#1504 (2026-08-19);</span></p></div>
 <h2>Parked</h2>
@@ -81,7 +82,7 @@ summary{cursor:pointer;font-weight:600;padding:.4rem 0}
 <div class="task"><button class="copy" data-cmd="/route start the planned PyAutoMind task latent-nan-guard-honest-run — its record is in planned.md" aria-label="Copy the Claude command">📋</button><p><b>latent-nan-guard-honest-run</b></p></div>
 </details>
 <h2>Backlog</h2>
-<p class="muted">126 filed prompts, not started — sorted most-pickable first (priority, then size).</p>
+<p class="muted">125 filed prompts, not started — sorted most-pickable first (priority, then size).</p>
 <details>
 <summary>bug — 31</summary>
 <div class="task"><button class="copy" data-cmd="/start_dev draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md">EP hierarchical parent-scale collapse: cure the basin, or document the</a> — <span class="facets">autofit · too-large · human-required · high</span></p></div>
@@ -212,11 +213,10 @@ summary{cursor:pointer;font-weight:600;padding:.4rem 0}
 <div class="task"><button class="copy" data-cmd="/start_dev draft/docs/workspaces/unify_ai_assistant_workspace_readmes.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/docs/workspaces/unify_ai_assistant_workspace_readmes.md">Phase 2: Make workspace READMEs assistant-first</a> — <span class="facets">workspaces</span></p></div>
 </details>
 <details>
-<summary>refactor — 5</summary>
+<summary>refactor — 4</summary>
 <div class="task"><button class="copy" data-cmd="/start_dev draft/refactor/autogalaxy/einstein_radius_jit_native_seed_finder.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/refactor/autogalaxy/einstein_radius_jit_native_seed_finder.md"><code>einstein_radius_jit_from</code>: replace static init_guess with a JAX-native seed finder</a> — <span class="facets">autogalaxy · too-large · supervised · high</span></p></div>
 <div class="task"><button class="copy" data-cmd="/start_dev draft/refactor/autoarray/matern_vendor_bessel_kve.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/refactor/autoarray/matern_vendor_bessel_kve.md">Vendor <code>bessel_kve</code> into autoarray and drop the tensorflow-probability dependency</a> — <span class="facets">autoarray · large · supervised · medium</span></p></div>
 <div class="task"><button class="copy" data-cmd="/start_dev draft/refactor/autofit/split_fitness_batch_size_lh_vs_latent.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/refactor/autofit/split_fitness_batch_size_lh_vs_latent.md">Split <code>Fitness.batch_size</code> into <code>lh_batch_size</code> and <code>latent_batch_size</code></a> — <span class="facets">autofit · small · supervised · normal</span></p></div>
-<div class="task"><button class="copy" data-cmd="/start_dev draft/refactor/libraries/import_time_lazy_heavy_imports.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/refactor/libraries/import_time_lazy_heavy_imports.md">Slow imports: autolens 4.3s, autogalaxy 3.4s (hygiene perf tier, &gt;3s</a> — <span class="facets">libraries · medium · supervised · normal</span></p></div>
 <div class="task"><button class="copy" data-cmd="/start_dev draft/refactor/pyautofit/remove_eden_packaging_tooling.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/refactor/pyautofit/remove_eden_packaging_tooling.md">Remove the dead EDEN packaging tooling from PyAutoFit</a> — <span class="facets">pyautofit · medium · supervised · normal</span></p></div>
 </details>
 <details>

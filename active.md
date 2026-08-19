@@ -70,3 +70,23 @@
 - registered: 2026-08-19 by the wake_up session — the issuing session (claude/autofit-priors-messages-audit-ylvenv)
   filed the prompt + issue but not this entry, tripping Lifecycle Drift on main.
 - repos-none-claimed: this entry claims NO repos — one line deliberately, not 2-space bullets.
+
+## lazy-heavy-imports
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1505
+- status: library-dev — issued 2026-08-19, plan approved; implementation starting
+- worktree: ~/Code/PyAutoLabs-wt/lazy-heavy-imports
+- repos:
+  - PyAutoFit: feature/lazy-heavy-imports
+  - PyAutoArray: feature/lazy-heavy-imports
+  - PyAutoNerves: feature/lazy-heavy-imports
+- prompt: active/import_time_lazy_heavy_imports.md
+- CONFLICT OVERRIDE (deliberate, 2026-08-19, human-approved): `worktree_check_conflict` exits 1 —
+  PyAutoFit is also claimed by `stored-sample-reconstruction-guard` (#1486, library half shipped as
+  PR#1504). FILE-DISJOINT: that task touches `autofit/non_linear/samples/` + `updater.py`; this one
+  touches `autofit/__init__.py`, `non_linear/fitness.py`, `database/sqlalchemy_.py`, `paths/database.py`,
+  search-module annotation headers. Also note `version-stamp-sync-guards` (PyAutoHands#235) has a
+  PyAutoFit branch touching `autofit/__init__.py` version-stamp lines — coordinate at merge if both land.
+- summary: defer jax chain (nufftax/blackjax/optax, measured 1.75s = 43% of import), IPython,
+  sqlalchemy, numba (decoration-time), astropy to first use; dedupe autonerves version warning.
+  Target `import autolens` 4.1s → ≤ ~1.9s. Matplotlib deferral deliberately scoped OUT (no
+  smoke/user win — scripts import aplt anyway).

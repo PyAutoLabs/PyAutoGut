@@ -8,7 +8,7 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 4 |
+| [In flight](#in-flight) (`active/`) | 1 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
 | [Backlog](#backlog) (`draft/`) | 122 |
@@ -186,33 +186,6 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 ## In flight
 
 Issued — each has an open GitHub issue and usually a branch. The full record for each is in [`active.md`](active.md).
-
-- [`@PyAutoFit` Refactor: each density should live in one place, not](active/12_single_source_density_refactor.md) — [issue #1500](https://github.com/PyAutoLabs/PyAutoFit/issues/1500)
-  <details><summary>📋 copy for Claude</summary>
-
-  ```
-  /start_dev active/12_single_source_density_refactor.md
-  ```
-
-  </details>
-
-- [`@PyAutoFit` Refactor: collapse the `Prior` / `Message` two-layer hierarchy](active/13_collapse_prior_and_message.md) — [issue #1500](https://github.com/PyAutoLabs/PyAutoFit/issues/1500)
-  <details><summary>📋 copy for Claude</summary>
-
-  ```
-  /start_dev active/13_collapse_prior_and_message.md
-  ```
-
-  </details>
-
-- [PyAutoReduce validation: slacs1430+4105 ACS reduction vs trusted legacy dataset](active/pyautoreduce_slacs1430_acs_comparison.md)
-  <details><summary>📋 copy for Claude</summary>
-
-  ```
-  /start_dev active/pyautoreduce_slacs1430_acs_comparison.md
-  ```
-
-  </details>
 
 - [Reconstructing a stored sample raises through `ignore_assertions=True`](active/to_instance_guard_gap.md) — [issue #1486](https://github.com/PyAutoLabs/PyAutoFit/issues/1486) — library-dev — WORKSPACE HALF SHIPPED; the PyAutoFit hardening (#1486) is what remains
   <details><summary>📋 copy for Claude</summary>

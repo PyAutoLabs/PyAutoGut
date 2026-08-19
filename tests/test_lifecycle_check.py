@@ -411,18 +411,26 @@ def test_default_fetcher_builds_the_gh_argv_and_parses_state(monkeypatch):
     ]
 
 
-def test_default_fetcher_raises_gh_unavailable_when_gh_is_missing(monkeypatch):
-    """The one error the command turns into "could not run" rather than a
-    finding — so it must be the exception type, not a state string."""
-    import pytest
+def test_default_fetcher_falls_back_to_http_when_gh_is_missing(monkeypatch):
+    """No `gh` (cloud/web sessions, bare CI images) must not mean "could not
+    run": the fetcher falls back to the stdlib HTTPS path and still returns
+    real states. The HTTP helper is stubbed so the test stays offline."""
 
     def _missing(argv):
         raise FileNotFoundError(2, "No such file or directory: 'gh'")
 
     _stub_run(monkeypatch, _missing)
 
-    with pytest.raises(lifecycle.GhUnavailable):
-        lifecycle._gh_issue_states([GHOST_ISSUE])
+    http_calls = []
+
+    def _fake_http(owner, repo, kind, num):
+        http_calls.append((owner, repo, kind, num))
+        return "open"
+
+    monkeypatch.setattr(lifecycle, "_http_api_state", _fake_http)
+
+    assert lifecycle._gh_issue_states([GHOST_ISSUE]) == {GHOST_ISSUE: "open"}
+    assert http_calls == [("FictionalOrg", "FlywheelRepo", "issues", "17")]
 
 
 def test_default_fetcher_reports_a_failed_call_as_unreadable(monkeypatch):
@@ -476,6 +484,113 @@ def test_default_fetcher_reads_each_url_in_a_mixed_batch(monkeypatch):
         GHOST_ISSUE: "open",
         OTHER_ISSUE: "closed",
     }
+
+
+# --------------------------------------------------------------------------- #
+# the online leg — `status: pr-open` PR state
+#
+# The crashed-ship signature: the PR merged but the shipping session died
+# before the bookkeeping, so the tracking issue is still OPEN and the issue
+# leg above stays green. The merged PR is the only signal that survives.
+# --------------------------------------------------------------------------- #
+GHOST_PR = "https://github.com/FictionalOrg/FlywheelRepo/pull/42"
+
+
+def test_merged_pr_on_a_pr_open_entry_is_drift(tmp_path):
+    (tmp_path / "active.md").write_text(
+        _entry("sprocket-calibration").replace(
+            "- status: planned", f"- status: pr-open ({GHOST_PR})")
+    )
+    problems = lifecycle.pr_problems(tmp_path, fetch=_states({GHOST_PR: "merged"}))
+    assert len(problems) == 1
+    assert "MERGED" in problems[0]
+    assert "sprocket-calibration" in problems[0]
+
+
+def test_open_pr_on_a_pr_open_entry_is_not_drift(tmp_path):
+    (tmp_path / "active.md").write_text(
+        _entry("sprocket-calibration").replace(
+            "- status: planned", f"- status: pr-open ({GHOST_PR})")
+    )
+    assert lifecycle.pr_problems(tmp_path, fetch=_states({GHOST_PR: "open"})) == []
+
+
+def test_closed_unmerged_pr_on_a_pr_open_entry_is_drift(tmp_path):
+    """A PR closed without merging is not shipped — but the entry still claims
+    an open PR, so its state is wrong either way and needs a human."""
+    (tmp_path / "active.md").write_text(
+        _entry("sprocket-calibration").replace(
+            "- status: planned", f"- status: pr-open ({GHOST_PR})")
+    )
+    problems = lifecycle.pr_problems(tmp_path, fetch=_states({GHOST_PR: "closed"}))
+    assert len(problems) == 1
+    assert "CLOSED" in problems[0]
+
+
+def test_pr_urls_outside_the_status_field_are_not_tracking_refs(tmp_path):
+    """A shipped task's `library-pr:`/`workspace-pr:` history, or a PR cited in
+    prose, is not a claim of in-flight state — only `status: pr-open` is."""
+    body = _entry(
+        "sprocket-calibration",
+        extra=(
+            f"- library-pr: {GHOST_PR}\n"
+            f"- notes: superseded by {GHOST_PR} long ago\n"
+        ),
+    )
+    (tmp_path / "active.md").write_text(body)
+    assert lifecycle.registry_pr_refs(tmp_path) == []
+    assert lifecycle.pr_problems(tmp_path, fetch=_states({})) == []
+
+
+def test_pr_state_fetcher_builds_the_pulls_argv_with_merged_jq(monkeypatch):
+    """PRs need the merged_at disambiguation: GitHub's `state` is "closed" for
+    both a merged and an abandoned PR, and the two mean opposite things here."""
+    calls = _stub_run(monkeypatch, lambda argv: _Completed(stdout="merged\n"))
+
+    states = lifecycle._gh_pr_states([GHOST_PR])
+
+    assert states == {GHOST_PR: "merged"}
+    assert calls == [
+        [
+            "gh",
+            "api",
+            "repos/FictionalOrg/FlywheelRepo/pulls/42",
+            "--jq",
+            'if .merged_at then "merged" else .state end',
+        ]
+    ]
+
+
+# --------------------------------------------------------------------------- #
+# active/ strays — files the lifecycle tooling cannot see
+#
+# check/orphans/dashboard all scan active/*.md, top level only. Five completed
+# leftovers (three with months-old records) hid in active/ subdirectories and
+# as stray scripts until the 2026-08-19 sweep; this gate makes that class
+# visible hermetically.
+# --------------------------------------------------------------------------- #
+def test_subdirectory_prompt_and_stray_script_are_strays(tmp_path):
+    root = _tree(
+        tmp_path,
+        active=["tracked_task.md"],
+        registries={"active.md": _entry("tracked-task", prompt="active/tracked_task.md")},
+    )
+    sub = root / "active" / "legacy_target"
+    sub.mkdir()
+    (sub / "old_prompt.md").write_text("# pre-migration leftover\n")
+    (root / "active" / "ground_truth.py").write_text("print('retired scratch')\n")
+
+    strays = [str(p.relative_to(root)) for p in lifecycle.active_strays(root)]
+    assert strays == ["active/ground_truth.py", "active/legacy_target/old_prompt.md"]
+
+
+def test_top_level_prompts_are_not_strays(tmp_path):
+    root = _tree(
+        tmp_path,
+        active=["tracked_task.md"],
+        registries={"active.md": _entry("tracked-task", prompt="active/tracked_task.md")},
+    )
+    assert lifecycle.active_strays(root) == []
 
 
 # --------------------------------------------------------------------------- #

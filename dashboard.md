@@ -10,7 +10,7 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 1 |
+| [In flight](#in-flight) (`active/`) | 2 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
 | [Backlog](#backlog) (`draft/`) | 125 |
@@ -162,6 +162,14 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 ## In flight
 
 Issued — each has an open GitHub issue and usually a branch. The full record for each is in [`active.md`](active.md).
+
+<details><summary>📋 <a href="active/16_transformed_message_factor_gradient_unpack.md"><code>@PyAutoFit</code> <code>TransformedMessage.factor_gradient</code> crashes on first call</a></summary>
+
+```
+/start_dev active/16_transformed_message_factor_gradient_unpack.md
+```
+
+</details>
 
 <details><summary>📋 <a href="active/to_instance_guard_gap.md">Reconstructing a stored sample raises through <code>ignore_assertions=True</code></a> — <a href="https://github.com/PyAutoLabs/PyAutoFit/issues/1486">issue #1486</a> — library-dev — WORKSPACE HALF SHIPPED; the PyAutoFit hardening (#1486) is what remains</summary>
 

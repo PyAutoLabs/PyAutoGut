@@ -8,10 +8,10 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 4 |
+| [In flight](#in-flight) (`active/`) | 3 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 128 |
+| [Backlog](#backlog) (`draft/`) | 130 |
 
 ## Start here
 
@@ -167,14 +167,6 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
-<details><summary>📋 <a href="active/brain_readability_pass.md">PyAutoBrain readability pass — README rewrite, root declutter, ORGANISM currency</a> — <a href="https://github.com/PyAutoLabs/PyAutoBrain/issues/237">issue #237</a> — in-dev — issued 2026-08-19, plan approved; implementing on</summary>
-
-```
-/start_dev active/brain_readability_pass.md
-```
-
-</details>
-
 <details><summary>📋 <a href="active/import_time_lazy_heavy_imports.md">Slow imports: defer jax chain + 5 heavy eager imports</a> — <a href="https://github.com/PyAutoLabs/PyAutoFit/issues/1505">issue #1505</a> — library-shipped, awaiting-merge — five PRs open 2026-08-19, all pending-release, all</summary>
 
 ```
@@ -283,10 +275,10 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**128** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**130** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
-<summary><b>bug</b> — 32</summary>
+<summary><b>bug</b> — 33</summary>
 
 <details><summary>📋 <a href="draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md">EP hierarchical parent-scale collapse: cure the basin, or document the</a> — autofit · too-large · human-required · high</summary>
 
@@ -428,6 +420,14 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/bug/howtogalaxy/small_api_drift_ellipse_and_plot_grid_lines.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/pyautobrain/pyautoconf_rename_functional_leftovers.md">PyAutoConf rename leftovers in Brain functional surfaces</a> — pyautobrain · small · supervised · normal</summary>
+
+```
+/start_dev draft/bug/pyautobrain/pyautoconf_rename_functional_leftovers.md
 ```
 
 </details>
@@ -1098,7 +1098,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>docs</b> — 16</summary>
+<summary><b>docs</b> — 17</summary>
 
 <details><summary>📋 <a href="draft/docs/workspaces/cluster_regime_narrative.md">Cluster package: point-source-default narrative + extended-source follow-up feature</a> — workspaces · medium · supervised · high</summary>
 
@@ -1136,6 +1136,14 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/docs/autolens_workspace/markdown_regeneration_sigma_min.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/docs/pyautobrain/rtd_organism_currency.md">RTD organism docs currency: Nerves page, organ-count drift, hands.md rename</a> — pyautobrain · small · supervised · normal</summary>
+
+```
+/start_dev draft/docs/pyautobrain/rtd_organism_currency.md
 ```
 
 </details>

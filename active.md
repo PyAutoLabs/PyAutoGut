@@ -2,54 +2,19 @@
 
 ## jax-default-dependency
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/702
-- status: workspace-dev — library PRs open + merging (human-authorized 2026-08-19); jax-0.11 cap widen
-  REVERTED on PyAutoNerves#150 (commit 848a254; jax 0.11.1 breaks autofit message log_partition — tracked
-  in draft/bug/autofit/jax_011_message_log_partition_tuple_shape.md). Workspace half in progress: docs-only
-  migration of `[jax]`-extra prose (start_here prose is tutorial-register → judgment tier). Post-release
-  follow-up: bump intra-family floors to the first promoted version.
-- library-pr:
-  - PyAutoNerves: https://github.com/PyAutoLabs/PyAutoNerves/pull/150
-  - PyAutoFit: https://github.com/PyAutoLabs/PyAutoFit/pull/1503
-  - PyAutoArray: https://github.com/PyAutoLabs/PyAutoArray/pull/450
-  - PyAutoGalaxy: https://github.com/PyAutoLabs/PyAutoGalaxy/pull/574
-  - PyAutoLens: https://github.com/PyAutoLabs/PyAutoLens/pull/703
-  - PyAutoHeart: https://github.com/PyAutoLabs/PyAutoHeart/pull/150
-- repos (workspace half):
-  - autolens_workspace: feature/jax-default-dependency
-  - autogalaxy_workspace: feature/jax-default-dependency
-  - autofit_workspace: feature/jax-default-dependency
-  - HowToLens: feature/jax-default-dependency
-  - HowToGalaxy: feature/jax-default-dependency
-- workspace-pr (all pending-release — merge only AFTER the promoted release ships; prose claims default-JAX):
-  - autolens_workspace: https://github.com/PyAutoLabs/autolens_workspace/pull/486
-  - autogalaxy_workspace: https://github.com/PyAutoLabs/autogalaxy_workspace/pull/212
-  - autofit_workspace: https://github.com/PyAutoLabs/autofit_workspace/pull/139
-  - HowToLens: https://github.com/PyAutoLabs/HowToLens/pull/71
-  - HowToGalaxy: https://github.com/PyAutoLabs/HowToGalaxy/pull/67
-- merged (2026-08-19, human-authorized): ALL SIX library PRs — PyAutoHeart#150, PyAutoNerves#150,
-  PyAutoFit#1503, PyAutoArray#450, PyAutoGalaxy#574, PyAutoLens#703. main CI green everywhere incl.
-  the new nojax leg. The leg caught two real bugs on day one: unmarked jax-requiring test in autolens
-  potential_correction (94d8f54ba) and NumPy-scalar misrouting in autofit Beta/Gamma/Normal message
-  dispatch — np.generic added (19c679583).
+- status: shipped-awaiting-release-followups — ALL ELEVEN PRs merged 2026-08-19 (human-authorized):
+  six library (PyAutoHeart#150, PyAutoNerves#150, PyAutoFit#1503, PyAutoArray#450, PyAutoGalaxy#574,
+  PyAutoLens#703) + five workspace (autolens_workspace#486, autogalaxy_workspace#212,
+  autofit_workspace#139, HowToLens#71, HowToGalaxy#67; pending-release hold waived by human — prose-only,
+  few-hour docs-ahead window until the nightly). Worktree removed, claims released, branches deleted.
+- nojax CI leg caught two real bugs day one: unmarked jax-requiring autolens test (94d8f54ba);
+  NumPy-scalar misrouting in autofit Beta/Gamma/Normal message dispatch (19c679583).
+- jax cap stays <0.11 (widen reverted 848a254; jax 0.11 bug prompt:
+  draft/bug/autofit/jax_011_message_log_partition_tuple_shape.md).
 - NEXT (release-blocked; nightly 02:00 UTC): (1) bump intra-family floors `>=2026.7.29.2` → first
-  promoted version in all five pyprojects; (2) merge the five workspace PRs; (3) later, make
+  promoted version in all five pyprojects, then move this task to complete/; (2) later, make
   unittest-nojax a required check once it has green history.
-- worktree: ~/Code/PyAutoLabs-wt/jax-default-dependency
-- repos:
-  - PyAutoNerves: feature/jax-default-dependency
-  - PyAutoFit: feature/jax-default-dependency
-  - PyAutoArray: feature/jax-default-dependency
-  - PyAutoGalaxy: feature/jax-default-dependency
-  - PyAutoLens: feature/jax-default-dependency
-  - PyAutoHeart: feature/jax-default-dependency
 - prompt: active/jax_default_dependency.md
-- CONFLICT OVERRIDE (deliberate, 2026-08-19): `worktree_check_conflict` exits 1 — PyAutoFit is also
-  claimed by `stored-sample-reconstruction-guard` (PyAutoFit#1486). Proceeding authorized by the human
-  after verifying near-disjoint scope: this task touches only `PyAutoFit/pyproject.toml` (dependency
-  promotion); that task touches `autofit/non_linear/samples/`. Accepted risk: trivial merge conflict.
-- decisions (human, 2026-08-19): jax/jaxlib declared with environment markers
-  (`sys_platform != "darwin" or platform_machine == "arm64"`) so Intel Macs resolve to NumPy-only;
-  `[jax]` extras kept as no-op aliases; cap widened to `<0.12.0`; no-JAX CI leg in Heart lib-tests.yml.
 
 ## stored-sample-reconstruction-guard
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1486

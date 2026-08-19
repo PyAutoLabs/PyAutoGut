@@ -3,6 +3,10 @@
 - completed: 2026-08-19
 - workspace-prs: autofit_workspace#141, autogalaxy_workspace#213, autolens_workspace#487,
   autocti_workspace#22 (all merged)
+- notebook-regen-prs: autofit_workspace#142, autogalaxy_workspace#214, autolens_workspace#488
+  (all merged) — those three workspaces' AGENTS.md require committing regenerated .ipynb twins
+  alongside script changes; autocti_workspace's says release-time regeneration, so it has none.
+  See [[feedback_notebook_regen_convention_differs_per_workspace]].
 - summary: results/database/aggregator tutorials hardcoded stored-sample index 9 ("the tenth
   sample") in `parameter_lists[9][k]` and the four figure-of-merit `[9]` prints — IndexError
   for any stored run with <10 samples (test-mode sweeps). Unified the family to the final

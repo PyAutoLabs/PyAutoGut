@@ -8,10 +8,10 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 4 |
+| [In flight](#in-flight) (`active/`) | 3 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 133 |
+| [Backlog](#backlog) (`draft/`) | 135 |
 
 ## Start here
 
@@ -139,6 +139,14 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 </details>
 
+<details><summary>📋 <a href="draft/maintenance/pyautohands/hands_hygiene_leftovers.md">Hands hygiene: expired announcement dead code, unregistered modules</a> — pyautohands · small · safe · low</summary>
+
+```
+/start_dev draft/maintenance/pyautohands/hands_hygiene_leftovers.md
+```
+
+</details>
+
 <details><summary>📋 <a href="draft/maintenance/workspaces/latex_raw_string_docstrings.md">Raw-string the LaTeX docstrings emitting SyntaxWarnings (HowToFit + HowToLens)</a> — workspaces · small · safe · low</summary>
 
 ```
@@ -175,15 +183,7 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
-<details><summary>📋 <a href="active/release_board.md">PyAutoHands release board with one-tap copy-for-Claude commands</a> — <a href="https://github.com/PyAutoLabs/PyAutoHands/issues/239">issue #239</a> — in-dev — issued 2026-08-19, plan approved; implementing on</summary>
-
-```
-/start_dev active/release_board.md
-```
-
-</details>
-
-<details><summary>📋 <a href="active/sub_312_pip_install_backtracks_silently.md">Sub-3.12 <code>pip install</code> silently backtracks to the stale pre-floor release</a></summary>
+<details><summary>📋 <a href="active/sub_312_pip_install_backtracks_silently.md">Sub-3.12 <code>pip install</code> silently backtracks to the stale pre-floor release</a> — <a href="https://github.com/PyAutoLabs/PyAutoHands/issues/238">issue #238</a> — in-flight — issued 2026-08-19 by a concurrent session; this entry registered by</summary>
 
 ```
 /start_dev active/sub_312_pip_install_backtracks_silently.md
@@ -283,7 +283,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**133** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**135** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 35</summary>
@@ -571,7 +571,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>feature</b> — 27</summary>
+<summary><b>feature</b> — 28</summary>
 
 <details><summary>📋 <a href="draft/feature/autofit/clipper_in_search_identifier.md">Decide whether the clipper belongs in the search identifier</a> — autofit · medium · human-required · high</summary>
 
@@ -761,6 +761,14 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/feature/autogalaxy/dpie_sigma0_parameterization.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/pyautohands/release_board_run_logs_enrichment.md">Release board: local run_logs enrichment</a> — pyautohands · small · supervised · low</summary>
+
+```
+/start_dev draft/feature/pyautohands/release_board_run_logs_enrichment.md
 ```
 
 </details>
@@ -965,7 +973,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>maintenance</b> — 19</summary>
+<summary><b>maintenance</b> — 20</summary>
 
 <details><summary>📋 <a href="draft/maintenance/autolens_workspace_developer/rectangular_experiments_gut_stash.md">autolens_workspace_developer rectangular experiments — Gut stash + rename</a> — autolens_workspace_developer · small · supervised · normal</summary>
 
@@ -1083,6 +1091,14 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/maintenance/autolens_workspace/latex_docstrings_invalid_escape_warnings.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/maintenance/pyautohands/hands_hygiene_leftovers.md">Hands hygiene: expired announcement dead code, unregistered modules</a> — pyautohands · small · safe · low</summary>
+
+```
+/start_dev draft/maintenance/pyautohands/hands_hygiene_leftovers.md
 ```
 
 </details>

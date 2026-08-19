@@ -263,6 +263,17 @@ One `##` block per item. Fields:
 - breaks-if-wrong: loses the morning-status-workflow prototype work; recoverable via `pyauto-gut recover pyautomind-feature-morning-status-workflow` until voided.
 - archive-ref: refs/heads/archive/condemned/pyautomind-feature-morning-status-workflow on PyAutoMind origin (13ecca7)
 
+## potential-correction-validation-artifacts
+- type: file
+- locator: ~/Code/PyAutoLabs/potential_correction_validation_artifacts/ (19 files, 688K — loose workspace-root dir, was in no git repo)
+- confidence: n/a — not condemned; archived as a durable BACKUP on explicit human request 2026-08-19
+- reason: artifacts of the closed potential-correction-validation campaign (PyAutoLens#672, closed 2026-08-01): phase 2 JAX-vs-Python parity results (phase2_results/*.npz), phase 3 evidence-grid results (subhalo_recovery_evidence_*.npz, iter_point_*.npz), diagnostic/run scripts, chain logs, and the phase 4 algorithm_review_report.md. Moved off the workspace root into the Gut attic; local copy deleted after ls-remote verification.
+- merged: n/a
+- condemned: 2026-08-19
+- sweep-after: never — backup, void only on explicit human request
+- breaks-if-wrong: loses the campaign's raw numerical evidence and the algorithm review report; recoverable via `pyauto-gut recover potential-correction-validation-artifacts` (run from the PyAutoGut checkout), then check out the branch to reabsorb.
+- archive-ref: refs/heads/archive/condemned/potential-correction-validation-artifacts on PyAutoGut origin (716826e, orphan commit, 19 files)
+
 ## pyautomind/stash-pre-sync-2026-07-06
 - type: stash
 - locator: stash@{0} (PyAutoMind) — "pre-sync local PyAutoMind edits 2026-07-06 (restored after accidental drop)"

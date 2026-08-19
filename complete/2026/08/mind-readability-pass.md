@@ -1,3 +1,52 @@
+- issue: https://github.com/PyAutoLabs/PyAutoMind/issues/248 (closed on ship)
+- shipped: 2026-08-19 — Mind + Heart direct on main; Brain via PR
+  https://github.com/PyAutoLabs/PyAutoBrain/pull/236 (squash-merged `4ff5919`)
+- classification: maintenance (PyAutoMind primary; PyAutoBrain renderer; PyAutoHeart comments)
+- summary: made PyAutoMind legible to an external viewer. Census (two sweeps: staleness +
+  reference blast-radius) → root declutter instead of a `mind/` folder move (human-decided:
+  `active.md`/`planned.md` are parsed by path from Brain, Heart, 3 workflows, ~30 skills and
+  the spawn template contract — moving the ledger is a staged migration if ever wanted, not
+  a tidy-up). README rewritten around a step-by-step "How PyAutoMind works"; dashboard header
+  trimmed at the renderer; generated clickable contents blocks added to the long registry files.
+- shipped changes:
+  - README.md: 4-line opening, dashboard-in-practice paragraph, sequential capture → start →
+    develop → complete guide with GitHub folder links (replaced the "What lives here" table).
+  - Dashboard header (Brain `_intake.py` `render_dashboard`): one-tap-copy phone line first,
+    two-sentence description, dropped the "Tasks only —" and "Live on GitHub" lines and the
+    now-unused `GH_SEARCH` constant; HTML twin intro was already concise, untouched.
+  - New `scripts/registry_toc.py` + 8 tests: `<!-- toc:start/end -->` contents block above the
+    first `##` of planned/parked/condemned (GitHub-slug anchors, fence-aware, min 3 sections);
+    self-healed by `dashboard_refresh.yml` on the dashboard contract (PR fail / main heal);
+    `condemned.md` added to that workflow's path filters.
+  - Root declutter: `AI_POLICY.md` + `CONTRIBUTING.md` → `.github/` (GitHub resolves
+    community-health files there; spawn manifest/spec/tests updated in lockstep — Memory's
+    copies deliberately stay at root); stale `overview.md` deleted; fully-consumed `queue.md`
+    emptied (file kept — `/register_and_iterate` + spawn contract read it by path); the four
+    uncalled `scripts/health*.sh` forwarding shims deleted after repointing Heart's three
+    usage comments (`~/.bashrc` verified to source the Heart paths directly);
+    `skills/OWNERSHIP.md` trimmed from a completed-migration record (dead `autoprompt/`,
+    `admin_jammy/skills/` paths) to the current ownership table; `lifecycle_drift.yml`
+    dropped its retired `complete.md` path filters (#81); `.pytest_cache/` gitignored;
+    360 MB of untracked `tmp/` scratch removed locally.
+- validation: PyAutoMind 154/154 tests; Brain `test_intake_dashboard.py` 20/20 (PR CI green
+  on 3.12 + 3.13); `lifecycle.py check` OK with TOC blocks in place (parsers key on `## `
+  and ignore the block); dashboard `--check` converges post-regeneration; Dashboard Refresh
+  + Lifecycle Drift green on every push.
+- key traps:
+  - The dashboard header lives in the RENDERER (`PyAutoBrain/agents/conductors/intake/_intake.py`),
+    not the page — hand-edits are reverted by the self-heal, and the Brain PR must merge
+    before the Mind page is regenerated (dashboard_refresh checks against Brain main).
+  - The spawn template contract lists registry files BY PATH (`scripts/spawn.py` MIND_RULES);
+    any root-file move/delete must update manifest + `spawn_spec.md` + both spawn tests in
+    lockstep or spawn fails UNMATCHED (by design).
+  - Census follow-ups deliberately not fixed here, filed as drafts:
+    `draft/refactor/pyautomind/repos_sync_check_dedup.md`,
+    `draft/bug/pyautomind/status_sh_repos_missing_source.md`. The RED
+    `registry_reconcile.yml` run (2026-08-19 06:23) was real drift that self-resolved —
+    `lifecycle.py issues` OK by evening, no action.
+
+## Original prompt
+
 # PyAutoMind human-readability pass — census cleanup, dashboard/README rewrite, registry TOCs
 
 Type: maintenance

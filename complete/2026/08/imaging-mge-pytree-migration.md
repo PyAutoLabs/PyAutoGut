@@ -1,3 +1,28 @@
+- issue: none — pre-lifecycle-migration prompt (old `active/<target>/` layout); never issued
+- completed: retroactively logged by the 2026-08-19 completed-tasks reconcile sweep
+- repos: autolens_workspace_developer
+
+## Summary
+
+Retroactively logged. The prompt asked for
+`jax_profiling/imaging/mge.py` to migrate its JIT'd closure from a flat 1D
+parameter vector (`jnp_params`, `model.instance_from_vector` at the JIT
+boundary) to pytree-native inputs. The `jax_profiling/` tree was since
+restructured and the ask is delivered in the current
+`jax_profiling/gradient/imaging/mge.py` (verified on
+autolens_workspace_developer main `c5cccb8`, 2026-08-19): the script
+registers the model as a JAX pytree via `autofit.jax.register_model`,
+converts the sampled `ModelInstance` into a JAX-array-valued pytree, and
+each step closure differentiates w.r.t. that pytree — the parameter-identity
+and vmap-batching goals of the prompt.
+
+The prompt file sat unclaimed in `active/autolens_workspace_developer/`
+(a pre-migration subdirectory invisible to `lifecycle.py check`/`orphans`,
+which only scan `active/*.md`) from before the 2026-07-13 lifecycle
+migration until this sweep retired it.
+
+## Original prompt
+
 # Imaging MGE JAX JIT Profiling — Migrate to Pytree Inputs
 
 ## Context

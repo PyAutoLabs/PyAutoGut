@@ -8,7 +8,7 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 5 |
+| [In flight](#in-flight) (`active/`) | 4 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
 | [Backlog](#backlog) (`draft/`) | 122 |
@@ -219,15 +219,6 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
   ```
   /start_dev active/to_instance_guard_gap.md
-  ```
-
-  </details>
-
-- [Version-stamp sync to 2026.8.17.1 + release-sed guards](active/version_stamp_sync_and_release_sed_guards.md) — [issue #235](https://github.com/PyAutoLabs/PyAutoHands/issues/235) — pr-open (https://github.com/PyAutoLabs/PyAutoLens/pull/700)
-  <details><summary>📋 copy for Claude</summary>
-
-  ```
-  /start_dev active/version_stamp_sync_and_release_sed_guards.md
   ```
 
   </details>

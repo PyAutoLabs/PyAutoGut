@@ -37,6 +37,8 @@ Subcommands
             fallback, and into the state folder its registry implies
           * no slug is listed in two registries at once
           * no active/ prompt is left unclaimed by every registry
+          * nothing lives under active/ except top-level prompt .md files
+            (subdirectories and scripts are invisible to every other guard)
         Wire into /health and CI.
 
   orphans
@@ -44,10 +46,15 @@ Subcommands
         entry claims. `check` grades this too — this lists only them.
 
   issues
-        The ONLINE leg (needs `gh` + network, so deliberately not part of
-        `check`): every registry entry's tracking issue cross-checked against
-        GitHub. Catches finished work still listed as pending — the class no
-        offline check can see.
+        The ONLINE leg (needs network — `gh` when installed, else plain HTTPS
+        with an optional GITHUB_TOKEN; deliberately not part of `check`, which
+        stays hermetic): every registry entry's tracking issue AND every
+        `status: pr-open` PR cross-checked against GitHub. Catches finished
+        work still listed as pending — including the crashed-ship case where
+        the PR merged but the session died before closing the issue, so the
+        issue leg alone stays green. Run daily by registry_reconcile.yml
+        (instance automation — deliberately not part of the shipped
+        lifecycle_drift.yml, which must stay schedule-free per spawn rule 9).
 
 This file is intentionally stdlib-only (no PyAuto imports) so it runs in any
 environment, including a bare template checkout.
@@ -246,6 +253,16 @@ def registry_problems(root: Path) -> "list[str]":
 ISSUE_FIELDS = ("issue", "epic")
 ISSUE_URL_RE = re.compile(r"https://github\.com/([\w.-]+)/([\w.-]+)/issues/(\d+)")
 
+# The one PR reference that IS tracking state: a `status:` field declaring the
+# task is waiting on an open PR. When that PR merges, the ship bookkeeping
+# (record + retire + issue close) is owed — and if the shipping session dies
+# first, the entry goes stale with its tracking ISSUE still open, which is
+# exactly the case the issue leg above cannot see. (version-stamp-sync-guards,
+# 2026-08-17: six PRs merged, session died after the "Shipped" comment; found
+# two days later only by a manual sweep.)
+PR_URL_RE = re.compile(r"https://github\.com/([\w.-]+)/([\w.-]+)/pull/(\d+)")
+PR_OPEN_TOKEN = "pr-open"
+
 
 class GhUnavailable(RuntimeError):
     """`gh` is not installed. Distinct from "gh ran and said no" so the command
@@ -268,29 +285,81 @@ def registry_issue_refs(root: Path) -> "list[tuple[str, str, str]]":
     return refs
 
 
-def _gh_issue_states(urls: "list[str]") -> "dict[str, str]":
-    """{url: state} via the `gh` CLI. Requires gh + network; online leg only."""
+def _http_api_state(owner: str, repo: str, kind: str, num: str) -> str:
+    """One GitHub REST read via stdlib urllib — the gh-free fallback path.
+
+    `kind` is "issues" or "pulls". Sends `GITHUB_TOKEN`/`GH_TOKEN` when set
+    (CI runners always have one; anonymous works for public repos, rate-limited).
+    Returns "merged" for a merged PR, else the API `state`, else "unreadable: …"
+    — never raises, so one dead URL cannot sink the whole report."""
+    import json
+    import os
+    import urllib.error
+    import urllib.request
+
+    req = urllib.request.Request(
+        f"https://api.github.com/repos/{owner}/{repo}/{kind}/{num}",
+        headers={
+            "Accept": "application/vnd.github+json",
+            "User-Agent": "pyautomind-lifecycle",
+        },
+    )
+    token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")
+    if token:
+        req.add_header("Authorization", f"Bearer {token}")
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            data = json.load(resp)
+    except urllib.error.HTTPError as e:
+        return f"unreadable: HTTP {e.code}"
+    except Exception as e:  # URLError, timeout, bad JSON — report, don't crash
+        return f"unreadable: {e.__class__.__name__}"
+    if kind == "pulls" and data.get("merged_at"):
+        return "merged"
+    return data.get("state", "unknown")
+
+
+def _states_via_gh_or_http(urls: "list[str]", url_re: "re.Pattern",
+                           kind: str, jq: str) -> "dict[str, str]":
+    """{url: state} via the `gh` CLI, falling back to plain HTTPS when gh is
+    not installed (cloud/web sessions, bare CI images). Online leg only."""
     import subprocess
 
     states: "dict[str, str]" = {}
+    gh_missing = False
     for url in urls:
-        m = ISSUE_URL_RE.match(url)
+        m = url_re.match(url)
         if not m:
             continue
         owner, repo, num = m.groups()
+        if gh_missing:
+            states[url] = _http_api_state(owner, repo, kind, num)
+            continue
         try:
             r = subprocess.run(
-                ["gh", "api", f"repos/{owner}/{repo}/issues/{num}", "--jq", ".state"],
+                ["gh", "api", f"repos/{owner}/{repo}/{kind}/{num}", "--jq", jq],
                 capture_output=True, text=True,
             )
         except FileNotFoundError:
-            raise GhUnavailable
+            gh_missing = True
+            states[url] = _http_api_state(owner, repo, kind, num)
+            continue
         if r.returncode != 0:
             tail = (r.stderr.strip().splitlines() or ["error"])[-1]
             states[url] = f"unreadable: {tail}"
             continue
         states[url] = r.stdout.strip()
     return states
+
+
+def _gh_issue_states(urls: "list[str]") -> "dict[str, str]":
+    return _states_via_gh_or_http(urls, ISSUE_URL_RE, "issues", ".state")
+
+
+def _gh_pr_states(urls: "list[str]") -> "dict[str, str]":
+    return _states_via_gh_or_http(
+        urls, PR_URL_RE, "pulls",
+        'if .merged_at then "merged" else .state end')
 
 
 def issue_problems(root: Path, fetch=None) -> "list[str]":
@@ -315,6 +384,53 @@ def issue_problems(root: Path, fetch=None) -> "list[str]":
             )
         elif state != "open":
             problems.append(f"{reg}: {slug}: could not read issue state ({state}): {url}")
+    return problems
+
+
+def registry_pr_refs(root: Path) -> "list[tuple[str, str, str]]":
+    """(registry, slug, pr_url) for every entry whose `status:` declares an
+    open PR. Only the `status:` field is read — a PR URL anywhere else in the
+    entry (prose, `library-pr:` history) is not a claim of in-flight state."""
+    refs = []
+    for reg in REGISTRY_FILES:
+        for slug, fields in registry_entries(root / reg):
+            status = fields.get("status", "")
+            if PR_OPEN_TOKEN not in status:
+                continue
+            for m in PR_URL_RE.finditer(status):
+                refs.append((reg, slug, m.group(0)))
+    return refs
+
+
+def pr_problems(root: Path, fetch=None) -> "list[str]":
+    """Registry entries whose `status: pr-open` PR is no longer open.
+
+    The complement of `issue_problems`: when a shipping session dies between
+    the merge and the bookkeeping, the tracking issue is never closed — so the
+    issue leg stays green while the entry rots. The merged PR is the one
+    signal that survives the crash. `fetch` is injectable for tests."""
+    refs = registry_pr_refs(root)
+    if not refs:
+        return []
+    fetch = fetch or _gh_pr_states
+    states = fetch([url for _, _, url in refs])
+
+    problems = []
+    for reg, slug, url in refs:
+        state = states.get(url, "unknown")
+        if state == "merged":
+            problems.append(
+                f"{reg}: {slug}: status says pr-open but the PR is MERGED — "
+                f"the ship bookkeeping (record + retire + issue close) was "
+                f"never done: {url}"
+            )
+        elif state == "closed":
+            problems.append(
+                f"{reg}: {slug}: status says pr-open but the PR was CLOSED "
+                f"without merging: {url}"
+            )
+        elif state != "open":
+            problems.append(f"{reg}: {slug}: could not read PR state ({state}): {url}")
     return problems
 
 
@@ -489,9 +605,10 @@ def draft_gate_notes(root: Path, fetch=None) -> "dict[str, list[str]]":
 
 
 def cmd_issues(args) -> int:
-    """Cross-check every registry entry's tracking issue against GitHub."""
+    """Cross-check every registry entry's tracking issue AND every
+    `status: pr-open` PR against GitHub."""
     try:
-        problems = issue_problems(ROOT)
+        problems = issue_problems(ROOT) + pr_problems(ROOT)
     except GhUnavailable:
         print(
             "lifecycle issues: cannot run — the `gh` CLI is not installed.\n"
@@ -500,6 +617,18 @@ def cmd_issues(args) -> int:
             "  session that has it.",
             file=sys.stderr,
         )
+        return 2
+    n_refs = len(registry_issue_refs(ROOT)) + len(registry_pr_refs(ROOT))
+    if problems and n_refs and all("could not read" in p for p in problems) \
+            and len(problems) == n_refs:
+        print(
+            "lifecycle issues: cannot run — GitHub is unreachable from here\n"
+            "  (every state read failed). Run from a session with GitHub\n"
+            "  access, or set GITHUB_TOKEN for the HTTPS fallback.",
+            file=sys.stderr,
+        )
+        for line in problems[:3]:
+            print(f"    e.g. {line}", file=sys.stderr)
         return 2
     notes = []
     gates = {"shipped": [], "unblocked": [], "partial": [], "unreadable": []}
@@ -515,7 +644,9 @@ def cmd_issues(args) -> int:
         for line in problems:
             print(f"  - {line}")
     else:
-        print(f"lifecycle issues: OK ({len(registry_issue_refs(ROOT))} tracking issue(s) open)")
+        print(
+            f"lifecycle issues: OK ({len(registry_issue_refs(ROOT))} tracking "
+            f"issue(s) open, {len(registry_pr_refs(ROOT))} pr-open PR(s) open)")
 
     # Declared gates first: the prompt author said which reading applies, so
     # these are actionable rather than a question. Still advisory — retiring a
@@ -550,6 +681,30 @@ def cmd_issues(args) -> int:
             print(f"  ? {line}")
 
     return 1 if problems else 0
+
+
+def active_strays(root: Path) -> "list[Path]":
+    """Files under active/ the lifecycle tooling cannot see.
+
+    `check`, `orphans` and the dashboard all scan `active/*.md` — top level
+    only. Anything else under active/ (a pre-migration `active/<target>/`
+    subdirectory, a stray script) is therefore invisible to every guard, which
+    is how five completed leftovers sat there for a month+ until the
+    2026-08-19 sweep: three prompts whose completion records had existed since
+    May/July, and two retired ground-truth scripts. A prompt belongs at
+    `active/<name>.md`; anything else belongs in another state folder or in
+    `complete/archive/`."""
+    active_dir = root / "active"
+    if not active_dir.is_dir():
+        return []
+    strays = []
+    for f in sorted(active_dir.rglob("*")):
+        if f.is_dir():
+            continue
+        if f.parent == active_dir and f.suffix == ".md":
+            continue
+        strays.append(f)
+    return strays
 
 
 def orphan_prompts(root: Path) -> "list[Path]":
@@ -922,6 +1077,11 @@ def cmd_check(args) -> int:
         f"active/ prompt no registry entry claims: {f.relative_to(ROOT)}"
         for f in orphan_prompts(ROOT)
     )
+    problems.extend(
+        f"active/ stray the lifecycle tooling cannot see (retire, or re-home "
+        f"to a state folder): {f.relative_to(ROOT)}"
+        for f in active_strays(ROOT)
+    )
 
     if problems:
         print("lifecycle check: DRIFT")
@@ -960,7 +1120,9 @@ def main() -> int:
     c.set_defaults(func=cmd_check)
 
     iss = sub.add_parser(
-        "issues", help="cross-check registry tracking issues against GitHub (needs gh)"
+        "issues",
+        help="cross-check registry tracking issues + pr-open PRs against "
+             "GitHub (needs gh, or network + optional GITHUB_TOKEN)",
     )
     iss.add_argument("--drafts", action="store_true",
                      help="also flag draft/ prompts citing a closed issue (advisory)")

@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1028 records across 7 buckets.
+1031 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -74,6 +74,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [hygiene-detail-flag](2026/08/hygiene-detail-flag.md)
 - [hygiene-gone-ref-counter](2026/08/hygiene-gone-ref-counter.md) — the prompt was never issued — the defects were fixed under other issues, see below
 - [hygiene-howto-refs-docstrings](2026/08/hygiene-howto-refs-docstrings.md)
+- [imaging-mge-pytree-migration](2026/08/imaging-mge-pytree-migration.md)
 - [inference-method-cards-seed](2026/08/inference-method-cards-seed.md)
 - [inference-programme-ledger](2026/08/inference-programme-ledger.md)
 - [interferometer-delaunay-flaky-fitexception](2026/08/interferometer-delaunay-flaky-fitexception.md)
@@ -121,6 +122,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [pyautofit_plot_rst_dead_plotters](2026/08/pyautofit_plot_rst_dead_plotters.md)
 - [pyautogalaxy-mge-sigma-test](2026/08/pyautogalaxy-mge-sigma-test.md)
 - [reconcile-upstream-repo-mode](2026/08/reconcile-upstream-repo-mode.md)
+- [rectangular-spline-adapt-image-jit-fix](2026/08/rectangular-spline-adapt-image-jit-fix.md)
 - [registry-integrity-check](2026/08/registry-integrity-check.md)
 - [regularization-jax-gradient-gaps](2026/08/regularization-jax-gradient-gaps.md)
 - [release-drive-2026-08-03](2026/08/release-drive-2026-08-03.md)
@@ -150,6 +152,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [transformed-message-semantics-doc](2026/08/transformed-message-semantics-doc.md)
 - [uniform-prior-bounds-numpy-path](2026/08/uniform-prior-bounds-numpy-path.md) — auto-closed by the merge's `Closes` line
 - [version-skew-yank-awareness](2026/08/version-skew-yank-awareness.md)
+- [version-stamp-sync-guards](2026/08/version-stamp-sync-guards.md) — closed by the 2026-08-19 reconcile sweep — see traps
 - [wiki-provenance-restamp](2026/08/wiki-provenance-restamp.md)
 - [worktree-claim-parser-forms](2026/08/worktree-claim-parser-forms.md) — CLOSED completed
 - [yang24-sidm-gravothermal-profile](2026/08/yang24-sidm-gravothermal-profile.md)

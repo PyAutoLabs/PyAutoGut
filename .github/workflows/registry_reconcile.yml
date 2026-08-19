@@ -1,0 +1,34 @@
+name: Registry Reconcile
+
+# The ONLINE lifecycle leg (`lifecycle.py issues`): registry entries
+# cross-checked against live GitHub — a tracking issue closed, or a
+# `status: pr-open` PR merged, while the entry still reads pending. That
+# second case is the crashed-ship signature (2026-08-17,
+# version-stamp-sync-guards: six PRs merged, the session died before the
+# bookkeeping, and no offline check could see it). A red run means finished
+# work is still listed as pending: run the wrap-up (record + retire + issue
+# close), don't silence the job.
+#
+# Instance automation, NOT shipped into the fresh-slate template (spawn spec
+# rule 9c): it runs on a schedule and reads sibling-repo issue/PR state
+# across the org, neither of which a freshly-spawned repo can satisfy.
+# lifecycle_drift.yml stays the hermetic shipped guard; this file is the
+# networked companion that must live outside it.
+
+on:
+  schedule:
+    - cron: "23 6 * * *"   # daily 06:23 UTC — offset to dodge top-of-hour load
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: registry state vs GitHub (closed issues / merged pr-open PRs still listed pending)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 scripts/lifecycle.py issues

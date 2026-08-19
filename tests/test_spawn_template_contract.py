@@ -93,6 +93,7 @@ GITHUB_FILES = {
     ".github/workflows/lifecycle_drift.yml": _real("lifecycle_drift.yml"),
     ".github/workflows/spawn_drift.yml": _real("spawn_drift.yml"),
     ".github/workflows/dashboard_refresh.yml": _real("dashboard_refresh.yml"),
+    ".github/workflows/registry_reconcile.yml": _real("registry_reconcile.yml"),
     ".github/workflows/morning_status.yml": (
         "name: digest\non:\n  schedule:\n    - cron: \"0 6 * * *\"\n"
         "jobs:\n  d:\n    runs-on: ubuntu-latest\n    steps:\n"
@@ -117,6 +118,9 @@ DROPPED_GITHUB = [
     # rule 9c: checks out PyAutoLabs/PyAutoBrain for the dashboard renderer,
     # which a freshly-spawned org does not have.
     ".github/workflows/dashboard_refresh.yml",
+    # rule 9c: the online lifecycle leg — scheduled, and reads sibling-repo
+    # issue/PR state, so it can neither auto-run nor succeed on a fresh org.
+    ".github/workflows/registry_reconcile.yml",
     ".github/workflows/morning_status.yml",
     ".github/workflows/morning_health.yml",
     ".github/workflows/arxiv_papers.yml",

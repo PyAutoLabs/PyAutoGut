@@ -1,3 +1,30 @@
+- issue: none — pre-lifecycle-migration prompt (old `active/<target>/` layout); never issued
+- completed: retroactively logged by the 2026-08-19 completed-tasks reconcile sweep
+- repos: autolens_workspace_developer
+
+## Summary
+
+Retroactively logged. The prompt reported `RectangularSplineAdaptImage`
+crashing on its first JIT call (`AttributeError: 'NoneType' object has no
+attribute 'array'` out of the `AdaptImages` plumbing) in
+`jax_profiling/imaging/pixelization_spline_vs_linear.py`, blocking the
+adapt-image row of the spline-vs-linear benchmark. On current
+autolens_workspace_developer main (`c5cccb8`, verified 2026-08-19) the
+script lives at `jax_profiling/misc/pixelization_spline_vs_linear.py`, runs
+all four rectangular meshes with path-keyed adapt images (so
+`Analysis.adapt_images_via_instance_from` rebuilds them inside the trace),
+and committed results exist for the previously-crashing variants —
+`jax_profiling/results/jit/imaging/spline_vs_linear_fit/` holds
+`subplot_fit_RectangularSplineAdaptDensity.png` and a
+`spline_vs_linear_hst_v2026.4.13.6.json` benchmark record.
+
+The prompt file sat unclaimed in `active/autolens_workspace_developer/`
+(a pre-migration subdirectory invisible to `lifecycle.py check`/`orphans`,
+which only scan `active/*.md`) from before the 2026-07-13 lifecycle
+migration until this sweep retired it.
+
+## Original prompt
+
 # Fix `RectangularSplineAdaptImage` JIT crash in `AdaptImages` plumbing
 
 ## Context

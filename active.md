@@ -45,7 +45,12 @@
 ## sub-312-install-tombstone
 - issue: https://github.com/PyAutoLabs/PyAutoHands/issues/238
 - session: claude --resume b3ad53ad-8075-440f-af34-a01b950894fb
-- status: library-dev
+- status: library-shipped, awaiting-merge — phase 1 of 2
+- library-pr: https://github.com/PyAutoLabs/PyAutoHands/pull/240 (no pending-release label; does not
+  depend on a release, and gating it on one would block the fix)
+- next: (1) merge #240 — workflow_dispatch only registers on the default branch; (2) run
+  publish_tombstone against testpypi, verify, then pypi with the confirm phrase `publish tombstones`;
+  (3) phase 2 — the three docs/installation/pip.md notes + PyAutoHeart verify_install Check B.
 - worktree: ~/Code/PyAutoLabs-wt/sub-312-install-tombstone
 - repos:
   - PyAutoHands: feature/sub-312-install-tombstone

@@ -207,6 +207,20 @@ jobs:
             Add one section block per highlight, then (if any) a final section
             block holding the "*More:*" bulleted list of the rest.
 
+            After those, append ONE more section block — the one-tap queue
+            hand-off. Its mrkdwn text is exactly two lines: the label
+            "*📥 Queue these* — paste into a Claude Code chat:" and then a
+            single inline code block (triple backticks) containing:
+
+              Append these to the '## Strong Lensing' section of the
+              PyAutoMemory reading-queue.md (one per line, title then
+              ' — <arXiv id>'), then run make validate:
+              <one line per surviving paper: <title> — <arXiv id>>
+
+            (Pasting that into Claude Code files the night's papers into the
+            reading queue; the digest itself still never commits anything.)
+            Skip this block on the no-papers day.
+
             IF, after dropping off-topic papers, NOTHING genuinely about strong
             lensing remains, do NOT omit the file — instead write
             `slack_payload.json` with this exact "no new papers" notice (an empty

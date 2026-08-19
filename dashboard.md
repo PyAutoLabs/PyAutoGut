@@ -17,11 +17,10 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 24
+**Highest priority** (filed as `high`) — showing 12 of 23
 
 - [TRIAGE: needs manual review before routing](draft/triage/jax_zero_contour.md) — medium · safe · high
 - [Decide whether the clipper belongs in the search identifier](draft/feature/autofit/clipper_in_search_identifier.md) — autofit · medium · human-required · high
-- [PyAutoLens RTD docs: three-regime restructure (multi_galaxy / group / cluster)](draft/docs/autolens/docs_three_regime_restructure.md) — autolens · medium · supervised · high
 - [The `ell_comps` trapping was masked, not cleared — characterise it](draft/research/autolens_profiling/ell_comps_trapping_unmasked.md) — autolens_profiling · medium · supervised · high
 - [Cluster package: point-source-default narrative + extended-source follow-up feature](draft/docs/workspaces/cluster_regime_narrative.md) — workspaces · medium · supervised · high
 - [multi_galaxy package: new regime package in autolens_workspace](draft/docs/autolens/multi_galaxy_package.md) — autolens · large · supervised · high
@@ -31,6 +30,7 @@ Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3A
 - [EP hierarchical parent-scale collapse: cure the basin, or document the](draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md) — autofit · too-large · human-required · high
 - [Census of priors and messages — confirmed bugs + redesign](draft/research/autofit/priors_and_messages_math_audit.md) — autofit · too-large · supervised · high
 - [`einstein_radius_jit_from`: replace static init_guess with a JAX-native seed finder](draft/refactor/autogalaxy/einstein_radius_jit_native_seed_finder.md) — autogalaxy · too-large · supervised · high
+- [Investigate eager `FitImaging.figure_of_merit` vs JIT/step-by-step divergence in rectangular pixelization](draft/bug/autolens/pixelization_eager_vs_jit_divergence.md) — autolens · too-large · supervised · high
 
 **Quick wins** (small enough, and safe enough to run unattended)
 
@@ -205,7 +205,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 <details>
 <summary><b>docs</b> — 17</summary>
 
-- [PyAutoLens RTD docs: three-regime restructure (multi_galaxy / group / cluster)](draft/docs/autolens/docs_three_regime_restructure.md) — autolens · medium · supervised · high
 - [Cluster package: point-source-default narrative + extended-source follow-up feature](draft/docs/workspaces/cluster_regime_narrative.md) — workspaces · medium · supervised · high
 - [multi_galaxy package: new regime package in autolens_workspace](draft/docs/autolens/multi_galaxy_package.md) — autolens · large · supervised · high
 - [Split lensing regimes: multi_galaxy / group / cluster (epic plan)](draft/docs/autolens/split_lensing_regimes.md) — autolens · too-large · supervised · high
@@ -219,6 +218,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 - [HowToLens ch4 tutorial 3: mask overlay is never actually drawn](draft/docs/howtolens/ch4_mask_overlay_never_drawn.md) — howtolens · small · supervised · low
 - [Markdown renderings batch 2a — leftovers (ellipse/modeling + PNG size)](draft/docs/pyautobuild/markdown_renderings_2a_leftovers.md) — pyautobuild · small · safe · low
 - [Assistants: regime-aware routing for multi_galaxy / group / cluster (follow-up)](draft/docs/workspaces/assistants_regime_extension.md) — workspaces · medium · supervised · low
+- [PyAutoLens model cookbook: fix stale chaining notebook link](draft/docs/autolens/cookbook_stale_chaining_link.md) — autolens · trivial · autonomous · low
 - [Phase 2 — drop the hand-written quick-update sentence from the](draft/docs/autolens_workspace/sampler_cli_output_workspace_sweep.md) — autolens_workspace
 - [plot coverage — follow-ups deferred from plot-coverage-gaps](draft/docs/workspaces/plot_coverage_followups.md) — workspaces
 - [Phase 2: Make workspace READMEs assistant-first](draft/docs/workspaces/unify_ai_assistant_workspace_readmes.md) — workspaces

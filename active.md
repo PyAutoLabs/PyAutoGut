@@ -1,5 +1,25 @@
 # Active Tasks
 
+## jax-default-dependency
+- issue: https://github.com/PyAutoLabs/PyAutoLens/issues/702
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/jax-default-dependency
+- repos:
+  - PyAutoNerves: feature/jax-default-dependency
+  - PyAutoFit: feature/jax-default-dependency
+  - PyAutoArray: feature/jax-default-dependency
+  - PyAutoGalaxy: feature/jax-default-dependency
+  - PyAutoLens: feature/jax-default-dependency
+  - PyAutoHeart: feature/jax-default-dependency
+- prompt: active/jax_default_dependency.md
+- CONFLICT OVERRIDE (deliberate, 2026-08-19): `worktree_check_conflict` exits 1 — PyAutoFit is also
+  claimed by `stored-sample-reconstruction-guard` (PyAutoFit#1486). Proceeding authorized by the human
+  after verifying near-disjoint scope: this task touches only `PyAutoFit/pyproject.toml` (dependency
+  promotion); that task touches `autofit/non_linear/samples/`. Accepted risk: trivial merge conflict.
+- decisions (human, 2026-08-19): jax/jaxlib declared with environment markers
+  (`sys_platform != "darwin" or platform_machine == "arm64"`) so Intel Macs resolve to NumPy-only;
+  `[jax]` extras kept as no-op aliases; cap widened to `<0.12.0`; no-JAX CI leg in Heart lib-tests.yml.
+
 ## stored-sample-reconstruction-guard
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1486
 - status: library-dev — WORKSPACE HALF SHIPPED; the PyAutoFit hardening (#1486) is what remains

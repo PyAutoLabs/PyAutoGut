@@ -11,11 +11,11 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 | [In flight](#in-flight) (`active/`) | 2 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 133 |
+| [Backlog](#backlog) (`draft/`) | 135 |
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 23
+**Highest priority** (filed as `high`) — showing 12 of 24
 
 <details><summary>📋 <a href="draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — medium · safe · high</summary>
 
@@ -37,6 +37,14 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 ```
 /start_dev draft/research/autolens_profiling/ell_comps_trapping_unmasked.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/pyautohands/sub_312_pip_install_backtracks_silently.md">Sub-3.12 <code>pip install</code> silently backtracks to the stale pre-floor release</a> — pyautohands · medium · human-required · high</summary>
+
+```
+/start_dev draft/bug/pyautohands/sub_312_pip_install_backtracks_silently.md
 ```
 
 </details>
@@ -101,14 +109,6 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 ```
 /start_dev draft/refactor/autogalaxy/einstein_radius_jit_native_seed_finder.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/autolens/pixelization_eager_vs_jit_divergence.md">Investigate eager <code>FitImaging.figure_of_merit</code> vs JIT/step-by-step divergence in rectangular pixelization</a> — autolens · too-large · supervised · high</summary>
-
-```
-/start_dev draft/bug/autolens/pixelization_eager_vs_jit_divergence.md
 ```
 
 </details>
@@ -267,10 +267,18 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**133** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**135** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
-<summary><b>bug</b> — 34</summary>
+<summary><b>bug</b> — 36</summary>
+
+<details><summary>📋 <a href="draft/bug/pyautohands/sub_312_pip_install_backtracks_silently.md">Sub-3.12 <code>pip install</code> silently backtracks to the stale pre-floor release</a> — pyautohands · medium · human-required · high</summary>
+
+```
+/start_dev draft/bug/pyautohands/sub_312_pip_install_backtracks_silently.md
+```
+
+</details>
 
 <details><summary>📋 <a href="draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md">EP hierarchical parent-scale collapse: cure the basin, or document the</a> — autofit · too-large · human-required · high</summary>
 
@@ -428,6 +436,14 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/bug/pyautohands/generate_rejects_autocti_after_deleting_notebooks.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/pyautoreduce/published_autoreduce_09_missing_312_floor.md"><code>autoreduce 0.9</code> on PyPI never got the Python 3.12 floor</a> — pyautoreduce · small · supervised · normal</summary>
+
+```
+/start_dev draft/bug/pyautoreduce/published_autoreduce_09_missing_312_floor.md
 ```
 
 </details>

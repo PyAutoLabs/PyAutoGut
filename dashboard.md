@@ -8,10 +8,10 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 2 |
+| [In flight](#in-flight) (`active/`) | 3 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 139 |
+| [Backlog](#backlog) (`draft/`) | 138 |
 
 ## Start here
 
@@ -183,6 +183,14 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
+<details><summary>📋 <a href="active/knowledge_board.md">PyAutoMemory knowledge board — manage the papers and wikis, one</a> — <a href="https://github.com/PyAutoLabs/PyAutoMemory/issues/32">issue #32</a> — in-dev — issued 2026-08-19, plan approved (management-first direction from the</summary>
+
+```
+/start_dev active/knowledge_board.md
+```
+
+</details>
+
 ## Parked
 
 Started or scoped, not currently in flight — resume by moving the row back to `active.md`. Full detail in [`parked.md`](parked.md).
@@ -275,7 +283,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**139** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**138** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 35</summary>
@@ -792,7 +800,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>research</b> — 25</summary>
+<summary><b>research</b> — 24</summary>
 
 <details><summary>📋 <a href="draft/research/autolens_profiling/ell_comps_trapping_unmasked.md">The <code>ell_comps</code> trapping was masked, not cleared — characterise it</a> — autolens_profiling · medium · supervised · high</summary>
 
@@ -878,14 +886,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/research/pyautobrain/explore_dashboardify_the_brain_s_operational_sur.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/research/pyautomemory/explore_dashboard_style_surfaces_for_papers_and.md">Explore: dashboard-style surfaces for papers and wiki contents?</a> — pyautomemory · small · supervised · normal</summary>
-
-```
-/start_dev draft/research/pyautomemory/explore_dashboard_style_surfaces_for_papers_and.md
 ```
 
 </details>

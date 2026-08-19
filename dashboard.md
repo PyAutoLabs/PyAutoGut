@@ -4,6 +4,8 @@
 
 Every task the Mind is holding, on one page: what is in flight, what is parked, and the whole backlog to pick from. Pick a line, then run `/start_dev <prompt-path>` to start it. On a phone, tap a task's 📋 to reveal that command, copy it, and paste it into a Claude Code chat to route Claude straight to the task.
 
+Reading on a phone? The [one-tap copy version](https://pyautolabs.github.io/PyAutoMind/) puts the command on your clipboard with a single tap of 📋.
+
 Tasks only — the organism's health lives with the Heart (`/health`), not here.
 
 | Where | Count |

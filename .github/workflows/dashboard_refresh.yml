@@ -28,6 +28,7 @@ on:
       - "parked.md"
       - "planned.md"
       - "dashboard.md"
+      - "dashboard.html"
   pull_request:
     paths:
       - "draft/**"
@@ -36,6 +37,7 @@ on:
       - "parked.md"
       - "planned.md"
       - "dashboard.md"
+      - "dashboard.html"
   workflow_dispatch:
 
 # contents: write is needed by the self-heal push on main; PR runs never push.
@@ -100,8 +102,8 @@ jobs:
               echo "::error::'--apply dashboard' did not converge — renderer bug, repair by hand"
               exit 1
             fi
-            git add dashboard.md
-            git commit -m "mind: self-heal stale dashboard.md"
+            git add dashboard.md dashboard.html
+            git commit -m "mind: self-heal stale dashboard pages"
             if git push origin HEAD:main; then
               echo "healed on attempt ${attempt}"
               exit 0

@@ -18,7 +18,9 @@
 
 ## stored-sample-reconstruction-guard
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1486
-- status: library-dev — WORKSPACE HALF SHIPPED; the PyAutoFit hardening (#1486) is what remains
+- status: library-shipped, workspace-pending — PyAutoFit hardening shipped as PR#1504 (2026-08-19);
+  remaining: one-line autocti_workspace migration (samples.py:286 catch must add `SamplesException`)
+- library-pr: https://github.com/PyAutoLabs/PyAutoFit/pull/1504
 - worktree: ~/Code/PyAutoLabs-wt/stored-sample-reconstruction-guard
 - repos:
   - PyAutoFit: feature/stored-sample-reconstruction-guard

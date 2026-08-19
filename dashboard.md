@@ -8,7 +8,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 5 |
+| [In flight](#in-flight) (`active/`) | 4 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
 | [Backlog](#backlog) (`draft/`) | 127 |
@@ -187,14 +187,6 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/jax_default_dependency.md
-```
-
-</details>
-
-<details><summary>📋 <a href="active/to_instance_guard_gap.md">Reconstructing a stored sample raises through <code>ignore_assertions=True</code></a> — <a href="https://github.com/PyAutoLabs/PyAutoFit/issues/1486">issue #1486</a> — library-shipped, workspace-pending — PyAutoFit hardening shipped as PR#1504 (2026-08-19);</summary>
-
-```
-/start_dev active/to_instance_guard_gap.md
 ```
 
 </details>

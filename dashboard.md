@@ -8,7 +8,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 4 |
+| [In flight](#in-flight) (`active/`) | 5 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
 | [Backlog](#backlog) (`draft/`) | 127 |
@@ -163,6 +163,14 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/16_transformed_message_factor_gradient_unpack.md
+```
+
+</details>
+
+<details><summary>📋 <a href="active/actionable_health_board.md">Actionable health board: one-tap prompts, links, dev-box enrichment</a> — <a href="https://github.com/PyAutoLabs/PyAutoHeart/issues/151">issue #151</a> — in-dev — issued 2026-08-19, plan approved; implementing on</summary>
+
+```
+/start_dev active/actionable_health_board.md
 ```
 
 </details>
@@ -613,10 +621,10 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/feature/pyautobrain/one_tap_dashboard_pattern_roll_out_to.md">One-tap dashboard pattern: roll out to more organs</a> — pyautobrain · medium · supervised · normal</summary>
+<details><summary>📋 <a href="draft/feature/pyautobrain/one_tap_dashboard_more_surfaces.md">One-tap dashboard pattern: remaining surfaces</a> — pyautobrain · medium · supervised · normal</summary>
 
 ```
-/start_dev draft/feature/pyautobrain/one_tap_dashboard_pattern_roll_out_to.md
+/start_dev draft/feature/pyautobrain/one_tap_dashboard_more_surfaces.md
 ```
 
 </details>

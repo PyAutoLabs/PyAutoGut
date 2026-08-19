@@ -79,6 +79,11 @@
   - PyAutoFit: feature/lazy-heavy-imports
   - PyAutoArray: feature/lazy-heavy-imports
   - PyAutoNerves: feature/lazy-heavy-imports
+  - PyAutoGalaxy: feature/lazy-heavy-imports
+  - PyAutoLens: feature/lazy-heavy-imports
+- scope-note (2026-08-19): PyAutoGalaxy/PyAutoLens added mid-implementation — 8 aggregator files
+  evaluate `af.Aggregator` in def-time annotations, re-triggering the sqlalchemy import the task
+  removes; fix is one-line `from __future__ import annotations` headers only.
 - prompt: active/import_time_lazy_heavy_imports.md
 - CONFLICT OVERRIDE (deliberate, 2026-08-19, human-approved): `worktree_check_conflict` exits 1 —
   PyAutoFit is also claimed by `stored-sample-reconstruction-guard` (#1486, library half shipped as

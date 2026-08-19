@@ -8,7 +8,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 3 |
+| [In flight](#in-flight) (`active/`) | 2 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
 | [Backlog](#backlog) (`draft/`) | 139 |
@@ -179,14 +179,6 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/jax_default_dependency.md
-```
-
-</details>
-
-<details><summary>📋 <a href="active/sub_312_pip_install_backtracks_silently.md">Sub-3.12 <code>pip install</code> silently backtracks to the stale pre-floor release</a> — <a href="https://github.com/PyAutoLabs/PyAutoHands/issues/238">issue #238</a> — in-flight — issued 2026-08-19 by a concurrent session; this entry registered by</summary>
-
-```
-/start_dev active/sub_312_pip_install_backtracks_silently.md
 ```
 
 </details>

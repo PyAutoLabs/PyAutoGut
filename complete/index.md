@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1044 records across 7 buckets.
+1047 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -90,6 +90,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [lacosmic-cr-option-and-star-pass-decoupling](2026/08/lacosmic-cr-option-and-star-pass-decoupling.md) — both deliberately OPEN — closure is the default-flip decision, not this ship
 - [lazy-heavy-imports](2026/08/lazy-heavy-imports.md) — Deferred all heavy non-essential imports to first use. `import autolens` 4.07s → 1.2–1.3s
 - [llms-txt-census-fixes](2026/08/llms-txt-census-fixes.md)
+- [memory-surfaces-stale-names](2026/08/memory-surfaces-stale-names.md) — auto-closed on merge
 - [message-prior-xp-jax-trace](2026/08/message-prior-xp-jax-trace.md) — made the remaining message and compound-prior array-namespace paths
 - [messages-xp-stack-jax-trace](2026/08/messages-xp-stack-jax-trace.md) — replaced ten fixed-shape `xp.array([...])` message constructors
 - [mge-lane-death](2026/08/mge-lane-death.md) — lanes walk out of UniformPrior support and `resurrect=False` never redraws them — that accumulation IS the 62%
@@ -106,6 +107,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [nss-remainline-mainline-blackjax](2026/08/nss-remainline-mainline-blackjax.md)
 - [nufft-parity-full-datasets](2026/08/nufft-parity-full-datasets.md)
 - [numerical-hazard-profiling](2026/08/numerical-hazard-profiling.md) — Phase 1 established the reusable numerical-hazard profiling framework, typed risk measurements, reachability a…
+- [paper-management-pipeline](2026/08/paper-management-pipeline.md) — auto-closed on merge
 - [per-parameter-step-scaling](2026/08/per-parameter-step-scaling.md)
 - [persist-smoke-environments](2026/08/persist-smoke-environments.md) — Made smoke dependency environments durable and isolated per library and Python version, with version-handshake…
 - [pix-prodigy-gpu-compat](2026/08/pix-prodigy-gpu-compat.md)
@@ -165,6 +167,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [uniform-prior-bounds-numpy-path](2026/08/uniform-prior-bounds-numpy-path.md) — auto-closed by the merge's `Closes` line
 - [version-skew-yank-awareness](2026/08/version-skew-yank-awareness.md)
 - [version-stamp-sync-guards](2026/08/version-stamp-sync-guards.md) — closed by the 2026-08-19 reconcile sweep — see traps
+- [wiki-hygiene](2026/08/wiki-hygiene.md) — auto-closed on merge
 - [wiki-provenance-restamp](2026/08/wiki-provenance-restamp.md)
 - [worktree-claim-parser-forms](2026/08/worktree-claim-parser-forms.md) — CLOSED completed
 - [yang24-sidm-gravothermal-profile](2026/08/yang24-sidm-gravothermal-profile.md)

@@ -8,7 +8,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 5 |
+| [In flight](#in-flight) (`active/`) | 2 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
 | [Backlog](#backlog) (`draft/`) | 151 |
@@ -179,30 +179,6 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/jax_default_dependency.md
-```
-
-</details>
-
-<details><summary>📋 <a href="active/memory_surfaces_stale_names.md">Memory faculty blind spots + retired *_wiki layout names</a> — <a href="https://github.com/PyAutoLabs/PyAutoBrain/issues/239">issue #239</a> — in-dev — issued 2026-08-19, plan approved (batch of three knowledge-board</summary>
-
-```
-/start_dev active/memory_surfaces_stale_names.md
-```
-
-</details>
-
-<details><summary>📋 <a href="active/paper_management_pipeline.md">Paper management pipeline: structured reading queue + arXiv ingest</a> — <a href="https://github.com/PyAutoLabs/PyAutoMemory/issues/35">issue #35</a> — queued behind wiki-hygiene (same session, sequential)</summary>
-
-```
-/start_dev active/paper_management_pipeline.md
-```
-
-</details>
-
-<details><summary>📋 <a href="active/wiki_hygiene.md">Wiki hygiene: PDF-path frontmatter, path-shaped links, bib junk keys</a> — <a href="https://github.com/PyAutoLabs/PyAutoMemory/issues/34">issue #34</a> — queued behind memory-surfaces-stale-names (same session, sequential)</summary>
-
-```
-/start_dev active/wiki_hygiene.md
 ```
 
 </details>

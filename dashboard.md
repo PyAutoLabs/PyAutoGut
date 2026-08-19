@@ -8,10 +8,10 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 3 |
+| [In flight](#in-flight) (`active/`) | 4 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 128 |
+| [Backlog](#backlog) (`draft/`) | 127 |
 
 ## Start here
 
@@ -183,6 +183,14 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
+<details><summary>📋 <a href="active/tenth_sample_hardcoded_index.md">Bug in the workspaces: tutorial scripts hardcode stored-sample index 9</a> — <a href="https://github.com/PyAutoLabs/autofit_workspace/issues/140">issue #140</a> — workspace-dev — issued 2026-08-19, plan on the issue; unify the "tenth sample"</summary>
+
+```
+/start_dev active/tenth_sample_hardcoded_index.md
+```
+
+</details>
+
 ## Parked
 
 Started or scoped, not currently in flight — resume by moving the row back to `active.md`. Full detail in [`parked.md`](parked.md).
@@ -275,10 +283,10 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**128** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**127** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
-<summary><b>bug</b> — 33</summary>
+<summary><b>bug</b> — 32</summary>
 
 <details><summary>📋 <a href="draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md">EP hierarchical parent-scale collapse: cure the basin, or document the</a> — autofit · too-large · human-required · high</summary>
 
@@ -484,14 +492,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/bug/priors/15_transformed_message_logpdf_jacobian.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/workspaces/bug_in_the_workspaces_tutorial_scripts_hardcode.md">Bug in the workspaces: tutorial scripts hardcode stored-sample index 9</a> — workspaces · medium · supervised · normal</summary>
-
-```
-/start_dev draft/bug/workspaces/bug_in_the_workspaces_tutorial_scripts_hardcode.md
 ```
 
 </details>

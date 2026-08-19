@@ -1245,10 +1245,10 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/refactor/libraries/import_time_autolens_autogalaxy.md">Slow imports: autolens 4.3s, autogalaxy 3.4s (hygiene perf tier, &gt;3s</a> — libraries · medium · supervised · normal</summary>
+<details><summary>📋 <a href="draft/refactor/libraries/import_time_lazy_heavy_imports.md">Slow imports: autolens 4.3s, autogalaxy 3.4s (hygiene perf tier, &gt;3s</a> — libraries · medium · supervised · normal</summary>
 
 ```
-/start_dev draft/refactor/libraries/import_time_autolens_autogalaxy.md
+/start_dev draft/refactor/libraries/import_time_lazy_heavy_imports.md
 ```
 
 </details>

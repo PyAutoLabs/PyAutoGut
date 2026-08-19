@@ -2,10 +2,11 @@
 
 ## jax-default-dependency
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/702
-- status: library-shipped, workspace-pending — six PRs open (all suites green), pending-release on the five
-  library PRs. Workspace half is a docs-only migration: ~30 files recommend the now-aliased `[jax]` extra
-  (start_here prose is tutorial-register → judgment tier). Merge order: PyAutoHeart#150 first (no-jax CI leg),
-  then libraries bottom-up. Post-release follow-up: bump intra-family floors to the first promoted version.
+- status: workspace-dev — library PRs open + merging (human-authorized 2026-08-19); jax-0.11 cap widen
+  REVERTED on PyAutoNerves#150 (commit 848a254; jax 0.11.1 breaks autofit message log_partition — tracked
+  in draft/bug/autofit/jax_011_message_log_partition_tuple_shape.md). Workspace half in progress: docs-only
+  migration of `[jax]`-extra prose (start_here prose is tutorial-register → judgment tier). Post-release
+  follow-up: bump intra-family floors to the first promoted version.
 - library-pr:
   - PyAutoNerves: https://github.com/PyAutoLabs/PyAutoNerves/pull/150
   - PyAutoFit: https://github.com/PyAutoLabs/PyAutoFit/pull/1503
@@ -13,6 +14,24 @@
   - PyAutoGalaxy: https://github.com/PyAutoLabs/PyAutoGalaxy/pull/574
   - PyAutoLens: https://github.com/PyAutoLabs/PyAutoLens/pull/703
   - PyAutoHeart: https://github.com/PyAutoLabs/PyAutoHeart/pull/150
+- repos (workspace half):
+  - autolens_workspace: feature/jax-default-dependency
+  - autogalaxy_workspace: feature/jax-default-dependency
+  - autofit_workspace: feature/jax-default-dependency
+  - HowToLens: feature/jax-default-dependency
+  - HowToGalaxy: feature/jax-default-dependency
+- workspace-pr (all pending-release — merge only AFTER the promoted release ships; prose claims default-JAX):
+  - autolens_workspace: https://github.com/PyAutoLabs/autolens_workspace/pull/486
+  - autogalaxy_workspace: https://github.com/PyAutoLabs/autogalaxy_workspace/pull/212
+  - autofit_workspace: https://github.com/PyAutoLabs/autofit_workspace/pull/139
+  - HowToLens: https://github.com/PyAutoLabs/HowToLens/pull/71
+  - HowToGalaxy: https://github.com/PyAutoLabs/HowToGalaxy/pull/67
+- merged (2026-08-19, human-authorized): PyAutoHeart#150, PyAutoNerves#150, PyAutoArray#450,
+  PyAutoGalaxy#574. PyAutoFit#1503 + PyAutoLens#703 merge on green nojax legs. nojax leg caught one
+  real gap on first run (unmarked jax-requiring test in autolens potential_correction — fixed 94d8f54ba).
+- NEXT (release-blocked): after tonight's nightly ships the promotion, bump intra-family floors
+  `>=2026.7.29.2` → first promoted version in all five pyprojects (small follow-up PR set), then merge
+  the five workspace PRs.
 - worktree: ~/Code/PyAutoLabs-wt/jax-default-dependency
 - repos:
   - PyAutoNerves: feature/jax-default-dependency
@@ -36,7 +55,8 @@
 - worktree: ~/Code/PyAutoLabs-wt/stored-sample-reconstruction-guard
 - repos:
   - PyAutoFit: feature/stored-sample-reconstruction-guard
-  - autogalaxy_workspace: feature/stored-sample-reconstruction-guard
+- claim-pruned (2026-08-19): autogalaxy_workspace released — PR#210 merged 2026-08-17, remote branch
+  deleted, local worktree clean; the physical worktree dir remains for post-merge cleanup.
 - workspace-PR: **MERGED 2026-08-17T22:08Z** as `1b5005c8` (squash), branch deleted. All 6 checks green
   (smoke 3.12 3m37s, smoke 3.13 3m44s, 3x navigator). Verified present on origin/main. This closes the
   nightly Workspace Smoke red; Heart's `workspace validation not passing` reason should clear on its

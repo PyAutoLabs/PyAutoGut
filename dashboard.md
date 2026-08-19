@@ -13,7 +13,7 @@ Tasks only — the organism's health lives with the Heart (`/health`), not here.
 | [In flight](#in-flight) (`active/`) | 3 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 126 |
+| [Backlog](#backlog) (`draft/`) | 127 |
 
 Live on GitHub: [open issues](https://github.com/search?q=org%3APyAutoLabs+is%3Aissue+is%3Aopen&type=issues) · [open pull requests](https://github.com/search?q=org%3APyAutoLabs+is%3Apr+is%3Aopen&type=prs)
 
@@ -279,7 +279,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**126** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**127** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 31</summary>
@@ -1086,7 +1086,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>docs</b> — 16</summary>
+<summary><b>docs</b> — 17</summary>
 
 <details><summary>📋 <a href="draft/docs/workspaces/cluster_regime_narrative.md">Cluster package: point-source-default narrative + extended-source follow-up feature</a> — workspaces · medium · supervised · high</summary>
 
@@ -1164,6 +1164,14 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/docs/workspaces/extra_galaxies_feature_parity.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/docs/pyautoscientist/readme_organ_header_buttons.md">Replace organ-repo README header prose with PyAutoScientist buttons</a> — pyautoscientist · easy · supervised · normal</summary>
+
+```
+/start_dev draft/docs/pyautoscientist/readme_organ_header_buttons.md
 ```
 
 </details>

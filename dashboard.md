@@ -11,7 +11,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 | [In flight](#in-flight) (`active/`) | 2 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 130 |
+| [Backlog](#backlog) (`draft/`) | 132 |
 
 ## Start here
 
@@ -267,10 +267,10 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**130** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**132** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
-<summary><b>bug</b> — 33</summary>
+<summary><b>bug</b> — 34</summary>
 
 <details><summary>📋 <a href="draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md">EP hierarchical parent-scale collapse: cure the basin, or document the</a> — autofit · too-large · human-required · high</summary>
 
@@ -508,6 +508,14 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/bug/priors/z_features.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/autolens/jax_likelihood_smoke_pins_stale.md">autolens_workspace_test jax_likelihood pins: 4 scripts fail smoke on main</a> — autolens · low · supervised · normal</summary>
+
+```
+/start_dev draft/bug/autolens/jax_likelihood_smoke_pins_stale.md
 ```
 
 </details>
@@ -941,7 +949,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>maintenance</b> — 18</summary>
+<summary><b>maintenance</b> — 19</summary>
 
 <details><summary>📋 <a href="draft/maintenance/autolens_workspace_developer/rectangular_experiments_gut_stash.md">autolens_workspace_developer rectangular experiments — Gut stash + rename</a> — autolens_workspace_developer · small · supervised · normal</summary>
 
@@ -1083,6 +1091,14 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/maintenance/workspaces/script_sizes_snapshot_drift.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/maintenance/pyautobrain/refactor_witness_map_missing_autonerves.md">Refactor Agent witness map lacks PyAutoNerves test suite</a> — pyautobrain · low · safe · low</summary>
+
+```
+/start_dev draft/maintenance/pyautobrain/refactor_witness_map_missing_autonerves.md
 ```
 
 </details>

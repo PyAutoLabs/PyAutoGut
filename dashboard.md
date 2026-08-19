@@ -11,7 +11,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 | [In flight](#in-flight) (`active/`) | 4 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 127 |
+| [Backlog](#backlog) (`draft/`) | 128 |
 
 ## Start here
 
@@ -283,7 +283,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**127** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**128** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 32</summary>
@@ -1276,6 +1276,43 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
+<summary><b>triage</b> — 4</summary>
+
+<details><summary>📋 <a href="draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — medium · safe · high</summary>
+
+```
+/start_dev draft/triage/jax_zero_contour.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/triage/convolver_blurring_image_warning.md">Triage: Convolver "No blurring_image provided" warning in canonical workspace scripts</a> — small · supervised · normal</summary>
+
+```
+/start_dev draft/triage/convolver_blurring_image_warning.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/triage/nightly_release_blocked_eight_nights.md">Nightly release has been blocked 8 nights running — triage</a> — medium · supervised · normal</summary>
+
+```
+/start_dev draft/triage/nightly_release_blocked_eight_nights.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/triage/bug_in_autocti_workspace_the_dataset_1d.md">Bug in autocti_workspace: the dataset_1d results/database example scripts have drifted</a> — large · supervised · normal</summary>
+
+```
+/start_dev draft/triage/bug_in_autocti_workspace_the_dataset_1d.md
+```
+
+</details>
+
+</details>
+
+<details>
 <summary><b>test</b> — 3</summary>
 
 <details><summary>📋 <a href="draft/test/autolens_workspace_developer/mge_jit_regression_rebaseline.md">Re-baseline the MGE imaging JIT profiling regression value</a> — autolens_workspace_developer · too-large · supervised · high</summary>
@@ -1298,35 +1335,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/test/workspaces/smoke_workspace_fixes.md
-```
-
-</details>
-
-</details>
-
-<details>
-<summary><b>triage</b> — 3</summary>
-
-<details><summary>📋 <a href="draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — medium · safe · high</summary>
-
-```
-/start_dev draft/triage/jax_zero_contour.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/triage/convolver_blurring_image_warning.md">Triage: Convolver "No blurring_image provided" warning in canonical workspace scripts</a> — small · supervised · normal</summary>
-
-```
-/start_dev draft/triage/convolver_blurring_image_warning.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/triage/nightly_release_blocked_eight_nights.md">Nightly release has been blocked 8 nights running — triage</a> — medium · supervised · normal</summary>
-
-```
-/start_dev draft/triage/nightly_release_blocked_eight_nights.md
 ```
 
 </details>

@@ -17,6 +17,35 @@ and voids; the Brain hygiene conductor drives (decides what to condemn, triggers
 a sweep), mirroring the Heart ↔ vitals template. See the decision:
 `complete/2026/07/pyautogut-organ-decision.md`.
 
+<!-- toc:start -->
+
+**Contents**
+
+- [Lifecycle](#lifecycle)
+- [Entry schema](#entry-schema)
+- [feature/abandoned-spike](#featureabandoned-spike)
+- [release-datasets/autolens-regenerable](#release-datasetsautolens-regenerable)
+- [release-datasets/autogalaxy-regenerable](#release-datasetsautogalaxy-regenerable)
+- [release-datasets-group-b/all-four](#release-datasets-group-ball-four)
+- [pj011646-wfc3-parity/superseded-branch](#pj011646-wfc3-paritysuperseded-branch)
+- [release-datasets/autolens-regenerable-leg2](#release-datasetsautolens-regenerable-leg2)
+- [release-datasets/autogalaxy-database-orphans](#release-datasetsautogalaxy-database-orphans)
+- [release-datasets/autolens-many-visibilities](#release-datasetsautolens-many-visibilities)
+- [history-rewrite-2026-07-27-addendum](#history-rewrite-2026-07-27-addendum)
+- [release-datasets/autocti-imaging-ci](#release-datasetsautocti-imaging-ci)
+- [release-datasets/autocti-dataset-1d-overview](#release-datasetsautocti-dataset-1d-overview)
+- [pyautogalaxy/docs-cite-prodigy](#pyautogalaxydocs-cite-prodigy)
+- [pyautolens/docs-cite-prodigy](#pyautolensdocs-cite-prodigy)
+- [pyautobrain/release-accept-red-override](#pyautobrainrelease-accept-red-override)
+- [pyautobrain/stash-remove-pulse-compat](#pyautobrainstash-remove-pulse-compat)
+- [pyautoheart/autonerves-verify-install](#pyautoheartautonerves-verify-install)
+- [pyautomind/lifecycle-record-auto-index](#pyautomindlifecycle-record-auto-index)
+- [pyautomind/morning-status-workflow](#pyautomindmorning-status-workflow)
+- [potential-correction-validation-artifacts](#potential-correction-validation-artifacts)
+- [pyautomind/stash-pre-sync-2026-07-06](#pyautomindstash-pre-sync-2026-07-06)
+
+<!-- toc:end -->
+
 ## Lifecycle
 
 1. **Condemn** — the hygiene `tidy` pass files an entry here (async, no

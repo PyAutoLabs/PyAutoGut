@@ -65,7 +65,8 @@ def _fake_repo(root, files):
 MINIMAL_MIND = {
     "README.md": "# Mind\n", "AGENTS.md": "# A\n", "CLAUDE.md": "# C\n",
     "REFERENCE.md": "# R\n", "ROUTING.md": "# Ro\n", "LICENSE": "MIT\n",
-    ".gitignore": "tmp/\n", "AI_POLICY.md": "p\n", "CONTRIBUTING.md": "c\n",
+    ".gitignore": "tmp/\n",
+    ".github/AI_POLICY.md": "p\n", ".github/CONTRIBUTING.md": "c\n",
     "repos.yaml": "repos: {}\n",
     "active.md": "# Active Tasks\n", "planned.md": "# Planned\n",
     "parked.md": "# Parked\n", "condemned.md": "# Condemned\n",

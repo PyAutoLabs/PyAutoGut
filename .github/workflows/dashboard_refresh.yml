@@ -27,6 +27,7 @@ on:
       - "active.md"
       - "parked.md"
       - "planned.md"
+      - "condemned.md"
       - "dashboard.md"
       - "dashboard.html"
   pull_request:
@@ -36,6 +37,7 @@ on:
       - "active.md"
       - "parked.md"
       - "planned.md"
+      - "condemned.md"
       - "dashboard.md"
       - "dashboard.html"
   workflow_dispatch:
@@ -57,6 +59,44 @@ jobs:
         with:
           repository: PyAutoLabs/PyAutoBrain
           path: PyAutoBrain
+      # The contents blocks in planned.md / parked.md / condemned.md are
+      # generated too (scripts/registry_toc.py) and take the same contract as
+      # the dashboard pages: PR runs fail on drift, pushes to main self-heal.
+      - name: registry contents blocks (self-healing on push to main)
+        working-directory: PyAutoMind
+        run: |
+          if python3 scripts/registry_toc.py --check; then
+            exit 0
+          fi
+          if [ "${GITHUB_EVENT_NAME}" != "push" ]; then
+            echo "::error::registry contents blocks are stale — run 'python3 scripts/registry_toc.py --write' on this branch and commit the result"
+            exit 1
+          fi
+          echo "registry contents blocks are stale on main — self-healing"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          for attempt in 1 2 3; do
+            git fetch origin main
+            git reset --hard FETCH_HEAD
+            if python3 scripts/registry_toc.py --check; then
+              echo "tip of main is already fresh (healed by a concurrent push)"
+              exit 0
+            fi
+            python3 scripts/registry_toc.py --write
+            if ! python3 scripts/registry_toc.py --check; then
+              echo "::error::'registry_toc.py --write' did not converge — script bug, repair by hand"
+              exit 1
+            fi
+            git add planned.md parked.md condemned.md
+            git commit -m "mind: self-heal registry contents blocks"
+            if git push origin HEAD:main; then
+              echo "healed on attempt ${attempt}"
+              exit 0
+            fi
+            echo "push rejected (attempt ${attempt}) — retrying on the new tip of main"
+          done
+          echo "::error::could not push the healed contents blocks after 3 attempts"
+          exit 1
       - name: dashboard freshness (self-healing on push to main)
         working-directory: PyAutoMind
         run: |

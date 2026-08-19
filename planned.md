@@ -1,3 +1,16 @@
+<!-- toc:start -->
+
+**Contents**
+
+- [isothermal-ell-sph-oversampling-at-the-cusp](#isothermal-ell-sph-oversampling-at-the-cusp)
+- [remote-mcp-deployment-tiers](#remote-mcp-deployment-tiers)
+- [samples-parameter-paths](#samples-parameter-paths)
+- [jax-point-source-point-smoke-sentinel](#jax-point-source-point-smoke-sentinel)
+- [piemass-potential](#piemass-potential)
+- [latent-nan-guard-honest-run](#latent-nan-guard-honest-run)
+
+<!-- toc:end -->
+
 ## isothermal-ell-sph-oversampling-at-the-cusp
 - status: planned — NOT yet a prompt file; file one via `/intake` before starting
 - found: 2026-08-09, while pinning B10 of the @rhayes777 audit (`complete/2026/08/autogalaxy-profile-validation-guards.md`)

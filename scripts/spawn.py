@@ -74,8 +74,10 @@ MIND_RULES = [
     # links the canonical copy in that org's PyAutoScientist — so they take the
     # same owner substitution .github/** does rather than a verbatim KEEP.
     # Verbatim would stamp "Contributing to PyAutoLabs" into a fresh-slate
-    # template spawned for somebody else's org.
-    ("AI_POLICY.md", "KEEP_SUB"), ("CONTRIBUTING.md", "KEEP_SUB"),
+    # template spawned for somebody else's org. They live under .github/ (the
+    # 2026-08 root declutter, #248) — GitHub resolves community-health files
+    # there, and the Mind's root stays the task ledger.
+    (".github/AI_POLICY.md", "KEEP_SUB"), (".github/CONTRIBUTING.md", "KEEP_SUB"),
     ("repos.yaml", "SPECIAL:body_map"),
     ("active.md", "EMPTY"), ("planned.md", "EMPTY"),
     ("parked.md", "EMPTY"), ("condemned.md", "EMPTY"), ("ideas.md", "EMPTY"), ("queue.md", "EMPTY"),
@@ -88,11 +90,11 @@ MIND_RULES = [
     ("complete/AGENTS.md", "KEEP"),
     ("active/*", "DROP"), ("complete/*", "DROP"),
     ("docs/*", "DROP"),
-    # Instance root docs. `dashboard.md` is EMPTY rather than DROP: README.md
-    # ships verbatim and links it, so dropping it would hand every spawned org
-    # a broken front-page link. The emptied page carries the regenerate
-    # command, which is the whole of what a fresh Mind can truthfully say.
-    ("dashboard.md", "EMPTY"), ("overview.md", "DROP"),
+    # `dashboard.md` is EMPTY rather than DROP: README.md ships verbatim and
+    # links it, so dropping it would hand every spawned org a broken
+    # front-page link. The emptied page carries the regenerate command, which
+    # is the whole of what a fresh Mind can truthfully say.
+    ("dashboard.md", "EMPTY"),
     ("skills/*", "KEEP"), ("policy/*", "KEEP"),
     # .github is decided PER FILE by the spec's fresh-repo invariant (rule 9):
     # a shipped workflow must succeed on a freshly-spawned repo with no secrets

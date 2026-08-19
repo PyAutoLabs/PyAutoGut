@@ -1,5 +1,18 @@
 # Active Tasks
 
+## release-board
+- issue: https://github.com/PyAutoLabs/PyAutoHands/issues/239
+- status: in-dev — issued 2026-08-19, plan approved; implementing on
+  PyAutoHands feature/release-board (PR to follow)
+- prompt: active/release_board.md
+- repos:
+  - PyAutoHands: feature/release-board
+- summary: phone-readable release board (API-first: release.yml runs + nightly outcomes +
+  library tags + PyPI + Releases links) with one-tap 📋 /release · rehearse · validate ·
+  /build chips and /bug prompts on failed train runs; Pages twin + badge + README strip;
+  README on the arc pattern (stale rename banners dropped); AGENTS verb prose fixed;
+  AI_POLICY/CONTRIBUTING → .github/. Past-tense record only — readiness stays the Heart's.
+
 ## jax-default-dependency
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/702
 - status: shipped-awaiting-release-followups — ALL ELEVEN PRs merged 2026-08-19 (human-authorized):

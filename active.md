@@ -1,5 +1,17 @@
 # Active Tasks
 
+## mind-readability-pass
+- issue: https://github.com/PyAutoLabs/PyAutoMind/issues/248
+- status: in-dev — issued 2026-08-19, plan approved; direct-main edits in Mind/Heart,
+  Brain renderer change via feature/mind-dashboard-header-trim PR
+- prompt: active/mind_readability_pass.md
+- repos-none-claimed: no worktrees — Mind + Heart edits land on main (Mind convention);
+  the only branch is PyAutoBrain feature/mind-dashboard-header-trim (renderer header trim).
+- summary: root declutter (overview.md deleted, queue.md emptied, AI_POLICY/CONTRIBUTING →
+  .github/, health*.sh shims deleted, OWNERSHIP.md trimmed, lifecycle_drift.yml stale paths),
+  dashboard header rewrite in the intake renderer, registry TOC self-heal script, README
+  rewrite with a step-by-step "How PyAutoMind works".
+
 ## jax-default-dependency
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/702
 - status: shipped-awaiting-release-followups — ALL ELEVEN PRs merged 2026-08-19 (human-authorized):

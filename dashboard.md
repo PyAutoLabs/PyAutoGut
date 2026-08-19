@@ -8,10 +8,10 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 4 |
+| [In flight](#in-flight) (`active/`) | 5 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 129 |
+| [Backlog](#backlog) (`draft/`) | 128 |
 
 ## Start here
 
@@ -115,14 +115,6 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 **Quick wins** (small enough, and safe enough to run unattended)
 
-<details><summary>📋 <a href="draft/bug/workspaces/bug_in_autocti_workspace_the_database_guide.md">Bug in autocti_workspace: the database guide chain cannot run from</a> — workspaces · small · safe · normal</summary>
-
-```
-/start_dev draft/bug/workspaces/bug_in_autocti_workspace_the_database_guide.md
-```
-
-</details>
-
 <details><summary>📋 <a href="draft/docs/workspaces/add_vincken_2026_wiki_and_cite_in_euclid.md">add-vincken-2026-wiki-and-cite-in-euclid</a> — workspaces · small · safe · normal</summary>
 
 ```
@@ -179,6 +171,14 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/actionable_health_board.md
+```
+
+</details>
+
+<details><summary>📋 <a href="active/database_guide_info_inline.md">Bug in autocti_workspace: the database guide chain cannot run from</a> — <a href="https://github.com/PyAutoLabs/autocti_workspace/issues/20">issue #20</a> — workspace-dev — issued 2026-08-19, plan on the issue; inline the database guide's</summary>
+
+```
+/start_dev active/database_guide_info_inline.md
 ```
 
 </details>
@@ -291,10 +291,10 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**129** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**128** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
-<summary><b>bug</b> — 34</summary>
+<summary><b>bug</b> — 33</summary>
 
 <details><summary>📋 <a href="draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md">EP hierarchical parent-scale collapse: cure the basin, or document the</a> — autofit · too-large · human-required · high</summary>
 
@@ -452,14 +452,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/bug/workspaces/aplt_output_drift_remaining_repos.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/workspaces/bug_in_autocti_workspace_the_database_guide.md">Bug in autocti_workspace: the database guide chain cannot run from</a> — workspaces · small · safe · normal</summary>
-
-```
-/start_dev draft/bug/workspaces/bug_in_autocti_workspace_the_database_guide.md
 ```
 
 </details>

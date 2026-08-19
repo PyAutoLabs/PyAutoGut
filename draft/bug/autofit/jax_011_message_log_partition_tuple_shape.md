@@ -30,3 +30,11 @@ and 0.11, then widen the autonerves cap to `<0.12.0` in the same arc
 (@PyAutoNerves pyproject — remove the "Cap stays <0.11" comment). The cap
 widen matters because jax is now a base dependency and the `<0.11` cap
 conflicts with e.g. Colab's preinstalled jax.
+
+Note (2026-08-19, later same day): the no-jax CI leg exposed that
+beta/gamma/normal message `xp` dispatch misrouted NumPy scalars
+(np.int64/np.float64 are not int/float under NumPy 2) into the JAX branch —
+fixed on the same branch (PyAutoFit 19c679583, np.generic added). `test_beta`
+was one of the five jax-0.11 failures, so re-test under 0.11 AFTER that fix
+lands: the remaining failures are probably only the deliberate jax-trace
+tests (`test_jax_trace.py`), which narrows the compat surface.

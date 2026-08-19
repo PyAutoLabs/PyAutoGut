@@ -43,7 +43,12 @@
 
 ## lazy-heavy-imports
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1505
-- status: library-dev — issued 2026-08-19, plan approved; implementation starting
+- status: library-shipped, awaiting-merge — five PRs open 2026-08-19, all pending-release, all
+  suites green, Heart GREEN(100), six-workspace smoke = canonical (4 pre-existing jax_likelihood
+  pin fails, control-tested). No workspace impact (option iii). Merge is human.
+- library-prs: PyAutoFit#1506, PyAutoArray#451, PyAutoNerves#151, PyAutoGalaxy#575, PyAutoLens#705
+- result: import autolens 4.07s -> ~2.1s; heavy modules importtime-proven absent; version warning
+  deduped to once per process
 - worktree: ~/Code/PyAutoLabs-wt/lazy-heavy-imports
 - repos:
   - PyAutoFit: feature/lazy-heavy-imports

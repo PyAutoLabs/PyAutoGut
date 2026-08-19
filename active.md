@@ -41,19 +41,30 @@
 ## sub-312-install-tombstone
 - issue: https://github.com/PyAutoLabs/PyAutoHands/issues/238
 - session: claude --resume b3ad53ad-8075-440f-af34-a01b950894fb
-- status: phase-1 merged, rehearsing the publish — phase 1 of 2
-- library-pr: https://github.com/PyAutoLabs/PyAutoHands/pull/240 MERGED (squash 2ddab4a); CI green
-  3.12/3.13/3.14. No pending-release label: does not depend on a release, and gating it on one would
-  block the fix.
-- testpypi rehearsal GREEN (run 32309854365): all five tombstones live, verified by resolving on real
-  3.9/3.10/3.11 (loud failure, correct version named), 3.12 (unaffected), and an exact old pin (still
-  resolves). twine check PASSED on all five. First attempt 32309423898 failed at build — --no-isolation
-  with no setuptools on a 3.12 runner — fixed in PyAutoHands#242 (merged 8724b05).
-- next: (1) pypi publish with the confirm phrase `publish tombstones` — PERMANENT, awaiting explicit
-  human go; (2) phase 2 — the three docs/installation/pip.md notes + PyAutoHeart verify_install Check B.
+- status: shipped-awaiting-merge — phase 1 MERGED + PUBLISHED; phase 2 PRs open, all CI green
+- phase 1 (done): PyAutoHands#240 (2ddab4a) tombstone mechanism + dispatch-only publish workflow;
+  PyAutoHands#242 (8724b05) --no-isolation needs setuptools explicitly on 3.12 runners.
+  Tombstones 2026.7.29.1.post1 PUBLISHED to PyPI (run 32310162773) after a TestPyPI rehearsal
+  (32309854365) that caught the setuptools bug at build, before any upload.
+- verified on real PyPI: 3.9/3.10/3.11 pip install of all five packages fails loudly naming the
+  running version; 3.12 still resolves 2026.8.17.1; autolens==2026.7.29.1 still resolves on 3.10.
+  Known hole, documented not hidden: --only-binary=:all: skips sdists and still lands on the old wheel.
+- phase 2 PRs (green, awaiting merge): PyAutoLens#706, PyAutoGalaxy#576, PyAutoFit#1507 (install page:
+  wrong failure mode + wrong cut release 2026.4.5.3 -> 2026.7.29.2 + the yank that never happened +
+  overview 3.12-3.13 -> 3.12 or later), PyAutoHeart#155 (Check B unpinned leg + release_validation),
+  autogalaxy_assistant#17 (wiki said the opposite of reality; needed a --write-provenance re-stamp).
+- deliberately NOT changed after checking: PyAutoCTI "3.12 or 3.13" is accurate (classifiers stop at
+  3.13, never promoted); workspace AGENTS.md "3.12 and 3.13" is accurate (Heart's reusable smoke
+  workflow defaults to ["3.12","3.13"], no overrides).
+- follow-up filed: PyAutoReduce#71 — published autoreduce 0.9 still declares >=3.9,<=3.14.7 a fortnight
+  after its floor merged; the sharp question is whether the build path assembles metadata independently
+  of pyproject.toml.
 - worktree: ~/Code/PyAutoLabs-wt/sub-312-install-tombstone
 - repos:
-  - PyAutoHands: feature/sub-312-install-tombstone
-- phase-2-repos-not-yet-claimed: PyAutoLens, PyAutoGalaxy, PyAutoFit (docs/installation/pip.md)
-  and PyAutoHeart (verify_install Check B) are claimed via worktree_add_repo when phase 2 starts —
-  deliberately not held idle while phase 1 builds and publishes the tombstones.
+  - PyAutoHands: feature/sub-312-install-tombstone (merged, branch deleted)
+  - PyAutoLens: feature/sub-312-install-tombstone
+  - PyAutoGalaxy: feature/sub-312-install-tombstone
+  - PyAutoFit: feature/sub-312-install-tombstone
+  - PyAutoHeart: feature/sub-312-install-tombstone
+  - autogalaxy_assistant: feature/sub-312-install-tombstone
+- prompt: active/sub_312_pip_install_backtracks_silently.md

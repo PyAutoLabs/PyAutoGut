@@ -7,7 +7,8 @@ Repos:
 Difficulty: small
 Autonomy: supervised
 Priority: normal
-Status: formalised
+Status: issued
+Issue: https://github.com/PyAutoLabs/PyAutoReduce/issues/71
 
 `autoreduce 0.9`, published **2026-08-12**, declares on PyPI:
 

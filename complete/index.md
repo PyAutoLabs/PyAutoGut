@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1060 records across 7 buckets.
+1061 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -157,6 +157,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [review-claim-dispositions](2026/08/review-claim-dispositions.md)
 - [samplers-surface-autolens-tiers](2026/08/samplers-surface-autolens-tiers.md) — the samplers faculty's SamplerSurface now scans the findings
 - [save-json-numpy-scalar-typeerror](2026/08/save-json-numpy-scalar-typeerror.md) — Adds `NumpyEncoder` in `autofit/tools/util.py` (`np.ndarray` ->
+- [script-size-guard-git-based](2026/08/script-size-guard-git-based.md) — replaced the rotting `.script_sizes.json` snapshot with a git-diff truncation
 - [script-title-underline-off-by-one](2026/08/script-title-underline-off-by-one.md)
 - [searches-readme-dashboard](2026/08/searches-readme-dashboard.md)
 - [simulator-util-to-af-ex](2026/08/simulator-util-to-af-ex.md) — moved the four 1D-Gaussian simulator helpers out of the duplicated

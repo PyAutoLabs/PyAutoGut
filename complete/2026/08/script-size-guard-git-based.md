@@ -1,3 +1,31 @@
+## script-size-guard-git-based
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/490
+- completed: 2026-08-20
+- workspace-pr: https://github.com/PyAutoLabs/autolens_workspace/pull/493, https://github.com/PyAutoLabs/autogalaxy_workspace/pull/219
+- summary: replaced the rotting `.script_sizes.json` snapshot with a git-diff truncation
+  guard in BOTH workspaces (byte-identical `check_sizes.sh`): each CHANGED
+  `scripts/**/*.py` is compared against its blob size at `HEAD` (local) or the PR
+  merge-base (CI, new advisory `script_size_guard.yml`). Snapshot deleted, `--update`
+  contract removed from AGENTS.md — no baseline left to rot; new scripts are protected
+  the day they land. Guard fails closed (exit 2) on an unresolvable `--base`;
+  `ALLOW_SHRINK=1` retained.
+- verification: six planning controls re-run green in-repo (incl. truncation two commits
+  back caught via merge-base) + two fail-closed cases; zero-false-positive replay over
+  real history (alw HEAD~25/~100/~300 = 123/366/402 changed scripts; agw HEAD~25/~100 =
+  41/150); CI positive control passed in BOTH repos — deliberate truncation commit
+  reddened `size-guard` (99% shrink vs correctly-resolved merge-base), then reverted.
+- gotchas: (1) `check_sizes.sh` was tracked 100644, so CI could never have exec'd it
+  directly on a fresh checkout — now 100755; (2) the PR-ref cancel-in-progress
+  concurrency means a revert pushed too soon cancels the red positive-control run —
+  let the failing run complete first; (3) the guard is deliberately NOT in
+  `repos.yaml -> required_workflows` (group-wide key, five workspace repos have no
+  guard) — advisory only.
+- environment: implemented and shipped entirely from a claude.ai/code remote session on
+  direct clones (no local worktree); Mind state pushed on branch
+  claude/script-sizes-snapshot-drift-nf8xdf pending merge to main.
+
+## Original prompt
+
 # Refresh the stale `.script_sizes.json` snapshot in @autolens_workspace
 
 Difficulty: small

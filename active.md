@@ -1,5 +1,12 @@
 # Active Tasks
 
+## dashboard-naming-unification
+- issue: https://github.com/PyAutoLabs/PyAutoScientist/issues/13
+- status: workspace-dev
+- worktree: ~/Code/PyAutoLabs-wt/dashboard-naming-unification
+- prompt: active/dashboard_naming_unification.md
+- repos:
+
 ## jax-default-dependency
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/702
 - status: shipped-awaiting-release-followups — ALL ELEVEN PRs merged 2026-08-19 (human-authorized):

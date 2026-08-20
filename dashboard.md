@@ -8,14 +8,14 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 2 |
+| [In flight](#in-flight) (`active/`) | 3 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
 | [Backlog](#backlog) (`draft/`) | 152 |
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 32
+**Highest priority** (filed as `high`) — showing 12 of 33
 
 <details><summary>📋 <a href="draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — medium · safe · high</summary>
 
@@ -45,6 +45,14 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 ```
 /start_dev draft/research/graphical_ep/analytic_gaussian_benchmark.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/pyautoscientist/organism_board_final_readmes.md">Organism board on PyAutoScientist + final organ READMEs</a> — pyautoscientist · medium · supervised · high</summary>
+
+```
+/start_dev draft/feature/pyautoscientist/organism_board_final_readmes.md
 ```
 
 </details>
@@ -101,14 +109,6 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 ```
 /start_dev draft/feature/profiling/profiling_agent_jax_compile_time_scope.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/workspaces/cluster_source_science.md">Cluster source_science.py: robust magnification science at cluster scale (no meshes</a> — workspaces · large · supervised · high</summary>
-
-```
-/start_dev draft/feature/workspaces/cluster_source_science.md
 ```
 
 </details>
@@ -171,6 +171,14 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/16_transformed_message_factor_gradient_unpack.md
+```
+
+</details>
+
+<details><summary>📋 <a href="active/folder_list_ref_drift_sweep.md">Fix folder-list drift in workspace/HowTo prose (hygiene refs sweep)</a></summary>
+
+```
+/start_dev active/folder_list_ref_drift_sweep.md
 ```
 
 </details>
@@ -571,12 +579,20 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>feature</b> — 35</summary>
+<summary><b>feature</b> — 36</summary>
 
 <details><summary>📋 <a href="draft/feature/autofit/clipper_in_search_identifier.md">Decide whether the clipper belongs in the search identifier</a> — autofit · medium · human-required · high</summary>
 
 ```
 /start_dev draft/feature/autofit/clipper_in_search_identifier.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/pyautoscientist/organism_board_final_readmes.md">Organism board on PyAutoScientist + final organ READMEs</a> — pyautoscientist · medium · supervised · high</summary>
+
+```
+/start_dev draft/feature/pyautoscientist/organism_board_final_readmes.md
 ```
 
 </details>
@@ -1383,7 +1399,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>refactor</b> — 8</summary>
+<summary><b>refactor</b> — 7</summary>
 
 <details><summary>📋 <a href="draft/refactor/autogalaxy/critical_curves_dispatch_cluster.md">Critical curves: implement context-aware dispatch, dedupe engines, make clusters honor</a> — autogalaxy · too-large · supervised · high</summary>
 
@@ -1437,14 +1453,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/refactor/pyautomind/repos_sync_check_dedup.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/refactor/workspaces/folder_list_ref_drift_sweep.md">Fix folder-list drift in workspace/HowTo prose (hygiene refs sweep)</a> — workspaces · easy · safe · low</summary>
-
-```
-/start_dev draft/refactor/workspaces/folder_list_ref_drift_sweep.md
 ```
 
 </details>

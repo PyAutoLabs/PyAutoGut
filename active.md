@@ -6,6 +6,12 @@
 - worktree: ~/Code/PyAutoLabs-wt/dashboard-naming-unification
 - prompt: active/dashboard_naming_unification.md
 - repos:
+  - PyAutoScientist
+  - PyAutoMind
+  - PyAutoBrain
+  - PyAutoHeart
+  - PyAutoHands
+  - PyAutoMemory
 
 ## jax-default-dependency
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/702

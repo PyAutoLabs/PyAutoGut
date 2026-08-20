@@ -1,5 +1,9 @@
 # Numba CPU likelihood phase 2: kernel-CDF numba fast path (the 49-88% lever)
 
+> **DEFERRED (user, 2026-08-20):** the campaign fiducial is the Delaunay +
+> AdaptImage (Hilbert) mesh — profile and speed that path up first; this
+> Rectangular kernel-CDF work resumes afterwards.
+
 > Phase 2 of the CPU-likelihood speed restoration. Phase 1 (exact-identical
 > MGE-convolution batching + operated-mapping-matrix caching) is
 > `numba_cpu_likelihood_mge_convolution_and_caching.md` — ship it first; its

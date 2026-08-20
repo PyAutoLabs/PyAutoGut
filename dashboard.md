@@ -11,16 +11,24 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 | [In flight](#in-flight) (`active/`) | 4 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 145 |
+| [Backlog](#backlog) (`draft/`) | 146 |
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 30
+**Highest priority** (filed as `high`) — showing 12 of 31
 
 <details><summary>📋 <a href="draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — medium · safe · high</summary>
 
 ```
 /start_dev draft/triage/jax_zero_contour.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/autoarray/numba_first_call_garbage_psf_weighted_data.md">Numba sparse-operator likelihood: first-call garbage / intermittent worker corruption</a> — autoarray · medium · supervised · high</summary>
+
+```
+/start_dev draft/bug/autoarray/numba_first_call_garbage_psf_weighted_data.md
 ```
 
 </details>
@@ -101,14 +109,6 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 ```
 /start_dev draft/research/autoarray/delaunay_research.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md">EP hierarchical parent-scale collapse: cure the basin, or document the</a> — autofit · too-large · human-required · high</summary>
-
-```
-/start_dev draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md
 ```
 
 </details>
@@ -295,10 +295,18 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**145** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**146** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
-<summary><b>bug</b> — 35</summary>
+<summary><b>bug</b> — 36</summary>
+
+<details><summary>📋 <a href="draft/bug/autoarray/numba_first_call_garbage_psf_weighted_data.md">Numba sparse-operator likelihood: first-call garbage / intermittent worker corruption</a> — autoarray · medium · supervised · high</summary>
+
+```
+/start_dev draft/bug/autoarray/numba_first_call_garbage_psf_weighted_data.md
+```
+
+</details>
 
 <details><summary>📋 <a href="draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md">EP hierarchical parent-scale collapse: cure the basin, or document the</a> — autofit · too-large · human-required · high</summary>
 

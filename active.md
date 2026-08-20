@@ -23,8 +23,8 @@
 - issue: https://github.com/PyAutoLabs/autolens_profiling/issues/151 (closed by merge)
 - pr: https://github.com/PyAutoLabs/autolens_profiling/pull/152 — MERGED 2026-08-20
   (564d51e, human-authorized from the cloud session); branch deleted
-- status: awaiting-merge — infra + Rectangular euclid/hst + Delaunay euclid/hst passes on PR #152,
-  re-fiducialed to 1250 vertices per user (commit 1d13e3f, 2026-08-20; runs from a 4-core cloud
+- status: merged-awaiting-hpc-sweep — infra + Rectangular euclid/hst + Delaunay euclid/hst passes,
+  re-fiducialed to 1250 vertices per user (runs from a 4-core cloud
   container that first reproduced the 1500 euclid pin exactly). CAMPAIGN FIDUCIAL = Delaunay +
   Hilbert(1250) AdaptImage + ConstantSplit; Rectangular kernel-CDF speed-up DEFERRED.
   New pins: euclid 7215.3687893658935, hst 29090.527192092646 (rtol 1e-6).

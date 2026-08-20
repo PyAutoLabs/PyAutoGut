@@ -159,7 +159,7 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
-<details><summary>📋 <a href="active/numba_cpu_likelihood_profiling.md">Profiling infrastructure for the numba CPU sparse-operator likelihood</a> — <a href="https://github.com/PyAutoLabs/autolens_profiling/issues/151">issue #151</a> — awaiting-merge — infra + Rectangular euclid/hst + Delaunay euclid/hst passes on PR #152,</summary>
+<details><summary>📋 <a href="active/numba_cpu_likelihood_profiling.md">Profiling infrastructure for the numba CPU sparse-operator likelihood</a> — <a href="https://github.com/PyAutoLabs/autolens_profiling/issues/151">issue #151</a> — merged-awaiting-hpc-sweep — infra + Rectangular euclid/hst + Delaunay euclid/hst passes,</summary>
 
 ```
 /start_dev active/numba_cpu_likelihood_profiling.md

@@ -8,7 +8,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 3 |
+| [In flight](#in-flight) (`active/`) | 2 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
 | [Backlog](#backlog) (`draft/`) | 149 |
@@ -171,14 +171,6 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/16_transformed_message_factor_gradient_unpack.md
-```
-
-</details>
-
-<details><summary>📋 <a href="active/dashboard_naming_unification.md">Dashboard naming unification — every board is "&lt;Repo&gt; Dashboard", html</a> — <a href="https://github.com/PyAutoLabs/PyAutoScientist/issues/13">issue #13</a> — prs-open — six PRs, merge Brain#241 BEFORE Mind#250 (drift check renders with Brain main);</summary>
-
-```
-/start_dev active/dashboard_naming_unification.md
 ```
 
 </details>

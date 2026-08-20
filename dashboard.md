@@ -8,10 +8,10 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 2 |
+| [In flight](#in-flight) (`active/`) | 3 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 150 |
+| [Backlog](#backlog) (`draft/`) | 149 |
 
 ## Start here
 
@@ -175,6 +175,14 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
+<details><summary>📋 <a href="active/dashboard_naming_unification.md">Dashboard naming unification — every board is "&lt;Repo&gt; Dashboard", html</a> — <a href="https://github.com/PyAutoLabs/PyAutoScientist/issues/13">issue #13</a> — workspace-dev</summary>
+
+```
+/start_dev active/dashboard_naming_unification.md
+```
+
+</details>
+
 <details><summary>📋 <a href="active/jax_default_dependency.md">Make JAX a default (non-optional) dependency across the library stack</a> — <a href="https://github.com/PyAutoLabs/PyAutoLens/issues/702">issue #702</a> — shipped-awaiting-release-followups — ALL ELEVEN PRs merged 2026-08-19 (human-authorized):</summary>
 
 ```
@@ -275,7 +283,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**150** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**149** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 36</summary>
@@ -571,7 +579,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>feature</b> — 34</summary>
+<summary><b>feature</b> — 33</summary>
 
 <details><summary>📋 <a href="draft/feature/autolens/area_magnification_leggos.md">Area magnification (LEGGOS-style): per-pixel inversion sum as primary; ShapeSolver rehabilitate-or-retire</a> — autolens · large · supervised · high</summary>
 
@@ -833,14 +841,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/feature/pyautomind/repos-sync-config-stamper.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/pyautoscientist/dashboard_naming_unification.md">Dashboard naming unification — every board is "&lt;Repo&gt; Dashboard", html</a> — pyautoscientist · easy · supervised</summary>
-
-```
-/start_dev draft/feature/pyautoscientist/dashboard_naming_unification.md
 ```
 
 </details>

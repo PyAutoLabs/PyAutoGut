@@ -65,7 +65,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 </details>
 
-<details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_positive_only_solver_speedup.md">Numba CPU likelihood: positive-only solver speed-up (the Delaunay 60-78% lever)</a> — autoarray · large · supervised · high</summary>
+<details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_positive_only_solver_speedup.md">Numba CPU likelihood: positive-only solver speed-up (the Delaunay ~74% euclid</a> — autoarray · large · supervised · high</summary>
 
 ```
 /start_dev draft/feature/autoarray/numba_cpu_likelihood_positive_only_solver_speedup.md
@@ -151,7 +151,7 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
-<details><summary>📋 <a href="active/numba_cpu_likelihood_profiling.md">Profiling infrastructure for the numba CPU sparse-operator likelihood</a> — <a href="https://github.com/PyAutoLabs/autolens_profiling/issues/151">issue #151</a> — awaiting-merge — infra + Rectangular euclid/hst + Delaunay euclid/hst passes on PR #152</summary>
+<details><summary>📋 <a href="active/numba_cpu_likelihood_profiling.md">Profiling infrastructure for the numba CPU sparse-operator likelihood</a> — <a href="https://github.com/PyAutoLabs/autolens_profiling/issues/151">issue #151</a> — awaiting-merge — infra + Rectangular euclid/hst + Delaunay euclid/hst passes on PR #152,</summary>
 
 ```
 /start_dev active/numba_cpu_likelihood_profiling.md
@@ -625,7 +625,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_positive_only_solver_speedup.md">Numba CPU likelihood: positive-only solver speed-up (the Delaunay 60-78% lever)</a> — autoarray · large · supervised · high</summary>
+<details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_positive_only_solver_speedup.md">Numba CPU likelihood: positive-only solver speed-up (the Delaunay ~74% euclid</a> — autoarray · large · supervised · high</summary>
 
 ```
 /start_dev draft/feature/autoarray/numba_cpu_likelihood_positive_only_solver_speedup.md

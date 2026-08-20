@@ -3,22 +3,27 @@
 ## numba-cpu-likelihood-profiling
 - issue: https://github.com/PyAutoLabs/autolens_profiling/issues/151
 - pr: https://github.com/PyAutoLabs/autolens_profiling/pull/152
-- status: awaiting-merge — infra + Rectangular euclid/hst + Delaunay euclid/hst passes on PR #152
-  (last commit b48a243, 2026-08-20; hst run from a cloud container, euclid pin reproduced there
-  first so pins are hardware-independent). CAMPAIGN FIDUCIAL = Delaunay + Hilbert(1500)
-  AdaptImage + ConstantSplit (user pivot 2026-08-20); Rectangular kernel-CDF speed-up DEFERRED.
-- delaunay-verdict: solve is PARAM-BOUND — euclid 3.73 s of 4.6 s (~78%), hst 4.23 s of 6.97 s
-  (~60%), same 1560-param cost at both resolutions. SOLVER VERIFIED (instrumented probe):
-  positive-only fnnls_cholesky IS live in autoarray 2026.8.20.1 — the "deleted in 8bb449a1,
-  restore it" hypothesis is RETIRED. Real cost: 154 sequential Bro-Jong active-set iterations
-  whose cholinsertlast/choldeleteindexes rebuild the ~1400^2 factor via np.insert/np.delete
-  (3.58 s of 5.06 s) vs 0.081 s for ONE from-scratch Cholesky at n=1560. Speed-up prompt filed:
+- status: awaiting-merge — infra + Rectangular euclid/hst + Delaunay euclid/hst passes on PR #152,
+  re-fiducialed to 1250 vertices per user (commit 1d13e3f, 2026-08-20; runs from a 4-core cloud
+  container that first reproduced the 1500 euclid pin exactly). CAMPAIGN FIDUCIAL = Delaunay +
+  Hilbert(1250) AdaptImage + ConstantSplit; Rectangular kernel-CDF speed-up DEFERRED.
+  New pins: euclid 7215.3687893658935, hst 29090.527192092646 (rtol 1e-6).
+- delaunay-verdict (1250): solve cost is ITERATION-BOUND, not resolution/param-bound — euclid
+  3.61 s of 4.92 s (~74%, 153 active-set iterations); hst only 1.42 s of 3.95 s (near-perfect
+  warm start at 1250; was 4.23 s at 1500). SOLVER VERIFIED (instrumented probe): positive-only
+  fnnls_cholesky IS live in autoarray 2026.8.20.1 — the "deleted in 8bb449a1, restore it"
+  hypothesis is RETIRED. Real cost: cholinsertlast/choldeleteindexes rebuild the ~1200^2 factor
+  via np.insert/np.delete every iteration (2.41 s of 3.52 s) vs 0.047 s for ONE from-scratch
+  Cholesky at n=1310. Speed-up prompt filed (numbers current for 1250):
   draft/feature/autoarray/numba_cpu_likelihood_positive_only_solver_speedup.md (in-place factor
   buffer / block pivoting / cross-eval warm starts).
+- parallel_scaling: pixelization_numba.py now has --mesh delaunay (campaign fiducial); first
+  1,2,4-core euclid pass running on the cloud container 2026-08-20.
 - RESUME: (1) start_dev the solver speed-up prompt above + start_dev
   draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md (still valid;
   both need a CLI session — deliberately not started from the cloud session);
-  (2) on merge: RAL scaling sweep (hpc/batch_cpu/...), worktree cleanup, completion record.
+  (2) on merge: RAL scaling sweep (hpc/batch_cpu/..., incl. --mesh delaunay), worktree cleanup,
+  completion record.
   Bug prompt filed: draft/bug/autoarray/numba_first_call_garbage_psf_weighted_data.md.
   Full findings trail: issue #151 comments.
 - worktree: ~/Code/PyAutoLabs-wt/numba-cpu-likelihood-profiling

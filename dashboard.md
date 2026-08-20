@@ -159,7 +159,7 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
-<details><summary>📋 <a href="active/add_vincken_2026_wiki_and_cite_in_euclid.md">add-vincken-2026-wiki-and-cite-in-euclid</a> — <a href="https://github.com/PyAutoLabs/PyAutoMemory/issues/39">issue #39</a> — workspace-dev</summary>
+<details><summary>📋 <a href="active/add_vincken_2026_wiki_and_cite_in_euclid.md">add-vincken-2026-wiki-and-cite-in-euclid</a> — <a href="https://github.com/PyAutoLabs/PyAutoMemory/issues/39">issue #39</a> — awaiting-merge — PR open, human merge pending.</summary>
 
 ```
 /start_dev active/add_vincken_2026_wiki_and_cite_in_euclid.md

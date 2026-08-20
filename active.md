@@ -68,11 +68,19 @@
 
 ## script-size-guard-git-based
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/490
-- session: claude --resume 453f0202-8188-4e01-89a4-67bdb99523a2
-- status: workspace-dev — PLANNED ONLY, NOT STARTED. Plan approved and filed on #490;
-  human moved to mobile before implementation. Next action: /start_workspace on this
-  entry (creates the worktree + branch); no repo has been edited and no worktree exists.
-- worktree: ~/Code/PyAutoLabs-wt/script-size-guard-git-based
+- session: claude.ai/code remote session (2026-08-20); superseded planning session
+  453f0202-8188-4e01-89a4-67bdb99523a2
+- status: workspace-dev — IMPLEMENTED, branches pushed, awaiting /ship_workspace.
+  Both repos carry one commit each: check_sizes.sh rewritten to the git-diff guard
+  (fail-closed --base, ALLOW_SHRINK retained, exec bit now tracked — was 644, so CI
+  could not have invoked it directly), .script_sizes.json deleted, advisory
+  script_size_guard.yml added, AGENTS.md contract updated. Verified: six controls +
+  2 fail-closed cases green in-repo; zero-false-positive replay HEAD~25/~100/~300
+  (alw 123/366/402 changed scripts) and HEAD~25/~100 (agw 41/150). Still owed at
+  ship: the CI positive control on the PR (push a deliberate truncation, see the
+  guard redden, revert — per #490 verification).
+- worktree: none — implemented in a remote session on direct clones; no local
+  worktree was ever created (~/Code/PyAutoLabs-wt path from planning is unused)
 - prompt: active/script_sizes_snapshot_drift.md
 - plan: replace the rotting `.script_sizes.json` snapshot with a git-diff truncation guard —
   `check_sizes.sh` compares each CHANGED `scripts/**/*.py` against its size at HEAD (local)
@@ -90,5 +98,5 @@
   (worst case degrades detection from <50% to <34% of current); the 39 scripts with NO
   baseline are the entire real hole, and that count grew 12 -> 39 in three weeks.
 - repos:
-  - autolens_workspace: feature/script-size-guard-git-based (not yet created)
-  - autogalaxy_workspace: feature/script-size-guard-git-based (not yet created)
+  - autolens_workspace: feature/script-size-guard-git-based (pushed)
+  - autogalaxy_workspace: feature/script-size-guard-git-based (pushed)

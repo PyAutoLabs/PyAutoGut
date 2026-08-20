@@ -2,7 +2,12 @@
 
 ## numba-cpu-likelihood-profiling
 - issue: https://github.com/PyAutoLabs/autolens_profiling/issues/151
-- status: workspace-dev
+- pr: https://github.com/PyAutoLabs/autolens_profiling/pull/152
+- status: awaiting-merge — infra + first euclid/hst pass shipped 2026-08-20; on merge: run the
+  RAL 1-32-core sweep (hpc/batch_cpu/submit_parallel_scaling_pixelization_numba_euclid), then
+  worktree cleanup + completion record. Follow-ups filed: PyAutoArray numba first-call/worker
+  corruption bug (draft/bug/autoarray/numba_first_call_garbage_psf_weighted_data.md); consider
+  a sparse_triplets_data optimization prompt (88% of the hst eval).
 - worktree: ~/Code/PyAutoLabs-wt/numba-cpu-likelihood-profiling
 - prompt: active/numba_cpu_likelihood_profiling.md
 - plan: build numba-CPU sparse-operator likelihood profiling infra in autolens_profiling —

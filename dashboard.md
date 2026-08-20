@@ -8,10 +8,10 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 5 |
+| [In flight](#in-flight) (`active/`) | 6 |
 | [Parked](#parked) (`parked.md`) | 3 |
-| [Planned](#planned) (`planned.md`) | 8 |
-| [Backlog](#backlog) (`draft/`) | 147 |
+| [Planned](#planned) (`planned.md`) | 6 |
+| [Backlog](#backlog) (`draft/`) | 145 |
 
 ## Start here
 
@@ -115,13 +115,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 **Quick wins** (small enough, and safe enough to run unattended)
 
-<details><summary>📋 <a href="draft/bug/hands/raw_string_docstring_prefix.md">Teach the notebook/env parsers to accept raw-string (<code>r"""</code>) docstrings</a> — hands · small · safe · medium</summary>
-
-```
-/start_dev draft/bug/hands/raw_string_docstring_prefix.md
-```
-
-</details>
+- _(none right now)_
 
 ## In flight
 
@@ -147,6 +141,14 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/jax_default_dependency.md
+```
+
+</details>
+
+<details><summary>📋 <a href="active/latex_raw_string_docstrings.md">Raw-string the LaTeX docstrings across the six workspace repos</a> — <a href="https://github.com/PyAutoLabs/autolens_workspace/issues/491">issue #491</a> — workspace-dev — 5 of 6 PRs MERGED; HowToLens#73 held RED (not this PR's failure)</summary>
+
+```
+/start_dev active/latex_raw_string_docstrings.md
 ```
 
 </details>
@@ -233,7 +235,7 @@ Started or scoped, not currently in flight — resume by moving the row back to 
 Scoped but not started; some are not yet prompt files. Full detail in [`planned.md`](planned.md).
 
 <details>
-<summary><b>8</b> task(s)</summary>
+<summary><b>6</b> task(s)</summary>
 
 <details><summary>📋 <b>isothermal-ell-sph-oversampling-at-the-cusp</b> — planned — NOT yet a prompt file; file one via <code>/intake</code> before starting</summary>
 
@@ -283,30 +285,14 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <b>hands-raw-string-docstring-prefix</b></summary>
-
-```
-/start_dev draft/bug/hands/raw_string_docstring_prefix.md
-```
-
-</details>
-
-<details><summary>📋 <b>latex-raw-string-docstrings</b></summary>
-
-```
-/start_dev draft/maintenance/workspaces/latex_raw_string_docstrings.md
-```
-
-</details>
-
 </details>
 
 ## Backlog
 
-**147** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**145** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
-<summary><b>bug</b> — 37</summary>
+<summary><b>bug</b> — 36</summary>
 
 <details><summary>📋 <a href="draft/bug/autoarray/numba_first_call_garbage_psf_weighted_data.md">Numba sparse-operator likelihood: first-call garbage / intermittent worker corruption</a> — autoarray · medium · supervised · high</summary>
 
@@ -392,14 +378,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/bug/autofit/jax_011_message_log_partition_tuple_shape.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/hands/raw_string_docstring_prefix.md">Teach the notebook/env parsers to accept raw-string (<code>r"""</code>) docstrings</a> — hands · small · safe · medium</summary>
-
-```
-/start_dev draft/bug/hands/raw_string_docstring_prefix.md
 ```
 
 </details>
@@ -1097,7 +1075,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>maintenance</b> — 18</summary>
+<summary><b>maintenance</b> — 17</summary>
 
 <details><summary>📋 <a href="draft/maintenance/autolens_workspace_developer/rectangular_experiments_gut_stash.md">autolens_workspace_developer rectangular experiments — Gut stash + rename</a> — autolens_workspace_developer · small · supervised · normal</summary>
 
@@ -1223,14 +1201,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/maintenance/workspaces/notebook_setup_notebook_drift_siblings.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/maintenance/workspaces/latex_raw_string_docstrings.md">Raw-string the LaTeX docstrings across the six workspace repos</a> — workspaces · medium · safe · low</summary>
-
-```
-/start_dev draft/maintenance/workspaces/latex_raw_string_docstrings.md
 ```
 
 </details>

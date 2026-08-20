@@ -8,10 +8,10 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 4 |
+| [In flight](#in-flight) (`active/`) | 3 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 151 |
+| [Backlog](#backlog) (`draft/`) | 150 |
 
 ## Start here
 
@@ -191,14 +191,6 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
-<details><summary>📋 <a href="active/organism_board_final_readmes.md">Organism board on PyAutoScientist + final organ READMEs</a> — <a href="https://github.com/PyAutoLabs/PyAutoScientist/issues/12">issue #12</a> — in-dev — issued 2026-08-19, plan approved; direct-main sweep (Scientist has no</summary>
-
-```
-/start_dev active/organism_board_final_readmes.md
-```
-
-</details>
-
 ## Parked
 
 Started or scoped, not currently in flight — resume by moving the row back to `active.md`. Full detail in [`parked.md`](parked.md).
@@ -291,7 +283,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**151** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**150** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 36</summary>
@@ -587,7 +579,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>feature</b> — 35</summary>
+<summary><b>feature</b> — 34</summary>
 
 <details><summary>📋 <a href="draft/feature/autofit/clipper_in_search_identifier.md">Decide whether the clipper belongs in the search identifier</a> — autofit · medium · human-required · high</summary>
 
@@ -689,14 +681,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/feature/autolens_workspace/joss_cluster_benchmark_tuning.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/pyautobrain/one_tap_dashboard_more_surfaces.md">One-tap dashboard pattern: remaining surfaces</a> — pyautobrain · medium · supervised · normal</summary>
-
-```
-/start_dev draft/feature/pyautobrain/one_tap_dashboard_more_surfaces.md
 ```
 
 </details>

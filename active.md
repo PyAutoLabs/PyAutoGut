@@ -2,7 +2,8 @@
 
 ## dashboard-naming-unification
 - issue: https://github.com/PyAutoLabs/PyAutoScientist/issues/13
-- status: workspace-dev
+- status: prs-open — six PRs, merge Brain#241 BEFORE Mind#250 (drift check renders with Brain main);
+  Heart#156, Hands#243, Memory#38, Scientist#14 (closes #13) independent. Merge/close stays human.
 - worktree: ~/Code/PyAutoLabs-wt/dashboard-naming-unification
 - prompt: active/dashboard_naming_unification.md
 - repos:

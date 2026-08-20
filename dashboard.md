@@ -11,11 +11,11 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 | [In flight](#in-flight) (`active/`) | 4 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 146 |
+| [Backlog](#backlog) (`draft/`) | 147 |
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 32
+**Highest priority** (filed as `high`) — showing 12 of 33
 
 <details><summary>📋 <a href="draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — medium · safe · high</summary>
 
@@ -29,6 +29,14 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 ```
 /start_dev draft/bug/autoarray/numba_first_call_garbage_psf_weighted_data.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md">Numba CPU likelihood phase 1: batched MGE convolution + operated-matrix</a> — autoarray · medium · supervised · high</summary>
+
+```
+/start_dev draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md
 ```
 
 </details>
@@ -49,10 +57,10 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 </details>
 
-<details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_fast_path_restoration.md">Numba CPU likelihood: restore legacy-class speed (adaptive-mesh transform + MGE</a> — autoarray · large · supervised · high</summary>
+<details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_kernel_cdf_fast_path.md">Numba CPU likelihood phase 2: kernel-CDF numba fast path (the</a> — autoarray · large · supervised · high</summary>
 
 ```
-/start_dev draft/feature/autoarray/numba_cpu_likelihood_fast_path_restoration.md
+/start_dev draft/feature/autoarray/numba_cpu_likelihood_kernel_cdf_fast_path.md
 ```
 
 </details>
@@ -101,14 +109,6 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 ```
 /start_dev draft/feature/profiling/profiling_agent_jax_compile_time_scope.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/workspaces/cluster_source_science.md">Cluster source_science.py: robust magnification science at cluster scale (no meshes</a> — workspaces · large · supervised · high</summary>
-
-```
-/start_dev draft/feature/workspaces/cluster_source_science.md
 ```
 
 </details>
@@ -287,7 +287,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**146** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**147** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 36</summary>
@@ -583,12 +583,20 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>feature</b> — 34</summary>
+<summary><b>feature</b> — 35</summary>
 
-<details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_fast_path_restoration.md">Numba CPU likelihood: restore legacy-class speed (adaptive-mesh transform + MGE</a> — autoarray · large · supervised · high</summary>
+<details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md">Numba CPU likelihood phase 1: batched MGE convolution + operated-matrix</a> — autoarray · medium · supervised · high</summary>
 
 ```
-/start_dev draft/feature/autoarray/numba_cpu_likelihood_fast_path_restoration.md
+/start_dev draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_kernel_cdf_fast_path.md">Numba CPU likelihood phase 2: kernel-CDF numba fast path (the</a> — autoarray · large · supervised · high</summary>
+
+```
+/start_dev draft/feature/autoarray/numba_cpu_likelihood_kernel_cdf_fast_path.md
 ```
 
 </details>

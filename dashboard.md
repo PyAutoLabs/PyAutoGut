@@ -8,10 +8,10 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 2 |
+| [In flight](#in-flight) (`active/`) | 3 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 146 |
+| [Backlog](#backlog) (`draft/`) | 145 |
 
 ## Start here
 
@@ -115,14 +115,6 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 **Quick wins** (small enough, and safe enough to run unattended)
 
-<details><summary>📋 <a href="draft/docs/pyautobuild/markdown_renderings_2a_leftovers.md">Markdown renderings batch 2a — leftovers (ellipse/modeling + PNG size)</a> — pyautobuild · small · safe · low</summary>
-
-```
-/start_dev draft/docs/pyautobuild/markdown_renderings_2a_leftovers.md
-```
-
-</details>
-
 <details><summary>📋 <a href="draft/maintenance/pyautohands/hands_hygiene_leftovers.md">Hands hygiene: expired announcement dead code, unregistered modules</a> — pyautohands · small · safe · low</summary>
 
 ```
@@ -163,6 +155,14 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/jax_default_dependency.md
+```
+
+</details>
+
+<details><summary>📋 <a href="active/markdown_renderings_2a_leftovers.md">Markdown renderings batch 2a — leftovers (ellipse/modeling + PNG size)</a> — <a href="https://github.com/PyAutoLabs/PyAutoHands/issues/247">issue #247</a> — library-dev</summary>
+
+```
+/start_dev active/markdown_renderings_2a_leftovers.md
 ```
 
 </details>
@@ -287,7 +287,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**146** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**145** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 35</summary>
@@ -1214,7 +1214,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>docs</b> — 17</summary>
+<summary><b>docs</b> — 16</summary>
 
 <details><summary>📋 <a href="draft/docs/workspaces/cluster_regime_narrative.md">Cluster package: point-source-default narrative + extended-source follow-up feature</a> — workspaces · medium · supervised · high</summary>
 
@@ -1308,14 +1308,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/docs/howtolens/ch4_mask_overlay_never_drawn.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/docs/pyautobuild/markdown_renderings_2a_leftovers.md">Markdown renderings batch 2a — leftovers (ellipse/modeling + PNG size)</a> — pyautobuild · small · safe · low</summary>
-
-```
-/start_dev draft/docs/pyautobuild/markdown_renderings_2a_leftovers.md
 ```
 
 </details>

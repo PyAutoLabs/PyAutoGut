@@ -18,7 +18,9 @@
   draft/feature/autoarray/numba_cpu_likelihood_positive_only_solver_speedup.md (in-place factor
   buffer / block pivoting / cross-eval warm starts).
 - parallel_scaling: pixelization_numba.py now has --mesh delaunay (campaign fiducial); first
-  1,2,4-core euclid pass running on the cloud container 2026-08-20.
+  euclid pass done 2026-08-20 (4-core container): 3.4x at P=4, 84-86% efficiency, pool variants
+  indistinguishable, zero corrupted evals; RAL submit script added
+  (submit_parallel_scaling_delaunay_numba_euclid, 1-32 cores).
 - RESUME: (1) start_dev the solver speed-up prompt above + start_dev
   draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md (still valid;
   both need a CLI session — deliberately not started from the cloud session);

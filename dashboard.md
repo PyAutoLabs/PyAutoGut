@@ -11,11 +11,11 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 | [In flight](#in-flight) (`active/`) | 4 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 145 |
+| [Backlog](#backlog) (`draft/`) | 146 |
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 31
+**Highest priority** (filed as `high`) — showing 12 of 32
 
 <details><summary>📋 <a href="draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — medium · safe · high</summary>
 
@@ -45,6 +45,14 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 ```
 /start_dev draft/docs/workspaces/cluster_regime_narrative.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_fast_path_restoration.md">Numba CPU likelihood: restore legacy-class speed (adaptive-mesh transform + MGE</a> — autoarray · large · supervised · high</summary>
+
+```
+/start_dev draft/feature/autoarray/numba_cpu_likelihood_fast_path_restoration.md
 ```
 
 </details>
@@ -101,14 +109,6 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 ```
 /start_dev draft/feature/workspaces/cluster_source_science.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/research/autoarray/delaunay_research.md">Deep research: Can we speed up Delaunay in PyAutoArray?</a> — autoarray · too-large · supervised · high</summary>
-
-```
-/start_dev draft/research/autoarray/delaunay_research.md
 ```
 
 </details>
@@ -287,7 +287,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**145** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**146** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 36</summary>
@@ -583,7 +583,15 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>feature</b> — 33</summary>
+<summary><b>feature</b> — 34</summary>
+
+<details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_fast_path_restoration.md">Numba CPU likelihood: restore legacy-class speed (adaptive-mesh transform + MGE</a> — autoarray · large · supervised · high</summary>
+
+```
+/start_dev draft/feature/autoarray/numba_cpu_likelihood_fast_path_restoration.md
+```
+
+</details>
 
 <details><summary>📋 <a href="draft/feature/autolens/area_magnification_leggos.md">Area magnification (LEGGOS-style): per-pixel inversion sum as primary; ShapeSolver rehabilitate-or-retire</a> — autolens · large · supervised · high</summary>
 

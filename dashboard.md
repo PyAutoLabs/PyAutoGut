@@ -159,7 +159,7 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
-<details><summary>📋 <a href="active/markdown_renderings_2a_leftovers.md">Markdown renderings batch 2a — leftovers (ellipse/modeling + PNG size)</a> — <a href="https://github.com/PyAutoLabs/PyAutoHands/issues/247">issue #247</a> — library-dev</summary>
+<details><summary>📋 <a href="active/markdown_renderings_2a_leftovers.md">Markdown renderings batch 2a — leftovers (ellipse/modeling + PNG size)</a> — <a href="https://github.com/PyAutoLabs/PyAutoHands/issues/247">issue #247</a> — library-shipped, workspace-pending</summary>
 
 ```
 /start_dev active/markdown_renderings_2a_leftovers.md

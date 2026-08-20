@@ -7,7 +7,22 @@ Repos:
 Difficulty: small
 Autonomy: supervised
 Priority: low
-Status: draft — the § "Scope to establish first" measurement is DONE for autolens_workspace (2026-08-09)
+Status: SUPERSEDED 2026-08-20 — do not pick this up; see below
+
+## SUPERSEDED by `draft/maintenance/workspaces/latex_raw_string_docstrings.md`
+
+Same defect, same fix, wider scope. The 2026-08-20 survey swept all six workspace
+repos and found 41 files; the 17 `autolens_workspace` files it lists are exactly
+the 17 measured below (top-six warning counts match line for line). It also found
+a second, *silent* class this prompt never saw (`\t` in `\theta`, `\f` in
+`\frac` — escapes Python DOES recognise, so they corrupt the string with no
+warning at all) and a hard PyAutoHands prerequisite.
+
+Everything unique to this file has been carried across: the interpreter trap
+below (§ TRAP) now sits in that prompt's sweep spec and its verification gate,
+and the "do not reword the LaTeX or the prose" constraint is in its § Constraints.
+Kept for its origin trail (#457 / PR #459) and the 2026-08-09 measurement.
+
 
 ## 2026-08-09 — the sweep this prompt asks for, run
 

@@ -49,6 +49,21 @@ than fix them. Both reproduced, neither raises:
 
 Do not start this task until that Hands fix has merged.
 
+**Re-verified 2026-08-20 (resumed `/start_dev`): still blocked, still unfixed.**
+Against PyAutoHands `main` @ `cdea28c`, on a probe pair differing only by an `r`
+on the first narrative docstring:
+
+- `_narrative_docstring_ranges` → plain `[(0, 2), (6, 10)]` vs raw `[(6, 10)]`
+  — the raw block is dropped, silently, no exception.
+- `read_env_declaration` → plain `['jax']` vs raw `None` — silently, no exception.
+
+`add_notebook_quotes.py:67` still reads `lines[start].startswith('"""')` and
+`env_config.py:110` still reads `^(?:"""|''')\s*$`; neither accepts an `r`/`R`
+prefix. No `feature/hands-raw-string-docstring-prefix` branch exists on the
+remote yet, and its own blocker (`feature/hands-hygiene-leftovers`) is still
+open. Re-run this two-probe check at the next `/start_dev` rather than trusting
+this note.
+
 ### Two sweeps are needed, not one
 
 `SyntaxWarning` only fires for escapes Python does **not** recognise. The
@@ -62,6 +77,17 @@ diagnostic at all — `\t` in `\theta`, `\f` in `\frac`, `\r` in `\rm`, `\b` in
 - silent sweep: walk the AST, and for every non-raw `str` constant whose source
   segment contains a backslash, flag any control character (`ord < 32`, `\n`
   excepted) in the *value* — **132 hits**.
+
+**The warning sweep is interpreter-dependent — check this before trusting a
+zero.** Invalid escape sequences are a `SyntaxWarning` only on **Python 3.12+**;
+on 3.11 and earlier they are a `DeprecationWarning`. A sweep that collects
+`SyntaxWarning` on a 3.11 interpreter reports **0 hits** and is
+indistinguishable from "already fixed" — verified 2026-08-20 on 3.11.15, where
+`compile()` on a docstring containing `$\odot$` yields 0 `SyntaxWarning` and 1
+`DeprecationWarning`. Collect **both** categories, or assert the interpreter is
+3.12+ before believing the count. (`-m compileall` needs `-f` too, or
+`__pycache__` suppresses recompilation and the counts silently drop.) This
+already cost one mis-grade on the 2026-08-09 sweep.
 
 `HowToLens/scripts/chapter_4_scaling_up_lensing/tutorial_5_cluster_scale.py`
 has **only** silent hits and zero warnings, so a warning-only sweep skips it
@@ -142,9 +168,18 @@ The four matplotlib labels in
 - `autocti_workspace`, every `*_workspace_test` / `*_workspace_developer`, and
   `PyAutoFit` / `PyAutoArray` / `PyAutoLens` source: swept, **zero** hits.
 
+## Constraints
+
+- Docstring content is user-facing tutorial prose. Add the `r` prefix and change
+  **nothing else** — do not reword the LaTeX or the surrounding sentences.
+  Prose changes belong to a docs task, not this one.
+- Notebooks are regenerated, never hand-edited.
+
 ## Verification per repo (the diff-empty gate)
 
-1. Both sweeps return zero.
+1. Both sweeps return zero — on a **3.12+** interpreter, or collecting
+   `DeprecationWarning` as well (see the interpreter trap above). A zero from a
+   3.11 `SyntaxWarning`-only sweep is vacuous and does not clear this gate.
 2. Regenerate:
    `PYTHONPATH=../PyAutoHands/autohands python3 ../PyAutoHands/autohands/generate.py <project>`
    (`howtofit`, `howtogalaxy`, `howtolens`, `autofit`, `autogalaxy`, `autolens`).
@@ -157,6 +192,17 @@ The four matplotlib labels in
 
 Ship as six independent PRs, one per repo. Prose-only, no API surface, so no
 cross-repo merge ordering.
+
+## Supersedes
+
+`draft/maintenance/autolens_workspace/latex_docstrings_invalid_escape_warnings.md`
+(filed 2026-08-09, split from #457) is the same defect measured on
+`autolens_workspace` alone — its 80 warnings across 17 files are exactly the 17
+files listed above, top-six counts matching. This prompt subsumes it across all
+six repos and adds the silent-escape class. Its unique content (the interpreter
+trap, now folded in above; the "do not reword the LaTeX or the prose while
+fixing the escapes" constraint) is carried here. One task, one prompt — pick up
+this file, not that one.
 
 ## Follow-up worth filing
 

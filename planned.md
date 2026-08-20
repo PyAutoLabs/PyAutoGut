@@ -116,6 +116,10 @@
 - classification: library (PyAutoHands) — bug, silent parser defect
 - suggested-branch: feature/hands-raw-string-docstring-prefix
 - blocked-by: hands-hygiene-leftovers (using PyAutoHands; worktree dirty, 3 files)
+- blocker-recheck: 2026-08-20 — `feature/hands-hygiene-leftovers` still open on the
+  PyAutoHands remote (main @ cdea28c, last merge #248 markdown-renderings-2a-leftovers),
+  so this is still blocked and still unfiled. Both defects re-reproduced this pass —
+  see the latex-raw-string-docstrings entry below for the probe output.
 - summary: |
     Two PyAutoHands docstring parsers silently mis-handle an `r"""` opener, and
     neither raises. `add_notebook_quotes.py:67` tests
@@ -147,6 +151,16 @@
 - classification: workspace (6 repos) — maintenance, prose-only
 - suggested-branch: feature/latex-raw-string-docstrings
 - blocked-by: hands-raw-string-docstring-prefix (raw-stringing before it lands BREAKS the generated notebooks and silently drops 7 `__Env__` declarations)
+- blocker-recheck: 2026-08-20 (resumed /start_dev) — STILL BLOCKED. PyAutoHands main @ cdea28c
+  still carries both defects, reproduced on a probe pair differing only by an `r`:
+  `_narrative_docstring_ranges` [(0,2),(6,10)] -> [(6,10)] (raw block dropped), and
+  `read_env_declaration` ['jax'] -> None. Both silent. No fix branch on the remote;
+  its own blocker `feature/hands-hygiene-leftovers` is still open. No issue filed, no
+  workspace repo touched. Also folded into the prompt this pass: the Python 3.11-vs-3.12
+  warning-class trap (a `SyntaxWarning`-only sweep returns a VACUOUS zero on 3.11 and
+  would falsely clear the verification gate — verified on 3.11.15), and the supersession
+  of draft/maintenance/autolens_workspace/latex_docstrings_invalid_escape_warnings.md
+  (same task, autolens_workspace-only, now marked SUPERSEDED).
 - summary: |
     Prefix `r` on every module-level narrative docstring containing LaTeX, in
     41 files across 6 workspace repos. The 2026-08-06 prompt named 4 lines in 2

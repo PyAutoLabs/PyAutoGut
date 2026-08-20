@@ -8,7 +8,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 4 |
+| [In flight](#in-flight) (`active/`) | 3 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
 | [Backlog](#backlog) (`draft/`) | 146 |
@@ -171,14 +171,6 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/jax_default_dependency.md
-```
-
-</details>
-
-<details><summary>📋 <a href="active/notebook_quotes_string_literal_closing_delimiter.md"><code>add_notebook_quotes</code> mistakes a code string literal's closing delimiter for a</a> — <a href="https://github.com/PyAutoLabs/PyAutoHands/issues/244">issue #244</a> — library-shipped, awaiting-merge</summary>
-
-```
-/start_dev active/notebook_quotes_string_literal_closing_delimiter.md
 ```
 
 </details>

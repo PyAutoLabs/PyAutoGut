@@ -2,24 +2,27 @@
 
 ## numba-cpu-likelihood-positive-only-solver-speedup
 - issue: https://github.com/PyAutoLabs/PyAutoArray/issues/452 (issued 2026-08-20)
-- pr: https://github.com/PyAutoLabs/PyAutoArray/pull/453 (awaiting review; session subscribed
-  + hourly check-in armed)
-- status: pr-open — in-place factor buffer + copy-free numba solves + numba delete-shift
-  kernel (commits 2c9a22b, 89be276): euclid solve 3.29 -> 1.16 s (2.83x), euclid eval
+- pr: https://github.com/PyAutoLabs/PyAutoArray/pull/453 — MERGED 2026-08-20 (c7330a7,
+  human-authorized from the cloud session); issue #452 closed; branch deleted
+- status: merged-awaiting-release-followups — in-place factor buffer + copy-free numba
+  solves + numba delete-shift kernel: euclid solve 3.29 -> 1.16 s (2.83x), euclid eval
   4.92 -> 2.34 s (2.10x), hst 3.95 -> 3.43 s; both autolens_profiling pins PASS at rtol
-  1e-6; test_autoarray green bar 3 pre-existing pynufft failures (fail on stock main too).
+  1e-6 (existing pins stay valid — the solution shifts only ~1e-9 relative).
   PHASE 2 PROTOTYPED AND REJECTED (findings on issue #452): PJV block pivoting cycles on
   the near-degenerate columns; block-insertion Bro-Jong terminates non-converged via the
   no_update safeguard (KKT violated 3.7e3). Best remaining lever: cross-eval warm starts
-  (option 3). ON MERGE+RELEASE: re-run + re-commit delaunay_numba artifacts (validation
-  artifacts deliberately NOT committed against v2026.8.17.1).
+  (option 3). NEXT (release-blocked; nightly 02:00 UTC; cloud session wake-up armed for
+  ~02:45 UTC): install the released autolens in the cloud venv, re-run the delaunay_numba
+  runtime/breakdown cells at euclid+hst, commit the new-version artifacts on a fresh PR,
+  then completion record + prompt to complete/.
 - prompt: active/numba_cpu_likelihood_positive_only_solver_speedup.md
 - plan: see issue #452. Repos edited: PyAutoArray only.
   - Repo PyAutoArray: branch feature/fnnls-inplace-cholesky-buffer
 
 ## numba-cpu-likelihood-profiling
-- issue: https://github.com/PyAutoLabs/autolens_profiling/issues/151
-- pr: https://github.com/PyAutoLabs/autolens_profiling/pull/152
+- issue: https://github.com/PyAutoLabs/autolens_profiling/issues/151 (closed by merge)
+- pr: https://github.com/PyAutoLabs/autolens_profiling/pull/152 — MERGED 2026-08-20
+  (564d51e, human-authorized from the cloud session); branch deleted
 - status: awaiting-merge — infra + Rectangular euclid/hst + Delaunay euclid/hst passes on PR #152,
   re-fiducialed to 1250 vertices per user (commit 1d13e3f, 2026-08-20; runs from a 4-core cloud
   container that first reproduced the 1500 euclid pin exactly). CAMPAIGN FIDUCIAL = Delaunay +
@@ -41,8 +44,10 @@
 - RESUME: (1) solver speed-up prompt now ISSUED + implemented (see
   numba-cpu-likelihood-positive-only-solver-speedup above, PyAutoArray#452); still to
   start_dev: draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md;
-  (2) on merge: RAL scaling sweep (hpc/batch_cpu/..., incl. --mesh delaunay), worktree cleanup,
-  completion record.
+  (2) NOW UNBLOCKED BY MERGE (laptop/HPC): RAL scaling sweeps
+  (submit_parallel_scaling_pixelization_numba_euclid + ..._delaunay_numba_euclid), local
+  worktree cleanup (~/Code/PyAutoLabs-wt/numba-cpu-likelihood-profiling), then completion
+  record.
   Bug prompt filed: draft/bug/autoarray/numba_first_call_garbage_psf_weighted_data.md.
   Full findings trail: issue #151 comments.
 - worktree: ~/Code/PyAutoLabs-wt/numba-cpu-likelihood-profiling

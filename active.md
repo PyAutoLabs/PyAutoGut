@@ -46,3 +46,8 @@
 - status: workspace-dev
 - worktree: ~/Code/PyAutoLabs-wt/folder-list-ref-drift-sweep
 - repos:
+  - autocti_workspace: feature/folder-list-ref-drift-sweep
+  - autofit_workspace: feature/folder-list-ref-drift-sweep
+  - autogalaxy_workspace: feature/folder-list-ref-drift-sweep
+  - HowToGalaxy: feature/folder-list-ref-drift-sweep
+  - HowToLens: feature/folder-list-ref-drift-sweep

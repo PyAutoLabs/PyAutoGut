@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1051 records across 7 buckets.
+1052 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -51,6 +51,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [crashed-run-poisons-resume](2026/08/crashed-run-poisons-resume.md) — A run interrupted while writing output left a half-written JSON file,
 - [curvature-diag-doc-config-drift](2026/08/curvature-diag-doc-config-drift.md) — Aligned PyAutoArray's curvature-diagonal helper and Settings docs with the packaged 1e-3 default; numerical be…
 - [curvature-floor-scale-aware-prototype](2026/08/curvature-floor-scale-aware-prototype.md) — Corrected the Phase 2 conditioning denominator to the curvature entries actually floored. The absolute policy …
+- [dashboard-naming-unification](2026/08/dashboard-naming-unification.md) — Dashboard naming unified across all five boards — every board is just the
 - [database-guide-info-inline](2026/08/database-guide-info-inline.md) — the dataset_1d database guide chain failed on any fresh checkout —
 - [database-guide-sample-weight-threshold](2026/08/database-guide-sample-weight-threshold.md) — `guides/results/database/start_here.py` ran its own Nautilus fits capped at n_like_max=300 then indexed sample…
 - [delaunay-nn-laptop-gpu-profile](2026/08/delaunay-nn-laptop-gpu-profile.md) — Added the CPU, RTX 2060, and A100 DelaunayNN profiling sweep and result artifacts at matched PyAuto source rev…

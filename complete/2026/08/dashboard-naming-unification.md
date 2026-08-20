@@ -1,3 +1,20 @@
+## dashboard-naming-unification
+- issue: https://github.com/PyAutoLabs/PyAutoScientist/issues/13
+- completed: 2026-08-20
+- workspace-pr: https://github.com/PyAutoLabs/PyAutoBrain/pull/241 · https://github.com/PyAutoLabs/PyAutoHeart/pull/156 · https://github.com/PyAutoLabs/PyAutoHands/pull/243 · https://github.com/PyAutoLabs/PyAutoMemory/pull/38 · https://github.com/PyAutoLabs/PyAutoScientist/pull/14 · https://github.com/PyAutoLabs/PyAutoMind/pull/250
+- summary: Dashboard naming unified across all five boards — every board is just the
+  "<Repo> Dashboard" (no more "(mobile phone dashboard)" / "Knowledge Board" /
+  "Release Board" / "Organism Board"), the html Pages page is the primary README link,
+  and every board workflow now publishes its markdown render at _site/dashboard.md,
+  linked "markdown version" high up in each html page (the Mind pattern). Router
+  contracts (badge.json messages, Mind counts table) untouched — verified the router
+  only parses count rows. Gotcha: Mind's dashboard_refresh drift check renders with
+  Brain MAIN, so the Brain generator PR had to merge before the Mind page PR (its
+  failed check was re-run to green in between). Follow-up idea (not filed): Pages
+  serves dashboard.md as plain text; blob URLs would render it if that ever matters.
+
+## Original prompt
+
 # Dashboard naming unification — every board is "<Repo> Dashboard", html primary
 
 Difficulty: easy

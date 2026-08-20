@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1058 records across 7 buckets.
+1059 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -178,6 +178,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [uniform-prior-bounds-numpy-path](2026/08/uniform-prior-bounds-numpy-path.md) — auto-closed by the merge's `Closes` line
 - [version-skew-yank-awareness](2026/08/version-skew-yank-awareness.md)
 - [version-stamp-sync-guards](2026/08/version-stamp-sync-guards.md) — closed by the 2026-08-19 reconcile sweep — see traps
+- [vincken-2026-bib-placeholder](2026/08/vincken-2026-bib-placeholder.md)
 - [wiki-hygiene](2026/08/wiki-hygiene.md) — auto-closed on merge
 - [wiki-provenance-restamp](2026/08/wiki-provenance-restamp.md)
 - [worktree-claim-parser-forms](2026/08/worktree-claim-parser-forms.md) — CLOSED completed

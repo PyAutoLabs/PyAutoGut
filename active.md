@@ -29,6 +29,7 @@
 - `strip_env_declarations:51` shares the prefix assumption but is NOT a live defect (verified);
   migrated as hardening only. Zero-diff workspace regen is the proof that migration is safe.
 - repos:
+  - PyAutoHands: feature/notebook-quotes-string-literal
 
 ## transformed-message-factor-gradient-unpack
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1501 (issued 2026-08-19)

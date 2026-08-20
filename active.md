@@ -57,3 +57,30 @@
   separate /repo_cleanup sweep so a destructive branch delete never rides a code diff.
 - repos:
   - PyAutoHands: feature/hands-hygiene-leftovers
+
+## script-size-guard-git-based
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/490
+- session: claude --resume 453f0202-8188-4e01-89a4-67bdb99523a2
+- status: workspace-dev — PLANNED ONLY, NOT STARTED. Plan approved and filed on #490;
+  human moved to mobile before implementation. Next action: /start_workspace on this
+  entry (creates the worktree + branch); no repo has been edited and no worktree exists.
+- worktree: ~/Code/PyAutoLabs-wt/script-size-guard-git-based
+- prompt: active/script_sizes_snapshot_drift.md
+- plan: replace the rotting `.script_sizes.json` snapshot with a git-diff truncation guard —
+  `check_sizes.sh` compares each CHANGED `scripts/**/*.py` against its size at HEAD (local)
+  or the PR merge-base (CI); delete the snapshot + the `--update` contract from AGENTS.md;
+  add an advisory `script_size_guard.yml` to both workspaces. Design validated in planning
+  with 6 controls (incl. a truncation 2 commits back caught via merge-base) and a
+  zero-false-positive replay over 402/150 changed scripts of real history.
+- scope-note: the original prompt named autolens_workspace only; autogalaxy_workspace has a
+  BYTE-IDENTICAL check_sizes.sh and the same rot (81 stale, 5 unsnapshotted), so it is IN
+  scope — human confirmed. Two PRs, one issue.
+- ci-constraint: do NOT add the new workflow to `repos.yaml -> required_workflows`. That key is
+  group-wide (`workspaces` = ["Smoke Tests", "Navigator Check"]) and the other five workspace
+  repos have no size guard — adding it would red their Heart ws_ci gate. Guard stays advisory.
+- finding: the prompt's headline count is a red herring — 212 stale sizes are near-harmless
+  (worst case degrades detection from <50% to <34% of current); the 39 scripts with NO
+  baseline are the entire real hole, and that count grew 12 -> 39 in three weeks.
+- repos:
+  - autolens_workspace: feature/script-size-guard-git-based (not yet created)
+  - autogalaxy_workspace: feature/script-size-guard-git-based (not yet created)

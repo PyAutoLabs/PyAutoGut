@@ -11,7 +11,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 | [In flight](#in-flight) (`active/`) | 2 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 148 |
+| [Backlog](#backlog) (`draft/`) | 149 |
 
 ## Start here
 
@@ -275,7 +275,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**148** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**149** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 36</summary>
@@ -571,7 +571,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>feature</b> — 33</summary>
+<summary><b>feature</b> — 34</summary>
 
 <details><summary>📋 <a href="draft/feature/autolens/area_magnification_leggos.md">Area magnification (LEGGOS-style): per-pixel inversion sum as primary; ShapeSolver rehabilitate-or-retire</a> — autolens · large · supervised · high</summary>
 
@@ -833,6 +833,14 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/feature/pyautomind/repos-sync-config-stamper.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/pyautomind/dashboard_epics_section.md">Mind dashboard — "Epics" section under In flight with one-tap</a> — pyautomind · easy · supervised</summary>
+
+```
+/start_dev draft/feature/pyautomind/dashboard_epics_section.md
 ```
 
 </details>

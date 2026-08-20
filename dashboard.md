@@ -11,16 +11,24 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 | [In flight](#in-flight) (`active/`) | 3 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 145 |
+| [Backlog](#backlog) (`draft/`) | 146 |
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 30
+**Highest priority** (filed as `high`) — showing 12 of 31
 
 <details><summary>📋 <a href="draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — medium · safe · high</summary>
 
 ```
 /start_dev draft/triage/jax_zero_contour.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/autolens_profiling/numba_cpu_likelihood_profiling.md">Profiling infrastructure for the numba CPU sparse-operator likelihood</a> — autolens_profiling · medium · supervised · high</summary>
+
+```
+/start_dev draft/feature/autolens_profiling/numba_cpu_likelihood_profiling.md
 ```
 
 </details>
@@ -101,14 +109,6 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 ```
 /start_dev draft/research/autoarray/delaunay_research.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md">EP hierarchical parent-scale collapse: cure the basin, or document the</a> — autofit · too-large · human-required · high</summary>
-
-```
-/start_dev draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md
 ```
 
 </details>
@@ -287,7 +287,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**145** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**146** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 35</summary>
@@ -575,7 +575,15 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>feature</b> — 33</summary>
+<summary><b>feature</b> — 34</summary>
+
+<details><summary>📋 <a href="draft/feature/autolens_profiling/numba_cpu_likelihood_profiling.md">Profiling infrastructure for the numba CPU sparse-operator likelihood</a> — autolens_profiling · medium · supervised · high</summary>
+
+```
+/start_dev draft/feature/autolens_profiling/numba_cpu_likelihood_profiling.md
+```
+
+</details>
 
 <details><summary>📋 <a href="draft/feature/autolens/area_magnification_leggos.md">Area magnification (LEGGOS-style): per-pixel inversion sum as primary; ShapeSolver rehabilitate-or-retire</a> — autolens · large · supervised · high</summary>
 

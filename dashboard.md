@@ -8,10 +8,10 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 3 |
+| [In flight](#in-flight) (`active/`) | 4 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 146 |
+| [Backlog](#backlog) (`draft/`) | 145 |
 
 ## Start here
 
@@ -115,14 +115,6 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 **Quick wins** (small enough, and safe enough to run unattended)
 
-<details><summary>📋 <a href="draft/maintenance/pyautohands/hands_hygiene_leftovers.md">Hands hygiene: expired announcement dead code, unregistered modules</a> — pyautohands · small · safe · low</summary>
-
-```
-/start_dev draft/maintenance/pyautohands/hands_hygiene_leftovers.md
-```
-
-</details>
-
 <details><summary>📋 <a href="draft/maintenance/workspaces/latex_raw_string_docstrings.md">Raw-string the LaTeX docstrings emitting SyntaxWarnings (HowToFit + HowToLens)</a> — workspaces · small · safe · low</summary>
 
 ```
@@ -147,6 +139,14 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/16_transformed_message_factor_gradient_unpack.md
+```
+
+</details>
+
+<details><summary>📋 <a href="active/hands_hygiene_leftovers.md">Hands hygiene: expired announcement dead code, unregistered modules</a> — <a href="https://github.com/PyAutoLabs/PyAutoHands/issues/249">issue #249</a> — library-dev</summary>
+
+```
+/start_dev active/hands_hygiene_leftovers.md
 ```
 
 </details>
@@ -287,7 +287,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**146** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**145** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 36</summary>
@@ -1057,7 +1057,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>maintenance</b> — 20</summary>
+<summary><b>maintenance</b> — 19</summary>
 
 <details><summary>📋 <a href="draft/maintenance/autolens_workspace_developer/rectangular_experiments_gut_stash.md">autolens_workspace_developer rectangular experiments — Gut stash + rename</a> — autolens_workspace_developer · small · supervised · normal</summary>
 
@@ -1175,14 +1175,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/maintenance/autolens_workspace/latex_docstrings_invalid_escape_warnings.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/maintenance/pyautohands/hands_hygiene_leftovers.md">Hands hygiene: expired announcement dead code, unregistered modules</a> — pyautohands · small · safe · low</summary>
-
-```
-/start_dev draft/maintenance/pyautohands/hands_hygiene_leftovers.md
 ```
 
 </details>

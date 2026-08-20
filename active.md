@@ -32,7 +32,9 @@
 ## folder-list-ref-drift-sweep
 - issue: https://github.com/PyAutoLabs/autogalaxy_workspace/issues/215
 - session: claude --resume c65ba3d5-d4a8-4db3-8952-1c592efc2f2b
-- status: workspace-dev
+- status: awaiting-merge — 5 PRs open 2026-08-19 (autocti_workspace#23, autofit_workspace#143,
+  autogalaxy_workspace#216, HowToGalaxy#68, HowToLens#72; all pending-release, standalone, prose-only).
+  On merge: lifecycle.py record + worktree cleanup.
 - worktree: ~/Code/PyAutoLabs-wt/folder-list-ref-drift-sweep
 - repos:
   - autocti_workspace: feature/folder-list-ref-drift-sweep

@@ -28,3 +28,15 @@
 - registered: 2026-08-19 by the wake_up session — the issuing session (claude/autofit-priors-messages-audit-ylvenv)
   filed the prompt + issue but not this entry, tripping Lifecycle Drift on main.
 - repos-none-claimed: this entry claims NO repos — one line deliberately, not 2-space bullets.
+
+## markdown-renderings-2a-leftovers
+- issue: https://github.com/PyAutoLabs/PyAutoHands/issues/247
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/markdown-renderings-2a-leftovers
+- prompt: active/markdown_renderings_2a_leftovers.md
+- plan: Phase A add `--optimize-only` to generate_markdown.py (reuse existing
+  optimize_pngs, no dpi knob); Phase B retro-optimize 405 RGBA PNGs across six
+  workspaces (~88MB -> ~23MB measured); Phase C measure one ellipse fit, pre-run
+  the 22 fits outside nbconvert if under a 2h ceiling then render via resume,
+  else close out the yaml exclusion comment; Phase D ship library-first.
+- repos:

@@ -33,7 +33,12 @@ corner of the problem, and found a hard dependency the prompt did not know
 about. Both sweeps are ~20 lines each and specified below — rebuild them rather
 than trusting these counts blind.
 
-### BLOCKED BY: `draft/bug/hands/raw_string_docstring_prefix.md`
+### ~~BLOCKED BY~~ — CLEARED 2026-08-20
+
+The PyAutoHands prerequisite **merged**: issue #250 / PR #251 (merge `c887290`), all 3
+CI matrix jobs green. Both parsers accept `r`/`R` prefixes now, verified on `main`. This
+task is ready to start. History of the block, kept because it explains the gate below:
+
 
 Two PyAutoHands docstring parsers **silently** mis-handle an `r"""` opener, so
 raw-stringing these scripts today would break the generated artefacts rather
@@ -47,7 +52,7 @@ than fix them. Both reproduced, neither raises:
   `.../potential_correction/`), so their smoke env profile would be silently
   rerouted.
 
-Do not start this task until that Hands fix has merged.
+~~Do not start this task until that Hands fix has merged.~~ It has.
 
 **Re-verified 2026-08-20 (resumed `/start_dev`): still blocked, still unfixed.**
 Against PyAutoHands `main` @ `cdea28c`, on a probe pair differing only by an `r`

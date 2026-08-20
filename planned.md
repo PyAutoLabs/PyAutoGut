@@ -114,9 +114,11 @@
 - planned: 2026-08-20
 - classification: workspace (6 repos) — maintenance, prose-only
 - suggested-branch: feature/latex-raw-string-docstrings
-- blocked-by: hands-raw-string-docstring-prefix — now IN FLIGHT as PyAutoHands#250,
-  branch claude/latex-raw-string-docstrings-9h4ine, fix + 6 regression tests pushed and
-  awaiting merge. Unblocks the moment that merges; nothing else gates this task.
+- UNBLOCKED 2026-08-20: the PyAutoHands prerequisite MERGED — #250 / PR #251 (merge `c887290`),
+  all 3 CI matrix jobs green. Both parsers now accept `r`/`R` prefixes, verified on main.
+  Nothing gates this task; it is ready for /start_dev.
+- see: complete/2026/08/hands-raw-string-docstring-prefix.md (traps worth reading first —
+  notably that `ipynb-py-convert` will not build in a container, and do NOT run black here)
 - blocker-recheck: 2026-08-20 (resumed /start_dev) — STILL BLOCKED. PyAutoHands main @ cdea28c
   still carries both defects, reproduced on a probe pair differing only by an `r`:
   `_narrative_docstring_ranges` [(0,2),(6,10)] -> [(6,10)] (raw block dropped), and

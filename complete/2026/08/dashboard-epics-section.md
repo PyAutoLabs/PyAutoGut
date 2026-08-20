@@ -1,3 +1,24 @@
+## dashboard-epics-section
+- issue: https://github.com/PyAutoLabs/PyAutoMind/issues/251
+- completed: 2026-08-20
+- workspace-pr: https://github.com/PyAutoLabs/PyAutoBrain/pull/242 · https://github.com/PyAutoLabs/PyAutoMind/pull/252
+- summary: New root registry epics.md (active.md-style schema; fields title/ledger/
+  status/notes) lists the three live epics — JAX profiling (ledger
+  autolens_profiling/results/notes/inference/PROGRAMME.md), cluster strong lensing
+  (draft/feature/autolens/source_cluster_arc.md), EP campaign
+  (draft/research/graphical_ep/ep_campaign.md). The dashboard renders an Epics
+  section under In flight; each 📋 copies a resume PROCEDURE (read the ledger +
+  DECISIONS/RESULTS siblings, cross-check epics.md/active.md and open issues/PRs,
+  continue from the next logical step via /start_dev) — deliberately no phase
+  snapshot baked in, so the button never goes stale. Every html section now also
+  links its markdown source ("markdown version": active.md/epics.md/parked.md/
+  planned.md/draft tree). spawn.py gained the epics.md EMPTY rule and the spawned
+  dashboard.md title was un-staled ("PyAutoMind task dashboard" → "PyAutoMind
+  Dashboard"). Absent epics.md → no section (spawn-safe). Counts table untouched
+  (router contract).
+
+## Original prompt
+
 # Mind dashboard — "Epics" section under In flight with one-tap resume prompts
 
 Difficulty: easy

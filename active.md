@@ -43,7 +43,8 @@
 
 ## markdown-renderings-2a-leftovers
 - issue: https://github.com/PyAutoLabs/PyAutoHands/issues/247
-- status: library-dev
+- status: library-shipped, workspace-pending
+- library-pr: https://github.com/PyAutoLabs/PyAutoHands/pull/248 (pending-release, OPEN — merge held for human)
 - worktree: ~/Code/PyAutoLabs-wt/markdown-renderings-2a-leftovers
 - prompt: active/markdown_renderings_2a_leftovers.md
 - plan: Phase A add `--optimize-only` to generate_markdown.py (reuse existing
@@ -51,8 +52,14 @@
   workspaces (~88MB -> ~23MB measured); Phase C measure one ellipse fit, pre-run
   the 22 fits outside nbconvert if under a 2h ceiling then render via resume,
   else close out the yaml exclusion comment; Phase D ship library-first.
-- status-detail: Phase A DONE (PyAutoHands 1e32e29, `--optimize-only` + 5 tests,
-  354 tests pass). Workspaces attached 2026-08-20 via worktree_add_repo.
+- status-detail: Phases A/B/C all DONE 2026-08-20. A: PyAutoHands 1e32e29
+  (`--optimize-only` + 5 tests, 354 pass) -> PR#248. B: 66.5MB reclaimed across
+  5 workspaces (91.2 -> 24.7MB, 405 PNGs); HowToLens 0 changes, no commit, its
+  branch is empty. C: ellipse/modeling premise FALSIFIED — one fit is ~32s not
+  hours, flat in major_axis; page rendered in 591s, added at max_minutes 120;
+  also fixed 3 pre-existing broken multi/ -> multi_dataset/ index links.
+  Heart at ship time: stale-85, sole reason PyAutoGalaxy rehearsal drift
+  (unrelated). NOTHING MERGED — all merges held for human.
 - repos:
   - PyAutoHands: feature/markdown-renderings-2a-leftovers
   - autolens_workspace: feature/markdown-renderings-2a-leftovers

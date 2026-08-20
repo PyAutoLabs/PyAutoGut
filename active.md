@@ -1,5 +1,20 @@
 # Active Tasks
 
+## numba-cpu-likelihood-positive-only-solver-speedup
+- issue: https://github.com/PyAutoLabs/PyAutoArray/issues/452 (issued 2026-08-20)
+- status: implemented-awaiting-pr — phase 1 (in-place factor buffer + copy-free numba
+  triangular solves) implemented, unit-tested and pushed from the cloud session (commit
+  2c9a22b): euclid solve 3.29 s -> 1.40 s (2.35x), euclid eval 4.92 -> 2.68 s (1.83x),
+  hst 3.95 -> 3.43 s; both autolens_profiling pins PASS at rtol 1e-6; full test_autoarray
+  green bar 3 pre-existing pynufft failures. NEXT: open the PyAutoArray PR (+ review),
+  then re-run + re-commit the delaunay_numba artifacts once the change is released
+  (validation artifacts were deliberately NOT committed against v2026.8.17.1).
+  Phase 2 candidates (block pivoting, cross-eval warm starts) stay in the prompt.
+- prompt: active/numba_cpu_likelihood_positive_only_solver_speedup.md
+- plan: see issue #452 (in-place buffer -> numba solves -> pins validation). Repos edited:
+  PyAutoArray only.
+  - Repo PyAutoArray: branch feature/fnnls-inplace-cholesky-buffer
+
 ## numba-cpu-likelihood-profiling
 - issue: https://github.com/PyAutoLabs/autolens_profiling/issues/151
 - pr: https://github.com/PyAutoLabs/autolens_profiling/pull/152
@@ -21,9 +36,9 @@
   euclid pass done 2026-08-20 (4-core container): 3.4x at P=4, 84-86% efficiency, pool variants
   indistinguishable, zero corrupted evals; RAL submit script added
   (submit_parallel_scaling_delaunay_numba_euclid, 1-32 cores).
-- RESUME: (1) start_dev the solver speed-up prompt above + start_dev
-  draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md (still valid;
-  both need a CLI session — deliberately not started from the cloud session);
+- RESUME: (1) solver speed-up prompt now ISSUED + implemented (see
+  numba-cpu-likelihood-positive-only-solver-speedup above, PyAutoArray#452); still to
+  start_dev: draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md;
   (2) on merge: RAL scaling sweep (hpc/batch_cpu/..., incl. --mesh delaunay), worktree cleanup,
   completion record.
   Bug prompt filed: draft/bug/autoarray/numba_first_call_garbage_psf_weighted_data.md.

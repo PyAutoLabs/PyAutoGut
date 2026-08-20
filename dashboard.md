@@ -8,14 +8,14 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 5 |
+| [In flight](#in-flight) (`active/`) | 6 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 8 |
-| [Backlog](#backlog) (`draft/`) | 148 |
+| [Backlog](#backlog) (`draft/`) | 147 |
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 34
+**Highest priority** (filed as `high`) — showing 12 of 33
 
 <details><summary>📋 <a href="draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — medium · safe · high</summary>
 
@@ -65,14 +65,6 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 </details>
 
-<details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_positive_only_solver_speedup.md">Numba CPU likelihood: positive-only solver speed-up (the Delaunay ~74% euclid</a> — autoarray · large · supervised · high</summary>
-
-```
-/start_dev draft/feature/autoarray/numba_cpu_likelihood_positive_only_solver_speedup.md
-```
-
-</details>
-
 <details><summary>📋 <a href="draft/docs/autolens/multi_galaxy_package.md">multi_galaxy package: new regime package in autolens_workspace</a> — autolens · large · supervised · high</summary>
 
 ```
@@ -113,6 +105,14 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 </details>
 
+<details><summary>📋 <a href="draft/feature/profiling/profiling_agent_jax_compile_time_scope.md">Give the Profiling Agent a compile-time axis — the arc</a> — profiling · large · supervised · high</summary>
+
+```
+/start_dev draft/feature/profiling/profiling_agent_jax_compile_time_scope.md
+```
+
+</details>
+
 **Quick wins** (small enough, and safe enough to run unattended)
 
 <details><summary>📋 <a href="draft/bug/hands/raw_string_docstring_prefix.md">Teach the notebook/env parsers to accept raw-string (<code>r"""</code>) docstrings</a> — hands · small · safe · medium</summary>
@@ -147,6 +147,14 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/jax_default_dependency.md
+```
+
+</details>
+
+<details><summary>📋 <a href="active/numba_cpu_likelihood_positive_only_solver_speedup.md">Numba CPU likelihood: positive-only solver speed-up (the Delaunay ~74% euclid</a> — <a href="https://github.com/PyAutoLabs/PyAutoArray/issues/452">issue #452</a> — implemented-awaiting-pr — phase 1 (in-place factor buffer + copy-free numba</summary>
+
+```
+/start_dev active/numba_cpu_likelihood_positive_only_solver_speedup.md
 ```
 
 </details>
@@ -303,7 +311,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**148** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**147** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 37</summary>
@@ -607,7 +615,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>feature</b> — 36</summary>
+<summary><b>feature</b> — 35</summary>
 
 <details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md">Numba CPU likelihood phase 1: batched MGE convolution + operated-matrix</a> — autoarray · medium · supervised · high</summary>
 
@@ -621,14 +629,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/feature/autoarray/numba_cpu_likelihood_kernel_cdf_fast_path.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_positive_only_solver_speedup.md">Numba CPU likelihood: positive-only solver speed-up (the Delaunay ~74% euclid</a> — autoarray · large · supervised · high</summary>
-
-```
-/start_dev draft/feature/autoarray/numba_cpu_likelihood_positive_only_solver_speedup.md
 ```
 
 </details>

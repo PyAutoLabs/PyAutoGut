@@ -1,5 +1,33 @@
 # Active Tasks
 
+## latex-raw-string-docstrings
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/491
+- status: workspace-dev — IMPLEMENTED and pushed in all 6 repos; PRs NOT yet opened
+- prompt: active/latex_raw_string_docstrings.md
+- repos (all on branch claude/latex-raw-string-docstrings-9h4ine):
+  - HowToFit: 4 files, 13 literals, 7 corruptions repaired
+  - HowToGalaxy: 4 files, 20 literals, 13 repaired
+  - HowToLens: 8 files, 32 literals, 21 repaired
+  - autofit_workspace: 2 files, 2 literals, 1 repaired
+  - autogalaxy_workspace: 6 files, 30 literals, 28 repaired
+  - autolens_workspace: 17 files, 83 literals, 61 repaired
+- totals: 41 files, 180 literals, 131 corruptions repaired — 41 matches the survey exactly.
+- verification (per repo, in order): baseline regeneration is a NO-OP; both sweeps zero;
+  runtime value check (every changed literal's value compared HEAD vs worktree — the prefix
+  may only REMOVE corruption) = 131 repaired / 0 unexpected; diff-empty gate passes
+  byte-exactly on notebooks/ markdown/ llms-full.txt workspace_index.json. autolens_workspace
+  additionally: all 57 __Env__ declarations re-read IDENTICALLY, and 4 of the raw-stringed
+  files carry __Env__, so the PyAutoHands#251 fix is exercised end to end.
+- gate refinement: HowToFit's 4 `plt.ylabel` labels are runtime strings in CODE cells, which
+  copy source verbatim, so the `r` legitimately shows there. The gate holds exactly as written
+  for every docstring; that one code-cell delta is by design.
+- residue: autolens_workspace scripts/group/likelihood_function.py keeps 2 warned + 1 silent.
+  Three docstrings use the DOUBLE-backslash convention ($\\theta$, \\frac, \\vec) mixed with
+  single-backslash macros; adding `r` would double the correct ones. Needs a convention
+  decision + un-doubling 18 backslashes = a prose edit this task excludes. Follow-up.
+- follow-up to file: -W error::SyntaxWarning compile guard in workspace CI (catches only the
+  warned class; the silent class needs the AST sweep).
+
 ## numba-cpu-likelihood-profiling
 - issue: https://github.com/PyAutoLabs/autolens_profiling/issues/151
 - pr: https://github.com/PyAutoLabs/autolens_profiling/pull/152

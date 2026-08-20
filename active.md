@@ -54,6 +54,22 @@
   filed the prompt + issue but not this entry, tripping Lifecycle Drift on main.
 - repos-none-claimed: this entry claims NO repos — one line deliberately, not 2-space bullets.
 
+## hands-raw-string-docstring-prefix
+- issue: https://github.com/PyAutoLabs/PyAutoHands/issues/250
+- status: library-dev — fix + tests IMPLEMENTED and pushed; awaiting PR + merge
+- prompt: active/hands_raw_string_docstring_prefix.md
+- repos:
+  - PyAutoHands: claude/latex-raw-string-docstrings-9h4ine
+- scope-note: the prompt's "blocked by hands-hygiene-leftovers" was LOCAL WORKTREE
+  contention only, not a code dependency. Verified 2026-08-20: feature/hands-hygiene-leftovers
+  touches AGENTS.md, generate_release_notes.py, bin/autohands and two unrelated tests —
+  ZERO overlap with add_notebook_quotes.py / env_config.py. Done in a separate clone, so
+  the two can merge in either order.
+- verification: all 6 new tests confirmed to FAIL with the source change reverted. Full
+  suite 14F/337P on branch vs 14F/331P on main — identical failure sets, all 14 from
+  ipynb-py-convert being unbuildable locally (CI installs it).
+- blocks: latex-raw-string-docstrings (41 workspace files across 6 repos)
+
 ## hands-hygiene-leftovers
 - issue: https://github.com/PyAutoLabs/PyAutoHands/issues/249
 - session: claude --resume 08f77ea2-bf3a-42f4-a427-e01da3a4ce2d

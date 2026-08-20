@@ -8,7 +8,6 @@
 - [jax-point-source-point-smoke-sentinel](#jax-point-source-point-smoke-sentinel)
 - [piemass-potential](#piemass-potential)
 - [latent-nan-guard-honest-run](#latent-nan-guard-honest-run)
-- [hands-raw-string-docstring-prefix](#hands-raw-string-docstring-prefix)
 - [latex-raw-string-docstrings](#latex-raw-string-docstrings)
 
 <!-- toc:end -->
@@ -109,48 +108,15 @@
   - autolens_workspace_test
 - note: latent/latent_nan_robustness.py PASSES but VACUOUSLY under the smoke profile — TEST_MODE=2 yields only 4 bypass samples, and DISABLE_JAX=1 silently flips its deliberate AnalysisImaging(use_jax=True) to False (PyAutoLens analysis/analysis/dataset.py:89), so the JAX column-masking branch the guard exists to catch is never taken. MultiStartAdam/BlackJAXNUTS precedent. Work = (1) config/build/env_vars.yaml override for `latent/latent_nan_robustness` with unset: [PYAUTO_TEST_MODE, PYAUTO_DISABLE_JAX]; (2) trim the script under the 300s cap. MEASURED: honest run = 412s; PYAUTO_TEST_MODE=1 does NOT help (455s) — Nautilus is NOT the bottleneck (~136s post-fit results update + ~56s latent compute on 100 samples), so the lever is sample count. Script is in the curated smoke_tests.txt, which DOES read env_vars.yaml, so this lands in the per-PR gate. Adjacent to the blocker's own follow-up ("re-time the SLOW siblings"). NOT bugs, verified passing from clean output, no change needed: imaging/model_fit.py and latent/latent_variables_smoke.py.
 
-## hands-raw-string-docstring-prefix
-- prompt: draft/bug/hands/raw_string_docstring_prefix.md
-- issue: NOT YET FILED — file at `/start_dev` time, once `hands-hygiene-leftovers` is close to shipping
-- planned: 2026-08-20
-- classification: library (PyAutoHands) — bug, silent parser defect
-- suggested-branch: feature/hands-raw-string-docstring-prefix
-- blocked-by: hands-hygiene-leftovers (using PyAutoHands; worktree dirty, 3 files)
-- blocker-recheck: 2026-08-20 — `feature/hands-hygiene-leftovers` still open on the
-  PyAutoHands remote (main @ cdea28c, last merge #248 markdown-renderings-2a-leftovers),
-  so this is still blocked and still unfiled. Both defects re-reproduced this pass —
-  see the latex-raw-string-docstrings entry below for the probe output.
-- summary: |
-    Two PyAutoHands docstring parsers silently mis-handle an `r"""` opener, and
-    neither raises. `add_notebook_quotes.py:67` tests
-    `lines[start].startswith('"""')`, so an r-string narrative block is dropped
-    as a cell boundary and the tutorial prose ships as a Python CODE cell.
-    `env_config.py:110` (`_DOCSTRING_DELIM_RE = ^(?:"""|''')\s*$`) misses the
-    opener, then matches the block's CLOSER as an opener — parity inverts for
-    the rest of the file and `read_env_declaration` returns None instead of the
-    declared tokens.
-
-    BOTH REPRODUCED 2026-08-20 on probe files: `_narrative_docstring_ranges`
-    returned only the plain block, and `read_env_declaration` gave `['jax']` for
-    a plain file vs `None` for the same file with an `r` on an earlier
-    docstring. Zero `r"""` narrative docstrings exist in any workspace today,
-    which is why this has never fired.
-
-    Fix is two lines plus tests: accept an optional `r`/`R` prefix at both
-    sites. `generate_markdown.script_title` and `navigator.py` were checked and
-    are NOT affected (the former's regex finds the `"""` after the `r`; the
-    latter reads already-converted `'''` output).
-- blocks: latex-raw-string-docstrings (41 workspace files cannot be raw-stringed until this lands)
-- affected-repos:
-  - PyAutoHands
-
 ## latex-raw-string-docstrings
 - prompt: draft/maintenance/workspaces/latex_raw_string_docstrings.md
 - issue: NOT YET FILED — file at `/start_dev` time, after hands-raw-string-docstring-prefix merges
 - planned: 2026-08-20
 - classification: workspace (6 repos) — maintenance, prose-only
 - suggested-branch: feature/latex-raw-string-docstrings
-- blocked-by: hands-raw-string-docstring-prefix (raw-stringing before it lands BREAKS the generated notebooks and silently drops 7 `__Env__` declarations)
+- blocked-by: hands-raw-string-docstring-prefix — now IN FLIGHT as PyAutoHands#250,
+  branch claude/latex-raw-string-docstrings-9h4ine, fix + 6 regression tests pushed and
+  awaiting merge. Unblocks the moment that merges; nothing else gates this task.
 - blocker-recheck: 2026-08-20 (resumed /start_dev) — STILL BLOCKED. PyAutoHands main @ cdea28c
   still carries both defects, reproduced on a probe pair differing only by an `r`:
   `_narrative_docstring_ranges` [(0,2),(6,10)] -> [(6,10)] (raw block dropped), and

@@ -43,8 +43,13 @@
 
 ## markdown-renderings-2a-leftovers
 - issue: https://github.com/PyAutoLabs/PyAutoHands/issues/247
-- status: library-shipped, workspace-pending
-- library-pr: https://github.com/PyAutoLabs/PyAutoHands/pull/248 (pending-release, OPEN — merge held for human)
+- status: workspace-shipped, awaiting-merge — ALL SIX PRs OPEN, none merged
+- library-pr: https://github.com/PyAutoLabs/PyAutoHands/pull/248 (pending-release, OPEN)
+- workspace-prs: autolens_workspace#489, autogalaxy_workspace#217,
+  autofit_workspace#144, HowToGalaxy#69, HowToFit#46 (all pending-release, all OPEN)
+- merge-order: PyAutoHands#248 FIRST (library-first gate), then the five workspace PRs.
+  HowToLens has an empty branch and no PR — it was already fully optimized.
+- MERGE HELD FOR HUMAN. Do not merge or write a completion record until then.
 - worktree: ~/Code/PyAutoLabs-wt/markdown-renderings-2a-leftovers
 - prompt: active/markdown_renderings_2a_leftovers.md
 - plan: Phase A add `--optimize-only` to generate_markdown.py (reuse existing

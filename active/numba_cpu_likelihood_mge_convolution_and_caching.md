@@ -1,10 +1,9 @@
-# Numba CPU likelihood phase 1: batched MGE convolution + operated-matrix caching
+# Numba CPU likelihood phase 1: MGE operated-matrix cross-eval memo (fixed-MGE campaigns)
 
 Type: feature
 Target: autoarray
 Repos:
 - @PyAutoArray
-- @PyAutoGalaxy
 Difficulty: medium
 Autonomy: supervised
 Priority: high
@@ -43,15 +42,33 @@ the `cpu_fast_modeling.py` production route):
    consistent with the inversion's per-evaluation lifetime) and hoist the
    noise division out of the pair loop.
 
-## Goal
+## Scope narrowed (user direction, 2026-08-20)
 
-- Batch the MGE/linear-func operated mapping matrix construction through the
-  existing batched convolver call (numpy path; JAX path untouched).
-- Cache `linear_func_operated_mapping_matrix_dict` and hoist repeated
-  per-pair work in `imaging_numba/sparse.py`.
-- **Likelihood values unchanged**: pinned euclid/hst log-likelihoods in
-  autolens_profiling's `pixelization_numba` cells must pass (rtol 1e-6; expect
-  bit-comparable), plus the existing unit suites in both repos.
-- Re-run the autolens_profiling runtime + breakdown cells to record the gain
-  (expect the "MGE operated mapping matrix" step 0.42 s -> ~0.05-0.1 s at
-  euclid).
+Keep the change inside the numba inversion bit (`imaging_numba/sparse.py`),
+minimal source interference, and active only when the MGE is *actually fixed*.
+That rules the original item 1 (batched convolution in PyAutoGalaxy
+`linear/abstract.py`) out of scope — DEFERRED, and largely mooted for
+fixed-MGE campaigns by the memo below (the convolution runs once per worker).
+Note the source-hunt's item 2 premise weakened on inspection: the override is
+already a `cached_property` on the func object, so intra-eval rebuilds were
+cheap; the real cost was fresh func objects re-paying the convolution stack
+*every evaluation* even with identical parameters.
+
+## Goal (as implemented)
+
+`InversionImagingSparseNumba.linear_func_operated_mapping_matrix_dict`
+overridden with (1) per-inversion `cached_property` and (2) a module-level
+cross-evaluation memo keyed by sha256 of the linear func's full pickled state
+(profiles + grids + PSF): fixed profiles fingerprint identically -> matrix
+reused across evals; any free parameter changes the key -> recompute exactly
+as before. Unpicklable objects fall back to the uncached path; failure modes
+are misses, never stale hits; entries are read-only copies, bounded at 8;
+`AUTOARRAY_NUMBA_OPERATED_MEMO=0` disables.
+
+## Results (validated 2026-08-20, 4-core container, Delaunay-1250 fiducial)
+
+- Euclid "MGE operated mapping matrix" step: 0.56 s -> 0.004 s on memo hits.
+- Euclid steady-state eval: 2.34 s -> **1.34 s** (on top of the fnnls solver
+  speed-up PyAutoArray#453; 4.92 s -> 1.34 s = 3.7x total today).
+- Both autolens_profiling delaunay_numba pins PASS (rtol 1e-6);
+  test_autoarray 1034 passed (+8 new memo tests).

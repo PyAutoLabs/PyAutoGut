@@ -8,14 +8,14 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 6 |
+| [In flight](#in-flight) (`active/`) | 7 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 8 |
-| [Backlog](#backlog) (`draft/`) | 147 |
+| [Backlog](#backlog) (`draft/`) | 146 |
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 33
+**Highest priority** (filed as `high`) — showing 12 of 32
 
 <details><summary>📋 <a href="draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — medium · safe · high</summary>
 
@@ -29,14 +29,6 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 ```
 /start_dev draft/bug/autoarray/numba_first_call_garbage_psf_weighted_data.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md">Numba CPU likelihood phase 1: batched MGE convolution + operated-matrix</a> — autoarray · medium · supervised · high</summary>
-
-```
-/start_dev draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md
 ```
 
 </details>
@@ -113,6 +105,14 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 </details>
 
+<details><summary>📋 <a href="draft/feature/workspaces/cluster_source_science.md">Cluster source_science.py: robust magnification science at cluster scale (no meshes</a> — workspaces · large · supervised · high</summary>
+
+```
+/start_dev draft/feature/workspaces/cluster_source_science.md
+```
+
+</details>
+
 **Quick wins** (small enough, and safe enough to run unattended)
 
 <details><summary>📋 <a href="draft/bug/hands/raw_string_docstring_prefix.md">Teach the notebook/env parsers to accept raw-string (<code>r"""</code>) docstrings</a> — hands · small · safe · medium</summary>
@@ -147,6 +147,14 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/jax_default_dependency.md
+```
+
+</details>
+
+<details><summary>📋 <a href="active/numba_cpu_likelihood_mge_convolution_and_caching.md">Numba CPU likelihood phase 1: MGE operated-matrix cross-eval memo (fixed-MGE</a> — <a href="https://github.com/PyAutoLabs/PyAutoArray/issues/454">issue #454</a> — pr-open — cross-eval memo for the MGE operated mapping matrices in</summary>
+
+```
+/start_dev active/numba_cpu_likelihood_mge_convolution_and_caching.md
 ```
 
 </details>
@@ -311,7 +319,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**147** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**146** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 37</summary>
@@ -615,15 +623,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>feature</b> — 35</summary>
-
-<details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md">Numba CPU likelihood phase 1: batched MGE convolution + operated-matrix</a> — autoarray · medium · supervised · high</summary>
-
-```
-/start_dev draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md
-```
-
-</details>
+<summary><b>feature</b> — 34</summary>
 
 <details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_kernel_cdf_fast_path.md">Numba CPU likelihood phase 2: kernel-CDF numba fast path (the</a> — autoarray · large · supervised · high</summary>
 

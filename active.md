@@ -1,5 +1,18 @@
 # Active Tasks
 
+## numba-cpu-likelihood-mge-operated-matrix-memo
+- issue: https://github.com/PyAutoLabs/PyAutoArray/issues/454 (issued 2026-08-20)
+- pr: https://github.com/PyAutoLabs/PyAutoArray/pull/455 (open, awaiting CI + human merge; session
+  subscribed)
+- status: pr-open — cross-eval memo for the MGE operated mapping matrices in
+  imaging_numba/sparse.py only (user-constrained scope: numba bit, active only when MGE actually
+  fixed via sha256 state fingerprint; batched-convolution half DEFERRED). Validated: euclid MGE
+  step 0.56 s -> 0.004 s on hits; steady-state eval 2.34 -> 1.34 s; stacked with PyAutoArray#453
+  today's euclid total is 4.92 -> 1.34 s (3.7x). Pins pass; +8 unit tests (1034 passed).
+- prompt: active/numba_cpu_likelihood_mge_convolution_and_caching.md
+- plan: see issue #454. Repos edited: PyAutoArray only.
+  - Repo PyAutoArray: branch feature/numba-mge-operated-matrix-memo
+
 ## numba-cpu-likelihood-positive-only-solver-speedup
 - issue: https://github.com/PyAutoLabs/PyAutoArray/issues/452 (issued 2026-08-20)
 - pr: https://github.com/PyAutoLabs/PyAutoArray/pull/453 — MERGED 2026-08-20 (c7330a7,
@@ -42,8 +55,8 @@
   indistinguishable, zero corrupted evals; RAL submit script added
   (submit_parallel_scaling_delaunay_numba_euclid, 1-32 cores).
 - RESUME: (1) solver speed-up prompt now ISSUED + implemented (see
-  numba-cpu-likelihood-positive-only-solver-speedup above, PyAutoArray#452); still to
-  start_dev: draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md;
+  numba-cpu-likelihood-positive-only-solver-speedup above, PyAutoArray#452); MGE memo prompt
+  now also ISSUED + implemented (PyAutoArray#454/#455, entry above);
   (2) NOW UNBLOCKED BY MERGE (laptop/HPC): RAL scaling sweeps
   (submit_parallel_scaling_pixelization_numba_euclid + ..._delaunay_numba_euclid), local
   worktree cleanup (~/Code/PyAutoLabs-wt/numba-cpu-likelihood-profiling), then completion

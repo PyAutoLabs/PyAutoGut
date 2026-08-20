@@ -1,5 +1,17 @@
 # Active Tasks
 
+## numba-cpu-likelihood-profiling
+- issue: https://github.com/PyAutoLabs/autolens_profiling/issues/151
+- status: workspace-dev
+- worktree: ~/Code/PyAutoLabs-wt/numba-cpu-likelihood-profiling
+- prompt: active/numba_cpu_likelihood_profiling.md
+- plan: build numba-CPU sparse-operator likelihood profiling infra in autolens_profiling —
+  runtime cell + step-by-step breakdown cell (euclid default, hst/jwst) + multiprocessing
+  scaling harness (serial vs Nautilus object-pool vs initializer-cached pool, pickle payload,
+  BLAS interplay) + RAL SLURM submit; then first local pass (euclid+hst, cores 1-8) and
+  findings. Repos edited: autolens_profiling only.
+  - Repo autolens_profiling: branch feature/numba-cpu-likelihood-profiling
+
 ## jax-default-dependency
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/702
 - status: shipped-awaiting-release-followups — ALL ELEVEN PRs merged 2026-08-19 (human-authorized):

@@ -8,7 +8,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 4 |
+| [In flight](#in-flight) (`active/`) | 3 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
 | [Backlog](#backlog) (`draft/`) | 146 |
@@ -155,14 +155,6 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/jax_default_dependency.md
-```
-
-</details>
-
-<details><summary>📋 <a href="active/markdown_renderings_2a_leftovers.md">Markdown renderings batch 2a — leftovers (ellipse/modeling + PNG size)</a> — <a href="https://github.com/PyAutoLabs/PyAutoHands/issues/247">issue #247</a> — workspace-shipped, awaiting-merge — ALL SIX PRs OPEN, none merged</summary>
-
-```
-/start_dev active/markdown_renderings_2a_leftovers.md
 ```
 
 </details>

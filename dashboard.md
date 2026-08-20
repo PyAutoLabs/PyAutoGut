@@ -175,7 +175,7 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
-<details><summary>📋 <a href="active/notebook_quotes_string_literal_closing_delimiter.md"><code>add_notebook_quotes</code> mistakes a code string literal's closing delimiter for a</a> — <a href="https://github.com/PyAutoLabs/PyAutoHands/issues/244">issue #244</a> — library-dev</summary>
+<details><summary>📋 <a href="active/notebook_quotes_string_literal_closing_delimiter.md"><code>add_notebook_quotes</code> mistakes a code string literal's closing delimiter for a</a> — <a href="https://github.com/PyAutoLabs/PyAutoHands/issues/244">issue #244</a> — library-shipped, awaiting-merge</summary>
 
 ```
 /start_dev active/notebook_quotes_string_literal_closing_delimiter.md

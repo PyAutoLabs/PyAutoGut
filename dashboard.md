@@ -8,27 +8,19 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 3 |
+| [In flight](#in-flight) (`active/`) | 4 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 146 |
+| [Backlog](#backlog) (`draft/`) | 145 |
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 31
+**Highest priority** (filed as `high`) — showing 12 of 30
 
 <details><summary>📋 <a href="draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — medium · safe · high</summary>
 
 ```
 /start_dev draft/triage/jax_zero_contour.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/autolens_profiling/numba_cpu_likelihood_profiling.md">Profiling infrastructure for the numba CPU sparse-operator likelihood</a> — autolens_profiling · medium · supervised · high</summary>
-
-```
-/start_dev draft/feature/autolens_profiling/numba_cpu_likelihood_profiling.md
 ```
 
 </details>
@@ -113,6 +105,14 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 </details>
 
+<details><summary>📋 <a href="draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md">EP hierarchical parent-scale collapse: cure the basin, or document the</a> — autofit · too-large · human-required · high</summary>
+
+```
+/start_dev draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md
+```
+
+</details>
+
 **Quick wins** (small enough, and safe enough to run unattended)
 
 <details><summary>📋 <a href="draft/maintenance/pyautohands/hands_hygiene_leftovers.md">Hands hygiene: expired announcement dead code, unregistered modules</a> — pyautohands · small · safe · low</summary>
@@ -163,6 +163,14 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/markdown_renderings_2a_leftovers.md
+```
+
+</details>
+
+<details><summary>📋 <a href="active/numba_cpu_likelihood_profiling.md">Profiling infrastructure for the numba CPU sparse-operator likelihood</a> — <a href="https://github.com/PyAutoLabs/autolens_profiling/issues/151">issue #151</a> — workspace-dev</summary>
+
+```
+/start_dev active/numba_cpu_likelihood_profiling.md
 ```
 
 </details>
@@ -287,7 +295,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**146** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**145** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 35</summary>
@@ -575,15 +583,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>feature</b> — 34</summary>
-
-<details><summary>📋 <a href="draft/feature/autolens_profiling/numba_cpu_likelihood_profiling.md">Profiling infrastructure for the numba CPU sparse-operator likelihood</a> — autolens_profiling · medium · supervised · high</summary>
-
-```
-/start_dev draft/feature/autolens_profiling/numba_cpu_likelihood_profiling.md
-```
-
-</details>
+<summary><b>feature</b> — 33</summary>
 
 <details><summary>📋 <a href="draft/feature/autolens/area_magnification_leggos.md">Area magnification (LEGGOS-style): per-pixel inversion sum as primary; ShapeSolver rehabilitate-or-retire</a> — autolens · large · supervised · high</summary>
 

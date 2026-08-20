@@ -2,7 +2,24 @@
 
 ## latex-raw-string-docstrings
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/491
-- status: workspace-dev — IMPLEMENTED and pushed in all 6 repos; PRs NOT yet opened
+- status: workspace-dev — 5 of 6 PRs MERGED; HowToLens#73 held RED (not this PR's failure)
+- issue-umbrella: autolens_workspace#491 (one issue, six PRs)
+- merged: HowToFit#47, HowToGalaxy#70, autofit_workspace#145, autogalaxy_workspace#218,
+  autolens_workspace#492 — all green, incl. the CI 'Catalogue staleness' check, which
+  independently re-confirms the regeneration gate.
+- BLOCKED: HowToLens#73 red on smoke (3.12 + 3.13). Two scripts fail with numba
+  'Pass nopython_type_inference': chapter_3_pixelizations/tutorial_8_adaptive_pixelization.py
+  and tutorial_11_brightness_adaption.py. NEITHER is in the diff, and all 8 files that ARE
+  in it pass. Reproduced identically on one re-run. A docstring r-prefix cannot cause a numba
+  typing error. Prime suspect: PyAutoArray#453 (in-place Cholesky buffer + new numba kernels
+  for fnnls_cholesky) merged 2026-08-20 22:09:30 UTC, minutes before this run; CI installs
+  autoarray from source at HEAD, and the last green HowToLens main run (04:29 UTC) predates
+  it. NOT yet proven: two specific mechanisms were tested and BOTH passed under the exact CI
+  versions (numba 0.67.0 + scipy 1.17.1) — a strided Ubuf view into _cholupdate, and the new
+  np.dot inside _cho_solve_buffer. So the suspicion rests on timing + code area, not a
+  reproduced mechanism. Control experiment running: re-run of the last GREEN main build
+  (same commit, fresh dependency install) — if it now fails the same way, the break is on
+  main/library drift and this PR is clean.
 - prompt: active/latex_raw_string_docstrings.md
 - repos (all on branch claude/latex-raw-string-docstrings-9h4ine):
   - HowToFit: 4 files, 13 literals, 7 corruptions repaired

@@ -1,3 +1,11 @@
+## folder-list-ref-drift-sweep
+- issue: https://github.com/PyAutoLabs/autogalaxy_workspace/issues/215
+- completed: 2026-08-19
+- workspace-pr: autocti_workspace#23, autofit_workspace#143, autogalaxy_workspace#216, HowToGalaxy#68, HowToLens#72 (all merged 2026-08-19)
+- summary: Fixed the 12 real defects from the 2026-08-19 hygiene refs scan — 2 autoCTI_workspace/output casing refs, 2 howtolens/dataset/cluster/simple re-points in the HowToLens cluster simulator, 8 missing README folder-list entries sourced from each folder's own README/docstrings. Notebook mirrors regenerated per each repo's convention (autocti script-only). 6 of the scan's 18 findings adjudicated sibling-repo false positives (targets exist in autolens_workspace) and deliberately untouched — the scanner still reports the 5 weak/*.py refs until it learns cross-repo resolution. Witness: branch re-scan 18 → 5.
+
+## Original prompt
+
 # Fix folder-list drift in workspace/HowTo prose (hygiene refs sweep)
 
 Type: refactor

@@ -28,3 +28,10 @@
 - registered: 2026-08-19 by the wake_up session — the issuing session (claude/autofit-priors-messages-audit-ylvenv)
   filed the prompt + issue but not this entry, tripping Lifecycle Drift on main.
 - repos-none-claimed: this entry claims NO repos — one line deliberately, not 2-space bullets.
+
+## folder-list-ref-drift-sweep
+- issue: https://github.com/PyAutoLabs/autogalaxy_workspace/issues/215
+- session: claude --resume c65ba3d5-d4a8-4db3-8952-1c592efc2f2b
+- status: workspace-dev
+- worktree: ~/Code/PyAutoLabs-wt/folder-list-ref-drift-sweep
+- repos:

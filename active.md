@@ -45,3 +45,14 @@
 - registered: 2026-08-19 by the wake_up session — the issuing session (claude/autofit-priors-messages-audit-ylvenv)
   filed the prompt + issue but not this entry, tripping Lifecycle Drift on main.
 - repos-none-claimed: this entry claims NO repos — one line deliberately, not 2-space bullets.
+
+## hands-hygiene-leftovers
+- issue: https://github.com/PyAutoLabs/PyAutoHands/issues/249
+- session: claude --resume 08f77ea2-bf3a-42f4-a427-e01da3a4ce2d
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/hands-hygiene-leftovers
+- prompt: active/hands_hygiene_leftovers.md
+- scope-note: the prompt's third bullet (~30 stale PyAutoHands remote branches, incl.
+  origin/master, origin/release) is deliberately OUT of this task's PR — run it as a
+  separate /repo_cleanup sweep so a destructive branch delete never rides a code diff.
+- repos:

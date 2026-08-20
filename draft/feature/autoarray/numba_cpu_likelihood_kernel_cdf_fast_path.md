@@ -1,10 +1,14 @@
-# Numba CPU likelihood: restore legacy-class speed (adaptive-mesh transform + MGE convolution)
+# Numba CPU likelihood phase 2: kernel-CDF numba fast path (the 49-88% lever)
+
+> Phase 2 of the CPU-likelihood speed restoration. Phase 1 (exact-identical
+> MGE-convolution batching + operated-mapping-matrix caching) is
+> `numba_cpu_likelihood_mge_convolution_and_caching.md` — ship it first; its
+> files are disjoint from this phase's.
 
 Type: feature
 Target: autoarray
 Repos:
 - @PyAutoArray
-- @PyAutoGalaxy
 Difficulty: large
 Autonomy: supervised
 Priority: high
@@ -69,25 +73,21 @@ Secondary confirmed costs:
 - `mapper_numba_util.py:74` clears an O(source_pixels) array once per data
   pixel inside `unique_mappings` (minor at <=1500 sources).
 
-## Goal
+## Goal (this phase)
 
-Make the numba CPU sparse-operator likelihood (the `cpu_fast_modeling.py`
-route) fast again with **unchanged likelihood values**:
+**Kernel-CDF fast path (dominant, 49-88% of the likelihood)**: a numba
+implementation of the adaptive-rectangular CDF transform
+(`autoarray/inversion/mesh/interpolator/rectangular.py:146-172`) — loop-based
+erf sum without the 126 MB broadcast temporaries, exploiting exact fp64 erf
+saturation (sorted points + +-~6-bandwidth window; contributions outside are
+exactly 0/1) so results match the current numpy path to fp precision. The
+numba path applies to `xp is np` only; the JAX path is untouched (the numpy
+transform stays as the JAX-differentiable reference implementation and the
+fallback when numba is absent).
 
-1. **Kernel-CDF fast path (dominant, 49-88%)**: numba implementation of the
-   adaptive-rectangular CDF transform — loop-based erf sum without broadcast
-   temporaries, exploiting exact fp64 erf saturation (sorted points + +-~6h
-   window; outside contributions are exactly 0/1) so results match the current
-   numpy path to fp precision. Target >=5-10x on this step.
-2. **Batched MGE convolution (19%)**: route the linear-func operated mapping
-   matrices through the existing batched convolver call (one FFT for all 60
-   columns, blurring region included); verify bit-comparability.
-3. **Cache/hoist `linear_func_operated_mapping_matrix_dict`** (and the noise
-   division) — exact-identical, removes pure repeated work.
-4. **Validate + measure** with the new autolens_profiling numba cells
-   (autolens_profiling#151/PR#152): pinned euclid/hst log-likelihoods must
-   pass; re-run runtime + breakdown; update dashboards.
-
-Estimated end state: hst 21.6 s -> ~3-5 s, euclid 2.15 s -> ~0.7 s per
-evaluation. Follow-up (out of scope here): approximate interpolated-CDF mode
-(config-gated) if exact saturation windowing is insufficient at scale.
+Validate + measure with the autolens_profiling numba cells
+(autolens_profiling#151 / PR#152): pinned euclid/hst log-likelihoods must
+pass; re-run runtime + breakdown; update dashboards. Target >=5-10x on this
+step (hst likelihood 21.6 s -> ~3-5 s, euclid 2.15 s -> ~1.0 s, before phase-1
+gains). Follow-up (out of scope): a config-gated approximate interpolated-CDF
+mode if exact saturation windowing is insufficient at scale.

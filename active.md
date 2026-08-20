@@ -19,7 +19,8 @@
 ## notebook-quotes-string-literal
 - issue: https://github.com/PyAutoLabs/PyAutoHands/issues/244
 - prompt: active/notebook_quotes_string_literal_closing_delimiter.md
-- status: library-dev
+- status: library-shipped, awaiting-merge
+- library-pr: https://github.com/PyAutoLabs/PyAutoHands/pull/246 (pending-release)
 - worktree: ~/Code/PyAutoLabs-wt/notebook-quotes-string-literal
 - registered: 2026-08-20 via /start_dev; no worktree conflict (worktree_check_conflict exit 0).
 - confirmed live on origin/main before planning: `add_notebook_quotes.py:152` prefix test matches a
@@ -28,6 +29,12 @@
   shape, autolens_workspace_test/gallery/gallery_build.py:42, sits outside `scripts/`.
 - `strip_env_declarations:51` shares the prefix assumption but is NOT a live defect (verified);
   migrated as hardening only. Zero-diff workspace regen is the proof that migration is safe.
+- heart-ack: human acknowledged Heart `stale`/85 at ship time — sole reason
+  "release validation stale: source moved since rehearsal (PyAutoGalaxy)"; no RED/YELLOW.
+  Ack covers this reason only.
+- validated: 349 tests pass; control test = 8/9 new tests fail against the pre-fix module;
+  zero-diff over 693 converted scripts (function level) and 60 real scripts (end-to-end
+  through ipynb-py-convert). Workspace impact (iii) none — no follow-up needed.
 - repos:
   - PyAutoHands: feature/notebook-quotes-string-literal
 

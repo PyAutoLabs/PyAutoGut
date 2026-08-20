@@ -1,3 +1,17 @@
+## pyautoscientist-readme-drop-organism-live-strip
+- issue: https://github.com/PyAutoLabs/PyAutoScientist/issues/19
+- completed: 2026-08-20
+- workspace-pr: https://github.com/PyAutoLabs/PyAutoScientist/pull/20
+- summary: Removed the PyAutoScientist README's "## The organism live" strip section
+  (scientist:begin/end markers) and the repo-status blockquote — redundant with the new
+  dashboard bullets — and rendered the Docs/Adoption-guide links as two lines right after
+  the bullets. Also removed organism_board.yml's README-strip self-commit step and its
+  readme_strip.md render (marker-guarded, would only no-op); board.py --md-brief and the
+  Pages/badge publishing are untouched. PyAutoScientist no longer carries a README strip
+  — the only organ board without one, by design.
+
+## Original prompt
+
 # PyAutoScientist README — drop the organism-live strip and repo-status blockquote
 
 Difficulty: trivial

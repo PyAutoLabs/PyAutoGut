@@ -8,10 +8,10 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 4 |
+| [In flight](#in-flight) (`active/`) | 5 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 8 |
-| [Backlog](#backlog) (`draft/`) | 148 |
+| [Backlog](#backlog) (`draft/`) | 147 |
 
 ## Start here
 
@@ -123,14 +123,6 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 </details>
 
-<details><summary>📋 <a href="draft/maintenance/workspaces/script_sizes_snapshot_drift.md">Refresh the stale <code>.script_sizes.json</code> snapshot in @autolens_workspace</a> — workspaces · small · safe · low</summary>
-
-```
-/start_dev draft/maintenance/workspaces/script_sizes_snapshot_drift.md
-```
-
-</details>
-
 ## In flight
 
 Issued — each has an open GitHub issue and usually a branch. The full record for each is in [`active.md`](active.md).
@@ -163,6 +155,14 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/numba_cpu_likelihood_profiling.md
+```
+
+</details>
+
+<details><summary>📋 <a href="active/script_sizes_snapshot_drift.md">Refresh the stale <code>.script_sizes.json</code> snapshot in @autolens_workspace</a> — <a href="https://github.com/PyAutoLabs/autolens_workspace/issues/490">issue #490</a> — workspace-dev — PLANNED ONLY, NOT STARTED. Plan approved and filed on #490;</summary>
+
+```
+/start_dev active/script_sizes_snapshot_drift.md
 ```
 
 </details>
@@ -303,7 +303,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**148** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**147** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 37</summary>
@@ -1097,7 +1097,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>maintenance</b> — 19</summary>
+<summary><b>maintenance</b> — 18</summary>
 
 <details><summary>📋 <a href="draft/maintenance/autolens_workspace_developer/rectangular_experiments_gut_stash.md">autolens_workspace_developer rectangular experiments — Gut stash + rename</a> — autolens_workspace_developer · small · supervised · normal</summary>
 
@@ -1223,14 +1223,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/maintenance/workspaces/notebook_setup_notebook_drift_siblings.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/maintenance/workspaces/script_sizes_snapshot_drift.md">Refresh the stale <code>.script_sizes.json</code> snapshot in @autolens_workspace</a> — workspaces · small · safe · low</summary>
-
-```
-/start_dev draft/maintenance/workspaces/script_sizes_snapshot_drift.md
 ```
 
 </details>

@@ -15,20 +15,12 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 31
+**Highest priority** (filed as `high`) — showing 12 of 30
 
 <details><summary>📋 <a href="draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — medium · safe · high</summary>
 
 ```
 /start_dev draft/triage/jax_zero_contour.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/research/autolens_profiling/ell_comps_trapping_unmasked.md">The <code>ell_comps</code> trapping was masked, not cleared — characterise it</a> — autolens_profiling · medium · supervised · high</summary>
-
-```
-/start_dev draft/research/autolens_profiling/ell_comps_trapping_unmasked.md
 ```
 
 </details>
@@ -109,6 +101,14 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 ```
 /start_dev draft/research/autoarray/delaunay_research.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md">EP hierarchical parent-scale collapse: cure the basin, or document the</a> — autofit · too-large · human-required · high</summary>
+
+```
+/start_dev draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md
 ```
 
 </details>
@@ -840,15 +840,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>research</b> — 26</summary>
-
-<details><summary>📋 <a href="draft/research/autolens_profiling/ell_comps_trapping_unmasked.md">The <code>ell_comps</code> trapping was masked, not cleared — characterise it</a> — autolens_profiling · medium · supervised · high</summary>
-
-```
-/start_dev draft/research/autolens_profiling/ell_comps_trapping_unmasked.md
-```
-
-</details>
+<summary><b>research</b> — 25</summary>
 
 <details><summary>📋 <a href="draft/research/graphical_ep/analytic_gaussian_benchmark.md">Analytic Gaussian benchmark: closed-form validation of graphical + EP</a> — graphical_ep · medium · supervised · high</summary>
 
@@ -1218,7 +1210,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>docs</b> — 18</summary>
+<summary><b>docs</b> — 19</summary>
 
 <details><summary>📋 <a href="draft/docs/workspaces/cluster_regime_narrative.md">Cluster package: point-source-default narrative + extended-source follow-up feature</a> — workspaces · medium · supervised · high</summary>
 
@@ -1344,6 +1336,14 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/docs/autolens_workspace/sampler_cli_output_workspace_sweep.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/docs/pyautoscientist/readme_two_paragraph_opening.md">PyAutoScientist README — two-paragraph house-style opening</a> — pyautoscientist · trivial · supervised</summary>
+
+```
+/start_dev draft/docs/pyautoscientist/readme_two_paragraph_opening.md
 ```
 
 </details>

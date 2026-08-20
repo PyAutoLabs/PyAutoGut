@@ -11,7 +11,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 | [In flight](#in-flight) (`active/`) | 2 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 149 |
+| [Backlog](#backlog) (`draft/`) | 148 |
 
 ## Start here
 
@@ -275,7 +275,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**149** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**148** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 36</summary>
@@ -1210,7 +1210,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>docs</b> — 19</summary>
+<summary><b>docs</b> — 18</summary>
 
 <details><summary>📋 <a href="draft/docs/workspaces/cluster_regime_narrative.md">Cluster package: point-source-default narrative + extended-source follow-up feature</a> — workspaces · medium · supervised · high</summary>
 
@@ -1336,14 +1336,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/docs/autolens_workspace/sampler_cli_output_workspace_sweep.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/docs/pyautoscientist/readme_drop_organism_live_strip.md">PyAutoScientist README — drop the organism-live strip and repo-status blockquote</a> — pyautoscientist · trivial · supervised</summary>
-
-```
-/start_dev draft/docs/pyautoscientist/readme_drop_organism_live_strip.md
 ```
 
 </details>

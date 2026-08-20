@@ -8,10 +8,10 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 2 |
+| [In flight](#in-flight) (`active/`) | 3 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 148 |
+| [Backlog](#backlog) (`draft/`) | 147 |
 
 ## Start here
 
@@ -123,14 +123,6 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 </details>
 
-<details><summary>📋 <a href="draft/bug/hands/notebook_quotes_string_literal_closing_delimiter.md"><code>add_notebook_quotes</code> mistakes a code string literal's closing delimiter for a</a> — hands · small · safe · low</summary>
-
-```
-/start_dev draft/bug/hands/notebook_quotes_string_literal_closing_delimiter.md
-```
-
-</details>
-
 <details><summary>📋 <a href="draft/docs/pyautobuild/markdown_renderings_2a_leftovers.md">Markdown renderings batch 2a — leftovers (ellipse/modeling + PNG size)</a> — pyautobuild · small · safe · low</summary>
 
 ```
@@ -179,6 +171,14 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/jax_default_dependency.md
+```
+
+</details>
+
+<details><summary>📋 <a href="active/notebook_quotes_string_literal_closing_delimiter.md"><code>add_notebook_quotes</code> mistakes a code string literal's closing delimiter for a</a> — <a href="https://github.com/PyAutoLabs/PyAutoHands/issues/244">issue #244</a> — library-dev</summary>
+
+```
+/start_dev active/notebook_quotes_string_literal_closing_delimiter.md
 ```
 
 </details>
@@ -303,10 +303,10 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**148** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**147** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
-<summary><b>bug</b> — 36</summary>
+<summary><b>bug</b> — 35</summary>
 
 <details><summary>📋 <a href="draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md">EP hierarchical parent-scale collapse: cure the basin, or document the</a> — autofit · too-large · human-required · high</summary>
 
@@ -568,14 +568,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/bug/autolens/jax_likelihood_smoke_pins_stale.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/hands/notebook_quotes_string_literal_closing_delimiter.md"><code>add_notebook_quotes</code> mistakes a code string literal's closing delimiter for a</a> — hands · small · safe · low</summary>
-
-```
-/start_dev draft/bug/hands/notebook_quotes_string_literal_closing_delimiter.md
 ```
 
 </details>

@@ -1,3 +1,17 @@
+## pyautoscientist-readme-two-paragraph-opening
+- issue: https://github.com/PyAutoLabs/PyAutoScientist/issues/15
+- completed: 2026-08-20
+- workspace-pr: https://github.com/PyAutoLabs/PyAutoScientist/pull/16
+- summary: PyAutoScientist README opening now matches the organ house pattern — one bold
+  high-level intro paragraph starting "PyAutoScientist enables human-led, natural-language
+  software development", then the Dashboard paragraph. The March-2026 transition history
+  moved to a new "## Project History" section (after "The organs"), now explicitly naming
+  PyAutoLens/PyAutoGalaxy/PyAutoFit/PyAutoArray/PyAutoCTI; the Docs/Adoption links moved
+  below the organism-live strip. Mid-review refinement from the user reshaped the first
+  draft (intro wording + history placement) before merge.
+
+## Original prompt
+
 # PyAutoScientist README — two-paragraph house-style opening
 
 Difficulty: trivial

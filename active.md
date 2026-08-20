@@ -56,3 +56,4 @@
   origin/master, origin/release) is deliberately OUT of this task's PR — run it as a
   separate /repo_cleanup sweep so a destructive branch delete never rides a code diff.
 - repos:
+  - PyAutoHands: feature/hands-hygiene-leftovers

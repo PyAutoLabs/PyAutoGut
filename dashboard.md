@@ -8,7 +8,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 3 |
+| [In flight](#in-flight) (`active/`) | 2 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
 | [Backlog](#backlog) (`draft/`) | 146 |
@@ -155,14 +155,6 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/16_transformed_message_factor_gradient_unpack.md
-```
-
-</details>
-
-<details><summary>📋 <a href="active/add_vincken_2026_wiki_and_cite_in_euclid.md">add-vincken-2026-wiki-and-cite-in-euclid</a> — <a href="https://github.com/PyAutoLabs/PyAutoMemory/issues/39">issue #39</a> — awaiting-merge — PR open, human merge pending.</summary>
-
-```
-/start_dev active/add_vincken_2026_wiki_and_cite_in_euclid.md
 ```
 
 </details>

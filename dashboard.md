@@ -1340,10 +1340,10 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/docs/pyautoscientist/readme_dashboard_bullets.md">PyAutoScientist README — dashboard paragraph as linked bullets</a> — pyautoscientist · trivial · supervised</summary>
+<details><summary>📋 <a href="draft/docs/pyautoscientist/readme_drop_organism_live_strip.md">PyAutoScientist README — drop the organism-live strip and repo-status blockquote</a> — pyautoscientist · trivial · supervised</summary>
 
 ```
-/start_dev draft/docs/pyautoscientist/readme_dashboard_bullets.md
+/start_dev draft/docs/pyautoscientist/readme_drop_organism_live_strip.md
 ```
 
 </details>

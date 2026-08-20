@@ -39,9 +39,13 @@
   workspaces (~88MB -> ~23MB measured); Phase C measure one ellipse fit, pre-run
   the 22 fits outside nbconvert if under a 2h ceiling then render via resume,
   else close out the yaml exclusion comment; Phase D ship library-first.
+- status-detail: Phase A DONE (PyAutoHands 1e32e29, `--optimize-only` + 5 tests,
+  354 tests pass). Workspaces attached 2026-08-20 via worktree_add_repo.
 - repos:
   - PyAutoHands: feature/markdown-renderings-2a-leftovers
-- note: the six workspace repos are NOT claimed yet — they attach via
-  worktree_add_repo in /start_workspace before Phase B runs. Until then they
-  are symlinks to the canonical checkouts inside the worktree root, so running
-  generate_markdown.py there would edit canonical. Do not run Phase B early.
+  - autolens_workspace: feature/markdown-renderings-2a-leftovers
+  - autogalaxy_workspace: feature/markdown-renderings-2a-leftovers
+  - autofit_workspace: feature/markdown-renderings-2a-leftovers
+  - HowToGalaxy: feature/markdown-renderings-2a-leftovers
+  - HowToFit: feature/markdown-renderings-2a-leftovers
+  - HowToLens: feature/markdown-renderings-2a-leftovers

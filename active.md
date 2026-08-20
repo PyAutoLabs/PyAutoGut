@@ -48,7 +48,8 @@
 - issue: https://github.com/PyAutoLabs/PyAutoMemory/issues/39
 - session: claude --resume 084ed603-054f-433c-9b87-e5cfc5506059
 - prompt: active/add_vincken_2026_wiki_and_cite_in_euclid.md
-- status: workspace-dev
+- status: awaiting-merge — PR open, human merge pending.
+- pr: https://github.com/PyAutoLabs/PyAutoMemory/pull/41 (label pending-release, MERGEABLE)
 - worktree: ~/Code/PyAutoLabs-wt/vincken-2026-bib-placeholder
 - registered: 2026-08-20 via /start_dev; no worktree conflict (worktree_check_conflict exit 0).
 - rescoped at plan approval: prompt's arXiv link (2503.22657) is Shajib 2025 dolphin, NOT Vincken —

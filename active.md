@@ -61,3 +61,4 @@
   paper is public, and replace the placeholder `**Supports:**` bullet with real claims.
 - repos:
   - PyAutoMemory: feature/vincken-2026-bib-placeholder
+  - PyAutoMemory: feature/vincken-2026-bib-placeholder

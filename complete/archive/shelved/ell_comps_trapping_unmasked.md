@@ -8,7 +8,13 @@ Repos:
 Difficulty: medium
 Autonomy: supervised
 Priority: high
-Status: formalised
+Status: absorbed (2026-08-20) — folded into the JAX inference programme, not
+a standalone task: questions 1–3 are now Phase 3 [H3.3] / CP-3 metrics (and
+repeat across the Phase 4 positions on/off axis, per engine) in
+`autolens_profiling/results/notes/inference/PROGRAMME.md`; question 4 stays
+gated behind that evidence. Decision record: `DECISIONS.md` 2026-08-20 entry
+(same dir). Re-measure under current setups (PositionsLH on/off) — do not
+close on the pre-positions phase-2 numbers (6/16, 4/16 pinned).
 
 Filed 2026-08-16. This is **follow-up (2)** owed by the `mge-lane-death` task
 (`active/mge_lane_death.md`, autolens_profiling#128), which recorded it as out

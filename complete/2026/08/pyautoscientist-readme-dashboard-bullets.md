@@ -1,3 +1,14 @@
+## pyautoscientist-readme-dashboard-bullets
+- issue: https://github.com/PyAutoLabs/PyAutoScientist/issues/17
+- completed: 2026-08-20
+- workspace-pr: https://github.com/PyAutoLabs/PyAutoScientist/pull/18
+- summary: The PyAutoScientist README's dashboard paragraph now lists the four organ
+  dashboards as bullets — "**[<Repo> Dashboard](pages-url)**: <one-line role>" — with
+  Mind's bullet worded as the user gave it ("planned and active development tasks on
+  the scientist's mind"); the lead sentence and "where to work next" hint kept.
+
+## Original prompt
+
 # PyAutoScientist README — dashboard paragraph as linked bullets
 
 Difficulty: trivial

@@ -1,16 +1,5 @@
 # Active Tasks
 
-## organism-board-final-readmes
-- issue: https://github.com/PyAutoLabs/PyAutoScientist/issues/12
-- status: in-dev — issued 2026-08-19, plan approved; direct-main sweep (Scientist has no
-  CI gates), READMEs on Gut/Nerves direct-main
-- prompt: active/organism_board_final_readmes.md
-- repos-none-claimed: no worktrees — README/board sweep on mains (badges-round precedent)
-- summary: umbrella router board on PyAutoScientist Pages (per-organ-board headlines via
-  badge.json + Mind counts; where-to-work banner off the Heart verdict; 📋 door chips;
-  badge + README strip); Gut/Nerves/Scientist READMEs to the house style (no boards for
-  Gut/Nerves by design); the one-tap dashboard-rollout prompt closed with an arc record.
-
 ## jax-default-dependency
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/702
 - status: shipped-awaiting-release-followups — ALL ELEVEN PRs merged 2026-08-19 (human-authorized):

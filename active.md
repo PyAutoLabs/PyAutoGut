@@ -2,17 +2,19 @@
 
 ## numba-cpu-likelihood-positive-only-solver-speedup
 - issue: https://github.com/PyAutoLabs/PyAutoArray/issues/452 (issued 2026-08-20)
-- status: implemented-awaiting-pr — phase 1 (in-place factor buffer + copy-free numba
-  triangular solves) implemented, unit-tested and pushed from the cloud session (commit
-  2c9a22b): euclid solve 3.29 s -> 1.40 s (2.35x), euclid eval 4.92 -> 2.68 s (1.83x),
-  hst 3.95 -> 3.43 s; both autolens_profiling pins PASS at rtol 1e-6; full test_autoarray
-  green bar 3 pre-existing pynufft failures. NEXT: open the PyAutoArray PR (+ review),
-  then re-run + re-commit the delaunay_numba artifacts once the change is released
-  (validation artifacts were deliberately NOT committed against v2026.8.17.1).
-  Phase 2 candidates (block pivoting, cross-eval warm starts) stay in the prompt.
+- pr: https://github.com/PyAutoLabs/PyAutoArray/pull/453 (awaiting review; session subscribed
+  + hourly check-in armed)
+- status: pr-open — in-place factor buffer + copy-free numba solves + numba delete-shift
+  kernel (commits 2c9a22b, 89be276): euclid solve 3.29 -> 1.16 s (2.83x), euclid eval
+  4.92 -> 2.34 s (2.10x), hst 3.95 -> 3.43 s; both autolens_profiling pins PASS at rtol
+  1e-6; test_autoarray green bar 3 pre-existing pynufft failures (fail on stock main too).
+  PHASE 2 PROTOTYPED AND REJECTED (findings on issue #452): PJV block pivoting cycles on
+  the near-degenerate columns; block-insertion Bro-Jong terminates non-converged via the
+  no_update safeguard (KKT violated 3.7e3). Best remaining lever: cross-eval warm starts
+  (option 3). ON MERGE+RELEASE: re-run + re-commit delaunay_numba artifacts (validation
+  artifacts deliberately NOT committed against v2026.8.17.1).
 - prompt: active/numba_cpu_likelihood_positive_only_solver_speedup.md
-- plan: see issue #452 (in-place buffer -> numba solves -> pins validation). Repos edited:
-  PyAutoArray only.
+- plan: see issue #452. Repos edited: PyAutoArray only.
   - Repo PyAutoArray: branch feature/fnnls-inplace-cholesky-buffer
 
 ## numba-cpu-likelihood-profiling

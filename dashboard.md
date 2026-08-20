@@ -151,7 +151,7 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
-<details><summary>📋 <a href="active/numba_cpu_likelihood_positive_only_solver_speedup.md">Numba CPU likelihood: positive-only solver speed-up (the Delaunay ~74% euclid</a> — <a href="https://github.com/PyAutoLabs/PyAutoArray/issues/452">issue #452</a> — implemented-awaiting-pr — phase 1 (in-place factor buffer + copy-free numba</summary>
+<details><summary>📋 <a href="active/numba_cpu_likelihood_positive_only_solver_speedup.md">Numba CPU likelihood: positive-only solver speed-up (the Delaunay ~74% euclid</a> — <a href="https://github.com/PyAutoLabs/PyAutoArray/issues/452">issue #452</a> — pr-open — in-place factor buffer + copy-free numba solves + numba delete-shift</summary>
 
 ```
 /start_dev active/numba_cpu_likelihood_positive_only_solver_speedup.md

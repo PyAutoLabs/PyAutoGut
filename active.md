@@ -2,7 +2,10 @@
 
 ## queue-intake-claude
 - issue: https://github.com/PyAutoLabs/PyAutoMemory/issues/48
-- status: library-dev
+- library-pr: https://github.com/PyAutoLabs/PyAutoMemory/pull/49
+- status: library-shipped, awaiting-merge — HUMAN PREREQ before first live run:
+  add CLAUDE_CODE_OAUTH_TOKEN secret to PyAutoMemory, then live-test one 📑 cite
+  issue end-to-end.
 - worktree: ~/Code/PyAutoLabs-wt/queue-intake-claude
 - prompt: active/queue_intake_claude_action.md
 - plan: item 4 of the approved dashboard follow-ups — queue_filing.yml wires

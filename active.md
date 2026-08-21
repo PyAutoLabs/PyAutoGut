@@ -4,12 +4,18 @@
 - issue: https://github.com/PyAutoLabs/PyAutoArray/issues/461
 - pr: https://github.com/PyAutoLabs/PyAutoArray/pull/462 (MERGED d29ad979, 2026-08-21, human-authorized)
 - session: https://claude.ai/code/session_01WtMqU3JfmyJh8GvB7jT4Et (web-github; Mind state on branch claude/bilinear-rtu-mesh-docs-pbhsxg)
-- status: workspace-dev — library phase merged (CI green 3.12/3.13/nojax): rank-CDF resurrected
-  from 22b28463^ behind a transform="rank"|"kernel" seam; Bilinear classes added; RTU pure
-  renames. Workspace follow-up in flight: autolens_workspace + autogalaxy_workspace defaults →
-  Bilinear + RTU advanced docs (fold Enzi draft, retire it), prior-config yamls,
-  autolens_workspace_test pin renames + Bilinear pin regeneration (overwrite), then
-  autolens_profiling#153 / PROGRAMME Phase 14 update.
+- status: awaiting-merge — library PR #462 MERGED; follow-up PRs open (all pending-release):
+  autolens_workspace#495 (Bilinear default imaging-family, RTU interferometer, Enzi docs folded),
+  autogalaxy_workspace#221 (mirror), PyAutoGalaxy#579 (packaged prior yamls + stale-key fix),
+  PyAutoLens#707 (docs/exc + stale-key fix). autolens_workspace_test branch: RTU pin copies
+  (values unchanged) + Bilinear pins regenerated under JAX_ENABLE_X64=1 (imaging -651692.997799,
+  imaging-mge -85.41696632, imaging-dspl -3695.93899659 (bandwidth kwarg dropped),
+  multi -12932.06852498, multi-mge -6157.55707862). Phase 14 adjudication recorded on
+  autolens_profiling#153 (comment); PROGRAMME.md edit deferred — repo claimed by
+  numba-cpu-likelihood-profiling (#152 in flight). Bilinear profiling measurement still to record.
+  Retire draft/docs/workspaces/rectangular_mesh_enzi_citation_examples.md when #495/#221 merge
+  (its content is folded into those PRs). NOTE: pins require JAX x64 (float32 vmap gives
+  -inf in a bare container — pre-existing, not the mesh split).
 - worktree: ~/Code/PyAutoLabs-wt/rectangular-bilinear-rtu-mesh-split
 - repos:
   - Repo PyAutoArray: branch feature/rectangular-bilinear-rtu-mesh-split

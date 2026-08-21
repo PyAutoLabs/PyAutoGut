@@ -1,3 +1,32 @@
+- issue: https://github.com/PyAutoLabs/PyAutoMemory/issues/48 (auto-closed on merge)
+- shipped: 2026-08-21 — PyAutoMemory PR https://github.com/PyAutoLabs/PyAutoMemory/pull/49
+  (merge 9d0e14ec) + PyAutoMind 68bc7051 (spawn DROP).
+- classification: feature (PyAutoMemory) — item 4 of the four human-approved dashboard
+  follow-ups; completes the paper-management loop: tap → notes → submit → filing PR.
+- summary: `.github/workflows/queue_filing.yml` wires claude-code-action@v1 to the
+  dashboard's 📥 queue-intake / 📑 queue-cite issues. Trigger `labeled` ONLY (fires
+  for creation-applied labels too — an opened+labeled pair would double-run);
+  author-association gate as in queue_actions.yml. Claude gets workspace-edit tools
+  + arXiv-scoped WebFetch, no git/gh; it adds the canonical bib entry, writes the
+  sources section (cite = minimal key+notes, intake = full stub), DONE-marks the
+  queue line, or writes /tmp/filing_error.txt and aborts cleanly (reason posted to
+  the issue). Deterministic steps then gate (make validate + pytest), stage explicit
+  paths only, push queue-filing/issue-<n>, open a PR that closes the issue. Merge
+  stays human.
+- NOT YET LIVE — human prerequisite: add the CLAUDE_CODE_OAUTH_TOKEN secret to
+  PyAutoMemory (it exists only as a PyAutoMind repo secret; values unreadable, so
+  it cannot be copied programmatically). Until then a labeled issue fails loudly
+  with a comment pointing at the missing secret. First live 📑 cite round-trip is
+  the remaining validation (PR #49 checklist).
+- traps:
+  - GITHUB_TOKEN-created filing PRs never trigger validate.yml — the gates must run
+    inside the filing workflow before push (they do).
+  - gh in pre-checkout steps needs GH_REPO env for repo context.
+- affected-repos:
+  - PyAutoMemory
+
+## Original prompt
+
 # Memory queue: claude-action filing of intake/cite issues
 
 Type: feature

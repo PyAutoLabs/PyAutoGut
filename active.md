@@ -1,21 +1,5 @@
 # Active Tasks
 
-## queue-intake-claude
-- issue: https://github.com/PyAutoLabs/PyAutoMemory/issues/48
-- library-pr: https://github.com/PyAutoLabs/PyAutoMemory/pull/49
-- status: library-shipped, awaiting-merge — HUMAN PREREQ before first live run:
-  add CLAUDE_CODE_OAUTH_TOKEN secret to PyAutoMemory, then live-test one 📑 cite
-  issue end-to-end.
-- worktree: ~/Code/PyAutoLabs-wt/queue-intake-claude
-- prompt: active/queue_intake_claude_action.md
-- plan: item 4 of the approved dashboard follow-ups — queue_filing.yml wires
-  claude-code-action@v1 to queue-intake/queue-cite issues (org pattern from Mind
-  arxiv_papers.yml; author-association gated; Claude edits files only, workflow
-  stages explicit paths, validate+pytest gate, PR per filing). HUMAN PREREQ: add
-  CLAUDE_CODE_OAUTH_TOKEN secret to PyAutoMemory before first live run.
-- repos:
-  - PyAutoMemory: feature/queue-intake-claude
-
 ## numba-cpu-likelihood-profiling
 - issue: https://github.com/PyAutoLabs/autolens_profiling/issues/151
 - pr: https://github.com/PyAutoLabs/autolens_profiling/pull/152

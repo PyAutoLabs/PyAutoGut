@@ -11,11 +11,11 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 | [In flight](#in-flight) (`active/`) | 4 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 146 |
+| [Backlog](#backlog) (`draft/`) | 147 |
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 33
+**Highest priority** (filed as `high`) — showing 12 of 34
 
 <details><summary>📋 <a href="draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — medium · safe · high</summary>
 
@@ -37,6 +37,14 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 ```
 /start_dev draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/autoarray/rectangular_bilinear_rtu_mesh_split.md">Rectangular mesh split: Bilinear (fast CPU default) vs RTU (advanced/GPU)</a> — autoarray · medium · supervised · high</summary>
+
+```
+/start_dev draft/feature/autoarray/rectangular_bilinear_rtu_mesh_split.md
 ```
 
 </details>
@@ -101,14 +109,6 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 ```
 /start_dev draft/feature/autolens_profiling/jax_compile_time_profiling.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/profiling/profiling_agent_jax_compile_time_scope.md">Give the Profiling Agent a compile-time axis — the arc</a> — profiling · large · supervised · high</summary>
-
-```
-/start_dev draft/feature/profiling/profiling_agent_jax_compile_time_scope.md
 ```
 
 </details>
@@ -273,7 +273,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**146** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**147** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 37</summary>
@@ -577,12 +577,20 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>feature</b> — 35</summary>
+<summary><b>feature</b> — 36</summary>
 
 <details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md">Numba CPU likelihood phase 1: batched MGE convolution + operated-matrix</a> — autoarray · medium · supervised · high</summary>
 
 ```
 /start_dev draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/autoarray/rectangular_bilinear_rtu_mesh_split.md">Rectangular mesh split: Bilinear (fast CPU default) vs RTU (advanced/GPU)</a> — autoarray · medium · supervised · high</summary>
+
+```
+/start_dev draft/feature/autoarray/rectangular_bilinear_rtu_mesh_split.md
 ```
 
 </details>

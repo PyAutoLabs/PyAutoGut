@@ -10,7 +10,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 |-------|------:|
 | [In flight](#in-flight) (`active/`) | 5 |
 | [Parked](#parked) (`parked.md`) | 3 |
-| [Planned](#planned) (`planned.md`) | 7 |
+| [Planned](#planned) (`planned.md`) | 6 |
 | [Backlog](#backlog) (`draft/`) | 145 |
 
 ## Start here
@@ -199,7 +199,7 @@ Started or scoped, not currently in flight — resume by moving the row back to 
 Scoped but not started; some are not yet prompt files. Full detail in [`planned.md`](planned.md).
 
 <details>
-<summary><b>7</b> task(s)</summary>
+<summary><b>6</b> task(s)</summary>
 
 <details><summary>📋 <b>isothermal-ell-sph-oversampling-at-the-cusp</b> — planned — NOT yet a prompt file; file one via <code>/intake</code> before starting</summary>
 
@@ -221,14 +221,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/bug/health_fixes/samples_parameter_paths.md
-```
-
-</details>
-
-<details><summary>📋 <b>autofit-sampler-database</b> — <a href="https://github.com/PyAutoLabs/PyAutoFit/issues/1508">issue #1508</a> — closed-not-reproducing</summary>
-
-```
-/start_dev draft/bug/health_fixes/autofit_sampler_database.md
 ```
 
 </details>

@@ -15,7 +15,18 @@
 
 ## pixelization-eager-jit-divergence
 - issue: https://github.com/PyAutoLabs/PyAutoGalaxy/issues/580
-- status: library-dev
+- pr-library: https://github.com/PyAutoLabs/PyAutoGalaxy/pull/581
+- pr-workspace: https://github.com/PyAutoLabs/autolens_workspace_developer/pull/127
+- status: awaiting-merge — both PRs open, library merges FIRST (the script cannot run
+  without the Basis fix). VERDICT: the divergence is NOT a bug. Two causes, both settled:
+  (a) the script fed mapper-only H (1225) into an evidence whose D/F span all linear objects
+  (1285) and slogdet'd the singular full H — fixed by mirroring Inversion's reduced-matrix
+  log-det; rebuild now matches figure_of_merit to 13 s.f. (b) the residual ~1.8e-3 step-by-step
+  gap is the fnnls non-negative active set (344/1285 pinned at zero), not FP drift as the old
+  comment claimed — now documented + separately pinned.
+- cross-check: numpy/numba (xp=np) 25004.71903495436 vs JAX full pipeline 25004.72457703401
+  agree to 2.2e-7 — two independent implementations, so the re-pin is not a single-run pin.
+- constant: re-pinned 24746.105672366088 (v2026.5.1.4) → 25004.71903495436 (v2026.8.17.1), 1.0e-2 drift.
 - worktree: ~/Code/PyAutoLabs-wt/pixelization-eager-jit-divergence
 - prompt: active/pixelization_eager_vs_jit_divergence.md
 - plan: unblock `jax_profiling/jit/imaging/pixelization.py` (broken on main two ways:

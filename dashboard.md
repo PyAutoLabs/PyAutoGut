@@ -8,7 +8,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 6 |
+| [In flight](#in-flight) (`active/`) | 5 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 7 |
 | [Backlog](#backlog) (`draft/`) | 145 |
@@ -125,14 +125,6 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/16_transformed_message_factor_gradient_unpack.md
-```
-
-</details>
-
-<details><summary>📋 <a href="active/dashboard_epic_grouping_freshness.md">Mind dashboard: epic grouping + freshness guards</a> — <a href="https://github.com/PyAutoLabs/PyAutoBrain/issues/246">issue #246</a> — library-dev</summary>
-
-```
-/start_dev active/dashboard_epic_grouping_freshness.md
 ```
 
 </details>

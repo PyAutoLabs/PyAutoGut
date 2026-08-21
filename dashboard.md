@@ -11,7 +11,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 | [In flight](#in-flight) (`active/`) | 4 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 147 |
+| [Backlog](#backlog) (`draft/`) | 148 |
 
 ## Start here
 
@@ -273,7 +273,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**147** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**148** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 37</summary>
@@ -577,7 +577,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>feature</b> — 36</summary>
+<summary><b>feature</b> — 37</summary>
 
 <details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md">Numba CPU likelihood phase 1: batched MGE convolution + operated-matrix</a> — autoarray · medium · supervised · high</summary>
 
@@ -695,6 +695,14 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/feature/autolens_workspace/joss_cluster_benchmark_tuning.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/pyautomemory/dashboard_per_paper_actions.md">Memory dashboard: per-paper browsing + one-tap read/intake actions</a> — pyautomemory · medium · supervised · normal</summary>
+
+```
+/start_dev draft/feature/pyautomemory/dashboard_per_paper_actions.md
 ```
 
 </details>

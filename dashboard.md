@@ -8,7 +8,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 5 |
+| [In flight](#in-flight) (`active/`) | 4 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
 | [Backlog](#backlog) (`draft/`) | 147 |
@@ -125,14 +125,6 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/16_transformed_message_factor_gradient_unpack.md
-```
-
-</details>
-
-<details><summary>📋 <a href="active/dashboard_per_paper_actions.md">Memory dashboard: per-paper browsing + one-tap read/intake actions</a> — <a href="https://github.com/PyAutoLabs/PyAutoMemory/issues/42">issue #42</a> — library-shipped, awaiting-merge — PR #43 (pending-release, 62f8f26);</summary>
-
-```
-/start_dev active/dashboard_per_paper_actions.md
 ```
 
 </details>

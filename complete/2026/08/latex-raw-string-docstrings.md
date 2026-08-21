@@ -1,3 +1,75 @@
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/491 (one issue, six PRs)
+- shipped: 2026-08-20 — all six merged:
+  HowToFit#47, HowToGalaxy#70, HowToLens#73, autofit_workspace#145,
+  autogalaxy_workspace#218, autolens_workspace#492.
+- classification: maintenance (6 workspace repos) — prose-only, no API surface.
+- blocked-by (cleared): hands-raw-string-docstring-prefix / PyAutoHands#251.
+- summary: prefixed `r` on every LaTeX-carrying docstring across the six workspace repos —
+  **41 files, 180 literals, 131 silent corruptions repaired**. 41 files matches the
+  2026-08-20 survey exactly, and autolens_workspace's 17 files / 80 warnings match the
+  independent 2026-08-09 measurement line for line. Per repo: HowToFit 4/13/7,
+  HowToGalaxy 4/20/13, HowToLens 8/32/21, autofit_workspace 2/2/1,
+  autogalaxy_workspace 6/30/28, autolens_workspace 17/83/61 (files/literals/repaired).
+- the two damage classes: `SyntaxWarning` fires only for escapes Python does NOT recognise
+  (`\s`, `\l`, `\[`). The ones it DOES recognise — `\t` in `\theta`, `\f` in `\frac`,
+  `\r` in `\rm`, `\b` in `\beta` — corrupt the value with NO diagnostic at all.
+  `\theta_E` in HowToLens chapter_4 was literally TAB + "heta_E". Confirmed repaired.
+- key traps:
+  - **THE DIFF-EMPTY GATE CANNOT CATCH A WRONG EDIT HERE.** The prompt's gate (regenerate,
+    assert notebooks/markdown/llms-full.txt/workspace_index.json unchanged) is necessary but
+    structurally blind: the generator reads SOURCE TEXT, not runtime values, so a corrupted
+    value regenerates byte-identically. The check that actually catches mistakes is comparing
+    every changed literal's RUNTIME VALUE HEAD vs worktree and asserting the `r` prefix only
+    ever REMOVES corruption. It caught two real errors mid-task: a `print("\nInfo:")` newline
+    about to be destroyed, and 12 already-escaped `$\\chi^2$` about to be doubled into LaTeX
+    line breaks. Final tally: 131 repaired, 0 unexpected. **Build this check first.**
+  - **`\\` is ALWAYS deliberate, whatever the surrounding context.** In a non-raw literal
+    `\\` already means one literal backslash — the author got it right; adding `r` doubles it.
+    A math-context rule alone lets these through (they sit inside `$...$`).
+  - **The warning sweep is interpreter-dependent.** Invalid escapes are a `SyntaxWarning`
+    only on Python 3.12+; on 3.11 they are a `DeprecationWarning`. Verified on 3.11.15: a
+    docstring with `$\odot$` yields 0 SyntaxWarning and 1 DeprecationWarning — so a
+    SyntaxWarning-only sweep returns a VACUOUS zero that looks exactly like "already fixed".
+    Collect both. (`compileall` also needs `-f`, or `__pycache__` hides the counts.)
+  - **Run the generator BEFORE editing and confirm a no-op.** Otherwise pre-existing
+    generator drift is indistinguishable from damage your edit caused.
+  - **Preserve line endings.** Several scripts are CRLF; a `write_text` round-trip normalises
+    the whole file and turns a 1-character edit into a 549-line diff. Use `newline=""`.
+  - Auto-fix only where EVERY backslash sits in a LaTeX context — `$...$`, `\(...\)`,
+    `\[...\]`, `\begin{}...\end{}`, or a markdown code span. Four docstrings with malformed
+    or unbalanced delimiters were read in full and prefixed by hand; their delimiters were
+    left exactly as found (fixing them is a prose change this task excluded).
+  - **Gate refinement**: runtime label strings (e.g. HowToFit's four `plt.ylabel`) live in
+    CODE cells, which copy source verbatim, so the `r` legitimately appears in the notebook.
+    The gate holds exactly as written for every docstring; that one delta is by design.
+- residue (deliberate, worth a follow-up): `autolens_workspace/scripts/group/likelihood_function.py`
+  keeps 2 warned + 1 silent. Three of its docstrings use the DOUBLE-backslash convention
+  (`$\\theta$`, `\\frac`, `\\vec`) mixed with single-backslash macros; adding `r` would double
+  the already-correct ones, and fixing it properly means un-doubling 18 backslashes — a prose
+  edit this task excluded. Needs a convention decision.
+- also left alone: already-escaped `\\` anywhere (two autogalaxy interferometer files,
+  autofit `samples.py:410`), real newlines in `print()`, and
+  `autolens_workspace/dataset/cluster/a2744/prep.py:38` where `line.split("\t")` is a genuine
+  TSV tab.
+- **HowToLens#73 was merged with smoke RED, and the red was proven not to be this PR's.**
+  Two chapter_3 pixelization scripts fail numba `Pass nopython_type_inference`; neither is in
+  the diff and all 8 files that are in it pass. Decisive control: re-running the last GREEN
+  `main` build (run 255, commit `dcb67e9`, zero changes from the branch, fresh dependency
+  install) now FAILS identically — `main` itself is red. Suspected cause, NOT proven:
+  PyAutoArray#453 (in-place Cholesky buffer + new numba kernels for `fnnls_cholesky`) merged
+  22:09:30 UTC, minutes before. Two candidate mechanisms were tested under the exact CI
+  versions (numba 0.67.0 + scipy 1.17.1) and BOTH passed — a strided `Ubuf` view into
+  `_cholupdate`, and the new `np.dot` in `_cho_solve_buffer`. A new numba release was ruled
+  out (0.67.0 shipped nine days before the last green run). **Open question for whoever owns
+  that solver.**
+- follow-up shipped: PyAutoBrain#245 added a `hygiene escapes` mode so this debt is caught
+  continuously — it reports both classes, marks files with ONLY silent damage, and handles
+  both interpreter traps. Preferred over the originally-proposed
+  `-W error::SyntaxWarning` CI guard, which would catch only the warned class and pass
+  vacuously on 3.11.
+
+## Original prompt
+
 # Raw-string the LaTeX docstrings across the six workspace repos
 
 Type: maintenance
@@ -33,7 +105,12 @@ corner of the problem, and found a hard dependency the prompt did not know
 about. Both sweeps are ~20 lines each and specified below — rebuild them rather
 than trusting these counts blind.
 
-### BLOCKED BY: `draft/bug/hands/raw_string_docstring_prefix.md`
+### ~~BLOCKED BY~~ — CLEARED 2026-08-20
+
+The PyAutoHands prerequisite **merged**: issue #250 / PR #251 (merge `c887290`), all 3
+CI matrix jobs green. Both parsers accept `r`/`R` prefixes now, verified on `main`. This
+task is ready to start. History of the block, kept because it explains the gate below:
+
 
 Two PyAutoHands docstring parsers **silently** mis-handle an `r"""` opener, so
 raw-stringing these scripts today would break the generated artefacts rather
@@ -47,7 +124,22 @@ than fix them. Both reproduced, neither raises:
   `.../potential_correction/`), so their smoke env profile would be silently
   rerouted.
 
-Do not start this task until that Hands fix has merged.
+~~Do not start this task until that Hands fix has merged.~~ It has.
+
+**Re-verified 2026-08-20 (resumed `/start_dev`): still blocked, still unfixed.**
+Against PyAutoHands `main` @ `cdea28c`, on a probe pair differing only by an `r`
+on the first narrative docstring:
+
+- `_narrative_docstring_ranges` → plain `[(0, 2), (6, 10)]` vs raw `[(6, 10)]`
+  — the raw block is dropped, silently, no exception.
+- `read_env_declaration` → plain `['jax']` vs raw `None` — silently, no exception.
+
+`add_notebook_quotes.py:67` still reads `lines[start].startswith('"""')` and
+`env_config.py:110` still reads `^(?:"""|''')\s*$`; neither accepts an `r`/`R`
+prefix. No `feature/hands-raw-string-docstring-prefix` branch exists on the
+remote yet, and its own blocker (`feature/hands-hygiene-leftovers`) is still
+open. Re-run this two-probe check at the next `/start_dev` rather than trusting
+this note.
 
 ### Two sweeps are needed, not one
 
@@ -62,6 +154,17 @@ diagnostic at all — `\t` in `\theta`, `\f` in `\frac`, `\r` in `\rm`, `\b` in
 - silent sweep: walk the AST, and for every non-raw `str` constant whose source
   segment contains a backslash, flag any control character (`ord < 32`, `\n`
   excepted) in the *value* — **132 hits**.
+
+**The warning sweep is interpreter-dependent — check this before trusting a
+zero.** Invalid escape sequences are a `SyntaxWarning` only on **Python 3.12+**;
+on 3.11 and earlier they are a `DeprecationWarning`. A sweep that collects
+`SyntaxWarning` on a 3.11 interpreter reports **0 hits** and is
+indistinguishable from "already fixed" — verified 2026-08-20 on 3.11.15, where
+`compile()` on a docstring containing `$\odot$` yields 0 `SyntaxWarning` and 1
+`DeprecationWarning`. Collect **both** categories, or assert the interpreter is
+3.12+ before believing the count. (`-m compileall` needs `-f` too, or
+`__pycache__` suppresses recompilation and the counts silently drop.) This
+already cost one mis-grade on the 2026-08-09 sweep.
 
 `HowToLens/scripts/chapter_4_scaling_up_lensing/tutorial_5_cluster_scale.py`
 has **only** silent hits and zero warnings, so a warning-only sweep skips it
@@ -142,9 +245,18 @@ The four matplotlib labels in
 - `autocti_workspace`, every `*_workspace_test` / `*_workspace_developer`, and
   `PyAutoFit` / `PyAutoArray` / `PyAutoLens` source: swept, **zero** hits.
 
+## Constraints
+
+- Docstring content is user-facing tutorial prose. Add the `r` prefix and change
+  **nothing else** — do not reword the LaTeX or the surrounding sentences.
+  Prose changes belong to a docs task, not this one.
+- Notebooks are regenerated, never hand-edited.
+
 ## Verification per repo (the diff-empty gate)
 
-1. Both sweeps return zero.
+1. Both sweeps return zero — on a **3.12+** interpreter, or collecting
+   `DeprecationWarning` as well (see the interpreter trap above). A zero from a
+   3.11 `SyntaxWarning`-only sweep is vacuous and does not clear this gate.
 2. Regenerate:
    `PYTHONPATH=../PyAutoHands/autohands python3 ../PyAutoHands/autohands/generate.py <project>`
    (`howtofit`, `howtogalaxy`, `howtolens`, `autofit`, `autogalaxy`, `autolens`).
@@ -157,6 +269,17 @@ The four matplotlib labels in
 
 Ship as six independent PRs, one per repo. Prose-only, no API surface, so no
 cross-repo merge ordering.
+
+## Supersedes
+
+`draft/maintenance/autolens_workspace/latex_docstrings_invalid_escape_warnings.md`
+(filed 2026-08-09, split from #457) is the same defect measured on
+`autolens_workspace` alone — its 80 warnings across 17 files are exactly the 17
+files listed above, top-six counts matching. This prompt subsumes it across all
+six repos and adds the silent-escape class. Its unique content (the interpreter
+trap, now folded in above; the "do not reword the LaTeX or the prose while
+fixing the escapes" constraint) is carried here. One task, one prompt — pick up
+this file, not that one.
 
 ## Follow-up worth filing
 

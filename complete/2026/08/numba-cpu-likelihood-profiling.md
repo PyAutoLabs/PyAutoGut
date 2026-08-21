@@ -1,3 +1,57 @@
+# numba-cpu-likelihood-profiling — numba-CPU sparse-operator likelihood profiling
+
+**Date:** 2026-08-20 (merged) / recorded 2026-08-21
+**Issue:** [autolens_profiling#151](https://github.com/PyAutoLabs/autolens_profiling/issues/151) (closed, completed)
+**PR:** [autolens_profiling#152](https://github.com/PyAutoLabs/autolens_profiling/pull/152) — **merged 2026-08-20 by Jammy2211**, merge commit `564d51e7`, 5 commits / 30 files
+**Repos edited:** `autolens_profiling` only
+
+## What shipped
+
+Numba-CPU sparse-operator likelihood profiling infrastructure in `autolens_profiling`: a runtime
+cell, a step-by-step breakdown cell (euclid default, hst/jwst), a multiprocessing scaling harness
+(serial vs Nautilus object-pool vs initializer-cached pool, pickle payload, BLAS interplay), and
+RAL SLURM submit — plus the first local pass.
+
+Campaign fiducial, set by user pivot on 2026-08-20: **Delaunay + Hilbert(1500) AdaptImage +
+ConstantSplit**. The Rectangular kernel-CDF speed-up was **deferred**.
+
+## Headline finding
+
+Delaunay at euclid: **4.6 s/eval**, of which the **reconstruction solve is 3.73 s (~78%)** for a
+1560-parameter positive-only solve. MGE matrices account for 0.51 s; triplet construction only
+15 ms — i.e. the cost is overwhelmingly the solve, not the geometry.
+
+Prime restoration suspect: the legacy numba `fnnls` + `cholesky_funcs` deleted in PyAutoArray
+`8bb449a1` (2025-06-18).
+
+Full findings trail: the comments on issue #151.
+
+## Outstanding follow-ups (NOT done — this record does not claim them)
+
+Carried forward from the task's own RESUME list. Two are already filed as prompts; two are not:
+
+- **Filed as prompts:**
+  - `draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md` (still valid)
+  - `draft/bug/autoarray/numba_first_call_garbage_psf_weighted_data.md`
+- **Not yet filed — need a prompt if they are still wanted:**
+  - Verify which solver actually runs (`settings.use_positive_only_solver`) and its source-pixel
+    scaling.
+  - Write + `start_dev` a **PyAutoArray solver-restoration** prompt against the `8bb449a1` deletion
+    above — this is the direct consequence of the headline finding.
+  - The **RAL scaling sweep** (`hpc/batch_cpu/...`), which the task listed as post-merge work.
+
+A hst runtime/breakdown pin for `delaunay_numba` was also on the RESUME list as "push to PR #152";
+that is now moot — the PR merged without it.
+
+## Record provenance
+
+Written 2026-08-21 by a different session while clearing a `lifecycle issues` DRIFT report
+(tracking issue CLOSED but `active.md` still listed the task as pending). The merge, issue state and
+PR metadata were verified against GitHub; the technical findings above are transcribed from the
+task's `active.md` entry and issue #151, not independently re-measured.
+
+## Original prompt
+
 # Profiling infrastructure for the numba CPU sparse-operator likelihood
 
 Type: feature

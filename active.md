@@ -1,30 +1,5 @@
 # Active Tasks
 
-## numba-cpu-likelihood-profiling
-- issue: https://github.com/PyAutoLabs/autolens_profiling/issues/151
-- pr: https://github.com/PyAutoLabs/autolens_profiling/pull/152
-- status: awaiting-merge — infra + Rectangular euclid/hst pass + Delaunay euclid pass on PR #152
-  (last commit 8e742e9, 2026-08-20). CAMPAIGN FIDUCIAL = Delaunay + Hilbert(1500) AdaptImage +
-  ConstantSplit (user pivot 2026-08-20); Rectangular kernel-CDF speed-up DEFERRED.
-- delaunay-verdict: euclid 4.6 s/eval — RECONSTRUCTION SOLVE 3.73 s (~78%, 1560-param
-  positive-only); MGE matrices 0.51 s; triplets only 15 ms. Prime restoration suspect: legacy
-  numba fnnls + cholesky_funcs deleted in PyAutoArray 8bb449a1 (2025-06-18).
-- RESUME: (1) run delaunay_numba runtime+breakdown at hst, pin hst value, push to PR #152;
-  (2) verify which solver runs (settings.use_positive_only_solver) + its source-pixel scaling;
-  (3) write + start_dev a PyAutoArray solver-restoration prompt, and start_dev
-  draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md (still valid);
-  (4) on merge: RAL scaling sweep (hpc/batch_cpu/...), worktree cleanup, completion record.
-  Bug prompt filed: draft/bug/autoarray/numba_first_call_garbage_psf_weighted_data.md.
-  Full findings trail: issue #151 comments.
-- worktree: ~/Code/PyAutoLabs-wt/numba-cpu-likelihood-profiling
-- prompt: active/numba_cpu_likelihood_profiling.md
-- plan: build numba-CPU sparse-operator likelihood profiling infra in autolens_profiling —
-  runtime cell + step-by-step breakdown cell (euclid default, hst/jwst) + multiprocessing
-  scaling harness (serial vs Nautilus object-pool vs initializer-cached pool, pickle payload,
-  BLAS interplay) + RAL SLURM submit; then first local pass (euclid+hst, cores 1-8) and
-  findings. Repos edited: autolens_profiling only.
-  - Repo autolens_profiling: branch feature/numba-cpu-likelihood-profiling
-
 ## jax-default-dependency
 - issue: https://github.com/PyAutoLabs/PyAutoLens/issues/702
 - status: shipped-awaiting-release-followups — ALL ELEVEN PRs merged 2026-08-19 (human-authorized):

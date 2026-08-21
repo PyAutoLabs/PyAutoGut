@@ -8,10 +8,10 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 7 |
+| [In flight](#in-flight) (`active/`) | 8 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 8 |
-| [Backlog](#backlog) (`draft/`) | 146 |
+| [Backlog](#backlog) (`draft/`) | 145 |
 
 ## Start here
 
@@ -147,6 +147,14 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/jax_default_dependency.md
+```
+
+</details>
+
+<details><summary>📋 <a href="active/numba_cpu_likelihood_kernel_cdf_fast_path.md">Numba CPU likelihood phase 2: kernel-CDF numba fast path (the</a> — <a href="https://github.com/PyAutoLabs/PyAutoArray/issues/457">issue #457</a> — pr-open — windowed numba kernel for the RectangularAdaptDensity kernel-CDF forward</summary>
+
+```
+/start_dev active/numba_cpu_likelihood_kernel_cdf_fast_path.md
 ```
 
 </details>
@@ -319,7 +327,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**146** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**145** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
 <summary><b>bug</b> — 37</summary>
@@ -623,7 +631,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>feature</b> — 34</summary>
+<summary><b>feature</b> — 33</summary>
 
 <details><summary>📋 <a href="draft/feature/autolens/area_magnification_leggos.md">Area magnification (LEGGOS-style): per-pixel inversion sum as primary; ShapeSolver rehabilitate-or-retire</a> — autolens · large · supervised · high</summary>
 
@@ -885,14 +893,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/feature/pyautomind/repos-sync-config-stamper.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_kernel_cdf_fast_path.md">Numba CPU likelihood phase 2: kernel-CDF numba fast path (the</a> — autoarray</summary>
-
-```
-/start_dev draft/feature/autoarray/numba_cpu_likelihood_kernel_cdf_fast_path.md
 ```
 
 </details>

@@ -1,5 +1,20 @@
 # Active Tasks
 
+## numba-cpu-likelihood-kernel-cdf-fast-path
+- issue: https://github.com/PyAutoLabs/PyAutoArray/issues/457 (issued 2026-08-21)
+- pr: https://github.com/PyAutoLabs/PyAutoArray/pull/458 (open, awaiting CI + human merge;
+  session subscribed)
+- status: pr-open — windowed numba kernel for the RectangularAdaptDensity kernel-CDF forward
+  transform (numpy branch only; JAX path untouched, sort confined to the gradient-free branch):
+  transform 3.0-3.4x exact (dev <= 1e-13); Rectangular eval euclid 3.08 -> 1.17 s, hst ~30 ->
+  10.1 s stacked with #453/#455; both pixelization_numba pins PASS; 1036 tests (+2). Beyond
+  3.4x is O(MxN)-irreducible exactly — interp-CDF option (K=8192: dlnL <= +4e-3 abs / 2e-3
+  diff, 18-55x) + the default-CPU-mesh decision filed as autolens_profiling#153 = inference
+  programme Phase 14 (ledger PR autolens_profiling#154).
+- prompt: active/numba_cpu_likelihood_kernel_cdf_fast_path.md
+- plan: see issue #457. Repos edited: PyAutoArray only.
+  - Repo PyAutoArray: branch feature/kernel-cdf-numba-fast-path
+
 ## numba-cpu-likelihood-mge-operated-matrix-memo
 - issue: https://github.com/PyAutoLabs/PyAutoArray/issues/454 (issued 2026-08-20)
 - pr: https://github.com/PyAutoLabs/PyAutoArray/pull/455 — MERGED 2026-08-21 (1c33850,

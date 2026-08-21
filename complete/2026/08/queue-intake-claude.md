@@ -13,15 +13,25 @@
   the issue). Deterministic steps then gate (make validate + pytest), stage explicit
   paths only, push queue-filing/issue-<n>, open a PR that closes the issue. Merge
   stays human.
-- NOT YET LIVE — human prerequisite: add the CLAUDE_CODE_OAUTH_TOKEN secret to
-  PyAutoMemory (it exists only as a PyAutoMind repo secret; values unreadable, so
-  it cannot be copied programmatically). Until then a labeled issue fails loudly
-  with a comment pointing at the missing secret. First live 📑 cite round-trip is
-  the remaining validation (PR #49 checklist).
+- LIVE + VALIDATED 2026-08-21: human minted a fresh `claude setup-token` OAuth
+  token into the Memory repo secrets, then a real 📑 cite round-trip on Memory#50
+  (Morgan et al. 2026, arXiv:2608.17041) took three runs, each fixed by a
+  corrective PR: #51 (runner ships no pytest — install it), #52
+  (claude-code-action rewires checkout git credentials for its own OIDC token —
+  push via explicit x-access-token URL with the job token), #54 (org policy
+  "Actions may not create PRs" blocked gh pr create — degrade to a one-tap
+  compare-link comment). Run 3 filed/gated/pushed green; the filing PR (#53) was
+  opened by hand and left for human review. Filing quality was high: correct
+  BibTeX, right sources page, accurate minimal claim.
 - traps:
   - GITHUB_TOKEN-created filing PRs never trigger validate.yml — the gates must run
     inside the filing workflow before push (they do).
   - gh in pre-checkout steps needs GH_REPO env for repo context.
+  - PyAutoLabs org has "Allow GitHub Actions to create and approve pull requests"
+    OFF; repo-level PUT silently no-ops under it, and flipping the org toggle
+    needs admin:org scope the local gh token lacks — until a human enables it
+    (org Settings → Actions → General, then repo), filing ends at the
+    compare-link comment.
 - affected-repos:
   - PyAutoMemory
 

@@ -97,3 +97,52 @@ Owners: @PyAutoArray, @PyAutoFit, @PyAutoGalaxy, @PyAutoLens,
    their normal directory sequence.
 
 <!-- formalised retroactively by the Intake (Conception) Agent on 2026-07-08 -->
+
+## 2026-08-21 — REPRODUCTION GATE RUN: **6/6 PASS**
+
+Method (identical to the gate that closed the sibling `autofit_sampler_database`, PyAutoFit#1508):
+every script run from a **cleared** `output/`, under its workspace's
+`config/build/profile_release.yaml`, env resolved by `autohands.env_config.build_env_for_script`
+at workspace CWD, 1800s `mode=release` cap. Libraries at `main`: PyAutoFit `248ca971f`,
+PyAutoArray `b808a9b1`, PyAutoGalaxy `7e3856dd`, PyAutoLens `d8f6bb3df`, PyAutoNerves `f6d6d52`.
+Three workspace checkouts were **behind `origin/main`** and were synced first.
+
+| Script (resolved path) | Result | Secs |
+|---|---|--:|
+| `autolens_workspace_test` `multi_dataset/jax_likelihood/rectangular.py` | PASS | 31 |
+| `autolens_workspace_test` `multi_dataset/jax_likelihood/rectangular_mge.py` | PASS | 32 |
+| `autolens_workspace_test` `interferometer/jax_likelihood/delaunay_mge.py` *(parked)* | PASS | 95 |
+| `autogalaxy_workspace_test` `imaging/jax_likelihood/delaunay_mge.py` *(parked)* | PASS | 72 |
+| `autogalaxy_workspace_test` `interferometer/jax_likelihood/delaunay_mge.py` *(parked)* | PASS | 66 |
+| `autogalaxy_workspace_test` `multi_dataset/jax_likelihood/delaunay_mge.py` *(parked)* | PASS | 46 |
+
+All six at `PYAUTO_TEST_MODE=0` (real full searches). The passes are on **the exact assertion this
+prompt is about**, not merely exit 0:
+
+```
+NumPy log_likelihood_function: 12448.66325394023
+JIT   log_likelihood_function: 12448.663253713981
+PASS: jit(log_likelihood_function) round-trip matches NumPy scalar.
+PASS: TransformerNUFFT cross-check matches TransformerDFT.
+```
+
+**The defect claim (TFP using removed JAX internals; NumPy/JAX likelihood mismatch) is refuted.**
+
+**The parkings are NOT refuted, and must not be lifted on this evidence.** All four parked entries
+describe an *intermittent* failure ("flakes at the 1800s cap"; the sibling NEEDS_FIX entries name an
+"intermittent XLA compile stall … passes ~19s otherwise"). One green run each is exactly what those
+notes predict, so it is consistent with them rather than contrary to them. Unparking needs repeated
+runs; a single sample cannot clear an intermittent hang.
+
+### Script-path corrections (three renames, verified on disk 2026-08-21)
+
+The tables in this folder have drifted **again** since the 2026-08-09 sweep. All paths resolve;
+a 404 here still means drift, never deletion.
+
+- `scripts/jax_likelihood_functions/<dataset>/X.py` -> `scripts/<dataset>/jax_likelihood/X.py`
+- `scripts/<dataset>/modeling_visualization_jit.py` -> `scripts/<dataset>/visualization/modeling_visualization_jit.py`
+- `scripts/multi/...` -> `scripts/multi_dataset/...`  (this one bit `slam/simultaneous.py`, still
+  listed under `multi/` above)
+- `double_einstein_ring` -> `double_source_plane_lens`  (autolens_workspace#394) — so
+  `imaging/features/advanced/double_einstein_ring/chaining.py` is now
+  `imaging/features/advanced/double_source_plane_lens/chaining.py`

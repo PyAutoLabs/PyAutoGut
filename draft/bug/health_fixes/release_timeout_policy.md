@@ -70,3 +70,44 @@ Owners: @autogalaxy_workspace, @autolens_workspace, @PyAutoFit, @PyAutoGalaxy,
    chosen scripts as skipped with their documented reasons.
 
 <!-- formalised retroactively by the Intake (Conception) Agent on 2026-07-08 -->
+
+## 2026-08-21 — REPRODUCTION GATE RUN: **4/4 measured live scripts pass far under the cap**
+
+Method (identical to the gate that closed the sibling `autofit_sampler_database`, PyAutoFit#1508):
+every script run from a **cleared** `output/`, under its workspace's
+`config/build/profile_release.yaml`, env resolved by `autohands.env_config.build_env_for_script`
+at workspace CWD, 1800s `mode=release` cap. Libraries at `main`: PyAutoFit `248ca971f`,
+PyAutoArray `b808a9b1`, PyAutoGalaxy `7e3856dd`, PyAutoLens `d8f6bb3df`, PyAutoNerves `f6d6d52`.
+Three workspace checkouts were **behind `origin/main`** and were synced first.
+
+| Script (resolved path) | Result | Secs | vs 1800s cap |
+|---|---|--:|---|
+| `autogalaxy_workspace/scripts/ellipse/multipoles.py` | PASS | 102 | 6% |
+| `autolens_workspace` `imaging/features/advanced/double_source_plane_lens/chaining.py` | PASS | 444 | 25% |
+| `autolens_workspace` `multi_dataset/features/slam/simultaneous.py` | PASS | 426 | 24% |
+| `autolens_workspace/scripts/cluster/modeling.py` | PASS | 90 | 5% |
+| `autolens_workspace/scripts/cluster/start_here.py` *(parked)* | **NOT MEASURED** | — | — |
+
+`start_here.py` was **operator-stopped at 754s** (SIGTERM, `rc=-15`) — neither a pass nor a
+failure. Left unmeasured deliberately: it is already parked `SLOW 2026-07-22`, and this prompt's
+own § "1 of the 5 is resolved via option 3b" records that documented parking as its resolved
+outcome, so its runtime changes no conclusion here.
+
+**No timeout policy decision is owed on the other four** — none is close to the cap.
+
+**One latent trap, flagged not acted on:** `chaining.py` (444s) and `simultaneous.py` (426s) clear
+the 1800s `mode=release` cap comfortably but would blow a **300s** cap. Neither is parked, so any
+runner that applies a 300s budget to them will see timeouts that are budget artifacts, not defects.
+
+### Script-path corrections (three renames, verified on disk 2026-08-21)
+
+The tables in this folder have drifted **again** since the 2026-08-09 sweep. All paths resolve;
+a 404 here still means drift, never deletion.
+
+- `scripts/jax_likelihood_functions/<dataset>/X.py` -> `scripts/<dataset>/jax_likelihood/X.py`
+- `scripts/<dataset>/modeling_visualization_jit.py` -> `scripts/<dataset>/visualization/modeling_visualization_jit.py`
+- `scripts/multi/...` -> `scripts/multi_dataset/...`  (this one bit `slam/simultaneous.py`, still
+  listed under `multi/` above)
+- `double_einstein_ring` -> `double_source_plane_lens`  (autolens_workspace#394) — so
+  `imaging/features/advanced/double_einstein_ring/chaining.py` is now
+  `imaging/features/advanced/double_source_plane_lens/chaining.py`

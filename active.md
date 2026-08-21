@@ -2,7 +2,17 @@
 
 ## pixelization-eager-jit-divergence
 - issue: https://github.com/PyAutoLabs/PyAutoGalaxy/issues/580
-- pr-library: https://github.com/PyAutoLabs/PyAutoGalaxy/pull/581
+- pr-library: https://github.com/PyAutoLabs/PyAutoGalaxy/pull/581 — CI GREEN (docs-build, unittest
+  3.12/3.13, unittest-nojax all SUCCESS), MERGEABLE. autolens_workspace_developer has NO .github/workflows,
+  so empty checks on #127 is expected, not a failure.
+- relabel-trap (self-inflicted, then fixed in 08d5d86): my first pass BLANKET-renamed
+  RectangularAdaptDensity→RTU across gradient/README.md + 3 scripts — the SAME error this task exists
+  to fix, since the name meant rank-CDF pre-2026-07-23 and kernel-CDF after. gradient/README.md is a
+  MIXED document: rows dated ≤2026-07-09 = rank = Bilinear; the 2026-07-26 sections = kernel = RTU
+  (it says so itself: "Post-consolidation (PyAutoArray#403 — the kernel-CDF meshes now ARE
+  RectangularAdaptDensity)"). Scripts last authored 2026-06-01 → pre-consolidation → Bilinear.
+  Dated-names warning added above the status table. RULE: never blanket-rename a mesh symbol; check
+  the DATE of each finding first.
 - pr-workspace: https://github.com/PyAutoLabs/autolens_workspace_developer/pull/127
 - status: awaiting-merge — both PRs open, library merges FIRST (the script cannot run
   without the Basis fix). VERDICT: the divergence is NOT a bug. Two causes, both settled:

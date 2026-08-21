@@ -153,7 +153,7 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
-<details><summary>📋 <a href="active/queue_intake_claude_action.md">Memory queue: claude-action filing of intake/cite issues</a> — <a href="https://github.com/PyAutoLabs/PyAutoMemory/issues/48">issue #48</a> — library-dev</summary>
+<details><summary>📋 <a href="active/queue_intake_claude_action.md">Memory queue: claude-action filing of intake/cite issues</a> — <a href="https://github.com/PyAutoLabs/PyAutoMemory/issues/48">issue #48</a> — library-shipped, awaiting-merge — HUMAN PREREQ before first live run:</summary>
 
 ```
 /start_dev active/queue_intake_claude_action.md

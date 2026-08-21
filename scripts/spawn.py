@@ -164,6 +164,9 @@ MEMORY_RULES = [
     # template content. scripts/queue_mark_done.py SHIPS via scripts/*, so an
     # adopter re-adds the workflow deliberately, like the board publisher.
     (".github/workflows/queue_actions.yml", "DROP"),
+    # DROP: the claude-action filing workflow needs the instance's Claude OAuth
+    # secret, labels and reading queue — instance machinery like the two above.
+    (".github/workflows/queue_filing.yml", "DROP"),
     # The shared wiki schema is template content; the sub-wikis are instance
     # content (the generator stamps an empty wiki/example/ instead).
     ("wiki/CLAUDE.md", "KEEP"),

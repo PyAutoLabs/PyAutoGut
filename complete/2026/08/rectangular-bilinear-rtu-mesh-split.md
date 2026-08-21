@@ -1,3 +1,78 @@
+Split the rectangular adaptive mesh family into **Bilinear** (empirical
+rank-CDF — sort + cumsum, no hyperparameters, fast CPU default) and **RTU**
+(kernel-CDF, Enzi et al. arXiv:2606.30620 — advanced option for GPU /
+gradient samplers / interferometer gradient fitting). Conceived, reviewed,
+implemented, fanned out across seven repos and human-merged in one day
+(2026-08-21). Resolves autolens_profiling PROGRAMME Phase 14 (issue
+autolens_profiling#153, option 2).
+
+## Shipped
+
+- **PyAutoArray#462** (issue #461): `create_transforms_rank` recovered
+  verbatim from `22b28463^` behind a `transform="rank"|"kernel"` seam
+  (interpolator + mesh geometry share it, so areas/edges always match the
+  mapper); `RectangularBilinearAdaptDensity(shape)` /
+  `RectangularBilinearAdaptImage(shape, weight_power, weight_floor)` added
+  (clean signatures — no bandwidth/n_knots); kernel-CDF classes pure-renamed
+  to `RectangularRTUAdaptDensity/Image`; `RectangularUniform` untouched.
+  1114 unit tests + CI 3.12/3.13/nojax green.
+- **autolens_workspace#495 / autogalaxy_workspace#221**: Bilinear default
+  in EVERY example — including interferometer, per the follow-up human
+  decision that no normal workspace uses RTU; RTU documentation-only, with
+  the Enzi citation folded in from the queued Mind docs draft (retired with
+  this record); prior yamls split; navigator catalogues regenerated (the
+  staleness CI check regenerates per-PR — not release-only).
+- **PyAutoGalaxy#579 / PyAutoLens#707**: packaged default prior yamls
+  (PyAutoGalaxy ships them — discovered via workspace-impact analysis),
+  docs/exc updates, and a fix for genuinely stale `rectangular.<Class>`
+  JSON/YAML prior keys (verified: autonerves matches the real module path
+  via endswith — the old keys never resolved).
+- **autolens_workspace_test#259**: Bilinear pins regenerated under
+  JAX_ENABLE_X64=1 (imaging -651692.997799, imaging-mge -85.41696632,
+  imaging-dspl -3695.93899659 with the bandwidth kwarg dropped,
+  multi -12932.06852498, multi-mge -6157.55707862); RTU pin scripts kept as
+  `rectangular*_rtu.py` pure renames (values unchanged); all seven verified
+  locally end-to-end.
+- **autolens_profiling#155** + PROGRAMME/DECISIONS update on main: both
+  meshes explicit via `--rect-mesh {bilinear,rtu}` +
+  `_profile_cli.rect_mesh_classes`, `rect_mesh` in result JSONs, `_rtu`
+  filename suffix; sampler benchmark surfaces pinned to RTU (truth bars
+  valid). Phase 14 flipped to adjudicated+shipped.
+
+## Key traps / findings
+
+- **x64 pins:** the `_test` vmap pins require `JAX_ENABLE_X64=1` — a bare
+  container's float32 vmap returns `-inf` even for the unchanged kernel-CDF
+  scripts (pre-existing environment trait, not the mesh split). Diagnosed
+  via an RTU control script whose historical pin also failed.
+- **Stale prior keys:** `module.Class`-style JSON/YAML prior keys must use
+  the real module name (`rectangular_rtu_adapt_density.RectangularRTU...`);
+  the legacy `rectangular.<Class>` keys silently never matched.
+- **Navigator catalogue is a per-PR CI gate** (PyAutoHands
+  `regenerate_navigator.py`), not release-regenerated as assumed.
+- Bilinear classes subclass the RTU ones with narrowed `__init__`
+  signatures, so autofit model introspection sees only real parameters.
+- Gradient guidance encoded everywhere: Bilinear likelihood is exactly
+  piecewise-constant at os_pix=1 (zero gradients; certified July audit);
+  imaging gradient users set os_pix>=4 or use RTU; interferometer gradient
+  fitting must use RTU (no over-sampling escape hatch).
+
+## Follow-ups
+
+- Versioned Bilinear-vs-RTU CPU measurement in the `pixelization_numba`
+  cells (`--rect-mesh bilinear` / `rtu`) — tracked on autolens_profiling#153
+  and PROGRAMME Phase 14's outstanding tail.
+- autolens_profiling#152 (in-flight numba-profiling branch) may need a
+  trivial rename/flag reconciliation in `pixelization_numba.py` on merge.
+- Notebooks + workspace_index regenerate at next release (autohands).
+
+## Session
+
+Web session https://claude.ai/code/session_01WtMqU3JfmyJh8GvB7jT4Et; Mind
+state on branch claude/bilinear-rtu-mesh-docs-pbhsxg.
+
+## Original prompt
+
 # Rectangular mesh split: Bilinear (fast CPU default) vs RTU (advanced/GPU)
 
 Type: feature

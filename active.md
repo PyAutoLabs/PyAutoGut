@@ -1,39 +1,5 @@
 # Active Tasks
 
-## rectangular-bilinear-rtu-mesh-split
-- issue: https://github.com/PyAutoLabs/PyAutoArray/issues/461
-- pr: https://github.com/PyAutoLabs/PyAutoArray/pull/462 (MERGED d29ad979, 2026-08-21, human-authorized)
-- session: https://claude.ai/code/session_01WtMqU3JfmyJh8GvB7jT4Et (web-github; Mind state on branch claude/bilinear-rtu-mesh-docs-pbhsxg)
-- status: awaiting-merge — library PR #462 MERGED; follow-up PRs open (all pending-release):
-  autolens_workspace#495 (Bilinear default imaging-family, RTU interferometer, Enzi docs folded),
-  autogalaxy_workspace#221 (mirror), PyAutoGalaxy#579 (packaged prior yamls + stale-key fix),
-  PyAutoLens#707 (docs/exc + stale-key fix). autolens_workspace_test branch: RTU pin copies
-  (values unchanged) + Bilinear pins regenerated under JAX_ENABLE_X64=1 (imaging -651692.997799,
-  imaging-mge -85.41696632, imaging-dspl -3695.93899659 (bandwidth kwarg dropped),
-  multi -12932.06852498, multi-mge -6157.55707862) — all verified green, PR
-  autolens_workspace_test#259 (pending-release). USER DECISIONS 2026-08-21: (1) no normal
-  workspace uses RTU — interferometer examples also default to Bilinear (pushed to #495/#221,
-  RTU documentation-only); (2) autolens_profiling supports both meshes explicitly — PR
-  autolens_profiling#155: --rect-mesh {bilinear,rtu} sweep flag + rect_mesh_classes() in
-  _profile_cli.py, six cells wired, sampler benchmarks pure-renamed to RTU (truth bars valid);
-  may need trivial reconciliation with in-flight #152 (merge-order note on the PR). Phase 14
-  adjudication recorded on
-  autolens_profiling#153 (comment); PROGRAMME.md edit deferred — repo claimed by
-  numba-cpu-likelihood-profiling (#152 in flight). Bilinear profiling measurement still to record.
-  Retire draft/docs/workspaces/rectangular_mesh_enzi_citation_examples.md when #495/#221 merge
-  (its content is folded into those PRs). NOTE: pins require JAX x64 (float32 vmap gives
-  -inf in a bare container — pre-existing, not the mesh split).
-- worktree: ~/Code/PyAutoLabs-wt/rectangular-bilinear-rtu-mesh-split
-- repos:
-  - Repo PyAutoArray: branch feature/rectangular-bilinear-rtu-mesh-split
-- prompt: active/rectangular_bilinear_rtu_mesh_split.md
-- plan: split rectangular adaptive meshes — resurrect empirical rank-CDF transform (from
-  22b28463^) as RectangularBilinearAdaptDensity/AdaptImage (fast CPU workspace default);
-  pure-rename kernel-CDF classes to RectangularRTUAdaptDensity/AdaptImage (advanced/GPU/
-  interferometer; never delete). Library first (PyAutoArray#461); workspace follow-up PRs
-  (autolens_workspace, autogalaxy_workspace, autolens_workspace_test pins) after the API
-  lands; then update autolens_profiling#153 / PROGRAMME Phase 14.
-
 ## numba-cpu-likelihood-profiling
 - issue: https://github.com/PyAutoLabs/autolens_profiling/issues/151
 - pr: https://github.com/PyAutoLabs/autolens_profiling/pull/152

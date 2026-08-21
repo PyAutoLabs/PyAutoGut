@@ -66,7 +66,16 @@
   return None when psf is None (prevents crash + preserves mapping_matrix→NUFFT path);
   add scripts/interferometer/features/operated_light_profile/ example packages to
   autogalaxy_workspace + autolens_workspace mirroring the imaging packages.
+- progress: all four branches implemented, tested (autoarray 1090 pass + 3 pre-existing
+  pynufft env failures; autogalaxy 1112 pass) and pushed 2026-08-21 from the remote
+  session. Notebooks regenerated via PyAutoHands generate.py. PRs not yet opened
+  (awaiting human go-ahead); reporter design note posted on issue (visibility-space
+  bypass semantics — watch for HRSAstro reply before merge).
 - repos:
+  - PyAutoArray: feature/interferometer-operated-override
+  - PyAutoGalaxy: feature/interferometer-operated-override
+  - autogalaxy_workspace: feature/interferometer-operated-override
+  - autolens_workspace: feature/interferometer-operated-override
 
 ## hands-hygiene-leftovers
 - issue: https://github.com/PyAutoLabs/PyAutoHands/issues/249

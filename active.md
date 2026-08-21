@@ -2,14 +2,19 @@
 
 ## dashboard-per-paper-actions
 - issue: https://github.com/PyAutoLabs/PyAutoMemory/issues/42
-- status: library-dev
+- library-pr: https://github.com/PyAutoLabs/PyAutoMemory/pull/43
+- status: library-shipped, awaiting-merge — PR #43 (pending-release, 62f8f26);
+  25 tests + make validate green; no workspace impact (repo tooling). On merge:
+  verify labels + one live queue-read round-trip, then completion record.
 - worktree: ~/Code/PyAutoLabs-wt/dashboard-per-paper-actions
 - prompt: active/dashboard_per_paper_actions.md
 - plan: Memory dashboard grows per-paper browsing (collapsible sections, arXiv
-  abstract/title-search links) + two prefilled-GitHub-issue actions per paper:
-  queue-read (new queue_actions.yml + scripts/queue_mark_done.py auto-marks the
-  line DONE, owner/collaborator-gated) and queue-intake (issue = filing work
-  item). Plus a mechanical PyAutoMind spawn.py DROP rule for the new workflow.
+  abstract/title-search links) + THREE prefilled-GitHub-issue actions per paper
+  (human-refined during dev): queue-intake (full wiki filing, with free-text
+  notes), queue-cite (bib entry + minimal sources section, with notes — added
+  mid-task), queue-read (new queue_actions.yml + scripts/queue_mark_done.py
+  auto-marks the line DONE, owner/collaborator-gated). Labels created via REST.
+  Plus the PyAutoMind spawn.py DROP rule for the new workflow (a5da38cd).
 - repos:
   - PyAutoMemory: feature/dashboard-per-paper-actions
 

@@ -1,5 +1,25 @@
 # Active Tasks
 
+## pixelization-eager-jit-divergence
+- issue: https://github.com/PyAutoLabs/PyAutoGalaxy/issues/580
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/pixelization-eager-jit-divergence
+- prompt: active/pixelization_eager_vs_jit_divergence.md
+- plan: unblock `jax_profiling/jit/imaging/pixelization.py` (broken on main two ways:
+  `RectangularAdaptDensity` renamed by PyAutoArray#461 f9aceea3; `Basis.image_2d_list_from`
+  assumes `grid.mask`, dies on `Grid2DIrregular` at basis.py:164), then settle the eager-vs
+  step-by-step log-evidence gap. Working hypothesis (probe before writing it up): eager
+  `Inversion.reconstruction` is fnnls non-negative (`use_positive_only_solver: true`) while the
+  script's step-by-step does a plain pos/neg `solve(F+H, D)` — a genuine difference, not FP drift
+  as the current comment claims. Prompt suspects 1/2/4 already falsified.
+- scope-note: the ~40 OTHER files still naming `RectangularAdapt{Density,Image}` are PyAutoArray#461's
+  announced workspace follow-up campaign — deliberately NOT in this PR. File a separate prompt.
+- stale-prompt-note: the prompt's `-1.3e9` values, two constants and FIXME are superseded by
+  workspace_developer PR #60; `EXPECTED_LOG_EVIDENCE_HST` has also drifted ~1e-2 and needs re-pinning.
+- repos:
+  - PyAutoGalaxy: feature/pixelization-eager-jit-divergence
+  - autolens_workspace_developer: feature/pixelization-eager-jit-divergence
+
 ## numba-cpu-likelihood-profiling
 - issue: https://github.com/PyAutoLabs/autolens_profiling/issues/151
 - pr: https://github.com/PyAutoLabs/autolens_profiling/pull/152

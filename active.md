@@ -11,8 +11,13 @@
   10.1 s stacked with #453/#455; both pixelization_numba pins PASS; 1036 tests (+2). Beyond
   3.4x is O(MxN)-irreducible exactly — interp-CDF option (K=8192: dlnL <= +4e-3 abs / 2e-3
   diff, 18-55x) + the default-CPU-mesh decision filed as autolens_profiling#153 = inference
-  programme Phase 14 (ledger PR autolens_profiling#154 — MERGED e76bf0f). The 02:45 UTC
-  wake-up now re-pins BOTH delaunay_numba and pixelization_numba cell families post-release.
+  programme Phase 14 (ledger PR autolens_profiling#154 — MERGED e76bf0f).
+- RE-PIN RELEASE-BLOCKED (checked 02:45 + 05:00 UTC 2026-08-21): PyPI newest autoarray is
+  still 2026.8.20.1 — cadence is gate-driven (8.15 / 8.17 / 8.20), not nightly-every-day, so
+  #453/#455/#458 await the next human-run release flow. No further polling armed; after the
+  next promoted version: upgrade cloud venv, re-run delaunay_numba + pixelization_numba
+  (euclid+hst, runtime+breakdown; expect ~1.3 s / ~1.2 s euclid, ~10 s hst), fresh
+  version-stamped artifacts on branch feature/cpu-speedups-repin-post-release -> PR.
 - prompt: active/numba_cpu_likelihood_kernel_cdf_fast_path.md
 - plan: see issue #457. Repos edited: PyAutoArray only.
   - Repo PyAutoArray: branch feature/kernel-cdf-numba-fast-path

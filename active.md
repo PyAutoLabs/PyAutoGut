@@ -68,9 +68,12 @@
   autogalaxy_workspace + autolens_workspace mirroring the imaging packages.
 - progress: all four branches implemented, tested (autoarray 1090 pass + 3 pre-existing
   pynufft env failures; autogalaxy 1112 pass) and pushed 2026-08-21 from the remote
-  session. Notebooks regenerated via PyAutoHands generate.py. PRs not yet opened
-  (awaiting human go-ahead); reporter design note posted on issue (visibility-space
-  bypass semantics — watch for HRSAstro reply before merge).
+  session. Notebooks regenerated via PyAutoHands generate.py. PR-open milestone comment
+  posted to reporter (visibility-space bypass semantics — watch for HRSAstro reply
+  before merge).
+- prs: PyAutoArray#460 (lead; closes #459) + PyAutoGalaxy#578 (merge together with #460);
+  autogalaxy_workspace#220 + autolens_workspace#494 (pending-release, merge after
+  library PRs). Next milestone: merged + released comment to reporter.
 - repos:
   - PyAutoArray: feature/interferometer-operated-override
   - PyAutoGalaxy: feature/interferometer-operated-override

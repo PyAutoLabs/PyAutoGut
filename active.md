@@ -2,13 +2,16 @@
 
 ## numba-cpu-likelihood-mge-operated-matrix-memo
 - issue: https://github.com/PyAutoLabs/PyAutoArray/issues/454 (issued 2026-08-20)
-- pr: https://github.com/PyAutoLabs/PyAutoArray/pull/455 (open, awaiting CI + human merge; session
-  subscribed)
-- status: pr-open — cross-eval memo for the MGE operated mapping matrices in
+- pr: https://github.com/PyAutoLabs/PyAutoArray/pull/455 — MERGED 2026-08-21 (1c33850,
+  human-authorized from the cloud session); issue #454 closed; branch deleted
+- status: merged-awaiting-release-followups — cross-eval memo for the MGE operated mapping matrices in
   imaging_numba/sparse.py only (user-constrained scope: numba bit, active only when MGE actually
   fixed via sha256 state fingerprint; batched-convolution half DEFERRED). Validated: euclid MGE
   step 0.56 s -> 0.004 s on hits; steady-state eval 2.34 -> 1.34 s; stacked with PyAutoArray#453
   today's euclid total is 4.92 -> 1.34 s (3.7x). Pins pass; +8 unit tests (1034 passed).
+  Adversarial parameterization check clean (memo on/off ground-truth twin: 12 interleaved evals,
+  worst 4.5e-10 rel; gating exact — see PR #455 comment). Post-release re-profile covered by the
+  armed 02:45 UTC wake-up (now captures #453 + #455 together).
 - prompt: active/numba_cpu_likelihood_mge_convolution_and_caching.md
 - plan: see issue #454. Repos edited: PyAutoArray only.
   - Repo PyAutoArray: branch feature/numba-mge-operated-matrix-memo

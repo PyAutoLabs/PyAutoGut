@@ -161,7 +161,7 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
-<details><summary>📋 <a href="active/pixelization_eager_vs_jit_divergence.md">Investigate eager <code>FitImaging.figure_of_merit</code> vs JIT/step-by-step divergence in rectangular pixelization</a> — <a href="https://github.com/PyAutoLabs/PyAutoGalaxy/issues/580">issue #580</a> — library-dev</summary>
+<details><summary>📋 <a href="active/pixelization_eager_vs_jit_divergence.md">Investigate eager <code>FitImaging.figure_of_merit</code> vs JIT/step-by-step divergence in rectangular pixelization</a> — <a href="https://github.com/PyAutoLabs/PyAutoGalaxy/issues/580">issue #580</a> — awaiting-merge — both PRs open, library merges FIRST (the script cannot run</summary>
 
 ```
 /start_dev active/pixelization_eager_vs_jit_divergence.md

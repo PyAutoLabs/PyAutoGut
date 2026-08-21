@@ -5,7 +5,6 @@
 - [isothermal-ell-sph-oversampling-at-the-cusp](#isothermal-ell-sph-oversampling-at-the-cusp)
 - [remote-mcp-deployment-tiers](#remote-mcp-deployment-tiers)
 - [samples-parameter-paths](#samples-parameter-paths)
-- [autofit-sampler-database](#autofit-sampler-database)
 - [jax-point-source-point-smoke-sentinel](#jax-point-source-point-smoke-sentinel)
 - [piemass-potential](#piemass-potential)
 - [latent-nan-guard-honest-run](#latent-nan-guard-honest-run)

@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1064 records across 7 buckets.
+1065 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -52,6 +52,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [curvature-diag-doc-config-drift](2026/08/curvature-diag-doc-config-drift.md) — Aligned PyAutoArray's curvature-diagonal helper and Settings docs with the packaged 1e-3 default; numerical be…
 - [curvature-floor-scale-aware-prototype](2026/08/curvature-floor-scale-aware-prototype.md) — Corrected the Phase 2 conditioning denominator to the curvature entries actually floored. The absolute policy …
 - [dashboard-epics-section](2026/08/dashboard-epics-section.md) — New root registry epics.md (active.md-style schema; fields title/ledger/
+- [dashboard-filter-trend](2026/08/dashboard-filter-trend.md) — auto-closed on merge
 - [dashboard-naming-unification](2026/08/dashboard-naming-unification.md) — Dashboard naming unified across all five boards — every board is just the
 - [dashboard-per-paper-actions](2026/08/dashboard-per-paper-actions.md) — auto-closed on merge
 - [database-guide-info-inline](2026/08/database-guide-info-inline.md) — the dataset_1d database guide chain failed on any fresh checkout —

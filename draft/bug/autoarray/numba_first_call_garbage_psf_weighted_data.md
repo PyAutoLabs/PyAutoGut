@@ -55,3 +55,53 @@ as the regression probe.
   (`_materialize_all`). Worth testing: `cache=False`, numba version pin, and
   whether symptom 2 reproduces with symptom 1 fixed (they may share a cause).
 - Keep the profiling-harness corruption counters as the acceptance test.
+
+## Root cause — confirmed 2026-08-21
+
+Not a numba codegen or caching bug. `psf_weighted_data_from` gathers the
+weight map at `[ip0_y + k0_y + kernel_shift_y, ip0_x + k0_x + kernel_shift_x]`
+with **no bounds check**. numba `@jit()` does not bounds-check array reads, so
+for any unmasked pixel within `kernel_shape // 2` of the array edge the gather
+reads uninitialized heap memory instead of raising `IndexError`. Negative
+indices are unsafe in the same way — they wrap to the opposite edge.
+
+Proof: compiling the shipped source unchanged under `boundscheck=True` raises
+`IndexError: index is out of bounds` for a mask reaching the array edge, and is
+clean for an interior-only mask. With the guard added, the numba output matches
+the zero-padded numpy twin exactly across array sizes and kernel sizes.
+
+This explains **both** symptoms, and explains why the inputs were verified
+identical between call 1 and call 2 — they were; the function reads memory
+*outside* its inputs:
+
+- **Symptom 1** — a cold-cache first call runs right after numba's compilation
+  has churned the heap, so the memory next to the freshly allocated weight map
+  holds compiler garbage (~1e299). Warm cache: no compile, benign neighbour.
+- **Symptom 2** — each forked worker has a different heap layout, so whether
+  the neighbouring memory is poisonous varies per worker and per run. Hence
+  2/8 corrupted in one map and 0/24 in the next.
+
+The `np.isnan` guard was doing real work (masked border is `0/0 = NaN`) but
+never protected the array bounds. The sibling `psf_precision_value_from` was
+already hardened against exactly this — `psf_weighted_data_from` was missed.
+
+The inf suspect (finite image / zero noise passing the `isnan` guard) is **not
+reachable** via the caller: `.native` zeroes both data and noise outside the
+mask, giving `0/0 = NaN`, never `inf`. An inf would require a zero noise value
+*inside* the mask, which is a data-validation error and should stay loud. The
+`isnan` guard is therefore left as-is.
+
+Fix: @PyAutoArray branch `claude/autoarray-numba-psf-garbage-hfxnjv` — bounds
+guard mirroring the sibling, plus a numba-vs-numpy equivalence regression test
+on an edge-touching mask (fails without the fix, passes with it). Full
+`test_autoarray` suite: 1034 passed, 3 pre-existing pynufft failures unrelated
+to this change.
+
+Not done: the `parallel_scaling/pixelization_numba.py` corruption counters
+named as the acceptance probe could not be run here (needs the profiling
+workspace and its datasets). Symptom 2 should be re-measured against this
+branch before the prompt is closed.
+
+Split out while fixing this: `draft/bug/autoarray/numba_kernel_shift_axes_swapped.md`
+— both numba gathers derive the y/x kernel shifts from the transposed kernel
+axes, harmless for square kernels but wrong for non-square odd PSFs.

@@ -23,6 +23,13 @@
   original constant restored, no re-pin, pre-#402 history intact. Bit-identity after 3.5 months
   also PROVES nothing else in the library moved this value.
 - trap: a bit-identical match across a long span is strong evidence AGAINST generic drift — use it.
+- history-confirmed: `git log -S` shows 24746.105672366088 pinned 2026-05-11 (aa71013, 49fb4f6) and
+  25004.71903495436 NEVER pinned in the script's history (only this task's commits) — so post-#402
+  the script computed a value its own assertion rejected. Corroborated by rank-CDF-era committed
+  artifacts results/jit/imaging/pixelization/{hpc_a100,local_gpu,local_cpu}_fp64.json — A100 + RTX2060
+  + CPU, v2026.5.1.4 and v2026.5.8.2, ALL bit-identical to the constant (_mp siblings = 24746.105678802393,
+  7th-decimal mp difference). Plus code identity: May-era create_transforms (bc00c113 rectangular.py:70)
+  is LINE-FOR-LINE identical to today's create_transforms_rank (Bilinear's path); no erf.
 - worktree: ~/Code/PyAutoLabs-wt/pixelization-eager-jit-divergence
 - prompt: active/pixelization_eager_vs_jit_divergence.md
 - plan: unblock `jax_profiling/jit/imaging/pixelization.py` (broken on main two ways:

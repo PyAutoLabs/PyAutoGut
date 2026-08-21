@@ -2,8 +2,12 @@
 
 ## rectangular-bilinear-rtu-mesh-split
 - issue: https://github.com/PyAutoLabs/PyAutoArray/issues/461
+- pr: https://github.com/PyAutoLabs/PyAutoArray/pull/462 (pending-release)
 - session: https://claude.ai/code/session_01WtMqU3JfmyJh8GvB7jT4Et (web-github; Mind state on branch claude/bilinear-rtu-mesh-docs-pbhsxg)
-- status: library-dev
+- status: awaiting-merge — library PR #462 open (commit f9aceea, 2026-08-21): rank-CDF
+  resurrected from 22b28463^ behind a transform="rank"|"kernel" seam; Bilinear classes added;
+  RTU pure renames; 1114 unit tests pass (only pre-existing pynufft env failures, also red on
+  pristine main). Workspace follow-up starts after merge.
 - worktree: ~/Code/PyAutoLabs-wt/rectangular-bilinear-rtu-mesh-split
 - repos:
   - Repo PyAutoArray: branch feature/rectangular-bilinear-rtu-mesh-split

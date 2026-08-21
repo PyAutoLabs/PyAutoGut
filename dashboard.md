@@ -8,7 +8,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 5 |
+| [In flight](#in-flight) (`active/`) | 4 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
 | [Backlog](#backlog) (`draft/`) | 145 |
@@ -149,14 +149,6 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/numba_cpu_likelihood_profiling.md
-```
-
-</details>
-
-<details><summary>📋 <a href="active/pixelization_eager_vs_jit_divergence.md">Investigate eager <code>FitImaging.figure_of_merit</code> vs JIT/step-by-step divergence in rectangular pixelization</a> — <a href="https://github.com/PyAutoLabs/PyAutoGalaxy/issues/580">issue #580</a> — awaiting-merge — both PRs open, library merges FIRST (the script cannot run</summary>
-
-```
-/start_dev active/pixelization_eager_vs_jit_divergence.md
 ```
 
 </details>

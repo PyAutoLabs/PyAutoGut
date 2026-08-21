@@ -11,7 +11,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 | [In flight](#in-flight) (`active/`) | 4 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 145 |
+| [Backlog](#backlog) (`draft/`) | 146 |
 
 ## Start here
 
@@ -273,10 +273,10 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**145** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**146** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
-<summary><b>bug</b> — 36</summary>
+<summary><b>bug</b> — 37</summary>
 
 <details><summary>📋 <a href="draft/bug/autoarray/numba_first_call_garbage_psf_weighted_data.md">Numba sparse-operator likelihood: first-call garbage / intermittent worker corruption</a> — autoarray · medium · supervised · high</summary>
 
@@ -378,6 +378,14 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/bug/autolens_workspace_test/jax_grad_local_assertions_fail_but_pass_in_ci.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/autoarray/numba_kernel_shift_axes_swapped.md">Numba PSF gathers derive the y/x kernel shifts from the</a> — autoarray · low · supervised · medium</summary>
+
+```
+/start_dev draft/bug/autoarray/numba_kernel_shift_axes_swapped.md
 ```
 
 </details>

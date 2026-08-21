@@ -1,3 +1,40 @@
+- issue: https://github.com/PyAutoLabs/PyAutoMemory/issues/42 (auto-closed on merge)
+- shipped: 2026-08-21 — PyAutoMemory PR https://github.com/PyAutoLabs/PyAutoMemory/pull/43
+  (merge d78cb78c) + PyAutoMind a5da38cd (spawn DROP rule for the new workflow).
+- classification: feature (PyAutoMemory) — follow-up to the knowledge board (#32) and the
+  paper-management pipeline (#35): the per-paper browsing/action growth path both named.
+- summary: the Dashboard's reading-queue sections expand to the individual papers.
+  Each title links out (arXiv abstract when the queue line carries a ` — <ref>`,
+  arXiv title-search otherwise — today all ~231 lines are bare) and carries three
+  prefilled-GitHub-issue actions, the human's tiering: 📥 queue-intake (really
+  interesting → full wiki filing work item), 📑 queue-cite (worth citing, not
+  pivotal → bib entry + minimal sources section; added mid-task), ✅ queue-read
+  (done with it → the new queue_actions.yml + scripts/queue_mark_done.py
+  DONE-prefix the line, commit reading-queue.md only, redispatch the board
+  render, close the issue). Intake/cite issues carry an editable free-text
+  `notes:` field the filing workflow folds into the wiki entry. Action gated on
+  author ∈ OWNER/MEMBER/COLLABORATOR (public repo). Badge + README strip
+  byte-identical (cross-board contract). Labels queue-read/cite/intake created
+  via REST. DONE papers render as a collapsed per-section reading history.
+- traps:
+  - local `gh` 2.4.0 has no `label` subcommand AND `-f "labels[]=x"` on the
+    issues endpoint silently drops the label — create labeled issues with a
+    JSON `--input -` body. A label-less `queue-read` issue makes the workflow
+    job skip (the gate working as designed), which looks like a workflow bug.
+  - queue_actions.yml must redispatch knowledge_board.yml explicitly — GITHUB_TOKEN
+    pushes never retrigger `on: push`, so the board would go stale until the cron.
+  - spawn_spec.md rule 8 has no `.github/**` catch-all: every new Memory workflow
+    needs an explicit spawn.py decision (queue_actions.yml → DROP, mirroring
+    knowledge_board.yml; queue_mark_done.py ships via scripts/*).
+- validation: 25 tests + make validate green pre-merge; post-merge smoke — a
+  properly-labeled `queue-read` issue naming a nonexistent line exercised the
+  gate/parse/comment path without mutating the queue (see #44/#45 outcome on
+  the issue trail); the full DONE-mark path runs live on the first real ✅ tap.
+- affected-repos:
+  - PyAutoMemory
+
+## Original prompt
+
 # Memory dashboard: per-paper browsing + one-tap read/intake actions
 
 Type: feature

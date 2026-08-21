@@ -11,6 +11,8 @@ Difficulty: too-large
 Autonomy: supervised
 Priority: high
 Status: formalised
+Epic: cluster-strong-lensing
+Phase: 1
 Parent: draft/feature/autolens/source_cluster_arc.md
 
 # PointSolver error-behavior change: bisect the 2025-11→2026-05 candidates, then health-harden

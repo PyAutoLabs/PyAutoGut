@@ -11,6 +11,8 @@ Difficulty: large
 Autonomy: supervised
 Priority: high
 Status: formalised
+Epic: cluster-strong-lensing
+Phase: 8
 Parent: draft/feature/autolens/source_cluster_arc.md
 
 # Magnification maps: image-plane contour maps, source-plane mesh maps, uncertainty maps

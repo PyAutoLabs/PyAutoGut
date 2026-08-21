@@ -10,6 +10,8 @@ Difficulty: large
 Autonomy: supervised
 Priority: normal
 Status: formalised
+Epic: cluster-strong-lensing
+Phase: 12
 Parent: draft/feature/autolens/source_cluster_arc.md
 
 # HowToLens cluster tutorial: show a pixelized source + fix the stale cross-reference

@@ -9,6 +9,8 @@ Difficulty: medium
 Autonomy: supervised
 Priority: high
 Status: formalised
+Epic: graphical-ep
+Phase: 1
 Campaign: research/graphical_ep/ep_campaign.md (Phase 1 — the keystone; start here)
 
 ## Why

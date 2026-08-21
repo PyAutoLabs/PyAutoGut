@@ -8,6 +8,8 @@ Difficulty: medium
 Autonomy: supervised
 Priority: normal
 Status: formalised
+Epic: graphical-ep
+Phase: 3
 
 ## Context
 

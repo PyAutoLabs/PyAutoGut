@@ -10,6 +10,8 @@ Difficulty: large
 Autonomy: supervised
 Priority: normal
 Status: formalised
+Epic: cluster-strong-lensing
+Phase: 4
 Parent: draft/feature/autolens/source_cluster_arc.md
 
 # Mesh magnification correctness: simulate-and-recover across every mesh variant

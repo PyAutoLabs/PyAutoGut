@@ -8,6 +8,8 @@ Difficulty: large
 Autonomy: supervised
 Priority: normal
 Status: formalised
+Epic: cluster-strong-lensing
+Phase: 10
 Parent: draft/feature/autolens/source_cluster_arc.md
 
 # Cluster pixelized-source refinement: per-source masks via AnalysisFactor

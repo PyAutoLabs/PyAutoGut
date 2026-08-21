@@ -17,8 +17,15 @@ name: Dashboard Refresh
 #
 # The generation stamp is excluded from the drift comparison (`--check`), so a
 # re-render on an unchanged Mind is not drift and this never commits daily.
+#
+# The nightly cron (human ask, 2026-08-21) is the routine rebuild: it catches
+# what push triggers cannot — generator changes merged in PyAutoBrain (the
+# renderer lives there, so no Mind path fires), epics.md edits, and any render
+# that depends on the passage of time. A no-op night commits nothing.
 
 on:
+  schedule:
+    - cron: "20 3 * * *"
   push:
     branches: [main]
     paths:
@@ -68,7 +75,9 @@ jobs:
           if python3 scripts/registry_toc.py --check; then
             exit 0
           fi
-          if [ "${GITHUB_EVENT_NAME}" != "push" ]; then
+          # Only PR runs error-without-healing; push, the nightly schedule and
+          # manual dispatch all self-heal main.
+          if [ "${GITHUB_EVENT_NAME}" = "pull_request" ]; then
             echo "::error::registry contents blocks are stale — run 'python3 scripts/registry_toc.py --write' on this branch and commit the result"
             exit 1
           fi
@@ -119,7 +128,8 @@ jobs:
           if check; then
             exit 0
           fi
-          if [ "${GITHUB_EVENT_NAME}" != "push" ]; then
+          # Only PR runs error-without-healing (see the registry step above).
+          if [ "${GITHUB_EVENT_NAME}" = "pull_request" ]; then
             echo "::error::dashboard.md is stale — run 'pyauto-brain intake --apply dashboard' on this branch and commit the result"
             exit 1
           fi

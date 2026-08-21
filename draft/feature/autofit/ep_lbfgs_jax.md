@@ -6,6 +6,8 @@ Difficulty: medium
 Autonomy: safe
 Priority: normal
 Status: formalised
+Epic: graphical-ep
+Phase: 4
 
 The project @z_projects/ic50_workspace is our IC50  use case which we are now aiming to scale up the EP framework
 to the IC50 use case.

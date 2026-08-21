@@ -10,6 +10,8 @@ Difficulty: large
 Autonomy: supervised
 Priority: high
 Status: formalised
+Epic: cluster-strong-lensing
+Phase: 6
 Parent: draft/feature/autolens/source_cluster_arc.md
 
 # Area magnification (LEGGOS-style): per-pixel inversion sum as primary; ShapeSolver rehabilitate-or-retire

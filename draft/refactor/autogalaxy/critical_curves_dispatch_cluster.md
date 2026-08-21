@@ -12,6 +12,8 @@ Difficulty: too-large
 Autonomy: supervised
 Priority: high
 Status: formalised
+Epic: cluster-strong-lensing
+Phase: 3
 Parent: draft/feature/autolens/source_cluster_arc.md
 
 # Critical curves: implement context-aware dispatch, dedupe engines, make clusters honor it

@@ -9,6 +9,8 @@ Difficulty: medium
 Autonomy: supervised
 Priority: high
 Status: draft
+Epic: cluster-strong-lensing
+Phase: 10
 Parent: draft/docs/autolens/split_lensing_regimes.md
 
 Align the `scripts/cluster/` package of @autolens_workspace with the

@@ -8,6 +8,8 @@ Difficulty: too-large
 Autonomy: human-required
 Priority: high
 Status: formalised — NOT started. Research-grade: the answer may be "inherent to
+Epic: graphical-ep
+Phase: 2
         EP", so do not pick this up as ordinary work. The evidence below is the
         expensive part and it is already paid for.
 Issue: (none — never issued. Parent report https://github.com/PyAutoLabs/PyAutoFit/issues/1405 stays open.)

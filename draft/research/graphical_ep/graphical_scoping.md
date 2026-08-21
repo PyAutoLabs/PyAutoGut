@@ -6,6 +6,8 @@ Difficulty: too-large
 Autonomy: supervised
 Priority: high
 Status: formalised
+Epic: graphical-ep
+Phase: 3
 
 Companion baseline package: `autofit_workspace_developer/graphical/`. This
 document is grounded in the profile data emitted by that package's

@@ -8,6 +8,8 @@ Difficulty: large
 Autonomy: supervised
 Priority: high
 Status: formalised
+Epic: cluster-strong-lensing
+Phase: 9
 Parent: draft/feature/autolens/source_cluster_arc.md
 
 # Cluster source_science.py: robust magnification science at cluster scale (no meshes yet)

@@ -8,6 +8,8 @@ Difficulty: large
 Autonomy: supervised
 Priority: normal
 Status: formalised
+Epic: cluster-strong-lensing
+Phase: 2
 Parent: draft/feature/autolens/source_cluster_arc.md
 
 # PointSolver profiling cells: lensed quasar → cluster runtime tier → single/multi-source → multiplane

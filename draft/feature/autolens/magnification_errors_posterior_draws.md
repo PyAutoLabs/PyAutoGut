@@ -8,6 +8,8 @@ Difficulty: large
 Autonomy: supervised
 Priority: normal
 Status: formalised
+Epic: cluster-strong-lensing
+Phase: 7
 Parent: draft/feature/autolens/source_cluster_arc.md
 
 # Magnification errors via posterior draws, standalone in source_science

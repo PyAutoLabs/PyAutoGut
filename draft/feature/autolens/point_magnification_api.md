@@ -8,6 +8,8 @@ Difficulty: large
 Autonomy: supervised
 Priority: high
 Status: formalised
+Epic: cluster-strong-lensing
+Phase: 5
 Parent: draft/feature/autolens/source_cluster_arc.md
 
 # Magnification at a point: surface the existing API in source_science + point package, extend to multi-plane

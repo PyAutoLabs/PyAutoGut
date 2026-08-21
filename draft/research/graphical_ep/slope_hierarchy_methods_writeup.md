@@ -8,6 +8,7 @@ Difficulty: medium
 Autonomy: supervised
 Priority: normal
 Status: formalised
+Epic: graphical-ep
 Model: Opus (narrative/scientific prose — see feedback_tutorial_prose_opus)
 
 ## Context

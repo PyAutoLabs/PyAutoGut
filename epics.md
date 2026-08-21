@@ -12,6 +12,12 @@ Schema per entry: `## <slug>` then `- title:` / `- ledger:` / `- notes:`
 (and optionally `- status:` for a coarse, durable state — never per-phase
 detail, which belongs in the ledger).
 
+A member prompt declares its membership in its own header: `Epic: <slug>`
+(this file's slug) plus an optional `Phase: <n>`. The dashboard then keeps
+members out of the pick lists and work-type sections and shows them only
+grouped, phase-ordered, under their epic — worked in order through the
+epic, never picked standalone.
+
 ## jax-inference-profiling
 - title: JAX profiling — inference programme
 - ledger: autolens_profiling/results/notes/inference/PROGRAMME.md

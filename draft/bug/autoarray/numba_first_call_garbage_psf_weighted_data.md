@@ -97,10 +97,46 @@ on an edge-touching mask (fails without the fix, passes with it). Full
 `test_autoarray` suite: 1034 passed, 3 pre-existing pynufft failures unrelated
 to this change.
 
-Not done: the `parallel_scaling/pixelization_numba.py` corruption counters
-named as the acceptance probe could not be run here (needs the profiling
-workspace and its datasets). Symptom 2 should be re-measured against this
-branch before the prompt is closed.
+## Reproduced on the euclid dataset — 2026-08-21
+
+Symptom 1 reproduced exactly, on the real profiling dataset
+(`autolens_profiling`, `dataset/imaging/euclid`, mask radius 3.5", PSF 21x21),
+by calling `psf_weighted_data_from` directly on the masked dataset:
+
+| | `max abs(psf_weighted_data)` | sum |
+|---|---|---|
+| pre-fix (`1c33850`) | **4.901e300** | 1.333e301 |
+| post-fix | **298.312** | 559433.417 |
+
+The bug report's own numbers were "max abs = 4.8e299 on fit #1, 2.98e02 on fit
+#2". The post-fix value **298.31 = 2.98e02** matches the report's *correct*
+value exactly, and the pre-fix value reproduces the uninitialized-memory scale.
+1244 of the 3841 unmasked pixels (32%) drive the gather off the array.
+
+Note on the mask padding — it does **not** protect this path. `apply_mask`
+emits no padding warning and leaves `data.native` and `data.mask` at (71, 71);
+only `derive_mask.blurring_from(allow_padding=True)` pads, to (89, 89), and
+that padded blurring mask is used by the dense convolver, not by the sparse
+numba path. `psf_weighted_data_from` reads the unpadded (71, 71) array via
+`data.mask.derive_indexes.native_for_slim`, so the mask sits flush against the
+array edge and the 21x21 kernel reads past it.
+
+## The acceptance probe is a weak detector — use the direct check instead
+
+`parallel_scaling/pixelization_numba.py` was run at P=2, 24 evals, 2 map
+repeats, cold `NUMBA_CACHE_DIR`, both pre-fix and post-fix. **Both runs
+reported `corrupt_evals_first_map = 0` and `corrupt_evals_steady_maps = [0, 0]`,
+and both had a finite warm-up likelihood.** That is not evidence of no bug: the
+values an out-of-bounds read returns are whatever the allocator left next to
+the weight map, so in that process they happened to be benign. The pre-fix
+warm-up likelihood still drifted from the post-fix one in the 6th decimal
+(5860.175003698866 vs 5860.175922117387) — the same reads, landing on small
+values instead of huge ones. This is exactly the reporter's own intermittency
+(2/8 corrupted in one map, 0/24 in the next).
+
+So the counters can sit at zero on a run where the bug is fully present. Prefer
+the direct `max abs(psf_weighted_data)` check above as the regression probe —
+it is deterministic within a process and reproduces the reported magnitudes.
 
 Split out while fixing this: `draft/bug/autoarray/numba_kernel_shift_axes_swapped.md`
 — both numba gathers derive the y/x kernel shifts from the transposed kernel

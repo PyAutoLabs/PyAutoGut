@@ -91,7 +91,7 @@ mask, giving `0/0 = NaN`, never `inf`. An inf would require a zero noise value
 *inside* the mask, which is a data-validation error and should stay loud. The
 `isnan` guard is therefore left as-is.
 
-Fix: @PyAutoArray branch `claude/autoarray-numba-psf-garbage-hfxnjv` — bounds
+Fix: @PyAutoArray PR #456 (branch `claude/autoarray-numba-psf-garbage-hfxnjv`) — bounds
 guard mirroring the sibling, plus a numba-vs-numpy equivalence regression test
 on an edge-touching mask (fails without the fix, passes with it). Full
 `test_autoarray` suite: 1034 passed, 3 pre-existing pynufft failures unrelated

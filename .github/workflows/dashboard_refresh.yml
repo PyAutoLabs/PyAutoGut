@@ -50,8 +50,13 @@ on:
   workflow_dispatch:
 
 # contents: write is needed by the self-heal push on main; PR runs never push.
+# actions: write → re-dispatch pages_dashboard.yml after a heal: the heal
+# commit is made with GITHUB_TOKEN, which never triggers other workflows, so
+# without the explicit dispatch the Pages page stays stale while the repo
+# copy is fresh (bitten 2026-08-21 — the epic-grouping render).
 permissions:
   contents: write
+  actions: write
 
 jobs:
   refresh:
@@ -156,6 +161,10 @@ jobs:
             git commit -m "mind: self-heal stale dashboard pages"
             if git push origin HEAD:main; then
               echo "healed on attempt ${attempt}"
+              # Token pushes never trigger pages_dashboard.yml — publish the
+              # healed page explicitly or the Pages site stays stale.
+              GH_TOKEN="${{ github.token }}" gh workflow run pages_dashboard.yml --ref main \
+                || echo "::warning::could not dispatch pages_dashboard.yml — the Pages page will lag until its next trigger"
               exit 0
             fi
             echo "push rejected (attempt ${attempt}) — retrying on the new tip of main"

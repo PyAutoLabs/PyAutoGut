@@ -8,7 +8,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 4 |
+| [In flight](#in-flight) (`active/`) | 3 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
 | [Backlog](#backlog) (`draft/`) | 145 |
@@ -141,14 +141,6 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/jax_default_dependency.md
-```
-
-</details>
-
-<details><summary>📋 <a href="active/numba_cpu_likelihood_profiling.md">Profiling infrastructure for the numba CPU sparse-operator likelihood</a> — <a href="https://github.com/PyAutoLabs/autolens_profiling/issues/151">issue #151</a> — awaiting-merge — infra + Rectangular euclid/hst pass + Delaunay euclid pass on PR #152</summary>
-
-```
-/start_dev active/numba_cpu_likelihood_profiling.md
 ```
 
 </details>

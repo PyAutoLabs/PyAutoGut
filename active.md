@@ -109,3 +109,6 @@
 - cost-note: autofit_workspace_test runs at PYAUTO_TEST_MODE=0 (FULL searches, 1800s release cap);
   one clean pass over the seven scripts plausibly takes hours — run Phase 1 detached.
 - repos:
+  - PyAutoFit: feature/autofit-sampler-database
+  - autofit_workspace: feature/autofit-sampler-database
+  - autofit_workspace_test: feature/autofit-sampler-database

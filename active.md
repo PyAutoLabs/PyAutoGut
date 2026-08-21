@@ -1,5 +1,18 @@
 # Active Tasks
 
+## dashboard-per-paper-actions
+- issue: https://github.com/PyAutoLabs/PyAutoMemory/issues/42
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/dashboard-per-paper-actions
+- prompt: active/dashboard_per_paper_actions.md
+- plan: Memory dashboard grows per-paper browsing (collapsible sections, arXiv
+  abstract/title-search links) + two prefilled-GitHub-issue actions per paper:
+  queue-read (new queue_actions.yml + scripts/queue_mark_done.py auto-marks the
+  line DONE, owner/collaborator-gated) and queue-intake (issue = filing work
+  item). Plus a mechanical PyAutoMind spawn.py DROP rule for the new workflow.
+- repos:
+  - PyAutoMemory: feature/dashboard-per-paper-actions
+
 ## numba-cpu-likelihood-profiling
 - issue: https://github.com/PyAutoLabs/autolens_profiling/issues/151
 - pr: https://github.com/PyAutoLabs/autolens_profiling/pull/152

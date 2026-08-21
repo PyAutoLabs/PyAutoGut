@@ -54,6 +54,20 @@
   filed the prompt + issue but not this entry, tripping Lifecycle Drift on main.
 - repos-none-claimed: this entry claims NO repos — one line deliberately, not 2-space bullets.
 
+## interferometer-operated-override
+- issue: https://github.com/PyAutoLabs/PyAutoArray/issues/459
+- user-facing: true
+- session: https://claude.ai/code/session_01Lv2LDovvSQydk8biNMSAPL (remote; receipt + plan comments)
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/interferometer-operated-override
+- plan: honor LinearObj.operated_mapping_matrix_override in interferometer inversions
+  (direct data-space bypass in InversionInterferometer operated_mapping_matrix_list,
+  consistent with imaging); guard autogalaxy LightProfileLinearObjFuncList override to
+  return None when psf is None (prevents crash + preserves mapping_matrix→NUFFT path);
+  add scripts/interferometer/features/operated_light_profile/ example packages to
+  autogalaxy_workspace + autolens_workspace mirroring the imaging packages.
+- repos:
+
 ## hands-hygiene-leftovers
 - issue: https://github.com/PyAutoLabs/PyAutoHands/issues/249
 - session: claude --resume 08f77ea2-bf3a-42f4-a427-e01da3a4ce2d

@@ -1,18 +1,5 @@
 # Active Tasks
 
-## dashboard-epic-grouping
-- issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/246
-- status: library-dev
-- worktree: ~/Code/PyAutoLabs-wt/dashboard-epic-grouping
-- prompt: active/dashboard_epic_grouping_freshness.md
-- plan: Brain _intake.py first (Epic:/Phase: headers, lifecycle-drift flag on
-  `Fix: ... PR #N` draft bodies, epic members out of Start-here/Backlog into
-  grouped+ordered bottom Epics section, both renders + tests); then Mind direct
-  main: dashboard_refresh.yml nightly cron + stamp Epic:/Phase: on arc +
-  graphical_ep member prompts. Numba bug prompt already reconciled (2d7f2367).
-- repos:
-  - PyAutoBrain: feature/dashboard-epic-grouping
-
 ## pixelization-eager-jit-divergence
 - issue: https://github.com/PyAutoLabs/PyAutoGalaxy/issues/580
 - pr-library: https://github.com/PyAutoLabs/PyAutoGalaxy/pull/581
@@ -109,4 +96,3 @@
   separate /repo_cleanup sweep so a destructive branch delete never rides a code diff.
 - repos:
   - PyAutoHands: feature/hands-hygiene-leftovers
-

@@ -1,3 +1,38 @@
+- issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/246 (auto-closed on merge)
+- shipped: 2026-08-21 — PyAutoBrain PR https://github.com/PyAutoLabs/PyAutoBrain/pull/247
+  (generator) + PyAutoMind 3566a908 (stamps, cron, epics.md schema) + 2d7f2367 (the
+  numba-prompt reconciliation that motivated the drift flag).
+- classification: feature (PyAutoBrain + PyAutoMind) — both human-reported dashboard
+  problems from 2026-08-21.
+- summary: (1) Epic grouping — prompts declare membership via `Epic: <slug>` +
+  optional `Phase: N` headers (documented in epics.md; NOT header-hygiene fields);
+  members leave Start-here and the work-type dropdowns and render only inside their
+  epic's group (resume 📋 first, phase-ordered, start-in-order caution) in an Epics
+  section moved to the bottom, md + html. Unregistered slugs group loudly. 23 prompts
+  stamped: 14 Source & Cluster arc (phases 1-12 from the ledger; narrative doc rides
+  phase 10; ledger itself phase-less) + 9 EP campaign (phases from ep_campaign.md's
+  table; two members live OUTSIDE draft/research/graphical_ep — bug/autofit and
+  feature/autofit — which is why membership is per-prompt, not per-folder).
+  (2) Freshness — dashboard_refresh.yml gains a nightly 03:20 UTC cron, and the
+  census flags draft prompts whose body carries a line-anchored `Fix: … PR #N` as
+  "Needs lifecycle reconciliation" above Start here.
+- diagnosis that shaped it: the "stale dashboard" was NOT render staleness — the
+  numba psf_weighted_data bug was fixed AND merged overnight (PyAutoArray#456) but
+  the session left the prompt in draft/, so the truthful render advertised a fixed
+  bug as top-priority backlog. The drift flag catches that idiom; the cron catches
+  what push triggers cannot (Brain-side generator merges, time-dependent renders).
+- trap fixed in passing: BOTH self-heal steps in dashboard_refresh.yml gated on
+  event == push — a scheduled run finding drift would have FAILED rather than
+  healed. Now only pull_request errors-without-healing.
+- validation: 28 dashboard contract tests (6 new) + full Brain suite 380 passed;
+  post-merge self-heal run completed/success on 3566a908 and the live page renders
+  both epic groups phase-ordered with members absent from the body sections.
+- affected-repos:
+  - PyAutoBrain
+  - PyAutoMind
+
+## Original prompt
+
 # Mind dashboard: epic grouping + freshness guards
 
 Type: feature

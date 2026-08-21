@@ -1,3 +1,31 @@
+- issue: none — PR-only (overnight cloud session); fix PR https://github.com/PyAutoLabs/PyAutoArray/pull/456 (MERGED, branch claude/autoarray-numba-psf-garbage-hfxnjv).
+- shipped: 2026-08-21 — bounds-guard on the kernel gather in `psf_weighted_data_from`
+  (autoarray/inversion/inversion/imaging_numba/inversion_imaging_numba_util.py), mirroring
+  the already-hardened sibling `psf_precision_value_from`, plus a numba-vs-numpy
+  equivalence regression test on an edge-touching mask.
+- classification: bug (PyAutoArray) — found while building the numba CPU profiling
+  infrastructure (autolens_profiling#151).
+- root cause: numba `@jit` does not bounds-check array reads; unmasked pixels within
+  kernel_shape//2 of the edge gathered uninitialized heap memory (negative indices wrap).
+  ONE cause explains both symptoms: cold-cache first call reads compiler-churned heap
+  (~1e299 garbage); forked workers each see different heap layouts (intermittent
+  sentinel corruption). Inputs were byte-identical between wrong and right calls —
+  the function read OUTSIDE its inputs.
+- validation: boundscheck=True raises IndexError on the shipped source for edge-reaching
+  masks; guarded version matches the zero-padded numpy twin exactly; euclid profiling
+  dataset repro pre-fix max|psf_weighted_data| = 4.9e300 → post-fix 298.3; full
+  test_autoarray 1034 passed (3 pre-existing pynufft failures unrelated).
+- residual watch: the parallel_scaling harness keeps `corrupt_evals_*` counters as the
+  symptom-2 regression probe on future `number_of_cores>1` runs.
+- lifecycle note: the overnight session updated the prompt body but never advanced
+  draft/ → the dashboard advertised a fixed bug as top-priority backlog until this
+  record (reconciled by the dashboard-epics-freshness task; its drift flag exists to
+  catch exactly this).
+- affected-repos:
+  - PyAutoArray
+
+## Original prompt
+
 # Numba sparse-operator likelihood: first-call garbage / intermittent worker corruption
 
 Type: bug

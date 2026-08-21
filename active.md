@@ -58,7 +58,10 @@
 - issue: https://github.com/PyAutoLabs/PyAutoArray/issues/459
 - user-facing: true
 - session: https://claude.ai/code/session_01Lv2LDovvSQydk8biNMSAPL (remote; receipt + plan comments)
-- status: library-dev
+- status: shipped-awaiting-release — ALL FOUR PRs merged 2026-08-21 ~14:00 UTC
+  (human-authorized "when they're green merge"): PyAutoArray#460 (90f6f0c, closes #459),
+  PyAutoGalaxy#578 (b03d826), autogalaxy_workspace#220 (fd843b3), autolens_workspace#494
+  (fb81900). Merged-milestone comment posted to reporter.
 - worktree: ~/Code/PyAutoLabs-wt/interferometer-operated-override
 - plan: honor LinearObj.operated_mapping_matrix_override in interferometer inversions
   (direct data-space bypass in InversionInterferometer operated_mapping_matrix_list,
@@ -71,9 +74,11 @@
   session. Notebooks regenerated via PyAutoHands generate.py. PR-open milestone comment
   posted to reporter (visibility-space bypass semantics — watch for HRSAstro reply
   before merge).
-- prs: PyAutoArray#460 (lead; closes #459) + PyAutoGalaxy#578 (merge together with #460);
-  autogalaxy_workspace#220 + autolens_workspace#494 (pending-release, merge after
-  library PRs). Next milestone: merged + released comment to reporter.
+- NEXT (release-blocked; nightly): once the change is in a released version, (1) post the
+  released milestone comment to @HRSAstro on PyAutoArray#459, (2) write the completion
+  record and move this entry to complete/ per lifecycle. Watch-item: reporter was told the
+  override is a visibility-space bypass — if they reply needing a real-space pre-NUFFT
+  hook, that is a new prompt, not a reopen.
 - repos:
   - PyAutoArray: feature/interferometer-operated-override
   - PyAutoGalaxy: feature/interferometer-operated-override

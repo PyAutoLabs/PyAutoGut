@@ -1,5 +1,20 @@
 # Active Tasks
 
+## rectangular-bilinear-rtu-mesh-split
+- issue: https://github.com/PyAutoLabs/PyAutoArray/issues/461
+- session: https://claude.ai/code/session_01WtMqU3JfmyJh8GvB7jT4Et (web-github; Mind state on branch claude/bilinear-rtu-mesh-docs-pbhsxg)
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/rectangular-bilinear-rtu-mesh-split
+- repos:
+  - Repo PyAutoArray: branch feature/rectangular-bilinear-rtu-mesh-split
+- prompt: active/rectangular_bilinear_rtu_mesh_split.md
+- plan: split rectangular adaptive meshes — resurrect empirical rank-CDF transform (from
+  22b28463^) as RectangularBilinearAdaptDensity/AdaptImage (fast CPU workspace default);
+  pure-rename kernel-CDF classes to RectangularRTUAdaptDensity/AdaptImage (advanced/GPU/
+  interferometer; never delete). Library first (PyAutoArray#461); workspace follow-up PRs
+  (autolens_workspace, autogalaxy_workspace, autolens_workspace_test pins) after the API
+  lands; then update autolens_profiling#153 / PROGRAMME Phase 14.
+
 ## numba-cpu-likelihood-profiling
 - issue: https://github.com/PyAutoLabs/autolens_profiling/issues/151
 - pr: https://github.com/PyAutoLabs/autolens_profiling/pull/152

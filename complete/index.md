@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1069 records across 7 buckets.
+1070 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -126,6 +126,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [per-parameter-step-scaling](2026/08/per-parameter-step-scaling.md)
 - [persist-smoke-environments](2026/08/persist-smoke-environments.md) — Made smoke dependency environments durable and isolated per library and Python version, with version-handshake…
 - [pix-prodigy-gpu-compat](2026/08/pix-prodigy-gpu-compat.md)
+- [pixelization-eager-jit-divergence](2026/08/pixelization-eager-jit-divergence.md)
 - [plot-array-stale-kwargs](2026/08/plot-array-stale-kwargs.md)
 - [point-source-defaults-campaign](2026/08/point-source-defaults-campaign.md) — took the point-source likelihood options from "several undocumented
 - [point-source-light](2026/08/point-source-light.md) — Added standard and linear point-source light profiles with total-flux normalization and oversampled PSF convol…

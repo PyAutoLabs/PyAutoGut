@@ -1,3 +1,82 @@
+## pixelization-eager-jit-divergence
+
+- issue: https://github.com/PyAutoLabs/PyAutoGalaxy/issues/580
+- completed: 2026-08-21
+- library-pr: https://github.com/PyAutoLabs/PyAutoGalaxy/pull/581 (merged d1b46b9)
+- workspace-pr: https://github.com/PyAutoLabs/autolens_workspace_developer/pull/127 (merged 77ca9d3)
+
+Investigated the reported eager-vs-JIT log-evidence divergence in
+`jax_profiling/jit/imaging/pixelization.py`. **Verdict: not a library bug** —
+but chasing it surfaced a real library bug, a broken script, and a silent
+transform swap that a stale regression pin had been masking for a month.
+
+**Library fix (PyAutoGalaxy#581).** `Basis.image_2d_list_from` built the
+zero placeholder for its `LightProfileLinear` members as
+`Array2D(values=..., mask=grid.mask)`, assuming a masked `Grid2D`. Evaluating a
+basis containing a linear light profile on a `Grid2DIrregular` — the grid type
+JIT-traced likelihood paths use — raised `AttributeError: Grid2DIrregular does
+not have attribute mask`, making any such path with an MGE lens light
+unreachable. Now dispatches on grid type (`ArrayIrregular` vs `Array2D`),
+mirroring `ArrayMaker.via_grid_2d` / `via_grid_2d_irr`. 1113 tests pass.
+
+**The reported divergence — two causes, both settled, neither a bug.**
+(1) The script fed the step-11 mapper-only H (1225) into an evidence whose D and
+F span every linear object (1285 = source pixels + 60 linear MGE Gaussians) — a
+hard shape error on current main. The MGE columns are unregularized, so the full
+H is singular and `slogdet(H)` is `-inf`; `Inversion.log_det_*` evaluates both
+log-det terms on the *reduced* (mapper-only) matrices, and the script now
+mirrors that. Rebuild matches `figure_of_merit` to 13 s.f.
+(2) The residual step-by-step gap is the fnnls non-negative active set (362 of
+1285 pinned at exactly zero; 777 negative under an unconstrained solve), not
+"floating-point drift" as the old comment claimed. Comment corrected; the
+step-by-step value, previously printed and never asserted, now carries its own
+pin. Prompt suspects 1/2/4 falsified — `FitDataset.figure_of_merit` uses exactly
+the five-term formula the script implements.
+
+**The constant was RESTORED, not re-pinned.** My first pass re-pinned to the
+kernel value and blamed accumulated library drift — inferred from a commit
+message, not measured. The user challenged it and the measurement falsified me.
+PyAutoArray `22b28463` (#402, 2026-07-23) gave the unchanged class name
+`RectangularAdaptDensity` the kernel-CDF transform; it had meant rank-CDF when
+the constant was pinned 2026-05-11. Naming `RectangularBilinearAdaptDensity`
+explicitly reproduces `24746.105672366088` **bit-for-bit**, preserving the pin's
+pre-#402 history. Four independent lines agree: cross-split measurement
+(pre-split `RectangularAdaptDensity` == post-split RTU == 25004.71903495436, so
+RTU really is a pure rename); `git log -S` showing the kernel value was NEVER
+pinned in the script's history; era artifacts
+`results/jit/imaging/pixelization/{hpc_a100,local_gpu,local_cpu}_fp64.json` (two
+GPUs + CPU, two library versions) all bit-identical to the constant; and code
+identity — May-era `create_transforms` is line-for-line identical to today's
+`create_transforms_rank`.
+
+**TRAPS**
+- A **bit-identical** match across months is strong evidence *against* generic
+  drift: any other change touching the value would break exactness. Check
+  `.hex()`, not printed precision.
+- Never attribute a constant's movement from commit messages — build the old
+  checkout and measure (`git worktree add <scratch> <sha>^ --detach` + a
+  PYTHONPATH substitution of the one repo is minutes, and decisive).
+- A stale pin can **hide** a silent semantic change. Ask what the *name* meant
+  when it was pinned. Restoring the fiducial beats re-pinning, which launders the
+  change away.
+- **Never blanket-rename these mesh symbols — relabel by DATE.** I made this
+  mistake mid-task on `gradient/README.md` and had to fix it (`08d5d86`): that
+  file is mixed, carrying 2026-07-09 rank rows and a 2026-07-26 kernel section,
+  and states the distinction itself. ≤2026-07-09 → Bilinear; ≥2026-07-26 → RTU.
+- The transform lives in `mesh/interpolator/rectangular.py`, **not** the mesh
+  class — grep the interpolator to identify which CDF a mesh uses.
+
+**Carried forward** into
+`draft/feature/autoarray/rectangular_bilinear_rtu_mesh_split.md` (that campaign
+owns the remaining ~40 files): the two `misc/pixelization_spline_*.py` scripts
+broken on the deleted `RectangularSplineAdaptDensity`; the three renamed sibling
+scripts that are symbol-verified but never executed; the dated-relabel trap; and
+a caution on Goal 3 — check whether each `_test` pin's fiducial actually changed
+before overwriting it, since an unchanged fiducial should reproduce its
+pre-#402 value exactly and that match is a free correctness check.
+
+## Original prompt
+
 # Investigate eager `FitImaging.figure_of_merit` vs JIT/step-by-step divergence in rectangular pixelization
 
 Type: bug

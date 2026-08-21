@@ -11,9 +11,18 @@
   log-det; rebuild now matches figure_of_merit to 13 s.f. (b) the residual ~1.8e-3 step-by-step
   gap is the fnnls non-negative active set (344/1285 pinned at zero), not FP drift as the old
   comment claimed — now documented + separately pinned.
-- cross-check: numpy/numba (xp=np) 25004.71903495436 vs JAX full pipeline 25004.72457703401
-  agree to 2.2e-7 — two independent implementations, so the re-pin is not a single-run pin.
-- constant: re-pinned 24746.105672366088 (v2026.5.1.4) → 25004.71903495436 (v2026.8.17.1), 1.0e-2 drift.
+- cross-check: numpy/numba (xp=np) 24746.105672366088 vs JAX full pipeline 24746.103473124283
+  agree to 8.9e-8 — two independent implementations, so the pin is not a single-run pin.
+- constant: NOT re-pinned — RESTORED. First pass wrongly blamed the 1.0e-2 gap on accumulated
+  library drift (inferred from a commit message, not measured); user challenged it. Measured:
+  PyAutoArray f9aceea3^ + RectangularAdaptDensity = f9aceea3 + RectangularRTUAdaptDensity =
+  25004.71903495436 (RTU IS a pure rename, bit-identical), while RectangularBilinearAdaptDensity
+  = 24746.105672366088 = the 2026-05-11 pin BIT-FOR-BIT (.hex() equal). Real cause: 22b28463
+  (#402, 2026-07-23) gave the unchanged class name `RectangularAdaptDensity` the kernel-CDF
+  transform; the script inherited kernel-CDF silently. Script now names Bilinear explicitly →
+  original constant restored, no re-pin, pre-#402 history intact. Bit-identity after 3.5 months
+  also PROVES nothing else in the library moved this value.
+- trap: a bit-identical match across a long span is strong evidence AGAINST generic drift — use it.
 - worktree: ~/Code/PyAutoLabs-wt/pixelization-eager-jit-divergence
 - prompt: active/pixelization_eager_vs_jit_divergence.md
 - plan: unblock `jax_profiling/jit/imaging/pixelization.py` (broken on main two ways:

@@ -129,7 +129,7 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
-<details><summary>📋 <a href="active/dashboard_per_paper_actions.md">Memory dashboard: per-paper browsing + one-tap read/intake actions</a> — <a href="https://github.com/PyAutoLabs/PyAutoMemory/issues/42">issue #42</a> — library-dev</summary>
+<details><summary>📋 <a href="active/dashboard_per_paper_actions.md">Memory dashboard: per-paper browsing + one-tap read/intake actions</a> — <a href="https://github.com/PyAutoLabs/PyAutoMemory/issues/42">issue #42</a> — library-shipped, awaiting-merge — PR #43 (pending-release, 62f8f26);</summary>
 
 ```
 /start_dev active/dashboard_per_paper_actions.md

@@ -159,6 +159,11 @@ MEMORY_RULES = [
     # the scripts/* KEEP above (it is generic: everything derives from the
     # checkout + git remote), so an adopter re-adds the workflow deliberately.
     (".github/workflows/knowledge_board.yml", "DROP"),
+    # DROP: the queue-actions processor mutates the instance reading queue from
+    # `queue-read` issues and needs the repo's labels — instance machinery, not
+    # template content. scripts/queue_mark_done.py SHIPS via scripts/*, so an
+    # adopter re-adds the workflow deliberately, like the board publisher.
+    (".github/workflows/queue_actions.yml", "DROP"),
     # The shared wiki schema is template content; the sub-wikis are instance
     # content (the generator stamps an empty wiki/example/ instead).
     ("wiki/CLAUDE.md", "KEEP"),

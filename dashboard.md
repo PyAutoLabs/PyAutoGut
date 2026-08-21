@@ -253,7 +253,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <b>autofit-sampler-database</b> — <a href="https://github.com/PyAutoLabs/PyAutoFit/issues/1508">issue #1508</a> — parked</summary>
+<details><summary>📋 <b>autofit-sampler-database</b> — <a href="https://github.com/PyAutoLabs/PyAutoFit/issues/1508">issue #1508</a> — closed-not-reproducing</summary>
 
 ```
 /start_dev draft/bug/health_fixes/autofit_sampler_database.md

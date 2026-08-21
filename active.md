@@ -11,7 +11,13 @@
   (values unchanged) + Bilinear pins regenerated under JAX_ENABLE_X64=1 (imaging -651692.997799,
   imaging-mge -85.41696632, imaging-dspl -3695.93899659 (bandwidth kwarg dropped),
   multi -12932.06852498, multi-mge -6157.55707862) — all verified green, PR
-  autolens_workspace_test#259 (pending-release). Phase 14 adjudication recorded on
+  autolens_workspace_test#259 (pending-release). USER DECISIONS 2026-08-21: (1) no normal
+  workspace uses RTU — interferometer examples also default to Bilinear (pushed to #495/#221,
+  RTU documentation-only); (2) autolens_profiling supports both meshes explicitly — PR
+  autolens_profiling#155: --rect-mesh {bilinear,rtu} sweep flag + rect_mesh_classes() in
+  _profile_cli.py, six cells wired, sampler benchmarks pure-renamed to RTU (truth bars valid);
+  may need trivial reconciliation with in-flight #152 (merge-order note on the PR). Phase 14
+  adjudication recorded on
   autolens_profiling#153 (comment); PROGRAMME.md edit deferred — repo claimed by
   numba-cpu-likelihood-profiling (#152 in flight). Bilinear profiling measurement still to record.
   Retire draft/docs/workspaces/rectangular_mesh_enzi_citation_examples.md when #495/#221 merge

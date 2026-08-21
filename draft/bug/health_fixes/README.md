@@ -14,7 +14,7 @@ Each failing script is assigned to exactly one prompt:
 | Prompt | Scripts | Primary concern |
 |---|---:|---|
 | [samples_parameter_paths.md](samples_parameter_paths.md) — ⚠️ parked, does not reproduce on current `main` ([PyAutoFit#1327](https://github.com/PyAutoLabs/PyAutoFit/issues/1327), blocked on clean-CI re-validation) | 9 | PyAutoFit result/sample path resolution |
-| [autofit_sampler_database.md](autofit_sampler_database.md) | 9 | Emcee NaNs and database output discovery |
+| [autofit_sampler_database.md](../../../active/autofit_sampler_database.md) — 🚧 **in flight 2026-08-21**, moved to `active/`, reproduction-gated ([PyAutoFit#1508](https://github.com/PyAutoLabs/PyAutoFit/issues/1508)) | 9 | Emcee NaNs and database output discovery |
 | ~~aggregator_output_contracts.md~~ — ✅ **SHIPPED 2026-07-07**, record `complete/2026/07/aggregator-output-contracts.md` (PyAutoFit#1324; autogalaxy_workspace#122, autolens_workspace#229, autolens_workspace_test#146 all merged) | 7 | Result/aggregator prerequisites and generated paths |
 | [jax_runtime_and_parity.md](jax_runtime_and_parity.md) | 6 | JAX/TFP compatibility and likelihood parity |
 | [jit_visualization_outputs.md](jit_visualization_outputs.md) | 4 | Quick-update visualizations not producing images |

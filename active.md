@@ -85,3 +85,27 @@
   separate /repo_cleanup sweep so a destructive branch delete never rides a code diff.
 - repos:
   - PyAutoHands: feature/hands-hygiene-leftovers
+
+## autofit-sampler-database
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1508
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/autofit-sampler-database
+- prompt: active/autofit_sampler_database.md
+- plan: REPRODUCTION-GATED. Phase 1 re-runs the nine release-run scripts (2 autofit_workspace
+  cookbooks + 7 autofit_workspace_test database/output scripts) on current main from a clean
+  output/ under each workspace's config/build/profile_release.yaml, env resolved via PyAutoHands
+  build_env_for_script with the workspace as CWD. Only survivors get fix phases: (2) Emcee /
+  bounded-prior NaN in PyAutoFit source, (3) database directory/scrape/grid/sensitivity/
+  minimal-output audit, (4) regression tests + pytest + clean re-run, then library-first ship.
+- staleness-warning: the premise is 6+ weeks old and the SIBLING prompt from this exact release
+  run (samples_parameter_paths, PyAutoFit#1327) was PARKED as not-reproducing — root cause judged
+  stale cached output/ in the run, not a library defect; its planned.md entry warns the other
+  health_fixes/ siblings are suspect too. A second sibling (aggregator_output_contracts) already
+  SHIPPED 2026-07-07. PyAutoFit has since merged #1413, 9f887a9b1, 8f6f4ef7d, #1377, #1401,
+  #1422, #1470, #1486, #1391 — all touching the exact scrape/aggregator/emcee machinery blamed.
+  If 0/9 fail, park this like its sibling and close with the evidence; do NOT fix a phantom.
+- clean-state-note: clearing output/database/ alone is NOT clean — output/database.sqlite and
+  output/database.info are SIBLINGS of it and the aggregator reads the stale rows.
+- cost-note: autofit_workspace_test runs at PYAUTO_TEST_MODE=0 (FULL searches, 1800s release cap);
+  one clean pass over the seven scripts plausibly takes hours — run Phase 1 detached.
+- repos:

@@ -1,8 +1,26 @@
 # Numba CPU likelihood phase 2: kernel-CDF numba fast path (the 49-88% lever)
 
-> **DEFERRED (user, 2026-08-20):** the campaign fiducial is the Delaunay +
-> AdaptImage (Hilbert) mesh — profile and speed that path up first; this
-> Rectangular kernel-CDF work resumes afterwards.
+> **PROTOTYPED 2026-08-21 (cloud session; Delaunay work complete —
+> PyAutoArray#453 + #455 merged).** Exact windowed numba kernel benchmarked on
+> captured real fiducial inputs (monkeypatched create_transforms recorder):
+>
+> - euclid (N=M=3841): kernel-CDF is 1.66 s = 55% of the eval on the 4-core
+>   container; numba windowed kernel 1.50 -> 0.50 s (**3.0x**, max dev 6e-14).
+> - hst (N=M=15361): kernel-CDF is 27 s = **89%** of the eval; numba windowed
+>   kernel 28.2 -> 8.3 s (**3.4x**, max dev 1e-13).
+> - Only ONE create_transforms + ONE forward transform per eval on this route
+>   (no within-eval duplication to dedup); n_knots=64 makes the inverse cheap.
+> - Window statistics cap the exact approach: bandwidth=1.0 at 28 mesh pixels
+>   gives a mean saturation-window fraction of ~0.72, so windowing trims only
+>   ~30% — the 3-3.4x is mostly numba removing the 126 MB broadcast
+>   temporaries. The transform is irreducibly O(M x N) erf for EXACT values;
+>   the 5-10x target at hst therefore needs the config-gated approximate
+>   interpolated-CDF forward (the inverse already runs off a 64-knot interp
+>   table, so the machinery exists) — an accuracy decision for the human, with
+>   re-pinning. Estimated ~20-30x on the step in that mode.
+>
+> Implementation of the exact 3x path is the same one-file pattern as #453/#455
+> (interpolator/rectangular.py numba kernel, numpy path as fallback/reference).
 
 > Phase 2 of the CPU-likelihood speed restoration. Phase 1 (exact-identical
 > MGE-convolution batching + operated-mapping-matrix caching) is

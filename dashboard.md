@@ -15,7 +15,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 32
+**Highest priority** (filed as `high`) — showing 12 of 31
 
 <details><summary>📋 <a href="draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — medium · safe · high</summary>
 
@@ -45,14 +45,6 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 ```
 /start_dev draft/docs/workspaces/cluster_regime_narrative.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_kernel_cdf_fast_path.md">Numba CPU likelihood phase 2: kernel-CDF numba fast path (the</a> — autoarray · large · supervised · high</summary>
-
-```
-/start_dev draft/feature/autoarray/numba_cpu_likelihood_kernel_cdf_fast_path.md
 ```
 
 </details>
@@ -109,6 +101,14 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 ```
 /start_dev draft/feature/workspaces/cluster_source_science.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/research/autoarray/delaunay_research.md">Deep research: Can we speed up Delaunay in PyAutoArray?</a> — autoarray · too-large · supervised · high</summary>
+
+```
+/start_dev draft/research/autoarray/delaunay_research.md
 ```
 
 </details>
@@ -625,14 +625,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 <details>
 <summary><b>feature</b> — 34</summary>
 
-<details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_kernel_cdf_fast_path.md">Numba CPU likelihood phase 2: kernel-CDF numba fast path (the</a> — autoarray · large · supervised · high</summary>
-
-```
-/start_dev draft/feature/autoarray/numba_cpu_likelihood_kernel_cdf_fast_path.md
-```
-
-</details>
-
 <details><summary>📋 <a href="draft/feature/autolens/area_magnification_leggos.md">Area magnification (LEGGOS-style): per-pixel inversion sum as primary; ShapeSolver rehabilitate-or-retire</a> — autolens · large · supervised · high</summary>
 
 ```
@@ -893,6 +885,14 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/feature/pyautomind/repos-sync-config-stamper.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_kernel_cdf_fast_path.md">Numba CPU likelihood phase 2: kernel-CDF numba fast path (the</a> — autoarray</summary>
+
+```
+/start_dev draft/feature/autoarray/numba_cpu_likelihood_kernel_cdf_fast_path.md
 ```
 
 </details>

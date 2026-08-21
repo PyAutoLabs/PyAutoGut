@@ -8,14 +8,14 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 4 |
+| [In flight](#in-flight) (`active/`) | 5 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 147 |
+| [Backlog](#backlog) (`draft/`) | 146 |
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 34
+**Highest priority** (filed as `high`) — showing 12 of 33
 
 <details><summary>📋 <a href="draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — medium · safe · high</summary>
 
@@ -153,6 +153,14 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
+<details><summary>📋 <a href="active/pixelization_eager_vs_jit_divergence.md">Investigate eager <code>FitImaging.figure_of_merit</code> vs JIT/step-by-step divergence in rectangular pixelization</a> — <a href="https://github.com/PyAutoLabs/PyAutoGalaxy/issues/580">issue #580</a> — library-dev</summary>
+
+```
+/start_dev active/pixelization_eager_vs_jit_divergence.md
+```
+
+</details>
+
 ## Epics
 
 Long-running multi-phase programmes. Each 📋 prompt has Claude read the epic's ledger, work out where it stands, and continue from the next logical point — no hunting for the paired issue. Full record in [`epics.md`](epics.md).
@@ -273,10 +281,10 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**147** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**146** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
 
 <details>
-<summary><b>bug</b> — 37</summary>
+<summary><b>bug</b> — 36</summary>
 
 <details><summary>📋 <a href="draft/bug/autoarray/numba_first_call_garbage_psf_weighted_data.md">Numba sparse-operator likelihood: first-call garbage / intermittent worker corruption</a> — autoarray · medium · supervised · high</summary>
 
@@ -290,14 +298,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/autolens/pixelization_eager_vs_jit_divergence.md">Investigate eager <code>FitImaging.figure_of_merit</code> vs JIT/step-by-step divergence in rectangular pixelization</a> — autolens · too-large · supervised · high</summary>
-
-```
-/start_dev draft/bug/autolens/pixelization_eager_vs_jit_divergence.md
 ```
 
 </details>

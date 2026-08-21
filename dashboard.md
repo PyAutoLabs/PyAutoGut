@@ -129,14 +129,6 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
-<details><summary>📋 <a href="active/dashboard_filter_trend_digest_refs.md">Memory dashboard: paper filter box, read trend, digest arXiv refs</a> — <a href="https://github.com/PyAutoLabs/PyAutoMemory/issues/46">issue #46</a> — library-dev</summary>
-
-```
-/start_dev active/dashboard_filter_trend_digest_refs.md
-```
-
-</details>
-
 <details><summary>📋 <a href="active/hands_hygiene_leftovers.md">Hands hygiene: expired announcement dead code, unregistered modules</a> — <a href="https://github.com/PyAutoLabs/PyAutoHands/issues/249">issue #249</a> — library-dev</summary>
 
 ```
@@ -157,6 +149,14 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/numba_cpu_likelihood_profiling.md
+```
+
+</details>
+
+<details><summary>📋 <a href="active/queue_intake_claude_action.md">Memory queue: claude-action filing of intake/cite issues</a> — <a href="https://github.com/PyAutoLabs/PyAutoMemory/issues/48">issue #48</a> — library-dev</summary>
+
+```
+/start_dev active/queue_intake_claude_action.md
 ```
 
 </details>

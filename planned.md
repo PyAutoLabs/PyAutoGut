@@ -59,8 +59,11 @@
 
 ## autofit-sampler-database
 - prompt: draft/bug/health_fixes/autofit_sampler_database.md
-- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1508 (open, parked)
-- status: parked
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1508 (CLOSED 2026-08-21 — no defect on
+  this evidence; closed rather than parked-open because the re-validation is AUTOMATIC: none of
+  the nine scripts is in no_run.yaml, so every mode=release run re-executes all nine and a real
+  wheel-path defect earns a fresh issue with fresh evidence)
+- status: closed-not-reproducing
 - filed: 2026-08-21
 - classification: library (PyAutoFit) — bug, health_fixes cluster
 - suggested-branch: feature/autofit-sampler-database

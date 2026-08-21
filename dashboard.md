@@ -151,7 +151,7 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
-<details><summary>📋 <a href="active/numba_cpu_likelihood_kernel_cdf_fast_path.md">Numba CPU likelihood phase 2: kernel-CDF numba fast path (the</a> — <a href="https://github.com/PyAutoLabs/PyAutoArray/issues/457">issue #457</a> — pr-open — windowed numba kernel for the RectangularAdaptDensity kernel-CDF forward</summary>
+<details><summary>📋 <a href="active/numba_cpu_likelihood_kernel_cdf_fast_path.md">Numba CPU likelihood phase 2: kernel-CDF numba fast path (the</a> — <a href="https://github.com/PyAutoLabs/PyAutoArray/issues/457">issue #457</a> — merged-awaiting-release-followups — windowed numba kernel for the RectangularAdaptDensity kernel-CDF forward</summary>
 
 ```
 /start_dev active/numba_cpu_likelihood_kernel_cdf_fast_path.md

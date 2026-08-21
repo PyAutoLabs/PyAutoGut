@@ -21,6 +21,11 @@
   the session left the prompt in draft/, so the truthful render advertised a fixed
   bug as top-priority backlog. The drift flag catches that idiom; the cron catches
   what push triggers cannot (Brain-side generator merges, time-dependent renders).
+- trap found post-ship (fixed a305a293): pages_dashboard.yml only fires on pushes
+  touching dashboard.html, and the self-heal commit uses GITHUB_TOKEN — which never
+  triggers other workflows — so the repo copy was fresh while the PAGES site stayed
+  stale (the human's 'don't see it yet'). The heal step now dispatches the publish
+  explicitly (same class as the Memory queue_actions → knowledge_board redispatch).
 - trap fixed in passing: BOTH self-heal steps in dashboard_refresh.yml gated on
   event == push — a scheduled run finding drift would have FAILED rather than
   healed. Now only pull_request errors-without-healing.

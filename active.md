@@ -1,5 +1,18 @@
 # Active Tasks
 
+## dashboard-filter-trend
+- issue: https://github.com/PyAutoLabs/PyAutoMemory/issues/46
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/dashboard-filter-trend
+- prompt: active/dashboard_filter_trend_digest_refs.md
+- plan: dashboard polish trio (human-approved "do all 4", items 1-3): self-contained
+  JS title filter box; papers-read trend (7/30-day counts + 8-week bar strip from
+  DONE dates, relative to snapshot generated); Mind arxiv_papers.yml digest append
+  block writes `Title — <arXiv id>` (direct Mind main commit). Item 4
+  (claude-action filing) is a separate follow-on task.
+- repos:
+  - PyAutoMemory: feature/dashboard-filter-trend
+
 ## numba-cpu-likelihood-profiling
 - issue: https://github.com/PyAutoLabs/autolens_profiling/issues/151
 - pr: https://github.com/PyAutoLabs/autolens_profiling/pull/152

@@ -1,3 +1,49 @@
+Closed the general footgun behind PyAutoArray#470, which `small-datasets-rmtree-committed-data`
+had fixed only at its single live instance.
+
+**Shipped:**
+- PyAutoHands#253 (squash `90f108f`) — leg 2 of `check_dataset_allowlist`: fail a
+  `pre_build` run when a `should_simulate` call site that has not released
+  `PYAUTO_SMALL_DATASETS` would delete git-tracked files.
+- PyAutoArray#480 (squash `f50d28c`) — `should_simulate`'s point-source
+  "not in this gap" claim corrected; it is repo-specific, decided by each repo's
+  `.gitignore`, and was false for the very directory #470 was about.
+
+**The design finding worth keeping.** The natural predicate — "does the resolved path
+sit under an `!dataset/...` allowlist prefix?" — is WRONG and over-reports. It produced
+six release-blocking failures in a workspace that commits documentation images directly
+in a dataset section while its scripts regenerate sibling subdirectories holding nothing
+tracked; deleting those destroys nothing. The correct invariant is **"`rmtree(path)`
+would delete git-tracked files"**. Allowlist membership and deletion risk are different
+properties. Caught only by running the guard across every workspace before trusting the
+green run on the originating repo.
+
+**Second finding.** Handling only single-argument `Path(...)` left 79 of ~253 call sites
+(~31%) in the largest workspace unresolved; multi-argument `Path("dataset", x, name)` is
+the dominant idiom. With it plus source-ordered top-level name resolution (these scripts
+reassign `dataset_name` between sections), coverage is complete: zero unresolved across
+all eight workspaces.
+
+**Tenant firewall detour.** CI failed all three legs — generic organ code carried six
+instance facts (satellite repo names). Refactored per doctrine rather than allowlisted
+("derivable or arbitrary -> refactor"; the comments/docstrings exemption was previously
+considered and rejected). None were load-bearing: workspace shapes are now described
+structurally and issue references live in the PR/commit trail, which is not scanned. The
+FIREWALL_ALLOWLIST did not grow.
+
+**Verified:** 370 PyAutoHands tests pass (10 new, including the false-positive shape as an
+explicit regression); PyAutoArray `test_autoarray/util` 88 pass. Reverting the originating
+workspace to its pre-fix state still reproduces the failure with exact file, line, resolved
+path and declared tokens. Post-merge, the guard runs clean from `main` across all eight
+workspaces — zero failures, zero unresolved — so `pre_build` is unaffected.
+
+Ran as a parallel claim on PyAutoHands alongside `hands-hygiene-leftovers`, verified
+disjoint at file level first. That task now needs a rebase onto `90f108f`.
+
+PyAutoArray#470 closed.
+
+## Original prompt
+
 # Guard: allowlisted datasets reachable from a capped `should_simulate` call site
 
 Type: feature

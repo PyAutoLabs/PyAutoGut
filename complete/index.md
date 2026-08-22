@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1081 records across 7 buckets.
+1082 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -59,6 +59,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [dashboard-per-paper-actions](2026/08/dashboard-per-paper-actions.md) — auto-closed on merge
 - [database-guide-info-inline](2026/08/database-guide-info-inline.md) — the dataset_1d database guide chain failed on any fresh checkout —
 - [database-guide-sample-weight-threshold](2026/08/database-guide-sample-weight-threshold.md) — `guides/results/database/start_here.py` ran its own Nautilus fits capped at n_like_max=300 then indexed sample…
+- [dataset-allowlist-small-datasets-guard](2026/08/dataset-allowlist-small-datasets-guard.md)
 - [delaunay-nn-laptop-gpu-profile](2026/08/delaunay-nn-laptop-gpu-profile.md) — Added the CPU, RTX 2060, and A100 DelaunayNN profiling sweep and result artifacts at matched PyAuto source rev…
 - [dep-floors-source-chain-ci](2026/08/dep-floors-source-chain-ci.md)
 - [dev-workflow-helpers-laptop-paths](2026/08/dev-workflow-helpers-laptop-paths.md)

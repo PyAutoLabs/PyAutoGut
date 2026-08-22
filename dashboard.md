@@ -8,7 +8,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 3 |
+| [In flight](#in-flight) (`active/`) | 2 |
 | [Parked](#parked) (`parked.md`) | 4 |
 | [Planned](#planned) (`planned.md`) | 6 |
 | [Backlog](#backlog) (`draft/`) | 150 |
@@ -139,14 +139,6 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/hands_hygiene_leftovers.md
-```
-
-</details>
-
-<details><summary>📋 <a href="active/small_datasets_rmtree_of_committed_data.md">should_simulate rmtree's committed, gitignore-allowlisted datasets</a> — <a href="https://github.com/PyAutoLabs/PyAutoArray/issues/470">issue #470</a> — workspace-dev — implementation complete, PR open</summary>
-
-```
-/start_dev active/small_datasets_rmtree_of_committed_data.md
 ```
 
 </details>

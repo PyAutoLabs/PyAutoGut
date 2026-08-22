@@ -8,14 +8,14 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 2 |
+| [In flight](#in-flight) (`active/`) | 3 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 146 |
+| [Backlog](#backlog) (`draft/`) | 145 |
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 19
+**Highest priority** (filed as `high`) — showing 12 of 18
 
 <details><summary>📋 <a href="draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — medium · safe · high</summary>
 
@@ -73,14 +73,6 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 </details>
 
-<details><summary>📋 <a href="draft/bug/pyautonerves/small_datasets_regime_stamp_at_writer_funnel.md">Stamp the small-datasets regime at the FITS writer funnel</a> — pyautonerves · large · supervised · high</summary>
-
-```
-/start_dev draft/bug/pyautonerves/small_datasets_regime_stamp_at_writer_funnel.md
-```
-
-</details>
-
 <details><summary>📋 <a href="draft/research/autoarray/delaunay_research.md">Deep research: Can we speed up Delaunay in PyAutoArray?</a> — autoarray · too-large · supervised · high</summary>
 
 ```
@@ -113,6 +105,14 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 </details>
 
+<details><summary>📋 <a href="draft/test/autolens_workspace_developer/mge_jit_regression_rebaseline.md">Re-baseline the MGE imaging JIT profiling regression value</a> — autolens_workspace_developer · too-large · supervised · high</summary>
+
+```
+/start_dev draft/test/autolens_workspace_developer/mge_jit_regression_rebaseline.md
+```
+
+</details>
+
 **Quick wins** (small enough, and safe enough to run unattended)
 
 - _(none right now)_
@@ -133,6 +133,14 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/hands_hygiene_leftovers.md
+```
+
+</details>
+
+<details><summary>📋 <a href="active/small_datasets_regime_stamp_at_writer_funnel.md">Stamp the small-datasets regime at the FITS writer funnel</a> — <a href="https://github.com/PyAutoLabs/PyAutoNerves/issues/153">issue #153</a> — library-dev — PLAN PRESENTED, awaiting human approval before any code edit</summary>
+
+```
+/start_dev active/small_datasets_regime_stamp_at_writer_funnel.md
 ```
 
 </details>
@@ -229,7 +237,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**146** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **23** of them belong to an epic and are listed only under [Epics](#epics) below.
+**145** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **23** of them belong to an epic and are listed only under [Epics](#epics) below.
 
 <details>
 <summary><b>feature</b> — 28</summary>
@@ -461,15 +469,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>bug</b> — 33</summary>
-
-<details><summary>📋 <a href="draft/bug/pyautonerves/small_datasets_regime_stamp_at_writer_funnel.md">Stamp the small-datasets regime at the FITS writer funnel</a> — pyautonerves · large · supervised · high</summary>
-
-```
-/start_dev draft/bug/pyautonerves/small_datasets_regime_stamp_at_writer_funnel.md
-```
-
-</details>
+<summary><b>bug</b> — 32</summary>
 
 <details><summary>📋 <a href="draft/bug/health_fixes/jax_runtime_and_parity.md">Fix release JAX runtime compatibility and likelihood parity</a> — health_fixes · too-large · supervised · high</summary>
 

@@ -24,3 +24,24 @@
   separate /repo_cleanup sweep so a destructive branch delete never rides a code diff.
 - repos:
   - PyAutoHands: feature/hands-hygiene-leftovers
+
+## small-datasets-regime-stamp
+- issue: https://github.com/PyAutoLabs/PyAutoNerves/issues/153 (issued 2026-08-22, pre-existing — start_dev did NOT create it)
+- session: cloud web-github session, branch claude/small-datasets-regime-stamp-s3i9o7
+- status: library-dev — PLAN PRESENTED, awaiting human approval before any code edit
+  (prompt is Autonomy: supervised and this run has no --auto, so checkpoint 1 holds)
+- prompt: active/small_datasets_regime_stamp_at_writer_funnel.md
+- worktree: n/a — web-github environment; clones at /home/user/pyautonerves, /home/user/pyautoarray
+- FINDING that changes the plan: the prompt's premise "every FITS write funnels through
+  `output_to_fits`" is only half true. `output_to_fits` is the only definition of that NAME,
+  but it is NOT the only write path — the multi-HDU dataset writers
+  (`autoarray/dataset/plot/{imaging,interferometer}_plots.py`) call
+  `hdu_list_for_output_from` + `write_hdu_list` directly and never touch `output_to_fits`.
+  Stamping at `fitsable.py:89` as written would MISS the interferometer multi-HDU write,
+  i.e. the exact silent case this task exists to catch. Terminal funnel is
+  `write_hdu_list` (`fitsable.py:127`, sole `hdu_list.writeto` in either repo).
+- risk surface is SMALLER than the prompt feared: no md5/sha256/golden-file pins over FITS
+  anywhere in PyAutoNerves or PyAutoArray; header tests assert per-key, not whole-header.
+- repos:
+  - PyAutoNerves: (branch not yet created)
+  - PyAutoArray: (branch not yet created)

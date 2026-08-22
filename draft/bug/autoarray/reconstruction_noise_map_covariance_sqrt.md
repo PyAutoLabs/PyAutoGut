@@ -1,4 +1,4 @@
-# `reconstruction_noise_map_with_covariance` sqrt-NaNs every off-diagonal by construction
+# `reconstruction_noise_map_with_covariance` — form the covariance properly, fix the sqrt
 
 Type: bug
 Target: autoarray
@@ -14,133 +14,159 @@ Status: draft
 Found during the 2026-08-21 reproduction gate for
 `draft/bug/health_fixes/numerical_inversion_failures.md` (record:
 `complete/2026/08/numerical-inversion-failures.md`). That prompt alleged
-non-positive-definite inversion matrices; it was **refuted** (2/2 scripts pass).
-This warning was the one real defect the gate turned up, and the prompt itself
-flagged it as "worth its own PyAutoArray prompt".
+non-positive-definite inversion matrices and was **refuted**; this was the real
+defect the gate turned up.
 
-**Read this first if you are chasing an inversion conditioning bug:** these NaNs
-look exactly like evidence of a non-positive-definite matrix and are not. They
-are unconditional — they appear for *any* input matrix, however well-conditioned.
-This finding has now been mistaken for a conditioning symptom once; don't let it
-happen twice.
+**Scope note (2026-08-22).** Deeper research found the noise map is wrong in
+*four* distinct ways. This prompt owns the two that need no science decision —
+the numerics and the semantics. The estimator-level defects (the noise map
+describes a different estimator than the default solver, and ignores edge-zeroed
+pixels) are **`draft/bug/autoarray/reconstruction_noise_map_solver_mismatch.md`**,
+which is the larger and more consequential of the two. Do that one second; this
+one first, because it is small, safe and unblocks the other.
 
-## The defect
+## Defect A — elementwise sqrt NaNs every off-diagonal
 
-`autoarray/inversion/inversion/abstract.py:839-859`, verified on `main` @ `a6b07cd`
-(2026-08-22):
+`autoarray/inversion/inversion/abstract.py:839-859`, verified on `main` @ `a6b07cd`:
 
 ```python
 @property
 def reconstruction_noise_map_with_covariance(self) -> np.ndarray:
-    """
-    Returns the noise-map of the reconstruction as a two dimension matrix which accounts for the covariance
-    of the noise between pixels.
-
-    The diagonal of this matrix is the noise-map of the reconstruction, ...
-    """
+    """... a two dimension matrix which accounts for the covariance of the noise between pixels."""
     return np.sqrt(np.linalg.inv(self.curvature_reg_matrix))
 ```
 
-`np.sqrt` is applied **elementwise to the entire inverse matrix**. That inverse is
-the reconstruction covariance matrix `C = inv(curvature_reg_matrix)`, whose
-off-diagonal entries are covariances and are **generally negative**. So every
-negative off-diagonal becomes `NaN`, and each call emits
-`RuntimeWarning: invalid value encountered in sqrt`.
+`np.sqrt` is applied **elementwise to the entire inverse**. That inverse is the
+covariance matrix `C`, whose off-diagonals are covariances and are generally
+negative — so they become `NaN`, and each call emits
+`RuntimeWarning: invalid value encountered in sqrt`. Unconditional: any matrix
+with an anti-correlated pixel pair NaNs, however well-conditioned.
 
-This is unconditional, not data-dependent: any covariance matrix with an
-anti-correlated pixel pair NaNs. Observed as 4x `RuntimeWarning` from a clean,
-passing run of
-`autogalaxy_workspace/scripts/interferometer/features/pixelization/galaxy_reconstruction.py`.
+**This does NOT affect the 1D noise map.** `np.sqrt` is elementwise, so it
+commutes with taking the diagonal — `np.diagonal(np.sqrt(C))[i] == sqrt(C[i,i])`.
+The off-diagonal NaNs never reach `reconstruction_noise_map`. Do not cite this
+defect as the cause of unreliable 1D noise maps; that is the sibling prompt.
 
-## Why it is worth fixing
+## Defect B — `np.linalg.inv` is the wrong routine, and the repo already says so
 
-The property is public API and its docstring promises a matrix that "accounts for
-the covariance of the noise between pixels". It returns NaN in exactly the entries
-that carry that covariance — so the documented purpose of the property is the part
-that is broken. Any consumer reading off-diagonals gets NaN.
+The same file, 50 lines up, documents exactly this hazard for the log-det path
+(`abstract.py:805-806`):
 
-Severity is bounded, and the bound should be stated honestly: **the science path is
-correct.** The 1D `reconstruction_noise_map` takes `np.diagonal(...)` of this
-property, and elementwise-sqrt commutes with taking the diagonal, so
-`diag(sqrt(C)) == sqrt(diag(C))` — the right answer. Only the covariance-aware
-consumer and the warning spam are hit.
+> the analytically exact `pixels * log(coeff) - log det C` from a single Cholesky
+> of their covariance `C`, **avoiding the round-off of factorizing the explicitly
+> formed inverse** (which reaches ~1e-6 absolute in the evidence at
+> **cond(C) ~ 1e9 on clustered traced mesh vertices**)
 
-## The trap — read before changing the return value
+That reasoning was applied to the log-det and never to the noise map, which still
+forms the explicit inverse — of the same matrix, at the same conditioning, on the
+same clustered-mesh geometry.
 
-`reconstruction_noise_map` (line 881) is **derived from this property's diagonal**:
+Three consequences, all pointing the same way:
+
+1. `np.linalg.inv` is LU-based. It exploits neither symmetry nor
+   positive-definiteness, both of which this matrix has (when it is well-posed).
+2. It **raises only on exactly-singular input.** Near-singular passes through with
+   amplified error, so a diagonal entry can come back negative — impossible for a
+   true PD inverse — and `sqrt` turns it into NaN, or leaves it barely positive and
+   yields a wildly wrong RMS. Silently.
+3. The reconstruction path never inverts: `reconstruction_positive_negative_from`
+   uses `xp.linalg.solve` and `fnnls_cholesky` uses
+   `slg.solve(..., assume_a="pos")`. The noise map is the only place in the
+   inversion that forms an explicit inverse.
+
+**This is already biting users.** `inversion_plots.py:395` wraps the noise map in
+`except np.linalg.LinAlgError` and writes the CSV column as NaN with a warning —
+a guard that exists because this fails in practice.
+
+## The fix
+
+Option 1 from the original draft, chosen 2026-08-22: the property should return
+the actual covariance matrix, computed via Cholesky. `scipy` is already a hard
+dependency (`pyproject.toml`).
 
 ```python
-return np.diagonal(self.reconstruction_noise_map_with_covariance)
+from scipy.linalg import cho_factor, cho_solve
+
+@property
+def reconstruction_covariance_matrix(self) -> np.ndarray:
+    """The covariance matrix C = [F + λH]^-1 of the reconstruction."""
+    matrix = np.asarray(self.curvature_reg_matrix)
+    covariance = cho_solve(cho_factor(matrix), np.eye(matrix.shape[0]))
+    return 0.5 * (covariance + covariance.T)   # remove rounding asymmetry
+
+@property
+def reconstruction_noise_map(self) -> np.ndarray:
+    """1D RMS noise: sqrt of the diagonal of the covariance matrix."""
+    return np.sqrt(np.diag(self.reconstruction_covariance_matrix))
 ```
 
-If the fix changes the diagonal's meaning — e.g. returning the raw covariance
-matrix `C` — then `reconstruction_noise_map` silently changes from **standard
-deviation to variance**. That is a science regression in the one path that is
-currently correct, and no existing test would catch it in a way that names the
-cause. Any fix must either keep this property's diagonal as standard deviations,
-or decouple `reconstruction_noise_map` from it and compute `sqrt(diag(C))`
-directly.
+Why this shape:
 
-## The decision this needs (do not guess it inline)
+- **`cho_factor` raises `LinAlgError` on a non-PD matrix**, so the noise map now
+  fails loudly on exactly the matrices the reconstruction already rejects. Today
+  the two disagree: `solve` raises and resamples, `inv` returns garbage.
+- **`reconstruction_noise_map` is decoupled** and computes `sqrt(diag(C))`
+  directly. Today it is correct only *incidentally*, because sqrt happens to be
+  elementwise — change the matrix and it silently becomes a variance. Decoupling
+  removes that trap permanently.
+- **Off-diagonals become real covariances**, so the docstring's promise holds.
 
-What the off-diagonals *should* be is an API/science call, not an obvious repair.
-The plausible options:
+**Naming.** `..._with_covariance` returning a covariance matrix should be
+`reconstruction_covariance_matrix`. Keep the old name as a `DeprecationWarning`
+alias returning the new matrix. Its values *do* change — diagonal from std-dev to
+variance, off-diagonals from NaN to covariances — but every off-diagonal consumer
+was reading NaN, so nothing correct can break. Note the change in the release
+notes regardless.
 
-1. **Return `C` unchanged** (a true covariance matrix; diagonal = variances).
-   Cleanest semantics, but breaks the "diagonal is the noise-map" docstring claim
-   and springs the trap above — `reconstruction_noise_map` must be rewritten in
-   the same change.
-2. **Sqrt the diagonal only**, leave off-diagonals as covariances. Preserves both
-   docstring claims and every current caller, but the matrix has mixed units
-   (std devs on the diagonal, variances off it), which is a strange object to hand
-   a user.
-3. **Signed sqrt**, `sign(C) * sqrt(|C|)`. Keeps a consistent "root" scale
-   throughout and preserves the diagonal, but is a non-standard quantity that
-   needs a documented justification.
-
-Option 2 is the smallest, least disruptive change and is the natural reading of
-the existing docstring. Option 1 is the most defensible statistically. Put the
-choice to a human — this is a public-API contract, and the property's name should
-probably change with it if the units do.
+Optional, only if profiling asks for it: if just the diagonal is needed,
+`diag(C)` is available from the Cholesky factor as the squared row-norms of
+`L^-1`, avoiding the full `n x n` product. Not worth the complexity up front —
+this is computed once per fit, not per-likelihood.
 
 ## Verification
 
-- Off-diagonals are finite for a well-conditioned `curvature_reg_matrix` with an
-  anti-correlated pixel pair. **There is currently no such test** — the only
-  assertion on this property is
-  `test_autoarray/inversion/inversion/test_abstract.py:684`, which checks `[0, 0]`,
-  a *diagonal* element. The off-diagonal NaNs are entirely untested; that gap is
-  why this shipped.
-- No `RuntimeWarning: invalid value encountered in sqrt` is emitted. Consider
-  running the regression test under `-W error::RuntimeWarning` so a regression
-  fails loudly rather than warning quietly.
-- `reconstruction_noise_map` still returns `sqrt(diag(C))` — assert this
-  explicitly, against a hand-computed value, in the same test. The existing
-  assertion at `test_abstract.py:686` covers the values but not the invariant.
+- **Off-diagonals finite** for a well-conditioned matrix with an anti-correlated
+  pixel pair. **No such test exists today** — the only assertion on this property
+  (`test_autoarray/inversion/inversion/test_abstract.py:684`) checks `[0, 0]`, a
+  *diagonal* element. That gap is why this shipped.
+- **No `RuntimeWarning`.** Run the regression test under `-W error::RuntimeWarning`
+  so a regression fails rather than warns.
+- **`reconstruction_noise_map` still returns `sqrt(diag(C))`** — assert against a
+  hand-computed value, and assert the invariant explicitly, not just the numbers.
+- **The `inv`-vs-`cho_solve` A/B is required, not assumed.** The claim that `inv`
+  yields negative/inaccurate diagonals at realistic conditioning was reasoned from
+  the numerical properties and the repo's own `~1e-6 at cond ~ 1e9` note — it was
+  **not** measured. Probe real `curvature_reg_matrix` instances from a Delaunay
+  source fit and count negative and near-zero diagonal entries under each method.
+  If `inv` turns out to be fine at realistic conditioning, say so and drop the
+  claim — keep the Cholesky change on the raise-loudly argument alone.
 - `test_autoarray/inversion/plot/test_inversion_plotters.py:82,110` monkeypatch
-  this property to a singular matrix to force a `LinAlgError` and check plots/CSV
-  degrade gracefully. Those must still pass — confirm the fix does not alter which
-  exception escapes.
-- Check downstream consumers before shipping: this sweep covered **PyAutoArray
-  only**, where the sole in-repo consumer is `reconstruction_noise_map`. Grep
-  @PyAutoGalaxy and @PyAutoLens for `reconstruction_noise_map_with_covariance`
-  before assuming the change is contained.
+  this property to force a `LinAlgError` and check plots/CSV degrade gracefully.
+  Confirm the same exception still escapes — `cho_factor` also raises
+  `LinAlgError`, so this should hold, but assert it.
+- **Downstream:** this sweep covered PyAutoArray only, where the sole in-repo
+  consumer is `reconstruction_noise_map`. Grep @PyAutoGalaxy and @PyAutoLens for
+  `reconstruction_noise_map_with_covariance` before assuming containment.
 
-Repro environment: `PYAUTO_SKIP_WORKSPACE_VERSION_CHECK=1`,
-`NUMBA_CACHE_DIR=/tmp/numba_cache`, `MPLCONFIGDIR=/tmp/matplotlib`,
-`PYAUTO_DISABLE_JAX=1`.
+## Also fold in
 
-## Also worth folding in
+`reconstruction_noise_map`'s docstring claims it "is computed as the square root
+of the diagonal of the `reconstruction_noise_map_with_covariance` matrix". The
+code takes the diagonal of an already-square-rooted matrix — no second sqrt. The
+two agree today only because sqrt is elementwise, which is precisely the bug.
+Rewrite the sentence to match whatever ships.
 
-`reconstruction_noise_map`'s docstring says it "is computed as the square root of
-the diagonal of the `reconstruction_noise_map_with_covariance` matrix". The code
-takes the diagonal of an already-square-rooted matrix — no second sqrt. The two
-are numerically equal today only because sqrt is elementwise, which is precisely
-the bug. Whichever option is chosen, that sentence needs rewriting to match.
+## Note on the JAX path
+
+This property uses bare `np`, not `self._xp`, so it is already numpy-only even
+under a JAX fit — a JAX `curvature_reg_matrix` is coerced via `__array__`, forcing
+a device→host sync. The scipy fix does not regress that (there was no JAX support
+to lose) but it does make it explicit. Add `np.asarray` at the boundary, as above,
+and note the limitation in the docstring rather than leaving it implicit.
 
 ## Provenance
 
 - Found during: `complete/2026/08/numerical-inversion-failures.md` (2026-08-22)
-- **Not** a symptom of the refuted non-positive-definite hypothesis in that
-  prompt, nor of the earlier `complete/2026/07/pix-inversion-not-positive-definite.md`
-  cluster (also refuted). Independent of both.
+- Sibling: `draft/bug/autoarray/reconstruction_noise_map_solver_mismatch.md`
+- **Not** a symptom of the refuted non-positive-definite hypothesis in that record,
+  nor of `complete/2026/07/pix-inversion-not-positive-definite.md` (also refuted).

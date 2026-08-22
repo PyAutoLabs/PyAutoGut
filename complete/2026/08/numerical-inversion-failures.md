@@ -122,6 +122,29 @@ correct off-diagonal semantics are an API/science decision, and the fix has a re
 science path is derived from this property's diagonal, so a naive change silently converts a
 standard-deviation into a variance).
 
+
+**2026-08-22 follow-up — the incidental finding got bigger.** Research into *why* source-reconstruction
+noise maps have been unreliable found the sqrt bug is **not** the cause: `np.sqrt` is elementwise, so it
+commutes with taking the diagonal and provably cannot reach the 1D noise map. Three deeper defects were
+found in the same property, and split into a second prompt,
+`draft/bug/autoarray/reconstruction_noise_map_solver_mismatch.md`:
+
+1. **Estimator mismatch (the big one).** `inv(curvature_reg_matrix)` is the posterior covariance of the
+   *unconstrained* Warren & Dye solve. But `use_positive_only_solver: true` is the shipped default, so the
+   reconstruction is an NNLS active-set solve. Imposing `s >= 0` truncates the posterior, so the reported
+   noise is overstated near the boundary and meaningless for pinned pixels — and a compact lensed source
+   pins a large fraction of the mesh at zero, so the formula is worst exactly where it is most used.
+2. **Edge-zeroed pixels ignored.** `use_edge_zeroed_pixels: true` is also default; the reconstruction
+   solves on `zeroed_ids_to_keep` and scatters back zeros, while the noise map inverts the *full* matrix —
+   re-admitting the poorly-constrained boundary vertices the zeroing exists to remove.
+3. **`use_edge_zeroed_pixels` is nested inside the positive-only branch**, so turning the positive-only
+   solver off silently disables edge-zeroing with no warning. Two orthogonal settings, silently coupled.
+
+Corroboration for the numerics half: `abstract.py:805` already documents `~1e-6` evidence round-off from
+"factorizing the explicitly formed inverse" at `cond(C) ~ 1e9` on clustered traced mesh vertices — applied
+to the log-det, never to the noise map. And `inversion_plots.py:395` already wraps the noise map in
+`except np.linalg.LinAlgError`, writing NaN to the CSV: a guard that exists because this fails in practice.
+
 ## Follow-on state of the cluster
 
 `draft/bug/health_fixes/README.md` row struck through. Of the original seven prompts: two shipped or

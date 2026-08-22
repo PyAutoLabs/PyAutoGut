@@ -11,16 +11,24 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 | [In flight](#in-flight) (`active/`) | 2 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 144 |
+| [Backlog](#backlog) (`draft/`) | 145 |
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 17
+**Highest priority** (filed as `high`) — showing 12 of 18
 
 <details><summary>📋 <a href="draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — medium · safe · high</summary>
 
 ```
 /start_dev draft/triage/jax_zero_contour.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/autoarray/reconstruction_noise_map_solver_mismatch.md">The reconstruction noise map describes a different estimator than the</a> — autoarray · medium · human-required · high</summary>
+
+```
+/start_dev draft/bug/autoarray/reconstruction_noise_map_solver_mismatch.md
 ```
 
 </details>
@@ -101,14 +109,6 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 ```
 /start_dev draft/docs/autolens/split_lensing_regimes.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/test/autolens_workspace_developer/mge_jit_regression_rebaseline.md">Re-baseline the MGE imaging JIT profiling regression value</a> — autolens_workspace_developer · too-large · supervised · high</summary>
-
-```
-/start_dev draft/test/autolens_workspace_developer/mge_jit_regression_rebaseline.md
 ```
 
 </details>
@@ -229,7 +229,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**144** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **23** of them belong to an epic and are listed only under [Epics](#epics) below.
+**145** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **23** of them belong to an epic and are listed only under [Epics](#epics) below.
 
 <details>
 <summary><b>feature</b> — 28</summary>
@@ -461,7 +461,15 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>bug</b> — 32</summary>
+<summary><b>bug</b> — 33</summary>
+
+<details><summary>📋 <a href="draft/bug/autoarray/reconstruction_noise_map_solver_mismatch.md">The reconstruction noise map describes a different estimator than the</a> — autoarray · medium · human-required · high</summary>
+
+```
+/start_dev draft/bug/autoarray/reconstruction_noise_map_solver_mismatch.md
+```
+
+</details>
 
 <details><summary>📋 <a href="draft/bug/health_fixes/jax_runtime_and_parity.md">Fix release JAX runtime compatibility and likelihood parity</a> — health_fixes · too-large · supervised · high</summary>
 
@@ -495,7 +503,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/bug/autoarray/reconstruction_noise_map_covariance_sqrt.md"><code>reconstruction_noise_map_with_covariance</code> sqrt-NaNs every off-diagonal by construction</a> — autoarray · small · supervised · medium</summary>
+<details><summary>📋 <a href="draft/bug/autoarray/reconstruction_noise_map_covariance_sqrt.md"><code>reconstruction_noise_map_with_covariance</code> — form the covariance properly, fix the sqrt</a> — autoarray · small · supervised · medium</summary>
 
 ```
 /start_dev draft/bug/autoarray/reconstruction_noise_map_covariance_sqrt.md

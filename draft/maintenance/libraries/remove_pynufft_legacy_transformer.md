@@ -1,0 +1,109 @@
+# Remove pynufft + legacy TransformerNUFFTPyNUFFT
+
+Type: maintenance
+Target: libraries
+Repos:
+- @PyAutoArray
+- @PyAutoGalaxy
+- @PyAutoLens
+Difficulty: low-medium
+Autonomy: supervised
+Priority: normal
+Status: in-flight
+
+Re-homed 2026-08-22 from `draft/refactor/autoarray/`. The Brain Refactor Agent
+refused it there (`SUSPECT-API-CHANGE`, effective autonomy `human-required`):
+deleting a public class is not behaviour-preserving, so it cannot be a
+`refactor/`. `maintenance/` ("dependency updates, hygiene, cleanup") is the
+taxonomy fit for removing a dependency.
+
+## Original request (verbatim, 2026-08-19)
+
+> do we even use pynufft? maybe we should file a follow up to remove it I think
+> its purely for one function, so make that filing remove it but also include
+> this check of import time.
+
+## Corrections to the original filing (measured 2026-08-22)
+
+The 2026-08-19 filing had two factual errors, both found during implementation:
+
+1. **pynufft was never a base dependency.** It sat in the `optional` extra
+   (`PyAutoArray/pyproject.toml:67`) and the `dev` extra (line 77). A plain
+   `pip install autoarray` never had it, so `TransformerNUFFTPyNUFFT` already
+   raised `pynufft_exception()` for most users.
+2. **The import-time saving is ~10 ms, not ~230 ms.** Measured as the median of
+   7 runs on Python 3.13 with the dev extras: `import autoarray` goes
+   369.8 ms → 359.9 ms. `pynufft`'s 0.19 s *cumulative* import is ~95 %
+   `scipy.sparse` (0.11 s), which `autoarray/operators/derivative_util.py:30`
+   pulls in eagerly for `csr_matrix` regardless of pynufft. Only ~10 modules and
+   ~10 ms are exclusive to pynufft.
+
+The removal is still worth doing — an unmaintained dependency, one dead class,
+and a `dev` extra that is broken against SciPy >= 1.17 — but **not** on
+import-time grounds. The real 0.10 s win is filed separately as
+`draft/maintenance/libraries/defer_scipy_sparse_import.md`.
+
+## The Intel-macOS decision (settled 2026-08-22)
+
+The original filing flagged one blocking question: does removing the pynufft
+fallback cost Intel-Mac users their interferometer transformer? Verified
+against PyPI:
+
+- `jaxlib`'s **last Intel-macOS (x86_64) wheel is 0.4.38**, uploaded
+  2024-12-17. Every release since (through 0.11.1) is `macosx_11_0_arm64` only.
+- `jaxlib` has **never published an sdist**, for any version — so there is no
+  pip fallback that builds from source.
+- PyAutoNerves' floor is `jax>=0.7.0`
+  (`PyAutoNerves/pyproject.toml:38`, markered
+  `sys_platform != "darwin" or platform_machine == "arm64"`).
+- `nufftax` is pure-JAX; even its `xp=np` path calls `nufftax.nufft2d2`. So no
+  JAX means no `TransformerNUFFT` either.
+
+So Intel macOS keeps **`TransformerDFT` only** for interferometry — exact, pure
+numpy, but O(N_vis x N_pix). Human decision (2026-08-22): accept this; record
+it as a release-note line, not a blocker. The broader "is Intel macOS a
+supported platform" question is filed as
+`draft/research/libraries/intel_macos_support_policy.md`.
+
+## Work done (branches pushed 2026-08-22)
+
+All three on `claude/remove-pynufft-6uwt2z`:
+
+- **@PyAutoArray** — deleted `TransformerNUFFTPyNUFFT`, the `NUFFTPlaceholder`
+  / `NUFFT_cpu` module-scope try-import and `pynufft_exception()`; dropped the
+  re-exports from `__init__.py` and `type.py` and its arm of the `Transformer`
+  union; removed the three `test__nufft_pynufft__*` tests and the `"pynufft"`
+  arm of the nufftax-absent skip filter in `conftest.py`; dropped `pynufft`
+  from `optional` and the `pynufft==2022.2.2` pin from `dev`. Rewrote
+  `nufftax_exception()` and the `use_adjoint_scaling` docstrings, which cited
+  the deleted class. **1164 passed, 1 skipped.**
+- **@PyAutoGalaxy** — dropped the `__init__.py:29` re-export and the `optional`
+  entry; updated installation docs, the feature overview and the live citation
+  surface (`files/citations.{md,tex,bib}`, `docs/index.md`) to cite `nufftax`.
+  **1103 passed, 1 skipped.**
+- **@PyAutoLens** — same, minus the citation *addition* (nufftax was already
+  cited); the PyNUFFT entry was simply dropped. **532 passed, 1 skipped.**
+
+`paper/` in both downstream repos was deliberately left untouched — published
+JOSS records of what the software used at time of publication, not live docs.
+
+## Remaining
+
+1. **Workspace tier** (not started, needs the workspace repos):
+   - `autolens_workspace_test/scripts/interferometer/nufft.py:211` — the one
+     executable use; drop or replace the PyNUFFT leg of the parity comparison.
+   - Four prose mentions in autolens_workspace (`start_here.py`, `using_jax.py`,
+     `simulator.py`, `linear_light_profiles/modeling.py`) describing it as a
+     "non-JAX fallback".
+   - Check `PyAutoHands/autohands/config/no_run.yaml` per the ship_library
+     reference.
+2. **PR bodies need the `## API Changes` breaking entry** (release-notes
+   contract): `TransformerNUFFTPyNUFFT` removed; migration is `TransformerNUFFT`
+   (nufftax), or `TransformerDFT` where JAX is unavailable.
+3. All three library PRs **must merge together** — the downstream re-exports
+   break at import the moment PyAutoArray's removal lands alone.
+4. Closes the separate bug draft
+   `draft/bug/autoarray/pynufft_scipy_pinv2_dev_extra.md`: the
+   `pynufft==2022.2.2` dev pin calls `scipy.linalg.pinv2`, absent from SciPy
+   1.17.1 (confirmed 2026-08-22 — `hasattr(scipy.linalg, "pinv2")` is `False`).
+   Retiring the backend was one of that prompt's three sanctioned remedies.

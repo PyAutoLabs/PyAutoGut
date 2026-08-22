@@ -11,7 +11,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 | [In flight](#in-flight) (`active/`) | 2 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 146 |
+| [Backlog](#backlog) (`draft/`) | 148 |
 
 ## Start here
 
@@ -115,7 +115,13 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 **Quick wins** (small enough, and safe enough to run unattended)
 
-- _(none right now)_
+<details><summary>📋 <a href="draft/maintenance/libraries/defer_scipy_sparse_import.md">Defer the eager scipy.sparse import in derivative_util (~0.10 s of</a> — libraries · small · safe · normal</summary>
+
+```
+/start_dev draft/maintenance/libraries/defer_scipy_sparse_import.md
+```
+
+</details>
 
 ## In flight
 
@@ -229,7 +235,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**146** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **23** of them belong to an epic and are listed only under [Epics](#epics) below.
+**148** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **23** of them belong to an epic and are listed only under [Epics](#epics) below.
 
 <details>
 <summary><b>feature</b> — 28</summary>
@@ -730,7 +736,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>research</b> — 16</summary>
+<summary><b>research</b> — 17</summary>
 
 <details><summary>📋 <a href="draft/research/autoarray/delaunay_research.md">Deep research: Can we speed up Delaunay in PyAutoArray?</a> — autoarray · too-large · supervised · high</summary>
 
@@ -804,6 +810,14 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
+<details><summary>📋 <a href="draft/research/libraries/intel_macos_support_policy.md">Is Intel macOS a supported platform, and what is the</a> — libraries · medium · supervised · normal</summary>
+
+```
+/start_dev draft/research/libraries/intel_macos_support_policy.md
+```
+
+</details>
+
 <details><summary>📋 <a href="draft/research/pyautomemory/checkerboard_psf_mismatch_residual_diagnostic.md">Checkerboard PSF-mismatch residual diagnostic — research + document + ingest</a> — pyautomemory · medium · supervised · normal</summary>
 
 ```
@@ -863,7 +877,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>maintenance</b> — 18</summary>
+<summary><b>maintenance</b> — 20</summary>
 
 <details><summary>📋 <a href="draft/maintenance/ci/smoke_install_stale_jax_pin.md">smoke_install.sh's stale <code>jax&lt;0.7</code> pin — CI is on the right</a> — ci · low · supervised · medium</summary>
 
@@ -877,6 +891,14 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/maintenance/autolens_workspace_developer/rectangular_experiments_gut_stash.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/maintenance/libraries/defer_scipy_sparse_import.md">Defer the eager scipy.sparse import in derivative_util (~0.10 s of</a> — libraries · small · safe · normal</summary>
+
+```
+/start_dev draft/maintenance/libraries/defer_scipy_sparse_import.md
 ```
 
 </details>
@@ -965,6 +987,14 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/maintenance/workspaces/read_through_issues.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/maintenance/libraries/remove_pynufft_legacy_transformer.md">Remove pynufft + legacy TransformerNUFFTPyNUFFT</a> — libraries · low-medium · supervised · normal</summary>
+
+```
+/start_dev draft/maintenance/libraries/remove_pynufft_legacy_transformer.md
 ```
 
 </details>
@@ -1129,7 +1159,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>refactor</b> — 6</summary>
+<summary><b>refactor</b> — 5</summary>
 
 <details><summary>📋 <a href="draft/refactor/autogalaxy/einstein_radius_jit_native_seed_finder.md"><code>einstein_radius_jit_from</code>: replace static init_guess with a JAX-native seed finder</a> — autogalaxy · too-large · supervised · high</summary>
 
@@ -1159,14 +1189,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/refactor/pyautofit/remove_eden_packaging_tooling.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/refactor/autoarray/remove_pynufft_legacy_transformer.md">Remove pynufft + legacy TransformerNUFFTPyNUFFT (0.23s of import, one fallback</a> — autoarray · low-medium · supervised · normal</summary>
-
-```
-/start_dev draft/refactor/autoarray/remove_pynufft_legacy_transformer.md
 ```
 
 </details>

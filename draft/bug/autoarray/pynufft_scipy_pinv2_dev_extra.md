@@ -7,7 +7,7 @@ Repos:
 Difficulty: small
 Autonomy: supervised
 Priority: normal
-Status: draft
+Status: superseded
 
 ## Original request
 
@@ -40,3 +40,20 @@ exists, or retire the legacy backend and its tests. Keep this separate from the
 - The PyNUFFT test either passes against the supported dependency set or is
   removed together with an explicit backend-retirement decision.
 - The standard optional-profile suite remains green.
+
+## Superseded 2026-08-22
+
+Resolved by `draft/maintenance/libraries/remove_pynufft_legacy_transformer.md`,
+which takes this prompt's third sanctioned remedy — "retire the legacy backend
+and its tests". `pynufft` is gone from PyAutoArray's `optional` and `dev`
+extras, so there is no longer a dev-extra install that can hit
+`scipy.linalg.pinv2`.
+
+Confirmed on a clean Python 3.13 install (2026-08-22): with
+`pynufft==2022.2.2` present, `hasattr(scipy.linalg, "pinv2")` is `False` under
+SciPy 1.17.1 — the drift this prompt reported is real, and pre-existing rather
+than a Python-floor regression as it said. pynufft 2022.2.2 also emits
+`SyntaxWarning: "is" with 'str' literal` on 3.13, i.e. it is unmaintained
+against the supported interpreter range.
+
+Close this out when the removal PRs merge.

@@ -87,6 +87,21 @@
   (n_visibilities, 2), 108384x2 for committed sdp81, so an "either axis" test would refuse to
   delete the one family the stamp exists for. Verified lossless against the real committed
   files: (16,16) and (108384,2) still delete; 151x151, 209x209, 300x300 now kept.
+- ADVERSARIAL REVIEW (Fable, 24 agents, 6 diverse lenses + independent refuters): 18 findings
+  attacked, **13 refuted, 5 survived**. Three of the five were the SAME defect found
+  independently by three lenses and reproduced by three separate skeptics: the committed FITS
+  fixtures became regime-DEPENDENT, so running either suite with `PYAUTO_SMALL_DATASETS=1`
+  exported (the documented harness default) passed but left a dirty tree. Confirmed against
+  fresh `main` worktrees that the stamp introduced it. Fixed with one autouse conftest fixture
+  per repo (3e6e601, 33a23cf) rather than rewriting the 14 tracked test write-targets, which
+  would have buried a header-card change under a test refactor. Both suites now leave a clean
+  tree with the var exported AND unset.
+  The other two survivors were the same stale-diff artifact — the review's input diffs predated
+  757238a, so it re-derived the data-loss bug already fixed; its skeptic confirmed HEAD is
+  correct. Refuted included: the funnel-coverage overclaim (already softened in 95b7c36), the
+  autonerves version floor (already fixed in 449d991), byte-size neutrality at the 36-card
+  block boundary, the non-2D-cube blind spot in the contradiction guard (no write path exists),
+  and `write_hdu_list` mutating a caller-owned HDUList in place.
 - FOLLOW-UP noted, out of scope: the capped branch (`PYAUTO_SMALL_DATASETS=1`) still rmtrees
   unconditionally and ignores the stamp it now has, so every smoke run re-simulates every
   dataset even when the stamp already says T. Pre-existing; `if stamp is not True:` is now a

@@ -137,7 +137,7 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
-<details><summary>📋 <a href="active/jax_grad_local_assertions_fail_but_pass_in_ci.md">jax_grad scripts fail assertions locally that PASS in CI</a> — <a href="https://github.com/PyAutoLabs/autolens_workspace_test/issues/260">issue #260</a> — workspace-dev</summary>
+<details><summary>📋 <a href="active/jax_grad_local_assertions_fail_but_pass_in_ci.md">jax_grad scripts fail assertions locally that PASS in CI</a> — <a href="https://github.com/PyAutoLabs/autolens_workspace_test/issues/260">issue #260</a> — library-dev (RECLASSIFIED from workspace-dev — the fix is upstream in PyAutoArray;</summary>
 
 ```
 /start_dev active/jax_grad_local_assertions_fail_but_pass_in_ci.md

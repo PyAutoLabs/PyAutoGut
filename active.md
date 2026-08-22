@@ -28,7 +28,8 @@
 ## jax-grad-local-vs-ci-assertions
 - issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/260 (issued 2026-08-22)
 - session: https://claude.ai/code/session_01VEHLT33XpVcRt5YCJGLRMJ (web-github; no local worktree yet)
-- status: workspace-dev
+- status: library-dev (RECLASSIFIED from workspace-dev — the fix is upstream in PyAutoArray;
+  autolens_workspace_test needs no change and no tolerance change)
 - worktree: ~/Code/PyAutoLabs-wt/jax-grad-local-vs-ci-assertions
 - prompt: active/jax_grad_local_assertions_fail_but_pass_in_ci.md
 - classification: workspace (single repo) — routes to /start_workspace
@@ -50,9 +51,24 @@
   1-core vs 4-core). The likelihood runs through JAX/XLA; numpy only does the FD bookkeeping.
 - NO tolerance change is warranted — all three asserts did their job on a genuinely invalid
   dataset. assert_eager_jit_consistent's rtol=1e-10 is vindicated, not under-specified.
-- RECLASSIFY: the fix belongs upstream in PyAutoArray, not this workspace — every PyAuto
-  workspace using the auto-simulate pattern inherits the trap. Awaiting a human call between
-  (1) a regime marker and (2) symmetric regeneration; that call moves this to library-dev.
+- FIX SHIPPED to a branch 2026-08-22: PyAutoArray `claude/jax-grad-assertions-ci-hontn3` @ 5ef6eea.
+  `should_simulate` now also regenerates on the small->full transition, inferring the regime from
+  data.fits's shape (the cap emits EXACTLY 16x16). Design went through an adversarial review that
+  corrected three things: no pixel-scale check (not in the FITS header), `==` not `<=` (the cap
+  cannot emit 12x12), and data.fits BY NAME not first-FITS-in-dir (PSFs are legitimately 11x11 and
+  dataset/cluster/test/psf.fits is 5760 B — a glob would have deleted real data every run).
+  Verified: control-tested, 1168 tests pass, 12 new tests over all four regime transitions, and
+  end-to-end — poison then full-datasets run now PASSES where it raised. Steady state 0.64 ms.
+  NO PR opened (not requested); branch is pushed and ready.
+- SCOPE: imaging manifestation only. Point-source/weak-lensing (JSON, no FITS) and interferometer
+  (shape-invariant under the cap, so it fails SILENTLY) remain exposed; stated in the docstring.
+- follow-ups filed (not absorbed):
+  - PyAutoNerves#153 — stamp the regime at the single FITS writer funnel (fitsable.py:89); the only
+    discriminant that can catch the silent interferometer case. Kept out of the fix deliberately: it
+    changes a header card on every FITS the stack writes (round-trip tests, file-hash pins).
+  - PyAutoArray#470 — separate live defect: the small-datasets branch rmtree's
+    dataset/point_source/simple, which is COMMITTED and allowlisted in .gitignore:13, replacing it
+    with capped-solver garbage. Recoverable via git checkout but violates the allowlist invariant.
 - follow-up (separate defect, not this bug): autolens_workspace_test
   `.github/scripts/smoke_install.sh:9` `pip install "jax<0.7" "jaxlib<0.7"` downgrades jax to
   0.6.2 and conflicts with autonerves' jax>=0.7,<0.11; the run only lands on the intended
@@ -60,3 +76,4 @@
 - out-of-bounds: moving lp.py's evaluation point, adding skip_indices, or widening a
   tolerance without a measured basis. All three mask the trap instead of removing it.
 - repos:
+  - PyAutoArray: claude/jax-grad-assertions-ci-hontn3

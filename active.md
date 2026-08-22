@@ -1,19 +1,5 @@
 # Active Tasks
 
-## optional-dependency-skip-guards
-- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1511 (issued 2026-08-22)
-- prompt: active/17_optional_dependency_skip_guards.md
-- status: PR OPEN — https://github.com/PyAutoLabs/PyAutoFit/pull/1512, CI GREEN
-  (unittest 3.12 + 3.13 + nojax, run 32575550710), mergeable clean, awaiting review
-- scope-note: tests only, no `autofit/` source touched. Verified inert in the CI env
-  (2024 passed / 3 skipped, identical to main), so no coverage is lost.
-- context: closes follow-up 4 of complete/2026/08/uniform-prior-bounds-numpy-path.md,
-  filed there 2026-08-18 but never turned into a prompt. Ends the recurring
-  "test_nautilus fails pre-existing on main" false alarm — see the correction trail
-  in the prompt.
-- repos:
-  - PyAutoFit: claude/test-nautilus-single-core-builds-35kyot
-
 ## transformed-message-factor-gradient-unpack
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1501 (issued 2026-08-19)
 - prompt: active/16_transformed_message_factor_gradient_unpack.md

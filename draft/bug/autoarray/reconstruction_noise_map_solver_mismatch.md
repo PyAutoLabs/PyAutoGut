@@ -142,6 +142,23 @@ set* — standard practice for constrained least squares, and a defensible,
 documentable choice. It is still an approximation: it ignores the uncertainty in
 the active set itself. Say so in the docstring rather than implying exactness.
 
+## Downstream evidence for why this matters (added 2026-08-22)
+
+`autolens_workspace` uses the 1D noise map directly in user-facing science scripts —
+`scripts/{imaging,interferometer,group,multi_galaxy}/features/pixelization/source_science.py`
+compute:
+
+```python
+reconstruction_noise_map = inversion.reconstruction_noise_map
+signal_to_noise_map = reconstruction / reconstruction_noise_map
+```
+
+So the quantity this prompt argues is computed for the wrong estimator is divided into the
+reconstruction to produce a **signal-to-noise map on a source reconstruction** — the number
+that ends up in papers. If the NNLS/unconstrained mismatch is real, it propagates straight
+into published S/N. That raises the stakes on the Defect 1 decision and is the concrete
+reason to instrument a real fit rather than reason about it further.
+
 ## Verification
 
 - **Reproduce the symptom first.** Take a real Delaunay source fit, compute the

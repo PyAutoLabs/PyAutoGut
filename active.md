@@ -11,7 +11,18 @@
   the positive-only solver is off) are deliberately OUT of this PR and tracked in
   draft/bug/autoarray/reconstruction_noise_map_solver_mismatch.md.
 - pushed: PyAutoArray branch pushed, PR NOT opened (awaiting human go-ahead).
-- tests: 1150 passed, 1 skipped; 3 test_transformer.py pynufft failures pre-exist on a6b07cd.
+- tests: 1152 passed, 1 skipped; 3 test_transformer.py pynufft failures pre-exist on a6b07cd.
+- reviewed: adversarial review 2026-08-22 found a MAJOR regression in the first commit --
+  scipy cho_factor raises ValueError (not LinAlgError) on non-finite input, escaping both
+  callers' guards and aborting a model-fit the CSV writer promises not to abort. Fixed by
+  raising LinAlgError explicitly inside the property. Also symmetrizes the input now
+  (cho_factor reads only the upper triangle) and the tautological symmetry test was given a
+  real accuracy oracle.
+- downstream-grep: zero consumers of reconstruction_noise_map_with_covariance in PyAutoGalaxy
+  (3ca31bf), PyAutoLens (87e5827) or autolens_workspace, so the alias's value change is safe.
+  reconstruction_noise_map IS used in autolens_workspace source_science.py for
+  signal_to_noise_map = reconstruction / reconstruction_noise_map -- values unchanged.
+  NOT checked: autogalaxy_workspace, HowTo repos, user code.
 - repos:
   - PyAutoArray: claude/numerical-inversion-failures-7xsp1k
 

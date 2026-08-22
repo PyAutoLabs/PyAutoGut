@@ -1,3 +1,136 @@
+# reconstruction-noise-map-covariance-sqrt — covariance NaNs and the Cholesky rewrite
+
+**Date:** 2026-08-22
+**Issue:** [PyAutoArray#468](https://github.com/PyAutoLabs/PyAutoArray/issues/468) (closed)
+**PRs:** [PyAutoArray#469](https://github.com/PyAutoLabs/PyAutoArray/pull/469) (MERGED, `2784056`)
+**Outcome:** shipped — phase 1 of a two-phase cluster; the estimator half is still open.
+
+## What this task was
+
+`AbstractInversion.reconstruction_noise_map_with_covariance` was one line:
+
+```python
+return np.sqrt(np.linalg.inv(self.curvature_reg_matrix))
+```
+
+`np.sqrt` applied **elementwise to the whole inverse**. The off-diagonals of a covariance matrix are
+covariances and are routinely negative, so every one was `NaN` by construction — for any matrix,
+however well-conditioned — with a `RuntimeWarning` on every call. The docstring promised a matrix
+that "accounts for the covariance of the noise between pixels"; the entries carrying that covariance
+were precisely the broken ones.
+
+Found as an incidental finding while reproduction-gating
+`complete/2026/08/numerical-inversion-failures.md`, whose own hypothesis was refuted.
+
+## The trap this cluster kept setting
+
+**The elementwise sqrt does not affect the 1D `reconstruction_noise_map`.** `np.sqrt` is elementwise,
+so it commutes with taking the diagonal: `diagonal(sqrt(C))[i] == sqrt(C[i,i])`. This was mistaken
+for the cause of unreliable source noise maps twice — once by the original gate, once during
+planning. It is not. It looks exactly like evidence for a non-positive-definite matrix and is not
+that either.
+
+## The A/B refuted two of the arguments for the fix
+
+Run **before** writing any code, which is why the reasoning in the shipped docstring is narrower than
+the reasoning in the original prompt:
+
+| Claim | Verdict |
+|---|---|
+| `inv` gives negative diagonals on well-formed SPD | **REFUTED** — 0 across cond 1e3–1e15, n=400, 20 trials each |
+| `inv` is materially less accurate on the diagonal | **REFUTED** — matches `cho_solve`; at cond 1e15 `inv` was marginally *better* |
+| Near-coincident mesh vertices degrade the inverse | **REFUTED** — with regularization the matrix stays PD (cond ~6.8e7 even at exactly duplicated columns) |
+| `inv` returns asymmetric output | **CONFIRMED** — 5.2e-7 at cond 1e12 vs 2.6e-16 |
+| `inv` silently succeeds on indefinite matrices | **CONFIRMED** |
+
+**The case for Cholesky is detection, not accuracy.** `cho_factor` raises `LinAlgError` on a negative
+eigenvalue; `np.linalg.inv` raises only on an *exactly* singular matrix. At eigenvalue `-1e-8` all
+300 diagonals came back negative (whole noise map NaN); at `-1.0`, **zero** did — no NaN, no warning,
+no error, and wrong numbers. That silent case is the failure mode worth fixing.
+
+The `abstract.py:805` note about "the round-off of factorizing the explicitly formed inverse" at
+`cond ~ 1e9` was cited as corroboration during planning. The A/B did not support it as an *accuracy*
+argument for the noise map; keep it as history, not as evidence.
+
+## What shipped
+
+- **new `reconstruction_covariance_matrix`** — `cho_solve(cho_factor(...))`, input *and* output
+  symmetrized, explicit finiteness guard raising `LinAlgError`.
+- **`reconstruction_noise_map`** — decoupled to `sqrt(diag(C))`. It was previously correct only
+  *incidentally*, via the elementwise sqrt; the invariant is now stated so it cannot silently become
+  a variance.
+- **`reconstruction_noise_map_with_covariance`** — deprecated alias, warning states the value change.
+- 5 new regression tests plus 2 from review; 2 plotter monkeypatch sites repointed.
+
+## The review caught a regression the first commit introduced
+
+Worth recording, because it is a trap anyone swapping `inv` for a scipy factorization will hit:
+
+**scipy's `cho_factor`/`cho_solve` default to `check_finite=True` and raise `ValueError`, not
+`LinAlgError`.** Both call sites (`inversion_plots.py:169`, `:397`) catch only `LinAlgError`, and the
+CSV writer's docstring explicitly promises a failure there may not abort the enclosing model-fit. So
+a NaN-contaminated curvature matrix would have killed a fit that previously wrote a `nan` column and
+continued. Measured: old code returned `[nan, nan]`; first fix raised `builtins.ValueError` past the
+guards.
+
+Fixed *inside* the property with an explicit finiteness check rather than by broadening the callers'
+`except` clauses — the contract "raises `LinAlgError` for any input that has no covariance" then
+holds for downstream callers too. `check_finite=False` is passed onward, so the check costs nothing.
+
+Second review find: **`cho_factor` reads only the upper triangle**, so an asymmetric input was
+silently inverted as though its lower triangle matched (`[[2.0, 0.5], [0.1, 2.0]]` → diag `0.5333`
+vs the true `0.5063`). Output symmetrization does not fix that; the input is symmetrized now too.
+
+Also corrected: the "no value change" claim for `reconstruction_noise_map` was overstated —
+algebraically identical, only *numerically* equivalent (~7e-15 at cond 1e3, ~4e-5 at cond 1e13).
+And the symmetry test was tautological, since `0.5 * (C + C.T)` is bitwise symmetric for any `C`; it
+now also asserts accuracy against an exactly-constructed ground truth.
+
+## Downstream API risk — resolved by grep, not assumption
+
+The deprecated alias changes values under an unchanged name, and `DeprecationWarning` is invisible by
+default when raised from library code. So it was checked:
+
+| Repo | `with_covariance` | `reconstruction_noise_map` |
+|---|---|---|
+| PyAutoGalaxy `3ca31bf` | none | none |
+| PyAutoLens `87e5827` | none | none |
+| autolens_workspace | none | **4 scripts + notebooks** |
+
+Control greps confirm the checkouts were real (394 / 237 / 465 `.py` files), so the nulls are genuine.
+**Not checked:** `autogalaxy_workspace`, the HowTo repos, external user code.
+
+`reconstruction_noise_map` **is** used, and this is the finding that matters for the sibling prompt:
+`autolens_workspace/scripts/{imaging,interferometer,group,multi_galaxy}/features/pixelization/source_science.py`
+compute `signal_to_noise_map = reconstruction / reconstruction_noise_map`. The noise map feeds
+published S/N maps on source reconstructions.
+
+## Still open — the larger half
+
+`draft/bug/autoarray/reconstruction_noise_map_solver_mismatch.md` (`Priority: high`,
+`Autonomy: human-required`) holds the estimator-level defects, deliberately excluded from this PR:
+
+1. The covariance is that of the **unconstrained** Warren & Dye solve, but
+   `use_positive_only_solver: true` is the shipped default, so the reconstruction is an NNLS
+   active-set solve. A compact source pins a large fraction of the mesh at zero.
+2. The noise map ignores `zeroed_ids_to_keep` under `use_edge_zeroed_pixels: true`, re-admitting the
+   poorly-constrained boundary vertices the zeroing exists to remove.
+3. `use_edge_zeroed_pixels` is nested inside the positive-only branch, so turning that solver off
+   silently disables edge-zeroing.
+
+First job there is to instrument a real fit: **it was never established that a real
+`curvature_reg_matrix` is indefinite in a converged fit**, nor that the NNLS pinned fraction is
+actually large. Both were reasoned, not measured, and the whole estimator argument rests on the
+second.
+
+## Environment note
+
+Python 3.11 is too old for this repo (`requires-python >= 3.12`); `python3.12` was present and a venv
+there installed cleanly. Three `test_transformer.py` pynufft failures reproduce on clean `a6b07cd`
+in that sandbox and were **green in CI** — a local dependency artefact, not a repo problem.
+
+## Original prompt
+
 # `reconstruction_noise_map_with_covariance` — form the covariance properly, fix the sqrt
 
 Type: bug

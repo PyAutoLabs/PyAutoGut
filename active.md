@@ -24,3 +24,7 @@
   separate /repo_cleanup sweep so a destructive branch delete never rides a code diff.
 - repos:
   - PyAutoHands: feature/hands-hygiene-leftovers
+- rebased: 2026-08-22 onto main 90f108f (PyAutoHands#253, the dataset-allowlist guard) —
+  51da190 -> 86cd40e, force-pushed with --force-with-lease. No PR existed, so nothing was
+  orphaned. Clean rebase; the branch's own diff is byte-identical before and after, and the
+  suite is 374 passed (main's 370 + this branch's 4), so the parallel claim held.

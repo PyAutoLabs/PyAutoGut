@@ -28,7 +28,8 @@
 ## message-log-partition-tuple-shape
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1510 (issued 2026-08-22)
 - prompt: active/jax_011_message_log_partition_tuple_shape.md
-- status: library-dev
+- status: PRs open, awaiting human merge — PyAutoFit#1513 merges FIRST, then PyAutoNerves#152
+  (cap widen; its Galaxy/Lens-under-0.11 gate is verified green, table on the PR)
 - worktree: ~/Code/PyAutoLabs-wt/message-log-partition-tuple-shape
 - root-cause: jax 0.11 changed `jnp.broadcast_arrays` list -> tuple (NumPy 2 alignment), so
   `MessageInterface.shape`'s `isinstance(..., list)` JAX branch stops matching and falls

@@ -3,12 +3,11 @@
 Type: bug
 Target: autoarray
 Repos:
-- @PyAutoArray
 - @autolens_workspace_test
 Difficulty: medium
 Autonomy: supervised
 Priority: medium
-Status: formalised
+Status: in-review (PR autolens_workspace_test#264)
 
 Tracked as PyAutoArray#470. Found during
 `complete/2026/08/jax-grad-local-vs-ci-assertions.md`; **independent of that bug**
@@ -58,7 +57,30 @@ unexplained dirty tree after a routine smoke run, and — combined with the seve
 full-regime readers — is the same mixed-regime collision class as #260 in a
 dataset family the shape-based fix is structurally blind to (JSON, no FITS).
 
-## Options (a design call is needed — do not just pick one)
+## Design call — TAKEN 2026-08-22: option 2
+
+Resolved by the human at start_dev. An organism-wide sweep (every workspace's
+`!dataset/**` allowlist × every `should_simulate` call site that does not release
+the cap) found **exactly one** at-risk site — `visualization.py` itself. The class
+is a population of one, and six sibling scripts against this same dataset already
+declare `full_datasets`, so option 2 restores an established convention rather
+than papering over a library flaw. Option 3 is the right shape for a *recurring*
+class; the evidence says it does not recur.
+
+Two premises in the text below have since moved and are corrected here:
+
+- The `rmtree` is **no longer unconditional** — PyAutoArray#471 guards it with
+  `_is_capped_at_the_current_cap`. The defect survives anyway because that helper
+  reads `<dataset>/data.fits`, and this directory is JSON-only.
+- **Seven full-regime readers is an overstatement.** Of the 9 scripts touching
+  this dataset, 6 declare `full_datasets` and `modeling_visualization_jit.py`'s
+  `real_output` is a superset token that also releases the cap. The
+  `smoke_tests.txt` entry (`jax_likelihood/point.py`) is among the safe ones.
+
+Shipped as autolens_workspace_test#264. Guard + docstring follow-up filed at
+`draft/feature/pyautohands/dataset_allowlist_small_datasets_guard.md`.
+
+## Options as originally filed (superseded by the decision above)
 
 1. **Skip `rmtree` for git-tracked paths.** Cheap, but puts a git dependency in a
    library utility: wrong layer.

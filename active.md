@@ -28,8 +28,23 @@
 ## small-datasets-regime-stamp
 - issue: https://github.com/PyAutoLabs/PyAutoNerves/issues/153 (issued 2026-08-22, pre-existing — start_dev did NOT create it)
 - session: cloud web-github session, branch claude/small-datasets-regime-stamp-s3i9o7
-- status: library-dev — PLAN PRESENTED, awaiting human approval before any code edit
-  (prompt is Autonomy: supervised and this run has no --auto, so checkpoint 1 holds)
+- status: library-shipped, awaiting-merge — stopped at PR-open; merge is human
+- library-pr: https://github.com/PyAutoLabs/PyAutoNerves/pull/154 (write side, pending-release)
+- library-pr: https://github.com/PyAutoLabs/PyAutoArray/pull/474 (read side, pending-release)
+- MERGE ORDER: PyAutoNerves#154 must merge AND RELEASE before PyAutoArray#474. autoarray's
+  pyproject floor `autonerves>=2026.8.22.1` is currently the newest release on PyPI, so it
+  predates the stamp. Not a blocker (absent card -> unknown -> shape fallback, the designed
+  degradation) but until a stamped autonerves ships the read side has nothing to read.
+- workspace impact: NONE (option iii). No symbol removed/renamed/resignatured; the
+  zero-call-site property held across all 253 should_simulate sites and both
+  hdu_list_for_output_from sites. No /start_workspace needed.
+- gate: Heart NOT consulted — no PyAutoHeart checkout in this web-github session
+  (`pyauto-brain vitals` reports pyauto-heart not on PATH). Used the documented per-repo
+  suite fallback: PyAutoNerves 165 passed, PyAutoArray 1101 passed / 0 failed / 64 skipped.
+  The 11 failures seen earlier were missing optional deps (pynufft, numba) in the sandbox,
+  proven by installing them rather than assumed.
+- smoke test NOT run: the workspace smoke harness needs the full PyAutoLens stack and
+  datasets, neither available here. Worth running before merge.
 - prompt: active/small_datasets_regime_stamp_at_writer_funnel.md
 - worktree: n/a — web-github environment; clones at /home/user/pyautonerves, /home/user/pyautoarray
 - FINDING, corrected after deep research (an earlier note in this entry overstated the

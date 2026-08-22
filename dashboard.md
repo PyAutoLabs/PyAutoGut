@@ -137,7 +137,7 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
-<details><summary>📋 <a href="active/small_datasets_regime_stamp_at_writer_funnel.md">Stamp the small-datasets regime at the FITS writer funnel</a> — <a href="https://github.com/PyAutoLabs/PyAutoNerves/issues/153">issue #153</a> — library-dev — PLAN PRESENTED, awaiting human approval before any code edit</summary>
+<details><summary>📋 <a href="active/small_datasets_regime_stamp_at_writer_funnel.md">Stamp the small-datasets regime at the FITS writer funnel</a> — <a href="https://github.com/PyAutoLabs/PyAutoNerves/issues/153">issue #153</a> — library-shipped, awaiting-merge — stopped at PR-open; merge is human</summary>
 
 ```
 /start_dev active/small_datasets_regime_stamp_at_writer_funnel.md

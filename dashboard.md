@@ -8,7 +8,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 2 |
+| [In flight](#in-flight) (`active/`) | 3 |
 | [Parked](#parked) (`parked.md`) | 4 |
 | [Planned](#planned) (`planned.md`) | 6 |
 | [Backlog](#backlog) (`draft/`) | 150 |
@@ -143,6 +143,14 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
+<details><summary>📋 <a href="active/small_datasets_rmtree_of_committed_data.md">should_simulate rmtree's committed, gitignore-allowlisted datasets</a> — <a href="https://github.com/PyAutoLabs/PyAutoArray/issues/470">issue #470</a> — workspace-dev — implementation complete, PR open</summary>
+
+```
+/start_dev active/small_datasets_rmtree_of_committed_data.md
+```
+
+</details>
+
 ## Parked
 
 Started or scoped, not currently in flight — resume by moving the row back to `active.md`. Full detail in [`parked.md`](parked.md).
@@ -246,7 +254,244 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 **150** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **23** of them belong to an epic and are listed only under [Epics](#epics) below.
 
 <details>
-<summary><b>bug</b> — 34</summary>
+<summary><b>feature</b> — 29</summary>
+
+<details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md">Numba CPU likelihood phase 1: batched MGE convolution + operated-matrix</a> — autoarray · medium · supervised · high</summary>
+
+```
+/start_dev draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/autoarray/rectangular_bilinear_rtu_mesh_split.md">Rectangular mesh split: Bilinear (fast CPU default) vs RTU (advanced/GPU)</a> — autoarray · medium · supervised · high</summary>
+
+```
+/start_dev draft/feature/autoarray/rectangular_bilinear_rtu_mesh_split.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_kernel_cdf_fast_path.md">Numba CPU likelihood phase 2: kernel-CDF numba fast path (the</a> — autoarray · large · supervised · high</summary>
+
+```
+/start_dev draft/feature/autoarray/numba_cpu_likelihood_kernel_cdf_fast_path.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/autolens_profiling/jax_compile_time_profiling.md">Profile and speed up JAX likelihood-function compile times (all use</a> — autolens_profiling · large · supervised · high</summary>
+
+```
+/start_dev draft/feature/autolens_profiling/jax_compile_time_profiling.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/profiling/profiling_agent_jax_compile_time_scope.md">Give the Profiling Agent a compile-time axis — the arc</a> — profiling · large · supervised · high</summary>
+
+```
+/start_dev draft/feature/profiling/profiling_agent_jax_compile_time_scope.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/pyautohands/dataset_allowlist_small_datasets_guard.md">Guard: allowlisted datasets reachable from a capped <code>should_simulate</code> call site</a> — pyautohands · small · supervised · medium</summary>
+
+```
+/start_dev draft/feature/pyautohands/dataset_allowlist_small_datasets_guard.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/autofit/prior_exit_sampler_coverage.md">Which other searches need prior-support handling — coverage audit after</a> — autofit · medium · supervised · medium</summary>
+
+```
+/start_dev draft/feature/autofit/prior_exit_sampler_coverage.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/autofit/search_seed_reproducibility.md">Give PyAutoFit searches a <code>seed</code> — today no search can</a> — autofit · medium · supervised · medium</summary>
+
+```
+/start_dev draft/feature/autofit/search_seed_reproducibility.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/autoarray/multiwavelength_inversion.md">Can create a list of InversionMatrix objects for each dataset</a> — autoarray · medium · supervised · normal</summary>
+
+```
+/start_dev draft/feature/autoarray/multiwavelength_inversion.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/autolens_workspace/joss_cluster_benchmark_tuning.md">Tune cluster-scale JOSS benchmarks toward their 5-minute targets</a> — autolens_workspace · medium · supervised · normal</summary>
+
+```
+/start_dev draft/feature/autolens_workspace/joss_cluster_benchmark_tuning.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/pyautomind/complete_archive_wiki.md">Token-light wiki index over the complete/ archive</a> — pyautomind · medium · supervised · normal</summary>
+
+```
+/start_dev draft/feature/pyautomind/complete_archive_wiki.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/workspaces/group_los_halos.md">The imaging <code>features/advanced/los_halos</code> example needs improving and padding out before</a> — workspaces · medium · safe · normal</summary>
+
+```
+/start_dev draft/feature/workspaces/group_los_halos.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/workspaces/group_subhalo_sensitivity.md">The imaging <code>features/advanced/subhalo/sensitivity</code> example needs improving and padding out before</a> — workspaces · medium · safe · normal</summary>
+
+```
+/start_dev draft/feature/workspaces/group_subhalo_sensitivity.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/autoarray/arcsecond_to_decimal.md">Claude Development Prompt: Arcsecond Tick Label Decimal Placement</a> — autoarray · large · supervised · normal</summary>
+
+```
+/start_dev draft/feature/autoarray/arcsecond_to_decimal.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/autofit/ep_analytic_updates.md">EP analytic updates — implement the four planned work packages</a> — autofit · large · supervised · normal</summary>
+
+```
+/start_dev draft/feature/autofit/ep_analytic_updates.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/autofit_assistant/remote_mcp_deployment_tiers.md">Remote-MCP deployment tiers (2 + 3) for the results-inspector server</a> — autofit_assistant · large · human-required · normal</summary>
+
+```
+/start_dev draft/feature/autofit_assistant/remote_mcp_deployment_tiers.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/autolens_profiling/search_settings_estimation_infrastructure.md">Search settings-estimation + profiling infrastructure (n_starts / batch_size / n_batch)</a> — autolens_profiling · large · supervised · normal</summary>
+
+```
+/start_dev draft/feature/autolens_profiling/search_settings_estimation_infrastructure.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/autolens_workspace/oversampled_psf_dataset_adoption.md">Adopt oversampled PSFs in the start-here dataset chain (option a)</a> — autolens_workspace · large · supervised · normal</summary>
+
+```
+/start_dev draft/feature/autolens_workspace/oversampled_psf_dataset_adoption.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/autoarray/rectangular_multi_submesh.md">Follow-up to <code>rectangular_adapt_cdf.md</code> (issue #322) and Path A</a> — autoarray · too-large · supervised · normal</summary>
+
+```
+/start_dev draft/feature/autoarray/rectangular_multi_submesh.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/autogalaxy/piemass_potential.md"><code>PIEMass.potential_2d_from</code>: implement the missing lensing potential</a> — autogalaxy · too-large · supervised · normal</summary>
+
+```
+/start_dev draft/feature/autogalaxy/piemass_potential.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/autolens_jax_joss/autolens_jax_joss_benchmark_repo.md">autolens_jax_joss benchmark repo + real-data start_here pairing</a> — autolens_jax_joss · too-large · supervised · normal</summary>
+
+```
+/start_dev draft/feature/autolens_jax_joss/autolens_jax_joss_benchmark_repo.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/jax_substructure/5_prng_key_vmap_noise.md">Context: PyAutoLens issue #542 follow-up (Gap 1, deferred during the</a> — jax_substructure · too-large · supervised · normal</summary>
+
+```
+/start_dev draft/feature/jax_substructure/5_prng_key_vmap_noise.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/jax_substructure/6_deflection_equivalence_test.md">Context: PyAutoLens issue #542 follow-up (Gap 2, deferred during the</a> — jax_substructure · too-large · supervised · normal</summary>
+
+```
+/start_dev draft/feature/jax_substructure/6_deflection_equivalence_test.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/workspaces/restore_multiple_sources_lensing_of_lens.md">Once https://github.com/PyAutoLabs/PyAutoLens/issues/480 is fixed (PointSolver</a> — workspaces · too-large · supervised · normal</summary>
+
+```
+/start_dev draft/feature/workspaces/restore_multiple_sources_lensing_of_lens.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/autogalaxy/dpie_sigma0_parameterization.md">dPIE: optional central-dispersion (sigma_0) parameterization</a> — autogalaxy · small · supervised · low</summary>
+
+```
+/start_dev draft/feature/autogalaxy/dpie_sigma0_parameterization.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/pyautohands/release_board_run_logs_enrichment.md">Release board: local run_logs enrichment</a> — pyautohands · small · supervised · low</summary>
+
+```
+/start_dev draft/feature/pyautohands/release_board_run_logs_enrichment.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/workspaces/gallery_runner_missing_tiers.md">Gallery runner: add visualization_upper + decide the modeling_visualization_jit tier</a> — workspaces · small · supervised · low</summary>
+
+```
+/start_dev draft/feature/workspaces/gallery_runner_missing_tiers.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/autonomy/10_scheduled_runs.md">Scheduled runs — overnight queue passes with a morning report</a> — autonomy · medium · supervised · low</summary>
+
+```
+/start_dev draft/feature/autonomy/10_scheduled_runs.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/pyautomind/repos-sync-config-stamper.md">Teach repos_sync --write to stamp organ config surfaces</a> — pyautomind · hard · supervised · low</summary>
+
+```
+/start_dev draft/feature/pyautomind/repos-sync-config-stamper.md
+```
+
+</details>
+
+</details>
+
+<details>
+<summary><b>bug</b> — 33</summary>
 
 <details><summary>📋 <a href="draft/bug/health_fixes/jax_runtime_and_parity.md">Fix release JAX runtime compatibility and likelihood parity</a> — health_fixes · too-large · supervised · high</summary>
 
@@ -292,14 +537,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/bug/pyautoheart/script_timing_baselines_orphaned_and_window_filled.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/autoarray/small_datasets_rmtree_of_committed_data.md">should_simulate rmtree's committed, gitignore-allowlisted datasets</a> — autoarray · medium · supervised · medium</summary>
-
-```
-/start_dev draft/bug/autoarray/small_datasets_rmtree_of_committed_data.md
 ```
 
 </details>
@@ -516,235 +753,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/bug/autolens/interferometer_release_leg_oom.md
-```
-
-</details>
-
-</details>
-
-<details>
-<summary><b>feature</b> — 28</summary>
-
-<details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md">Numba CPU likelihood phase 1: batched MGE convolution + operated-matrix</a> — autoarray · medium · supervised · high</summary>
-
-```
-/start_dev draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/autoarray/rectangular_bilinear_rtu_mesh_split.md">Rectangular mesh split: Bilinear (fast CPU default) vs RTU (advanced/GPU)</a> — autoarray · medium · supervised · high</summary>
-
-```
-/start_dev draft/feature/autoarray/rectangular_bilinear_rtu_mesh_split.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_kernel_cdf_fast_path.md">Numba CPU likelihood phase 2: kernel-CDF numba fast path (the</a> — autoarray · large · supervised · high</summary>
-
-```
-/start_dev draft/feature/autoarray/numba_cpu_likelihood_kernel_cdf_fast_path.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/autolens_profiling/jax_compile_time_profiling.md">Profile and speed up JAX likelihood-function compile times (all use</a> — autolens_profiling · large · supervised · high</summary>
-
-```
-/start_dev draft/feature/autolens_profiling/jax_compile_time_profiling.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/profiling/profiling_agent_jax_compile_time_scope.md">Give the Profiling Agent a compile-time axis — the arc</a> — profiling · large · supervised · high</summary>
-
-```
-/start_dev draft/feature/profiling/profiling_agent_jax_compile_time_scope.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/autofit/prior_exit_sampler_coverage.md">Which other searches need prior-support handling — coverage audit after</a> — autofit · medium · supervised · medium</summary>
-
-```
-/start_dev draft/feature/autofit/prior_exit_sampler_coverage.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/autofit/search_seed_reproducibility.md">Give PyAutoFit searches a <code>seed</code> — today no search can</a> — autofit · medium · supervised · medium</summary>
-
-```
-/start_dev draft/feature/autofit/search_seed_reproducibility.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/autoarray/multiwavelength_inversion.md">Can create a list of InversionMatrix objects for each dataset</a> — autoarray · medium · supervised · normal</summary>
-
-```
-/start_dev draft/feature/autoarray/multiwavelength_inversion.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/autolens_workspace/joss_cluster_benchmark_tuning.md">Tune cluster-scale JOSS benchmarks toward their 5-minute targets</a> — autolens_workspace · medium · supervised · normal</summary>
-
-```
-/start_dev draft/feature/autolens_workspace/joss_cluster_benchmark_tuning.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/pyautomind/complete_archive_wiki.md">Token-light wiki index over the complete/ archive</a> — pyautomind · medium · supervised · normal</summary>
-
-```
-/start_dev draft/feature/pyautomind/complete_archive_wiki.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/workspaces/group_los_halos.md">The imaging <code>features/advanced/los_halos</code> example needs improving and padding out before</a> — workspaces · medium · safe · normal</summary>
-
-```
-/start_dev draft/feature/workspaces/group_los_halos.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/workspaces/group_subhalo_sensitivity.md">The imaging <code>features/advanced/subhalo/sensitivity</code> example needs improving and padding out before</a> — workspaces · medium · safe · normal</summary>
-
-```
-/start_dev draft/feature/workspaces/group_subhalo_sensitivity.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/autoarray/arcsecond_to_decimal.md">Claude Development Prompt: Arcsecond Tick Label Decimal Placement</a> — autoarray · large · supervised · normal</summary>
-
-```
-/start_dev draft/feature/autoarray/arcsecond_to_decimal.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/autofit/ep_analytic_updates.md">EP analytic updates — implement the four planned work packages</a> — autofit · large · supervised · normal</summary>
-
-```
-/start_dev draft/feature/autofit/ep_analytic_updates.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/autofit_assistant/remote_mcp_deployment_tiers.md">Remote-MCP deployment tiers (2 + 3) for the results-inspector server</a> — autofit_assistant · large · human-required · normal</summary>
-
-```
-/start_dev draft/feature/autofit_assistant/remote_mcp_deployment_tiers.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/autolens_profiling/search_settings_estimation_infrastructure.md">Search settings-estimation + profiling infrastructure (n_starts / batch_size / n_batch)</a> — autolens_profiling · large · supervised · normal</summary>
-
-```
-/start_dev draft/feature/autolens_profiling/search_settings_estimation_infrastructure.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/autolens_workspace/oversampled_psf_dataset_adoption.md">Adopt oversampled PSFs in the start-here dataset chain (option a)</a> — autolens_workspace · large · supervised · normal</summary>
-
-```
-/start_dev draft/feature/autolens_workspace/oversampled_psf_dataset_adoption.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/autoarray/rectangular_multi_submesh.md">Follow-up to <code>rectangular_adapt_cdf.md</code> (issue #322) and Path A</a> — autoarray · too-large · supervised · normal</summary>
-
-```
-/start_dev draft/feature/autoarray/rectangular_multi_submesh.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/autogalaxy/piemass_potential.md"><code>PIEMass.potential_2d_from</code>: implement the missing lensing potential</a> — autogalaxy · too-large · supervised · normal</summary>
-
-```
-/start_dev draft/feature/autogalaxy/piemass_potential.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/autolens_jax_joss/autolens_jax_joss_benchmark_repo.md">autolens_jax_joss benchmark repo + real-data start_here pairing</a> — autolens_jax_joss · too-large · supervised · normal</summary>
-
-```
-/start_dev draft/feature/autolens_jax_joss/autolens_jax_joss_benchmark_repo.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/jax_substructure/5_prng_key_vmap_noise.md">Context: PyAutoLens issue #542 follow-up (Gap 1, deferred during the</a> — jax_substructure · too-large · supervised · normal</summary>
-
-```
-/start_dev draft/feature/jax_substructure/5_prng_key_vmap_noise.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/jax_substructure/6_deflection_equivalence_test.md">Context: PyAutoLens issue #542 follow-up (Gap 2, deferred during the</a> — jax_substructure · too-large · supervised · normal</summary>
-
-```
-/start_dev draft/feature/jax_substructure/6_deflection_equivalence_test.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/workspaces/restore_multiple_sources_lensing_of_lens.md">Once https://github.com/PyAutoLabs/PyAutoLens/issues/480 is fixed (PointSolver</a> — workspaces · too-large · supervised · normal</summary>
-
-```
-/start_dev draft/feature/workspaces/restore_multiple_sources_lensing_of_lens.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/autogalaxy/dpie_sigma0_parameterization.md">dPIE: optional central-dispersion (sigma_0) parameterization</a> — autogalaxy · small · supervised · low</summary>
-
-```
-/start_dev draft/feature/autogalaxy/dpie_sigma0_parameterization.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/pyautohands/release_board_run_logs_enrichment.md">Release board: local run_logs enrichment</a> — pyautohands · small · supervised · low</summary>
-
-```
-/start_dev draft/feature/pyautohands/release_board_run_logs_enrichment.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/workspaces/gallery_runner_missing_tiers.md">Gallery runner: add visualization_upper + decide the modeling_visualization_jit tier</a> — workspaces · small · supervised · low</summary>
-
-```
-/start_dev draft/feature/workspaces/gallery_runner_missing_tiers.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/autonomy/10_scheduled_runs.md">Scheduled runs — overnight queue passes with a morning report</a> — autonomy · medium · supervised · low</summary>
-
-```
-/start_dev draft/feature/autonomy/10_scheduled_runs.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/pyautomind/repos-sync-config-stamper.md">Teach repos_sync --write to stamp organ config surfaces</a> — pyautomind · hard · supervised · low</summary>
-
-```
-/start_dev draft/feature/pyautomind/repos-sync-config-stamper.md
 ```
 
 </details>

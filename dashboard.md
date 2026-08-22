@@ -15,7 +15,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 31
+**Highest priority** (filed as `high`) — showing 12 of 18
 
 <details><summary>📋 <a href="draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — medium · safe · high</summary>
 
@@ -41,22 +41,6 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 </details>
 
-<details><summary>📋 <a href="draft/research/graphical_ep/analytic_gaussian_benchmark.md">Analytic Gaussian benchmark: closed-form validation of graphical + EP</a> — graphical_ep · medium · supervised · high</summary>
-
-```
-/start_dev draft/research/graphical_ep/analytic_gaussian_benchmark.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/docs/workspaces/cluster_regime_narrative.md">Cluster package: point-source-default narrative + extended-source follow-up feature</a> — workspaces · medium · supervised · high</summary>
-
-```
-/start_dev draft/docs/workspaces/cluster_regime_narrative.md
-```
-
-</details>
-
 <details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_kernel_cdf_fast_path.md">Numba CPU likelihood phase 2: kernel-CDF numba fast path (the</a> — autoarray · large · supervised · high</summary>
 
 ```
@@ -73,30 +57,6 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 </details>
 
-<details><summary>📋 <a href="draft/feature/autolens/area_magnification_leggos.md">Area magnification (LEGGOS-style): per-pixel inversion sum as primary; ShapeSolver rehabilitate-or-retire</a> — autolens · large · supervised · high</summary>
-
-```
-/start_dev draft/feature/autolens/area_magnification_leggos.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/autolens/magnification_maps_visualization.md">Magnification maps: image-plane contour maps, source-plane mesh maps, uncertainty maps</a> — autolens · large · supervised · high</summary>
-
-```
-/start_dev draft/feature/autolens/magnification_maps_visualization.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/autolens/point_magnification_api.md">Magnification at a point: surface the existing API in source_science</a> — autolens · large · supervised · high</summary>
-
-```
-/start_dev draft/feature/autolens/point_magnification_api.md
-```
-
-</details>
-
 <details><summary>📋 <a href="draft/feature/autolens_profiling/jax_compile_time_profiling.md">Profile and speed up JAX likelihood-function compile times (all use</a> — autolens_profiling · large · supervised · high</summary>
 
 ```
@@ -109,6 +69,46 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 ```
 /start_dev draft/feature/profiling/profiling_agent_jax_compile_time_scope.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/research/autoarray/delaunay_research.md">Deep research: Can we speed up Delaunay in PyAutoArray?</a> — autoarray · too-large · supervised · high</summary>
+
+```
+/start_dev draft/research/autoarray/delaunay_research.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/research/autofit/priors_and_messages_math_audit.md">Census of priors and messages — confirmed bugs + redesign</a> — autofit · too-large · supervised · high</summary>
+
+```
+/start_dev draft/research/autofit/priors_and_messages_math_audit.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/refactor/autogalaxy/einstein_radius_jit_native_seed_finder.md"><code>einstein_radius_jit_from</code>: replace static init_guess with a JAX-native seed finder</a> — autogalaxy · too-large · supervised · high</summary>
+
+```
+/start_dev draft/refactor/autogalaxy/einstein_radius_jit_native_seed_finder.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/docs/autolens/split_lensing_regimes.md">Split lensing regimes: multi_galaxy / group / cluster (epic plan)</a> — autolens · too-large · supervised · high</summary>
+
+```
+/start_dev draft/docs/autolens/split_lensing_regimes.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/test/autolens_workspace_developer/mge_jit_regression_rebaseline.md">Re-baseline the MGE imaging JIT profiling regression value</a> — autolens_workspace_developer · too-large · supervised · high</summary>
+
+```
+/start_dev draft/test/autolens_workspace_developer/mge_jit_regression_rebaseline.md
 ```
 
 </details>
@@ -133,34 +133,6 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/hands_hygiene_leftovers.md
-```
-
-</details>
-
-## Epics
-
-Long-running multi-phase programmes. Each 📋 prompt has Claude read the epic's ledger, work out where it stands, and continue from the next logical point — no hunting for the paired issue. Full record in [`epics.md`](epics.md).
-
-<details><summary>📋 <b>JAX profiling — inference programme</b> — ledger: `autolens_profiling/results/notes/inference/PROGRAMME.md`</summary>
-
-```
-Continue the 'JAX profiling — inference programme' epic. Its canonical state lives in autolens_profiling/results/notes/inference/PROGRAMME.md — read that ledger (and any DECISIONS/RESULTS files beside it) first. Cross-check this epic's entry in PyAutoMind/epics.md, any related rows in PyAutoMind/active.md, and the referenced repos' open issues and PRs, to work out the last completed phase and what is currently in flight. Then pick the next logical step and continue it through the normal workflow (/start_dev — filing the phase's prompt first if none exists), updating the ledger as the work advances. Note: DECISIONS.md (append-only gate log) and phase_<NN>_*/RESULTS.md sit beside the ledger; slices ship as autolens_profiling issues/PRs, not Mind prompts.
-```
-
-</details>
-
-<details><summary>📋 <b>Cluster strong lensing — Source &amp; Cluster arc</b> — ledger: `draft/feature/autolens/source_cluster_arc.md`</summary>
-
-```
-Continue the 'Cluster strong lensing — Source & Cluster arc' epic. Its canonical state lives in draft/feature/autolens/source_cluster_arc.md — read that ledger (and any DECISIONS/RESULTS files beside it) first. Cross-check this epic's entry in PyAutoMind/epics.md, any related rows in PyAutoMind/active.md, and the referenced repos' open issues and PRs, to work out the last completed phase and what is currently in flight. Then pick the next logical step and continue it through the normal workflow (/start_dev — filing the phase's prompt first if none exists), updating the ledger as the work advances. Note: 12 phased prompts under draft/; issue phases ONE at a time as predecessors near shipping — no bulk issue queues.
-```
-
-</details>
-
-<details><summary>📋 <b>Expectation propagation (EP) campaign</b> — ledger: `draft/research/graphical_ep/ep_campaign.md`</summary>
-
-```
-Continue the 'Expectation propagation (EP) campaign' epic. Its canonical state lives in draft/research/graphical_ep/ep_campaign.md — read that ledger (and any DECISIONS/RESULTS files beside it) first. Cross-check this epic's entry in PyAutoMind/epics.md, any related rows in PyAutoMind/active.md, and the referenced repos' open issues and PRs, to work out the last completed phase and what is currently in flight. Then pick the next logical step and continue it through the normal workflow (/start_dev — filing the phase's prompt first if none exists), updating the ledger as the work advances. Note: umbrella phase map — each phase's real content lives in its own prompt under draft/research/graphical_ep/; the campaign file itself is never issued.
 ```
 
 </details>
@@ -257,10 +229,10 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**144** filed prompts, not started. Each section is sorted most-pickable first (priority, then size).
+**144** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **23** of them belong to an epic and are listed only under [Epics](#epics) below.
 
 <details>
-<summary><b>feature</b> — 36</summary>
+<summary><b>feature</b> — 28</summary>
 
 <details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md">Numba CPU likelihood phase 1: batched MGE convolution + operated-matrix</a> — autoarray · medium · supervised · high</summary>
 
@@ -286,30 +258,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/feature/autolens/area_magnification_leggos.md">Area magnification (LEGGOS-style): per-pixel inversion sum as primary; ShapeSolver rehabilitate-or-retire</a> — autolens · large · supervised · high</summary>
-
-```
-/start_dev draft/feature/autolens/area_magnification_leggos.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/autolens/magnification_maps_visualization.md">Magnification maps: image-plane contour maps, source-plane mesh maps, uncertainty maps</a> — autolens · large · supervised · high</summary>
-
-```
-/start_dev draft/feature/autolens/magnification_maps_visualization.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/autolens/point_magnification_api.md">Magnification at a point: surface the existing API in source_science</a> — autolens · large · supervised · high</summary>
-
-```
-/start_dev draft/feature/autolens/point_magnification_api.md
-```
-
-</details>
-
 <details><summary>📋 <a href="draft/feature/autolens_profiling/jax_compile_time_profiling.md">Profile and speed up JAX likelihood-function compile times (all use</a> — autolens_profiling · large · supervised · high</summary>
 
 ```
@@ -322,22 +270,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/feature/profiling/profiling_agent_jax_compile_time_scope.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/workspaces/cluster_source_science.md">Cluster source_science.py: robust magnification science at cluster scale (no meshes</a> — workspaces · large · supervised · high</summary>
-
-```
-/start_dev draft/feature/workspaces/cluster_source_science.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/autolens/source_cluster_arc.md">Source &amp; Cluster arc — magnification science, PointSolver trust, cluster</a> — autolens · too-large · supervised · high</summary>
-
-```
-/start_dev draft/feature/autolens/source_cluster_arc.md
 ```
 
 </details>
@@ -362,14 +294,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/feature/autoarray/multiwavelength_inversion.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/autofit/ep_lbfgs_jax.md">The project @z_projects/ic50_workspace is our IC50 use case which we</a> — autofit · medium · safe · normal</summary>
-
-```
-/start_dev draft/feature/autofit/ep_lbfgs_jax.md
 ```
 
 </details>
@@ -430,14 +354,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/feature/autolens/magnification_errors_posterior_draws.md">Magnification errors via posterior draws, standalone in source_science</a> — autolens · large · supervised · normal</summary>
-
-```
-/start_dev draft/feature/autolens/magnification_errors_posterior_draws.md
-```
-
-</details>
-
 <details><summary>📋 <a href="draft/feature/autolens_profiling/search_settings_estimation_infrastructure.md">Search settings-estimation + profiling infrastructure (n_starts / batch_size / n_batch)</a> — autolens_profiling · large · supervised · normal</summary>
 
 ```
@@ -450,14 +366,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/feature/autolens_workspace/oversampled_psf_dataset_adoption.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/workspaces/cluster_pixelized_analysisfactor.md">Cluster pixelized-source refinement: per-source masks via AnalysisFactor</a> — workspaces · large · supervised · normal</summary>
-
-```
-/start_dev draft/feature/workspaces/cluster_pixelized_analysisfactor.md
 ```
 
 </details>
@@ -553,23 +461,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>bug</b> — 34</summary>
-
-<details><summary>📋 <a href="draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md">EP hierarchical parent-scale collapse: cure the basin, or document the</a> — autofit · too-large · human-required · high</summary>
-
-```
-/start_dev draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/autolens/point_solver_error_bisect_health.md">PointSolver error-behavior change: bisect the 2025-11→2026-05 candidates, then health-harden</a> — autolens · too-large · supervised · high</summary>
-
-```
-/start_dev draft/bug/autolens/point_solver_error_bisect_health.md
-```
-
-</details>
+<summary><b>bug</b> — 32</summary>
 
 <details><summary>📋 <a href="draft/bug/health_fixes/jax_runtime_and_parity.md">Fix release JAX runtime compatibility and likelihood parity</a> — health_fixes · too-large · supervised · high</summary>
 
@@ -830,15 +722,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>research</b> — 25</summary>
-
-<details><summary>📋 <a href="draft/research/graphical_ep/analytic_gaussian_benchmark.md">Analytic Gaussian benchmark: closed-form validation of graphical + EP</a> — graphical_ep · medium · supervised · high</summary>
-
-```
-/start_dev draft/research/graphical_ep/analytic_gaussian_benchmark.md
-```
-
-</details>
+<summary><b>research</b> — 16</summary>
 
 <details><summary>📋 <a href="draft/research/autoarray/delaunay_research.md">Deep research: Can we speed up Delaunay in PyAutoArray?</a> — autoarray · too-large · supervised · high</summary>
 
@@ -852,30 +736,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/research/autofit/priors_and_messages_math_audit.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/research/graphical_ep/ep_campaign.md">EP campaign — phase map for the 2026 Q3 graphical/EP</a> — graphical_ep · too-large · supervised · high</summary>
-
-```
-/start_dev draft/research/graphical_ep/ep_campaign.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/research/graphical_ep/ep_scoping.md">Expectation Propagation Scale-Up — Scoping</a> — graphical_ep · too-large · supervised · high</summary>
-
-```
-/start_dev draft/research/graphical_ep/ep_scoping.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/research/graphical_ep/graphical_scoping.md">Graphical Model Scale-Up — Scoping</a> — graphical_ep · too-large · supervised · high</summary>
-
-```
-/start_dev draft/research/graphical_ep/graphical_scoping.md
 ```
 
 </details>
@@ -936,22 +796,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/research/graphical_ep/slope_hierarchy_methods_writeup.md">slope_hierarchy: methods write-up (NUTS headline, EP cautionary)</a> — graphical_ep · medium · supervised · normal</summary>
-
-```
-/start_dev draft/research/graphical_ep/slope_hierarchy_methods_writeup.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/research/graphical_ep/slope_hierarchy_n25_scale_up.md">slope_hierarchy: scale the hierarchical slope recovery to N=25–50</a> — graphical_ep · medium · supervised · normal</summary>
-
-```
-/start_dev draft/research/graphical_ep/slope_hierarchy_n25_scale_up.md
-```
-
-</details>
-
 <details><summary>📋 <a href="draft/research/pyautomemory/checkerboard_psf_mismatch_residual_diagnostic.md">Checkerboard PSF-mismatch residual diagnostic — research + document + ingest</a> — pyautomemory · medium · supervised · normal</summary>
 
 ```
@@ -964,30 +808,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/research/autofit/autofit_profiling_bootstrap.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/research/autolens/cluster_extended_source_inference.md">Cluster extended-source inference: gradient-based fitting building on JAX knowledge</a> — autolens · large · supervised · normal</summary>
-
-```
-/start_dev draft/research/autolens/cluster_extended_source_inference.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/research/autolens_profiling/point_solver_profiling_cells.md">PointSolver profiling cells: lensed quasar → cluster runtime tier →</a> — autolens_profiling · large · supervised · normal</summary>
-
-```
-/start_dev draft/research/autolens_profiling/point_solver_profiling_cells.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/research/graphical_ep/ic50_ep_scale_up.md">IC50 use case: EP end-to-end with existing derived-variable handling</a> — graphical_ep · large · supervised · normal</summary>
-
-```
-/start_dev draft/research/graphical_ep/ic50_ep_scale_up.md
 ```
 
 </details>
@@ -1176,15 +996,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>docs</b> — 16</summary>
-
-<details><summary>📋 <a href="draft/docs/workspaces/cluster_regime_narrative.md">Cluster package: point-source-default narrative + extended-source follow-up feature</a> — workspaces · medium · supervised · high</summary>
-
-```
-/start_dev draft/docs/workspaces/cluster_regime_narrative.md
-```
-
-</details>
+<summary><b>docs</b> — 14</summary>
 
 <details><summary>📋 <a href="draft/docs/autolens/multi_galaxy_package.md">multi_galaxy package: new regime package in autolens_workspace</a> — autolens · large · supervised · high</summary>
 
@@ -1258,14 +1070,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/docs/howtolens/cluster_pixelized_source.md">HowToLens cluster tutorial: show a pixelized source + fix the</a> — howtolens · large · supervised · normal</summary>
-
-```
-/start_dev draft/docs/howtolens/cluster_pixelized_source.md
-```
-
-</details>
-
 <details><summary>📋 <a href="draft/docs/howtolens/ch4_mask_overlay_never_drawn.md">HowToLens ch4 tutorial 3: mask overlay is never actually drawn</a> — howtolens · small · supervised · low</summary>
 
 ```
@@ -1309,15 +1113,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>refactor</b> — 7</summary>
-
-<details><summary>📋 <a href="draft/refactor/autogalaxy/critical_curves_dispatch_cluster.md">Critical curves: implement context-aware dispatch, dedupe engines, make clusters honor</a> — autogalaxy · too-large · supervised · high</summary>
-
-```
-/start_dev draft/refactor/autogalaxy/critical_curves_dispatch_cluster.md
-```
-
-</details>
+<summary><b>refactor</b> — 6</summary>
 
 <details><summary>📋 <a href="draft/refactor/autogalaxy/einstein_radius_jit_native_seed_finder.md"><code>einstein_radius_jit_from</code>: replace static init_guess with a JAX-native seed finder</a> — autogalaxy · too-large · supervised · high</summary>
 
@@ -1370,7 +1166,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>test</b> — 4</summary>
+<summary><b>test</b> — 3</summary>
 
 <details><summary>📋 <a href="draft/test/autolens_workspace_developer/mge_jit_regression_rebaseline.md">Re-baseline the MGE imaging JIT profiling regression value</a> — autolens_workspace_developer · too-large · supervised · high</summary>
 
@@ -1384,14 +1180,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/test/workspaces/restore_workspace_test_likelihood_baselines.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/test/workspaces/mesh_magnification_correctness.md">Mesh magnification correctness: simulate-and-recover across every mesh variant</a> — workspaces · large · supervised · normal</summary>
-
-```
-/start_dev draft/test/workspaces/mesh_magnification_correctness.md
 ```
 
 </details>
@@ -1450,6 +1238,228 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/release/autocti/cti_release_train_wiring.md
+```
+
+</details>
+
+</details>
+
+## Epics
+
+Long-running multi-phase programmes. Each epic's 📋 prompt has Claude read its ledger, work out where it stands, and continue from the next logical point. Members are worked in order through the epic's ledger — continue the epic rather than starting one standalone. Full record in [`epics.md`](epics.md).
+
+<details><summary>📋 <b>JAX profiling — inference programme</b> — ledger: `autolens_profiling/results/notes/inference/PROGRAMME.md`</summary>
+
+```
+Continue the 'JAX profiling — inference programme' epic. Its canonical state lives in autolens_profiling/results/notes/inference/PROGRAMME.md — read that ledger (and any DECISIONS/RESULTS files beside it) first. Cross-check this epic's entry in PyAutoMind/epics.md, any related rows in PyAutoMind/active.md, and the referenced repos' open issues and PRs, to work out the last completed phase and what is currently in flight. Then pick the next logical step and continue it through the normal workflow (/start_dev — filing the phase's prompt first if none exists), updating the ledger as the work advances. Note: DECISIONS.md (append-only gate log) and phase_<NN>_*/RESULTS.md sit beside the ledger; slices ship as autolens_profiling issues/PRs, not Mind prompts.
+```
+
+</details>
+
+<details>
+<summary><b>Cluster strong lensing — Source &amp; Cluster arc</b> — 14 queued prompt(s), in order</summary>
+
+<details><summary>📋 <b>Cluster strong lensing — Source &amp; Cluster arc</b> — ledger: `draft/feature/autolens/source_cluster_arc.md`</summary>
+
+```
+Continue the 'Cluster strong lensing — Source & Cluster arc' epic. Its canonical state lives in draft/feature/autolens/source_cluster_arc.md — read that ledger (and any DECISIONS/RESULTS files beside it) first. Cross-check this epic's entry in PyAutoMind/epics.md, any related rows in PyAutoMind/active.md, and the referenced repos' open issues and PRs, to work out the last completed phase and what is currently in flight. Then pick the next logical step and continue it through the normal workflow (/start_dev — filing the phase's prompt first if none exists), updating the ledger as the work advances. Note: 12 phased prompts under draft/; issue phases ONE at a time as predecessors near shipping — no bulk issue queues.
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/autolens/point_solver_error_bisect_health.md">PointSolver error-behavior change: bisect the 2025-11→2026-05 candidates, then health-harden</a> — autolens · too-large · supervised · high</summary>
+
+```
+/start_dev draft/bug/autolens/point_solver_error_bisect_health.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/research/autolens_profiling/point_solver_profiling_cells.md">PointSolver profiling cells: lensed quasar → cluster runtime tier →</a> — autolens_profiling · large · supervised · normal</summary>
+
+```
+/start_dev draft/research/autolens_profiling/point_solver_profiling_cells.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/refactor/autogalaxy/critical_curves_dispatch_cluster.md">Critical curves: implement context-aware dispatch, dedupe engines, make clusters honor</a> — autogalaxy · too-large · supervised · high</summary>
+
+```
+/start_dev draft/refactor/autogalaxy/critical_curves_dispatch_cluster.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/test/workspaces/mesh_magnification_correctness.md">Mesh magnification correctness: simulate-and-recover across every mesh variant</a> — workspaces · large · supervised · normal</summary>
+
+```
+/start_dev draft/test/workspaces/mesh_magnification_correctness.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/autolens/point_magnification_api.md">Magnification at a point: surface the existing API in source_science</a> — autolens · large · supervised · high</summary>
+
+```
+/start_dev draft/feature/autolens/point_magnification_api.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/autolens/area_magnification_leggos.md">Area magnification (LEGGOS-style): per-pixel inversion sum as primary; ShapeSolver rehabilitate-or-retire</a> — autolens · large · supervised · high</summary>
+
+```
+/start_dev draft/feature/autolens/area_magnification_leggos.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/autolens/magnification_errors_posterior_draws.md">Magnification errors via posterior draws, standalone in source_science</a> — autolens · large · supervised · normal</summary>
+
+```
+/start_dev draft/feature/autolens/magnification_errors_posterior_draws.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/autolens/magnification_maps_visualization.md">Magnification maps: image-plane contour maps, source-plane mesh maps, uncertainty maps</a> — autolens · large · supervised · high</summary>
+
+```
+/start_dev draft/feature/autolens/magnification_maps_visualization.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/workspaces/cluster_source_science.md">Cluster source_science.py: robust magnification science at cluster scale (no meshes</a> — workspaces · large · supervised · high</summary>
+
+```
+/start_dev draft/feature/workspaces/cluster_source_science.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/docs/workspaces/cluster_regime_narrative.md">Cluster package: point-source-default narrative + extended-source follow-up feature</a> — workspaces · medium · supervised · high</summary>
+
+```
+/start_dev draft/docs/workspaces/cluster_regime_narrative.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/workspaces/cluster_pixelized_analysisfactor.md">Cluster pixelized-source refinement: per-source masks via AnalysisFactor</a> — workspaces · large · supervised · normal</summary>
+
+```
+/start_dev draft/feature/workspaces/cluster_pixelized_analysisfactor.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/research/autolens/cluster_extended_source_inference.md">Cluster extended-source inference: gradient-based fitting building on JAX knowledge</a> — autolens · large · supervised · normal</summary>
+
+```
+/start_dev draft/research/autolens/cluster_extended_source_inference.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/docs/howtolens/cluster_pixelized_source.md">HowToLens cluster tutorial: show a pixelized source + fix the</a> — howtolens · large · supervised · normal</summary>
+
+```
+/start_dev draft/docs/howtolens/cluster_pixelized_source.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/autolens/source_cluster_arc.md">Source &amp; Cluster arc — magnification science, PointSolver trust, cluster</a> — autolens · too-large · supervised · high</summary>
+
+```
+/start_dev draft/feature/autolens/source_cluster_arc.md
+```
+
+</details>
+
+</details>
+
+<details>
+<summary><b>Expectation propagation (EP) campaign</b> — 9 queued prompt(s), in order</summary>
+
+<details><summary>📋 <b>Expectation propagation (EP) campaign</b> — ledger: `draft/research/graphical_ep/ep_campaign.md`</summary>
+
+```
+Continue the 'Expectation propagation (EP) campaign' epic. Its canonical state lives in draft/research/graphical_ep/ep_campaign.md — read that ledger (and any DECISIONS/RESULTS files beside it) first. Cross-check this epic's entry in PyAutoMind/epics.md, any related rows in PyAutoMind/active.md, and the referenced repos' open issues and PRs, to work out the last completed phase and what is currently in flight. Then pick the next logical step and continue it through the normal workflow (/start_dev — filing the phase's prompt first if none exists), updating the ledger as the work advances. Note: umbrella phase map — each phase's real content lives in its own prompt under draft/research/graphical_ep/; the campaign file itself is never issued.
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/research/graphical_ep/analytic_gaussian_benchmark.md">Analytic Gaussian benchmark: closed-form validation of graphical + EP</a> — graphical_ep · medium · supervised · high</summary>
+
+```
+/start_dev draft/research/graphical_ep/analytic_gaussian_benchmark.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md">EP hierarchical parent-scale collapse: cure the basin, or document the</a> — autofit · too-large · human-required · high</summary>
+
+```
+/start_dev draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/research/graphical_ep/graphical_scoping.md">Graphical Model Scale-Up — Scoping</a> — graphical_ep · too-large · supervised · high</summary>
+
+```
+/start_dev draft/research/graphical_ep/graphical_scoping.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/research/graphical_ep/slope_hierarchy_n25_scale_up.md">slope_hierarchy: scale the hierarchical slope recovery to N=25–50</a> — graphical_ep · medium · supervised · normal</summary>
+
+```
+/start_dev draft/research/graphical_ep/slope_hierarchy_n25_scale_up.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/autofit/ep_lbfgs_jax.md">The project @z_projects/ic50_workspace is our IC50 use case which we</a> — autofit · medium · safe · normal</summary>
+
+```
+/start_dev draft/feature/autofit/ep_lbfgs_jax.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/research/graphical_ep/ic50_ep_scale_up.md">IC50 use case: EP end-to-end with existing derived-variable handling</a> — graphical_ep · large · supervised · normal</summary>
+
+```
+/start_dev draft/research/graphical_ep/ic50_ep_scale_up.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/research/graphical_ep/ep_campaign.md">EP campaign — phase map for the 2026 Q3 graphical/EP</a> — graphical_ep · too-large · supervised · high</summary>
+
+```
+/start_dev draft/research/graphical_ep/ep_campaign.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/research/graphical_ep/ep_scoping.md">Expectation Propagation Scale-Up — Scoping</a> — graphical_ep · too-large · supervised · high</summary>
+
+```
+/start_dev draft/research/graphical_ep/ep_scoping.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/research/graphical_ep/slope_hierarchy_methods_writeup.md">slope_hierarchy: methods write-up (NUTS headline, EP cautionary)</a> — graphical_ep · medium · supervised · normal</summary>
+
+```
+/start_dev draft/research/graphical_ep/slope_hierarchy_methods_writeup.md
 ```
 
 </details>

@@ -57,11 +57,19 @@
   an extra card cannot poison mask/geometry reconstruction; and the card is byte-size neutral
   (a FITS header block holds 36 cards, a real dataset header carries ~10), so the byte-size
   diagnostics from the predecessor task still hold.
-- HYGIENE, pre-existing, kept OUT of this diff: running the test suites dirties committed
-  fixtures (`PyAutoArray test_autoarray/structures/arrays/files/array/output_test/array.fits`,
-  `PyAutoNerves test_autonerves/files/array_out.fits`). Reproduces on clean main. Also
-  `autogalaxy/util/plot_utils.py` and `autogalaxy/plot/plot_utils.py` are byte-identical
-  duplicates. Both are /hygiene follow-ups, not this task.
+- CORRECTION (an earlier version of this entry got this wrong): the two committed FITS
+  fixtures that the suites rewrite —
+  `PyAutoArray test_autoarray/structures/arrays/files/array/output_test/array.fits` and
+  `PyAutoNerves test_autonerves/files/array_out.fits` — are dirtied BY THE STAMP, not
+  pre-existing. The first check was invalid because the stamped autonerves was still on
+  PYTHONPATH while only autoarray was reverted; with BOTH repos on clean main the trees stay
+  clean. They are test write targets, so the refreshed bytes are committed (5cea0c8, e582e52);
+  leaving them stale would hand every contributor a dirty tree after testing. Sizes unchanged
+  at 5760 B.
+- HYGIENE follow-ups, genuinely pre-existing and OUT of this diff: `autogalaxy/util/plot_utils.py`
+  and `autogalaxy/plot/plot_utils.py` are byte-identical duplicate modules; and every
+  `header_dict` card on disk carries the literal comment text `['']` because
+  `fitsable.hdu_list_for_output_from` passes `[""]` as the comment.
 - repos:
   - PyAutoNerves: claude/small-datasets-regime-stamp-s3i9o7 (39014b6, 553327f)
   - PyAutoArray: claude/small-datasets-regime-stamp-s3i9o7 (601ffbd)

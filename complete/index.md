@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1076 records across 7 buckets.
+1078 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -70,6 +70,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [falsified-by-checkpoint-efficacy-review](2026/08/falsified-by-checkpoint-efficacy-review.md)
 - [feature-ranker-ignores-header-keys](2026/08/feature-ranker-ignores-header-keys.md) — the Feature Agent's ranker now reads the prompt metadata header it was
 - [file-path-guard-decision](2026/08/file-path-guard-decision.md) — The file-path leg split from raw-guard-migration (leg 3 of the dataset-bulk series, autolens_workspace#354). D…
+- [fits-header-comment-literal-list](2026/08/fits-header-comment-literal-list.md) — small, single-repo, cosmetic
 - [folder-list-ref-drift-sweep](2026/08/folder-list-ref-drift-sweep.md) — Fixed the 12 real defects from the 2026-08-19 hygiene refs scan — 2 autoCTI_workspace/output casing refs, 2 ho…
 - [frozen-lane-counter](2026/08/frozen-lane-counter.md) — Added a third disjoint lane counter to the multi-start gradient search
 - [group-data-preparation-readme](2026/08/group-data-preparation-readme.md)
@@ -123,7 +124,6 @@ _(curate hard-won records here — survives regeneration.)_
 - [numba-cpu-likelihood-profiling](2026/08/numba-cpu-likelihood-profiling.md)
 - [numba-first-call-garbage-psf-weighted-data](2026/08/numba-first-call-garbage-psf-weighted-data.md)
 - [numerical-hazard-profiling](2026/08/numerical-hazard-profiling.md) — Phase 1 established the reusable numerical-hazard profiling framework, typed risk measurements, reachability a…
-- [numerical-inversion-failures](2026/08/numerical-inversion-failures.md)
 - [one-tap-dashboard-rollout](2026/08/one-tap-dashboard-rollout.md) — the pattern (a generated page + one-tap 📋 copy-for-Claude payloads, phone
 - [optional-dependency-skip-guards](2026/08/optional-dependency-skip-guards.md) — `test_nautilus.py::test__single_core_builds_no_pool` had no skip guard
 - [organism-board-final-readmes](2026/08/organism-board-final-readmes.md) — close on record
@@ -133,6 +133,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [pix-prodigy-gpu-compat](2026/08/pix-prodigy-gpu-compat.md)
 - [pixelization-eager-jit-divergence](2026/08/pixelization-eager-jit-divergence.md)
 - [plot-array-stale-kwargs](2026/08/plot-array-stale-kwargs.md)
+- [plot-utils-duplicate-modules](2026/08/plot-utils-duplicate-modules.md) — small, single-repo, behaviour-preserving
 - [point-source-defaults-campaign](2026/08/point-source-defaults-campaign.md) — took the point-source likelihood options from "several undocumented
 - [point-source-light](2026/08/point-source-light.md) — Added standard and linear point-source light profiles with total-flux normalization and oversampled PSF convol…
 - [pointmass-smbh-jax](2026/08/pointmass-smbh-jax.md) — `al.mp.PointMass` and `al.mp.SMBH` failed every JAX-mode fit (user report on 2026.8.4.1). Two independent bugs…
@@ -157,7 +158,6 @@ _(curate hard-won records here — survives regeneration.)_
 - [queue-intake-claude](2026/08/queue-intake-claude.md) — auto-closed on merge
 - [readme-scientist-buttons](2026/08/readme-scientist-buttons.md)
 - [reconcile-upstream-repo-mode](2026/08/reconcile-upstream-repo-mode.md)
-- [reconstruction-noise-map-covariance-sqrt](2026/08/reconstruction-noise-map-covariance-sqrt.md)
 - [rectangular-spline-adapt-image-jit-fix](2026/08/rectangular-spline-adapt-image-jit-fix.md)
 - [registry-integrity-check](2026/08/registry-integrity-check.md)
 - [regularization-jax-gradient-gaps](2026/08/regularization-jax-gradient-gaps.md)
@@ -175,8 +175,10 @@ _(curate hard-won records here — survives regeneration.)_
 - [script-size-guard-git-based](2026/08/script-size-guard-git-based.md) — replaced the rotting `.script_sizes.json` snapshot with a git-diff truncation
 - [script-title-underline-off-by-one](2026/08/script-title-underline-off-by-one.md)
 - [searches-readme-dashboard](2026/08/searches-readme-dashboard.md)
+- [should-simulate-capped-branch-reuse](2026/08/should-simulate-capped-branch-reuse.md) — small, single-repo follow-up of the closed PyAutoNerves#153
 - [simulator-util-to-af-ex](2026/08/simulator-util-to-af-ex.md) — moved the four 1D-Gaussian simulator helpers out of the duplicated
 - [small-datasets-loader-pixel-scales](2026/08/small-datasets-loader-pixel-scales.md)
+- [small-datasets-regime-stamp](2026/08/small-datasets-regime-stamp.md)
 - [smoke-runner-jupyter-guard](2026/08/smoke-runner-jupyter-guard.md)
 - [spawn-autonomy-log-generated](2026/08/spawn-autonomy-log-generated.md)
 - [spawn-drift-self-heal](2026/08/spawn-drift-self-heal.md)

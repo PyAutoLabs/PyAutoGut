@@ -9,13 +9,13 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 | Where | Count |
 |-------|------:|
 | [In flight](#in-flight) (`active/`) | 2 |
-| [Parked](#parked) (`parked.md`) | 3 |
+| [Parked](#parked) (`parked.md`) | 4 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 149 |
+| [Backlog](#backlog) (`draft/`) | 150 |
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 18
+**Highest priority** (filed as `high`) — showing 12 of 17
 
 <details><summary>📋 <a href="draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — medium · safe · high</summary>
 
@@ -73,14 +73,6 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 </details>
 
-<details><summary>📋 <a href="draft/bug/pyautonerves/small_datasets_regime_stamp_at_writer_funnel.md">Stamp the small-datasets regime at the FITS writer funnel</a> — pyautonerves · large · supervised · high</summary>
-
-```
-/start_dev draft/bug/pyautonerves/small_datasets_regime_stamp_at_writer_funnel.md
-```
-
-</details>
-
 <details><summary>📋 <a href="draft/research/autoarray/delaunay_research.md">Deep research: Can we speed up Delaunay in PyAutoArray?</a> — autoarray · too-large · supervised · high</summary>
 
 ```
@@ -109,6 +101,14 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 ```
 /start_dev draft/docs/autolens/split_lensing_regimes.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/test/autolens_workspace_developer/mge_jit_regression_rebaseline.md">Re-baseline the MGE imaging JIT profiling regression value</a> — autolens_workspace_developer · too-large · supervised · high</summary>
+
+```
+/start_dev draft/test/autolens_workspace_developer/mge_jit_regression_rebaseline.md
 ```
 
 </details>
@@ -148,7 +148,7 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 Started or scoped, not currently in flight — resume by moving the row back to `active.md`. Full detail in [`parked.md`](parked.md).
 
 <details>
-<summary><b>3</b> task(s)</summary>
+<summary><b>4</b> task(s)</summary>
 
 <details><summary>📋 <b>single-source-density-design</b> — <a href="https://github.com/PyAutoLabs/PyAutoFit/issues/1500">issue #1500</a></summary>
 
@@ -170,6 +170,14 @@ Started or scoped, not currently in flight — resume by moving the row back to 
 
 ```
 /start_dev active/pyautoreduce_slacs1430_acs_comparison.md
+```
+
+</details>
+
+<details><summary>📋 <b>pyautonerves-release-for-regime-stamp</b> — PARKED — ready to release, but NOT runnable from a cloud/web session</summary>
+
+```
+/route resume the parked PyAutoMind task pyautonerves-release-for-regime-stamp — its record is in parked.md
 ```
 
 </details>
@@ -235,18 +243,10 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**149** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **23** of them belong to an epic and are listed only under [Epics](#epics) below.
+**150** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **23** of them belong to an epic and are listed only under [Epics](#epics) below.
 
 <details>
 <summary><b>bug</b> — 34</summary>
-
-<details><summary>📋 <a href="draft/bug/pyautonerves/small_datasets_regime_stamp_at_writer_funnel.md">Stamp the small-datasets regime at the FITS writer funnel</a> — pyautonerves · large · supervised · high</summary>
-
-```
-/start_dev draft/bug/pyautonerves/small_datasets_regime_stamp_at_writer_funnel.md
-```
-
-</details>
 
 <details><summary>📋 <a href="draft/bug/health_fixes/jax_runtime_and_parity.md">Fix release JAX runtime compatibility and likelihood parity</a> — health_fixes · too-large · supervised · high</summary>
 
@@ -500,6 +500,14 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/bug/autoarray/reconstruction_noise_map_solver_mismatch.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/pyautolens/point_source_json_datasets_record_no_regime.md">Point-source JSON datasets record no resolution regime</a> — pyautolens · medium · supervised · low</summary>
+
+```
+/start_dev draft/bug/pyautolens/point_source_json_datasets_record_no_regime.md
 ```
 
 </details>
@@ -885,7 +893,15 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>maintenance</b> — 20</summary>
+<summary><b>maintenance</b> — 21</summary>
+
+<details><summary>📋 <a href="draft/maintenance/libraries/bump_autoarray_autonerves_floor_after_stamp_release.md">Bump autoarray's autonerves floor once the regime stamp is released</a> — libraries · small · supervised · medium</summary>
+
+```
+/start_dev draft/maintenance/libraries/bump_autoarray_autonerves_floor_after_stamp_release.md
+```
+
+</details>
 
 <details><summary>📋 <a href="draft/maintenance/ci/smoke_install_stale_jax_pin.md">smoke_install.sh's stale <code>jax&lt;0.7</code> pin — CI is on the right</a> — ci · low · supervised · medium</summary>
 

@@ -8,7 +8,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 3 |
+| [In flight](#in-flight) (`active/`) | 2 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
 | [Backlog](#backlog) (`draft/`) | 146 |
@@ -125,14 +125,6 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/16_transformed_message_factor_gradient_unpack.md
-```
-
-</details>
-
-<details><summary>📋 <a href="active/fits_header_dict_comment_is_a_literal_list.md">Every header_dict FITS card carries the literal comment text ['']</a> — library-shipped, awaiting-merge — stopped at PR-open; merge is human</summary>
-
-```
-/start_dev active/fits_header_dict_comment_is_a_literal_list.md
 ```
 
 </details>

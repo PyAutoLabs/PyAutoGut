@@ -363,6 +363,31 @@ lambda. Only the last is the operating point, and it is the one that governs.
 
 Script: `scratchpad/fitted_lambda.py` (session artefact).
 
+## PARTIALLY ADDRESSED 2026-08-22 — the docstring caveat shipped
+
+The recommended immediate action was taken: **[PyAutoArray#472](https://github.com/PyAutoLabs/PyAutoArray/pull/472)**
+documents on `reconstruction_noise_map` that the covariance is that of the *unconstrained* solve
+while the default solver is NNLS, quantifies the overstatement at the evidence-optimal coefficient
+(x1.01 to x1.26 median, up to ~2x per pixel) and below it (~2.8x median, ~10x per pixel), and records
+that restricting to the free set is **not** the correction because the two bracket the truth.
+
+Documentation only — no behaviour change, no API change.
+
+### What this prompt still owns
+
+1. **Defect 1's actual maths.** Computing the truncated-Gaussian posterior properly. Graded `low`:
+   worth it only if someone needs calibrated per-pixel error bars on a very compact source.
+2. **Defect 2** — the covariance ignores `zeroed_ids_to_keep` while the reconstruction subsets by it.
+   Never measured in isolation; the real fits here had 108 zeroed pixels of 784 and they are folded
+   into the "pinned" counts throughout, so its separate contribution is unknown.
+3. **Defect 3** — `use_edge_zeroed_pixels` nested inside the `use_positive_only_solver` branch, so
+   turning the positive-only solver off silently disables edge-zeroing. **Untouched by any of the
+   measurement above and unambiguous at any priority.** It sits on the reconstruction path, so it
+   changes fit results and needs its own sign-off. This is the most likely next piece of real work
+   here.
+4. **The open measurement**: re-run the evidence-optimal lambda with the lens mass **free** rather
+   than fixed at truth. That is the single result most likely to overturn the `low` grading.
+
 ## Verification
 
 - **Reproduce the symptom first.** Take a real Delaunay source fit, compute the

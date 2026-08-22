@@ -6,7 +6,7 @@ Repos:
 - @PyAutoArray
 Difficulty: medium
 Autonomy: human-required
-Priority: medium
+Priority: high
 Status: draft
 
 ## Why this exists
@@ -169,7 +169,7 @@ that ends up in papers. If the NNLS/unconstrained mismatch is real, it propagate
 into published S/N. That raises the stakes on the Defect 1 decision and is the concrete
 reason to instrument a real fit rather than reason about it further.
 
-## MEASURED 2026-08-22 — pinned fraction is large, the consequence is small
+## SUPERSEDED — synthetic proxy, badly underestimated the effect (kept as a caution)
 
 This prompt's load-bearing claim was that NNLS pins a large fraction of a compact source's mesh,
 flagged as reasoned-not-measured. Now measured with PyAutoArray's **real solver**
@@ -226,6 +226,83 @@ quoting them anywhere.**
 
 Defect 3 (the config coupling) is untouched by all of this — it is an unambiguous bug at any priority,
 but it sits on the reconstruction path and so changes fit results. It needs its own sign-off.
+
+## MEASURED ON A REAL LENS FIT 2026-08-22 — the proxy was wrong; re-graded back to high
+
+The synthetic measurement above was re-run on a **real ray-traced fit**, reproducing
+`autolens_workspace/scripts/imaging/features/pixelization/source_science.py`: Isothermal
+`einstein_radius=1.6` + shear, `RectangularBilinearAdaptDensity(28, 28)`, `Constant` regularization,
+`r=3.0"` mask, `over_sample_size_pixelization=4`, compact Sersic source, PSF and Poisson noise.
+Defaults confirmed live: `use_positive_only_solver=True`, `use_edge_zeroed_pixels=True`,
+`mesh.zeroed_pixels = 108` of 784.
+
+**The proxy understated the effect by an order of magnitude, and its caveat was the reason.** A random
+mapping matrix spreads data support across the whole mesh; real ray tracing concentrates it in the
+arc, so far more of the mesh is unconstrained.
+
+Sensitivity sweep (`noise x med` = median shipped/active-set-conditional on free pixels; `flux %` =
+change in source flux passing the workspace's `S/N >= 5` cut):
+
+| r_eff | reg coeff | mesh | params | pinned % | noise x med | max | flux % |
+|--:|--:|--:|--:|--:|--:|--:|--:|
+| 0.05 | 1.0 | 28 | 784 | **97.1%** | **2.837** | 9.34 | **-24.1%** |
+| 0.10 | 1.0 | 28 | 784 | **88.6%** | **1.692** | 10.60 | -11.1% |
+| 0.30 | 1.0 | 28 | 784 | 53.2% | 1.208 | 8.02 | -3.9% |
+| 0.60 | 1.0 | 28 | 784 | 21.0% | 1.025 | 4.06 | -1.1% |
+| 0.10 | 0.1 | 28 | 784 | 87.1% | 1.713 | 10.39 | **-29.8%** |
+| 0.10 | 10.0 | 28 | 784 | 82.3% | 1.117 | 1.90 | -2.4% |
+| 0.10 | 100.0 | 28 | 784 | 83.2% | 1.009 | 1.57 | -0.2% |
+| 0.10 | 1.0 | 20 | 400 | 91.0% | 1.481 | 4.93 | 0.0% |
+| 0.10 | 1.0 | 40 | 1600 | 90.4% | 1.421 | 10.36 | **-48.9%** |
+
+Two clean trends: the gap **grows with source compactness** and **shrinks with regularization
+strength**. At `coeff=100` it essentially vanishes (1.009); at realistic `coeff~1` with a compact
+source it is a factor of **1.7-2.8**, with individual pixels up to **10x**.
+
+### The framing that matters — these are two bounds, not right-vs-wrong
+
+Do not read "1.8x" as "the shipped noise map is wrong by 1.8x". The two quantities **bracket** the
+truth:
+
+- **Shipped (full-matrix)** ignores the `s >= 0` constraint entirely, so it **overstates** — an upper
+  bound.
+- **Active-set-conditional** treats the active set as *known*, ignoring uncertainty about which
+  pixels are pinned, so it **understates** — a lower bound.
+- The true truncated-Gaussian posterior lies between them.
+
+So the finding is: **the source-plane noise map is ambiguous at the factor-of-2 level for compact
+sources**, and the shipped value sits at the pessimistic end of that range. That is still a serious
+problem for a published error bar — but "switch to the conditional covariance" is **not** the
+correct fix, it just swaps one bound for the other. Designing the real fix means either computing the
+truncated posterior properly, or documenting the bracket honestly.
+
+### Downstream consequence is a threshold effect, which amplifies it
+
+`source_science.py` does not merely display the noise map:
+
+```python
+signal_to_noise_map = reconstruction / reconstruction_noise_map
+mesh_pixel_mask = signal_to_noise_map < 5.0
+reconstruction_masked[mesh_pixel_mask] = 0.0
+```
+
+Source flux and magnification are computed from the surviving pixels. A hard cut turns a smooth noise
+bias into a discrete one: pixels near `S/N = 5` flip in or out. Measured flux shifts of **-24%**,
+**-30%** and **-49%** in the table above come from a handful of pixels crossing that line.
+
+**Re-graded `Priority: medium` -> `high`.** The earlier downgrade was made on the synthetic proxy and
+was wrong.
+
+### What is still not established
+
+- One lens configuration, one mass model, one noise realization per row. No error bars on these numbers.
+- `reg coeff` was fixed by hand. In a real model-fit λ is a **free parameter the sampler optimises**,
+  and the `coeff=100` row shows the effect nearly vanishes when λ is large. Where fitted λ actually
+  lands for these datasets decides whether this bites in practice — **measure that before acting**.
+- `RectangularBilinearAdaptDensity`, not Delaunay. Delaunay is the other common source mesh and was
+  not tested.
+
+Scripts: `scratchpad/real_fit_measure.py`, `scratchpad/sensitivity.py` (session artefacts).
 
 ## Verification
 

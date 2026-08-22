@@ -40,3 +40,16 @@
   separate /repo_cleanup sweep so a destructive branch delete never rides a code diff.
 - repos:
   - PyAutoHands: feature/hands-hygiene-leftovers
+
+## autoarray-pixel-scales-int-tuple
+- issue: https://github.com/PyAutoLabs/PyAutoArray/issues/464
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/autoarray-pixel-scales-int-tuple
+- branch: claude/autoarray-pixel-scales-int-tuple-wfxlnj (web session; no local worktree)
+- decision-pinned: widened `pixel_scales` is cast to Python `float` — `1` → `(1.0, 1.0)`,
+  not `(1, 1)`; matches the `Tuple[float, ...]` annotation and keeps numpy scalars out of
+  stored geometry and JSON.
+- follow-ups noted on the issue: tuple entries not normalised; `convert_shape_native_1d`
+  has the identical `type(x) is int` defect.
+- prompt: active/pixel_scales_int_not_widened_to_tuple.md
+- repos:

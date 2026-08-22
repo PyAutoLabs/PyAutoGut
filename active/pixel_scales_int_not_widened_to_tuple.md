@@ -7,7 +7,7 @@ Repos:
 Difficulty: small
 Autonomy: supervised
 Priority: medium
-Status: draft
+Status: issued 2026-08-22 as PyAutoArray#464
 
 ## Why this exists
 

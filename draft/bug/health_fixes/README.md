@@ -18,7 +18,7 @@ Each failing script is assigned to exactly one prompt:
 | ~~aggregator_output_contracts.md~~ — ✅ **SHIPPED 2026-07-07**, record `complete/2026/07/aggregator-output-contracts.md` (PyAutoFit#1324; autogalaxy_workspace#122, autolens_workspace#229, autolens_workspace_test#146 all merged) | 7 | Result/aggregator prerequisites and generated paths |
 | [jax_runtime_and_parity.md](jax_runtime_and_parity.md) — ⚠️ **6/6 pass 2026-08-21**, defect refuted; parkings NOT cleared (intermittent) | 6 | JAX/TFP compatibility and likelihood parity |
 | [jit_visualization_outputs.md](jit_visualization_outputs.md) — ⚠️ **4/4 pass 2026-08-21**, refuted; point_source parking is stale | 4 | Quick-update visualizations not producing images |
-| [numerical_inversion_failures.md](numerical_inversion_failures.md) — ⚠️ **2/2 pass 2026-08-21**, refuted; incidental PyAutoArray sqrt-NaN found | 2 | Non-positive-definite inversion matrices |
+| ~~numerical_inversion_failures.md~~ — ✅ **CLOSED 2026-08-22**, record `complete/2026/08/numerical-inversion-failures.md` ([PyAutoArray#467](https://github.com/PyAutoLabs/PyAutoArray/issues/467); **0/2 reproduce** on current `main` — no defect, no code changed in any repo; neither script is parked, so re-validation is automatic in every `mode=release` pass). Incidental PyAutoArray sqrt-NaN filed as `draft/bug/autoarray/reconstruction_noise_map_covariance_sqrt.md` | 2 | Non-positive-definite inversion matrices |
 | [release_timeout_policy.md](release_timeout_policy.md) — ⚠️ **4/4 measured pass far under cap 2026-08-21**; start_here not measured | 5 | 300-second release-surface decisions |
 
 Total: **42 scripts**. Scripts that pass on current `main` remain listed because they
@@ -69,3 +69,34 @@ consistent explanation across all of them is the one #1327 reached: stale cached
    candidate.
 2. **These were source-tree runs**, not the TestPyPI wheels the release run installed. A
    wheel-only defect would not show here.
+
+## 2026-08-22 — `numerical_inversion_failures` closed (the "four" above are now three)
+
+Struck through in the table. The 2026-08-21 sweep left four prompts in `draft/`; one of them has
+now closed, on the same ground that closed `autofit_sampler_database` rather than on its green run
+alone:
+
+**Neither of its two scripts is parked.** Verified against `main`:
+`autogalaxy_workspace/config/build/no_run.yaml` has no
+`interferometer/features/pixelization/galaxy_reconstruction` entry, and
+`autolens_workspace_test/config/build/no_run.yaml` has no `interferometer/model_fit` entry — it
+appears only as a *consumer*, where its simulator is marked `BOOTSTRAP-TARGET` for producing
+`model_fit`'s dataset. Both scripts therefore re-execute in **every** `mode=release` pass, so
+re-validation is automatic and there is no human reminder to lose.
+
+That is the distinction that decides this whole folder: caveat 1 of the 2026-08-21 sweep blocks the
+*parked* prompts from closing, and it simply does not apply here. The three that remain
+(`jax_runtime_and_parity`, `jit_visualization_outputs`, `release_timeout_policy`) each still carry
+SLOW/NEEDS_FIX parkings describing *intermittent* failures a single green run cannot clear.
+
+It also makes **four** independent refutations of this cluster, not three — the fourth predates the
+release run: `complete/2026/07/pix-inversion-not-positive-definite.md` (2026-07-21) tested the same
+non-positive-definite hypothesis across six markers, found all six stale, and changed **no code**.
+The `LinAlgError` had been cured on 2026-04-10 by PyAutoArray's `GaussianKernel` PD-guarantee
+`f1817af0`, confirmed by a 40-draw inversion A/B across the full prior range (0 raises, 0 non-finite).
+
+One real defect came out of the gate and is filed separately:
+`draft/bug/autoarray/reconstruction_noise_map_covariance_sqrt.md`. **It looks exactly like evidence
+for the non-positive-definite hypothesis and is not** — `abstract.py:859` applies `np.sqrt`
+elementwise to a whole covariance matrix, so negative off-diagonals are NaN unconditionally, for any
+matrix, however well-conditioned. It has been mistaken for a conditioning symptom once already.

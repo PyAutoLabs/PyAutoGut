@@ -15,7 +15,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 18
+**Highest priority** (filed as `high`) — showing 12 of 17
 
 <details><summary>📋 <a href="draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — medium · safe · high</summary>
 
@@ -479,14 +479,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/bug/health_fixes/numerical_inversion_failures.md">Fix release-profile numerical inversion failures</a> — health_fixes · too-large · supervised · high</summary>
-
-```
-/start_dev draft/bug/health_fixes/numerical_inversion_failures.md
-```
-
-</details>
-
 <details><summary>📋 <a href="draft/bug/health_fixes/samples_parameter_paths.md">Fix release result/sample parameter-path regressions</a> — health_fixes · too-large · supervised · high</summary>
 
 ```
@@ -499,6 +491,14 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/bug/autoarray/pixel_scales_int_not_widened_to_tuple.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/autoarray/reconstruction_noise_map_covariance_sqrt.md"><code>reconstruction_noise_map_with_covariance</code> sqrt-NaNs every off-diagonal by construction</a> — autoarray · small · supervised · medium</summary>
+
+```
+/start_dev draft/bug/autoarray/reconstruction_noise_map_covariance_sqrt.md
 ```
 
 </details>

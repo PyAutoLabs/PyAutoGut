@@ -126,10 +126,28 @@ hidden there.
 
 Two things found along the way that are NOT closed by this task:
 
-1. `use_adjoint_scaling` is now a **no-op on both remaining transformers** — it
-   was load-bearing only for the deleted class's pynufft-internal IFFT
-   normalisation. Kept, with docstrings rewritten, rather than widening this
-   removal. Worth a separate decision.
+1. ~~`use_adjoint_scaling` is now a no-op on both remaining transformers.~~
+   **RESOLVED 2026-08-22 — @PyAutoArray#478.** Parameter and the
+   `adjoint_scaling` attribute both removed from `TransformerDFT` and
+   `TransformerNUFFT`, and from the sole caller
+   `Interferometer.apply_sparse_operator`.
+
+   The history, since it matters for anyone holding old results: `TransformerDFT`
+   **never** applied the factor; `TransformerNUFFTPyNUFFT` did
+   (`image *= self.adjoint_scaling`, a Kaiser-Bessel compensation — the only real
+   user, deleted in #475); `TransformerNUFFT` applied it until **bd18a769
+   (2026-05-22)**, which removed the multiplication because "the nufftax adjoint
+   is already the mathematical adjoint and needs no extra scaling".
+
+   Verified numerically before removing: `True` vs `False` was bit-identical
+   (`0.000e+00`) on both classes, and nufftax matches the exact DFT at 1.562e-13
+   relative — the same figure before and after. Applying the factor would have
+   been a 4096x error on a 32x32 grid, not a correction.
+
+   **Caveat worth raising with users:** anyone who used `TransformerNUFFT` with
+   `use_adjoint_scaling=True` *before* 2026-05-22 has results that differ by
+   `4 * N_y * N_x` from anything regenerated today. That discrepancy dates from
+   bd18a769, not from #478.
 2. `autolens_workspace_test/scripts/interferometer/jax_likelihood/rectangular_sparse.py`
    recorded the `apply_sparse_operator` / `TransformerNUFFT` incompatibility as
    being caused by pynufft's kernel-deconvolved adjoint scale. That backend is

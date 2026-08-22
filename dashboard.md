@@ -9,9 +9,9 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 | Where | Count |
 |-------|------:|
 | [In flight](#in-flight) (`active/`) | 2 |
-| [Parked](#parked) (`parked.md`) | 3 |
+| [Parked](#parked) (`parked.md`) | 4 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 146 |
+| [Backlog](#backlog) (`draft/`) | 147 |
 
 ## Start here
 
@@ -142,7 +142,7 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 Started or scoped, not currently in flight — resume by moving the row back to `active.md`. Full detail in [`parked.md`](parked.md).
 
 <details>
-<summary><b>3</b> task(s)</summary>
+<summary><b>4</b> task(s)</summary>
 
 <details><summary>📋 <b>single-source-density-design</b> — <a href="https://github.com/PyAutoLabs/PyAutoFit/issues/1500">issue #1500</a></summary>
 
@@ -164,6 +164,14 @@ Started or scoped, not currently in flight — resume by moving the row back to 
 
 ```
 /start_dev active/pyautoreduce_slacs1430_acs_comparison.md
+```
+
+</details>
+
+<details><summary>📋 <b>pyautonerves-release-for-regime-stamp</b> — PARKED — ready to release, but NOT runnable from a cloud/web session</summary>
+
+```
+/route resume the parked PyAutoMind task pyautonerves-release-for-regime-stamp — its record is in parked.md
 ```
 
 </details>
@@ -229,7 +237,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**146** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **23** of them belong to an epic and are listed only under [Epics](#epics) below.
+**147** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **23** of them belong to an epic and are listed only under [Epics](#epics) below.
 
 <details>
 <summary><b>feature</b> — 28</summary>
@@ -863,7 +871,15 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>maintenance</b> — 18</summary>
+<summary><b>maintenance</b> — 19</summary>
+
+<details><summary>📋 <a href="draft/maintenance/libraries/bump_autoarray_autonerves_floor_after_stamp_release.md">Bump autoarray's autonerves floor once the regime stamp is released</a> — libraries · small · supervised · medium</summary>
+
+```
+/start_dev draft/maintenance/libraries/bump_autoarray_autonerves_floor_after_stamp_release.md
+```
+
+</details>
 
 <details><summary>📋 <a href="draft/maintenance/ci/smoke_install_stale_jax_pin.md">smoke_install.sh's stale <code>jax&lt;0.7</code> pin — CI is on the right</a> — ci · low · supervised · medium</summary>
 

@@ -70,6 +70,27 @@
   and `autogalaxy/plot/plot_utils.py` are byte-identical duplicate modules; and every
   `header_dict` card on disk carries the literal comment text `['']` because
   `fitsable.hdu_list_for_output_from` passes `[""]` as the comment.
+- DATA-LOSS BUG FOUND BY ADVERSARIAL REVIEW AND FIXED (757238a). The completeness critic
+  asked the question no research lane did: *is the proposition the stamp records the same
+  proposition `should_simulate` acts on?* It is not. The stamp records "the env var was set
+  in the writing process"; `should_simulate` read it as "this data is capped, therefore
+  disposable". The library already makes those diverge — `Kernel2D.from_gaussian` passes
+  `respect_small_datasets=False` (`convolver.py:729`), `Interferometer.from_fits` never caps,
+  and any user converting real data in a shell exporting `PYAUTO_SMALL_DATASETS=1` (the
+  documented harness default) stamps `T` on full-resolution data.
+  REPRODUCED: a 300x300 image written under the cap, read in a full run, was DELETED — and
+  the pre-stamp shape heuristic had explicitly refused to delete it. So the first cut was a
+  strict WEAKENING of the safety property PyAutoArray#471 established, not a residual risk.
+  FIX: a destructive `T` must be corroborated by the data. Every capped 2D image is rewritten
+  to exactly (16,16), so `T` on an image larger than the cap in BOTH axes is a contradiction,
+  resolved toward keep. Both axes, never either — interferometer `data.fits` is
+  (n_visibilities, 2), 108384x2 for committed sdp81, so an "either axis" test would refuse to
+  delete the one family the stamp exists for. Verified lossless against the real committed
+  files: (16,16) and (108384,2) still delete; 151x151, 209x209, 300x300 now kept.
+- FOLLOW-UP noted, out of scope: the capped branch (`PYAUTO_SMALL_DATASETS=1`) still rmtrees
+  unconditionally and ignores the stamp it now has, so every smoke run re-simulates every
+  dataset even when the stamp already says T. Pre-existing; `if stamp is not True:` is now a
+  cheap fix.
 - repos:
-  - PyAutoNerves: claude/small-datasets-regime-stamp-s3i9o7 (39014b6, 553327f)
-  - PyAutoArray: claude/small-datasets-regime-stamp-s3i9o7 (601ffbd)
+  - PyAutoNerves: claude/small-datasets-regime-stamp-s3i9o7 (39014b6, 553327f, e582e52)
+  - PyAutoArray: claude/small-datasets-regime-stamp-s3i9o7 (601ffbd, 5cea0c8, e45a604, 757238a)

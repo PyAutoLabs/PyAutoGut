@@ -13,6 +13,7 @@ write the dated `complete/<YYYY>/<MM>/<slug>.md` record instead.
 - [single-source-density-design](#single-source-density-design)
 - [prior-message-collapse-design](#prior-message-collapse-design)
 - [pyautoreduce-slacs1430-acs-comparison](#pyautoreduce-slacs1430-acs-comparison)
+- [pyautonerves-release-for-regime-stamp](#pyautonerves-release-for-regime-stamp)
 
 <!-- toc:end -->
 

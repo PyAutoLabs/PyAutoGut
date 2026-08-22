@@ -1,3 +1,55 @@
+`should_simulate` deleted the committed, gitignore-allowlisted dataset
+`dataset/point_source/simple` in `autolens_workspace_test` on any capped run,
+replacing three tracked JSON files with degenerate simulator output.
+
+**Shipped:** autolens_workspace_test#264 (squash `220148a`) — one file.
+`scripts/point_source/visualization/visualization.py` declared `ENV: real_plots`,
+so the smoke profile left `PYAUTO_SMALL_DATASETS=1` in force. Added
+`full_datasets` and corrected the `__Env__` prose that asserted the dataset was
+"unaffected by SMALL_DATASETS" — that sentence was the cause, not commentary.
+
+**Design call (option 2, human-taken).** An organism-wide sweep — every
+workspace's `!dataset/**` allowlist × every `should_simulate` call site not
+releasing the cap — found **exactly one** at-risk site. The issue framed option 2
+as leaving the footgun armed and option 3 (regime path separation) as correct
+"if this class keeps recurring"; the sweep showed it does not recur. Six sibling
+scripts against this same dataset already declared `full_datasets`, so the fix
+restored a convention rather than papering over a library flaw. Options 1 and 3
+would both have added a library diff and release exposure for a population of one.
+
+**Why PyAutoArray#471's guard could not reach it.** `_is_capped_at_the_current_cap`
+keys off the `SMALLDAT` card in `<dataset>/data.fits`; this directory is JSON-only
+(`autolens_workspace_test/.gitignore` lists `data.fits` under "Generated artifacts
+— never check in"), so no stamp can exist and the helper returns False.
+
+**Corrections to the filed prompt.** (1) The `rmtree` was no longer unconditional
+— #471 had already guarded it; the defect survived the guard rather than predating
+it. (2) "Seven full-regime readers, one in `smoke_tests.txt`" overstated exposure:
+6 of 9 consumers declared `full_datasets`, `real_output` is a superset token that
+also releases the cap, and the `smoke_tests.txt` entry was among the safe ones.
+(3) Understated: the degenerate data *persists across scripts* — the re-simulated
+directory still has no FITS, so a later full-regime reader's `should_simulate`
+gets stamp `None`, finds no shape to check, and keeps it.
+
+**Verified:** reproduced the deletion on `origin/main` first (all three tracked
+JSONs gone from one call); resolver yields `PYAUTO_SMALL_DATASETS=None` under both
+profiles with `real_plots` preserved; end-to-end smoke run exits 0 with `fit.png`
+on disk and the dataset untouched; counterfactual against `origin/main`'s file
+gives `'1'` vs `None`, proving the token holds the line. CI green on both matrix
+legs (3.12, 3.13).
+
+**Follow-up still open:**
+`draft/feature/pyautohands/dataset_allowlist_small_datasets_guard.md` — extend
+`check_dataset_allowlist.py` to catch this class automatically, and correct
+`should_simulate`'s docstring claim that point-source datasets are stamp-covered
+(true in `autolens_workspace`, false in `autolens_workspace_test`). Blocked at
+ship time: PyAutoHands was claimed by `hands-hygiene-leftovers`.
+
+Tracking issue PyAutoArray#470 left OPEN deliberately — it is the only tracker
+pointing at PyAutoArray, and the docstring half of the follow-up lands there.
+
+## Original prompt
+
 # should_simulate rmtree's committed, gitignore-allowlisted datasets
 
 Type: bug

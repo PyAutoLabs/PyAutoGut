@@ -8,7 +8,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 3 |
+| [In flight](#in-flight) (`active/`) | 2 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
 | [Backlog](#backlog) (`draft/`) | 148 |
@@ -139,14 +139,6 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/hands_hygiene_leftovers.md
-```
-
-</details>
-
-<details><summary>📋 <a href="active/should_simulate_capped_branch_ignores_the_stamp.md">should_simulate's capped branch re-simulates every dataset, ignoring the stamp it</a> — library-shipped, awaiting-merge — stopped at PR-open; merge is human</summary>
-
-```
-/start_dev active/should_simulate_capped_branch_ignores_the_stamp.md
 ```
 
 </details>

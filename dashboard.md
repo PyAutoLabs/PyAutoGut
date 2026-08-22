@@ -8,10 +8,10 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 2 |
+| [In flight](#in-flight) (`active/`) | 3 |
 | [Parked](#parked) (`parked.md`) | 4 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 150 |
+| [Backlog](#backlog) (`draft/`) | 149 |
 
 ## Start here
 
@@ -135,6 +135,14 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
+<details><summary>📋 <a href="active/dataset_allowlist_small_datasets_guard.md">Guard: allowlisted datasets reachable from a capped <code>should_simulate</code> call site</a> — <a href="https://github.com/PyAutoLabs/PyAutoHands/issues/252">issue #252</a> — library-dev — implementation complete, both PRs open</summary>
+
+```
+/start_dev active/dataset_allowlist_small_datasets_guard.md
+```
+
+</details>
+
 <details><summary>📋 <a href="active/hands_hygiene_leftovers.md">Hands hygiene: expired announcement dead code, unregistered modules</a> — <a href="https://github.com/PyAutoLabs/PyAutoHands/issues/249">issue #249</a> — library-dev</summary>
 
 ```
@@ -243,10 +251,10 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**150** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **23** of them belong to an epic and are listed only under [Epics](#epics) below.
+**149** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **23** of them belong to an epic and are listed only under [Epics](#epics) below.
 
 <details>
-<summary><b>feature</b> — 29</summary>
+<summary><b>feature</b> — 28</summary>
 
 <details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md">Numba CPU likelihood phase 1: batched MGE convolution + operated-matrix</a> — autoarray · medium · supervised · high</summary>
 
@@ -284,14 +292,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/feature/profiling/profiling_agent_jax_compile_time_scope.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/pyautohands/dataset_allowlist_small_datasets_guard.md">Guard: allowlisted datasets reachable from a capped <code>should_simulate</code> call site</a> — pyautohands · small · supervised · medium</summary>
-
-```
-/start_dev draft/feature/pyautohands/dataset_allowlist_small_datasets_guard.md
 ```
 
 </details>

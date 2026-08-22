@@ -8,7 +8,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 3 |
+| [In flight](#in-flight) (`active/`) | 2 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
 | [Backlog](#backlog) (`draft/`) | 143 |
@@ -133,14 +133,6 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/hands_hygiene_leftovers.md
-```
-
-</details>
-
-<details><summary>📋 <a href="active/jax_grad_local_assertions_fail_but_pass_in_ci.md">jax_grad scripts fail assertions locally that PASS in CI</a> — <a href="https://github.com/PyAutoLabs/autolens_workspace_test/issues/260">issue #260</a> — library-dev (RECLASSIFIED from workspace-dev — the fix is upstream in PyAutoArray;</summary>
-
-```
-/start_dev active/jax_grad_local_assertions_fail_but_pass_in_ci.md
 ```
 
 </details>

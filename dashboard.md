@@ -129,7 +129,7 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
-<details><summary>📋 <a href="active/17_optional_dependency_skip_guards.md"><code>@PyAutoFit</code> <code>[optional]</code>-dependency tests have no skip guards</a> — <a href="https://github.com/PyAutoLabs/PyAutoFit/issues/1511">issue #1511</a> — PR OPEN — https://github.com/PyAutoLabs/PyAutoFit/pull/1512, awaiting CI</summary>
+<details><summary>📋 <a href="active/17_optional_dependency_skip_guards.md"><code>@PyAutoFit</code> <code>[optional]</code>-dependency tests have no skip guards</a> — <a href="https://github.com/PyAutoLabs/PyAutoFit/issues/1511">issue #1511</a> — PR OPEN — https://github.com/PyAutoLabs/PyAutoFit/pull/1512, CI GREEN</summary>
 
 ```
 /start_dev active/17_optional_dependency_skip_guards.md

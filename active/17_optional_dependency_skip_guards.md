@@ -5,7 +5,7 @@ Target: autofit
 Difficulty: small
 Autonomy: autonomous
 Priority: normal
-Status: issued 2026-08-22 as PyAutoFit#1511; PR #1512 open, awaiting CI
+Status: issued 2026-08-22 as PyAutoFit#1511; PR #1512 open, CI green, awaiting review
 
 Not a defect on `main` — a test-hygiene gap that has been *repeatedly
 misdiagnosed* as one. That misdiagnosis is the actual cost.

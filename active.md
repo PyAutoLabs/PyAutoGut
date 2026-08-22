@@ -3,7 +3,8 @@
 ## optional-dependency-skip-guards
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1511 (issued 2026-08-22)
 - prompt: active/17_optional_dependency_skip_guards.md
-- status: PR OPEN — https://github.com/PyAutoLabs/PyAutoFit/pull/1512, awaiting CI
+- status: PR OPEN — https://github.com/PyAutoLabs/PyAutoFit/pull/1512, CI GREEN
+  (unittest 3.12 + 3.13 + nojax, run 32575550710), mergeable clean, awaiting review
 - scope-note: tests only, no `autofit/` source touched. Verified inert in the CI env
   (2024 passed / 3 skipped, identical to main), so no coverage is lost.
 - context: closes follow-up 4 of complete/2026/08/uniform-prior-bounds-numpy-path.md,

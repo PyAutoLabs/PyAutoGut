@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1072 records across 7 buckets.
+1073 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -123,6 +123,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [numba-first-call-garbage-psf-weighted-data](2026/08/numba-first-call-garbage-psf-weighted-data.md)
 - [numerical-hazard-profiling](2026/08/numerical-hazard-profiling.md) — Phase 1 established the reusable numerical-hazard profiling framework, typed risk measurements, reachability a…
 - [one-tap-dashboard-rollout](2026/08/one-tap-dashboard-rollout.md) — the pattern (a generated page + one-tap 📋 copy-for-Claude payloads, phone
+- [optional-dependency-skip-guards](2026/08/optional-dependency-skip-guards.md) — `test_nautilus.py::test__single_core_builds_no_pool` had no skip guard
 - [organism-board-final-readmes](2026/08/organism-board-final-readmes.md) — close on record
 - [paper-management-pipeline](2026/08/paper-management-pipeline.md) — auto-closed on merge
 - [per-parameter-step-scaling](2026/08/per-parameter-step-scaling.md)

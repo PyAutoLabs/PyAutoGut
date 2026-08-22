@@ -19,6 +19,24 @@
 - assertion design worth reusing: the load-bearing invariant is **equality with an uninterrupted reference run** (the search is deterministic), not "the counters went up". Injecting the regression (resetting both counters on resume) yields 402 against the reference's 403 — a `>=` assertion accepts that happily, equality catches it. A separate decisive check also ran: stamping sentinel values (7000/9000) into the live checkpoint and resuming gave 7045/9008, so the restored totals are provably carried rather than recounted.
 - also confirmed while doing it: a resumed run's final counters are independent of *where* the kill landed (killed at step 72 and at step 74 both finished at the reference totals), i.e. the checkpoint captures the full accumulator state.
 
+## Correction (2026-08-22) — the `test_nautilus` failure
+
+`test_nautilus.py::test__single_core_builds_no_pool` is **not** a failure on
+clean `main`. It is a **missing optional dependency**: the test runs a real
+`search.fit`, which reaches `from nautilus import Sampler`, and
+`nautilus-sampler` ships only in the `[optional]` extra. CI installs
+`[optional]` and the test passes there — latest main CI is 2024 passed,
+3 skipped, 0 failed. Sandboxes and local venvs without the extras get a hard
+`ModuleNotFoundError`.
+
+The validation bullet above says "confirmed pre-existing on unmodified
+`main`". "Not caused by this work" was right; "pre-existing on `main`" is the
+wrong gloss — read it as environment-specific.
+
+Fixed by PyAutoFit#1511 / PR #1512 (skip-if-missing guards, also covering the
+`astropy` collection errors and aggregator errors from the same cause). Full
+investigation: `active/17_optional_dependency_skip_guards.md`.
+
 ## Original prompt
 
 # MultiStartGradient cannot resume a killed mid-run search — FoM sanity check compares log-likelihood against chi-squared

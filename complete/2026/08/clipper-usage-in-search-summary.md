@@ -64,6 +64,24 @@ wired up and firing at all".
 Multi-start summaries gained a `Constrained Lane-Steps` line. Everything else is
 additive and gated.
 
+## Correction (2026-08-22) — the `test_nautilus` failure
+
+`test_nautilus.py::test__single_core_builds_no_pool` is **not** a failure on
+clean `main`. It is a **missing optional dependency**: the test runs a real
+`search.fit`, which reaches `from nautilus import Sampler`, and
+`nautilus-sampler` ships only in the `[optional]` extra. CI installs
+`[optional]` and the test passes there — latest main CI is 2024 passed,
+3 skipped, 0 failed. Sandboxes and local venvs without the extras get a hard
+`ModuleNotFoundError`.
+
+The in-flight note above calls it **pre-existing**, alongside the `astropy`
+collection error in `paths/test_save_and_load.py` — same cause, same
+correction. Both were environment-specific, not defects on `main`.
+
+Fixed by PyAutoFit#1511 / PR #1512 (skip-if-missing guards, also covering the
+`astropy` collection errors and aggregator errors from the same cause). Full
+investigation: `active/17_optional_dependency_skip_guards.md`.
+
 ## Original prompt
 
 # Report how much the Clipper actually fired — surface the count in `search.summary`

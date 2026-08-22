@@ -50,6 +50,24 @@
   4. `test_beta` + `test__single_core_builds_no_pool` fail on clean main without optional deps
      (sympy?/nautilus-sampler absence) — hygiene candidate: skip-if-missing markers.
 
+## Correction (2026-08-22) — the `test_nautilus` failure
+
+`test_nautilus.py::test__single_core_builds_no_pool` is **not** a failure on
+clean `main`. It is a **missing optional dependency**: the test runs a real
+`search.fit`, which reaches `from nautilus import Sampler`, and
+`nautilus-sampler` ships only in the `[optional]` extra. CI installs
+`[optional]` and the test passes there — latest main CI is 2024 passed,
+3 skipped, 0 failed. Sandboxes and local venvs without the extras get a hard
+`ModuleNotFoundError`.
+
+Follow-up 4 above ("hygiene candidate: skip-if-missing markers") called this
+correctly and proposed the fix, but was never filed as a prompt, so nothing
+acted on it for four days. It is now filed and fixed.
+
+Fixed by PyAutoFit#1511 / PR #1512 (skip-if-missing guards, also covering the
+`astropy` collection errors and aggregator errors from the same cause). Full
+investigation: `active/17_optional_dependency_skip_guards.md`.
+
 ## Original prompt
 
 # UniformPrior bounds are not enforced in the objective on the NumPy path

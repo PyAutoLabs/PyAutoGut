@@ -46,4 +46,11 @@
   extras (blackjax, nautilus-sampler) or 18 tests silently skip, and also run the ten
   scripts in `autofit_workspace_test/scripts/jax_assertions/` (JAX unit coverage moved
   out of the library suite in #1247).
+- implemented: 2026-08-22 — fix + parity regression test pushed on the branches below,
+  verified 2030 passed on jax 0.10.2 and 0.11.1 (full matrix on the issue). The
+  downstream gate note: PyAutoGalaxy/PyAutoLens CI resolves jax from the autonerves cap,
+  so pre-widen CI green does not cover 0.11 — gate via forced jax==0.11.1 runs or
+  matching-branch CI against the PyAutoNerves branch.
 - repos:
+  - PyAutoFit: feature/message-log-partition-tuple-shape
+  - PyAutoNerves: feature/message-log-partition-tuple-shape

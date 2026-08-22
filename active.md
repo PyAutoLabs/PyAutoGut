@@ -37,9 +37,26 @@
   Brain sizing disagreement: declared medium, derived large.
 - control: imaging/jax_grad/lp.py is the discriminator — the only script known to PASS in
   CI and FAIL locally. Every A/B runs against it first (~41s).
-- blocked-on-input: the failing local venv cannot be read from a cloud session. Capture
-  `pip freeze` + `np.show_config()` from the machine that reproduces the failure before it
-  drifts — otherwise step 2 has no ground truth. Raised at plan time; not yet supplied.
+- ROOT CAUSE FOUND 2026-08-22 (no laptop needed; findings on issue #260):
+  PyAutoArray `util/dataset_util.py:72` `should_simulate()` is existence-only and asymmetric —
+  it force-regenerates under PYAUTO_SMALL_DATASETS=1 but never under full_datasets. `dataset/**`
+  is gitignored, so CI always simulates fresh and CANNOT hit this; locally the dir persists and
+  is never refreshed. Any prior smoke run (SMALL_DATASETS=1 is the default for every OTHER
+  script) rewrites the FITS at 15x15, and the next jax_grad run silently loads them under
+  full-resolution settings. All three failures reproduced exactly from a clean checkout
+  (pixelization eager/jit matches the report to 11 s.f.; regularization's tolerance vector
+  matches exactly). Full chain proven: fresh=PASS -> one SMALL run -> stale=FAIL -> rm -rf =PASS.
+- numpy FALSIFIED: lp.py byte-identical across numpy 2.2.6 / 2.4.6 / 2.5.2 (and across
+  1-core vs 4-core). The likelihood runs through JAX/XLA; numpy only does the FD bookkeeping.
+- NO tolerance change is warranted — all three asserts did their job on a genuinely invalid
+  dataset. assert_eager_jit_consistent's rtol=1e-10 is vindicated, not under-specified.
+- RECLASSIFY: the fix belongs upstream in PyAutoArray, not this workspace — every PyAuto
+  workspace using the auto-simulate pattern inherits the trap. Awaiting a human call between
+  (1) a regime marker and (2) symmetric regeneration; that call moves this to library-dev.
+- follow-up (separate defect, not this bug): autolens_workspace_test
+  `.github/scripts/smoke_install.sh:9` `pip install "jax<0.7" "jaxlib<0.7"` downgrades jax to
+  0.6.2 and conflicts with autonerves' jax>=0.7,<0.11; the run only lands on the intended
+  0.10.2 because the next line's [optional] extras pull it back up. CI is right by accident.
 - out-of-bounds: moving lp.py's evaluation point, adding skip_indices, or widening a
   tolerance without a measured basis. All three mask the trap instead of removing it.
 - repos:

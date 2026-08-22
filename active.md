@@ -24,3 +24,26 @@
   separate /repo_cleanup sweep so a destructive branch delete never rides a code diff.
 - repos:
   - PyAutoHands: feature/hands-hygiene-leftovers
+
+## message-log-partition-tuple-shape
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1510 (issued 2026-08-22)
+- prompt: active/jax_011_message_log_partition_tuple_shape.md
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/message-log-partition-tuple-shape
+- root-cause: jax 0.11 changed `jnp.broadcast_arrays` list -> tuple (NumPy 2 alignment), so
+  `MessageInterface.shape`'s `isinstance(..., list)` JAX branch stops matching and falls
+  through to `.shape` on a tuple. Reproduced; 4 failing tests, not the reported 5 (the
+  fifth, graphical `test_beta`, was already cleared by PyAutoFit 19c679583).
+- scope-change: the one-line `isinstance` widen was REJECTED by adversarial review — it
+  preserves a silent numerical bug live on jax 0.10 today (batched JAX `logpdf` returns a
+  (2,2) matrix instead of (2,)). The PR fixes `shape`/`size`/`ndim` semantically instead.
+  Reviewer-visible consequence: batched JAX message output values change.
+- merge-order: PyAutoFit PR merges FIRST; the PyAutoNerves `jax`/`jaxlib` cap widen to
+  `<0.12.0` follows. Every supported env is Python >=3.12, so the widen puts jax 0.11 in
+  front of all users — PyAutoGalaxy and PyAutoLens must be green under 0.11 before it merges
+  (PyAutoFit and PyAutoArray already verified clean on both versions).
+- verification-note: `test_autofit` alone is NOT the JAX gate — install the `[optional]`
+  extras (blackjax, nautilus-sampler) or 18 tests silently skip, and also run the ten
+  scripts in `autofit_workspace_test/scripts/jax_assertions/` (JAX unit coverage moved
+  out of the library suite in #1247).
+- repos:

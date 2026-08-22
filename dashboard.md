@@ -11,11 +11,11 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 | [In flight](#in-flight) (`active/`) | 2 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 144 |
+| [Backlog](#backlog) (`draft/`) | 146 |
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 17
+**Highest priority** (filed as `high`) — showing 12 of 18
 
 <details><summary>📋 <a href="draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — medium · safe · high</summary>
 
@@ -73,6 +73,14 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 </details>
 
+<details><summary>📋 <a href="draft/bug/pyautonerves/small_datasets_regime_stamp_at_writer_funnel.md">Stamp the small-datasets regime at the FITS writer funnel</a> — pyautonerves · large · supervised · high</summary>
+
+```
+/start_dev draft/bug/pyautonerves/small_datasets_regime_stamp_at_writer_funnel.md
+```
+
+</details>
+
 <details><summary>📋 <a href="draft/research/autoarray/delaunay_research.md">Deep research: Can we speed up Delaunay in PyAutoArray?</a> — autoarray · too-large · supervised · high</summary>
 
 ```
@@ -101,14 +109,6 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 ```
 /start_dev draft/docs/autolens/split_lensing_regimes.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/test/autolens_workspace_developer/mge_jit_regression_rebaseline.md">Re-baseline the MGE imaging JIT profiling regression value</a> — autolens_workspace_developer · too-large · supervised · high</summary>
-
-```
-/start_dev draft/test/autolens_workspace_developer/mge_jit_regression_rebaseline.md
 ```
 
 </details>
@@ -229,7 +229,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**144** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **23** of them belong to an epic and are listed only under [Epics](#epics) below.
+**146** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **23** of them belong to an epic and are listed only under [Epics](#epics) below.
 
 <details>
 <summary><b>feature</b> — 28</summary>
@@ -461,7 +461,15 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>bug</b> — 32</summary>
+<summary><b>bug</b> — 33</summary>
+
+<details><summary>📋 <a href="draft/bug/pyautonerves/small_datasets_regime_stamp_at_writer_funnel.md">Stamp the small-datasets regime at the FITS writer funnel</a> — pyautonerves · large · supervised · high</summary>
+
+```
+/start_dev draft/bug/pyautonerves/small_datasets_regime_stamp_at_writer_funnel.md
+```
+
+</details>
 
 <details><summary>📋 <a href="draft/bug/health_fixes/jax_runtime_and_parity.md">Fix release JAX runtime compatibility and likelihood parity</a> — health_fixes · too-large · supervised · high</summary>
 
@@ -511,10 +519,10 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/bug/autolens_workspace_test/jax_grad_local_assertions_fail_but_pass_in_ci.md">jax_grad scripts fail assertions locally that PASS in CI</a> — autolens_workspace_test · medium · supervised · medium</summary>
+<details><summary>📋 <a href="draft/bug/autoarray/small_datasets_rmtree_of_committed_data.md">should_simulate rmtree's committed, gitignore-allowlisted datasets</a> — autoarray · medium · supervised · medium</summary>
 
 ```
-/start_dev draft/bug/autolens_workspace_test/jax_grad_local_assertions_fail_but_pass_in_ci.md
+/start_dev draft/bug/autoarray/small_datasets_rmtree_of_committed_data.md
 ```
 
 </details>
@@ -855,7 +863,15 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>maintenance</b> — 17</summary>
+<summary><b>maintenance</b> — 18</summary>
+
+<details><summary>📋 <a href="draft/maintenance/ci/smoke_install_stale_jax_pin.md">smoke_install.sh's stale <code>jax&lt;0.7</code> pin — CI is on the right</a> — ci · low · supervised · medium</summary>
+
+```
+/start_dev draft/maintenance/ci/smoke_install_stale_jax_pin.md
+```
+
+</details>
 
 <details><summary>📋 <a href="draft/maintenance/autolens_workspace_developer/rectangular_experiments_gut_stash.md">autolens_workspace_developer rectangular experiments — Gut stash + rename</a> — autolens_workspace_developer · small · supervised · normal</summary>
 

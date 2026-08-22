@@ -9,7 +9,7 @@ Repos:
 Difficulty: low-medium
 Autonomy: supervised
 Priority: normal
-Status: in-flight
+Status: shipped
 
 Re-homed 2026-08-22 from `draft/refactor/autoarray/`. The Brain Refactor Agent
 refused it there (`SUSPECT-API-CHANGE`, effective autonomy `human-required`):
@@ -107,3 +107,32 @@ JOSS records of what the software used at time of publication, not live docs.
    `pynufft==2022.2.2` dev pin calls `scipy.linalg.pinv2`, absent from SciPy
    1.17.1 (confirmed 2026-08-22 — `hasattr(scipy.linalg, "pinv2")` is `False`).
    Retiring the backend was one of that prompt's three sanctioned remedies.
+
+## Shipped 2026-08-22
+
+Library tier merged: @PyAutoArray#475, @PyAutoGalaxy#583, @PyAutoLens#709 —
+all green on CI, including each repo's `unittest-nojax` job, which is the
+standing evidence that the no-JAX path survives without the pynufft fallback.
+Merged galaxy -> lens -> array so main was never red (dropping a re-export is
+safe against an autoarray that still has the class; the reverse is not).
+
+Workspace tier raised: @autolens_workspace#497 (prose across `scripts/`,
+`notebooks/`, `markdown/`) and @autolens_workspace_test#261 (the `nufft.py`
+parity script rewritten around `TransformerDFT` as its sole reference; verified
+by running it — all four tests pass, 3.0e-14 relative residual at 256x256).
+
+`PyAutoHands/autohands/config/no_run.yaml` checked: no nufft entries, nothing
+hidden there.
+
+Two things found along the way that are NOT closed by this task:
+
+1. `use_adjoint_scaling` is now a **no-op on both remaining transformers** — it
+   was load-bearing only for the deleted class's pynufft-internal IFFT
+   normalisation. Kept, with docstrings rewritten, rather than widening this
+   removal. Worth a separate decision.
+2. `autolens_workspace_test/scripts/interferometer/jax_likelihood/rectangular_sparse.py`
+   recorded the `apply_sparse_operator` / `TransformerNUFFT` incompatibility as
+   being caused by pynufft's kernel-deconvolved adjoint scale. That backend is
+   gone; whether the incompatibility still holds against the nufftax adjoint is
+   **unverified**. The dead attribution was removed without asserting a
+   replacement claim.

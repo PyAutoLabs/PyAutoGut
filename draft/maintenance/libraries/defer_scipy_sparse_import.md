@@ -7,7 +7,7 @@ Repos:
 Difficulty: small
 Autonomy: safe
 Priority: normal
-Status: draft
+Status: in-flight
 
 ## Where this came from
 
@@ -56,3 +56,34 @@ alone.
 - Median `import autoarray` drops by ~0.10 s against the same measurement
   method above (record the before/after numbers in the PR).
 - Full suite green; sparse-operator behaviour unchanged.
+
+## Correction + result (implemented 2026-08-22, PyAutoArray#477)
+
+**This prompt's own premise was wrong, in exactly the way the pynufft one
+was.** Deferring `derivative_util.py:30` changed nothing: `scipy.sparse` was
+never imported from there. Traced with a `sys.meta_path` hook:
+
+```
+autoarray/__init__.py:80
+  -> inversion/mesh/mesh_geometry/delaunay.py:2   import scipy.spatial
+    -> scipy/spatial/__init__.py:111              from ._kdtree import *
+      -> scipy/spatial/_kdtree.py:4               from ._ckdtree import cKDTree
+```
+
+`scipy.spatial` (134 ms) pulls `scipy.sparse` (154 ms) transitively, so the
+`csr_matrix` import was riding on a subtree already paid for. Deferring
+`scipy.spatial` as well is what removes both — and is required to satisfy this
+prompt's own acceptance criterion.
+
+The general lesson, now hit twice: **a module's `importtime` cumulative figure
+is not its exclusive cost.** Attributing a saving to a dependency requires
+checking who else pulls its subtree in.
+
+Result: `import autoarray` **464.4 ms -> 183.7 ms** (medians of 15 runs,
+Python 3.13, dev extras) — a 281 ms saving, ~2.8x this prompt's ~0.10 s
+estimate, because `scipy.spatial`'s own cost comes off too. Both greps are
+empty. Suites green: autoarray 1179, autogalaxy 1103/1 skipped,
+autolens 532/1 skipped.
+
+Note `delaunay.py` already had local `import scipy.spatial` at two of its three
+use sites — this deferral had been started and left half-done.

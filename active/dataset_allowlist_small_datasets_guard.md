@@ -8,7 +8,7 @@ Repos:
 Difficulty: small
 Autonomy: supervised
 Priority: medium
-Status: formalised
+Status: in-review (PyAutoHands#253, PyAutoArray#480)
 
 Follow-up from autolens_workspace_test#264 (fix for PyAutoArray#470). That PR
 fixed the single live instance by declaring `full_datasets` on the one offending
@@ -16,7 +16,20 @@ script; this prompt closes the general footgun and corrects a docstring that
 actively misleads about it.
 
 Deliberately **not** ridden into #264: `PyAutoHands` was claimed by the
-`hands-hygiene-leftovers` task at the time.
+`hands-hygiene-leftovers` task at the time. Started 2026-08-22 as a **parallel
+claim** — that task's branch is disjoint at file level (`AGENTS.md`,
+`generate_release_notes.py`, `bin/autohands`, two unrelated test files), so the
+`worktree_check_conflict` block was overridden after the hand check that
+[[feedback_worktree_conflict_guard_never_fires]] prescribes.
+
+**Design note that only surfaced in implementation:** the obvious predicate —
+"the resolved path sits under an `!dataset/...` allowlist prefix" — is WRONG and
+over-reports. `autocti_workspace` commits five doc images directly in
+`dataset/overview/` while its overview scripts regenerate
+`dataset/overview/imaging_ci/uniform` and `dataset/overview/dataset_1d`, which
+hold nothing tracked; prefix matching called all six release-blocking failures.
+The correct invariant is **"`rmtree(path)` would delete git-tracked files"**.
+Caught only by running the guard across every workspace before trusting it.
 
 ## Part 1 — extend the allowlist guard (PyAutoHands)
 

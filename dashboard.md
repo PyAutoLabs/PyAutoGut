@@ -8,10 +8,10 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 2 |
+| [In flight](#in-flight) (`active/`) | 3 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 148 |
+| [Backlog](#backlog) (`draft/`) | 147 |
 
 ## Start here
 
@@ -115,13 +115,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 **Quick wins** (small enough, and safe enough to run unattended)
 
-<details><summary>📋 <a href="draft/refactor/autogalaxy/plot_utils_duplicate_modules.md">autogalaxy has two byte-identical plot_utils modules</a> — autogalaxy · small · safe · low</summary>
-
-```
-/start_dev draft/refactor/autogalaxy/plot_utils_duplicate_modules.md
-```
-
-</details>
+- _(none right now)_
 
 ## In flight
 
@@ -139,6 +133,14 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/hands_hygiene_leftovers.md
+```
+
+</details>
+
+<details><summary>📋 <a href="active/plot_utils_duplicate_modules.md">autogalaxy has two byte-identical plot_utils modules</a> — library-shipped, awaiting-merge — stopped at PR-open; merge is human</summary>
+
+```
+/start_dev active/plot_utils_duplicate_modules.md
 ```
 
 </details>
@@ -235,7 +237,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**148** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **23** of them belong to an epic and are listed only under [Epics](#epics) below.
+**147** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **23** of them belong to an epic and are listed only under [Epics](#epics) below.
 
 <details>
 <summary><b>bug</b> — 34</summary>
@@ -1143,7 +1145,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>refactor</b> — 7</summary>
+<summary><b>refactor</b> — 6</summary>
 
 <details><summary>📋 <a href="draft/refactor/autogalaxy/einstein_radius_jit_native_seed_finder.md"><code>einstein_radius_jit_from</code>: replace static init_guess with a JAX-native seed finder</a> — autogalaxy · too-large · supervised · high</summary>
 
@@ -1181,14 +1183,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/refactor/autoarray/remove_pynufft_legacy_transformer.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/refactor/autogalaxy/plot_utils_duplicate_modules.md">autogalaxy has two byte-identical plot_utils modules</a> — autogalaxy · small · safe · low</summary>
-
-```
-/start_dev draft/refactor/autogalaxy/plot_utils_duplicate_modules.md
 ```
 
 </details>

@@ -24,3 +24,25 @@
   separate /repo_cleanup sweep so a destructive branch delete never rides a code diff.
 - repos:
   - PyAutoHands: feature/hands-hygiene-leftovers
+
+## plot-utils-duplicate-modules
+- issue: none — shipped directly as a PR (small, single-repo, behaviour-preserving)
+- library-pr: https://github.com/PyAutoLabs/PyAutoGalaxy/pull/584 (pending-release)
+- status: library-shipped, awaiting-merge — stopped at PR-open; merge is human
+- prompt: active/plot_utils_duplicate_modules.md
+- worktree: n/a — web-github session, clone at /home/user/pyautogalaxy
+- branch: claude/plot-utils-duplicate-modules
+- METHOD NOTE worth keeping: the first importer search used a LINE-ANCHORED grep
+  (`^from autogalaxy.plot.plot_utils`) and returned ZERO, so the deletion looked safe.
+  It was not — `test_visuals.py:41` has an indented, function-local import, which the
+  anchored pattern silently skipped. The test suite caught it (passes on main, failed with
+  the change). Search UNANCHORED when removing a module; Python's function-local imports
+  do not sit at column zero.
+- also in the diff: a Sphinx cross-ref in galaxies_plots.py pointed at the deleted module
+  (re-pointed), and a stray `/btw ok` line committed into the `_critical_curves_from`
+  docstring in 3ca31bf (#582) and inherited by both copies (removed — it renders into the
+  API docs).
+- gate: Heart NOT consulted (no PyAutoHeart checkout). Suite fallback: 1099 passed /
+  5 skipped, an IDENTICAL count to clean main, which is the behaviour-preserving evidence.
+- repos:
+  - PyAutoGalaxy: claude/plot-utils-duplicate-modules (247e4a3)

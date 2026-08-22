@@ -87,7 +87,7 @@ All three on `claude/remove-pynufft-6uwt2z`:
 `paper/` in both downstream repos was deliberately left untouched — published
 JOSS records of what the software used at time of publication, not live docs.
 
-## Remaining
+## Remaining (both open items now closed — see above)
 
 1. **Workspace tier** (not started, needs the workspace repos):
    - `autolens_workspace_test/scripts/interferometer/nufft.py:211` — the one
@@ -148,9 +148,33 @@ Two things found along the way that are NOT closed by this task:
    `use_adjoint_scaling=True` *before* 2026-05-22 has results that differ by
    `4 * N_y * N_x` from anything regenerated today. That discrepancy dates from
    bd18a769, not from #478.
-2. `autolens_workspace_test/scripts/interferometer/jax_likelihood/rectangular_sparse.py`
-   recorded the `apply_sparse_operator` / `TransformerNUFFT` incompatibility as
-   being caused by pynufft's kernel-deconvolved adjoint scale. That backend is
-   gone; whether the incompatibility still holds against the nufftax adjoint is
-   **unverified**. The dead attribution was removed without asserting a
-   replacement claim.
+2. ~~The `apply_sparse_operator` / `TransformerNUFFT` incompatibility is
+   unverified.~~ **RESOLVED 2026-08-22 — there is no incompatibility.**
+   @PyAutoArray#479, @autolens_workspace#498, @autolens_workspace_test#263.
+
+   The `NotImplementedError` guard was removed for nufftax by @PyAutoArray#329
+   (bd18a769, 2026-05-22); only the workspace comment stayed stale, for three
+   months. Verified directly: `apply_sparse_operator` runs with
+   `TransformerNUFFT` at every scale tried and its dirty image matches the
+   `TransformerDFT` one to **~3e-13 relative**. Both paths are supported.
+
+   What was genuinely undocumented is *which to choose*, and it is not the
+   visibility count. The DFT setup costs `O(N_vis * N_pix)` against the NUFFT's
+   `O((N_vis + N_pix) log N)` plus a fixed ~2s overhead, so the **product**
+   decides. Seven CPU measurements agree on a crossover near `1e7`:
+   ratio 0.21x / 0.27x / 0.70x at 1.3e6 / 2.6e6 / 5.2e6, then 1.16x / 1.50x /
+   1.41x / 1.92x at 1.0e7 / 2.1e7 / 2.3e7 / 8.3e7. At a 64x64 mask that is
+   ~5,000 visibilities; on a 32x32 mask the DFT still wins at 4,000.
+
+   Memory is the decisive axis: the DFT allocates with the same product
+   (60 -> 239 -> 293 -> 446 MB as the grid grows at fixed N_vis=4000) while the
+   NUFFT allocates nothing measurable. At 10.7 bytes/element that is ~109 GB at
+   1M visibilities, independently corroborating the ~123 GB bd18a769 recorded
+   by a different route — so past ~1e8 the NUFFT is the only feasible path.
+
+   Guidance added as an INFO on the existing setup log, fired only for a
+   NUFFT-backed transformer below the crossover. Deliberately **not** a
+   construction-time warning: `Interferometer` defaults to `TransformerNUFFT`,
+   so that would fire on every small dataset in every tutorial and test. The
+   dangerous direction is already a hard `DatasetException` above 10,000
+   visibilities with an opt-out.

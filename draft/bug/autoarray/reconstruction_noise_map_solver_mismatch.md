@@ -6,7 +6,7 @@ Repos:
 - @PyAutoArray
 Difficulty: medium
 Autonomy: human-required
-Priority: high
+Priority: low
 Status: draft
 
 ## Why this exists
@@ -303,6 +303,65 @@ was wrong.
   not tested.
 
 Scripts: `scratchpad/real_fit_measure.py`, `scratchpad/sensitivity.py` (session artefacts).
+
+## SETTLED 2026-08-22 — at the FITTED lambda the effect nearly vanishes. Re-graded to low.
+
+The open question from the sweep above was: those numbers used a hand-set regularization
+coefficient, but in a real fit `Constant.coefficient` is a free parameter under
+`LogUniform(1e-6, 1e6)` (workspace `config/priors/regularization/constant.yaml`), and the figure of
+merit for a pixelized fit is the **Bayesian log evidence**. So `argmax_lambda log_evidence` is what
+the sampler converges on — computed deterministically over a 17-point grid rather than by running
+Nautilus.
+
+| r_eff | lambda* | log evidence | pinned % | noise x med | max | S/N>=5 ship | cond | flux % |
+|--:|--:|--:|--:|--:|--:|--:|--:|--:|
+| 0.05 | **10** | 27605.4 | 96.6% | **1.263** | 1.91 | 12 | 12 | **0.0%** |
+| 0.10 | **10** | 26932.8 | 87.1% | **1.055** | 2.45 | 29 | 30 | **-1.3%** |
+| 0.30 | **10** | 24635.2 | 42.3% | **1.007** | 2.10 | 138 | 138 | **0.0%** |
+
+`lambda* = 10` in all three cases, comfortably inside the scanned grid (`1e-3 .. 1e5`) — not an edge
+artefact.
+
+**The Bayesian evidence self-selects away from the problematic regime.** The factor-of-2.8 gap found
+above occurs at `lambda ~ 0.1-1`, i.e. under-regularized solutions the evidence *penalises*. At the
+lambda a real fit chooses, the median gap is **1.007-1.263** and the downstream science outputs —
+source flux and magnification through the `S/N >= 5` cut — move by **0.0%, -1.3%, 0.0%**. The pixel
+counts either side of the cut are all but identical (12/12, 29/30, 138/138).
+
+The pinned fraction stays large (42-97%), so the *mechanism* in Defect 1 is real and confirmed. It
+simply does not have a large numerical consequence at the operating point.
+
+**Re-graded `Priority: high` -> `low`.** Honest accounting: this prompt has been graded high ->
+medium -> high -> low across three measurements. The swings came from measuring progressively less
+wrong things — synthetic proxy, then a real fit at hand-set lambda, then a real fit at *fitted*
+lambda. Only the last is the operating point, and it is the one that governs.
+
+### What remains true and worth doing
+
+- For a **very compact source** (`r_eff = 0.05`) the shipped noise map still overstates by **~26%
+  median**, up to ~2x on individual pixels. That is a real bias on a published error bar even though
+  it moves no flux. Anyone quoting per-pixel source uncertainties on a compact source should know.
+- The **bracket framing stands**: full-matrix overstates, active-set-conditional understates, and the
+  truncated-Gaussian posterior lies between. A fix that simply swaps to the conditional covariance
+  would be wrong at any lambda.
+- **Recommended immediate action is documentation, not code**: state in
+  `reconstruction_noise_map`'s docstring that the covariance is that of the unconstrained solve,
+  that the default solver is NNLS, and that for compact sources this overstates per-pixel noise by a
+  few tens of percent at most. Cheap, honest, no API change.
+- A proper truncated-posterior implementation is only worth it if someone needs calibrated per-pixel
+  error bars on very compact sources. Not now.
+
+### Caveats on this result
+
+- **The lens mass was fixed at truth.** In a real model-fit the mass is free too, and a poor mass
+  model may need a lower lambda to absorb residuals — which is the regime where the gap opens. This
+  is the most likely way the conclusion could be wrong.
+- One noise realization per row; no error bars on lambda*.
+- `RectangularBilinearAdaptDensity` only; Delaunay untested.
+- Evidence was maximised on a grid, not sampled — Nautilus explores a posterior over lambda, so some
+  posterior mass sits at lower lambda where the gap is larger.
+
+Script: `scratchpad/fitted_lambda.py` (session artefact).
 
 ## Verification
 

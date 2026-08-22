@@ -43,7 +43,8 @@
 
 ## autoarray-pixel-scales-int-tuple
 - issue: https://github.com/PyAutoLabs/PyAutoArray/issues/464
-- library-pr: https://github.com/PyAutoLabs/PyAutoArray/pull/465 (open, pending-release, awaiting CI + human merge)
+- library-pr: https://github.com/PyAutoLabs/PyAutoArray/pull/465 (open, pending-release, CI GREEN,
+  awaiting human merge) — unittest 3.12 + 3.13 + unittest-nojax all success on 8298d74
 - status: library-shipped, awaiting-merge
 - environment: web-github (no local worktree; clone at /home/user/pyautoarray)
 - decision-pinned: widened `pixel_scales` is cast to Python `float` — `1` → `(1.0, 1.0)`,

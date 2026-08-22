@@ -1,3 +1,61 @@
+# jax-default-dependency
+
+**Completed 2026-08-22.** JAX became a default dependency across the family
+(PyAutoLens#702): eleven PRs merged 2026-08-19 (six library — PyAutoHeart#150,
+PyAutoNerves#150, PyAutoFit#1503, PyAutoArray#450, PyAutoGalaxy#574,
+PyAutoLens#703 — plus five workspace: autolens_workspace#486,
+autogalaxy_workspace#212, autofit_workspace#139, HowToLens#71, HowToGalaxy#67),
+released as **2026.8.22.1** (nightly-release run 50, dispatched by hand after
+the gates cleared), and closed out with the intra-family floor bumps
+`>=2026.7.29.2` → `>=2026.8.22.1`: PyAutoFit#1509, PyAutoArray#466,
+PyAutoGalaxy#582, PyAutoLens#708. PyAutoNerves needs no bump — its pyproject
+carries no intra-family floor, so four PRs cover all five libraries' floors.
+
+## Why the release (and therefore this task) sat blocked for two days
+
+The promoting release was held up by two stacked regressions the task did not
+cause, found and fixed while driving it out (2026-08-21/22 session):
+
+- **PyAutoArray#453's in-place numba Cholesky kernels rejected JAX inputs**:
+  the sparse-operator inversion path hands `fnnls_cholesky` JAX arrays even
+  under `PYAUTO_DISABLE_JAX=1`; indexing a JAX array yields another JAX array,
+  which numba maps to a *readonly* buffer, so kernel compilation died with
+  "Cannot modify readonly array" — HowToLens smoke red from 2026-08-20 22:30,
+  readiness RED, nightly blocked. Fixed by boundary coercion to numpy
+  (PyAutoArray#463) with a jnp-input regression test. The scipy solvers #453
+  replaced tolerated JAX input by copying internally — an in-place rewrite of
+  a copy-tolerant seam must re-check every caller's array provenance.
+- **The rectangular mesh split (PyAutoArray#462 et al.) merged library-side
+  without its downstream legs**, breaking the retired `RectangularAdapt*`
+  names in HowToLens, HowToGalaxy and autogalaxy_workspace_test (the Stage-3
+  release gate). Legs landed as HowToLens#74, HowToGalaxy#71,
+  autolens_workspace#496, autogalaxy_workspace#222, autogalaxy_workspace_test#106.
+
+Release attempts: run 47 (scheduled) blocked on readiness RED; run 48 blocked
+at Stage 3 (agwt old names; validation otherwise 672p/0f); run 49 passed
+everything but blocked STALE — PyAutoGalaxy#581 merged mid-run, the staleness
+gate correctly refusing to ship a set that no longer matched main; run 50
+(pins incl. #581) released 2026.8.22.1 and PyPI carries all five packages.
+
+## Keep / traps
+
+- The nojax CI leg caught two real bugs on day one: an unmarked
+  jax-requiring autolens test (94d8f54ba) and NumPy-scalar misrouting in
+  autofit Beta/Gamma/Normal message dispatch (19c679583).
+- jax cap stays `<0.11` (widen reverted 848a254; jax 0.11 bug prompt:
+  draft/bug/autofit/jax_011_message_log_partition_tuple_shape.md).
+- The staleness gate makes manual dispatches race active development: a
+  library merge landing between the driver's rehearsal SHA-pin (~15 min in)
+  and its readiness re-check (~80 min in) blocks the night. Dispatch when
+  merging has quiesced, or expect a re-run.
+
+## Remaining (deliberately not part of this record)
+
+- Make `unittest-nojax` a required check once it has green history (the
+  "later" half of the old NEXT list).
+
+## Original prompt
+
 # Make JAX a default (non-optional) dependency across the library stack
 
 Type: maintenance

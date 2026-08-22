@@ -1,21 +1,5 @@
 # Active Tasks
 
-## jax-default-dependency
-- issue: https://github.com/PyAutoLabs/PyAutoLens/issues/702
-- status: shipped-awaiting-release-followups — ALL ELEVEN PRs merged 2026-08-19 (human-authorized):
-  six library (PyAutoHeart#150, PyAutoNerves#150, PyAutoFit#1503, PyAutoArray#450, PyAutoGalaxy#574,
-  PyAutoLens#703) + five workspace (autolens_workspace#486, autogalaxy_workspace#212,
-  autofit_workspace#139, HowToLens#71, HowToGalaxy#67; pending-release hold waived by human — prose-only,
-  few-hour docs-ahead window until the nightly). Worktree removed, claims released, branches deleted.
-- nojax CI leg caught two real bugs day one: unmarked jax-requiring autolens test (94d8f54ba);
-  NumPy-scalar misrouting in autofit Beta/Gamma/Normal message dispatch (19c679583).
-- jax cap stays <0.11 (widen reverted 848a254; jax 0.11 bug prompt:
-  draft/bug/autofit/jax_011_message_log_partition_tuple_shape.md).
-- NEXT (release-blocked; nightly 02:00 UTC): (1) bump intra-family floors `>=2026.7.29.2` → first
-  promoted version in all five pyprojects, then move this task to complete/; (2) later, make
-  unittest-nojax a required check once it has green history.
-- prompt: active/jax_default_dependency.md
-
 ## transformed-message-factor-gradient-unpack
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1501 (issued 2026-08-19)
 - prompt: active/16_transformed_message_factor_gradient_unpack.md

@@ -6,7 +6,7 @@ Repos:
 - @PyAutoArray
 Difficulty: medium
 Autonomy: human-required
-Priority: high
+Priority: medium
 Status: draft
 
 ## Why this exists
@@ -21,6 +21,16 @@ provably cannot reach the 1D noise map. It is this: **the noise map is computed
 from a formula that describes an estimator PyAutoArray no longer uses by
 default.** `Autonomy: human-required` because the primary fix is a statistical
 decision about what the reported uncertainty *means*, not a code repair.
+
+## DECISION MADE 2026-08-22 — posterior, not diagnostic
+
+The human was asked whether this noise map is a **posterior** (a calibrated uncertainty on the
+reconstructed flux, used for error bars and S/N) or a **diagnostic** (a relative readout of how
+well-constrained each pixel is). Answer: **posterior.**
+
+That settles the direction and closes the diagnostic-only escape hatch offered under Defect 1
+("rewrite the docstring rather than the maths"). Defects 1 and 2 are real defects, not documentation
+drift. What remains open is the *design* of the fix, not whether one is needed.
 
 ## Defect 1 — the covariance formula assumes an unconstrained solve; the default is NNLS
 
@@ -121,7 +131,7 @@ statement about the mesh; which solver walks them is a separate choice. Edge-zer
 should apply to both branches, or the coupling should be made explicit and
 documented.
 
-## Suggested direction (not a decision — see Defect 1)
+## Suggested direction (interpretation now settled; design still open)
 
 If the noise map is to describe the estimator actually used, the covariance should
 be formed on the **same index set the reconstruction solved**, and scattered back:
@@ -158,6 +168,64 @@ reconstruction to produce a **signal-to-noise map on a source reconstruction** �
 that ends up in papers. If the NNLS/unconstrained mismatch is real, it propagates straight
 into published S/N. That raises the stakes on the Defect 1 decision and is the concrete
 reason to instrument a real fit rather than reason about it further.
+
+## MEASURED 2026-08-22 — pinned fraction is large, the consequence is small
+
+This prompt's load-bearing claim was that NNLS pins a large fraction of a compact source's mesh,
+flagged as reasoned-not-measured. Now measured with PyAutoArray's **real solver**
+(`autoarray.util.fnnls.fnnls_cholesky`) on a problem shaped like a source-plane inversion — compact
+Gaussian source, 4-neighbour gradient regularization, mesh mostly covering empty sky.
+
+**CONFIRMED — the pinned fraction is large, and scales with source compactness:**
+
+| mesh | pixels | source area | pinned at 0 |
+|---|--:|--:|--:|
+| 20x20 | 400 | 2% | **46.0%** |
+| 20x20 | 400 | 5% | **24.8%** |
+| 20x20 | 400 | 15% | 1.2% |
+| 30x30 | 900 | 2% | **47.8%** |
+| 30x30 | 900 | 5% | **26.4%** |
+| 30x30 | 900 | 15% | 0.4% |
+| 40x40 | 1600 | 2% | **50.0%** |
+| 40x40 | 1600 | 5% | **26.8%** |
+| 40x40 | 1600 | 15% | 0.5% |
+
+A quarter to a half of the mesh is pinned for a genuinely compact source; the effect vanishes for an
+extended one. The premise holds.
+
+**But the numerical consequence is far smaller than this prompt implied.** Shipped full-matrix noise
+map vs the active-set-conditional one (covariance restricted to the free set), on the 900-pixel /
+5%-source case (226 pinned):
+
+| quantity | value |
+|---|---|
+| median noise, shipped (full matrix) | 0.002226 |
+| median noise, active-set-conditional | 0.002159 |
+| ratio shipped / conditional, free pixels | **median 1.025, min 1.002, max 1.123** |
+
+The shipped map **overstates** uncertainty on the free pixels by ~2.5% median, up to ~12% worst case.
+The bias is systematic and one-directional (`min 1.002` — it never understates), exactly as the
+truncation argument predicts. But it is a few percent, **not** the order-of-magnitude error the
+`Priority: high` grading assumed.
+
+The pinned pixels are less alarming than feared: their reconstruction is exactly `0.0`, so
+`signal_to_noise_map = reconstruction / reconstruction_noise_map` yields `0 / 0.00228 = 0`. Zero S/N
+for an unlit pixel is defensible — though the reported noise value itself is still meaningless, the
+posterior there being a spike at the boundary rather than a Gaussian.
+
+**Re-graded `Priority: high` -> `medium`.** A systematic, always-one-direction ~2.5% (up to 12%)
+overstatement of source-plane error bars is worth correcting for a quantity now confirmed to be a
+**posterior** and which feeds published S/N maps. It is not an emergency.
+
+**Caveat, and a real one.** This is a *structural proxy*, not a lens fit: the mapping matrix is random
+rather than produced by ray tracing, so neighbouring image pixels do not map to neighbouring source
+pixels as they do in reality. That structure affects conditioning and could move the magnitude either
+way. The pinned *fraction* is robust to it (it follows from source compactness, not mapping
+structure); the *2.5% / 12%* figures are indicative only. **Re-measure on a real Delaunay fit before
+quoting them anywhere.**
+
+Defect 3 (the config coupling) is untouched by all of this — it is an unambiguous bug at any priority,
+but it sits on the reconstruction path and so changes fit results. It needs its own sign-off.
 
 ## Verification
 

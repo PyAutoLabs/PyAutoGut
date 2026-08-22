@@ -15,20 +15,12 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 18
+**Highest priority** (filed as `high`) — showing 12 of 17
 
 <details><summary>📋 <a href="draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — medium · safe · high</summary>
 
 ```
 /start_dev draft/triage/jax_zero_contour.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/autoarray/reconstruction_noise_map_solver_mismatch.md">The reconstruction noise map describes a different estimator than the</a> — autoarray · medium · human-required · high</summary>
-
-```
-/start_dev draft/bug/autoarray/reconstruction_noise_map_solver_mismatch.md
 ```
 
 </details>
@@ -109,6 +101,14 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 ```
 /start_dev draft/docs/autolens/split_lensing_regimes.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/test/autolens_workspace_developer/mge_jit_regression_rebaseline.md">Re-baseline the MGE imaging JIT profiling regression value</a> — autolens_workspace_developer · too-large · supervised · high</summary>
+
+```
+/start_dev draft/test/autolens_workspace_developer/mge_jit_regression_rebaseline.md
 ```
 
 </details>
@@ -463,14 +463,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 <details>
 <summary><b>bug</b> — 32</summary>
 
-<details><summary>📋 <a href="draft/bug/autoarray/reconstruction_noise_map_solver_mismatch.md">The reconstruction noise map describes a different estimator than the</a> — autoarray · medium · human-required · high</summary>
-
-```
-/start_dev draft/bug/autoarray/reconstruction_noise_map_solver_mismatch.md
-```
-
-</details>
-
 <details><summary>📋 <a href="draft/bug/health_fixes/jax_runtime_and_parity.md">Fix release JAX runtime compatibility and likelihood parity</a> — health_fixes · too-large · supervised · high</summary>
 
 ```
@@ -515,6 +507,14 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/bug/pyautoheart/script_timing_baselines_orphaned_and_window_filled.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/autoarray/reconstruction_noise_map_solver_mismatch.md">The reconstruction noise map describes a different estimator than the</a> — autoarray · medium · human-required · medium</summary>
+
+```
+/start_dev draft/bug/autoarray/reconstruction_noise_map_solver_mismatch.md
 ```
 
 </details>

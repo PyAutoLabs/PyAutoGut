@@ -8,10 +8,10 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 2 |
+| [In flight](#in-flight) (`active/`) | 3 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 145 |
+| [Backlog](#backlog) (`draft/`) | 144 |
 
 ## Start here
 
@@ -137,6 +137,14 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
+<details><summary>📋 <a href="active/reconstruction_noise_map_covariance_sqrt.md"><code>reconstruction_noise_map_with_covariance</code> — form the covariance properly, fix the sqrt</a> — <a href="https://github.com/PyAutoLabs/PyAutoArray/issues/468">issue #468</a> — library-dev</summary>
+
+```
+/start_dev active/reconstruction_noise_map_covariance_sqrt.md
+```
+
+</details>
+
 ## Parked
 
 Started or scoped, not currently in flight — resume by moving the row back to `active.md`. Full detail in [`parked.md`](parked.md).
@@ -229,7 +237,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**145** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **23** of them belong to an epic and are listed only under [Epics](#epics) below.
+**144** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **23** of them belong to an epic and are listed only under [Epics](#epics) below.
 
 <details>
 <summary><b>feature</b> — 28</summary>
@@ -461,7 +469,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>bug</b> — 33</summary>
+<summary><b>bug</b> — 32</summary>
 
 <details><summary>📋 <a href="draft/bug/autoarray/reconstruction_noise_map_solver_mismatch.md">The reconstruction noise map describes a different estimator than the</a> — autoarray · medium · human-required · high</summary>
 
@@ -499,14 +507,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/bug/autoarray/pixel_scales_int_not_widened_to_tuple.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/autoarray/reconstruction_noise_map_covariance_sqrt.md"><code>reconstruction_noise_map_with_covariance</code> — form the covariance properly, fix the sqrt</a> — autoarray · small · supervised · medium</summary>
-
-```
-/start_dev draft/bug/autoarray/reconstruction_noise_map_covariance_sqrt.md
 ```
 
 </details>

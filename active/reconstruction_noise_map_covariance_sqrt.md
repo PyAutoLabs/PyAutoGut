@@ -7,7 +7,7 @@ Repos:
 Difficulty: small
 Autonomy: supervised
 Priority: medium
-Status: draft
+Status: in-progress
 
 ## Why this exists
 
@@ -133,13 +133,28 @@ this is computed once per fit, not per-likelihood.
   so a regression fails rather than warns.
 - **`reconstruction_noise_map` still returns `sqrt(diag(C))`** — assert against a
   hand-computed value, and assert the invariant explicitly, not just the numbers.
-- **The `inv`-vs-`cho_solve` A/B is required, not assumed.** The claim that `inv`
-  yields negative/inaccurate diagonals at realistic conditioning was reasoned from
-  the numerical properties and the repo's own `~1e-6 at cond ~ 1e9` note — it was
-  **not** measured. Probe real `curvature_reg_matrix` instances from a Delaunay
-  source fit and count negative and near-zero diagonal entries under each method.
-  If `inv` turns out to be fine at realistic conditioning, say so and drop the
-  claim — keep the Cholesky change on the raise-loudly argument alone.
+- **The `inv`-vs-`cho_solve` A/B was run on 2026-08-22 and refuted two of the
+  claims above.** Recorded so nobody re-derives the wrong reasoning:
+
+  | Claim | Verdict |
+  |---|---|
+  | `inv` gives negative diagonals on well-formed SPD | **REFUTED** — 0 across cond 1e3–1e15, n=400, 20 trials each |
+  | `inv` is materially less accurate on the diagonal | **REFUTED** — matches `cho_solve`; at cond 1e15 `inv` was marginally *better* |
+  | Near-coincident mesh vertices degrade the inverse | **REFUTED** — with regularization the matrix stays PD (cond ~6.8e7 even at exactly duplicated columns) |
+  | `inv` returns asymmetric output | **CONFIRMED** — 5.2e-7 at cond 1e12 vs 2.6e-16 |
+  | `inv` silently succeeds on indefinite matrices | **CONFIRMED** |
+
+  The surviving argument is **detection, not accuracy**. `cho_factor` raises
+  `LinAlgError` on a negative eigenvalue; `inv` raises only on an *exactly*
+  singular matrix and otherwise returns a plausible-looking covariance. At
+  eigenvalue `-1e-8` all 300 diagonals came back negative (whole noise map NaN);
+  at `-1.0`, **zero** did — no NaN, no warning, no error, wrong numbers.
+
+  **Not established:** that a real `curvature_reg_matrix` *is* indefinite in a
+  converged fit. `Settings.no_regularization_add_to_curvature_diag_value` and the
+  `curvature_matrix_with_added_to_diag_from` docstring ("it is common for the
+  `curvature_matrix` computed to not be positive-definite") say it happens, but no
+  fit was instrumented to confirm it. Worth doing under the sibling prompt.
 - `test_autoarray/inversion/plot/test_inversion_plotters.py:82,110` monkeypatch
   this property to force a `LinAlgError` and check plots/CSV degrade gracefully.
   Confirm the same exception still escapes — `cho_factor` also raises

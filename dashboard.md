@@ -8,7 +8,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 3 |
+| [In flight](#in-flight) (`active/`) | 2 |
 | [Parked](#parked) (`parked.md`) | 4 |
 | [Planned](#planned) (`planned.md`) | 6 |
 | [Backlog](#backlog) (`draft/`) | 149 |
@@ -131,14 +131,6 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/16_transformed_message_factor_gradient_unpack.md
-```
-
-</details>
-
-<details><summary>📋 <a href="active/dataset_allowlist_small_datasets_guard.md">Guard: allowlisted datasets reachable from a capped <code>should_simulate</code> call site</a> — <a href="https://github.com/PyAutoLabs/PyAutoHands/issues/252">issue #252</a> — library-dev — implementation complete, both PRs open</summary>
-
-```
-/start_dev active/dataset_allowlist_small_datasets_guard.md
 ```
 
 </details>

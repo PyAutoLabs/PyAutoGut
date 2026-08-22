@@ -145,7 +145,7 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
-<details><summary>📋 <a href="active/pixel_scales_int_not_widened_to_tuple.md"><code>pixel_scales</code> given as an <code>int</code> (or <code>np.float64</code>) is never widened</a> — <a href="https://github.com/PyAutoLabs/PyAutoArray/issues/464">issue #464</a> — library-dev</summary>
+<details><summary>📋 <a href="active/pixel_scales_int_not_widened_to_tuple.md"><code>pixel_scales</code> given as an <code>int</code> (or <code>np.float64</code>) is never widened</a> — <a href="https://github.com/PyAutoLabs/PyAutoArray/issues/464">issue #464</a> — library-shipped, awaiting-merge</summary>
 
 ```
 /start_dev active/pixel_scales_int_not_widened_to_tuple.md

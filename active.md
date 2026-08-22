@@ -43,11 +43,15 @@
 
 ## autoarray-pixel-scales-int-tuple
 - issue: https://github.com/PyAutoLabs/PyAutoArray/issues/464
-- status: library-dev
+- library-pr: https://github.com/PyAutoLabs/PyAutoArray/pull/465 (open, pending-release, awaiting CI + human merge)
+- status: library-shipped, awaiting-merge
 - environment: web-github (no local worktree; clone at /home/user/pyautoarray)
 - decision-pinned: widened `pixel_scales` is cast to Python `float` — `1` → `(1.0, 1.0)`,
   not `(1, 1)`; matches the `Tuple[float, ...]` annotation and keeps numpy scalars out of
   stored geometry and JSON.
+- gate: local suite 1145 passed / 1 skipped, 0 unexplained failures (3 deselected pre-existing
+  pynufft failures, baselined identical on a clean tree). Heart NOT consulted — PyAutoHeart is
+  absent from this web session, so the WORKFLOW.md test-suite fallback was the gate.
 - follow-ups noted on the issue: tuple entries not normalised; `convert_shape_native_1d`
   has the identical `type(x) is int` defect.
 - prompt: active/pixel_scales_int_not_widened_to_tuple.md

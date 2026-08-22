@@ -11,7 +11,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 | [In flight](#in-flight) (`active/`) | 2 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 148 |
+| [Backlog](#backlog) (`draft/`) | 149 |
 
 ## Start here
 
@@ -235,7 +235,284 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**148** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **23** of them belong to an epic and are listed only under [Epics](#epics) below.
+**149** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **23** of them belong to an epic and are listed only under [Epics](#epics) below.
+
+<details>
+<summary><b>bug</b> — 34</summary>
+
+<details><summary>📋 <a href="draft/bug/pyautonerves/small_datasets_regime_stamp_at_writer_funnel.md">Stamp the small-datasets regime at the FITS writer funnel</a> — pyautonerves · large · supervised · high</summary>
+
+```
+/start_dev draft/bug/pyautonerves/small_datasets_regime_stamp_at_writer_funnel.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/health_fixes/jax_runtime_and_parity.md">Fix release JAX runtime compatibility and likelihood parity</a> — health_fixes · too-large · supervised · high</summary>
+
+```
+/start_dev draft/bug/health_fixes/jax_runtime_and_parity.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/health_fixes/jit_visualization_outputs.md">Fix JIT quick-update visualization output regressions</a> — health_fixes · too-large · supervised · high</summary>
+
+```
+/start_dev draft/bug/health_fixes/jit_visualization_outputs.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/health_fixes/samples_parameter_paths.md">Fix release result/sample parameter-path regressions</a> — health_fixes · too-large · supervised · high</summary>
+
+```
+/start_dev draft/bug/health_fixes/samples_parameter_paths.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/autoarray/pixel_scales_int_not_widened_to_tuple.md"><code>pixel_scales</code> given as an <code>int</code> (or <code>np.float64</code>) is never widened</a> — autoarray · small · supervised · medium</summary>
+
+```
+/start_dev draft/bug/autoarray/pixel_scales_int_not_widened_to_tuple.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/autofit/jax_011_message_log_partition_tuple_shape.md">jax 0.11 breaks beta/gamma message log_partition under jit ('tuple' object</a> — autofit · small · supervised · medium</summary>
+
+```
+/start_dev draft/bug/autofit/jax_011_message_log_partition_tuple_shape.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/pyautoheart/script_timing_baselines_orphaned_and_window_filled.md">Heart script_timing baselines are orphaned by path moves and filled</a> — pyautoheart · small · supervised · medium</summary>
+
+```
+/start_dev draft/bug/pyautoheart/script_timing_baselines_orphaned_and_window_filled.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/autoarray/small_datasets_rmtree_of_committed_data.md">should_simulate rmtree's committed, gitignore-allowlisted datasets</a> — autoarray · medium · supervised · medium</summary>
+
+```
+/start_dev draft/bug/autoarray/small_datasets_rmtree_of_committed_data.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/autoarray/numba_kernel_shift_axes_swapped.md">Numba PSF gathers derive the y/x kernel shifts from the</a> — autoarray · low · supervised · medium</summary>
+
+```
+/start_dev draft/bug/autoarray/numba_kernel_shift_axes_swapped.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/autoarray/pynufft_scipy_pinv2_dev_extra.md">PyNUFFT dev extra is incompatible with current SciPy on Python</a> — autoarray · small · supervised · normal</summary>
+
+```
+/start_dev draft/bug/autoarray/pynufft_scipy_pinv2_dev_extra.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/autofit/loggaussian_prior_declares_own_support.md"><code>LogGaussianPrior</code> misreports its own support as <code>(-inf, inf)</code></a> — autofit · small · supervised · normal</summary>
+
+```
+/start_dev draft/bug/autofit/loggaussian_prior_declares_own_support.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/autofit/plot_functions_discard_kwargs.md"><code>autofit.plot</code> functions accept <code>**kwargs</code> and silently discard them</a> — autofit · small · supervised · normal</summary>
+
+```
+/start_dev draft/bug/autofit/plot_functions_discard_kwargs.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/autofit/test_mode_bypass_ordered_assertion_ties.md">TEST_MODE bypass crashes on ordered-parameter assertion ties</a> — autofit · small · supervised · normal</summary>
+
+```
+/start_dev draft/bug/autofit/test_mode_bypass_ordered_assertion_ties.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/autolens/point_jax_vmap_parity_nondeterministic.md">point.py JAX-vmap parity assert is non-deterministic under the smoke env</a> — autolens · small · supervised · normal</summary>
+
+```
+/start_dev draft/bug/autolens/point_jax_vmap_parity_nondeterministic.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/autolens_workspace/script_local_pixel_scale_vs_dataset_pixel_scales.md">Scripts derive geometry from a hardcoded pixel_scale while the dataset</a> — autolens_workspace · small · supervised · normal</summary>
+
+```
+/start_dev draft/bug/autolens_workspace/script_local_pixel_scale_vs_dataset_pixel_scales.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/howtogalaxy/small_api_drift_ellipse_and_plot_grid_lines.md">HowToGalaxy small API drifts: ellipse kwargs + plot_grid_lines (parked NEEDS_FIX)</a> — howtogalaxy · small · supervised · normal</summary>
+
+```
+/start_dev draft/bug/howtogalaxy/small_api_drift_ellipse_and_plot_grid_lines.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/pyautobrain/pyautoconf_rename_functional_leftovers.md">PyAutoConf rename leftovers in Brain functional surfaces</a> — pyautobrain · small · supervised · normal</summary>
+
+```
+/start_dev draft/bug/pyautobrain/pyautoconf_rename_functional_leftovers.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/pyautohands/generate_rejects_autocti_after_deleting_notebooks.md"><code>generate.py</code> deletes notebooks/ before rejecting an unknown project</a> — pyautohands · small · supervised · normal</summary>
+
+```
+/start_dev draft/bug/pyautohands/generate_rejects_autocti_after_deleting_notebooks.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/pyautoreduce/published_autoreduce_09_missing_312_floor.md"><code>autoreduce 0.9</code> on PyPI never got the Python 3.12 floor</a> — pyautoreduce · small · supervised · normal</summary>
+
+```
+/start_dev draft/bug/pyautoreduce/published_autoreduce_09_missing_312_floor.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/workspaces/aplt_output_drift_remaining_repos.md"><code>aplt.Output</code> stale-API drift in the remaining workspace repos</a> — workspaces · small · supervised · normal</summary>
+
+```
+/start_dev draft/bug/workspaces/aplt_output_drift_remaining_repos.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/workspaces/jax_likelihood_pins_stale_by_1e4.md">Three <code>jax_likelihood</code> pins are stale by ~1.24e-4 and fail the</a> — workspaces · small · supervised · normal</summary>
+
+```
+/start_dev draft/bug/workspaces/jax_likelihood_pins_stale_by_1e4.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/autoarray/PROBE_adapt_double_square_coefficient.md">PROBE: is Adapt's 4th-power coefficient dependence (double square) intentional?</a> — autoarray · medium · supervised · normal</summary>
+
+```
+/start_dev draft/bug/autoarray/PROBE_adapt_double_square_coefficient.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/autolens/interferometer_delaunay_nonpd_fitexception.md">interferometer Delaunay pixelization — non-PD FitException in test-mode bypass</a> — autolens · medium · supervised · normal</summary>
+
+```
+/start_dev draft/bug/autolens/interferometer_delaunay_nonpd_fitexception.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/autolens/jax_point_source_point_smoke_sentinel.md">JAX point-source smoke sentinel: point.py returns -1e99 instead of -83.38</a> — autolens · medium · supervised · normal</summary>
+
+```
+/start_dev draft/bug/autolens/jax_point_source_point_smoke_sentinel.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/autolens/jit_cache_not_hit_modeling_visualization.md">JIT cache not hit in modeling_visualization delaunay/rectangular scripts</a> — autolens · medium · supervised · normal</summary>
+
+```
+/start_dev draft/bug/autolens/jit_cache_not_hit_modeling_visualization.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/autolens_workspace_test/multi_dataset_jax_likelihood_xla_stall.md">multi_dataset/jax_likelihood scripts hang to the timeout cap (XLA compile stall)</a> — autolens_workspace_test · medium · supervised · normal</summary>
+
+```
+/start_dev draft/bug/autolens_workspace_test/multi_dataset_jax_likelihood_xla_stall.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/priors/15_transformed_message_logpdf_jacobian.md"><code>@PyAutoFit</code> <code>TransformedMessage.logpdf</code>/<code>pdf</code> omit the transform Jacobian</a> — priors · medium · supervised · normal</summary>
+
+```
+/start_dev draft/bug/priors/15_transformed_message_logpdf_jacobian.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/health_fixes/release_timeout_policy.md">Resolve release-profile timeout scripts deliberately</a> — health_fixes · too-large · supervised · normal</summary>
+
+```
+/start_dev draft/bug/health_fixes/release_timeout_policy.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/priors/14_replace_transform_stack_with_bijectors.md"><code>@PyAutoFit</code> Refactor: replace hand-rolled <code>AbstractDensityTransform</code> with <code>tfp.bijectors</code> / <code>numpyro.distributions.transforms</code></a> — priors · too-large · supervised · normal</summary>
+
+```
+/start_dev draft/bug/priors/14_replace_transform_stack_with_bijectors.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/priors/z_features.md">Priors &amp; Messages cleanup — tracker</a> — priors · too-large · supervised · normal</summary>
+
+```
+/start_dev draft/bug/priors/z_features.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/autolens/jax_likelihood_smoke_pins_stale.md">autolens_workspace_test jax_likelihood pins: 4 scripts fail smoke on main</a> — autolens · low · supervised · normal</summary>
+
+```
+/start_dev draft/bug/autolens/jax_likelihood_smoke_pins_stale.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/pyautomind/status_sh_repos_missing_source.md">status.sh --repos sources a file that no longer exists</a> — pyautomind · small · supervised · low</summary>
+
+```
+/start_dev draft/bug/pyautomind/status_sh_repos_missing_source.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/autoarray/reconstruction_noise_map_solver_mismatch.md">The reconstruction noise map describes a different estimator than the</a> — autoarray · medium · human-required · low</summary>
+
+```
+/start_dev draft/bug/autoarray/reconstruction_noise_map_solver_mismatch.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/autolens/interferometer_release_leg_oom.md">interferometer/start_here.py OOM in nightly release-validation integrate leg</a> — autolens</summary>
+
+```
+/start_dev draft/bug/autolens/interferometer_release_leg_oom.md
+```
+
+</details>
+
+</details>
 
 <details>
 <summary><b>feature</b> — 28</summary>
@@ -460,275 +737,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/feature/pyautomind/repos-sync-config-stamper.md
-```
-
-</details>
-
-</details>
-
-<details>
-<summary><b>bug</b> — 33</summary>
-
-<details><summary>📋 <a href="draft/bug/pyautonerves/small_datasets_regime_stamp_at_writer_funnel.md">Stamp the small-datasets regime at the FITS writer funnel</a> — pyautonerves · large · supervised · high</summary>
-
-```
-/start_dev draft/bug/pyautonerves/small_datasets_regime_stamp_at_writer_funnel.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/health_fixes/jax_runtime_and_parity.md">Fix release JAX runtime compatibility and likelihood parity</a> — health_fixes · too-large · supervised · high</summary>
-
-```
-/start_dev draft/bug/health_fixes/jax_runtime_and_parity.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/health_fixes/jit_visualization_outputs.md">Fix JIT quick-update visualization output regressions</a> — health_fixes · too-large · supervised · high</summary>
-
-```
-/start_dev draft/bug/health_fixes/jit_visualization_outputs.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/health_fixes/samples_parameter_paths.md">Fix release result/sample parameter-path regressions</a> — health_fixes · too-large · supervised · high</summary>
-
-```
-/start_dev draft/bug/health_fixes/samples_parameter_paths.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/autoarray/pixel_scales_int_not_widened_to_tuple.md"><code>pixel_scales</code> given as an <code>int</code> (or <code>np.float64</code>) is never widened</a> — autoarray · small · supervised · medium</summary>
-
-```
-/start_dev draft/bug/autoarray/pixel_scales_int_not_widened_to_tuple.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/autofit/jax_011_message_log_partition_tuple_shape.md">jax 0.11 breaks beta/gamma message log_partition under jit ('tuple' object</a> — autofit · small · supervised · medium</summary>
-
-```
-/start_dev draft/bug/autofit/jax_011_message_log_partition_tuple_shape.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/pyautoheart/script_timing_baselines_orphaned_and_window_filled.md">Heart script_timing baselines are orphaned by path moves and filled</a> — pyautoheart · small · supervised · medium</summary>
-
-```
-/start_dev draft/bug/pyautoheart/script_timing_baselines_orphaned_and_window_filled.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/autoarray/small_datasets_rmtree_of_committed_data.md">should_simulate rmtree's committed, gitignore-allowlisted datasets</a> — autoarray · medium · supervised · medium</summary>
-
-```
-/start_dev draft/bug/autoarray/small_datasets_rmtree_of_committed_data.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/autoarray/numba_kernel_shift_axes_swapped.md">Numba PSF gathers derive the y/x kernel shifts from the</a> — autoarray · low · supervised · medium</summary>
-
-```
-/start_dev draft/bug/autoarray/numba_kernel_shift_axes_swapped.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/autoarray/pynufft_scipy_pinv2_dev_extra.md">PyNUFFT dev extra is incompatible with current SciPy on Python</a> — autoarray · small · supervised · normal</summary>
-
-```
-/start_dev draft/bug/autoarray/pynufft_scipy_pinv2_dev_extra.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/autofit/loggaussian_prior_declares_own_support.md"><code>LogGaussianPrior</code> misreports its own support as <code>(-inf, inf)</code></a> — autofit · small · supervised · normal</summary>
-
-```
-/start_dev draft/bug/autofit/loggaussian_prior_declares_own_support.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/autofit/plot_functions_discard_kwargs.md"><code>autofit.plot</code> functions accept <code>**kwargs</code> and silently discard them</a> — autofit · small · supervised · normal</summary>
-
-```
-/start_dev draft/bug/autofit/plot_functions_discard_kwargs.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/autofit/test_mode_bypass_ordered_assertion_ties.md">TEST_MODE bypass crashes on ordered-parameter assertion ties</a> — autofit · small · supervised · normal</summary>
-
-```
-/start_dev draft/bug/autofit/test_mode_bypass_ordered_assertion_ties.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/autolens/point_jax_vmap_parity_nondeterministic.md">point.py JAX-vmap parity assert is non-deterministic under the smoke env</a> — autolens · small · supervised · normal</summary>
-
-```
-/start_dev draft/bug/autolens/point_jax_vmap_parity_nondeterministic.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/autolens_workspace/script_local_pixel_scale_vs_dataset_pixel_scales.md">Scripts derive geometry from a hardcoded pixel_scale while the dataset</a> — autolens_workspace · small · supervised · normal</summary>
-
-```
-/start_dev draft/bug/autolens_workspace/script_local_pixel_scale_vs_dataset_pixel_scales.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/howtogalaxy/small_api_drift_ellipse_and_plot_grid_lines.md">HowToGalaxy small API drifts: ellipse kwargs + plot_grid_lines (parked NEEDS_FIX)</a> — howtogalaxy · small · supervised · normal</summary>
-
-```
-/start_dev draft/bug/howtogalaxy/small_api_drift_ellipse_and_plot_grid_lines.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/pyautobrain/pyautoconf_rename_functional_leftovers.md">PyAutoConf rename leftovers in Brain functional surfaces</a> — pyautobrain · small · supervised · normal</summary>
-
-```
-/start_dev draft/bug/pyautobrain/pyautoconf_rename_functional_leftovers.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/pyautohands/generate_rejects_autocti_after_deleting_notebooks.md"><code>generate.py</code> deletes notebooks/ before rejecting an unknown project</a> — pyautohands · small · supervised · normal</summary>
-
-```
-/start_dev draft/bug/pyautohands/generate_rejects_autocti_after_deleting_notebooks.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/pyautoreduce/published_autoreduce_09_missing_312_floor.md"><code>autoreduce 0.9</code> on PyPI never got the Python 3.12 floor</a> — pyautoreduce · small · supervised · normal</summary>
-
-```
-/start_dev draft/bug/pyautoreduce/published_autoreduce_09_missing_312_floor.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/workspaces/aplt_output_drift_remaining_repos.md"><code>aplt.Output</code> stale-API drift in the remaining workspace repos</a> — workspaces · small · supervised · normal</summary>
-
-```
-/start_dev draft/bug/workspaces/aplt_output_drift_remaining_repos.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/workspaces/jax_likelihood_pins_stale_by_1e4.md">Three <code>jax_likelihood</code> pins are stale by ~1.24e-4 and fail the</a> — workspaces · small · supervised · normal</summary>
-
-```
-/start_dev draft/bug/workspaces/jax_likelihood_pins_stale_by_1e4.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/autoarray/PROBE_adapt_double_square_coefficient.md">PROBE: is Adapt's 4th-power coefficient dependence (double square) intentional?</a> — autoarray · medium · supervised · normal</summary>
-
-```
-/start_dev draft/bug/autoarray/PROBE_adapt_double_square_coefficient.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/autolens/interferometer_delaunay_nonpd_fitexception.md">interferometer Delaunay pixelization — non-PD FitException in test-mode bypass</a> — autolens · medium · supervised · normal</summary>
-
-```
-/start_dev draft/bug/autolens/interferometer_delaunay_nonpd_fitexception.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/autolens/jax_point_source_point_smoke_sentinel.md">JAX point-source smoke sentinel: point.py returns -1e99 instead of -83.38</a> — autolens · medium · supervised · normal</summary>
-
-```
-/start_dev draft/bug/autolens/jax_point_source_point_smoke_sentinel.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/autolens/jit_cache_not_hit_modeling_visualization.md">JIT cache not hit in modeling_visualization delaunay/rectangular scripts</a> — autolens · medium · supervised · normal</summary>
-
-```
-/start_dev draft/bug/autolens/jit_cache_not_hit_modeling_visualization.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/priors/15_transformed_message_logpdf_jacobian.md"><code>@PyAutoFit</code> <code>TransformedMessage.logpdf</code>/<code>pdf</code> omit the transform Jacobian</a> — priors · medium · supervised · normal</summary>
-
-```
-/start_dev draft/bug/priors/15_transformed_message_logpdf_jacobian.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/health_fixes/release_timeout_policy.md">Resolve release-profile timeout scripts deliberately</a> — health_fixes · too-large · supervised · normal</summary>
-
-```
-/start_dev draft/bug/health_fixes/release_timeout_policy.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/priors/14_replace_transform_stack_with_bijectors.md"><code>@PyAutoFit</code> Refactor: replace hand-rolled <code>AbstractDensityTransform</code> with <code>tfp.bijectors</code> / <code>numpyro.distributions.transforms</code></a> — priors · too-large · supervised · normal</summary>
-
-```
-/start_dev draft/bug/priors/14_replace_transform_stack_with_bijectors.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/priors/z_features.md">Priors &amp; Messages cleanup — tracker</a> — priors · too-large · supervised · normal</summary>
-
-```
-/start_dev draft/bug/priors/z_features.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/autolens/jax_likelihood_smoke_pins_stale.md">autolens_workspace_test jax_likelihood pins: 4 scripts fail smoke on main</a> — autolens · low · supervised · normal</summary>
-
-```
-/start_dev draft/bug/autolens/jax_likelihood_smoke_pins_stale.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/pyautomind/status_sh_repos_missing_source.md">status.sh --repos sources a file that no longer exists</a> — pyautomind · small · supervised · low</summary>
-
-```
-/start_dev draft/bug/pyautomind/status_sh_repos_missing_source.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/autoarray/reconstruction_noise_map_solver_mismatch.md">The reconstruction noise map describes a different estimator than the</a> — autoarray · medium · human-required · low</summary>
-
-```
-/start_dev draft/bug/autoarray/reconstruction_noise_map_solver_mismatch.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/autolens/interferometer_release_leg_oom.md">interferometer/start_here.py OOM in nightly release-validation integrate leg</a> — autolens</summary>
-
-```
-/start_dev draft/bug/autolens/interferometer_release_leg_oom.md
 ```
 
 </details>

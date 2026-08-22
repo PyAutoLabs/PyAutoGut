@@ -32,16 +32,36 @@
   (prompt is Autonomy: supervised and this run has no --auto, so checkpoint 1 holds)
 - prompt: active/small_datasets_regime_stamp_at_writer_funnel.md
 - worktree: n/a — web-github environment; clones at /home/user/pyautonerves, /home/user/pyautoarray
-- FINDING that changes the plan: the prompt's premise "every FITS write funnels through
-  `output_to_fits`" is only half true. `output_to_fits` is the only definition of that NAME,
-  but it is NOT the only write path — the multi-HDU dataset writers
-  (`autoarray/dataset/plot/{imaging,interferometer}_plots.py`) call
-  `hdu_list_for_output_from` + `write_hdu_list` directly and never touch `output_to_fits`.
-  Stamping at `fitsable.py:89` as written would MISS the interferometer multi-HDU write,
-  i.e. the exact silent case this task exists to catch. Terminal funnel is
-  `write_hdu_list` (`fitsable.py:127`, sole `hdu_list.writeto` in either repo).
-- risk surface is SMALLER than the prompt feared: no md5/sha256/golden-file pins over FITS
-  anywhere in PyAutoNerves or PyAutoArray; header tests assert per-key, not whole-header.
+- FINDING, corrected after deep research (an earlier note in this entry overstated the
+  interferometer part and understated the rest — this supersedes it):
+  the issue's premise "every FITS write funnels through `output_to_fits`" is false, but not
+  where it first appeared. The interferometer SIMULATOR does use `output_to_fits`
+  (`autolens_workspace/scripts/interferometer/simulator.py:166` passes `data_path=`, the
+  separate-file arm), so the issue's proposed stamp point would have caught the motivating
+  case. The real hole is elsewhere and much larger: **14 production sites in PyAutoGalaxy
+  and PyAutoLens call `hdu_list.writeto(...)` directly** and never import `write_hdu_list`
+  at all, plus 4 more hand their HDUList to PyAutoFit's `paths.save_fits`
+  (`autofit/non_linear/paths/directory.py:131`, verified to `writeto` the list as-is).
+  All of them build via `hdu_list_for_output_from`. So neither `output_to_fits` NOR
+  `write_hdu_list` is the funnel — `hdu_list_for_output_from` is, and the shipped change
+  stamps BOTH it and `write_hdu_list`. Stamping only `output_to_fits` would have missed
+  16 of 18 library write sites.
+- SCOPE CORRECTION to the issue text: point-source datasets are NOT JSON-only — they write a
+  top-level `data.fits` and ARE covered by the stamp. Only weak-lensing `simple` is genuinely
+  FITS-free. Read side covers ~228 of 253 `should_simulate` call sites in autolens_workspace;
+  the ~23 misses (datacube `channel_XXX/`, multi_dataset `{waveband}_data.fits`, sample
+  `dataset_N/`, weak lensing) all fail SAFE to keep. Widening the match is deliberately left
+  as its own change — every trap in autolens_workspace_test#260 was a widened match.
+- risk surface is SMALLER than the prompt feared: no md5/sha256/golden-file pins over FITS in
+  either repo; header round-trip readers index specific keys by name (never `**kwargs`), so
+  an extra card cannot poison mask/geometry reconstruction; and the card is byte-size neutral
+  (a FITS header block holds 36 cards, a real dataset header carries ~10), so the byte-size
+  diagnostics from the predecessor task still hold.
+- HYGIENE, pre-existing, kept OUT of this diff: running the test suites dirties committed
+  fixtures (`PyAutoArray test_autoarray/structures/arrays/files/array/output_test/array.fits`,
+  `PyAutoNerves test_autonerves/files/array_out.fits`). Reproduces on clean main. Also
+  `autogalaxy/util/plot_utils.py` and `autogalaxy/plot/plot_utils.py` are byte-identical
+  duplicates. Both are /hygiene follow-ups, not this task.
 - repos:
-  - PyAutoNerves: (branch not yet created)
-  - PyAutoArray: (branch not yet created)
+  - PyAutoNerves: claude/small-datasets-regime-stamp-s3i9o7 (39014b6, 553327f)
+  - PyAutoArray: claude/small-datasets-regime-stamp-s3i9o7 (601ffbd)

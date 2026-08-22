@@ -8,7 +8,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 3 |
+| [In flight](#in-flight) (`active/`) | 2 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
 | [Backlog](#backlog) (`draft/`) | 144 |
@@ -133,14 +133,6 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/hands_hygiene_leftovers.md
-```
-
-</details>
-
-<details><summary>📋 <a href="active/jax_default_dependency.md">Make JAX a default (non-optional) dependency across the library stack</a> — <a href="https://github.com/PyAutoLabs/PyAutoLens/issues/702">issue #702</a> — shipped-awaiting-release-followups — ALL ELEVEN PRs merged 2026-08-19 (human-authorized):</summary>
-
-```
-/start_dev active/jax_default_dependency.md
 ```
 
 </details>

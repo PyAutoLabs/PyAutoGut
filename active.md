@@ -24,3 +24,22 @@
   separate /repo_cleanup sweep so a destructive branch delete never rides a code diff.
 - repos:
   - PyAutoHands: feature/hands-hygiene-leftovers
+
+## jax-grad-local-vs-ci-assertions
+- issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/260 (issued 2026-08-22)
+- session: https://claude.ai/code/session_01VEHLT33XpVcRt5YCJGLRMJ (web-github; no local worktree yet)
+- status: workspace-dev
+- worktree: ~/Code/PyAutoLabs-wt/jax-grad-local-vs-ci-assertions
+- prompt: active/jax_grad_local_assertions_fail_but_pass_in_ci.md
+- classification: workspace (single repo) — routes to /start_workspace
+- strategy: investigate-first. Bug Agent: severity=critical, scope=single-repo,
+  type=wrong-result, confidence=LOW. Reproduce and confirm root cause BEFORE patching.
+  Brain sizing disagreement: declared medium, derived large.
+- control: imaging/jax_grad/lp.py is the discriminator — the only script known to PASS in
+  CI and FAIL locally. Every A/B runs against it first (~41s).
+- blocked-on-input: the failing local venv cannot be read from a cloud session. Capture
+  `pip freeze` + `np.show_config()` from the machine that reproduces the failure before it
+  drifts — otherwise step 2 has no ground truth. Raised at plan time; not yet supplied.
+- out-of-bounds: moving lp.py's evaluation point, adding skip_indices, or widening a
+  tolerance without a measured basis. All three mask the trap instead of removing it.
+- repos:

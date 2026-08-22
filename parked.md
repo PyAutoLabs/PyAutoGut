@@ -68,6 +68,22 @@ write the dated `complete/<YYYY>/<MM>/<slug>.md` record instead.
   gate would be fabricated, not passed.
 - WHERE TO RUN IT: a local workspace with the full ~/Code/PyAutoLabs checkout, gh
   authenticated, and autohands on PATH — i.e. the CLI, not a cloud session.
+- ATTEMPTED 2026-08-22 LOCALLY AND NOT COMPLETED. Two separate causes, only one of them
+  understood:
+  1. HANDOFF-PROMPT DEFECT (understood, fixed). The first prompt handed to the local
+     session ended with "Report the Heart verdict verbatim before publishing anything.
+     Merge and release approval are mine, not yours" — an explicit instruction to stop
+     and wait, so the session did not publish and was not wrong to. It also carried the
+     cloud session's STALE-Heart diagnosis, which invited it to investigate whether Heart
+     was broken in an environment where it is not, and bolted on the autoarray floor bump
+     as a second task. A handoff prompt for a session that HAS working tools must not
+     carry the diagnosis of a session that did not; that context belongs here, not in the
+     instruction. Corrected prompt is in `release_prompt.md` beside this entry.
+  2. UNKNOWN LOCAL BLOCKER (not diagnosed). The operator reported being unable to do the
+     release safely even after the prompt was corrected. No verdict, log or error was
+     captured. NEXT ATTEMPT: capture `pyauto-heart readiness --json` verbatim and the
+     `/release` output before concluding anything — do not assume it is the same
+     prompt defect again.
 - ALSO STILL UNRUN: the workspace smoke suite has never exercised any of the five merged PRs,
   all of which change what every FITS the stack writes looks like. Worth a run before
   publishing to PyPI.

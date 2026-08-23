@@ -68,9 +68,14 @@ Health-hardening follow-ons from the audit, same branch:
   died in PR #420). Add an isothermal-quad accuracy test with tight tolerances.
 - `autoarray/structures/triangles/array.py:132,199` hard-code `dtype=jnp.float32` NaN
   placeholders — wrong dtype if x64 not enabled; verify + fix.
-- Absorb `draft/bug/autolens/point_jax_vmap_parity_nondeterministic.md` (the
-  PYAUTO_SMALL_DATASETS short-circuit at point_solver.py:111 making the parity assert
-  structurally meaningless in smoke mode) — same investigation surface.
+- ~~Absorb `draft/bug/autolens/point_jax_vmap_parity_nondeterministic.md`~~ — NO LONGER
+  THIS TASK'S. Split out and shipped separately on 2026-08-23 as
+  `point-source-dataset-cap-guard` (PyAutoLens#710). The parity failure was not a
+  triangle-solve question at all: `should_simulate` deletes the committed JSON
+  point-source dataset under `PYAUTO_SMALL_DATASETS=1`, so the script read degenerate
+  data. `point.py` passes on current main. The short-circuit (now at
+  `point_solver.py:119`, not `:111`) was confirmed to return a fixed model-independent
+  pair and now emits a one-shot warning, so this epic no longer needs to carry it.
 
 Blocks: every later phase of the arc (profiling, cluster source science, point
 magnification) assumes a trusted PointSolver.

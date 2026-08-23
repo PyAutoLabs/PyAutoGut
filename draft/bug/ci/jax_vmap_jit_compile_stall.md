@@ -49,6 +49,39 @@ not a slow script:
 So the same code path completes in seconds normally and occasionally never
 completes at all.
 
+## It is not one script — the second leg named a second one
+
+The two matrix legs of the **same commit** disagreed, and the slower leg found
+more:
+
+| Leg | Result | Timed out |
+|---|---|---|
+| `smoke (3.13)` | 36/37 | `imaging/jax_likelihood/mge_group.py` |
+| `smoke (3.12)` | **35/37** | `imaging/jax_likelihood/mge_group.py` **and `imaging/jax_likelihood/rectangular_mge.py`** |
+
+`rectangular_mge.py` **passed on 3.13 and stalled on 3.12, on the same commit**.
+So the stall is not a property of one script, and not deterministic per Python
+version either — it is a per-compile probability that two runs of the same code
+sample differently.
+
+The affected set has a shape. Of `imaging/jax_likelihood/`:
+
+| Script | State |
+|---|---|
+| `mge.py` | passes, 9.4s (2.5s vmap+JIT) |
+| `mge_group.py` | stalled on both legs |
+| `rectangular_mge.py` | stalled on 3.12, passed on 3.13 |
+| `delaunay_mge.py` | already disabled (jax 0.7 removed `jax.interpreters.xla.pytype_aval_mappings`) |
+
+The plain `mge` is fine; the **composite** MGE variants — group, rectangular-MGE,
+delaunay-MGE — are the ones that stall or are already out. That points at compile
+graph size/complexity in the vmap trace, not at any one script's logic, and it
+predicts which other entries are at risk.
+
+**This is why quarantining is the wrong end state.** Parking scripts as they
+stall is whack-a-mole against a probability: each park removes coverage of
+exactly the heaviest JAX paths, which are the ones most worth testing.
+
 ## Why this is worth a task rather than a marker
 
 This is the **third** repo/script to hit the same signature, and the pattern in

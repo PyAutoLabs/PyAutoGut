@@ -31,8 +31,14 @@
   300s and the smoke cap is also 300s, so the runner's SIGKILL beat the dump in all 20 stalled
   runs. Heartbeats worked; stacks did not. Fix: PyAutoFit#1518 derives the default from
   BUILD_SCRIPT_TIMEOUT at 80% (300s cap -> 240s). Phase 3 needs that stack, so this gates it.
-- next: (1) merge #1518; (2) re-dispatch the two AMBIGUOUS entries at the 1800s cap so they stall
-  WITH a stack; (3) the remaining 17 SLOW entries at 300s — expect several NEITHER; (4) marker
+- PyAutoFit#1518 MERGED 2026-08-23 — the dump now fires at 80% of BUILD_SCRIPT_TIMEOUT.
+- dispatched 2026-08-23 21:37, the 1800s pass on the two AMBIGUOUS entries, repeats=2 not 5:
+  ag_test imaging/jax_likelihood/mge_group.py and al_test multi_dataset/jax_likelihood/mge.py.
+  Two repeats because the deliverable here is the STACK, not more distribution — both entries
+  already hit the cap 10/10 at 300s, so one completion-or-cap settles the AMBIGUOUS question and
+  any single stall yields the 1440s traceback. Caps the bill at ~1h/job instead of ~2.5h.
+- next: (1) read those two runs — the traceback is what phase 3 starts from; (2) the remaining
+  17 SLOW entries at 300s — expect several NEITHER given the shared_preloads result; (3) marker
   rewrites once every entry has a verdict. No un-quarantining — that is phase 3.
 - heart: NOT consulted — pyauto-heart unreachable from this web session.
 - repos:

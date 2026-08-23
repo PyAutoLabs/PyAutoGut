@@ -9,7 +9,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 | Where | Count |
 |-------|------:|
 | [In flight](#in-flight) (`active/`) | 1 |
-| [Parked](#parked) (`parked.md`) | 4 |
+| [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
 | [Backlog](#backlog) (`draft/`) | 149 |
 
@@ -140,7 +140,7 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 Started or scoped, not currently in flight — resume by moving the row back to `active.md`. Full detail in [`parked.md`](parked.md).
 
 <details>
-<summary><b>4</b> task(s)</summary>
+<summary><b>3</b> task(s)</summary>
 
 <details><summary>📋 <b>single-source-density-design</b> — <a href="https://github.com/PyAutoLabs/PyAutoFit/issues/1500">issue #1500</a></summary>
 
@@ -162,14 +162,6 @@ Started or scoped, not currently in flight — resume by moving the row back to 
 
 ```
 /start_dev active/pyautoreduce_slacs1430_acs_comparison.md
-```
-
-</details>
-
-<details><summary>📋 <b>pyautonerves-release-for-regime-stamp</b> — PARKED — ready to release, but NOT runnable from a cloud/web session</summary>
-
-```
-/route resume the parked PyAutoMind task pyautonerves-release-for-regime-stamp — its record is in parked.md
 ```
 
 </details>

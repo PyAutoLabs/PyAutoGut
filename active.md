@@ -32,3 +32,7 @@
 - verification-caveat: every changed line is on a RELEASE path (release.yml is
   workflow_dispatch-only; Heart's line is in the mode=release step), so ordinary PR CI cannot
   exercise them. Full green lands on the next release rehearsal / nightly run.
+- PRs: @PyAutoHands#259 (PR CI green), @PyAutoHeart#162 (PR CI green),
+  @PyAutoCTI#107 (PR CI RED — pre-existing on main, NOT this diff: a zero-width (3, 0)
+  region in test_serial_eper.py now rejected by autoarray's #440 Mask2D guard. Filed as
+  draft/bug/autocti/serial_eper_zero_width_region_vs_autoarray_guard.md; reported on the PR).

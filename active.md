@@ -67,6 +67,24 @@
     longer). Its Install step ALREADY passed (16:39:30-16:40:47), so the assertion
     passed on this repo too — the epilogue this task changes is verified green here;
     only the smoke scripts themselves are still running.
-    Active polling stopped at /prm's ~30min cap. PR subscription + a 17:36Z check-in
-    are armed. Next: merge #107 when green, then the Shipped comment on #266 and
-    lifecycle.py record. Issue #266 close is a separate human decision.
+    #107 HUNG, was cancelled at 17:40 after 61min, and re-run once (human-directed).
+    Diagnosis from the cancelled job's log (autogalaxy 3.12):
+      - `resolved jax 0.11.1` — the assertion passed here too.
+      - 8/37 scripts passed, then `##[group]imaging/jax_likelihood/mge.py` opened at
+        16:41:58.915 and the job emitted NOTHING for the next 59 minutes. Teardown
+        reported `Terminate orphan process: pid (2860) (python)` x2.
+      - This repo has a documented intermittent hang: runs 268/255/239/242 each ran
+        ~6h to GitHub's ceiling and ended cancelled/failure, against an 11-14min norm,
+        and run 266's commit parks `multi_dataset/jax_likelihood/rectangular.py` for
+        an "intermittent release-integrate hang" (autolens_workspace_test#245).
+    KEY COUNTER-EVIDENCE against blaming the jax bump: merged autolens#268 ran the
+    SAME `imaging/jax_likelihood/mge.py` under jax 0.11.1 and it PASSED in 29.7s, as
+    did `interferometer/jax_likelihood/mge.py`; that suite was 23/23. So the
+    tfp-nightly Matern-kernel/bessel_kve path works under 0.11.1 and the mechanism
+    feared (0.11.1 breaking the Matern path) is disproven. Not full exoneration —
+    autogalaxy's mge.py is its own script — but the shared dependency is cleared.
+    A clean re-run of the same commit => known intermittent hang, merge #107.
+    A second hang on the same commit => jax 0.11.1 implicated, and merged #268 needs
+    reconsidering too.
+    Next: read the re-run result. Then Shipped comment on #266 + lifecycle.py record.
+    Issue #266 close remains a separate human decision.

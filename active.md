@@ -18,7 +18,8 @@
 - issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/267 (issued 2026-08-23)
 - issued: 2026-08-23
 - prompt: active/slowest_smoke_gate_scripts.md
-- status: workspace-dev
+- pr: https://github.com/PyAutoLabs/autolens_workspace_test/pull/269 (opened 2026-08-23, awaiting CI + human merge)
+- status: workspace-dev — PR open
 - worktree: n/a — remote session (branch feature/smoke-gate-slowest-scripts in autolens_workspace_test;
   Mind/Brain session branch claude/slowest-smoke-gate-perf-ovsuay)
 - repos:

@@ -13,3 +13,13 @@
 - registered: 2026-08-19 by the wake_up session — the issuing session (claude/autofit-priors-messages-audit-ylvenv)
   filed the prompt + issue but not this entry, tripping Lifecycle Drift on main.
 - repos-none-claimed: this entry claims NO repos — one line deliberately, not 2-space bullets.
+
+## smoke-gate-slowest-scripts
+- issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/267 (issued 2026-08-23)
+- issued: 2026-08-23
+- prompt: active/slowest_smoke_gate_scripts.md
+- status: workspace-dev
+- worktree: n/a — remote session (branch feature/smoke-gate-slowest-scripts in autolens_workspace_test;
+  Mind/Brain session branch claude/slowest-smoke-gate-perf-ovsuay)
+- repos:
+  - autolens_workspace_test (feature/smoke-gate-slowest-scripts)

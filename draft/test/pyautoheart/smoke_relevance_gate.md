@@ -11,6 +11,7 @@ Difficulty: medium
 Autonomy: supervised
 Priority: normal
 Status: formalised
+Filed: 2026-08-23 (backfilled from git)
 
 `PyAutoHeart/.github/workflows/smoke-tests.yml` — the reusable workflow every
 workspace's `smoke_tests.yml` is a thin caller of — has exactly one skip

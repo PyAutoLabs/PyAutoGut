@@ -14,9 +14,17 @@
   - branch `experiment/jax-vmap-jit-ordering` in PyAutoFit (swapped, NOT for merge) and a
     same-named branch in autogalaxy_workspace_test so the workspace CI's matching-branch clone
     picks the swapped library up.
-  - dispatched retime.yml from that branch on imaging/jax_likelihood/rectangular_mge.py,
-    repeats=5, 300s cap. Control: the same entry on main measured 4/5 stalls on BOTH legs
-    (~80% per compile). A clear drop in stall rate implicates the ordering; no change exonerates it.
+  - RESULT 2026-08-23 (run 32668184161): control 8/10 stalls (80%), experiment 3/10 (30%),
+    Fisher exact two-tailed p=0.070. CONTRIBUTORY, NOT CAUSAL — the stall SURVIVES the swap at
+    30%, so vmap-of-jit is not necessary for it, and p=0.070 at n=10/arm is suggestive rather
+    than significant. Do not merge the swap as "the fix"; it may deserve merging on its own
+    merits (jit(vmap) is conventional and latent.py already uses it) but that is a different
+    claim needing more samples.
+  - side-observation worth keeping: on the runs that complete, the #1517 split reports
+    "traced, lowered and compiled in 3.1s, result materialized in 0.5s". A healthy compile of
+    this script is ~3.1s and a stalled one exceeds 300s — >100x bimodality inside one step on the
+    same commit and runner image. The split does NOT localise the stall (it only prints after
+    both halves finish); only the faulthandler stack can.
 - experiment 2 — the persistent compile cache (not yet run): JAX_COMPILATION_CACHE_DIR has been on
   by default since PyAutoConf#128 (2026-07-17); both NEEDS_FIX stalls post-date it, the SLOW batch
   predates it. A/B with the cache disabled.

@@ -1,5 +1,33 @@
 # Active Tasks
 
+## jax-compile-stall-root-cause
+- epic: jax-compile-stall (phase 3 of 3; ledger draft/bug/ci/jax_vmap_jit_compile_stall.md)
+- phase-prompt (still in draft/, deliberately not advanced to active/): the phase 3 file
+  draft/bug/ci/jax_compile_stall_3_root_cause.md has no GitHub issue of its own — the experiments
+  run under autolens_workspace_test#271 while they are exploratory. Issue it if phase 3 turns into
+  a shippable fix rather than a hunt.
+- status: workspace-dev (experiment in flight)
+- started: 2026-08-23
+- experiment 1 — the vmap-of-jit ordering:
+  - Fitness._vmap builds jax.vmap(jax.jit(self.call)); analysis/latent.py builds the conventional
+    jax.jit(jax.vmap(...)). The stalling scripts are exactly the vmap-path ones.
+  - branch `experiment/jax-vmap-jit-ordering` in PyAutoFit (swapped, NOT for merge) and a
+    same-named branch in autogalaxy_workspace_test so the workspace CI's matching-branch clone
+    picks the swapped library up.
+  - dispatched retime.yml from that branch on imaging/jax_likelihood/rectangular_mge.py,
+    repeats=5, 300s cap. Control: the same entry on main measured 4/5 stalls on BOTH legs
+    (~80% per compile). A clear drop in stall rate implicates the ordering; no change exonerates it.
+- experiment 2 — the persistent compile cache (not yet run): JAX_COMPILATION_CACHE_DIR has been on
+  by default since PyAutoConf#128 (2026-07-17); both NEEDS_FIX stalls post-date it, the SLOW batch
+  predates it. A/B with the cache disabled.
+- in flight from phase 2, kept because they feed phase 3: the 1800s runs on
+  imaging/jax_likelihood/mge_group.py (ag_test) and multi_dataset/jax_likelihood/mge.py (al_test),
+  repeats=2 — with PyAutoFit#1518 merged these should dump a faulthandler stack at 1440s, which is
+  the first look at WHERE the stall sits.
+- repos:
+  - PyAutoFit: experiment/jax-vmap-jit-ordering
+  - autogalaxy_workspace_test: experiment/jax-vmap-jit-ordering
+
 ## jax-compile-stall-slow-vs-stall-audit
 - issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/271 (issued 2026-08-23)
 - issued: 2026-08-23
@@ -37,9 +65,12 @@
   Two repeats because the deliverable here is the STACK, not more distribution — both entries
   already hit the cap 10/10 at 300s, so one completion-or-cap settles the AMBIGUOUS question and
   any single stall yields the 1440s traceback. Caps the bill at ~1h/job instead of ~2.5h.
-- next: (1) read those two runs — the traceback is what phase 3 starts from; (2) the remaining
-  17 SLOW entries at 300s — expect several NEITHER given the shared_preloads result; (3) marker
-  rewrites once every entry has a verdict. No un-quarantining — that is phase 3.
+- SCOPE CUT 2026-08-23 (James): stop widening the measurement — the remaining 17 SLOW entries and
+  the marker rewrites move OUT of this epic into `draft/research/ci/smoke_timing_and_profiling.md`,
+  a follow-up task for proper smoke timing/profiling. Four entries measured was enough to prove the
+  SLOW markers unreliable; sweeping the rest one dispatch at a time was not worth the runner budget.
+  Phase 2 is therefore DONE for the epic's purposes — its question is answered.
+- next: phase 3, the root cause.
 - heart: NOT consulted — pyauto-heart unreachable from this web session.
 - repos:
 

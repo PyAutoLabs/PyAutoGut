@@ -54,5 +54,19 @@
     gate treats STALE as passing (a release would still require GREEN), so the gate
     is satisfied on its own terms, not waived.
     No upstream library PR, so the library-first merge gate does not apply.
-    Subscribed to both PRs' CI events. Next: drive both to green, then a human
-    merges; then the completion record via lifecycle.py record.
+    MERGED: autolens_workspace_test#268 -> merge commit 9348e152 (all 3 legs green).
+    CI proved the point: the install log prints `resolved jax 0.11.1` — NOT the 0.10.2
+    the prompt observed. Removing the pin moved CI onto a newer jax that autonerves'
+    widened cap (<0.12.0) now permits, and the full smoke suite passed on 3.12 and
+    3.13 at that version. `incompatible` no longer appears in the install log at all.
+    This retrospectively vindicates deleting the pin rather than restating it as
+    `jax>=0.7,<0.11` per the prompt's quoted range: that would have pinned CI a full
+    minor version behind what the stack supports.
+    OPEN: autogalaxy_workspace_test#107 — `smoke / changes` green; both smoke legs
+    still in `Run smoke tests` at 39min (autolens took 11min; this suite is simply
+    longer). Its Install step ALREADY passed (16:39:30-16:40:47), so the assertion
+    passed on this repo too — the epilogue this task changes is verified green here;
+    only the smoke scripts themselves are still running.
+    Active polling stopped at /prm's ~30min cap. PR subscription + a 17:36Z check-in
+    are armed. Next: merge #107 when green, then the Shipped comment on #266 and
+    lifecycle.py record. Issue #266 close is a separate human decision.

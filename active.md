@@ -1,5 +1,20 @@
 # Active Tasks
 
+## jax-compile-stall-slow-vs-stall-audit
+- issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/271 (issued 2026-08-23)
+- issued: 2026-08-23
+- prompt: active/jax_compile_stall_2_slow_vs_stall_audit.md
+- status: workspace-dev
+- epic: jax-compile-stall (phase 2 of 3; ledger draft/bug/ci/jax_vmap_jit_compile_stall.md)
+- worktree: ~/Code/PyAutoLabs-wt/jax-compile-stall-slow-vs-stall-audit
+- worktree-note: started in a web-github session with no local tree; no branch cut yet.
+- blocked-on: a human decision about where the re-timing harness lives — a `runner` input +
+  workflow_dispatch on PyAutoHeart's reusable smoke-tests.yml (Heart-owned, serves every
+  workspace) vs a duplicated workflow_dispatch workflow per test workspace. See issue #271
+  "Blocked on a design decision". The census and the three marker-text findings are done and
+  are on the issue; the measurement leg needs this answered first.
+- repos:
+
 ## jax-compile-stall-evidence
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1516 (issued 2026-08-23)
 - issued: 2026-08-23

@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1082 records across 7 buckets.
+1083 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -75,6 +75,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [folder-list-ref-drift-sweep](2026/08/folder-list-ref-drift-sweep.md) — Fixed the 12 real defects from the 2026-08-19 hygiene refs scan — 2 autoCTI_workspace/output casing refs, 2 ho…
 - [frozen-lane-counter](2026/08/frozen-lane-counter.md) — Added a third disjoint lane counter to the multi-start gradient search
 - [group-data-preparation-readme](2026/08/group-data-preparation-readme.md)
+- [hands-hygiene-leftovers](2026/08/hands-hygiene-leftovers.md)
 - [hands-raw-string-docstring-prefix](2026/08/hands-raw-string-docstring-prefix.md) — closed on merge
 - [hazard-profiling-likelihood-tier](2026/08/hazard-profiling-likelihood-tier.md) — Tier-2 likelihood profiling landed with five persistent findings and corrected NNLS continuity semantics.
 - [health-conductor-stale-verdict](2026/08/health-conductor-stale-verdict.md)

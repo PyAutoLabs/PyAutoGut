@@ -1,3 +1,48 @@
+# JAX vmap compile stall — instrumented, measured, partially explained (jax-compile-stall epic)
+
+- **Issues:** PyAutoFit#1516 (closed) · autolens_workspace_test#271 (closed) · **PRs:** PyAutoFit#1517, PyAutoFit#1518, PyAutoHeart#161, autolens_workspace_test#272, autogalaxy_workspace_test#110 — all merged 2026-08-23
+- **Repos:** PyAutoFit (`non_linear/jax_compile.py`, tests), PyAutoHeart (`.github/workflows/smoke-tests.yml`), autolens_workspace_test + autogalaxy_workspace_test (`.github/scripts/retime.py`, `.github/workflows/retime.yml`)
+- **Epic:** `jax-compile-stall`, 3 phases. Phase 1 shipped in full; phases 2 and 3 taken to a deliberate stopping point (James, 2026-08-23) — **the remaining breadth moves to `draft/research/ci/smoke_timing_and_profiling.md`**, where this record is meant to be dug up.
+- **Status: CLOSED AS PARTIAL.** The stall is instrumented and characterised but **not root-caused**. Nothing was un-quarantined.
+
+## What shipped
+
+1. **A stalled JAX compile now reports itself** (#1517, #1518). `log_on_first_compile` gained a heartbeat (`still compiling <desc>, Ns elapsed`), a `faulthandler` watchdog, and separate timings for the trace/lower/compile wait vs the `block_until_ready` execution wait. All four call sites inherit it. No workspace script or CI runner touched.
+2. **A re-timing harness** (Heart#161 + the two workspace PRs). `retime.yml` (`workflow_dispatch`: scripts, repeats, script-timeout) → `retime.py`, which reuses `run_smoke.py`'s `run_one` so it cannot disagree with the PR gate about a script's environment. Heart's reusable workflow gained `runner` / `runner-args` / `script-timeout` inputs, all defaulting to prior behaviour, so the ceremony is shared rather than copied.
+
+## What was measured (60 script executions, all on hosted runners)
+
+| Entry | Verdict | Evidence |
+|---|---|---|
+| `interferometer/datacube/shared_preloads.py` (al) | **NEITHER** | 10/10 completed, worst 34.0s = **1.9%** of the 1800s cap its SLOW marker claims it flakes at |
+| `imaging/jax_likelihood/rectangular_mge.py` (ag) | **STALL** | 4/5 capped on *both* legs, completions ~22s (7% of cap) |
+| `imaging/jax_likelihood/mge_group.py` (ag) | **AMBIGUOUS** | 5/5 capped both legs, no completion |
+| `multi_dataset/jax_likelihood/mge.py` (al) | **AMBIGUOUS** | 5/5 capped both legs, though its own marker records 32s standalone |
+
+## Key findings — the part worth digging up
+
+- **A SLOW marker is not evidence of slowness.** Every 2026-07-14 marker reads "flakes at the 1800s cap" and records *no timing at all*. The first one measured was wrong by ~50x. Do not trust the remaining 17 without re-measuring.
+- **The stall is a >100x bimodality inside one step.** A healthy compile of `rectangular_mge.py` is **3.1s** (trace/lower/compile) + 0.5s (materialize); a stalled one exceeds 300s. Same commit, same runner image.
+- **`vmap(jit)` ordering is contributory, not causal.** `Fitness._vmap` builds `jax.vmap(jax.jit(self.call))` while `analysis/latent.py` builds the conventional `jax.jit(jax.vmap(...))`. A/B on `rectangular_mge.py`: control **8/10 stalls (80%)** vs experiment **3/10 (30%)**, Fisher exact two-tailed **p = 0.070**. The stall SURVIVES the swap, so the ordering is not necessary for it, and n=10/arm is not significant. Branch `experiment/jax-vmap-jit-ordering` exists in PyAutoFit and autogalaxy_workspace_test, unmerged, for whoever resumes.
+- **Untested hypothesis, still live:** the persistent compilation cache (`JAX_COMPILATION_CACHE_DIR`, default-on since PyAutoConf#128, 2026-07-17). Both NEEDS_FIX stalls post-date it; the SLOW batch predates it. A/B with the cache disabled is the obvious next experiment and was never run.
+
+## Traps recorded
+
+- **A watchdog whose threshold equals the cap never fires.** #1517 defaulted the `faulthandler` dump to 300s under CI; the smoke cap is also 300s, so the runner's SIGKILL beat the dump in all 20 stalled runs — heartbeats, no stacks. #1518 derives it from `BUILD_SCRIPT_TIMEOUT` at 80%. Its tests assert the *relationship* (`dump < cap` for every cap), not today's numbers, because nothing in #1517's own tests could have caught a collision between two independently-correct timeouts owned by different repos.
+- **A Python traceback during XLA compile parks at the pybind boundary** — it separates *in compile* / *in execution* / *blocked on a Python lock*, but shows no XLA internals.
+- **The compile/execute split does not localise a stall.** It only prints once *both* halves finish, so it characterises the healthy case only. Only the stack does.
+- **Testing a library change through workspace CI:** the reusable workflow clones the dependency chain at the **matching branch name**, so an identically-named branch in the workspace repo makes its CI pick up an experimental library branch. That is how the ordering A/B was run.
+- Diagnostics must never break a fit: unstartable heartbeat thread, unarmable dump, malformed interval all fall back and continue.
+
+## Left undone, deliberately
+
+- No root cause. No marker rewritten. **Nothing un-quarantined** — all five stall quarantines and all 21 SLOW markers stand as they were.
+- The two 1800s runs dispatched at 21:37 (ag_test run 32668061785, al_test run 32668067325; `mge_group.py` and `multi_dataset/jax_likelihood/mge.py`, 2 repeats) were still in flight at close-out and should carry the first `faulthandler` stack at 1440s. **Read those two runs first when resuming** — they are the only pending evidence.
+- **Heart:** never consulted this session — `pyauto-heart` unreachable from the `web-github` environment. Every merge was on an explicit human instruction ("merge when green").
+- Merged branches could not be deleted: this session's git proxy refuses ref deletions. `feature/jax-compile-stall-evidence`, `feature/jax-compile-dump-below-cap` (PyAutoFit), `feature/reusable-smoke-runner-input` (PyAutoHeart), `feature/jax-stall-retime-harness` (both workspaces), plus the two `experiment/jax-vmap-jit-ordering` branches. All need a local `/repo_cleanup`.
+
+## Original prompt
+
 # Phase 2: are the SLOW-marked jax_likelihood/jax_grad entries slow, or is this stall wearing a different label?
 
 Type: bug

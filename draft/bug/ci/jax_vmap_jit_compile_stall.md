@@ -137,6 +137,15 @@ what made this diagnosable at all.
 - The SLOW-vs-stall question in step 1 answered in writing, so the Profiling
   Agent is not chasing speedups on scripts that are hanging.
 
+## CLOSED AS PARTIAL — 2026-08-23
+
+Phase 1 shipped. Phases 2 and 3 were taken to a deliberate stopping point and the
+epic closed: the stall is **instrumented and characterised but not root-caused**,
+and nothing was un-quarantined. The full account, including the two live leads and
+every trap, is the record
+[`complete/2026/08/jax-compile-stall-slow-vs-stall-audit.md`](../../../complete/2026/08/jax-compile-stall-slow-vs-stall-audit.md).
+Resume through [`../../research/ci/smoke_timing_and_profiling.md`](../../research/ci/smoke_timing_and_profiling.md).
+
 ## Phase map (added 2026-08-23 at /start_dev)
 
 The Bug Agent sizes this `too-large` and returns `split-into-phases`. It is one

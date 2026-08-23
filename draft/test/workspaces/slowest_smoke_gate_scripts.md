@@ -60,6 +60,57 @@ acceptable outcomes, and the choice is per script, not global.
    is `PointSolver` iterations or JAX compile time; if compile-dominated, the
    lever is problem size, not sample count.
 
+## The cap does not apply to these scripts, and cannot be made to
+
+Read this before proposing "just turn PYAUTO_SMALL_DATASETS on".
+
+`config/build/profile_smoke.yaml` has set `PYAUTO_SMALL_DATASETS: "1"` in its
+defaults since the file was created (2026-04-08, then spelled
+`PYAUTO_WORKSPACE_SMALL_DATASETS`; renamed 2026-04-30). It has never been
+missing. What has grown is the set of entries exempted from it:
+
+| date | entries exempted from the cap |
+|---|---|
+| 2026-04-30 | 10 profile overrides |
+| 2026-05-28 | 23 |
+| 2026-07-23 | 27 — then migrated into in-file `ENV:` declarations (PyAutoHands#187), leaving 1 override |
+| today | 90 `ENV: … full_datasets` declarations repo-wide |
+
+Of the 23 live smoke entries, **16 declare `ENV: [jax] full_datasets`** and a
+17th (`misc/database/scrape/general.py`) is exempted by the one surviving
+profile override. That is **516.5s of the 553.0s — 93% of the gate — running
+uncapped.** Only six entries actually run capped (3 aggregator + 2 latent at
+9-pixel masks, `multi_galaxy/model_fit.py` at 80), totalling 36.5s.
+
+Measured mask sizes from the same CI run, against autolens_workspace's
+80–208 pixels:
+
+| entry | mask |
+|---|---:|
+| `imaging/subhalo_recovery.py` | 5858 px |
+| `misc/database/scrape/general.py` | 2828 px |
+| `multi_galaxy/jax_likelihood/lp.py` | 2828 px |
+| `imaging/jax_likelihood/potential_correction.py` | 1466 px |
+| `imaging/jax_likelihood/{rectangular,mge}.py` | 952 px |
+| `imaging/jax_likelihood/{lp,smbh}.py` | 716 px |
+
+The exemptions are deliberate and load-bearing: the `jax_likelihood` scripts
+assert hardcoded full-resolution likelihood literals at rtol 1e-4, so a capped
+dataset changes the likelihood and the assertion fails. That failure has been
+hit and recorded — see `complete/2026/08/sph-transform-name-check.md`
+("ran with capped datasets against full-resolution reference assertions and
+failed") and `complete/2026/08/mge-sigma-min-workspace-sweep.md`.
+
+So the real question this prompt has to answer is not "why is the cap off"
+but **"should the per-PR gate be running full-resolution parity assertions at
+all?"** For each of the three scripts, the options are: re-derive the literals
+at a capped size (buys the cap but re-pins every literal, and those pins have
+already had to be regenerated once — autolens_workspace_test#257, "repin vmap
+literals halved by the PositionsLH penalty fix", which blocked the nightly
+release at Stage 3 on 08-18/08-19), shrink the problem some other way, or
+demote to the weekly channel that is meant for full-fidelity work. Choose per
+script and say which.
+
 ## Constraints
 
 - **A faster script that no longer tests anything is a regression, not a win.**

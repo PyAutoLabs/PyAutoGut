@@ -1,3 +1,51 @@
+# `pixel_scales` scalar widening — shipped, with two sibling sites left open
+
+**Shipped:** [PyAutoArray#464](https://github.com/PyAutoLabs/PyAutoArray/issues/464),
+commit `8298d74e` on `main` 2026-08-22. Issue closed. The fix is the one this prompt
+suggested — `validate.is_concrete_scalar` in `convert_pixel_scales_1d` and
+`convert_pixel_scales_2d`, with the widened value cast to a Python `float`.
+
+Every verification item below passes on `main` (re-run 2026-08-23):
+
+```
+convert_pixel_scales_2d(1)              -> (1.0, 1.0)
+convert_pixel_scales_2d(np.float64(1))  -> (1.0, 1.0)
+convert_pixel_scales_2d(np.int32(1))    -> (1.0, 1.0)
+convert_pixel_scales_2d((1.0, 2.0))     -> (1.0, 2.0)   # unchanged
+convert_pixel_scales_1d(1)              -> (1.0,)
+Array2D.no_mask(values=np.ones((5,5)), pixel_scales=1).pixel_scales -> (1.0, 1.0)
+guards still raise on 0, -1, nan
+```
+
+The "cast to `float` or keep input type" question this prompt left open was decided
+**cast to `float`**, so the returned tuple always matches its `Tuple[float, ...]`
+annotation and NumPy scalars stay out of stored geometry and JSON serialisation.
+
+## Filed late, not shipped here
+
+Re-running the repro on 2026-08-23 found the sweep did **not** reach every site of the
+same defect. Two live sites, both confirmed on `main`, are carried forward in
+`bug/autoarray/scalar_widening_residual_sites.md`:
+
+1. `Mask1D.__init__` (`autoarray/mask/mask_1d.py:71`) hand-rolls its own
+   `type(pixel_scales) is float` and never routes through `convert_pixel_scales_1d` —
+   `Mask1D(mask=…, pixel_scales=1)` still stores a bare `1` and
+   `.geometry.scaled_maxima` still raises `TypeError: 'int' object is not subscriptable`.
+   `Mask2D.__init__` was already routed through the chokepoint; this is a 1D/2D divergence.
+2. `convert_shape_native_1d` keeps `type(shape_native) is int` (declared out of scope by
+   `8298d74e`) — `Array1D.full(fill_value=1.0, shape_native=np.int32(5))` raises
+   `IndexError: invalid index to scalar variable`.
+
+A third residual — tuple entries returned unnormalised, `convert_pixel_scales_2d((1, 1))`
+→ `(1, 1)` — is recorded but unfiled; it changes return values on working paths.
+
+**Lifecycle note:** this prompt sat in `draft/` while the work shipped from a session that
+did not move it, so the completion record is backfilled on 2026-08-23.
+
+---
+
+## Original prompt (as filed)
+
 # `pixel_scales` given as an `int` (or `np.float64`) is never widened to a tuple
 
 Type: bug

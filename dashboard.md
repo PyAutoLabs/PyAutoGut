@@ -8,10 +8,10 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 2 |
+| [In flight](#in-flight) (`active/`) | 1 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 151 |
+| [Backlog](#backlog) (`draft/`) | 152 |
 
 ## Start here
 
@@ -143,14 +143,6 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
-<details><summary>📋 <a href="active/smoke_install_stale_jax_pin.md">smoke_install.sh's stale <code>jax&lt;0.7</code> pin — CI is on the right</a> — <a href="https://github.com/PyAutoLabs/autolens_workspace_test/issues/266">issue #266</a> — issued 2026-08-23 — workspace-dev</summary>
-
-```
-/start_dev active/smoke_install_stale_jax_pin.md
-```
-
-</details>
-
 ## Parked
 
 Started or scoped, not currently in flight — resume by moving the row back to `active.md`. Full detail in [`parked.md`](parked.md).
@@ -243,10 +235,10 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**151** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **23** of them belong to an epic and are listed only under [Epics](#epics) below.
+**152** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **23** of them belong to an epic and are listed only under [Epics](#epics) below.
 
 <details>
-<summary><b>bug</b> — 34</summary>
+<summary><b>bug</b> — 35</summary>
 
 <details><summary>📋 <a href="draft/bug/health_fixes/jax_runtime_and_parity.md">Fix release JAX runtime compatibility and likelihood parity</a> — health_fixes · too-large · supervised · high</summary>
 
@@ -292,6 +284,14 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/bug/pyautoheart/script_timing_baselines_orphaned_and_window_filled.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/workspaces/intermittent_smoke_hang_jax_mge.md">Intermittent smoke hang on <code>imaging/jax_likelihood/mge.py</code> (autogalaxy_workspace_test)</a> — workspaces · medium · supervised · medium</summary>
+
+```
+/start_dev draft/bug/workspaces/intermittent_smoke_hang_jax_mge.md
 ```
 
 </details>
@@ -1320,7 +1320,7 @@ The 50 newest things to happen to the work in hand, newest first — issued, par
 
 | Date | Event | Task |
 |------|-------|------|
-| 2026-08-23 | issued | <a href="active/smoke_install_stale_jax_pin.md">smoke_install.sh's stale <code>jax&lt;0.7</code> pin — CI is on the right</a> |
+| 2026-08-23 | filed | <a href="draft/bug/workspaces/intermittent_smoke_hang_jax_mge.md">Intermittent smoke hang on <code>imaging/jax_likelihood/mge.py</code>…</a> |
 | 2026-08-22 | filed | <a href="draft/bug/autolens_workspace_test/multi_dataset_jax_likelihood_xla_stall.md">multi_dataset/jax_likelihood scripts hang to the timeout cap (XLA…</a> |
 | 2026-08-22 | filed | <a href="draft/maintenance/libraries/untrack_generated_fits_test_artifacts.md">Untrack the generated FITS test artifacts in autoarray</a> |
 | 2026-08-22 | filed | <a href="draft/bug/autoarray/reconstruction_noise_map_solver_mismatch.md">The reconstruction noise map describes a different estimator than the</a> |

@@ -51,7 +51,7 @@ button.more:hover{color:var(--fg)}
 <body>
 <h1>📋 PyAutoMind Dashboard</h1>
 <p>Every task the Mind is holding. Tap a task's 📋 and its <code>/start_dev</code> command is on your clipboard — paste it into a Claude Code chat to route Claude straight to that task. <a href="#recent">Recent</a> is the same work by date — what has been happening rather than what to do next.</p>
-<p class="muted">In flight 2 · Parked 3 · Planned 6 · Backlog 151 · <a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/dashboard.md">markdown version</a></p>
+<p class="muted">In flight 1 · Parked 3 · Planned 6 · Backlog 152 · <a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/dashboard.md">markdown version</a></p>
 <h2>Start here</h2>
 <h3>Highest priority <span class="facets">(filed as high) — showing 12 of 17</span></h3>
 <div class="task"><button class="copy" data-cmd="/start_dev draft/triage/jax_zero_contour.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — <span class="facets">medium · safe · high</span></p></div>
@@ -72,7 +72,6 @@ button.more:hover{color:var(--fg)}
 <h2>In flight <a class="mdsrc" href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/active.md">markdown version</a></h2>
 <p class="muted">Issued — each has an open GitHub issue and usually a branch.</p>
 <div class="task"><button class="copy" data-cmd="/start_dev active/16_transformed_message_factor_gradient_unpack.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/active/16_transformed_message_factor_gradient_unpack.md"><code>@PyAutoFit</code> <code>TransformedMessage.factor_gradient</code> crashes on first call</a> — <a href="https://github.com/PyAutoLabs/PyAutoFit/issues/1501">issue #1501</a><span class="facets"> — issued 2026-08-19</span> — <span class="facets">HOLD — do not start dev. Fix-or-delete hangs off the PyAutoFit#1498 logpdf-contract</span></p></div>
-<div class="task"><button class="copy" data-cmd="/start_dev active/smoke_install_stale_jax_pin.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/active/smoke_install_stale_jax_pin.md">smoke_install.sh's stale <code>jax&lt;0.7</code> pin — CI is on the right</a> — <a href="https://github.com/PyAutoLabs/autolens_workspace_test/issues/266">issue #266</a><span class="facets"> — issued 2026-08-23</span> — <span class="facets">workspace-dev</span></p></div>
 <h2>Parked <a class="mdsrc" href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/parked.md">markdown version</a></h2>
 <details>
 <summary>3 task(s)</summary>
@@ -91,15 +90,16 @@ button.more:hover{color:var(--fg)}
 <div class="task"><button class="copy" data-cmd="/route start the planned PyAutoMind task latent-nan-guard-honest-run — its record is in planned.md" aria-label="Copy the Claude command">📋</button><p><b>latent-nan-guard-honest-run</b><span class="facets"> — planned 2026-07-22</span></p></div>
 </details>
 <h2>Backlog <a class="mdsrc" href="https://github.com/PyAutoLabs/PyAutoMind/tree/main/draft">markdown version</a></h2>
-<p class="muted">151 filed prompts, not started — sorted most-pickable first (priority, then size). 23 of them belong to an epic and are listed only under Epics below.</p>
+<p class="muted">152 filed prompts, not started — sorted most-pickable first (priority, then size). 23 of them belong to an epic and are listed only under Epics below.</p>
 <details>
-<summary>bug — 34</summary>
+<summary>bug — 35</summary>
 <div class="task"><button class="copy" data-cmd="/start_dev draft/bug/health_fixes/jax_runtime_and_parity.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/bug/health_fixes/jax_runtime_and_parity.md">Fix release JAX runtime compatibility and likelihood parity</a> — <span class="facets">health_fixes · too-large · supervised · high</span></p></div>
 <div class="task"><button class="copy" data-cmd="/start_dev draft/bug/health_fixes/jit_visualization_outputs.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/bug/health_fixes/jit_visualization_outputs.md">Fix JIT quick-update visualization output regressions</a> — <span class="facets">health_fixes · too-large · supervised · high</span></p></div>
 <div class="task"><button class="copy" data-cmd="/start_dev draft/bug/health_fixes/samples_parameter_paths.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/bug/health_fixes/samples_parameter_paths.md">Fix release result/sample parameter-path regressions</a> — <span class="facets">health_fixes · too-large · supervised · high</span></p></div>
 <div class="task"><button class="copy" data-cmd="/start_dev draft/bug/autoarray/pixel_scales_int_not_widened_to_tuple.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/bug/autoarray/pixel_scales_int_not_widened_to_tuple.md"><code>pixel_scales</code> given as an <code>int</code> (or <code>np.float64</code>) is never widened</a> — <span class="facets">autoarray · small · supervised · medium</span></p></div>
 <div class="task"><button class="copy" data-cmd="/start_dev draft/bug/autofit/jax_011_message_log_partition_tuple_shape.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/bug/autofit/jax_011_message_log_partition_tuple_shape.md">jax 0.11 breaks beta/gamma message log_partition under jit ('tuple' object</a> — <span class="facets">autofit · small · supervised · medium</span></p></div>
 <div class="task"><button class="copy" data-cmd="/start_dev draft/bug/pyautoheart/script_timing_baselines_orphaned_and_window_filled.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/bug/pyautoheart/script_timing_baselines_orphaned_and_window_filled.md">Heart script_timing baselines are orphaned by path moves and filled</a> — <span class="facets">pyautoheart · small · supervised · medium</span></p></div>
+<div class="task"><button class="copy" data-cmd="/start_dev draft/bug/workspaces/intermittent_smoke_hang_jax_mge.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/bug/workspaces/intermittent_smoke_hang_jax_mge.md">Intermittent smoke hang on <code>imaging/jax_likelihood/mge.py</code> (autogalaxy_workspace_test)</a> — <span class="facets">workspaces · medium · supervised · medium</span></p></div>
 <div class="task"><button class="copy" data-cmd="/start_dev draft/bug/autoarray/numba_kernel_shift_axes_swapped.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/bug/autoarray/numba_kernel_shift_axes_swapped.md">Numba PSF gathers derive the y/x kernel shifts from the</a> — <span class="facets">autoarray · low · supervised · medium</span></p></div>
 <div class="task"><button class="copy" data-cmd="/start_dev draft/bug/autoarray/pynufft_scipy_pinv2_dev_extra.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/bug/autoarray/pynufft_scipy_pinv2_dev_extra.md">PyNUFFT dev extra is incompatible with current SciPy on Python</a> — <span class="facets">autoarray · small · supervised · normal</span></p></div>
 <div class="task"><button class="copy" data-cmd="/start_dev draft/bug/autofit/loggaussian_prior_declares_own_support.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/bug/autofit/loggaussian_prior_declares_own_support.md"><code>LogGaussianPrior</code> misreports its own support as <code>(-inf, inf)</code></a> — <span class="facets">autofit · small · supervised · normal</span></p></div>
@@ -252,9 +252,9 @@ button.more:hover{color:var(--fg)}
 <table class="recent">
 <tr>
 <td class="when">2026-08-23</td>
-<td class="what">issued</td>
-<td><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/active/smoke_install_stale_jax_pin.md">smoke_install.sh's stale <code>jax&lt;0.7</code> pin — CI is on the right</a></td>
-<td class="pick"><button class="copy" data-cmd="/start_dev active/smoke_install_stale_jax_pin.md" aria-label="Copy the Claude command">📋</button></td>
+<td class="what">filed</td>
+<td><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/bug/workspaces/intermittent_smoke_hang_jax_mge.md">Intermittent smoke hang on <code>imaging/jax_likelihood/mge.py</code>…</a></td>
+<td class="pick"><button class="copy" data-cmd="/start_dev draft/bug/workspaces/intermittent_smoke_hang_jax_mge.md" aria-label="Copy the Claude command">📋</button></td>
 </tr>
 <tr>
 <td class="when">2026-08-22</td>

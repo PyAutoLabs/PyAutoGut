@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1085 records across 7 buckets.
+1086 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -186,6 +186,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [small-datasets-loader-pixel-scales](2026/08/small-datasets-loader-pixel-scales.md)
 - [small-datasets-regime-stamp](2026/08/small-datasets-regime-stamp.md)
 - [small-datasets-rmtree-committed-data](2026/08/small-datasets-rmtree-committed-data.md)
+- [smoke-install-stale-jax-pin](2026/08/smoke-install-stale-jax-pin.md)
 - [smoke-runner-jupyter-guard](2026/08/smoke-runner-jupyter-guard.md)
 - [spawn-autonomy-log-generated](2026/08/spawn-autonomy-log-generated.md)
 - [spawn-drift-self-heal](2026/08/spawn-drift-self-heal.md)

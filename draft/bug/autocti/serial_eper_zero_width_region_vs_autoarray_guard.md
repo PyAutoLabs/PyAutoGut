@@ -64,7 +64,7 @@ degenerate structure and raises instead.
 
 ## In flight
 
-@PyAutoCTI#108 (opened 2026-08-23) takes option 1: it replaces the vacuous
+@PyAutoCTI#108 (opened 2026-08-23, **CI GREEN** on 3.12 / 3.13 / no-jax) takes option 1: it replaces the vacuous
 assertion with an explicit `pytest.raises`, pinning today's behaviour so `main`
 goes green. It is **test-only** and deliberately does NOT decide the semantics
 question below — if the answer turns out to be "clip", that PR's test changes

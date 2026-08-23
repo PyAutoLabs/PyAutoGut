@@ -37,6 +37,9 @@
   region in test_serial_eper.py now rejected by autoarray's #440 Mask2D guard. Filed as
   draft/bug/autocti/serial_eper_zero_width_region_vs_autoarray_guard.md; reported on the PR,
   and fixed test-only by @PyAutoCTI#108 so CTI main goes green — #107 merges after it).
+- merge-order: @PyAutoCTI#108 (CI GREEN on all 3 legs, 2026-08-23) -> @PyAutoCTI#107 (needs a
+  branch update / re-run after #108 lands) -> @PyAutoHands#259 + @PyAutoHeart#162 (both green,
+  independent). Merge is a human act.
 - scope-change: pylops removed from the CTI install doc too (defunct; human-authorized
   2026-08-23) — same green-CI evidence as pynufft, so #107 now deletes the whole
   "optional requirements" stanza.

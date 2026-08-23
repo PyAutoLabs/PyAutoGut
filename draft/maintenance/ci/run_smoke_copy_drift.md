@@ -80,18 +80,26 @@ Consequences for the original task, in order of how much they change it:
    HowTo delegator as the reference shape:
    - Is one PyAutoHands-owned runner with per-repo config the right target, or
      two (notebook-capable and script-only)?
-   - Does `autolens_workspace_test`'s timeout/kill behaviour get promoted to
-     everyone, or does that repo keep a documented divergence? **Answer this
-     before writing any code** — it is the only place consolidation destroys
-     behaviour.
+   - ~~Does `autolens_workspace_test`'s timeout/kill behaviour get promoted to
+     everyone, or does that repo keep a documented divergence?~~
+     **Answered 2026-08-23: promoted.** The written decision, the measured
+     evidence and the per-repo plan are
+     [`backport_per_script_timeout.md`](backport_per_script_timeout.md). Two
+     corrections to the table above came out of that measurement: the gap is
+     **six** repos wide, not three (the `workspace` variant carries no
+     `timeout=` either), and the process-group kill is missing from
+     PyAutoHands' `build_util` itself, so the HowTo tier and the release
+     mega-run inherit the gap rather than being covered.
 3. Implement whichever shape is chosen, one PR per repo.
 4. Drop the vestigial `_BUILD_DIR` line in autogalaxy_workspace if the
-   workspace variant is not being replaced wholesale.
+   workspace variant is not being replaced wholesale. **Absorbed** into
+   `backport_per_script_timeout.md` step 3, which touches that file anyway.
 
 ## Acceptance
 
-- A stated, written decision on the timeout/kill divergence — promoted or
-  documented-as-intentional — before any repo is touched.
+- ~~A stated, written decision on the timeout/kill divergence — promoted or
+  documented-as-intentional — before any repo is touched.~~ **Met
+  2026-08-23** — `backport_per_script_timeout.md`.
 - Each variant is either a thin wrapper over a PyAutoHands-owned module, or
   carries a documented reason why it diverges.
 - No repo loses behaviour it has today; `autolens_workspace_test` still

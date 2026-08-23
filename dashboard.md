@@ -159,7 +159,7 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
-<details><summary>📋 <a href="active/scalar_widening_residual_sites.md">Scalar widening: the two sites the <code>pixel_scales</code> sweep did not</a> — <a href="https://github.com/PyAutoLabs/PyAutoArray/issues/484">issue #484</a> — issued 2026-08-23 — library-dev</summary>
+<details><summary>📋 <a href="active/scalar_widening_residual_sites.md">Scalar widening: the two sites the <code>pixel_scales</code> sweep did not</a> — <a href="https://github.com/PyAutoLabs/PyAutoArray/issues/484">issue #484</a> — issued 2026-08-23 — library-shipped, awaiting-merge</summary>
 
 ```
 /start_dev active/scalar_widening_residual_sites.md

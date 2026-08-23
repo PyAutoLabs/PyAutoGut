@@ -17,7 +17,8 @@
 ## mask1d-shape-native-scalar-widening
 - issue: https://github.com/PyAutoLabs/PyAutoArray/issues/484
 - issued: 2026-08-23
-- status: library-dev
+- status: library-shipped, awaiting-merge
+- library-pr: https://github.com/PyAutoLabs/PyAutoArray/pull/485
 - worktree: ~/Code/PyAutoLabs-wt/mask1d-shape-native-scalar-widening
 - prompt: active/scalar_widening_residual_sites.md
 - repos:
@@ -39,7 +40,18 @@
     The originating prompt shipped as #464 and is recorded at
     complete/2026/08/autoarray-pixel-scales-scalar-widening.md (backfilled — it sat in
     draft/ while the work shipped).
-    Next: /start_library → worktree + branch, then the two source edits and their tests.
+    SHIPPED to PR #485 (`c0c00b0e`), NOT merged. test_autoarray 1201p/0f; test_autocti
+    270p/1f (pre-existing 2D serial-EPER failure, confirmed against canonical main);
+    dataset_1d simulator + modeling smoke pass; real-JAX jit tracer passthrough verified.
+    Workspace impact: NONE (option iii) — autocti_workspace's ac.Mask1D subclasses
+    aa.Mask1D and inherits the fix; no /start_workspace follow-up.
+    Also tightened #464's own widening tests, which passed vacuously because
+    `np.float64(1.0) == (1.0,)` NumPy-broadcasts to a truthy `array([True])`.
+    MERGE BLOCKED: Heart red on `release validation FAILED` — an incomplete report
+    (0 failures, only `integrate` recorded, pre-dates this task) unrelated to the change.
+    PR opened under explicit human override, NOT the AUTONOMY.md corrective-PR exception,
+    which does not apply since this PR does not repair that reason.
+    Next: /prm once Heart clears — merge, close #484, record, remove worktree + branches.
 
 ## pynufft-removal-residue-phase-1
 - issue: https://github.com/PyAutoLabs/autolens_workspace_developer/issues/128

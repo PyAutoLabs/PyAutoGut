@@ -10,14 +10,16 @@
 - worktree-note: started in a web-github session with no local tree; no branch cut yet.
 - decision: harness lives Heart-side (human choice 2026-08-23) — a `runner` input on the
   reusable smoke-tests.yml rather than a per-workspace duplicate of the ceremony.
-- prs:
-  - https://github.com/PyAutoLabs/PyAutoHeart/pull/161 (runner input; MERGES FIRST)
-  - https://github.com/PyAutoLabs/autolens_workspace_test/pull/272 (retime harness)
-  - https://github.com/PyAutoLabs/autogalaxy_workspace_test/pull/110 (retime harness)
-- order: #161 first — a caller cannot pass a `runner` input that does not exist yet, so a
-  dispatch of either retime.yml fails at workflow resolution until Heart merges.
-- next: once merged, dispatch retime.yml over the 26 entries (300s smoke / 1800s release,
-  both matrix legs) and classify from the distributions; then rewrite the markers.
+- prs: ALL MERGED 2026-08-23
+  - https://github.com/PyAutoLabs/PyAutoHeart/pull/161 (runner input) — merged
+  - https://github.com/PyAutoLabs/autolens_workspace_test/pull/272 (retime harness) — merged
+  - https://github.com/PyAutoLabs/autogalaxy_workspace_test/pull/110 (retime harness) — merged
+- harness: `retime.yml` (workflow_dispatch) + `.github/scripts/retime.py` now live in both test
+  workspaces. Inputs: scripts (comma-separated, relative to scripts/), repeats, script-timeout
+  (300 = smoke, 1800 = release). Verdicts STALL/SLOW/NEITHER/AMBIGUOUS/ERROR + retime_results.json.
+- next: the measurement. A full 26-entry x N sweep at the 1800s cap is many runner-hours, so it
+  is deliberately NOT dispatched wholesale — start bounded, on the entries that decide the most,
+  and widen with a human's say-so.
 - heart: NOT consulted — pyauto-heart unreachable from this web session.
 - repos:
 

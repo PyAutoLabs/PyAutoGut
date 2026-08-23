@@ -887,10 +887,10 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 <details>
 <summary><b>maintenance</b> — 21</summary>
 
-<details><summary>📋 <a href="draft/maintenance/libraries/bump_autoarray_autonerves_floor_after_stamp_release.md">Bump autoarray's autonerves floor once the regime stamp is released</a> — libraries · small · supervised · medium</summary>
+<details><summary>📋 <a href="draft/maintenance/libraries/untrack_generated_fits_test_artifacts.md">Untrack the generated FITS test artifacts in autoarray</a> — libraries · small · supervised · medium</summary>
 
 ```
-/start_dev draft/maintenance/libraries/bump_autoarray_autonerves_floor_after_stamp_release.md
+/start_dev draft/maintenance/libraries/untrack_generated_fits_test_artifacts.md
 ```
 
 </details>

@@ -175,3 +175,68 @@ imply the API one is resolved.
   chasing speedups on scripts that are hanging.
 - No script is un-quarantined by this phase — restoring coverage is phase 3,
   and depends on the fix.
+
+## The stack, captured after close-out — it is NOT a compile stall
+
+The two 1800s runs named above finished at 22:38 and both dumped a
+`faulthandler` traceback at 1440s, exactly as PyAutoFit#1518 intended. **The
+stack contradicts the premise this whole epic was filed under.**
+
+`autogalaxy_workspace_test` run 32668061785, `imaging/jax_likelihood/mge_group.py`:
+
+```
+Thread 0x00007fbf1f0e4b80 (most recent call first):
+  File ".../jax/_src/api.py", line 2764 in try_to_block
+  File ".../jax/_src/api.py", line 2781 in block_until_ready
+  File ".../autofit/non_linear/jax_compile.py", line 264 in wrapper
+  File ".../scripts/imaging/jax_likelihood/mge_group.py", line 175 in <module>
+```
+
+`autolens_workspace_test` run 32668067325, `multi_dataset/jax_likelihood/mge.py`
+— different repo, different script, **same stack**:
+
+```
+  File ".../jax/_src/api.py", line 2781 in block_until_ready
+  File ".../autofit/non_linear/jax_compile.py", line 264 in wrapper
+  File ".../scripts/multi_dataset/jax_likelihood/mge.py", line 150 in <module>
+```
+
+`jax_compile.py:264` is the `jax.block_until_ready(result)` call — the **second**
+half of the wrapped first call. The process is not tracing, lowering or
+compiling. `func(*args, **kwargs)` **returned**; what never returns is the wait
+for the result to materialize.
+
+### What this overturns
+
+- Every marker, issue and prompt in this epic calls it an *"intermittent XLA
+  compile stall"*. On this evidence that name is **wrong**, and it has been
+  wrong since the first quarantine on 2026-08-01. Anyone resuming should treat
+  "compile stall" as a label inherited from a guess, not a finding.
+- The heartbeat line reads `JAX jit still compiling ... 1770s elapsed` while the
+  process sits in `block_until_ready`. That wording is a defect in
+  `log_on_first_compile` — the wrapper cannot tell which half it is in and says
+  "compiling" regardless. **Fix the message to name the phase before anyone
+  reads another one of these logs.**
+- Both entries are `AMBIGUOUS` even at the 1800s cap: 2/2 runs capped on both
+  legs, no completion. Combined with the 300s round, that is **20 consecutive
+  cap hits** for `mge_group.py` and `multi_dataset/mge.py` with zero
+  completions — while `mge.py`'s own marker records it finishing in 32s
+  standalone.
+
+### Where this points instead
+
+An execution/materialization hang, not a compiler one. The hypotheses worth
+testing are now different from the ones this epic queued up:
+
+1. **Device transfer or the async dispatch queue deadlocking** on the runner —
+   `try_to_block` is where a never-arriving buffer would park.
+2. **The persistent compilation cache** is still live but for a different
+   reason than assumed: a cache *read* satisfying the compile instantly and
+   leaving execution to hang is consistent with what is seen here.
+3. **The `vmap(jit)` ordering** result (80% -> 30%, p=0.070) needs reinterpreting
+   in this light: the ordering changes the *shape of the executed computation*,
+   not just the compile graph, which is a more plausible route to an execution
+   hang than to a compile one.
+
+Do not restart from "why is XLA slow to compile". Start from "why does
+`block_until_ready` never return".

@@ -37,6 +37,14 @@ The headline for this task: **a SLOW marker is not evidence of slowness.** Every
 2026-07-14 marker reads "flakes at the 1800s cap" and records no timing at all;
 the one entry measured so far was wrong by a factor of ~50.
 
+## Before you start: the "compile stall" is a misnomer
+
+The stalled entries above were captured mid-hang on 2026-08-23 and the stack
+puts them in `jax.block_until_ready`, not in compilation. If any of this work
+touches those entries, do not carry the "XLA compile stall" framing over — it
+predates the evidence. Detail in
+[`../../../complete/2026/08/jax-compile-stall-slow-vs-stall-audit.md`](../../../complete/2026/08/jax-compile-stall-slow-vs-stall-audit.md).
+
 ## The harness exists
 
 `.github/workflows/retime.yml` + `.github/scripts/retime.py` in both test

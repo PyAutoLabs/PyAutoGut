@@ -49,6 +49,7 @@
 - worktree: ~/Code/PyAutoLabs-wt/pynufft-removal-residue-phase-1
 - prompt: active/pynufft_removal_downstream_residue_phase_1_developer_break.md
 - repos:
+  - autolens_workspace_developer: feature/pynufft-removal-residue-phase-1
 - summary: |
     Phase 1 of 3 cleaning up residue the pynufft removal (@PyAutoArray#475,
     @PyAutoGalaxy#583, @PyAutoLens#709) left behind. That work's "workspace tier"

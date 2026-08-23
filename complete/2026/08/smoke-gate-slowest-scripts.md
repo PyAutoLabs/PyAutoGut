@@ -1,3 +1,47 @@
+Cut the per-PR smoke gate's three slowest entries: py3.12 leg 553.0s → 301.3s
+(5m01s, 22/22), py3.13 351.1s — acceptance (<~6 min) met with margin and
+without demoting point.py. Decisions were measurement-driven (CI-equivalent
+env rebuilt in-session: py3.12 venv, source-chain install, smoke-profile env).
+
+- issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/267
+  (CLOSED completed 2026-08-23 on merge)
+- workspace-pr: autolens_workspace_test#269 (MERGED 2026-08-23, merge a6965a5,
+  single commit a9f9c27; 5 files, +230/−160)
+- per script: imaging/subhalo_recovery.py 120.7→13.2s CI (split — one-shot
+  stays on the gate; warm-started iterative-LM leg → new
+  subhalo_recovery_iterative.py, weekly/release only, and the unasserted ~18s
+  iter_fit.log_evidence() print was dropped in the move); misc/database/scrape/
+  general.py 63.4s → demoted (smoke_tests.txt comment names weekly
+  workspace-smoke.yml + release-integrate; the misc/aggregator trio keeps the
+  scrape/aggregator API on the gate under test-mode fixtures);
+  point_source/jax_likelihood/point.py 47.7→22.7s (FitPositionsImagePairAllSolved
+  block removed — image_plane.py pins the same coverage on the weekly channel;
+  base literal untouched, no re-pins).
+- why the split was safe: phase-timed the script — the iterative leg was ~81%
+  of runtime and reproduced the one-shot dkappa metrics to 3 d.p. (corr 0.8233
+  vs 0.8228, same 0.06" peak dist) — a stationarity confirmation, not
+  independent discrimination; the iterative engine class stays PR-gated via
+  interferometer/subhalo_recovery_interferometer.py (n_iter=5 cold start).
+- measured dead ends (don't re-derive): sim grid 120→100 leaves the S/N-driven
+  arc mask at ~5860 px (no gain); dpsi mesh factor 2→3 and arc-mask threshold
+  3→4 change nothing — the cost is the dense data x source algebra, not the
+  dpsi dimension. point.py is compile-dominated (44s of 55s XLA; likelihood
+  evals 0.03s) and 10x looser solver precision bought only ~15% — XLA cost is
+  a per-program floor, not refinement depth.
+- discrimination demos (constraint 1, recorded on the PR): no-subhalo
+  simulation → corr −0.017 vs the 0.5 threshold (AssertionError);
+  pixel_scale_precision 0.001→0.01 → likelihood −83.5433 vs pinned −83.3805,
+  rel 2.0e-3 vs rtol 1e-4 (AssertionError).
+- notes: gate is 22 entries now; new slowest is imaging/jax_likelihood/
+  rectangular.py at 31.8s (the flat tail the prompt says not to chase). The
+  sibling gate-frequency prompt (draft/test/pyautoheart/smoke_relevance_gate.md)
+  is untouched and separate. Remote session (no worktree); implementation
+  delegated to an execution-tier subagent, reviewed before push; remote
+  feature branch feature/smoke-gate-slowest-scripts not deleted (post-merge
+  cleanup pending, /repo_cleanup).
+
+## Original prompt
+
 # Speed up the three slowest autolens_workspace_test smoke-gate scripts
 
 Type: test

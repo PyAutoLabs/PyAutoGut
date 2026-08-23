@@ -7,6 +7,7 @@
 - status: library-dev
 - worktree: ~/Code/PyAutoLabs-wt/multistart-per-lane-best/
 - epic: jax-inference-profiling (Phase 3 pre-req, CP-3 — PROGRAMME.md §7)
+- pr: https://github.com/PyAutoLabs/PyAutoFit/pull/1515 (opened 2026-08-23, awaiting CI + review)
   - Repos: PyAutoFit (branch feature/multistart-per-lane-best)
 
 ## transformed-message-factor-gradient-unpack

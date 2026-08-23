@@ -97,22 +97,35 @@ existing contract; it does not invent a cap.
 
 ## Status — implemented 2026-08-23
 
-All seven repos pushed to `claude/backport-per-script-timeout-r3w1sv`; no PRs
-opened. Step 4 (HowTo) verified by inspection and correctly needed no change.
+**All eight PRs merged.** Step 4 (HowTo) verified by inspection and correctly
+needed no change.
 
-| Repo | Change |
-|---|---|
-| PyAutoHands | `run_capped` + public `kill_group`; both executors switched |
-| autofit_workspace_test, autogalaxy_workspace_test, autocti_workspace_test | donor `run_one` adopted; imports `timeout_for`/`kill_group` |
-| autolens_workspace, autogalaxy_workspace, autofit_workspace | both legs capped; `_BUILD_DIR` dropped; all three byte-identical again |
-| HowToLens, HowToGalaxy, HowToFit | none needed — `run_python.py` → `execute_scripts_in_folder` → the now-capped `execute_script` |
+| Repo | PR | Merge | Change |
+|---|---|---|---|
+| PyAutoHands | #257 | `bdd1aeb` | `run_capped` + public `kill_group`; both executors switched. Merged first (library-first gate) |
+| autofit_workspace_test | #89 | `c4b1a20` | donor `run_one` adopted; imports `timeout_for`/`kill_group` |
+| autocti_workspace_test | #15 | `6718e2a` | same |
+| autogalaxy_workspace_test | #109 | `cfba4ae` | same, plus two scripts parked (below) |
+| autofit_workspace | #146 | `747a02d` | both legs capped |
+| autogalaxy_workspace | #223 | `fb2e343` | both legs capped; vestigial `_BUILD_DIR` dropped |
+| autolens_workspace | #499 | `d4ab81e` | both legs capped |
+| autolens_workspace_test | #270 | `77d6d4d` | private `_kill_group` → `build_util.kill_group` |
+| HowToLens, HowToGalaxy, HowToFit | — | — | none needed — `run_python.py` → `execute_scripts_in_folder` → the now-capped `execute_script` |
+
+All ten `run_smoke.py` copies now enforce a per-script cap with a process-group
+kill, or delegate to a `build_util` path that does. The three `workspace` copies
+are byte-identical again.
 
 **The cap earned its keep on day one.** `autogalaxy_workspace_test`'s gate went
 red on its first capped run — not on this change, but on a latent hang the
 uncapped runner had been absorbing: `imaging/jax_likelihood/mge_group.py` went
 silent after "JAX jit compiling vectorized (vmap) likelihood function" and was
 killed at 300s (36/37 passed). Its sibling `mge.py` passes in 9.4s and it passes
-on `main`, so it is a stall, not a slow script. Parked NEEDS_FIX to land the
+on `main`, so it is a stall, not a slow script. **Two** scripts ended up parked, not one: the slower 3.12
+leg also named `imaging/jax_likelihood/rectangular_mge.py`, which had *passed*
+on 3.13 for the identical commit. With both parked the suite is 35 entries —
+exactly what passed on the stricter leg — and CI came back fully green with no
+third stall. Parked NEEDS_FIX to land the
 backport; the stall itself is filed as
 [`jax_vmap_jit_compile_stall.md`](../../bug/ci/jax_vmap_jit_compile_stall.md),
 which also inherits the 2026-08-01 marker of the same signature and the question

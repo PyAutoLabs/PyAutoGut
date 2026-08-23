@@ -60,15 +60,23 @@ Two consequences the drift prompt's table did not capture:
    `grep -n timeout autolens_workspace/.github/scripts/run_smoke.py` returns
    nothing. They are as exposed as the `workspace_test` tier and are the gates
    on the three public workspaces.
-2. **The group kill is missing from the authoritative executor.** `build_util`
-   has the timer but uses plain `subprocess.run(timeout=...)`, which kills only
-   the direct child. That is precisely the failure mode
-   `autolens_workspace_test` documents in `run_one`: with output captured, the
-   parent waits for the stdout pipe to reach EOF, and a grandchild that
-   inherited that pipe holds it open after the child dies — so the "timeout"
-   fires and the runner still hangs. The release mega-run and the entire HowTo
-   tier route through `build_util` and are therefore still exposed to the hang
-   that motivated the original fix.
+2. **The group kill is missing from the authoritative executor** — but it is a
+   resource leak there, not a hang. `build_util` has the timer and uses plain
+   `subprocess.run(timeout=...)`, which kills only the direct child.
+
+   > **Corrected 2026-08-23, measured.** An earlier draft of this prompt
+   > claimed the release mega-run and the HowTo tier were exposed to the same
+   > unbounded hang. They are not. On POSIX `subprocess.run` handles its own
+   > `TimeoutExpired` with `process.kill()` then `process.wait()` on the direct
+   > child only (CPython `subprocess.py`; it does **not** re-`communicate`, so
+   > it never blocks on an inherited pipe). Measured: with the cap set to 3s it
+   > raised at 3.0s. What it *does* leave behind is the grandchild — measured
+   > at **1 surviving process**, running on for its full lifetime. Over a
+   > mega-run of hundreds of scripts those accumulate against every script that
+   > follows, each holding whatever memory and GPU it had.
+
+   So Leg B is worth doing on its own merits, but it is **not** the urgent
+   half. Leg A is.
 
 ## Why promote rather than document the divergence
 
@@ -89,12 +97,23 @@ existing contract; it does not invent a cap.
 
 ## Task
 
-Order matters: **Leg B first.** Landing the group kill in `build_util` means
-the HowTo tier and the release run are covered without touching them, and Leg A
-then has a `build_util` helper to delegate to rather than nine copies growing
-their own `_kill_group`.
+Order matters, though not for the reason the first draft gave: **Leg B first**
+because it gives Leg A a `build_util` helper to import rather than six copies
+each growing their own `_kill_group`. It does *not* "cover" the HowTo tier and
+the release run against the hang — they were never exposed to it. **Leg A is
+the one that fixes an unbounded hang, and it is the priority.**
 
-1. **PyAutoHands — `build_util`: add the process-group kill.** Give
+1. ~~**PyAutoHands — `build_util`: add the process-group kill.**~~ **Done
+   2026-08-23**, branch `claude/backport-per-script-timeout-r3w1sv`. Landed as
+   `run_capped` + public `kill_group` — a drop-in for the module's
+   `subprocess.run(..., timeout=...)` calls raising the same `TimeoutExpired`
+   and `CalledProcessError` with the same captured attributes, so
+   `_timeout_output`, `is_clean_skip_exit` and the `ScriptResult`/TIMEOUT
+   report paths are untouched. Regression test asserts the grandchild is gone
+   a second after the cap; against the old code it fails `assert 1 == 0` with
+   the TIMEOUT status already correct, isolating the group kill. Suite: 354
+   passed (+2), same 14 pre-existing environment failures as `main`. The
+   original instruction, for the record: give
    `execute_notebook` (`:292`) and `execute_script` (`:447`) the
    `start_new_session=True` + `os.killpg(os.getpgid(pid), SIGKILL)` treatment
    from `autolens_workspace_test/.github/scripts/run_smoke.py::run_one` /
@@ -130,9 +149,9 @@ that depend on the exported helper.
 
 ## Acceptance
 
-- `grep -rn "start_new_session" PyAutoHands/autohands/build_util.py` is
-  non-empty, and a script that forks a grandchild holding stdout is reaped at
-  the cap rather than hanging to the Actions ceiling.
+- ~~`grep -rn "start_new_session" PyAutoHands/autohands/build_util.py` is
+  non-empty, and a script that forks a grandchild is reaped at the cap.~~
+  **Met** — see step 1.
 - Every one of the 10 `run_smoke.py` copies either enforces a per-script cap
   with a process-group kill, or delegates to a `build_util` path that does.
 - A timeout is reported as `TIMEOUT (Ns)` with exit 124 and the cap actually in

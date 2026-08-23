@@ -1646,3 +1646,5 @@ Continue the 'Expectation propagation (EP) campaign' epic. Its canonical state l
 - `draft/research/libraries/python_312_minimum.md`
 
 </details>
+
+Boards: [brain](https://pyautolabs.github.io/PyAutoBrain/) · [heart](https://pyautolabs.github.io/PyAutoHeart/) · [hands](https://pyautolabs.github.io/PyAutoHands/) · [memory](https://pyautolabs.github.io/PyAutoMemory/) · [organism](https://pyautolabs.github.io/PyAutoScientist/)

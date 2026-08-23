@@ -5,6 +5,7 @@ Target: PyAutoHeart
 Repos:
 - PyAutoHeart
 - autolens_workspace_test
+- autogalaxy_workspace_test
 - autolens_workspace
 Difficulty: medium
 Autonomy: supervised
@@ -50,21 +51,47 @@ Two tiers, shippable independently. Tier 1 alone is most of the win.
    core.** The smoke entries cluster cleanly by top-level package, so a
    directory-level mapping is enough — no dependency analysis needed:
 
-   | package | autolens_workspace_test | autolens_workspace |
-   |---|---:|---:|
-   | `imaging/` | 232.8s (42%) | 63.6s (18%) |
-   | `misc/` | 154.6s (28%) | — |
-   | `interferometer/` | 92.1s (17%) | 54.6s (16%) |
-   | `point_source/` | 47.7s (9%) | 15.7s (4%) |
-   | `multi_galaxy/` | 25.8s (5%) | 166.4s (47%) |
-   | `group/` | — | 22.9s (7%) |
-   | `guides/` | — | 14.3s (4%) |
-   | `multi_dataset/` | — | 13.5s (4%) |
+   | package | autolens_ws_test | autogalaxy_ws_test | autolens_workspace |
+   |---|---:|---:|---:|
+   | `imaging/` | 232.8s (42%) | 175.8s (32%) | 63.6s (18%) |
+   | `multi_dataset/` | — | 177.1s (32%) | 13.5s (4%) |
+   | `misc/` | 154.6s (28%) | 37.6s (7%) | — |
+   | `interferometer/` | 92.1s (17%) | 150.6s (27%) | 54.6s (16%) |
+   | `point_source/` | 47.7s (9%) | — | 15.7s (4%) |
+   | `multi_galaxy/` | 25.8s (5%) | 11.8s (2%) | 166.4s (47%) |
+   | `group/` | — | — | 22.9s (7%) |
+   | `guides/` | — | — | 14.3s (4%) |
+   | `cluster/` | — | 4.2s (1%) | — |
 
    A PR touching only `scripts/misc/` would run 155s instead of 553s; one
    touching only `multi_galaxy/` in `_test` would run 26s. Tier 2 needs the
    selected set passed down to `run_smoke.py` as an input, so it also touches
    each workspace's vendored runner — scope it deliberately or defer it.
+
+## autogalaxy_workspace_test is the same size and has no other lever
+
+Measured after this prompt was first filed (run 32533004337, 2026-08-21, py3.12,
+**557.1s across 37 entries** — within 4s of autolens_workspace_test's 553.0s,
+and again reconciling exactly to the step wall-clock).
+
+Unlike its autolens sibling it has **no hot spot at all**: slowest entry 40.0s,
+median 13.5s, and the top three are only 21% of the run. There is nothing to
+speed up, so the sibling prompt does not apply and this gate is the *only*
+lever for that repo.
+
+What it does have is a combinatorial matrix: 25 of its 37 entries are
+`{imaging, interferometer, multi_dataset}/jax_{likelihood,grad}/{lp, mge,
+mge_group, rectangular, rectangular_mge, delaunay, delaunay_mge}`, i.e. the
+same handful of meshes crossed with three dataset types. Tier 2's
+package-level narrowing maps onto that cleanly. A representative-subset
+policy for the PR gate (full cross-product weekly) is worth considering
+alongside it, but is a separate decision and belongs to that repo, not here.
+
+Checked and NOT a factor: its six `jax_grad/` entries were the obvious
+suspect, since Heart budgets that class at 1800s for running at full
+resolution. Measured they are 86.4s total (15.5%), 10.8–21.8s each. The
+expensive jax_grad scripts are the autolens ones, and those are not in any
+smoke list.
 
 ## Hard constraints
 

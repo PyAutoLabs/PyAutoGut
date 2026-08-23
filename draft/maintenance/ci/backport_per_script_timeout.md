@@ -112,11 +112,12 @@ their own `_kill_group`.
    the same patch three times. Do not "tidy" the docstring divergence in the
    same PR.
 3. **The three `workspace` copies** (autolens, autofit, autogalaxy): same
-   treatment for `run_script` (`:101`). The notebook leg (`:133`) keeps
-   `subprocess.run` only if step 1's `build_util` change already covers it via
-   delegation; if it still shells out to `jupyter nbconvert` directly, it needs
-   the cap too — an uncapped notebook hangs the gate exactly as an uncapped
-   script does. While in `autogalaxy_workspace`, drop the vestigial
+   treatment for `run_script` (`:101`). The notebook leg needs it too, and
+   does **not** get it from step 1: `execute_notebook` (`:120`) shells out to
+   `jupyter nbconvert --execute` directly rather than delegating to
+   `build_util`, so it inherits nothing. An uncapped notebook hangs the gate
+   exactly as an uncapped script does. While in `autogalaxy_workspace`, drop
+   the vestigial
    `_BUILD_DIR` line (`run_smoke.py:51`) — the last remaining real drift inside
    this variant, and item 4 of the drift prompt.
 4. **HowTo tier: no change.** The 75-line delegators inherit both legs from

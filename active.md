@@ -40,3 +40,38 @@
     complete/2026/08/autoarray-pixel-scales-scalar-widening.md (backfilled — it sat in
     draft/ while the work shipped).
     Next: /start_library → worktree + branch, then the two source edits and their tests.
+
+## pynufft-removal-residue-phase-1
+- issue: https://github.com/PyAutoLabs/autolens_workspace_developer/issues/128
+- issued: 2026-08-23
+- session: claude --resume session_01JEXzQpvG3QNUdTh6tZcaAE
+- status: workspace-dev
+- worktree: ~/Code/PyAutoLabs-wt/pynufft-removal-residue-phase-1
+- prompt: active/pynufft_removal_downstream_residue_phase_1_developer_break.md
+- repos:
+- summary: |
+    Phase 1 of 3 cleaning up residue the pynufft removal (@PyAutoArray#475,
+    @PyAutoGalaxy#583, @PyAutoLens#709) left behind. That work's "workspace tier"
+    was scoped to autolens_workspace + autolens_workspace_test only and never
+    swept the sibling repos.
+    THE BREAK (repro'd on clean main 2026-08-23):
+    `jax_profiling/dataset_setup/interferometer.py:140` still names the deleted
+    `al.TransformerNUFFTPyNUFFT`. The dict at :137 is built EAGERLY inside
+    `simulate()` (:106), so EVERY instrument raises AttributeError — not just the
+    `alma_high_res` config at :76 that selects it. Confirmed via `simulate('sma')`,
+    a DFT dataset, which still fails. All jax_profiling dataset setup is broken.
+    This is the ONLY executable reference to the deleted class in any repo.
+    FIX: drop the "nufft_pynufft" dict arm; repoint alma_high_res to "nufft"
+    (nufftax-backed TransformerNUFFT), NOT dft — its ~20GB dense-matrix OOM is
+    real (5000 vis x 512x512 = 1.31e9, far above the ~1e7 crossover). The
+    comment's other objection ("nufftax needs >=3.12, venv is 3.10") is OBSOLETE:
+    the whole stack floors requires-python >=3.12 and nufftax 0.6.1 needs >=3.11.
+    VERIFY across EVERY instrument key — the eager dict means a one-instrument
+    check would not prove the fix.
+    Phases 2 (autogalaxy_workspace + both assistants, prose) and 3 (Hands/Heart CI
+    + PyAutoCTI install doc) stay in draft/maintenance/workspaces/, independent —
+    no library API change, so no library-first gate.
+    Next: /start_workspace → worktree + branch feature/pynufft-removal-residue.
+- also-pending: close out draft/bug/autoarray/pynufft_scipy_pinv2_dev_extra.md
+  (Status: superseded; its acceptance is met — the removal PRs merged).
+

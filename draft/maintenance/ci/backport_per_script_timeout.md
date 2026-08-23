@@ -107,6 +107,19 @@ opened. Step 4 (HowTo) verified by inspection and correctly needed no change.
 | autolens_workspace, autogalaxy_workspace, autofit_workspace | both legs capped; `_BUILD_DIR` dropped; all three byte-identical again |
 | HowToLens, HowToGalaxy, HowToFit | none needed — `run_python.py` → `execute_scripts_in_folder` → the now-capped `execute_script` |
 
+**The cap earned its keep on day one.** `autogalaxy_workspace_test`'s gate went
+red on its first capped run — not on this change, but on a latent hang the
+uncapped runner had been absorbing: `imaging/jax_likelihood/mge_group.py` went
+silent after "JAX jit compiling vectorized (vmap) likelihood function" and was
+killed at 300s (36/37 passed). Its sibling `mge.py` passes in 9.4s and it passes
+on `main`, so it is a stall, not a slow script. Parked NEEDS_FIX to land the
+backport; the stall itself is filed as
+[`jax_vmap_jit_compile_stall.md`](../../bug/ci/jax_vmap_jit_compile_stall.md),
+which also inherits the 2026-08-01 marker of the same signature and the question
+of whether the 2026-07-14 SLOW-skips are this stall mislabelled. That repo has
+four runs cancelled at the 6-hour Actions ceiling — the cap makes that failure
+mode impossible and, this time, produced a diagnosable tail instead of silence.
+
 Evidence, measured on the runner files themselves rather than argued:
 
 - **Before**, `autofit_workspace_test`'s runner on a two-entry suite whose

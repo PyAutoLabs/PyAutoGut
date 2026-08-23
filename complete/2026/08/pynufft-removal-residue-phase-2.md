@@ -59,7 +59,9 @@ was is the transferable bit: run the same check on untouched `main`.
   `PyAutoGalaxy:autogalaxy/plot/plot_utils.py`, which no longer exists. That
   file is untouched by the PR.
 
-**Both assistant repos still have a red `wiki-currency` on `main`.** Unfiled.
+**Both assistant repos still have a red `wiki-currency` on `main`.** Filed
+2026-08-23 as `draft/bug/assistants/wiki_currency_red_on_main.md` (see the
+addendum at the end of this record).
 
 Heart was also RED (`release validation FAILED`, unrelated). Both reds were
 explicitly human-authorized before merge.
@@ -71,6 +73,24 @@ pynufft removal was marked shipped and its library tier genuinely was — but it
 workspace tier named two repos and missed five more, including one hard break.
 When a task deletes a public symbol, grep the symbol across **every** repo and
 split executable references from historical prose before believing it is done.
+
+## Addendum 2026-08-23 — the unfiled findings are now filed
+
+Written when phase 3 was issued (@PyAutoHands#258). The three findings this
+record listed as "Found while shipping, NOT filed anywhere" now have prompts,
+so nothing depends on re-reading this record:
+
+1. Assistants' red `wiki-currency` on `main` →
+   `draft/bug/assistants/wiki_currency_red_on_main.md`
+2. @autolens_workspace_developer datasets that do not reproduce →
+   `draft/bug/autolens_workspace_developer/committed_datasets_do_not_reproduce.md`
+3. @autolens_workspace_developer having no test CI → already covered by
+   `draft/maintenance/autolens_workspace_developer/stale_api_rot_audit.md`;
+   no new prompt filed.
+
+The deferred @autogalaxy_workspace `markdown/` regeneration (three curated
+pages still carrying the pynufft prose) is filed as
+`draft/docs/autogalaxy_workspace/markdown_regeneration_pynufft_prose.md`.
 
 ## Original prompt
 

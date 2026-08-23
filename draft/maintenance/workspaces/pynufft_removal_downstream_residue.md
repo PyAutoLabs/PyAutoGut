@@ -13,7 +13,7 @@ Repos:
 Difficulty: low-medium
 Autonomy: supervised
 Priority: normal
-Status: split (phases 1-2 SHIPPED 2026-08-23; phase 3 open)
+Status: split (phases 1-2 SHIPPED 2026-08-23; phase 3 ISSUED 2026-08-23 — @PyAutoHands#258)
 Filed: 2026-08-23
 
 ## Provenance
@@ -144,8 +144,10 @@ library source changes are involved:
    **SHIPPED 2026-08-23** — @autogalaxy_workspace#225, @autogalaxy_assistant#19,
    @autolens_assistant#115; issue @autogalaxy_workspace#224 closed.
    Record: complete/2026/08/pynufft-removal-residue-phase-2.md
-3. `pynufft_removal_downstream_residue_phase_3_ci_install_docs.md`
+3. `active/pynufft_removal_downstream_residue_phase_3_ci_install_docs.md`
    — @PyAutoHands, @PyAutoHeart, @PyAutoCTI; CI recipes + install doc.
+   **ISSUED 2026-08-23** — issue @PyAutoHands#258; PRs @PyAutoHands#259,
+   @PyAutoHeart#162, @PyAutoCTI#107 (independent, no library-first gate).
 
 The Brain Feature Agent graded the unsplit prompt `too-large` (score 33) and
 proposed a 4-phase `design / core_api / workspace_examples / docs` template with
@@ -173,13 +175,19 @@ agent, so this routed through the Feature Agent; recorded as a follow-up.
 
 ## Still open after phases 1-2 (2026-08-23)
 
-- **Phase 3** — the only remaining phase of this prompt.
+- **Phase 3** — issued 2026-08-23 (@PyAutoHands#258); the last phase of this
+  prompt.
 - **autogalaxy_workspace `markdown/`** — three curated pages (`start_here`,
   `interferometer/start_here`, `interferometer/simulator`) still carry the stale
   pynufft text. `generate_markdown.py` executes curated scripts for real and is
-  an at-release step, so phase 2 deliberately did not run it.
+  an at-release step, so phase 2 deliberately did not run it. **Now filed** as
+  `draft/docs/autogalaxy_workspace/markdown_regeneration_pynufft_prose.md`.
 
-## Found while shipping, NOT filed anywhere
+## Found while shipping — all filed 2026-08-23
+
+These were recorded as unfiled in the phase-2 record; they now have prompts of
+their own, so this task's own residue is closed out and nothing depends on
+someone re-reading a completion record.
 
 1. **Both assistant repos have a red `wiki-currency` on `main`.** Symbol audit
    `--scope all` reports `missing/broken: 2` on main (1 after phase 2). The
@@ -188,8 +196,13 @@ agent, so this routed through the Feature Agent; recorded as a follow-up.
    @autogalaxy_assistant additionally fails `--check-citations` on
    `wiki/core/operations/sandbox.md`, citing the deleted
    `PyAutoGalaxy:autogalaxy/plot/plot_utils.py`.
+   → `draft/bug/assistants/wiki_currency_red_on_main.md`
 2. **@autolens_workspace_developer committed datasets do not reproduce** from
    their own scripts — regenerating an untouched config (`sma`) yields different
    data plus a differing `SMALLDAT` header stamp.
+   → `draft/bug/autolens_workspace_developer/committed_datasets_do_not_reproduce.md`
 3. **@autolens_workspace_developer has no test CI** (one Copilot workflow),
    which is why the phase-1 break rotted unnoticed and why #129 merged unchecked.
+   → already covered by
+   `draft/maintenance/autolens_workspace_developer/stale_api_rot_audit.md`
+   ("no smoke coverage", suggested approach step 3) — no new prompt filed.

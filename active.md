@@ -44,5 +44,15 @@
     cases, and executed the guard against stub jax 0.10.2/0.6.2/0.12.0 (pass/fail/fail).
     Confirmed the reusable workflow uses actions/setup-python on ubuntu-latest, so
     `python` is on PATH and jax is always installed there.
-    Next: /ship_workspace to open the two PRs — NOT yet run; no PR exists. The PRs'
-    own Smoke Tests runs are the from-scratch install replay this task verifies by.
+    ship_workspace done — PRs OPEN, NOT merged (merge stays human):
+      autolens_workspace_test#268   (closes #266)
+      autogalaxy_workspace_test#107
+    Both carry the `pending-release` label, verified after creation.
+    Ship gate: Heart returned STALE (score 35) with red_reasons=[] and
+    yellow_reasons=[] — only evidence gaps (no library checkouts or report.json in
+    this web-github session). Per agents/faculties/vitals/AGENTS.md the dev-ship
+    gate treats STALE as passing (a release would still require GREEN), so the gate
+    is satisfied on its own terms, not waived.
+    No upstream library PR, so the library-first merge gate does not apply.
+    Subscribed to both PRs' CI events. Next: drive both to green, then a human
+    merges; then the completion record via lifecycle.py record.

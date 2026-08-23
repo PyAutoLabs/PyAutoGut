@@ -28,6 +28,12 @@ epic, never picked standalone.
 - ledger: draft/feature/autolens/source_cluster_arc.md
 - notes: 12 phased prompts under draft/; issue phases ONE at a time as predecessors near shipping — no bulk issue queues.
 
+## jax-compile-stall
+- title: Intermittent XLA compile stall in the JAX vmap likelihood path
+- ledger: draft/bug/ci/jax_vmap_jit_compile_stall.md
+- status: CLOSED AS PARTIAL 2026-08-23 — record complete/2026/08/jax-compile-stall-slow-vs-stall-audit.md
+- notes: phase 1 (watchdog) shipped in full; phases 2/3 stopped deliberately at a measured-but-not-root-caused state. The stall is instrumented and characterised (>100x bimodality inside one compile step; vmap-of-jit contributory at p=0.070 but NOT causal; the compile-cache hypothesis never tested) and NOTHING was un-quarantined. Resume via draft/research/ci/smoke_timing_and_profiling.md, which is where this gets dug up. Superseded draft/bug/autolens_workspace_test/multi_dataset_jax_likelihood_xla_stall.md.
+
 ## graphical-ep
 - title: Expectation propagation (EP) campaign
 - ledger: draft/research/graphical_ep/ep_campaign.md

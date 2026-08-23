@@ -8,8 +8,27 @@ Repos:
 Difficulty: medium
 Autonomy: supervised
 Priority: normal
-Status: draft
+Status: superseded by epic jax-compile-stall (see banner below)
 Filed: 2026-08-22 (backfilled from git)
+
+## SUPERSEDED 2026-08-23 — do not start this
+
+This defect is now the `jax-compile-stall` epic, whose ledger is
+[`../ci/jax_vmap_jit_compile_stall.md`](../ci/jax_vmap_jit_compile_stall.md).
+That filing carries the same stall with the cross-repo evidence
+(`autogalaxy_workspace_test#109`, the two matrix legs disagreeing on the same
+commit, the four 6-hour cancelled runs) and splits the work into three phases.
+One root cause is one task, so this file is kept for its evidence and is **not**
+issued.
+
+The two things this file asked for that the campaign filing did not already
+carry are folded in, so nothing is lost:
+
+- *"make the runner dump a stack trace on timeout instead of just reporting
+  TIMEOUT"* → phase 1, solved library-side instead of in the runner
+  ([`../ci/jax_compile_stall_1_evidence.md`](../ci/jax_compile_stall_1_evidence.md));
+- *"re-enable `mge.py` and `shared_preloads.py` in `smoke_tests.txt`"* → phase 3
+  ([`../ci/jax_compile_stall_3_root_cause.md`](../ci/jax_compile_stall_3_root_cause.md)).
 
 ## Why this is filed now
 

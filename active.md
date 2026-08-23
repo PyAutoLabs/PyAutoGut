@@ -21,22 +21,6 @@
 - heart: NOT consulted — pyauto-heart unreachable from this web session.
 - repos:
 
-## jax-compile-stall-evidence
-- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1516 (issued 2026-08-23)
-- issued: 2026-08-23
-- prompt: active/jax_compile_stall_1_evidence.md
-- status: library-dev
-- epic: jax-compile-stall (phase 1 of 3; ledger draft/bug/ci/jax_vmap_jit_compile_stall.md)
-- worktree: ~/Code/PyAutoLabs-wt/jax-compile-stall-evidence
-- worktree-note: started in a web-github session with no local tree — the branch was
-  cut against a direct clone at /home/user/pyautofit, not the worktree root above.
-  A local-dev session resuming this should create the worktree via worktree_create.
-- pr: https://github.com/PyAutoLabs/PyAutoFit/pull/1517 (opened 2026-08-23, awaiting review)
-- heart: NOT consulted — pyauto-heart unreachable from the web session that opened the PR;
-  run the vitals check before merge.
-- repos:
-  - PyAutoFit: feature/jax-compile-stall-evidence
-
 ## transformed-message-factor-gradient-unpack
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1501 (issued 2026-08-19)
 - issued: 2026-08-19

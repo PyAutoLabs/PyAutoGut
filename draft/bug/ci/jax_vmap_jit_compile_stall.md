@@ -146,7 +146,7 @@ at a time — nothing here is bulk-issued.
 
 | Phase | Prompt | Deliverable | Repos |
 |---|---|---|---|
-| 1 | [`jax_compile_stall_1_evidence.md`](jax_compile_stall_1_evidence.md) | A stalled compile reports itself: heartbeat, `faulthandler` dump, compile-vs-execute split | PyAutoFit |
+| 1 | ~~`jax_compile_stall_1_evidence.md`~~ **SHIPPED 2026-08-23** — record [`complete/2026/08/jax-compile-stall-evidence.md`](../../../complete/2026/08/jax-compile-stall-evidence.md) (PyAutoFit#1516, PR#1517 merged) | A stalled compile reports itself: heartbeat, `faulthandler` dump, compile-vs-execute split | PyAutoFit |
 | 2 | [`jax_compile_stall_2_slow_vs_stall_audit.md`](jax_compile_stall_2_slow_vs_stall_audit.md) | The SLOW-vs-stall question (task step 1) answered in writing; every marker carries its real reason | autogalaxy_workspace_test, autolens_workspace_test |
 | 3 | [`jax_compile_stall_3_root_cause.md`](jax_compile_stall_3_root_cause.md) | Root cause + fix; every NEEDS_FIX for this signature cleared (task steps 2–4) | PyAutoFit, both `_workspace_test` |
 

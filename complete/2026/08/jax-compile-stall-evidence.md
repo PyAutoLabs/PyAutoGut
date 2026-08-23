@@ -1,3 +1,22 @@
+# Make a stalled JAX compile report itself (jax-compile-stall phase 1)
+
+- **Issue:** PyAutoFit#1516 (closed) · **PR:** PyAutoFit#1517 (merged 2026-08-23)
+- **Repos:** PyAutoFit (`autofit/non_linear/jax_compile.py`, `test_autofit/non_linear/test_jax_compile.py`)
+- **Epic:** `jax-compile-stall` phase 1 of 3 — ledger `draft/bug/ci/jax_vmap_jit_compile_stall.md`. Phase 2 is autolens_workspace_test#271.
+- **What:** `log_on_first_compile` gained a heartbeat (`still compiling <desc>, Ns elapsed`; `PYAUTOFIT_JAX_COMPILE_HEARTBEAT_SECS`, default 30, 0 disables), a `faulthandler` watchdog dumping the process's own traceback on overrun (`PYAUTOFIT_JAX_COMPILE_DUMP_SECS`, defaulting to 300 **when `CI` is set** and 0 otherwise), and separate timings for the trace/lower/compile wait vs the `jax.block_until_ready` execution wait. Existing `complete in {n} seconds` summary line unchanged. All four call sites inherit it (`Fitness._vmap/_jit/_grad`, `analysis/latent.py`). No workspace script and no CI runner touched.
+- **Why:** the same intermittent XLA compile stall had been quarantined three times (autolens_workspace_test#245; ag_test `multi_dataset/.../rectangular.py` 2026-08-01; ag_test `imaging/.../mge_group.py` 2026-08-23) and diagnosed zero times, because a stalled run emitted the "compiling..." line and then nothing until the cap killed it.
+- **Key traps recorded:**
+  - **The silence spanned two different waits.** The wrapper called `func(...)` (trace/lower/XLA compile) and then `jax.block_until_ready(result)` (execution) under **one** log line, so a captured tail could not say which half was stuck — or whether the process was alive at all. That ambiguity, not the stall itself, is what defeated three investigations.
+  - **`Fitness._vmap` is `jax.vmap(jax.jit(self.call))`** — `vmap` *of* `jit`, the inverted ordering — while `analysis/latent.py` uses `jax.jit(jax.vmap(...))`. The stalling path is exactly the `vmap` path; `_jit`-only scripts in the same directories do not stall. **Deliberately not changed here**: altering the transform while trying to observe the stall would destroy the thing being observed. First A/B for phase 3.
+  - **The CI-conditional default avoids a second repo touch.** Defaulting the dump on when `CI` is set makes the next stall self-diagnosing without threading an env var through every workspace's `config/build/env_vars_*.yaml`.
+  - **A traceback during XLA compile parks at the pybind boundary** and shows no XLA internals. It still separates *in compile* / *in execution* / *blocked on a Python-level lock* (e.g. the persistent compile cache, on by default since PyAutoConf#128) — which is the three-way fork phase 3 needs.
+  - **Diagnostics must never break a fit.** An unstartable heartbeat thread (`RuntimeError` from `Thread.start`), an unarmable dump (a capturing harness can leave stderr without a real fd) and a malformed or negative interval all fall back and continue. The heartbeat-start guard was added on an adversarial re-read before pushing — it was originally outside the `try`, where it could have killed a fit.
+- **Tests/verification:** full PyAutoFit suite 2008 passed / 34 skipped (3.12); `test_jax_compile.py` 16 passed, 12 new. CI green on 3.12, 3.13 and **unittest-nojax** — the new tests need no JAX import. End-to-end: a simulated stall in a fresh process (`CI=true`, heartbeat 2s, dump 5s) emitted heartbeats and two repeating tracebacks before SIGKILL at 12s, exactly as a CI cap would kill it.
+- **Heart:** **NOT consulted** — `pyauto-heart` was unreachable from the `web-github` session that opened and merged this. Flagged in the PR body and in `active.md`; merge was a human instruction ("merge when green").
+- **Provenance:** started, implemented, shipped and merged by one `web-github` session 2026-08-23 (`claude/jax-vmap-jit-stall-swz2tc`), against a direct PyAutoFit clone rather than a worktree. Filed prompt lived on an unmerged branch (`claude/backport-per-script-timeout-r3w1sv`) and was brought onto the task branch at `/start_dev`.
+
+## Original prompt
+
 # Phase 1: make a stalled JAX compile report itself (heartbeat + faulthandler + compile/execute split)
 
 Type: bug

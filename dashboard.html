@@ -51,7 +51,7 @@ button.more:hover{color:var(--fg)}
 <body>
 <h1>📋 PyAutoMind Dashboard</h1>
 <p>Every task the Mind is holding. Tap a task's 📋 and its <code>/start_dev</code> command is on your clipboard — paste it into a Claude Code chat to route Claude straight to that task. <a href="#recent">Recent</a> is the same work by date — what has been happening rather than what to do next.</p>
-<p class="muted">In flight 3 · Parked 3 · Planned 6 · Backlog 155 · <a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/dashboard.md">markdown version</a></p>
+<p class="muted">In flight 2 · Parked 3 · Planned 6 · Backlog 155 · <a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/dashboard.md">markdown version</a></p>
 <h2>Start here</h2>
 <h3>Highest priority <span class="facets">(filed as high) — showing 12 of 17</span></h3>
 <div class="task"><button class="copy" data-cmd="/start_dev draft/triage/jax_zero_contour.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — <span class="facets">medium · safe · high</span></p></div>
@@ -72,7 +72,6 @@ button.more:hover{color:var(--fg)}
 <h2>In flight <a class="mdsrc" href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/active.md">markdown version</a></h2>
 <p class="muted">Issued — each has an open GitHub issue and usually a branch.</p>
 <div class="task"><button class="copy" data-cmd="/start_dev active/16_transformed_message_factor_gradient_unpack.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/active/16_transformed_message_factor_gradient_unpack.md"><code>@PyAutoFit</code> <code>TransformedMessage.factor_gradient</code> crashes on first call</a> — <a href="https://github.com/PyAutoLabs/PyAutoFit/issues/1501">issue #1501</a><span class="facets"> — issued 2026-08-19</span> — <span class="facets">HOLD — do not start dev. Fix-or-delete hangs off the PyAutoFit#1498 logpdf-contract</span></p></div>
-<div class="task"><button class="copy" data-cmd="/start_dev active/jax_compile_stall_1_evidence.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/active/jax_compile_stall_1_evidence.md">Phase 1: make a stalled JAX compile report itself (heartbeat</a> — <a href="https://github.com/PyAutoLabs/PyAutoFit/issues/1516">issue #1516</a><span class="facets"> — issued 2026-08-23</span> — <span class="facets">library-dev</span></p></div>
 <div class="task"><button class="copy" data-cmd="/start_dev active/jax_compile_stall_2_slow_vs_stall_audit.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/active/jax_compile_stall_2_slow_vs_stall_audit.md">Phase 2: are the SLOW-marked jax_likelihood/jax_grad entries slow, or is</a> — <a href="https://github.com/PyAutoLabs/autolens_workspace_test/issues/271">issue #271</a><span class="facets"> — issued 2026-08-23</span> — <span class="facets">workspace-dev</span></p></div>
 <h2>Parked <a class="mdsrc" href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/parked.md">markdown version</a></h2>
 <details>
@@ -261,12 +260,6 @@ button.more:hover{color:var(--fg)}
 </tr>
 <tr>
 <td class="when">2026-08-23</td>
-<td class="what">issued</td>
-<td><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/active/jax_compile_stall_1_evidence.md">Phase 1: make a stalled JAX compile report itself (heartbeat</a></td>
-<td class="pick"><button class="copy" data-cmd="/start_dev active/jax_compile_stall_1_evidence.md" aria-label="Copy the Claude command">📋</button></td>
-</tr>
-<tr>
-<td class="when">2026-08-23</td>
 <td class="what">filed</td>
 <td><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/feature/pyautobrain/brain_board_follow_ups.md">Brain board follow-ups: what real mornings surface</a></td>
 <td class="pick"><button class="copy" data-cmd="/start_dev draft/feature/pyautobrain/brain_board_follow_ups.md" aria-label="Copy the Claude command">📋</button></td>
@@ -313,7 +306,7 @@ button.more:hover{color:var(--fg)}
 <td><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/research/libraries/intel_macos_support_policy.md">Is Intel macOS a supported platform, and what is the</a></td>
 <td class="pick"><button class="copy" data-cmd="/start_dev draft/research/libraries/intel_macos_support_policy.md" aria-label="Copy the Claude command">📋</button></td>
 </tr>
-<tr hidden>
+<tr>
 <td class="when">2026-08-22</td>
 <td class="what">filed</td>
 <td><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/maintenance/libraries/defer_scipy_sparse_import.md">Defer the eager scipy.sparse import in derivative_util (~0.10 s of</a></td>
@@ -553,6 +546,12 @@ button.more:hover{color:var(--fg)}
 <td><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/bug/workspaces/aplt_output_drift_remaining_repos.md"><code>aplt.Output</code> stale-API drift in the remaining workspace repos</a></td>
 <td class="pick"><button class="copy" data-cmd="/start_dev draft/bug/workspaces/aplt_output_drift_remaining_repos.md" aria-label="Copy the Claude command">📋</button></td>
 </tr>
+<tr hidden>
+<td class="when">2026-08-04</td>
+<td class="what">filed</td>
+<td><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/triage/nightly_release_blocked_eight_nights.md">Nightly release has been blocked 8 nights running — triage</a></td>
+<td class="pick"><button class="copy" data-cmd="/start_dev draft/triage/nightly_release_blocked_eight_nights.md" aria-label="Copy the Claude command">📋</button></td>
+</tr>
 </table>
 <button class="more" data-page="10">… 10 more (40 left)</button>
 <h2>Epics <a class="mdsrc" href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/epics.md">markdown version</a></h2>
@@ -578,7 +577,7 @@ button.more:hover{color:var(--fg)}
 </details>
 <details>
 <summary>Intermittent XLA compile stall in the JAX vmap likelihood path — 2 queued prompt(s), in order</summary>
-<div class="task"><button class="copy" data-cmd="Continue the 'Intermittent XLA compile stall in the JAX vmap likelihood path' epic. Its canonical state lives in draft/bug/ci/jax_vmap_jit_compile_stall.md — read that ledger (and any DECISIONS/RESULTS files beside it) first. Cross-check this epic's entry in PyAutoMind/epics.md, any related rows in PyAutoMind/active.md, and the referenced repos' open issues and PRs, to work out the last completed phase and what is currently in flight. Then pick the next logical step and continue it through the normal workflow (/start_dev — filing the phase's prompt first if none exists), updating the ledger as the work advances. Note: three phases under draft/bug/ci/ — 1 evidence (PyAutoFit watchdog), 2 SLOW-vs-stall audit, 3 root cause + un-quarantine. Phase 3 is blocked on phase 1 shipping and a CI stall actually dumping a traceback; issue phases ONE at a time. Supersedes draft/bug/autolens_workspace_test/multi_dataset_jax_likelihood_xla_stall.md." aria-label="Copy the Claude command">📋</button><p><b>Intermittent XLA compile stall in the JAX vmap likelihood path</b> — <span class="facets">ledger: <code>draft/bug/ci/jax_vmap_jit_compile_stall.md</code></span></p></div>
+<div class="task"><button class="copy" data-cmd="Continue the 'Intermittent XLA compile stall in the JAX vmap likelihood path' epic. Its canonical state lives in draft/bug/ci/jax_vmap_jit_compile_stall.md — read that ledger (and any DECISIONS/RESULTS files beside it) first. Cross-check this epic's entry in PyAutoMind/epics.md, any related rows in PyAutoMind/active.md, and the referenced repos' open issues and PRs, to work out the last completed phase and what is currently in flight. Then pick the next logical step and continue it through the normal workflow (/start_dev — filing the phase's prompt first if none exists), updating the ledger as the work advances. Note: three phases under draft/bug/ci/ — 1 evidence (PyAutoFit watchdog, SHIPPED), 2 SLOW-vs-stall audit, 3 root cause + un-quarantine. Phase 3 is blocked on phase 1 shipping and a CI stall actually dumping a traceback; issue phases ONE at a time. Supersedes draft/bug/autolens_workspace_test/multi_dataset_jax_likelihood_xla_stall.md." aria-label="Copy the Claude command">📋</button><p><b>Intermittent XLA compile stall in the JAX vmap likelihood path</b> — <span class="facets">ledger: <code>draft/bug/ci/jax_vmap_jit_compile_stall.md</code></span> — <span class="facets">phase 1 shipped 2026-08-23 (PyAutoFit#1517); phase 2 in flight (autolens_workspace_test#271)</span></p></div>
 <div class="task"><button class="copy" data-cmd="/start_dev draft/bug/ci/jax_compile_stall_3_root_cause.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/bug/ci/jax_compile_stall_3_root_cause.md">Phase 3: root-cause the XLA vmap compile stall and clear</a> — <span class="facets">ci · large · supervised · high</span></p></div>
 <div class="task"><button class="copy" data-cmd="/start_dev draft/bug/ci/jax_vmap_jit_compile_stall.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/bug/ci/jax_vmap_jit_compile_stall.md">Intermittent XLA compile stall in JAX vmap likelihood scripts —</a> — <span class="facets">ci · too-large · supervised · high</span></p></div>
 </details>

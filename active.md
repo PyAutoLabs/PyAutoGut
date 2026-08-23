@@ -76,3 +76,26 @@
 - also-pending: close out draft/bug/autoarray/pynufft_scipy_pinv2_dev_extra.md
   (Status: superseded; its acceptance is met — the removal PRs merged).
 
+## pynufft-removal-residue-phase-2
+- issue: https://github.com/PyAutoLabs/autogalaxy_workspace/issues/224
+- issued: 2026-08-23
+- session: claude --resume session_01JEXzQpvG3QNUdTh6tZcaAE
+- status: workspace-dev
+- worktree: ~/Code/PyAutoLabs-wt/pynufft-removal-residue-phase-2
+- prompt: active/pynufft_removal_downstream_residue_phase_2_workspace_assistant_docs.md
+- repos:
+  - autogalaxy_workspace: feature/pynufft-removal-residue-phase-2
+  - autogalaxy_assistant: feature/pynufft-removal-residue-phase-2
+  - autolens_assistant: feature/pynufft-removal-residue-phase-2
+- summary: |
+    Phase 2 of 3. Prose-only: autogalaxy_workspace (the sibling of the repo fixed
+    by @autolens_workspace#497, never swept) plus both science assistants still
+    document the deleted `TransformerNUFFTPyNUFFT` as an available "non-JAX
+    fallback". Zero executable refs — the one live ref was phase 1 (#128).
+    Edit scripts/ ONLY in autogalaxy_workspace; notebooks/ and markdown/ are
+    GENERATED (generate.py autogalaxy, and a SEPARATE generate_markdown.py).
+    Mirror the #497 wording, adapting "strong lens" -> "galaxy". Assistant wiki
+    BODY edits need --write-provenance. paper/ dirs stay untouched (JOSS records).
+- also: phase 1 (#128) implemented on feature/pynufft-removal-residue-phase-1,
+  2 commits, not yet PR'd. Phase 3 (Hands/Heart CI + PyAutoCTI doc) still draft.
+

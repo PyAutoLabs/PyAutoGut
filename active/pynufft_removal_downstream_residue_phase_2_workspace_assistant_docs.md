@@ -9,8 +9,9 @@ Repos:
 Difficulty: low-medium
 Autonomy: supervised
 Priority: normal
-Status: draft
+Status: issued
 Filed: 2026-08-23
+Issued: 2026-08-23
 
 Phase 2 of 3. Parent: `pynufft_removal_downstream_residue.md`. Independent of
 phases 1 and 3.

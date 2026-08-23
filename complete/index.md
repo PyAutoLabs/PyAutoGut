@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1083 records across 7 buckets.
+1084 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -155,6 +155,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [pyautobrain-pr-test-ci](2026/08/pyautobrain-pr-test-ci.md) — auto-closed by the merge
 - [pyautofit_plot_rst_dead_plotters](2026/08/pyautofit_plot_rst_dead_plotters.md)
 - [pyautogalaxy-mge-sigma-test](2026/08/pyautogalaxy-mge-sigma-test.md)
+- [pyautonerves-release-for-regime-stamp](2026/08/pyautonerves-release-for-regime-stamp.md)
 - [pyautoscientist-readme-dashboard-bullets](2026/08/pyautoscientist-readme-dashboard-bullets.md) — The PyAutoScientist README's dashboard paragraph now lists the four organ
 - [pyautoscientist-readme-drop-organism-live-strip](2026/08/pyautoscientist-readme-drop-organism-live-strip.md) — Removed the PyAutoScientist README's "## The organism live" strip section
 - [pyautoscientist-readme-two-paragraph-opening](2026/08/pyautoscientist-readme-two-paragraph-opening.md) — PyAutoScientist README opening now matches the organ house pattern — one bold

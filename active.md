@@ -10,6 +10,9 @@
 - worktree-note: started in a web-github session with no local tree — the branch was
   cut against a direct clone at /home/user/pyautofit, not the worktree root above.
   A local-dev session resuming this should create the worktree via worktree_create.
+- pr: https://github.com/PyAutoLabs/PyAutoFit/pull/1517 (opened 2026-08-23, awaiting review)
+- heart: NOT consulted — pyauto-heart unreachable from the web session that opened the PR;
+  run the vitals check before merge.
 - repos:
   - PyAutoFit: feature/jax-compile-stall-evidence
 

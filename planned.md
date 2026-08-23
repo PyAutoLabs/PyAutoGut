@@ -80,6 +80,9 @@
 
     Sibling smoke scripts to check while triaging: image_plane.py,
     source_plane.py in the same dir — they share the seed dataset.
+- SUPERSEDED 2026-08-23 by point-source-dataset-cap-guard (PyAutoLens#710): the -1e99 sentinel
+  was poisoned-dataset output, not a library regression. point.py passes on current main. Retire
+  this entry and its prompt when #710 ships.
 
 ## piemass-potential
 - prompt: draft/feature/autogalaxy/piemass_potential.md

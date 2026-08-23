@@ -13,7 +13,7 @@ Repos:
 Difficulty: medium
 Autonomy: supervised
 Priority: high
-Status: formalised
+Status: implemented
 Filed: 2026-08-23
 
 Answers the blocking question left open by
@@ -95,6 +95,40 @@ the organism-wide cap (`build_util.py:12`, `run_all.py:49`
 `build_util` to resolve per-script profile overrides. Promotion adopts an
 existing contract; it does not invent a cap.
 
+## Status — implemented 2026-08-23
+
+All seven repos pushed to `claude/backport-per-script-timeout-r3w1sv`; no PRs
+opened. Step 4 (HowTo) verified by inspection and correctly needed no change.
+
+| Repo | Change |
+|---|---|
+| PyAutoHands | `run_capped` + public `kill_group`; both executors switched |
+| autofit_workspace_test, autogalaxy_workspace_test, autocti_workspace_test | donor `run_one` adopted; imports `timeout_for`/`kill_group` |
+| autolens_workspace, autogalaxy_workspace, autofit_workspace | both legs capped; `_BUILD_DIR` dropped; all three byte-identical again |
+| HowToLens, HowToGalaxy, HowToFit | none needed — `run_python.py` → `execute_scripts_in_folder` → the now-capped `execute_script` |
+
+Evidence, measured on the runner files themselves rather than argued:
+
+- **Before**, `autofit_workspace_test`'s runner on a two-entry suite whose
+  second script spawns a grandchild and exits, with `BUILD_SCRIPT_TIMEOUT=4`:
+  printed `::group::hangs.py` and nothing further, still hung when the harness
+  killed it at 30s. The cap was ignored because there was none. That is the
+  issue #196 signature exactly.
+- **After**: `[TIMEOUT (4s)] hangs.py — 4.0s`, exit 1, zero surviving
+  grandchildren.
+- The `workspace` variant reproduces the same on both legs, including a
+  `jupyter` that hangs and forks; its jupyter-not-found path still reports 127
+  unchanged.
+- PyAutoHands: 354 passed (+2 new), same 14 pre-existing environment failures
+  `main` has. The new test fails `assert 1 == 0` against the old code *with the
+  TIMEOUT status already correct*, which isolates the group kill as the thing
+  under test.
+
+**Follow-up not done here.** `autolens_workspace_test` still carries its own
+private `_kill_group` rather than importing `build_util.kill_group` like the
+six adopters now do. Functionally identical; left alone rather than touch a
+working production gate for consistency. Worth a one-line follow-up.
+
 ## Task
 
 Order matters, though not for the reason the first draft gave: **Leg B first**
@@ -122,7 +156,7 @@ the one that fixes an unbounded hang, and it is the priority.**
    report/`ScriptResult` timeout paths and `is_clean_skip_exit` handling
    exactly. Export `_kill_group` (unprefixed) so the workspace runners can
    import it instead of copying it.
-2. **The three `workspace_test` copies** (autofit, autogalaxy, autocti): adopt
+2. ~~**The three `workspace_test` copies**~~ **Done.** (autofit, autogalaxy, autocti): adopt
    the donor's `run_one` wholesale — `timeout_for(env)` with the
    `TIMEOUT_SECS` fallback shim, `Popen(start_new_session=True)`,
    `communicate(timeout=...)`, group kill, **return code 124**, and the
@@ -130,7 +164,7 @@ the one that fixes an unbounded hang, and it is the priority.**
    three are byte-identical to each other but for one docstring line, so it is
    the same patch three times. Do not "tidy" the docstring divergence in the
    same PR.
-3. **The three `workspace` copies** (autolens, autofit, autogalaxy): same
+3. ~~**The three `workspace` copies**~~ **Done.** (autolens, autofit, autogalaxy): same
    treatment for `run_script` (`:101`). The notebook leg needs it too, and
    does **not** get it from step 1: `execute_notebook` (`:120`) shells out to
    `jupyter nbconvert --execute` directly rather than delegating to
@@ -139,7 +173,7 @@ the one that fixes an unbounded hang, and it is the priority.**
    the vestigial
    `_BUILD_DIR` line (`run_smoke.py:51`) — the last remaining real drift inside
    this variant, and item 4 of the drift prompt.
-4. **HowTo tier: no change.** The 75-line delegators inherit both legs from
+4. ~~**HowTo tier: no change.**~~ **Confirmed.** The 75-line delegators inherit both legs from
    step 1. Confirm this by inspection and record it; do not open PRs.
 5. Report back into `run_smoke_copy_drift.md`: its step 2 blocking question is
    answered here, and its step 4 (`_BUILD_DIR`) is absorbed into step 3 above.
@@ -152,8 +186,9 @@ that depend on the exported helper.
 - ~~`grep -rn "start_new_session" PyAutoHands/autohands/build_util.py` is
   non-empty, and a script that forks a grandchild is reaped at the cap.~~
   **Met** — see step 1.
-- Every one of the 10 `run_smoke.py` copies either enforces a per-script cap
-  with a process-group kill, or delegates to a `build_util` path that does.
+- ~~Every one of the 10 `run_smoke.py` copies either enforces a per-script cap
+  with a process-group kill, or delegates to a `build_util` path that does.~~
+  **Met.**
 - A timeout is reported as `TIMEOUT (Ns)` with exit 124 and the cap actually in
   force — never as an ordinary `FAIL (exit -9)`, which would mislabel "raise
   the cap or SLOW-skip it" as "this script is broken".

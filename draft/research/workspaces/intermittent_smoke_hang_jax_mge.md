@@ -1,11 +1,11 @@
 # Intermittent smoke hang on `imaging/jax_likelihood/mge.py` (autogalaxy_workspace_test)
 
-Type: bug
+Type: research
 Target: workspaces
 Repos:
 - @autogalaxy_workspace_test
 - @autolens_workspace_test
-Difficulty: medium
+Difficulty: large
 Autonomy: supervised
 Priority: medium
 Status: formalised
@@ -87,12 +87,19 @@ protect.
    share a mechanism. Both are JAX likelihood paths; the MGE one goes through
    tfp-nightly's `bessel_kve`. Deadlock in a pure_callback, XLA compile lock, or
    thread/fork interaction are the candidates worth eliminating first.
-3. Add a per-script timeout to `.github/scripts/run_smoke.py` so a wedged script
-   fails its own entry with a clear message instead of consuming the whole job.
-   This is the highest-value change even if the root cause stays open: it converts
-   a 6-hour silent hang into a named, actionable failure.
-4. Once root-caused, unpark `multi_dataset/jax_likelihood/rectangular.py` and
+3. Once root-caused, unpark `multi_dataset/jax_likelihood/rectangular.py` and
    restore the lost coverage.
+
+## Split out of this prompt
+
+The per-script timeout for `.github/scripts/run_smoke.py` — the highest-value
+change even if this investigation stalls — is now its own task:
+`draft/test/workspaces/run_smoke_per_script_timeout.md`. It is bounded and ships
+independently; this prompt is the open-ended half and should not gate it.
+
+Sized `large`, not medium: reproducing an *intermittent* wedge has no guaranteed
+endpoint. The sizing faculty derived too-large (score 11) against an initial
+declared medium, and it was right.
 
 <!-- Filed as a follow-up during the stale-jax-pin ship rather than folded into it:
      the hang predates that change and has its own four-run history. autogalaxy#107

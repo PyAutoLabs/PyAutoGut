@@ -137,6 +137,15 @@ what made this diagnosable at all.
 - The SLOW-vs-stall question in step 1 answered in writing, so the Profiling
   Agent is not chasing speedups on scripts that are hanging.
 
+## CORRECTION — the stack says this is NOT a compile stall
+
+Captured after close-out, from both test workspaces independently: the stalled
+process is parked in `jax.block_until_ready` / `try_to_block`, i.e. the
+**execution** half of the first call, not tracing/lowering/compiling. The title
+of this file, and every marker calling this an "intermittent XLA compile
+stall", inherit a guess made before there was any evidence. See the record's
+final section.
+
 ## CLOSED AS PARTIAL — 2026-08-23
 
 Phase 1 shipped. Phases 2 and 3 were taken to a deliberate stopping point and the

@@ -72,6 +72,34 @@ Consequences for the original task, in order of how much they change it:
    jupyter-guard fix (autolens_workspace#470) landed the identical patch in all
    three, so it did not widen this.
 
+## What the timeout backport changed for this task (2026-08-23)
+
+The backport merged across all eight repos, which moves this prompt's remaining
+scope — the **consolidation question** — and makes it easier than when it was
+written:
+
+- **`build_util` now owns shared runner helpers.** `timeout_for` was already
+  there; `kill_group` and `run_capped` were added. Seven workspace runners now
+  import them with a local fallback, so the "PyAutoHands-owned module + guarded
+  import" pattern is proven in production rather than hypothetical. That is the
+  mechanism a thin-wrapper consolidation needs.
+- **The `workspace_test` tier has converged.** All four copies are now the same
+  program; the only difference between three of them is one docstring line.
+- **The `workspace` tier has converged.** All three are byte-identical again
+  (the `_BUILD_DIR` divergence is gone).
+- **A new drift datum, found while capping the notebook leg:** the `workspace`
+  variant's `execute_notebook` shells out to `jupyter nbconvert --execute`
+  directly and carries its own skip-guard, staging and regenerate-and-retry
+  logic — duplicating `build_util.execute_notebook`, which does the same job
+  with the same skip-guard semantics. That duplication is the largest remaining
+  overlap between the copies and PyAutoHands, and it is the concrete thing a
+  notebook-capable delegator would absorb.
+
+So the open question is unchanged in shape but better evidenced: one
+PyAutoHands-owned runner with per-repo config, or two (notebook-capable and
+script-only)? The HowTo tier remains the working precedent for the script-only
+half; the workspace variant's notebook leg is the part with no delegator yet.
+
 ## Task (re-scoped)
 
 1. ~~Roll the 2-line skip-guard adoption across the copies.~~ **Done** — verify

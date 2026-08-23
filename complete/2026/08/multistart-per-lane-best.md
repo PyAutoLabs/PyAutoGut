@@ -1,3 +1,46 @@
+# MultiStartGradient per-lane best preservation
+
+- Issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1514
+- PR: https://github.com/PyAutoLabs/PyAutoFit/pull/1515 (merged 2026-08-23)
+- Epic: jax-inference-profiling (Phase 3 pre-req, CP-3 — PROGRAMME.md §7)
+
+## What shipped
+
+`MultiStartGradient` (`_fit`) now tracks each lane's best figure-of-merit,
+PHYSICAL position, and `fom_history` step index, persisted in
+`search_internal` as `lane_best_params` / `lane_best_foms` /
+`lane_best_steps` alongside the global best and per-lane finals.
+Diagnostics only (never gates a redraw or step — the NaN-lane-counter
+rule). Capture is a pure-NumPy static helper `_lane_best_update`
+(strict-`<` so ties keep the earliest best step; lazy improved-only
+device→host gather). Resume restores the keys defensively (legacy files
+re-seed from finals); a resurrected slot resets its record (NaN params,
+inf fom) rather than conflating two starts' basins.
+
+## Why
+
+Phase 3 / CP-3 of the inference programme measures Prodigy's per-start
+basin-hit probability p_hit by per-lane basin classification — finals are
+unreliable (a lane can leave its best basin late, die, or pin to a bound
+after its best step).
+
+## Verification
+
+- Full suite 2036 passed / 3 skipped on both matrix legs (CI green).
+- Direct helper tests + `_fit` source-level wiring guards (NumPy-only
+  suite contract).
+- End-to-end JAX run (quadratic objective, 6 starts) — this caught the
+  one real bug: `np.asarray` of a JAX device array is READ-ONLY, so the
+  in-place update crashed until seed/restore used `np.array` copies.
+
+## Downstream
+
+RAL PyAuto stack fast-forwarded to the merge (c9ad40e5b) same day, so
+CP-3 A100 arms run against it. autolens_profiling CP-3 scripts consume
+the new keys for per-lane basin classification + H3.3 pinning counts.
+
+## Original prompt
+
 # Claude Development Prompt: MultiStartGradient Per-Lane Best Preservation
 
 Type: feature

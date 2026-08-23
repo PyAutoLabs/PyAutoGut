@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1087 records across 7 buckets.
+1088 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -162,6 +162,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [pyautoscientist-readme-dashboard-bullets](2026/08/pyautoscientist-readme-dashboard-bullets.md) — The PyAutoScientist README's dashboard paragraph now lists the four organ
 - [pyautoscientist-readme-drop-organism-live-strip](2026/08/pyautoscientist-readme-drop-organism-live-strip.md) — Removed the PyAutoScientist README's "## The organism live" strip section
 - [pyautoscientist-readme-two-paragraph-opening](2026/08/pyautoscientist-readme-two-paragraph-opening.md) — PyAutoScientist README opening now matches the organ house pattern — one bold
+- [pynufft-scipy-pinv2-dev-extra](2026/08/pynufft-scipy-pinv2-dev-extra.md)
 - [queue-intake-claude](2026/08/queue-intake-claude.md) — auto-closed on merge
 - [readme-scientist-buttons](2026/08/readme-scientist-buttons.md)
 - [reconcile-upstream-repo-mode](2026/08/reconcile-upstream-repo-mode.md)

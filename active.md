@@ -55,6 +55,8 @@
 
 ## pynufft-removal-residue-phase-1
 - issue: https://github.com/PyAutoLabs/autolens_workspace_developer/issues/128
+- pr: https://github.com/PyAutoLabs/autolens_workspace_developer/pull/129 (open, pending-release)
+- status-note: awaiting-merge — merge BLOCKED by Heart RED (see heart-ack); PR-open only.
 - issued: 2026-08-23
 - session: claude --resume session_01JEXzQpvG3QNUdTh6tZcaAE
 - status: workspace-dev
@@ -97,6 +99,10 @@
 
 ## pynufft-removal-residue-phase-2
 - issue: https://github.com/PyAutoLabs/autogalaxy_workspace/issues/224
+- pr: https://github.com/PyAutoLabs/autogalaxy_workspace/pull/225 (autogalaxy_workspace)
+- pr: https://github.com/PyAutoLabs/autogalaxy_assistant/pull/19 (autogalaxy_assistant)
+- pr: https://github.com/PyAutoLabs/autolens_assistant/pull/115 (autolens_assistant)
+- status-note: awaiting-merge — all three open + pending-release; merge BLOCKED by Heart RED.
 - issued: 2026-08-23
 - session: claude --resume session_01JEXzQpvG3QNUdTh6tZcaAE
 - status: workspace-dev

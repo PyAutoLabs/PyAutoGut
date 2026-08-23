@@ -28,6 +28,11 @@ epic, never picked standalone.
 - ledger: draft/feature/autolens/source_cluster_arc.md
 - notes: 12 phased prompts under draft/; issue phases ONE at a time as predecessors near shipping — no bulk issue queues.
 
+## jax-compile-stall
+- title: Intermittent XLA compile stall in the JAX vmap likelihood path
+- ledger: draft/bug/ci/jax_vmap_jit_compile_stall.md
+- notes: three phases under draft/bug/ci/ — 1 evidence (PyAutoFit watchdog), 2 SLOW-vs-stall audit, 3 root cause + un-quarantine. Phase 3 is blocked on phase 1 shipping and a CI stall actually dumping a traceback; issue phases ONE at a time. Supersedes draft/bug/autolens_workspace_test/multi_dataset_jax_likelihood_xla_stall.md.
+
 ## graphical-ep
 - title: Expectation propagation (EP) campaign
 - ledger: draft/research/graphical_ep/ep_campaign.md

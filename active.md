@@ -1,5 +1,18 @@
 # Active Tasks
 
+## jax-compile-stall-evidence
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1516 (issued 2026-08-23)
+- issued: 2026-08-23
+- prompt: active/jax_compile_stall_1_evidence.md
+- status: library-dev
+- epic: jax-compile-stall (phase 1 of 3; ledger draft/bug/ci/jax_vmap_jit_compile_stall.md)
+- worktree: ~/Code/PyAutoLabs-wt/jax-compile-stall-evidence
+- worktree-note: started in a web-github session with no local tree — the branch was
+  cut against a direct clone at /home/user/pyautofit, not the worktree root above.
+  A local-dev session resuming this should create the worktree via worktree_create.
+- repos:
+  - PyAutoFit: feature/jax-compile-stall-evidence
+
 ## transformed-message-factor-gradient-unpack
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1501 (issued 2026-08-19)
 - issued: 2026-08-19

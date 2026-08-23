@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1088 records across 7 buckets.
+1093 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -23,6 +23,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [astropy-cap-bump](2026/08/astropy-cap-bump.md) — closed manually post-merge — "Part of" in the PR bodies does not auto-close
 - [autoarray-adapt-images-precondition](2026/08/autoarray-adapt-images-precondition.md)
 - [autoarray-input-validation-guards](2026/08/autoarray-input-validation-guards.md)
+- [autoarray-pixel-scales-scalar-widening](2026/08/autoarray-pixel-scales-scalar-widening.md)
 - [autocti-util-dataset-export](2026/08/autocti-util-dataset-export.md) — no GitHub issue — worked directly from the draft prompt in a cloud session on explicit human instruction; the …
 - [autofit-mock-all-ones-ell-comps](2026/08/autofit-mock-all-ones-ell-comps.md)
 - [autofit-sampler-database](2026/08/autofit-sampler-database.md)
@@ -109,6 +110,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [lazy-heavy-imports](2026/08/lazy-heavy-imports.md) — Deferred all heavy non-essential imports to first use. `import autolens` 4.07s → 1.2–1.3s
 - [llms-txt-census-fixes](2026/08/llms-txt-census-fixes.md)
 - [markdown-renderings-2a-leftovers](2026/08/markdown-renderings-2a-leftovers.md)
+- [mask1d-shape-native-scalar-widening](2026/08/mask1d-shape-native-scalar-widening.md)
 - [memory-surfaces-stale-names](2026/08/memory-surfaces-stale-names.md) — auto-closed on merge
 - [message-prior-xp-jax-trace](2026/08/message-prior-xp-jax-trace.md) — made the remaining message and compound-prior array-namespace paths
 - [messages-xp-stack-jax-trace](2026/08/messages-xp-stack-jax-trace.md) — replaced ten fixed-shape `xp.array([...])` message constructors
@@ -163,6 +165,9 @@ _(curate hard-won records here — survives regeneration.)_
 - [pyautoscientist-readme-dashboard-bullets](2026/08/pyautoscientist-readme-dashboard-bullets.md) — The PyAutoScientist README's dashboard paragraph now lists the four organ
 - [pyautoscientist-readme-drop-organism-live-strip](2026/08/pyautoscientist-readme-drop-organism-live-strip.md) — Removed the PyAutoScientist README's "## The organism live" strip section
 - [pyautoscientist-readme-two-paragraph-opening](2026/08/pyautoscientist-readme-two-paragraph-opening.md) — PyAutoScientist README opening now matches the organ house pattern — one bold
+- [pynufft-removal-residue-phase-1](2026/08/pynufft-removal-residue-phase-1.md)
+- [pynufft-removal-residue-phase-2](2026/08/pynufft-removal-residue-phase-2.md)
+- [pynufft-scipy-pinv2-dev-extra](2026/08/pynufft-scipy-pinv2-dev-extra.md)
 - [queue-intake-claude](2026/08/queue-intake-claude.md) — auto-closed on merge
 - [readme-scientist-buttons](2026/08/readme-scientist-buttons.md)
 - [reconcile-upstream-repo-mode](2026/08/reconcile-upstream-repo-mode.md)

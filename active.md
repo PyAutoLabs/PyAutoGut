@@ -19,7 +19,10 @@
 - issued: 2026-08-23
 - prompt: active/smoke_install_stale_jax_pin.md
 - status: workspace-dev
-- worktree: ~/Code/PyAutoLabs-wt/smoke-install-stale-jax-pin
+- environment: web-github — no local worktree; branched in the session clones.
+  Deliberately no `worktree:` field (PyAutoBrain skills/WORKFLOW.md "Execution
+  environments"), so the entry claims no worktree path a local session could
+  mistake for an existing checkout.
 - repos:
   - autolens_workspace_test: feature/smoke-install-stale-jax-pin
   - autogalaxy_workspace_test: feature/smoke-install-stale-jax-pin
@@ -33,5 +36,13 @@
     CI is currently green only because line ordering repairs the downgrade.
     Scope widened from the prompt's single repo: autogalaxy_workspace_test carries the
     identical line; autocti_ and autofit_workspace_test were checked and are clean.
-    Next: /start_workspace (worktree + branches), then edits, then ship_workspace —
-    the PR's own Smoke Tests run is the from-scratch install replay.
+    start_workspace done (standalone mode, web-github): branched both clones at
+    feature/smoke-install-stale-jax-pin, `pending-release` label verified canonical
+    on both repos via the API (no gh CLI in this session).
+    Edits committed + pushed: autolens_workspace_test a97f052, autogalaxy_workspace_test
+    b0bd72d. Validated `bash -n` on both scripts, unit-tested the guard's boundary
+    cases, and executed the guard against stub jax 0.10.2/0.6.2/0.12.0 (pass/fail/fail).
+    Confirmed the reusable workflow uses actions/setup-python on ubuntu-latest, so
+    `python` is on PATH and jax is always installed there.
+    Next: /ship_workspace to open the two PRs — NOT yet run; no PR exists. The PRs'
+    own Smoke Tests runs are the from-scratch install replay this task verifies by.

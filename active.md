@@ -60,6 +60,13 @@
 - status: workspace-dev
 - worktree: ~/Code/PyAutoLabs-wt/pynufft-removal-residue-phase-1
 - prompt: active/pynufft_removal_downstream_residue_phase_1_developer_break.md
+- heart-ack: authorized 2026-08-23 by the human for push + PR-open only (merge stays blocked).
+  Acknowledged RED reason list, verbatim from `pyauto-heart readiness --json`:
+    - "release validation FAILED"
+  Release run at ack time: v2026.8.23.1.dev73401, profile=release,
+  2026-08-23T15:02:41Z, stages reported: integrate:pass. Unrelated to this task
+  (docs//script-only). The ack covers THIS reason list only — any new RED reason
+  re-blocks the gate.
 - repos:
   - autolens_workspace_developer: feature/pynufft-removal-residue-phase-1
 - summary: |
@@ -95,6 +102,13 @@
 - status: workspace-dev
 - worktree: ~/Code/PyAutoLabs-wt/pynufft-removal-residue-phase-2
 - prompt: active/pynufft_removal_downstream_residue_phase_2_workspace_assistant_docs.md
+- heart-ack: authorized 2026-08-23 by the human for push + PR-open only (merge stays blocked).
+  Acknowledged RED reason list, verbatim from `pyauto-heart readiness --json`:
+    - "release validation FAILED"
+  Release run at ack time: v2026.8.23.1.dev73401, profile=release,
+  2026-08-23T15:02:41Z, stages reported: integrate:pass. Unrelated to this task
+  (docs//script-only). The ack covers THIS reason list only — any new RED reason
+  re-blocks the gate.
 - repos:
   - autogalaxy_workspace: feature/pynufft-removal-residue-phase-2
   - autogalaxy_assistant: feature/pynufft-removal-residue-phase-2

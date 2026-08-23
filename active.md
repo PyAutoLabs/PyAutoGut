@@ -17,9 +17,23 @@
 - harness: `retime.yml` (workflow_dispatch) + `.github/scripts/retime.py` now live in both test
   workspaces. Inputs: scripts (comma-separated, relative to scripts/), repeats, script-timeout
   (300 = smoke, 1800 = release). Verdicts STALL/SLOW/NEITHER/AMBIGUOUS/ERROR + retime_results.json.
-- next: the measurement. A full 26-entry x N sweep at the 1800s cap is many runner-hours, so it
-  is deliberately NOT dispatched wholesale — start bounded, on the entries that decide the most,
-  and widen with a human's say-so.
+- measured 2026-08-23, first dispatch (4 entries x 5 repeats x 2 legs = 40 executions, 300s cap;
+  ag_test run 32664679042, al_test run 32664682689) — findings on issue #271:
+  - `interferometer/datacube/shared_preloads.py` (al_test) NEITHER — 10/10 completed, slowest
+    34.0s = 1.9% of the 1800s cap its SLOW marker says it "flakes at". Marker REFUTED; it should
+    be removed, not rewritten. This is finding 1 of the marker-text analysis, now measured.
+  - `imaging/jax_likelihood/rectangular_mge.py` (ag_test) STALL — 4/5 capped + one ~22s
+    completion (7% of cap), the SAME split independently on 3.12 and 3.13. Bimodality measured;
+    ~80% stall probability per compile, indifferent to Python version.
+  - `imaging/jax_likelihood/mge_group.py` (ag_test) and `multi_dataset/jax_likelihood/mge.py`
+    (al_test) AMBIGUOUS — 20 consecutive cap hits, zero completions. Need the 1800s pass.
+- phase-1 defect found by this run: the faulthandler dump NEVER fired — its CI default was a flat
+  300s and the smoke cap is also 300s, so the runner's SIGKILL beat the dump in all 20 stalled
+  runs. Heartbeats worked; stacks did not. Fix: PyAutoFit#1518 derives the default from
+  BUILD_SCRIPT_TIMEOUT at 80% (300s cap -> 240s). Phase 3 needs that stack, so this gates it.
+- next: (1) merge #1518; (2) re-dispatch the two AMBIGUOUS entries at the 1800s cap so they stall
+  WITH a stack; (3) the remaining 17 SLOW entries at 300s — expect several NEITHER; (4) marker
+  rewrites once every entry has a verdict. No un-quarantining — that is phase 3.
 - heart: NOT consulted — pyauto-heart unreachable from this web session.
 - repos:
 

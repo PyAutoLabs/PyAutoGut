@@ -8,11 +8,17 @@
 - epic: jax-compile-stall (phase 2 of 3; ledger draft/bug/ci/jax_vmap_jit_compile_stall.md)
 - worktree: ~/Code/PyAutoLabs-wt/jax-compile-stall-slow-vs-stall-audit
 - worktree-note: started in a web-github session with no local tree; no branch cut yet.
-- blocked-on: a human decision about where the re-timing harness lives — a `runner` input +
-  workflow_dispatch on PyAutoHeart's reusable smoke-tests.yml (Heart-owned, serves every
-  workspace) vs a duplicated workflow_dispatch workflow per test workspace. See issue #271
-  "Blocked on a design decision". The census and the three marker-text findings are done and
-  are on the issue; the measurement leg needs this answered first.
+- decision: harness lives Heart-side (human choice 2026-08-23) — a `runner` input on the
+  reusable smoke-tests.yml rather than a per-workspace duplicate of the ceremony.
+- prs:
+  - https://github.com/PyAutoLabs/PyAutoHeart/pull/161 (runner input; MERGES FIRST)
+  - https://github.com/PyAutoLabs/autolens_workspace_test/pull/272 (retime harness)
+  - https://github.com/PyAutoLabs/autogalaxy_workspace_test/pull/110 (retime harness)
+- order: #161 first — a caller cannot pass a `runner` input that does not exist yet, so a
+  dispatch of either retime.yml fails at workflow resolution until Heart merges.
+- next: once merged, dispatch retime.yml over the 26 entries (300s smoke / 1800s release,
+  both matrix legs) and classify from the distributions; then rewrite the markers.
+- heart: NOT consulted — pyauto-heart unreachable from this web session.
 - repos:
 
 ## jax-compile-stall-evidence

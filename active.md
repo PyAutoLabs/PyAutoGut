@@ -60,10 +60,20 @@
 
 ## pynufft-removal-residue-phase-2
 - issue: https://github.com/PyAutoLabs/autogalaxy_workspace/issues/224
-- pr: https://github.com/PyAutoLabs/autogalaxy_workspace/pull/225 (autogalaxy_workspace)
+- pr: https://github.com/PyAutoLabs/autogalaxy_workspace/pull/225 (autogalaxy_workspace) MERGED 2026-08-23
 - pr: https://github.com/PyAutoLabs/autogalaxy_assistant/pull/19 (autogalaxy_assistant)
 - pr: https://github.com/PyAutoLabs/autolens_assistant/pull/115 (autolens_assistant)
-- status-note: awaiting-merge — all three open + pending-release; merge BLOCKED by Heart RED.
+- status-note: PARTIALLY MERGED — do NOT record complete. autogalaxy_workspace#225 merged
+  2026-08-23 (CI fully green). The two assistant PRs are BLOCKED on a RED `wiki-currency`
+  check that is PRE-EXISTING on main, not caused by this work:
+    - Symbol audit `--scope all`: main reports missing/broken=2, these branches report 1.
+      The PRs REDUCE it; the survivor is `al.mesh.RectangularAdaptImage`, absent from the
+      installed stack (suggestions: RectangularRTUAdaptImage, RectangularBilinearAdaptImage).
+    - autogalaxy_assistant additionally fails `--check-citations` on
+      wiki/core/operations/sandbox.md citing PyAutoGalaxy:autogalaxy/plot/plot_utils.py,
+      which no longer exists. Also pre-existing; sandbox.md is untouched by the PR.
+  CONFIRMED GREEN in CI: `chat_bundle.py --check` reports "artifacts current" — holding back
+  the local version-stamp rollback (2026.8.23.1 -> 2026.8.17.1) was correct.
 - issued: 2026-08-23
 - session: claude --resume session_01JEXzQpvG3QNUdTh6tZcaAE
 - status: workspace-dev

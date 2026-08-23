@@ -51,7 +51,7 @@ button.more:hover{color:var(--fg)}
 <body>
 <h1>📋 PyAutoMind Dashboard</h1>
 <p>Every task the Mind is holding. Tap a task's 📋 and its <code>/start_dev</code> command is on your clipboard — paste it into a Claude Code chat to route Claude straight to that task. <a href="#recent">Recent</a> is the same work by date — what has been happening rather than what to do next.</p>
-<p class="muted">In flight 3 · Parked 3 · Planned 6 · Backlog 153 · <a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/dashboard.md">markdown version</a></p>
+<p class="muted">In flight 1 · Parked 3 · Planned 6 · Backlog 153 · <a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/dashboard.md">markdown version</a></p>
 <h2>Start here</h2>
 <h3>Highest priority <span class="facets">(filed as high) — showing 12 of 17</span></h3>
 <div class="task"><button class="copy" data-cmd="/start_dev draft/triage/jax_zero_contour.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — <span class="facets">medium · safe · high</span></p></div>
@@ -72,8 +72,6 @@ button.more:hover{color:var(--fg)}
 <h2>In flight <a class="mdsrc" href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/active.md">markdown version</a></h2>
 <p class="muted">Issued — each has an open GitHub issue and usually a branch.</p>
 <div class="task"><button class="copy" data-cmd="/start_dev active/16_transformed_message_factor_gradient_unpack.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/active/16_transformed_message_factor_gradient_unpack.md"><code>@PyAutoFit</code> <code>TransformedMessage.factor_gradient</code> crashes on first call</a> — <a href="https://github.com/PyAutoLabs/PyAutoFit/issues/1501">issue #1501</a><span class="facets"> — issued 2026-08-19</span> — <span class="facets">HOLD — do not start dev. Fix-or-delete hangs off the PyAutoFit#1498 logpdf-contract</span></p></div>
-<div class="task"><button class="copy" data-cmd="/start_dev active/pynufft_removal_downstream_residue_phase_1_developer_break.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/active/pynufft_removal_downstream_residue_phase_1_developer_break.md">Phase 1: fix the pynufft AttributeError breaking all jax_profiling dataset</a> — <a href="https://github.com/PyAutoLabs/autolens_workspace_developer/issues/128">issue #128</a><span class="facets"> — issued 2026-08-23</span> — <span class="facets">workspace-dev</span></p></div>
-<div class="task"><button class="copy" data-cmd="/start_dev active/pynufft_removal_downstream_residue_phase_2_workspace_assistant_docs.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/active/pynufft_removal_downstream_residue_phase_2_workspace_assistant_docs.md">Phase 2: retire pynufft prose from autogalaxy_workspace and both assistants</a> — <a href="https://github.com/PyAutoLabs/autogalaxy_workspace/issues/224">issue #224</a><span class="facets"> — issued 2026-08-23</span> — <span class="facets">workspace-dev</span></p></div>
 <h2>Parked <a class="mdsrc" href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/parked.md">markdown version</a></h2>
 <details>
 <summary>3 task(s)</summary>
@@ -267,18 +265,6 @@ button.more:hover{color:var(--fg)}
 </tr>
 <tr>
 <td class="when">2026-08-23</td>
-<td class="what">issued</td>
-<td><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/active/pynufft_removal_downstream_residue_phase_2_workspace_assistant_docs.md">Phase 2: retire pynufft prose from autogalaxy_workspace and both…</a></td>
-<td class="pick"><button class="copy" data-cmd="/start_dev active/pynufft_removal_downstream_residue_phase_2_workspace_assistant_docs.md" aria-label="Copy the Claude command">📋</button></td>
-</tr>
-<tr>
-<td class="when">2026-08-23</td>
-<td class="what">issued</td>
-<td><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/active/pynufft_removal_downstream_residue_phase_1_developer_break.md">Phase 1: fix the pynufft AttributeError breaking all jax_profiling…</a></td>
-<td class="pick"><button class="copy" data-cmd="/start_dev active/pynufft_removal_downstream_residue_phase_1_developer_break.md" aria-label="Copy the Claude command">📋</button></td>
-</tr>
-<tr>
-<td class="when">2026-08-23</td>
 <td class="what">filed</td>
 <td><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/feature/pyautobrain/brain_board_follow_ups.md">Brain board follow-ups: what real mornings surface</a></td>
 <td class="pick"><button class="copy" data-cmd="/start_dev draft/feature/pyautobrain/brain_board_follow_ups.md" aria-label="Copy the Claude command">📋</button></td>
@@ -313,13 +299,13 @@ button.more:hover{color:var(--fg)}
 <td><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/maintenance/libraries/remove_pynufft_legacy_transformer.md">Remove pynufft + legacy TransformerNUFFTPyNUFFT</a></td>
 <td class="pick"><button class="copy" data-cmd="/start_dev draft/maintenance/libraries/remove_pynufft_legacy_transformer.md" aria-label="Copy the Claude command">📋</button></td>
 </tr>
-<tr hidden>
+<tr>
 <td class="when">2026-08-22</td>
 <td class="what">filed</td>
 <td><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/bug/pyautolens/point_source_json_datasets_record_no_regime.md">Point-source JSON datasets record no resolution regime</a></td>
 <td class="pick"><button class="copy" data-cmd="/start_dev draft/bug/pyautolens/point_source_json_datasets_record_no_regime.md" aria-label="Copy the Claude command">📋</button></td>
 </tr>
-<tr hidden>
+<tr>
 <td class="when">2026-08-22</td>
 <td class="what">filed</td>
 <td><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/research/libraries/intel_macos_support_policy.md">Is Intel macOS a supported platform, and what is the</a></td>
@@ -552,6 +538,18 @@ button.more:hover{color:var(--fg)}
 <td class="what">filed</td>
 <td><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/maintenance/autolens_workspace_developer/stale_api_rot_audit.md">autolens_workspace_developer: broad stale-API rot (56 symbols, no CI)</a></td>
 <td class="pick"><button class="copy" data-cmd="/start_dev draft/maintenance/autolens_workspace_developer/stale_api_rot_audit.md" aria-label="Copy the Claude command">📋</button></td>
+</tr>
+<tr hidden>
+<td class="when">2026-08-04</td>
+<td class="what">filed</td>
+<td><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/bug/workspaces/aplt_output_drift_remaining_repos.md"><code>aplt.Output</code> stale-API drift in the remaining workspace repos</a></td>
+<td class="pick"><button class="copy" data-cmd="/start_dev draft/bug/workspaces/aplt_output_drift_remaining_repos.md" aria-label="Copy the Claude command">📋</button></td>
+</tr>
+<tr hidden>
+<td class="when">2026-08-04</td>
+<td class="what">filed</td>
+<td><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/triage/nightly_release_blocked_eight_nights.md">Nightly release has been blocked 8 nights running — triage</a></td>
+<td class="pick"><button class="copy" data-cmd="/start_dev draft/triage/nightly_release_blocked_eight_nights.md" aria-label="Copy the Claude command">📋</button></td>
 </tr>
 </table>
 <button class="more" data-page="10">… 10 more (40 left)</button>

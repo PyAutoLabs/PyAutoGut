@@ -13,7 +13,7 @@ Repos:
 Difficulty: low-medium
 Autonomy: supervised
 Priority: normal
-Status: split
+Status: split (phases 1-2 SHIPPED 2026-08-23; phase 3 open)
 Filed: 2026-08-23
 
 ## Provenance
@@ -137,9 +137,13 @@ library source changes are involved:
 
 1. `active/pynufft_removal_downstream_residue_phase_1_developer_break.md`
    — @autolens_workspace_developer; the confirmed `AttributeError`.
-   **ISSUED 2026-08-23** — @autolens_workspace_developer#128.
+   **SHIPPED 2026-08-23** — @autolens_workspace_developer#129, issue #128 closed.
+   Record: complete/2026/08/pynufft-removal-residue-phase-1.md
 2. `pynufft_removal_downstream_residue_phase_2_workspace_assistant_docs.md`
    — @autogalaxy_workspace, @autogalaxy_assistant, @autolens_assistant; prose.
+   **SHIPPED 2026-08-23** — @autogalaxy_workspace#225, @autogalaxy_assistant#19,
+   @autolens_assistant#115; issue @autogalaxy_workspace#224 closed.
+   Record: complete/2026/08/pynufft-removal-residue-phase-2.md
 3. `pynufft_removal_downstream_residue_phase_3_ci_install_docs.md`
    — @PyAutoHands, @PyAutoHeart, @PyAutoCTI; CI recipes + install doc.
 
@@ -166,3 +170,26 @@ agent, so this routed through the Feature Agent; recorded as a follow-up.
 - Hands/Heart CI recipes no longer install `pynufft`, and the affected workflows
   are confirmed green afterwards — check every run and every matrix leg.
 - `paper/` directories and bibliographies are demonstrably untouched.
+
+## Still open after phases 1-2 (2026-08-23)
+
+- **Phase 3** — the only remaining phase of this prompt.
+- **autogalaxy_workspace `markdown/`** — three curated pages (`start_here`,
+  `interferometer/start_here`, `interferometer/simulator`) still carry the stale
+  pynufft text. `generate_markdown.py` executes curated scripts for real and is
+  an at-release step, so phase 2 deliberately did not run it.
+
+## Found while shipping, NOT filed anywhere
+
+1. **Both assistant repos have a red `wiki-currency` on `main`.** Symbol audit
+   `--scope all` reports `missing/broken: 2` on main (1 after phase 2). The
+   survivor is `al.mesh.RectangularAdaptImage`, absent from the installed stack
+   (suggestions: `RectangularRTUAdaptImage`, `RectangularBilinearAdaptImage`).
+   @autogalaxy_assistant additionally fails `--check-citations` on
+   `wiki/core/operations/sandbox.md`, citing the deleted
+   `PyAutoGalaxy:autogalaxy/plot/plot_utils.py`.
+2. **@autolens_workspace_developer committed datasets do not reproduce** from
+   their own scripts — regenerating an untouched config (`sma`) yields different
+   data plus a differing `SMALLDAT` header stamp.
+3. **@autolens_workspace_developer has no test CI** (one Copilot workflow),
+   which is why the phase-1 break rotted unnoticed and why #129 merged unchecked.

@@ -35,4 +35,8 @@
 - PRs: @PyAutoHands#259 (PR CI green), @PyAutoHeart#162 (PR CI green),
   @PyAutoCTI#107 (PR CI RED — pre-existing on main, NOT this diff: a zero-width (3, 0)
   region in test_serial_eper.py now rejected by autoarray's #440 Mask2D guard. Filed as
-  draft/bug/autocti/serial_eper_zero_width_region_vs_autoarray_guard.md; reported on the PR).
+  draft/bug/autocti/serial_eper_zero_width_region_vs_autoarray_guard.md; reported on the PR,
+  and fixed test-only by @PyAutoCTI#108 so CTI main goes green — #107 merges after it).
+- scope-change: pylops removed from the CTI install doc too (defunct; human-authorized
+  2026-08-23) — same green-CI evidence as pynufft, so #107 now deletes the whole
+  "optional requirements" stanza.

@@ -7,8 +7,9 @@ Repos:
 Difficulty: low
 Autonomy: supervised
 Priority: high
-Status: draft
+Status: issued
 Filed: 2026-08-23
+Issued: 2026-08-23
 
 ## Provenance
 
@@ -60,6 +61,14 @@ assertion has never checked anything; autoarray now refuses to build the
 degenerate structure and raises instead.
 
 **The guard is correct.** Do not weaken or work around it in autoarray.
+
+## In flight
+
+@PyAutoCTI#108 (opened 2026-08-23) takes option 1: it replaces the vacuous
+assertion with an explicit `pytest.raises`, pinning today's behaviour so `main`
+goes green. It is **test-only** and deliberately does NOT decide the semantics
+question below — if the answer turns out to be "clip", that PR's test changes
+with the extractor.
 
 ## The decision this task owns
 

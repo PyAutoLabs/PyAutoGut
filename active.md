@@ -49,8 +49,16 @@
     shelled out to a bare `jupyter`; execute_notebook invokes
     `sys.executable run_notebook.py`, so the abort-with-no-summary failure mode is
     structurally absent. One promotion item dissolved on inspection.
-- remaining: the 7 workspace collapses (4 *_workspace_test, then 3 workspace), each a
-  one-file PR, all blocked on the Hands branch merging first (library-first gate).
-  Those repos are not attached to this session — each needs add_repo with push.
+- remaining: the 7 workspace collapses (4 *_workspace_test 198L → ~75L, then 3 workspace
+  356L → ~75L), each a one-file PR modelled on HowToLens's delegator. UNBLOCKED as of
+  2026-08-24 — the library-first gate cleared when PyAutoHands#261 merged. Phase 3
+  (HowTo ×3) needs no work; it is already the end state.
+  The delegator invocations these PRs should use:
+    *_workspace_test: run_python.py <project> scripts --list smoke_tests.txt
+                      --report-dir test-results
+    workspace:        the above, plus run.py <project> notebooks
+                      --list smoke_notebooks.txt --no-write-back --retry-from scripts
+  `--report-dir` is load-bearing: without it run_python.py never propagates failure
+  and the gate is vacuously green.
 - repos:
   - PyAutoHands (branch claude/smoke-copy-drift-ci-docs-ozntvv)

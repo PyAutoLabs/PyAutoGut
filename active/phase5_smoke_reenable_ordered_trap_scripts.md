@@ -9,6 +9,7 @@ Autonomy: supervised
 Priority: normal
 Status: formalised
 Filed: 2026-08-24
+Issued: 2026-08-24
 Epic: CTI resurrection — Phase 5
 
 Re-homed from `draft/test/autofit/` by the filing session. Intake set

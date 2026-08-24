@@ -9,6 +9,7 @@ Autonomy: supervised
 Priority: normal
 Status: formalised
 Filed: 2026-08-24
+Issued: 2026-08-24
 
 `PyAutoHeart/heart/smoke.py` is the local smoke runner — "one isolated
 environment per workspace, prepared from the workspace-owned installer", the

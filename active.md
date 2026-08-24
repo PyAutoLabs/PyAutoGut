@@ -1,5 +1,25 @@
 # Active Tasks
 
+## heart-smoke-table-autocti
+- issue: https://github.com/PyAutoLabs/PyAutoHeart/issues/172
+- issued: 2026-08-24
+- prompt: active/heart_smoke_table_autocti.md
+- status: library-dev
+- location: cloud-session (web-github; no worktree — session clones under /home/user)
+- repos:
+  - PyAutoHeart: feature/heart-smoke-table-autocti
+- summary: |
+    CTI CI standardisation Phase 6, task 2 of 3. Heart's local smoke runner has
+    no autocti entry, so neither CTI suite can be run locally.
+
+    Design decided by the human at the two-option checkpoint: the recipe is
+    EXTRACTED into `.github/actions/install-arcticpy/install_arcticpy.sh`, called
+    by the action via `${{ github.action_path }}` and by smoke.py from the Heart
+    checkout — one file, one 2.6 pin. Trigger is an explicit per-workspace
+    `arcticpy: true` key in the `smoke:` block. The local leg BUILDS arcticpy but
+    NEVER runs apt: it probes for GSL headers and fails with the apt line if
+    absent. Rejected: a Python leg mirroring the recipe (would undo #170).
+
 ## autocti-workspace-navigator-check
 - issue: https://github.com/PyAutoLabs/autocti_workspace/issues/29
 - issued: 2026-08-24

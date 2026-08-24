@@ -65,10 +65,16 @@ invisible to `main`, to `dashboard.md` and to the Brain router — the Mind
 believed it had filed work it had not.
 
 The prompt was recovered from that branch with `git checkout <branch> -- <path>`
-and advanced through the lifecycle normally. **Two items are still stranded
-there:** `draft/workspaces/euclid_crlf_line_endings.md`, and the `queue.md`
-entries from that commit. A filing branch with no PR is a silent loss; worth a
-sweep for others.
+and advanced through the lifecycle normally. **The stranding resolved itself
+mid-task**: PR #311 landed that filing branch on `main` while this work was in
+flight, which is why the close-out hit a merge conflict — `main` was adding the
+prompt to `draft/` at the same moment this branch folded it into `complete/`.
+The draft copy was removed in the merge (shipped work must not sit in two
+lifecycle states) and its `queue.md` line marked `# DONE`.
+
+The lesson survives the happy ending: for the hours between `dd7501f1` and PR
+#311, the Mind believed it had filed work that no tool could see. A filing
+branch with no PR is a silent loss, and nothing warns about one.
 
 ## Environment notes
 

@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1123 records across 7 buckets.
+1124 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -21,6 +21,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [actionable-health-board](2026/08/actionable-health-board.md) — closed on ship
 - [active-prompt-orphan-triage](2026/08/active-prompt-orphan-triage.md)
 - [arcticpy-install-standardisation](2026/08/arcticpy-install-standardisation.md)
+- [arxiv-inbox-tier](2026/08/arxiv-inbox-tier.md) — the nightly strong-lensing digest no longer ends in a Slack paste-block the
 - [astropy-cap-bump](2026/08/astropy-cap-bump.md) — closed manually post-merge — "Part of" in the PR bodies does not auto-close
 - [autoarray-adapt-images-precondition](2026/08/autoarray-adapt-images-precondition.md)
 - [autoarray-input-validation-guards](2026/08/autoarray-input-validation-guards.md)

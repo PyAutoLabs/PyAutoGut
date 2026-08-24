@@ -175,6 +175,10 @@ MEMORY_RULES = [
     ("logo.png", "DROP"),
     ("index.md", "SPECIAL:memory_index"),
     ("reading-queue.md", "EMPTY"),
+    # EMPTY, same class as the reading queue: the inbox format is template
+    # content, the instance's overnight suggestions are not. A fresh repo gets
+    # the header and no papers; PyAutoMemory#57.
+    ("arxiv-inbox.md", "EMPTY"),
     ("README.md", "SPECIAL:memory_readme"),
 ]
 
@@ -210,6 +214,7 @@ EMPTY_TITLES = {
     "ideas.md": "# Ideas",
     "queue.md": "# Queue",
     "reading-queue.md": "# Reading queue",
+    "arxiv-inbox.md": "# arXiv inbox",
 }
 
 # Generated header comments for EMPTY files matched by a glob rather than by

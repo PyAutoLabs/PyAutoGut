@@ -30,4 +30,10 @@
   tell users to install it.
 - follow-up: draft/release/pyautoreduce/pyautoreduce_release_induction.md (Hands induction +
   date versioning) — blocked until this task merges.
+- pr-open: https://github.com/PyAutoLabs/PyAutoReduce/pull/72 (library)
+- pr-open: https://github.com/PyAutoLabs/autoreduce_workspace/pull/1 (workspace; merges behind #72)
+- environment: web-github — no local worktree; clones at /home/user/pyautoreduce and
+  /home/user/autoreduce_workspace, so no `worktree:` claim beyond the recorded path.
 - repos:
+  - PyAutoReduce: feature/autoreduce-pypi-name-collision
+  - autoreduce_workspace: feature/autoreduce-pypi-name-collision

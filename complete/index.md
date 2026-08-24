@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1118 records across 7 buckets.
+1119 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -149,6 +149,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [paper-management-pipeline](2026/08/paper-management-pipeline.md) — auto-closed on merge
 - [per-parameter-step-scaling](2026/08/per-parameter-step-scaling.md)
 - [persist-smoke-environments](2026/08/persist-smoke-environments.md) — Made smoke dependency environments durable and isolated per library and Python version, with version-handshake…
+- [phase5-smoke-ordered-trap-scripts](2026/08/phase5-smoke-ordered-trap-scripts.md)
 - [pix-prodigy-gpu-compat](2026/08/pix-prodigy-gpu-compat.md)
 - [pixelization-eager-jit-divergence](2026/08/pixelization-eager-jit-divergence.md)
 - [plot-array-stale-kwargs](2026/08/plot-array-stale-kwargs.md)

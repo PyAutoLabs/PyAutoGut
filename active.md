@@ -19,7 +19,7 @@
 - issued: 2026-08-24
 - prompt: active/plot_functions_discard_kwargs.md
 - status: library-dev
-- worktree: ~/Code/PyAutoLabs-wt/autofit-plot-functions-kwargs
+- env: web-github (no local worktree; clones at /home/user/pyautofit + /home/user/autofit_workspace, venv /home/user/.venv-af on py3.12)
 - repos:
   - PyAutoFit: claude/autofit-plot-functions-kwargs-vvwj5x
   - autofit_workspace: claude/autofit-plot-functions-kwargs-vvwj5x

@@ -1,5 +1,25 @@
 # Active Tasks
 
+## test-mode-bypass-assertion-ties
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1519
+- issued: 2026-08-24
+- prompt: active/test_mode_bypass_ordered_assertion_ties.md
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/test-mode-bypass-assertion-ties
+- repos:
+- summary: |
+    TEST_MODE=2/3 bypass evaluates at the prior medians, so a model with identical
+    priors plus an ordering assertion ties and raises FitException. Verified on
+    PyAutoFit main d3625a8 that this reproduces at THREE sites, not the one the
+    prompt names: the instantiation outside the try (abstract_search.py:1007), the
+    uniformly-scaled fake samples (:1112, so every stored sample fails too), and
+    SamplesSummary.max_log_likelihood (interface.py:122, recover="raise") which
+    makes result.max_log_likelihood_instance raise SamplesException. TEST_MODE=3 is
+    therefore broken as well. Chosen fix (human-approved): share TEST_MODE=1's
+    existing deterministic valid-point search (medians, then seeded prior draws)
+    so the bypass evaluates AND stores an assertion-valid vector, fixing all three.
+    Next step: /start_library.
+
 ## transformed-message-factor-gradient-unpack
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1501 (issued 2026-08-19)
 - issued: 2026-08-19

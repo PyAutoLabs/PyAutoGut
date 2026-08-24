@@ -9,6 +9,7 @@ Autonomy: supervised
 Priority: normal
 Status: formalised
 Filed: 2026-08-24
+Issued: 2026-08-24
 
 CTI resurrection Phase 5 (`complete/2026/07/cti-resurrection-phase5.md`) rebuilt
 `autocti_workspace_test` as a modern integration suite and preserved the 2022-23

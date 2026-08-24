@@ -13,3 +13,20 @@
 - registered: 2026-08-19 by the wake_up session — the issuing session (claude/autofit-priors-messages-audit-ylvenv)
   filed the prompt + issue but not this entry, tripping Lifecycle Drift on main.
 - repos-none-claimed: this entry claims NO repos — one line deliberately, not 2-space bullets.
+
+## imaging-ci-heritage-sweep
+- issue: https://github.com/PyAutoLabs/autocti_workspace_test/issues/19
+- issued: 2026-08-24
+- prompt: active/imaging_ci_heritage_sweep.md
+- status: workspace-dev
+- worktree: ~/Code/PyAutoLabs-wt/imaging-ci-heritage-sweep
+- repos:
+  - autocti_workspace_test: feature/imaging-ci-heritage-sweep
+- summary: |
+    Verbatim `git mv` of the orphaned root `imaging_ci/` tree (43 files, ~284 KB —
+    cosmics/, profiling/, simulators/, temporal/) into the existing `legacy/` home,
+    plus the `legacy/README.md` and `AGENTS.md` structure-block lines that name it.
+    Pre-resurrection heritage the Phase 5 sweep missed; nothing references it and
+    the repo's own layout map already omits it. No behaviour change.
+    Planned in a web-github session — the worktree above does not exist yet;
+    `/start_workspace` creates it. Next: /start_workspace.

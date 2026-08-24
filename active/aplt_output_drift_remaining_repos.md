@@ -10,6 +10,7 @@ Autonomy: supervised
 Priority: normal
 Status: formalised
 Filed: 2026-08-04 (backfilled from git)
+Issued: 2026-08-24
 
 Split out of `plot-array-stale-kwargs` (HowToGalaxy#56, 2026-08-04), which
 repaired this same drift in `autolens_workspace_developer` but deliberately

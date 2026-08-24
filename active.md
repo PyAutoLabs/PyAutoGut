@@ -13,3 +13,34 @@
 - registered: 2026-08-19 by the wake_up session — the issuing session (claude/autofit-priors-messages-audit-ylvenv)
   filed the prompt + issue but not this entry, tripping Lifecycle Drift on main.
 - repos-none-claimed: this entry claims NO repos — one line deliberately, not 2-space bullets.
+
+## aplt-output-drift-remaining-repos
+- issue: https://github.com/PyAutoLabs/PyAutoGalaxy/issues/585
+- issued: 2026-08-24
+- session: https://claude.ai/code/session_01LN2Qsx6JjVKV45o17EKGtB (remote/web — no `--resume` id)
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/aplt-output-drift-remaining-repos
+- repos:
+- summary: |
+    Planned and issued by /start_dev; implementation not started. Classification
+    is **both** — PyAutoGalaxy (library) merges first under the library-first
+    gate, euclid_strong_lens_modeling_pipeline (workspace) behind it.
+
+    Scope changed materially from the prompt during planning, on verified
+    evidence:
+      * autocti.plot exports no Output (49-line __init__), so the prompt's
+        "unverified, may be correct as written" hedge resolves to *broken* —
+        but 18 of the 31 broken files are under legacy/, which
+        autocti_workspace_test/AGENTS.md:52 forbids editing, and the other 13
+        (top-level imaging_ci/) are 2023-era heritage the 2026-07-17 "CTI
+        resurrection Phase 5" sweep missed. autocti_workspace_test is therefore
+        OUT of scope; a follow-up prompt proposes sweeping imaging_ci/ into
+        legacy/ (decide against PyAutoCTI#82).
+      * A library defect the prompt did not mention: al.Scribbler's cmap=
+        parameter (autogalaxy/gui/scribbler.py:77-82) needs a Cmap-shaped
+        object, but Cmap is exported by no public plot namespace. Fixing it
+        library-side is what pulls PyAutoGalaxy in as primary repo.
+      * euclid has 3 broken files, not the 2 the prompt lists
+        (extra_galaxies_mask_gui.py also uses aplt.Cmap).
+
+    Next step: /start_library for PyAutoGalaxy, then /start_workspace for euclid.

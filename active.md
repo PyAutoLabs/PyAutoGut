@@ -18,9 +18,10 @@
 - issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/267
 - issued: 2026-08-24
 - prompt: active/pyautoconf_rename_functional_leftovers.md
-- status: awaiting-input — implementation complete + pushed; parked at ship PR sign-off
-  (supervised converts checkpoint 2 into a question, per PyAutoBrain/AUTONOMY.md)
-- question: https://github.com/PyAutoLabs/PyAutoBrain/issues/267#issuecomment-5401398548
+- status: library-shipped, awaiting-merge
+- library-pr: https://github.com/PyAutoLabs/PyAutoBrain/pull/268
+- was-parked: https://github.com/PyAutoLabs/PyAutoBrain/issues/267#issuecomment-5401398548
+  (supervised ship checkpoint; human signed off 2026-08-24 and the PR was opened)
 - autonomy: supervised (--auto launch; effective = min(header supervised, bug cap supervised))
 - gate: tests PASS (467); smoke n/a (organism repo); review CLEAN (dispositions on the
   question comment); Heart NOT EVALUATED — pyauto-heart unreachable in this web-github

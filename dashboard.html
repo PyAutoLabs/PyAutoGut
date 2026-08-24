@@ -123,7 +123,7 @@ table.recent button.copy{width:2.2rem;height:2.2rem;font-size:.95rem}
 </head>
 <body>
 <header class="hero"><span class="orb">📋</span><h1>PyAuto<b>Mind</b><span class="kind">Dashboard</span></h1><p class="tag">Intent. Priority. Flow.</p></header><p class="lede">Every task the Mind is holding. Tap a task's 📋 and its <code>/start_dev</code> command is on your clipboard — paste it into a Claude Code chat to route Claude straight to that task. <a href="#recent">Recent</a> is the same work by date — what has been happening rather than what to do next.</p>
-<ul class="stats"><li><b>3</b><span>In flight</span></li><li><b>3</b><span>Parked</span></li><li><b>6</b><span>Planned</span></li><li><b>154</b><span>Backlog</span></li></ul>
+<ul class="stats"><li><b>1</b><span>In flight</span></li><li><b>3</b><span>Parked</span></li><li><b>6</b><span>Planned</span></li><li><b>154</b><span>Backlog</span></li></ul>
 <p class="muted mdsrc"><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/dashboard.md">markdown version</a></p>
 <h2>Start here</h2>
 <h3>Highest priority <span class="facets">(filed as high) — showing 12 of 17</span></h3>
@@ -145,8 +145,6 @@ table.recent button.copy{width:2.2rem;height:2.2rem;font-size:.95rem}
 <h2>In flight <a class="mdsrc" href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/active.md">markdown version</a></h2>
 <p class="muted">Issued — each has an open GitHub issue and usually a branch.</p>
 <div class="task"><button class="copy" data-cmd="/start_dev active/16_transformed_message_factor_gradient_unpack.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/active/16_transformed_message_factor_gradient_unpack.md"><code>@PyAutoFit</code> <code>TransformedMessage.factor_gradient</code> crashes on first call</a> — <a href="https://github.com/PyAutoLabs/PyAutoFit/issues/1501">issue #1501</a><span class="facets"> — issued 2026-08-19</span> — <span class="facets">HOLD — do not start dev. Fix-or-delete hangs off the PyAutoFit#1498 logpdf-contract</span></p></div>
-<div class="task"><button class="copy" data-cmd="/start_dev active/script_timing_baselines_orphaned_and_window_filled.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/active/script_timing_baselines_orphaned_and_window_filled.md">Heart script_timing baselines are orphaned by path moves and filled…</a> — <a href="https://github.com/PyAutoLabs/PyAutoHeart/issues/165">issue #165</a><span class="facets"> — issued 2026-08-24</span> — <span class="facets">library-dev</span></p></div>
-<div class="task"><button class="copy" data-cmd="/start_dev active/smoke_timings_dataset.md" aria-label="Copy the Claude command">📋</button><p><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/active/smoke_timings_dataset.md">Per-script smoke timings as a standing dataset — one runner change, ten…</a> — <a href="https://github.com/PyAutoLabs/PyAutoHands/issues/264">issue #264</a><span class="facets"> — issued 2026-08-24</span> — <span class="facets">library-dev</span></p></div>
 <h2>Parked <a class="mdsrc" href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/parked.md">markdown version</a></h2>
 <details>
 <summary>3 task(s)</summary>
@@ -326,18 +324,6 @@ table.recent button.copy{width:2.2rem;height:2.2rem;font-size:.95rem}
 <p class="muted">The 50 newest things to happen to the work in hand, newest first — issued, parked, filed. Every other section on this page is laid out by state, which is exactly why none of them can answer “what has been happening?”. Shipped work is not here: it is read from <code>complete/index.md</code>, and a thousand records deep it would crowd out everything anyone can still act on. Showing the newest 10; … opens the next 10.</p>
 <table class="recent">
 <tr>
-<td class="when">2026-08-24</td>
-<td class="what">issued</td>
-<td><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/active/smoke_timings_dataset.md">Per-script smoke timings as a standing dataset — one runner change…</a></td>
-<td class="pick"><button class="copy" data-cmd="/start_dev active/smoke_timings_dataset.md" aria-label="Copy the Claude command">📋</button></td>
-</tr>
-<tr>
-<td class="when">2026-08-24</td>
-<td class="what">issued</td>
-<td><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/active/script_timing_baselines_orphaned_and_window_filled.md">Heart script_timing baselines are orphaned by path moves and filled…</a></td>
-<td class="pick"><button class="copy" data-cmd="/start_dev active/script_timing_baselines_orphaned_and_window_filled.md" aria-label="Copy the Claude command">📋</button></td>
-</tr>
-<tr>
 <td class="when">2026-08-23</td>
 <td class="what">filed</td>
 <td><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/maintenance/workspaces/pynufft_removal_downstream_residue.md">pynufft removal: unswept downstream residue (1 hard break + stale…</a></td>
@@ -385,13 +371,13 @@ table.recent button.copy{width:2.2rem;height:2.2rem;font-size:.95rem}
 <td><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/bug/autoarray/reconstruction_noise_map_solver_mismatch.md">The reconstruction noise map describes a different estimator than the…</a></td>
 <td class="pick"><button class="copy" data-cmd="/start_dev draft/bug/autoarray/reconstruction_noise_map_solver_mismatch.md" aria-label="Copy the Claude command">📋</button></td>
 </tr>
-<tr hidden>
+<tr>
 <td class="when">2026-08-22</td>
 <td class="what">filed</td>
 <td><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/maintenance/libraries/remove_pynufft_legacy_transformer.md">Remove pynufft + legacy TransformerNUFFTPyNUFFT</a></td>
 <td class="pick"><button class="copy" data-cmd="/start_dev draft/maintenance/libraries/remove_pynufft_legacy_transformer.md" aria-label="Copy the Claude command">📋</button></td>
 </tr>
-<tr hidden>
+<tr>
 <td class="when">2026-08-22</td>
 <td class="what">filed</td>
 <td><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/bug/pyautolens/point_source_json_datasets_record_no_regime.md">Point-source JSON datasets record no resolution regime</a></td>
@@ -624,6 +610,18 @@ table.recent button.copy{width:2.2rem;height:2.2rem;font-size:.95rem}
 <td class="what">filed</td>
 <td><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/maintenance/autolens_workspace/cosmos_web_ring_mask_dtype.md">cosmos_web_ring stores boolean masks as float64, wasting ~3.4 MB of…</a></td>
 <td class="pick"><button class="copy" data-cmd="/start_dev draft/maintenance/autolens_workspace/cosmos_web_ring_mask_dtype.md" aria-label="Copy the Claude command">📋</button></td>
+</tr>
+<tr hidden>
+<td class="when">2026-08-04</td>
+<td class="what">filed</td>
+<td><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/maintenance/autolens_workspace_developer/stale_api_rot_audit.md">autolens_workspace_developer: broad stale-API rot (56 symbols, no CI)</a></td>
+<td class="pick"><button class="copy" data-cmd="/start_dev draft/maintenance/autolens_workspace_developer/stale_api_rot_audit.md" aria-label="Copy the Claude command">📋</button></td>
+</tr>
+<tr hidden>
+<td class="when">2026-08-04</td>
+<td class="what">filed</td>
+<td><a href="https://github.com/PyAutoLabs/PyAutoMind/blob/main/draft/bug/workspaces/aplt_output_drift_remaining_repos.md"><code>aplt.Output</code> stale-API drift in the remaining workspace repos</a></td>
+<td class="pick"><button class="copy" data-cmd="/start_dev draft/bug/workspaces/aplt_output_drift_remaining_repos.md" aria-label="Copy the Claude command">📋</button></td>
 </tr>
 </table>
 <button class="more" data-page="10">… 10 more (40 left)</button>

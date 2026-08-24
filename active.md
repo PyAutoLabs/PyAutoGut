@@ -1,34 +1,5 @@
 # Active Tasks
 
-## script-timing-baselines-fix
-- issue: https://github.com/PyAutoLabs/PyAutoHeart/issues/165
-- issued: 2026-08-24
-- status: library-dev
-- prompt: active/script_timing_baselines_orphaned_and_window_filled.md
-- repos:
-  - PyAutoHeart: claude/test-performance-dashboard-y3fdy7
-- summary: |
-    Phase 0 of the test-performance board arc: run-identity dedup (the real
-    cause of the one-value-repeated-7x windows), >=3-distinct-run
-    classification floor, rename-aware slug migration with loud orphan
-    counts, per-duration run provenance. Cloud session, no local worktree.
-
-## smoke-timings-dataset
-- issue: https://github.com/PyAutoLabs/PyAutoHands/issues/264
-- issued: 2026-08-24
-- status: library-dev
-- prompt: active/smoke_timings_dataset.md
-- repos:
-  - PyAutoHands: claude/test-performance-dashboard-y3fdy7
-  - PyAutoHeart: claude/smoke-timings-artifact-y3fdy7
-- summary: |
-    Phase 2 of the test-performance board arc: the delegated runner emits
-    smoke_timings.json + a step-summary timing table for every gate run
-    (one change, ten repos inherit); Heart's reusable smoke-tests.yml
-    uploads the report dir as a run artifact. Answers item 4 of
-    draft/research/ci/smoke_timing_and_profiling.md with yes. Cloud
-    session, no local worktree.
-
 ## transformed-message-factor-gradient-unpack
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1501 (issued 2026-08-19)
 - issued: 2026-08-19

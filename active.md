@@ -1,5 +1,27 @@
 # Active Tasks
 
+## intake-declared-difficulty
+- issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/274 (issued 2026-08-24)
+- issued: 2026-08-24
+- prompt: active/intake_ignores_declared_difficulty.md
+- status: library-dev
+- worktree: none — remote web session (`web-github`), work done in the session clones
+- repos:
+  - PyAutoBrain: claude/intake-declared-difficulty-icstba
+  - PyAutoMind: claude/intake-declared-difficulty-icstba
+- summary: |
+    Third instance of one family: a conductor deriving from prose while ignoring a
+    declared header key (1 = feature ranker, fixed #217; 2 = the Bug Agent's Type:
+    leg, fixed in this pass; 3 = intake's Difficulty:). Per the prompt, the
+    precedence rule moves INTO the sizing faculty — one `effective_difficulty`
+    both conductors call — rather than being re-implemented per conductor:
+    declared wins, derived level + score reported alongside on disagreement.
+    Intake also reads a declaration out of unstructured raw text (the ideas.md
+    "Difficulty large, supervised." idiom), keeps it out of the derived
+    title/slug, and honours a declared `Type:` over prose classification.
+    The prompt file on main (c1927d5) is authoritative; the session's earlier
+    reconstruction of it was dropped in the merge.
+
 ## transformed-message-factor-gradient-unpack
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1501 (issued 2026-08-19)
 - issued: 2026-08-19

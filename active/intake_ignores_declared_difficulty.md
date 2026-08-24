@@ -8,6 +8,7 @@ Difficulty: medium
 Autonomy: safe
 Priority: normal
 Status: formalised
+Issued: 2026-08-24
 
 @PyAutoBrain's Intake Agent never reads the `Difficulty:` a raw input declares.
 `analyse()` hand-builds the prompt-shaped dict it hands the sizing faculty:

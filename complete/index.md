@@ -234,6 +234,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [test-mode-samples-info-hook-contract](2026/08/test-mode-samples-info-hook-contract.md) — `NonLinearSearch._test_mode_samples_info()`'s docstring told subclasses
 - [test-performance-board](2026/08/test-performance-board.md)
 - [testmode-assertion-note-removal](2026/08/testmode-assertion-note-removal.md) — Follow-up to test-mode-bypass-assertion-ties (PyAutoFit#1520, merged
+- [tracer-fits-existence-guard](2026/08/tracer-fits-existence-guard.md)
 - [transformed-message-semantics-doc](2026/08/transformed-message-semantics-doc.md)
 - [undo-community-file-declutter](2026/08/undo-community-file-declutter.md) — Undid the 2026-08-19 community-file declutter (#248 Mind, #32 Memory):
 - [uniform-prior-bounds-numpy-path](2026/08/uniform-prior-bounds-numpy-path.md) — auto-closed by the merge's `Closes` line

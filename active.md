@@ -25,6 +25,7 @@
   will never exist is what the resume check treats as drift.
 - repos:
   - PyAutoGalaxy: feature/aplt-output-drift-remaining-repos
+  - euclid_strong_lens_modeling_pipeline: feature/aplt-output-drift-remaining-repos
 - summary: |
     Planned and issued by /start_dev; implementation not started. Classification
     is **both** — PyAutoGalaxy (library) merges first under the library-first
@@ -57,5 +58,25 @@
     when cmap=None). Same bug, same fix locus, adjacent file; folded into
     Phase 1 rather than shipping a half-fix.
 
-    Next step: implement Phase 1, then /ship_library; /start_workspace for
-    euclid follows behind the library-first merge gate.
+    Phase 1 (PyAutoGalaxy) done 2026-08-24, commits 3fee409 + 3749aed,
+    1129 tests green on Python 3.12 (3.13 left to CI).
+
+    Phase 2 (euclid) done 2026-08-24, commit 294aaba. It forced a second,
+    unplanned library change: `plot_array` auto-derives its mask outline from
+    `array.mask`, and euclid's `data` comes from `Array2D.from_fits` unmasked,
+    so the plan's assumption that the explicit `mask=` could simply "drop out
+    as auto-derived" was wrong — it would have silently deleted the mask-radius
+    outline from the reference PNG. The autogalaxy wrapper did not forward
+    autoarray's `mask=`, so the passthrough was added (same fix-locus reasoning
+    as Scribbler: fix the wrapper, keep the workspace script clean).
+
+    Known behaviour change, accepted per the issue's stated trade-off: the
+    extra-galaxy centre markers were cyan and are now the plot_array default,
+    because the flat API hardcodes its overlay colour cycle. Restoring the
+    colour would need a PyAutoArray change (a third repo).
+
+    Both GUIs still cannot be run end-to-end here (TkAgg + FITS data absent),
+    so validation is re-scan + signature binding + headless render checks.
+
+    Next step: /ship_library for PyAutoGalaxy, then /ship_workspace for euclid
+    behind the library-first merge gate. No PRs are open yet.

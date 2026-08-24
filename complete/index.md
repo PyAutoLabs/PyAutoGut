@@ -6,7 +6,11 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
+<<<<<<< HEAD
 1101 records across 7 buckets.
+=======
+1103 records across 7 buckets.
+>>>>>>> origin/main
 
 <!-- CURATED:START -->
 ## Highlights
@@ -146,6 +150,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [pixelization-eager-jit-divergence](2026/08/pixelization-eager-jit-divergence.md)
 - [plot-array-stale-kwargs](2026/08/plot-array-stale-kwargs.md)
 - [plot-utils-duplicate-modules](2026/08/plot-utils-duplicate-modules.md) — small, single-repo, behaviour-preserving
+- [point-source-dataset-cap-guard](2026/08/point-source-dataset-cap-guard.md)
 - [point-source-defaults-campaign](2026/08/point-source-defaults-campaign.md) — took the point-source likelihood options from "several undocumented
 - [point-source-light](2026/08/point-source-light.md) — Added standard and linear point-source light profiles with total-flux normalization and oversampled PSF convol…
 - [pointmass-smbh-jax](2026/08/pointmass-smbh-jax.md) — `al.mp.PointMass` and `al.mp.SMBH` failed every JAX-mode fit (user report on 2026.8.4.1). Two independent bugs…
@@ -212,9 +217,11 @@ _(curate hard-won records here — survives regeneration.)_
 - [tenant-firewall-drift-aug](2026/08/tenant-firewall-drift-aug.md) — issue #198; 9 → OK, and a green `--check` is only evidence for the organs actually checked out
 - [tenant-firewall-hygiene-extras](2026/08/tenant-firewall-hygiene-extras.md) — auto-closed by the merge
 - [tenth-sample-hardcoded-index](2026/08/tenth-sample-hardcoded-index.md) — results/database/aggregator tutorials hardcoded stored-sample index 9 ("the tenth
+- [test-mode-bypass-assertion-ties](2026/08/test-mode-bypass-assertion-ties.md) — The PYAUTO_TEST_MODE=2/3 bypass evaluated the model at the prior
 - [test-mode-fit-exception-finalization](2026/08/test-mode-fit-exception-finalization.md) — `PYAUTO_TEST_MODE=1` no longer finalizes a model point whose reconstruction raises `FitException`; it substitu…
 - [test-mode-samples-info-hook-contract](2026/08/test-mode-samples-info-hook-contract.md) — `NonLinearSearch._test_mode_samples_info()`'s docstring told subclasses
 - [test-performance-board](2026/08/test-performance-board.md)
+- [testmode-assertion-note-removal](2026/08/testmode-assertion-note-removal.md) — Follow-up to test-mode-bypass-assertion-ties (PyAutoFit#1520, merged
 - [transformed-message-semantics-doc](2026/08/transformed-message-semantics-doc.md)
 - [undo-community-file-declutter](2026/08/undo-community-file-declutter.md) — Undid the 2026-08-19 community-file declutter (#248 Mind, #32 Memory):
 - [uniform-prior-bounds-numpy-path](2026/08/uniform-prior-bounds-numpy-path.md) — auto-closed by the merge's `Closes` line

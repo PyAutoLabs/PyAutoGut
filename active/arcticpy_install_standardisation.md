@@ -13,6 +13,7 @@ Autonomy: supervised
 Priority: normal
 Status: formalised
 Filed: 2026-08-24
+Issued: 2026-08-24
 
 `import autocti` hard-requires **arcticpy**, which is not a pip dependency: its
 sdist is source-only (needs `libgsl-dev` + a C++ toolchain + Cython) and its own

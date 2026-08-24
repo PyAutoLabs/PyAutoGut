@@ -30,8 +30,12 @@
   tell users to install it.
 - follow-up: draft/release/pyautoreduce/pyautoreduce_release_induction.md (Hands induction +
   date versioning) — blocked until this task merges.
-- pr-open: https://github.com/PyAutoLabs/PyAutoReduce/pull/72 (library)
-- pr-open: https://github.com/PyAutoLabs/autoreduce_workspace/pull/1 (workspace; merges behind #72)
+- pr-open: https://github.com/PyAutoLabs/PyAutoReduce/pull/72 (library) — CI green
+  2026-08-24 (run 32782915519; unittest 3.12 + 3.13 pass, unittest-nojax skipped by design),
+  mergeable_state clean, no review threads. Awaiting human merge.
+- pr-open: https://github.com/PyAutoLabs/autoreduce_workspace/pull/1 (workspace; merges behind
+  #72) — CI green 2026-08-24 (run 32783038199; workspace_smoke 3.12 + 3.13 pass, cloned the
+  matching PyAutoReduce branch so the pair was exercised together), mergeable_state clean.
 - environment: web-github — no local worktree; clones at /home/user/pyautoreduce and
   /home/user/autoreduce_workspace, so no `worktree:` claim beyond the recorded path.
 - repos:

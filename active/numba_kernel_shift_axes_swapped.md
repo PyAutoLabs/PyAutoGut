@@ -9,6 +9,7 @@ Autonomy: supervised
 Priority: medium
 Status: formalised
 Filed: 2026-08-21 (backfilled from git)
+Issued: 2026-08-24
 
 Found 2026-08-21 while fixing
 `draft/bug/autoarray/numba_first_call_garbage_psf_weighted_data.md` (the

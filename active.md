@@ -18,3 +18,20 @@
 - issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/274
 - issued: 2026-08-24
 - prompt: active/smoke_timing_and_profiling.md
+
+## numba-kernel-shift-axes
+- issue: https://github.com/PyAutoLabs/PyAutoArray/issues/486
+- issued: 2026-08-24
+- prompt: active/numba_kernel_shift_axes_swapped.md
+- status: library-dev
+- classification: library (PyAutoArray only)
+- environment: web-github — session clone at /home/user/pyautoarray is the working tree;
+  no `~/Code/PyAutoLabs-wt/` worktree exists or is claimed by this task.
+- repos:
+  - PyAutoArray: claude/numba-kernel-shift-axes-j5wo2p
+- summary: |
+    Both numba PSF gathers derive the kernel half-widths from the transposed kernel
+    axes (y from shape[1], x from shape[0]) — silent wrong answer for non-square odd
+    PSFs, invisible for square ones. Reproduced on main (9e47505): 3x5 kernel gives
+    max|numba - numpy| = 1420.0, square control 0.0. Fixing both gather sites together
+    plus the test helper that mirrors the same transposition.

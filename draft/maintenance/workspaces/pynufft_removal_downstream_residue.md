@@ -23,7 +23,7 @@ That bug prompt turned out to be genuinely superseded — verified, not merely
 marked — so no dev work was started on it. The sweep run to confirm the
 supersession is what surfaced this.
 
-`draft/maintenance/libraries/remove_pynufft_legacy_transformer.md`
+`complete/2026/08/remove-pynufft-legacy-transformer.md`
 (Status: shipped) deleted `TransformerNUFFTPyNUFFT` and dropped `pynufft` from
 PyAutoArray's `optional`/`dev` extras. Its "Workspace tier" scoped only
 `autolens_workspace` and `autolens_workspace_test`, both of which were done

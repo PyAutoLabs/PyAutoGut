@@ -173,8 +173,8 @@ phase carries only its own slice of it.
 
 ## Supersedes an earlier filing of the same defect
 
-[`../autolens_workspace_test/multi_dataset_jax_likelihood_xla_stall.md`](../autolens_workspace_test/multi_dataset_jax_likelihood_xla_stall.md)
-(filed 2026-08-22, never issued) describes this same stall from the
+[`complete/2026/08/multi-dataset-jax-likelihood-xla-stall.md`](../../../complete/2026/08/multi-dataset-jax-likelihood-xla-stall.md)
+(filed 2026-08-22 as `draft/bug/autolens_workspace_test/multi_dataset_jax_likelihood_xla_stall.md`, never issued, recorded 2026-08-24) describes this same stall from the
 `autolens_workspace_test` side. It is superseded by this campaign rather than
 run alongside it — one root cause is one task. Its two asks that this filing did
 not already carry are folded in: the runner leaving diagnostic evidence behind

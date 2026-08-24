@@ -31,7 +31,8 @@ across Prior subclasses"), we audited every prior and message in PyAutoFit
 for similar latent math bugs.
 
 Full audit lives at:
-`PyAutoMind/research/autofit/priors_and_messages_math_audit.md`
+`complete/2026/08/priors-and-messages-math-audit.md` (retired 2026-08-18 —
+fully graduated; was `draft/research/autofit/priors_and_messages_math_audit.md`)
 
 This folder breaks that audit into a logical, dependency-ordered sequence
 of standalone GitHub issues. The intent is to land them one by one so

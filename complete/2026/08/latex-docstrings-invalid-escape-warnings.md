@@ -1,3 +1,35 @@
+# LaTeX in non-raw docstrings — superseded, and the wider fix shipped
+
+- outcome: SUPERSEDED 2026-08-20; the defect it reported was then fixed at wider
+  scope on the same day.
+- superseded-by: `draft/maintenance/workspaces/latex_raw_string_docstrings.md`,
+  shipped as `complete/2026/08/latex-raw-string-docstrings.md` —
+  autolens_workspace#491, six PRs merged 2026-08-20 (HowToFit#47, HowToGalaxy#70,
+  HowToLens#73, autofit_workspace#145, autogalaxy_workspace#218,
+  autolens_workspace#492): 41 files, 180 literals, 131 silent corruptions
+  repaired. Prerequisite `hands-raw-string-docstring-prefix` (PyAutoHands#251)
+  cleared first.
+- why it was superseded rather than run: same defect, same fix, wider scope. The
+  2026-08-20 survey swept all six workspace repos; the 17 `autolens_workspace`
+  files it listed are exactly the 17 measured here (top-six warning counts match
+  line for line), and it found a second, *silent* class this filing never saw —
+  `\t` in `\theta`, `\f` in `\frac`, escapes Python DOES recognise, so they corrupt
+  the string with no warning at all.
+- carried across, so nothing was lost: the interpreter trap (§ TRAP) became the
+  successor's sweep spec and verification gate, and "do not reword the LaTeX or the
+  prose" became its § Constraints.
+- origin trail kept below: autolens_workspace#457 / PR#459, and the 2026-08-09
+  measurement (80 warnings across 17 files on `9974f891`).
+
+## Lifecycle note
+
+Marked `Status: SUPERSEDED` in place but left in `draft/`, so it kept rendering as
+pickable backlog after the successor merged. Recorded here by the 2026-08-24
+completed-prompt reconciliation sweep — which is also what widened the dashboard's
+drift detector to read a prompt's own `Status:` header, the signal that surfaced it.
+
+## Original prompt
+
 # LaTeX in non-raw docstrings emits SyntaxWarning: invalid escape sequence
 
 Type: maintenance

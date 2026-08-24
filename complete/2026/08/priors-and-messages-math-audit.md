@@ -1,3 +1,35 @@
+# Census of priors and messages — the audit, fully graduated
+
+- completed: 2026-08-18 — retired as a historical record; nothing was left to
+  action from this file.
+- A1–A9, all nine confirmed bugs: FIXED on PyAutoFit `main`. Batch 1 (A1–A5, A8)
+  via #1344 / PR#1345 (merged `c0b6c94b8`, 2026-07-10); batch 2 (A6, A9) via
+  #1346 / PR#1348 (merged `cf0cc4bbb`, 2026-07-10); A7 vectorised in PR#1345. All
+  five open decisions resolved on hub #1331 (2026-07-14 comment): Beta clamp →
+  raise; σ<0 rejected / σ=0 kept; Gamma `from_mode` matches mean+variance;
+  normalisation → Option A (drop constants + a `Prior.log_normalisation()` hook);
+  width modifier → `abs(mean)` + opt-in floor + `PriorException`. Locked in by
+  `test_priors_messages_fixes_1331.py` and `test_prior_width_safety.py`.
+- records: `complete/2026/07/priors-messages-fixes.md`,
+  `complete/2026/08/prior-width-safety.md`,
+  `complete/2026/07/ep-priors-fable-reassess.md`,
+  `complete/2026/08/prior-property-tests.md`,
+  `complete/2026/08/transformed-message-semantics-doc.md`.
+- C-findings: C2 shipped with the A5 decision (PR#1345); C6's reversal-convention
+  half via #1333 / PR#1334, its `LinearShiftTransform` half 2026-08-18 via PR#1499;
+  C3 shipped 2026-08-18 as the property sweep (PR#1499, `21288bb`).
+- still tracked elsewhere, deliberately: the remaining C-findings live as
+  `draft/bug/priors/` prompts (09, 11–14) under the tracker
+  `draft/bug/priors/z_features.md`, whose phase 4 is open.
+
+## Lifecycle note
+
+Marked `Status: RETIRED — historical record` in place on 2026-08-18 but left in
+`draft/` at `Priority: high`, so a spent census kept rendering near the top of the
+dashboard. Recorded here by the 2026-08-24 completed-prompt reconciliation sweep.
+
+## Original prompt
+
 # Census of priors and messages — confirmed bugs + redesign ideas
 
 Type: research

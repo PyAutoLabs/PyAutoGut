@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1102 records across 7 buckets.
+1115 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -59,9 +59,11 @@ _(curate hard-won records here — survives regeneration.)_
 - [dashboard-filter-trend](2026/08/dashboard-filter-trend.md) — auto-closed on merge
 - [dashboard-naming-unification](2026/08/dashboard-naming-unification.md) — Dashboard naming unified across all five boards — every board is just the
 - [dashboard-per-paper-actions](2026/08/dashboard-per-paper-actions.md) — auto-closed on merge
+- [dashboardify-brain-operational-surfaces](2026/08/dashboardify-brain-operational-surfaces.md)
 - [database-guide-info-inline](2026/08/database-guide-info-inline.md) — the dataset_1d database guide chain failed on any fresh checkout —
 - [database-guide-sample-weight-threshold](2026/08/database-guide-sample-weight-threshold.md) — `guides/results/database/start_here.py` ran its own Nautilus fits capped at n_like_max=300 then indexed sample…
 - [dataset-allowlist-small-datasets-guard](2026/08/dataset-allowlist-small-datasets-guard.md)
+- [delaunay-nan-probe-ell-comps-validator](2026/08/delaunay-nan-probe-ell-comps-validator.md) — `instance_from_vector` handed the deliberate all-NaN vector's
 - [delaunay-nn-laptop-gpu-profile](2026/08/delaunay-nn-laptop-gpu-profile.md) — Added the CPU, RTX 2060, and A100 DelaunayNN profiling sweep and result artifacts at matched PyAuto source rev…
 - [dep-floors-source-chain-ci](2026/08/dep-floors-source-chain-ci.md)
 - [dev-workflow-helpers-laptop-paths](2026/08/dev-workflow-helpers-laptop-paths.md)
@@ -83,6 +85,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [health-conductor-stale-verdict](2026/08/health-conductor-stale-verdict.md)
 - [heart-green-validation-ingest](2026/08/heart-green-validation-ingest.md)
 - [heart-red-guarded-sample-escape](2026/08/heart-red-guarded-sample-escape.md) — Closed the escape path that kept release validation RED after
+- [history-policy-generated-block](2026/08/history-policy-generated-block.md)
 - [howto-setup-notebook-audit](2026/08/howto-setup-notebook-audit.md) — none — run end-to-end from a cloud session; the six PRs are the record
 - [howto-smoke-all-tutorials](2026/08/howto-smoke-all-tutorials.md)
 - [howtofit-stub-fork-cleanup](2026/08/howtofit-stub-fork-cleanup.md)
@@ -96,16 +99,19 @@ _(curate hard-won records here — survives regeneration.)_
 - [inference-method-cards-seed](2026/08/inference-method-cards-seed.md)
 - [inference-programme-ledger](2026/08/inference-programme-ledger.md)
 - [interferometer-delaunay-flaky-fitexception](2026/08/interferometer-delaunay-flaky-fitexception.md)
+- [interferometer-delaunay-nonpd-fitexception](2026/08/interferometer-delaunay-nonpd-fitexception.md)
 - [interferometer-start-here-integrate-oom](2026/08/interferometer-start-here-integrate-oom.md)
 - [intra-family-dep-floors](2026/08/intra-family-dep-floors.md)
 - [jax-compile-stall-evidence](2026/08/jax-compile-stall-evidence.md) — jax-compile-stall phase 1
 - [jax-compile-stall-slow-vs-stall-audit](2026/08/jax-compile-stall-slow-vs-stall-audit.md) — jax-compile-stall epic
+- [jax-compile-time-profiling-absorbed](2026/08/jax-compile-time-profiling-absorbed.md)
 - [jax-default-dependency](2026/08/jax-default-dependency.md)
 - [jax-grad-local-vs-ci-assertions](2026/08/jax-grad-local-vs-ci-assertions.md)
 - [jax-grad-smoke-timeout-budget](2026/08/jax-grad-smoke-timeout-budget.md)
 - [jax-likelihood-mass-sensitivity](2026/08/jax-likelihood-mass-sensitivity.md) — Audit + fix for median-literal mass blindness across all jax_likelihood/datacube scripts (phase 2 of the findi…
 - [knowledge-board](2026/08/knowledge-board.md) — auto-closed on merge
 - [lacosmic-cr-option-and-star-pass-decoupling](2026/08/lacosmic-cr-option-and-star-pass-decoupling.md) — both deliberately OPEN — closure is the default-flip decision, not this ship
+- [latex-docstrings-invalid-escape-warnings](2026/08/latex-docstrings-invalid-escape-warnings.md)
 - [latex-raw-string-docstrings](2026/08/latex-raw-string-docstrings.md) — one issue, six PRs
 - [lazy-heavy-imports](2026/08/lazy-heavy-imports.md) — Deferred all heavy non-essential imports to first use. `import autolens` 4.07s → 1.2–1.3s
 - [llms-txt-census-fixes](2026/08/llms-txt-census-fixes.md)
@@ -119,6 +125,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [mge-sigma-min-workspace-sweep](2026/08/mge-sigma-min-workspace-sweep.md)
 - [mind-readability-pass](2026/08/mind-readability-pass.md) — closed on ship
 - [missing-auto-simulate-guards](2026/08/missing-auto-simulate-guards.md)
+- [multi-dataset-jax-likelihood-xla-stall](2026/08/multi-dataset-jax-likelihood-xla-stall.md) — filed 2026-08-22 after `multi_dataset/jax_likelihood/mge.py` was parked
 - [multi-start-auto-convergence-real-search](2026/08/multi-start-auto-convergence-real-search.md) — `scripts/jax_assertions/multi_start_gradient_auto_convergence.py` failed
 - [multistart-gradient-resume-fom-sanity-check](2026/08/multistart-gradient-resume-fom-sanity-check.md)
 - [multistart-nan-step-diagnostics](2026/08/multistart-nan-step-diagnostics.md)
@@ -158,7 +165,9 @@ _(curate hard-won records here — survives regeneration.)_
 - [pre-build-stages-untracked-wip](2026/08/pre-build-stages-untracked-wip.md) — CLOSED completed
 - [prior-property-tests](2026/08/prior-property-tests.md)
 - [prior-support-clipper](2026/08/prior-support-clipper.md) — Shipped `AbstractClipper` / `ClipperNone` / `ClipperPriorBox` in
+- [priors-and-messages-math-audit](2026/08/priors-and-messages-math-audit.md)
 - [profile-validation-resample-recovery](2026/08/profile-validation-resample-recovery.md) — Shipped the approved narrow compatibility fix: invalid profile construction is now both a direct `ValueError` …
+- [profiling-agent-compile-axis-arc](2026/08/profiling-agent-compile-axis-arc.md)
 - [purge-autocti-dataset-1d-overview](2026/08/purge-autocti-dataset-1d-overview.md) — no GitHub issue — the leftover from `autocti-util-dataset-export`, executed on direct human instruction "do th…
 - [pyautobrain-pr-test-ci](2026/08/pyautobrain-pr-test-ci.md) — auto-closed by the merge
 - [pyautofit_plot_rst_dead_plotters](2026/08/pyautofit_plot_rst_dead_plotters.md)
@@ -182,6 +191,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [release-drive-2026-08-07](2026/08/release-drive-2026-08-07.md)
 - [release-validation-tri-state](2026/08/release-validation-tri-state.md)
 - [release-version-sync-back-to-main](2026/08/release-version-sync-back-to-main.md)
+- [remove-pynufft-legacy-transformer](2026/08/remove-pynufft-legacy-transformer.md)
 - [resolve-border-relocator-hazard](2026/08/resolve-border-relocator-hazard.md) — Reconciled the likelihood hazard instrument after the border-relocator source fix. The resolved backend-diverg…
 - [resolve-curvature-floor-doc-drift](2026/08/resolve-curvature-floor-doc-drift.md) — Reconciled the curvature-floor documentation finding after PyAutoArray#444. The detector now requires both run…
 - [resolve-sersic-ell-comps-gradient](2026/08/resolve-sersic-ell-comps-gradient.md) — Reconciled the numerical-hazard evidence after the Sersic Cartesian-radius fix. The stable conditional detecto…
@@ -370,6 +380,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [ep-projection-weights](2026/07/ep-projection-weights.md) — two stacked defects
 - [ep-statistics-audit](2026/07/ep-statistics-audit.md) — F1-F10 census + EP wiki page; fixes dispersed: F3/F10->#1349, F5->#1334, F7c->#1345; remainder executes as bug…
 - [ep-statistics-fix-batch](2026/07/ep-statistics-fix-batch.md) — #1332 F1 (MeanField log_norm->plates ctor slip) + F2 (Gamma/Beta KL direction, MC-certified) + F4 (exoneration…
+- [extra-galaxies-feature-parity](2026/07/extra-galaxies-feature-parity.md) — the user's scoping held throughout — `imaging/features/extra_galaxies`
 - [extra-galaxies-multi-galaxy](2026/07/extra-galaxies-multi-galaxy.md)
 - [extra-galaxies-multi-galaxy-lens](2026/07/extra-galaxies-multi-galaxy-lens.md)
 - [extra-galaxies-point-source](2026/07/extra-galaxies-point-source.md)
@@ -602,6 +613,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [python-312-autolens-wiki-currency-ci](2026/07/python-312-autolens-wiki-currency-ci.md) — The autolens assistant wiki-currency workflow now runs on Python 3.12, completing the assistant CI-selector po…
 - [python-312-floor](2026/07/python-312-floor.md)
 - [python-312-memory-validation-ci](2026/07/python-312-memory-validation-ci.md) — PyAutoMemory validation now runs on Python 3.12 and its repository-structure validator recognizes the shared r…
+- [python-312-minimum-census](2026/07/python-312-minimum-census.md)
 - [python-312-release-surfaces](2026/07/python-312-release-surfaces.md) — Removed the accidentally tracked `=3.12` and generated `run_logs/`
 - [python-312-workspace-runtime-pins](2026/07/python-312-workspace-runtime-pins.md)
 - [python_312_floor_phase_1b_array](2026/07/python_312_floor_phase_1b_array.md)
@@ -704,6 +716,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [testmode-env-drift](2026/07/testmode-env-drift.md)
 - [tutorial-5-filtering-prose](2026/07/tutorial-5-filtering-prose.md)
 - [unblock-release-validation](2026/07/unblock-release-validation.md)
+- [unify-ai-assistant-workspace-readmes](2026/07/unify-ai-assistant-workspace-readmes.md) — this prompt's whole scope — one concise **AI Assistant** route first in
 - [user-defaults-discovery](2026/07/user-defaults-discovery.md) — batch finale (task 6, rescoped discovery-half) — start-new-project step 0 environment-discovery preflight: rea…
 - [vacuous-jax-assertions](2026/07/vacuous-jax-assertions.md) — four workspace_test scripts validated numpy while presenting as JAX — SHIPPED
 - [validation-searches-env-optax](2026/07/validation-searches-env-optax.md)

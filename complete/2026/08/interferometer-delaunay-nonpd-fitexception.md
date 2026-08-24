@@ -1,3 +1,36 @@
+# interferometer Delaunay — non-PD FitException in test-mode bypass
+
+- completed: 2026-08-07 — both halves merged; the script is un-parked and in smoke.
+- prs: **PyAutoFit#1408** (phase 1 — `PYAUTO_TEST_MODE=2` bypass tolerates a
+  single-eval `FitException` as a resample-to-reject sentinel) and
+  **autolens_workspace#311** (phase 1 — un-park
+  `interferometer/features/pixelization/delaunay` + add it to smoke); then
+  **PyAutoArray#436** (merged `efaf3041`, phase 2 — the numerical producer fix,
+  CI green first run on both matrix legs).
+- implementation record: `complete/2026/08/interferometer-delaunay-flaky-fitexception.md`,
+  which shipped under the sibling filing
+  `draft/bug/autoarray/interferometer_delaunay_intermittent_qhull_nan.md`
+  (correct target: the autoarray Delaunay interpolator, not autolens).
+- the actual producer, against this prompt's guess: not the `fnnls.py:134`
+  divide-by-zero (599 exercises, zero degenerate denominators — those warnings are
+  a downstream symptom) but `cholesky_funcs.py -> cholinsertlast`, whose unchecked
+  `math.sqrt(x[index] - S12.dot(S12))` goes imaginary when two near-coincident
+  source-mesh vertices make the Schur complement zero to within rounding
+  (measured ±1.776e-15, 8·eps). This prompt's own instinct — *fix the producer,
+  do not swallow the FitException* — is what shipped.
+- earlier false start on the record: `complete/2026/07/drop-interferometer-delaunay-marker.md`
+  (marker-removal PR autolens_workspace#310 closed without merge; three passing
+  local runs are not enough to call a ~50%-flaky script fixed).
+
+## Lifecycle note
+
+Two prompts were filed for one defect from different repos. The autoarray-targeted
+one advanced correctly; this autolens-targeted duplicate stayed in `draft/` and kept
+rendering as pickable backlog. Recorded here by the 2026-08-24 completed-prompt
+reconciliation sweep.
+
+## Original prompt
+
 # interferometer Delaunay pixelization — non-PD FitException in test-mode bypass
 
 Type: bug

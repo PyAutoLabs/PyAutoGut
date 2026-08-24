@@ -1,3 +1,26 @@
+# multi_dataset/jax_likelihood XLA compile stall — superseded by the jax-compile-stall epic
+
+- outcome: SUPERSEDED 2026-08-23, never issued — no PR, no code change under this slug.
+- superseded-by: `draft/bug/ci/jax_vmap_jit_compile_stall.md` (the `jax-compile-stall`
+  epic ledger), whose phases carry the same defect with cross-repo evidence.
+- shipped elsewhere: phase 1 `complete/2026/08/jax-compile-stall-evidence.md`;
+  phase 2 `complete/2026/08/jax-compile-stall-slow-vs-stall-audit.md`;
+  phase 3 remains open as `draft/bug/ci/jax_compile_stall_3_root_cause.md`.
+- summary: filed 2026-08-22 after `multi_dataset/jax_likelihood/mge.py` was parked
+  out of the smoke gate. One root cause is one task, so the filing was folded into
+  the epic the following day. The two asks this file carried that the epic did not
+  — dump a stack trace on timeout (solved library-side in phase 1) and re-enable
+  `mge.py` / `shared_preloads.py` in `smoke_tests.txt` (phase 3) — were both folded
+  in, so nothing was lost.
+
+## Lifecycle note
+
+Marked `Status: superseded` in place on 2026-08-23 but left in `draft/`, so it kept
+rendering as pickable backlog. Recorded here by the 2026-08-24 completed-prompt
+reconciliation sweep. Its evidence is preserved in the original prompt below.
+
+## Original prompt
+
 # multi_dataset/jax_likelihood scripts hang to the timeout cap (XLA compile stall)
 
 Type: bug

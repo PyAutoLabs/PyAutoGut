@@ -83,6 +83,24 @@ in CI:
 Plus `smoke (3.12)` and `smoke (3.13)` green — six checks, no reruns. All 12
 edited scripts byte-compile; none is in `smoke_tests.txt`.
 
+## The acceptance criterion, confirmed against the real function
+
+The prompt was explicit that the criterion is the roll-up flipping, not "the
+workflow passes". Both required workflows completed green on `main` HEAD
+(`4b162ae`, the PR #30 merge), and feeding that through `heart/checks/
+ci_status.py`'s real `rollup()` gives:
+
+```
+required for `workspaces`: ['Smoke Tests', 'Navigator Check']
+
+BEFORE (Navigator Check had never run) -> {'conclusion': '',        'status': 'in_progress'}
+AFTER  (both green on 4b162ae)         -> {'conclusion': 'success', 'status': 'completed'}
+```
+
+All three per-workflow conditions `rollup` applies — `conclusion == "success"`,
+`status == "completed"`, `on_head` — are satisfied. The repo can be seen as
+CI-clean by the readiness gate for the first time.
+
 ## Work item 4 — the general case, surveyed not guessed
 
 The prompt asked whether other repos have the same silent-never-green defect.

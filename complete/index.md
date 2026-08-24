@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1120 records across 7 buckets.
+1122 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -174,6 +174,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [profiling-agent-compile-axis-arc](2026/08/profiling-agent-compile-axis-arc.md)
 - [purge-autocti-dataset-1d-overview](2026/08/purge-autocti-dataset-1d-overview.md) — no GitHub issue — the leftover from `autocti-util-dataset-export`, executed on direct human instruction "do th…
 - [pyautobrain-pr-test-ci](2026/08/pyautobrain-pr-test-ci.md) — auto-closed by the merge
+- [pyautoconf-rename-leftovers](2026/08/pyautoconf-rename-leftovers.md) — PyAutoBrain#267 → PR #268, merge 2e7ea30
 - [pyautofit_plot_rst_dead_plotters](2026/08/pyautofit_plot_rst_dead_plotters.md)
 - [pyautogalaxy-mge-sigma-test](2026/08/pyautogalaxy-mge-sigma-test.md)
 - [pyautonerves-release-for-regime-stamp](2026/08/pyautonerves-release-for-regime-stamp.md)
@@ -188,6 +189,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [reconcile-upstream-repo-mode](2026/08/reconcile-upstream-repo-mode.md)
 - [reconstruction-noise-map-covariance-sqrt](2026/08/reconstruction-noise-map-covariance-sqrt.md)
 - [rectangular-spline-adapt-image-jit-fix](2026/08/rectangular-spline-adapt-image-jit-fix.md)
+- [refactor-witness-map-audit](2026/08/refactor-witness-map-audit.md) — PyAutoBrain#269 → PR #271, merge cf969f3; stacked on #268
 - [registry-integrity-check](2026/08/registry-integrity-check.md)
 - [regularization-jax-gradient-gaps](2026/08/regularization-jax-gradient-gaps.md)
 - [release-board](2026/08/release-board.md) — auto-closed on merge

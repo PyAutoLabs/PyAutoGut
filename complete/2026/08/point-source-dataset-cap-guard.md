@@ -77,9 +77,12 @@ accepts the previously-unused `full_datasets real_output` marker combination.
 
 Three prompts described this one surface; folded to one line of truth.
 
-- `planned.md` → `jax-point-source-point-smoke-sentinel` marked superseded. Its `-1e99`
-  symptom was the same poisoning; `point.py` passes on main. Retire the entry and its
-  prompt `draft/bug/autolens/jax_point_source_point_smoke_sentinel.md`.
+- `planned.md` → `jax-point-source-point-smoke-sentinel` **retired**. Its `-1e99` symptom was
+  the same poisoning, and autolens_workspace_test#265 measured `point.py` passing on main with
+  the pin exact — which settles the "what is still unknown" question that prompt's own
+  2026-08-09 note left open. Entry removed from `planned.md`; the prompt is archived at
+  `complete/archive/shelved/jax_point_source_point_smoke_sentinel.md` behind a WITHDRAWN
+  banner, provenance only.
 - `draft/bug/autolens/point_solver_error_bisect_health.md` no longer absorbs this task —
   the "same investigation surface" premise was false (workspace env-declaration defect,
   not triangle-solve accuracy). Its stale `point_solver.py:111` reference corrected to `:119`.
@@ -105,6 +108,7 @@ Difficulty: small
 Autonomy: supervised
 Priority: normal
 Status: issued — PyAutoLens#710 (2026-08-23)
+Filed: 2026-07-22 (backfilled from git)
 
 ## 2026-08-23 — DIAGNOSED. Root cause found; scope changed. Read this before the body below.
 

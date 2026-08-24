@@ -1,3 +1,5 @@
+# [WITHDRAWN 2026-08-23] superseded by complete/2026/08/point-source-dataset-cap-guard.md (PyAutoLens#710) — the `-1e99` sentinel was poisoned-on-disk dataset output, not a library regression: `should_simulate` rmtree'd the committed JSON `dataset/point_source/simple` under `PYAUTO_SMALL_DATASETS=1`, and `PointSolver.solve` short-circuited to a fixed model-independent position pair. autolens_workspace_test#265 measured `point.py` PASSING on current main with the pin exact (`-83.38049778`), which settles the "what is still unknown" question the 2026-08-09 note below left open. Kept for provenance only. Do NOT start.
+
 # JAX point-source smoke sentinel: point.py returns -1e99 instead of -83.38
 
 Type: bug

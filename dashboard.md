@@ -10,8 +10,8 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 |-------|------:|
 | [In flight](#in-flight) (`active/`) | 2 |
 | [Parked](#parked) (`parked.md`) | 3 |
-| [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 156 |
+| [Planned](#planned) (`planned.md`) | 5 |
+| [Backlog](#backlog) (`draft/`) | 153 |
 
 ## Start here
 
@@ -197,7 +197,7 @@ Started or scoped, not currently in flight — resume by moving the row back to 
 Scoped but not started; some are not yet prompt files. Full detail in [`planned.md`](planned.md).
 
 <details>
-<summary><b>6</b> task(s)</summary>
+<summary><b>5</b> task(s)</summary>
 
 <details><summary>📋 <b>isothermal-ell-sph-oversampling-at-the-cusp</b> — found 2026-08-09 — planned — NOT yet a prompt file; file one via <code>/intake</code> before starting</summary>
 
@@ -223,14 +223,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <b>jax-point-source-point-smoke-sentinel</b> — filed 2026-05-21 — planned</summary>
-
-```
-/start_dev draft/bug/autolens/jax_point_source_point_smoke_sentinel.md
-```
-
-</details>
-
 <details><summary>📋 <b>piemass-potential</b> — filed 2026-06-05 — planned</summary>
 
 ```
@@ -251,7 +243,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**156** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **26** of them belong to an epic and are listed only under [Epics](#epics) below.
+**153** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **26** of them belong to an epic and are listed only under [Epics](#epics) below.
 
 <details>
 <summary><b>feature</b> — 29</summary>
@@ -491,7 +483,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>bug</b> — 31</summary>
+<summary><b>bug</b> — 28</summary>
 
 <details><summary>📋 <a href="draft/bug/health_fixes/jax_runtime_and_parity.md">Fix release JAX runtime compatibility and likelihood parity</a> — health_fixes · too-large · supervised · high</summary>
 
@@ -545,14 +537,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/bug/autofit/plot_functions_discard_kwargs.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/autolens/point_jax_vmap_parity_nondeterministic.md">point.py JAX-vmap parity assert is non-deterministic under the smoke env</a> — autolens · small · supervised · normal</summary>
-
-```
-/start_dev draft/bug/autolens/point_jax_vmap_parity_nondeterministic.md
 ```
 
 </details>
@@ -629,26 +613,10 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/bug/autolens/jax_point_source_point_smoke_sentinel.md">JAX point-source smoke sentinel: point.py returns -1e99 instead of -83.38</a> — autolens · medium · supervised · normal</summary>
-
-```
-/start_dev draft/bug/autolens/jax_point_source_point_smoke_sentinel.md
-```
-
-</details>
-
 <details><summary>📋 <a href="draft/bug/autolens/jit_cache_not_hit_modeling_visualization.md">JIT cache not hit in modeling_visualization delaunay/rectangular scripts</a> — autolens · medium · supervised · normal</summary>
 
 ```
 /start_dev draft/bug/autolens/jit_cache_not_hit_modeling_visualization.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/autolens_workspace_test/delaunay_nan_probe_ell_comps_validator.md">The delaunay.py NaN-poisoning probe dies in ell_comps validation before it can probe…</a> — autolens_workspace_test · medium · supervised · normal</summary>
-
-```
-/start_dev draft/bug/autolens_workspace_test/delaunay_nan_probe_ell_comps_validator.md
 ```
 
 </details>
@@ -1348,18 +1316,17 @@ The 50 newest things to happen to the work in hand, newest first — issued, par
 | 2026-08-24 | filed | <a href="draft/bug/autolens_workspace_test/gradient_eager_jit_divergence_py313.md">interferometer/jax_grad/gradient.py: eager and jitted likelihoods…</a> |
 | 2026-08-24 | filed | <a href="draft/maintenance/workspaces/unpark_multi_galaxy_scaling_relation_slam.md">Un-park multi_galaxy/features/scaling_relation/slam once a capped run…</a> |
 | 2026-08-24 | filed | <a href="draft/maintenance/pyautoheart/weekly_smoke_timings_artifact_naming.md">The weekly smoke run's timings land in <code>results-*</code> under no…</a> |
-| 2026-08-24 | filed | <a href="draft/bug/autolens_workspace_test/delaunay_nan_probe_ell_comps_validator.md">The delaunay.py NaN-poisoning probe dies in ell_comps validation…</a> |
 | 2026-08-24 | issued | <a href="active/arcticpy_install_standardisation.md">Standardise the arcticpy CI install across every CTI repo</a> |
 | 2026-08-23 | filed | <a href="draft/maintenance/workspaces/pynufft_removal_downstream_residue.md">pynufft removal: unswept downstream residue (1 hard break + stale…</a> |
 | 2026-08-23 | filed | <a href="draft/maintenance/workspaces/pynufft_removal_downstream_residue_phase_3_ci_install_docs.md">Phase 3: stop installing pynufft in Hands/Heart CI and PyAutoCTI…</a> |
 | 2026-08-23 | filed | <a href="draft/feature/pyautobrain/brain_board_follow_ups.md">Brain board follow-ups: what real mornings surface</a> |
 | 2026-08-22 | filed | <a href="draft/maintenance/ci/smoke_install_stale_jax_pin.md">smoke_install.sh's stale <code>jax&lt;0.7</code> pin — CI is on the right jax…</a> |
+| 2026-08-22 | filed | <a href="draft/bug/autolens_workspace_test/multi_dataset_jax_likelihood_xla_stall.md">multi_dataset/jax_likelihood scripts hang to the timeout cap (XLA…</a> |
 
 <details><summary>… 10 more (40 left)</summary>
 
 | Date | Event | Task |
 |------|-------|------|
-| 2026-08-22 | filed | <a href="draft/bug/autolens_workspace_test/multi_dataset_jax_likelihood_xla_stall.md">multi_dataset/jax_likelihood scripts hang to the timeout cap (XLA…</a> |
 | 2026-08-22 | filed | <a href="draft/maintenance/libraries/untrack_generated_fits_test_artifacts.md">Untrack the generated FITS test artifacts in autoarray</a> |
 | 2026-08-22 | filed | <a href="draft/bug/autoarray/reconstruction_noise_map_solver_mismatch.md">The reconstruction noise map describes a different estimator than the…</a> |
 | 2026-08-22 | filed | <a href="draft/maintenance/libraries/remove_pynufft_legacy_transformer.md">Remove pynufft + legacy TransformerNUFFTPyNUFFT</a> |
@@ -1369,12 +1336,12 @@ The 50 newest things to happen to the work in hand, newest first — issued, par
 | 2026-08-22 | filed | <a href="draft/bug/workspaces/bug_fix_the_tracer_fits_existence_guard.md">Bug: fix the tracer.fits existence guard in autolens_workspace…</a> |
 | 2026-08-21 | filed | <a href="draft/feature/autoarray/rectangular_bilinear_rtu_mesh_split.md">Rectangular mesh split: Bilinear (fast CPU default) vs RTU…</a> |
 | 2026-08-20 | filed | <a href="draft/feature/autoarray/numba_cpu_likelihood_kernel_cdf_fast_path.md">Numba CPU likelihood phase 2: kernel-CDF numba fast path (the 49-88%…</a> |
+| 2026-08-20 | filed | <a href="draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md">Numba CPU likelihood phase 1: batched MGE convolution +…</a> |
 
 <details><summary>… 10 more (30 left)</summary>
 
 | Date | Event | Task |
 |------|-------|------|
-| 2026-08-20 | filed | <a href="draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md">Numba CPU likelihood phase 1: batched MGE convolution +…</a> |
 | 2026-08-19 | filed | <a href="draft/bug/pyautomind/status_sh_repos_missing_source.md">status.sh --repos sources a file that no longer exists</a> |
 | 2026-08-19 | filed | <a href="draft/bug/autofit/jax_011_message_log_partition_tuple_shape.md">jax 0.11 breaks beta/gamma message log_partition under jit…</a> |
 | 2026-08-19 | filed | <a href="draft/bug/autolens/jax_likelihood_smoke_pins_stale.md">autolens_workspace_test jax_likelihood pins: 4 scripts fail smoke on…</a> |
@@ -1384,12 +1351,12 @@ The 50 newest things to happen to the work in hand, newest first — issued, par
 | 2026-08-19 | filed | <a href="draft/feature/pyautohands/release_board_run_logs_enrichment.md">Release board: local run_logs enrichment</a> |
 | 2026-08-19 | filed | <a href="draft/maintenance/pyautobrain/refactor_witness_map_missing_autonerves.md">Refactor Agent witness map lacks PyAutoNerves test suite</a> |
 | 2026-08-19 | filed | <a href="draft/docs/pyautobrain/rtd_organism_currency.md">RTD organism docs currency: Nerves page, organ-count drift, hands.md…</a> |
+| 2026-08-19 | filed | <a href="draft/bug/pyautobrain/pyautoconf_rename_functional_leftovers.md">PyAutoConf rename leftovers in Brain functional surfaces</a> |
 
 <details><summary>… 10 more (20 left)</summary>
 
 | Date | Event | Task |
 |------|-------|------|
-| 2026-08-19 | filed | <a href="draft/bug/pyautobrain/pyautoconf_rename_functional_leftovers.md">PyAutoConf rename leftovers in Brain functional surfaces</a> |
 | 2026-08-19 | filed | <a href="draft/research/pyautobrain/explore_dashboardify_the_brain_s_operational_sur.md">Explore: dashboardify the Brain's operational surfaces with pasteable…</a> |
 | 2026-08-19 | filed | <a href="draft/refactor/pyautomind/repos_sync_check_dedup.md">Deduplicate repos_sync.py's check/write pairs</a> |
 | 2026-08-19 | filed | <a href="draft/triage/bug_in_autocti_workspace_the_dataset_1d.md">Bug in autocti_workspace: the dataset_1d results/database example…</a> |
@@ -1399,12 +1366,12 @@ The 50 newest things to happen to the work in hand, newest first — issued, par
 | 2026-08-17 | filed | <a href="draft/feature/autofit/prior_exit_sampler_coverage.md">Which other searches need prior-support handling — coverage audit…</a> |
 | 2026-08-17 | filed | <a href="draft/feature/pyautomind/repos-sync-config-stamper.md">Teach repos_sync --write to stamp organ config surfaces</a> |
 | 2026-08-16 | filed | <a href="draft/bug/autofit/loggaussian_prior_declares_own_support.md"><code>LogGaussianPrior</code> misreports its own support as <code>(-inf, inf)</code></a> |
+| 2026-08-14 | filed | <a href="draft/bug/workspaces/jax_likelihood_pins_stale_by_1e4.md">Three <code>jax_likelihood</code> pins are stale by ~1.24e-4 and fail the smoke…</a> |
 
 <details><summary>… 10 more (10 left)</summary>
 
 | Date | Event | Task |
 |------|-------|------|
-| 2026-08-14 | filed | <a href="draft/bug/workspaces/jax_likelihood_pins_stale_by_1e4.md">Three <code>jax_likelihood</code> pins are stale by ~1.24e-4 and fail the smoke…</a> |
 | 2026-08-09 | found | <a href="planned.md#isothermal-ell-sph-oversampling-at-the-cusp">isothermal-ell-sph-oversampling-at-the-cusp</a> |
 | 2026-08-08 | parked | <a href="parked.md#pyautoreduce-slacs1430-acs-comparison">pyautoreduce-slacs1430-acs-comparison</a> |
 | 2026-08-08 | filed | <a href="draft/docs/autolens_workspace/markdown_regeneration_sigma_min.md">Regenerate autolens_workspace markdown/ so the MGE pages show…</a> |
@@ -1414,6 +1381,7 @@ The 50 newest things to happen to the work in hand, newest first — issued, par
 | 2026-08-06 | filed | <a href="draft/docs/autocti/api_rst_rewrite.md">Rewrite PyAutoCTI docs/api — 55 of 89 autosummary entries are dead</a> |
 | 2026-08-06 | filed | <a href="draft/maintenance/libraries/dep_cap_refresh_2026_08.md">Dependency-cap refresh 2026-08: safe bumps, astropy 8 decision, two…</a> |
 | 2026-08-05 | filed | <a href="draft/feature/autofit/search_seed_reproducibility.md">Give PyAutoFit searches a <code>seed</code> — today no search can be made…</a> |
+| 2026-08-04 | filed | <a href="draft/maintenance/autolens_profiling/jwst_lw_untracked_gitignore_gap.md">dataset/imaging/jwst_lw is untracked because the gitignore was never…</a> |
 
 </details>
 

@@ -5,6 +5,7 @@ Target: pyautoreduce
 Repos:
 - PyAutoHands
 - PyAutoReduce
+- PyAutoBrain
 - PyAutoHeart
 - PyAutoMind
 Difficulty: medium
@@ -99,6 +100,12 @@ In @PyAutoReduce:
 - A `pending-release` label, if `ensure_workspace_labels.sh` does not already
   cover the repo.
 
+In @PyAutoBrain:
+
+- Add PyAutoReduce to the nightly driver's activity-gate repo list
+  (`nightly-release.yml`), so a day whose only merged work is here is not
+  skipped as "no activity".
+
 In @PyAutoHeart:
 
 - Check whether `version_skew`, `wiki_currency` and the readiness checks
@@ -111,19 +118,40 @@ In @PyAutoMind:
   role. Confirm it needs no field change once the repo is release-bearing, and
   re-run `python3 scripts/repos_sync.py --write`.
 
-## Open questions for the human
+## Answered by the human (2026-08-24)
 
-1. **Cadence.** The nightly driver releases the five core libraries together.
-   Should PyAutoReduce ride the same nightly, or release on demand only? It has
-   no PyAuto dependency chain (it never imports `autolens`/`autoarray`/etc.), so
-   it is not bound to the family's version lockstep — a nightly release of a
-   young library that nobody depends on may be pure noise.
-2. **First version.** Straight into `YYYY.M.D.1`, or a `0.x` line first? Date
-   versioning implies a continuously-released library; PyAutoReduce is still
-   described in its own `__init__.py` as "design phase".
-3. **PyPI token.** A new project needs its first upload authorized by an
-   account-scoped token before a project-scoped one can exist. Confirm who holds
-   it and how the Actions secret gets created.
+1. **Cadence — nightly, with the other projects.** PyAutoReduce joins the
+   scheduled nightly rather than releasing on demand. Consequence beyond the
+   `release.yml` matrices: the nightly driver is *activity-gated* over a list of
+   release-relevant repos (`complete/2026/07/nightly-release-activity-gate.md`,
+   PyAutoBrain `nightly-release.yml` / `docs/nightly_release_design.md` §2), so
+   PyAutoReduce must be added to that list too — otherwise a day whose only
+   merged work is in PyAutoReduce reads as "no activity, skipped" and its
+   changes never ship. Heart GREEN still gates every nightly.
+
+2. **First version — the family's date scheme, `2026.8.24.1`-shaped.** Asked for
+   as `YYYY.MM.DD.1`; recorded here as the family format because the two are the
+   same thing on PyPI and no work separates them:
+
+   - `release.yml`'s `version_number` job computes `date +"%Y.%-m.%-d"`, which
+     strips leading zeros — hence `autolens 2026.8.4.1`, `2026.8.7.1`.
+   - PEP 440 integer normalization drops leading zeros from every segment
+     anyway, so a zero-padded tag cannot survive to the index:
+     `Version("2026.08.24.1") == Version("2026.8.24.1")`, and PyPI would display
+     the unpadded form regardless.
+
+   So PyAutoReduce takes the shared `version_number` output unchanged. **Do not**
+   add a padded date format for this repo — it would diverge from the family in
+   the source and converge back at the index, which is the worst of both.
+   No `0.x` line first.
+
+3. **PyPI token — PyAutoLabs org, `Jammy2211` account.** The first upload of a
+   brand-new project cannot use a project-scoped token (the project does not
+   exist yet), so it needs an account-scoped token from `Jammy2211`, stored as
+   an Actions secret in PyAutoHands alongside the existing per-repo PATs. After
+   the first successful publish, narrow it: create a `pyautoreduce`
+   project-scoped token, replace the secret, and revoke the account-scoped one.
+   Do not leave an account-scoped token in CI once it is no longer needed.
 
 ## Done when
 

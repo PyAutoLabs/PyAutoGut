@@ -44,8 +44,8 @@ anything you could not verify.
 |-------|------:|
 | [In flight](#in-flight) (`active/`) | 1 |
 | [Parked](#parked) (`parked.md`) | 3 |
-| [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 144 |
+| [Planned](#planned) (`planned.md`) | 5 |
+| [Backlog](#backlog) (`draft/`) | 142 |
 
 ## Start here
 
@@ -223,7 +223,7 @@ Started or scoped, not currently in flight — resume by moving the row back to 
 Scoped but not started; some are not yet prompt files. Full detail in [`planned.md`](planned.md).
 
 <details>
-<summary><b>6</b> task(s)</summary>
+<summary><b>5</b> task(s)</summary>
 
 <details><summary>📋 <b>isothermal-ell-sph-oversampling-at-the-cusp</b> — found 2026-08-09 — planned — NOT yet a prompt file; file one via <code>/intake</code> before starting</summary>
 
@@ -249,14 +249,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <b>jax-point-source-point-smoke-sentinel</b> — filed 2026-05-21 — planned</summary>
-
-```
-/start_dev draft/bug/autolens/jax_point_source_point_smoke_sentinel.md
-```
-
-</details>
-
 <details><summary>📋 <b>piemass-potential</b> — filed 2026-06-05 — planned</summary>
 
 ```
@@ -277,7 +269,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**144** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **26** of them belong to an epic and are listed only under [Epics](#epics) below.
+**142** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **26** of them belong to an epic and are listed only under [Epics](#epics) below.
 
 <details>
 <summary><b>feature</b> — 27</summary>
@@ -501,7 +493,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>bug</b> — 28</summary>
+<summary><b>bug</b> — 26</summary>
 
 <details><summary>📋 <a href="draft/bug/health_fixes/jax_runtime_and_parity.md">Fix release JAX runtime compatibility and likelihood parity</a> — health_fixes · too-large · supervised · high</summary>
 
@@ -555,14 +547,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/bug/autofit/plot_functions_discard_kwargs.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/autolens/point_jax_vmap_parity_nondeterministic.md">point.py JAX-vmap parity assert is non-deterministic under the smoke env</a> — autolens · small · supervised · normal</summary>
-
-```
-/start_dev draft/bug/autolens/point_jax_vmap_parity_nondeterministic.md
 ```
 
 </details>
@@ -627,14 +611,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/bug/autoarray/PROBE_adapt_double_square_coefficient.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/autolens/jax_point_source_point_smoke_sentinel.md">JAX point-source smoke sentinel: point.py returns -1e99 instead of -83.38</a> — autolens · medium · supervised · normal</summary>
-
-```
-/start_dev draft/bug/autolens/jax_point_source_point_smoke_sentinel.md
 ```
 
 </details>

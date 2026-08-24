@@ -1,3 +1,4 @@
+<<<<<<<< HEAD:complete/2026/08/delaunay-nan-probe-ell-comps-validator.md
 # The delaunay.py NaN-poisoning probe died in ell_comps validation
 
 - shipped: 2026-08-24 — autolens_workspace_test#277 (merged `995f0c9`)
@@ -18,6 +19,55 @@ The shipping session closed the prompt out in place (Mind commit `9f5e6972`,
 `Status: shipped 2026-08-24`) but never advanced it out of `draft/`, so it kept
 rendering as pickable backlog on the dashboard. Recorded here by the 2026-08-24
 completed-prompt reconciliation sweep; no further work.
+========
+# The delaunay NaN probe injected above the boundary the validator guards
+
+autolens_workspace_test#277 (`995f0c9`), shipped 2026-08-24 — the first of the
+two bugs the smoke-surface retime sweep (#274,
+`complete/2026/08/smoke-surface-retime-sweep.md`) found hiding behind SLOW
+markers. Never issued as a GitHub issue: filed as a draft bug prompt at 18:0x
+and fixed the same evening.
+
+## What shipped
+
+`scripts/interferometer/jax_likelihood/delaunay.py`'s NaN-poisoning probe
+built an instance from an all-NaN vector via `instance_from_vector`, dying at
+autogalaxy `validate_ell_comps` (`ModelParameterException`) before testing the
+JAX NaN-lane isolation it exists to test — deterministic exit 1 on both
+Python legs, 5/5 (run 32741371308). The probe now builds the instance from
+prior medians and poisons a single downstream leaf
+(`mass.einstein_radius = np.nan`) by attribute assignment, below the
+constructor guard — a like-for-like port of the shipped imaging sibling probe
+against the identical model, assertion unchanged. `no_run.yaml`'s NEEDS_FIX
+entry removed, restoring mega-run coverage.
+
+Validated in CI before the PR: retime dispatch 32759921650 on the fix branch —
+NEITHER on both legs (42.0 s / 43.6 s at 14–15 % of cap), with the
+previously-unreachable tail passing ("invalid Delaunay mesh reaches the raw
+interferometer likelihood as NaN", TransformerNUFFT cross-check).
+
+## Key traps / findings
+
+- **The validator was right.** NaN rejection in `validate_ell_comps` is a
+  deliberate contract: present from the validator's birth (autogalaxy
+  `a366f771`, with NaN/inf parametrized as rejected across the guard family)
+  and deliberately softened to a resampling `FitException` in `be61b8d0`. The
+  probe-side fix was the only correct side.
+- **A probe that constructs pathological inputs through the public
+  construction path inherits the public path's validation.** Poison below the
+  boundary (post-construction attribute assignment) — the imaging sibling had
+  already made this move; interferometer was the straggler.
+- The local container could not run the stack (Python 3.11 vs the libraries'
+  `>=3.12` pin), so validation ran as a retime dispatch on the branch before
+  the PR — the harness this same day's work repaired.
+
+## Follow-ups
+
+None of its own. The sibling bug found by the same sweep —
+`gradient_eager_jit_divergence_py313.md`, root-caused to an NNLS
+`while_loop` branch flip — remains in `draft/` with its fix direction
+recorded (pin `nnls_solver_tol`/`max_iter`).
+>>>>>>>> origin/main:complete/2026/08/delaunay-nan-probe-fix.md
 
 ## Original prompt
 

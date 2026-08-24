@@ -1,5 +1,32 @@
 # Active Tasks
 
+## shared-log-norm-helper
+- issue: https://github.com/PyAutoLabs/PyAutoArray/issues/488 (issued 2026-08-24)
+- issued: 2026-08-24
+- prompt: active/shared_log_norm_helper.md
+- status: library-dev
+- worktree: none — remote web session (`web-github`), work done in the session clones
+- repos:
+  - PyAutoArray: claude/autoarray-shared-log-norm-c12ges
+  - PyAutoGalaxy: claude/autoarray-shared-log-norm-c12ges
+  - PyAutoMind: claude/autoarray-shared-log-norm-c12ges
+- summary: |
+    Refactor (effective autonomy `supervised` = min(header `supervised`,
+    refactor cap `safe`)). One colour-norm helper in
+    `autoarray/plot/utils.py`, called by `plot/array.py` and
+    `plot/inversion.py`, with `autogalaxy.util.plot_utils.norm_from`
+    delegating to it. The point is not tidiness: `inversion.py` hardcodes the
+    `1e-4` log floor and never reads `visualize.general.general.log10_min_value`,
+    so the configured floor is honoured on array plots and silently ignored on
+    inversion plots. Two further divergences decided deliberately and recorded
+    in the helper docstring + issue #488: the `vmax` source stays per-call-site
+    (different data being coloured, not a divergence), and the degenerate
+    `vmax <= vmin` widening applies to explicitly-passed limits too
+    (`array.py` wins). Library-first: PyAutoArray merges before PyAutoGalaxy.
+    The prompt file was orphaned on the unmerged
+    `claude/aplt-output-drift-repos-33n81z` branch (that filing PR was never
+    opened); it was recovered onto this branch and advanced to `active/`.
+
 ## intake-declared-difficulty
 - issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/274 (issued 2026-08-24)
 - issued: 2026-08-24

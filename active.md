@@ -13,3 +13,27 @@
 - registered: 2026-08-19 by the wake_up session — the issuing session (claude/autofit-priors-messages-audit-ylvenv)
   filed the prompt + issue but not this entry, tripping Lifecycle Drift on main.
 - repos-none-claimed: this entry claims NO repos — one line deliberately, not 2-space bullets.
+
+## autofit-plot-functions-kwargs
+- issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1523
+- issued: 2026-08-24
+- prompt: active/plot_functions_discard_kwargs.md
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/autofit-plot-functions-kwargs
+- repos:
+  - PyAutoFit: claude/autofit-plot-functions-kwargs-vvwj5x
+  - autofit_workspace: claude/autofit-plot-functions-kwargs-vvwj5x
+- summary: |
+    Routed by /start_dev in a web-github session (branch
+    claude/autofit-plot-functions-kwargs-vvwj5x). Fix direction approved by the
+    human: forward **kwargs with a strict signature filter (unrecognised names
+    raise TypeError), not plain forwarding and not dropping **kwargs.
+    Scope also covers a second silent defect found during verification:
+    corner_cornerpy passes weight_list= to corner.corner, which has no such
+    parameter (it is weights), so sample weights are ignored on every weighted
+    corner plot. Approved for the same PR.
+    Brain bug agent + sizing faculty both scored this too-large (13) and advised
+    phasing; overridden deliberately — the score is inflated by prompt word
+    count plus the multi-repo flag. Library PR merges first, workspace PR
+    follows behind the library-first gate.
+    Next: /start_library for PyAutoFit.

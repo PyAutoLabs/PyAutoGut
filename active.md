@@ -30,11 +30,23 @@
   HowTo 75L differ by PROJECT alone). Prompt steps 1 and 4 verified already done.
 - registered: 2026-08-24 by the start_dev session (claude/smoke-copy-drift-ci-docs-ozntvv);
   worktree_check_conflict clean (exit 0) for all 8 repos.
-- progress: phase 1 Hands leg DONE and pushed — `--list` allowlist mode on run_python.py,
-  8 new tests, docs/internals.md inventory corrected. Suite 362 passed / 8 skipped
-  (the 14 sandbox failures are pre-existing: ipynb-py-convert + Pillow unavailable;
-  clean-tree baseline is the same 14 with 354 passed). No PR opened yet.
-  Remaining: phase 1 collapse of the 4 *_workspace_test copies (blocked on this
-  merging), then phase 2 (notebook leg promotion + the 3 workspace copies).
+- progress: BOTH Hands legs DONE and pushed to PyAutoHands
+  claude/smoke-copy-drift-ci-docs-ozntvv. Phase 1 (8884ecd): `--list` opt-in script
+  lists on run_python.py. Phase 2 (c979b37): matching notebook leg on run.py —
+  `--list`, `--no-write-back`, `--retry-from`. 16 new tests; suite 388 passed /
+  5 skipped / 0 failed. No PR opened yet.
+- phase-2 findings (these changed the plan, recorded so the workspace PRs inherit them):
+  - run_notebook.py writes executed outputs back IN PLACE. Correct for generation
+    (the outputs are the product), wrong for a PR gate, which must not dirty the
+    tree it tests. Hence `--no-write-back`; it supersedes the workspace copy's
+    staged-copy-at-root trick rather than porting it, since the kernel cwd is
+    already pinned to the repo root.
+  - JUPYTER_MISSING_RC did NOT need promoting. It exists because the workspace copy
+    shelled out to a bare `jupyter`; execute_notebook invokes
+    `sys.executable run_notebook.py`, so the abort-with-no-summary failure mode is
+    structurally absent. One promotion item dissolved on inspection.
+- remaining: the 7 workspace collapses (4 *_workspace_test, then 3 workspace), each a
+  one-file PR, all blocked on the Hands branch merging first (library-first gate).
+  Those repos are not attached to this session — each needs add_repo with push.
 - repos:
   - PyAutoHands (branch claude/smoke-copy-drift-ci-docs-ozntvv)

@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1124 records across 7 buckets.
+1127 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -20,6 +20,7 @@ _(curate hard-won records here — survives regeneration.)_
 
 - [actionable-health-board](2026/08/actionable-health-board.md) — closed on ship
 - [active-prompt-orphan-triage](2026/08/active-prompt-orphan-triage.md)
+- [aplt-output-drift-remaining-repos](2026/08/aplt-output-drift-remaining-repos.md)
 - [arcticpy-install-standardisation](2026/08/arcticpy-install-standardisation.md)
 - [arxiv-inbox-tier](2026/08/arxiv-inbox-tier.md) — the nightly strong-lensing digest no longer ends in a Slack paste-block the
 - [astropy-cap-bump](2026/08/astropy-cap-bump.md) — closed manually post-merge — "Part of" in the PR bodies does not auto-close
@@ -101,6 +102,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [imaging-mge-pytree-migration](2026/08/imaging-mge-pytree-migration.md)
 - [inference-method-cards-seed](2026/08/inference-method-cards-seed.md)
 - [inference-programme-ledger](2026/08/inference-programme-ledger.md)
+- [intake-declared-difficulty](2026/08/intake-declared-difficulty.md) — the precedence rule "a DECLARED header key beats a value derived from
 - [interferometer-delaunay-flaky-fitexception](2026/08/interferometer-delaunay-flaky-fitexception.md)
 - [interferometer-delaunay-nonpd-fitexception](2026/08/interferometer-delaunay-nonpd-fitexception.md)
 - [interferometer-start-here-integrate-oom](2026/08/interferometer-start-here-integrate-oom.md)
@@ -234,6 +236,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [test-mode-samples-info-hook-contract](2026/08/test-mode-samples-info-hook-contract.md) — `NonLinearSearch._test_mode_samples_info()`'s docstring told subclasses
 - [test-performance-board](2026/08/test-performance-board.md)
 - [testmode-assertion-note-removal](2026/08/testmode-assertion-note-removal.md) — Follow-up to test-mode-bypass-assertion-ties (PyAutoFit#1520, merged
+- [tracer-fits-existence-guard](2026/08/tracer-fits-existence-guard.md)
 - [transformed-message-semantics-doc](2026/08/transformed-message-semantics-doc.md)
 - [undo-community-file-declutter](2026/08/undo-community-file-declutter.md) — Undid the 2026-08-19 community-file declutter (#248 Mind, #32 Memory):
 - [uniform-prior-bounds-numpy-path](2026/08/uniform-prior-bounds-numpy-path.md) — auto-closed by the merge's `Closes` line

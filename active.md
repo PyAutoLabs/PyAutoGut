@@ -4,7 +4,8 @@
 - issue: https://github.com/PyAutoLabs/PyAutoArray/issues/488 (issued 2026-08-24)
 - issued: 2026-08-24
 - prompt: active/shared_log_norm_helper.md
-- status: library-dev
+- status: awaiting-input
+- question: https://github.com/PyAutoLabs/PyAutoArray/issues/488#issuecomment-5402607740
 - worktree: none — remote web session (`web-github`), work done in the session clones
 - repos:
   - PyAutoArray: claude/autoarray-shared-log-norm-c12ges
@@ -25,7 +26,18 @@
     (`array.py` wins). Library-first: PyAutoArray merges before PyAutoGalaxy.
     The prompt file was orphaned on the unmerged
     `claude/aplt-output-drift-repos-33n81z` branch (that filing PR was never
-    opened); it was recovered onto this branch and advanced to `active/`.
+    opened); it was recovered onto this branch and advanced to `active/`. The
+    other two prompts filed in that commit — `draft/workspaces/
+    euclid_crlf_line_endings.md` and the `queue.md` additions — are still
+    stranded on that branch; question 2 on the issue asks whether to recover
+    them.
+
+    Implemented and pushed (PyAutoArray `accc253`, PyAutoGalaxy `00a0499`);
+    full suites green in both repos (1157 / 1119 passed; the 8 sparse-operator
+    inversion failures reproduce on unmodified main). Parked at ship sign-off
+    per the `supervised` levels table — the PRs are NOT open. Note the vitals
+    faculty could not be consulted (`pyauto-heart` absent in this `web-github`
+    session), so the Heart verdict is unknown rather than green.
 
 ## intake-declared-difficulty
 - issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/274 (issued 2026-08-24)

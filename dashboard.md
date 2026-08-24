@@ -193,7 +193,7 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
-<details><summary>📋 <a href="active/shared_log_norm_helper.md">One shared colour-norm helper — the three copies have already diverged</a> — <a href="https://github.com/PyAutoLabs/PyAutoArray/issues/488">issue #488</a> — issued 2026-08-24 — library-dev</summary>
+<details><summary>📋 <a href="active/shared_log_norm_helper.md">One shared colour-norm helper — the three copies have already diverged</a> — <a href="https://github.com/PyAutoLabs/PyAutoArray/issues/488">issue #488</a> — issued 2026-08-24 — awaiting-input</summary>
 
 ```
 /start_dev active/shared_log_norm_helper.md

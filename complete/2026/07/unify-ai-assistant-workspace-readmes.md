@@ -1,3 +1,28 @@
+# Phase 2: workspace READMEs made assistant-first
+
+- shipped: 2026-07-24, inside the phase-1 task rather than as a separate PR —
+  see `complete/2026/07/assistant-first-docs.md`.
+- issue: https://github.com/PyAutoLabs/PyAutoLens/issues/645
+- workspace-prs: https://github.com/PyAutoLabs/autolens_workspace/pull/329,
+  https://github.com/PyAutoLabs/autogalaxy_workspace/pull/155
+  (library legs PyAutoLens#646 + PyAutoGalaxy#521 were phase 1).
+- summary: this prompt's whole scope — one concise **AI Assistant** route first in
+  each workspace README's Getting Started, **Three Ways to Learn PyAutoLens**
+  removed, Colab/notebook/browsable-example routes preserved, remaining links
+  described as human-readable documentation — landed as the workspace leg of
+  `assistant-first-docs`, which unified library README, Read the Docs *and*
+  workspace onboarding in one pass. The PyAutoGalaxy assistant URL was
+  deliberately allowed to 404 until its repository exists.
+
+## Lifecycle note
+
+Phase 1 recorded the workspace PRs but the phase-2 prompt file was never advanced,
+so it kept rendering as pickable backlog long after the work merged. Recorded here
+by the 2026-08-24 completed-prompt reconciliation sweep — the split into phases 1/2
+was a planning artefact that the shipping session collapsed.
+
+## Original prompt
+
 # Phase 2: Make workspace READMEs assistant-first
 
 Filed: 2026-07-24 (backfilled from git)

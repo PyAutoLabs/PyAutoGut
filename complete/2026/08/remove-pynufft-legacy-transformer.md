@@ -1,3 +1,29 @@
+# Remove pynufft + the legacy TransformerNUFFTPyNUFFT
+
+- shipped: 2026-08-22 — library tier merged @PyAutoArray#475, @PyAutoGalaxy#583,
+  @PyAutoLens#709 (merged galaxy → lens → array so `main` was never red).
+- classification: maintenance (libraries) — dependency removal. Re-homed from
+  `draft/refactor/autoarray/` on 2026-08-22: the Refactor Agent refused it there
+  (`SUSPECT-API-CHANGE`, effective autonomy `human-required`) because deleting a
+  public class is not behaviour-preserving.
+- follow-ups (own records): `complete/2026/08/pynufft-removal-residue-phase-1.md`,
+  `complete/2026/08/pynufft-removal-residue-phase-2.md`,
+  `complete/2026/08/pynufft-scipy-pinv2-dev-extra.md`; phase 3 is still open as
+  `draft/maintenance/workspaces/pynufft_removal_downstream_residue_phase_3_ci_install_docs.md`.
+- corrections the implementation put on the record (the 2026-08-19 filing had both
+  facts wrong): pynufft was never a base dependency — it sat in the `optional` and
+  `dev` extras, so a plain `pip install autoarray` already raised
+  `pynufft_exception()` for most users; and the import-time saving is ~10 ms, not
+  the ~230 ms estimated at filing.
+
+## Lifecycle note
+
+Closed out in place with `Status: shipped` but never advanced out of `draft/`, so it
+kept rendering as pickable backlog. Recorded here by the 2026-08-24 completed-prompt
+reconciliation sweep.
+
+## Original prompt
+
 # Remove pynufft + legacy TransformerNUFFTPyNUFFT
 
 Type: maintenance

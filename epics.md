@@ -35,7 +35,7 @@ epic, never picked standalone.
 - CORRECTION (post-close-out): the captured stack shows the hang is in jax.block_until_ready, NOT in
   compilation. The epic's name and every marker calling this an "XLA compile stall" are wrong. Resume
   from "why does block_until_ready never return", not from compiler behaviour.
-- notes: phase 1 (watchdog) shipped in full; phases 2/3 stopped deliberately at a measured-but-not-root-caused state. The stall is instrumented and characterised (>100x bimodality inside one compile step; vmap-of-jit contributory at p=0.070 but NOT causal; the compile-cache hypothesis never tested) and NOTHING was un-quarantined. Resume via draft/research/ci/smoke_timing_and_profiling.md, which is where this gets dug up. Superseded draft/bug/autolens_workspace_test/multi_dataset_jax_likelihood_xla_stall.md.
+- notes: phase 1 (watchdog) shipped in full; phases 2/3 stopped deliberately at a measured-but-not-root-caused state. The stall is instrumented and characterised (>100x bimodality inside one compile step; vmap-of-jit contributory at p=0.070 but NOT causal; the compile-cache hypothesis never tested) and NOTHING was un-quarantined. Resume via draft/research/ci/smoke_timing_and_profiling.md, which is where this gets dug up. Superseded complete/2026/08/multi-dataset-jax-likelihood-xla-stall.md (was draft/bug/autolens_workspace_test/multi_dataset_jax_likelihood_xla_stall.md).
 
 ## graphical-ep
 - title: Expectation propagation (EP) campaign

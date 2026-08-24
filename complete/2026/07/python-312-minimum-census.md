@@ -1,3 +1,29 @@
+# Adopt Python 3.12 as the PyAuto ecosystem minimum — the census
+
+- completed: 2026-07-30 — the census this prompt asked for was produced (it is the
+  body below), and the migration it planned then shipped in full.
+- implementation record: `complete/2026/07/python-312-floor.md` — every phase, from
+  the five core library floors through build/health machinery, a live
+  `2026.7.29.2` PyPI release, the independent downstream repos and the long-tail
+  selector census. The whole stack declares and enforces `Requires-Python >=3.12`.
+- parent issues: PyAutoNerves#142 (with companions PyAutoCTI#100, PyAutoReduce#59,
+  PyAutoHeart#113), all closed 2026-07-30.
+- sibling records: `python-312-workspace-runtime-pins.md`,
+  `python_312_floor_phase_4b_autoreduce.md`, `python-312-release-surfaces.md`,
+  `release-check-e-python-312.md`, `python-312-autofit-wiki-currency-ci.md`.
+- still open, deliberately: `draft/bug/pyautoreduce/published_autoreduce_09_missing_312_floor.md`
+  — the `autoreduce 0.9` wheel already on PyPI predates the floor and needs a
+  release, not a code change.
+
+## Lifecycle note
+
+A research/census prompt whose acceptance criteria were all met by the shipped
+migration; it was never advanced out of `draft/`, so it kept rendering as pickable
+backlog carrying the same verbatim user request the migration was executed from.
+Recorded here by the 2026-08-24 completed-prompt reconciliation sweep.
+
+## Original prompt
+
 # Adopt Python 3.12 as the PyAuto ecosystem minimum
 
 Filed: 2026-07-28 (backfilled from git)

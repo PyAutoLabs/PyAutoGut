@@ -1,3 +1,36 @@
+# Explore: dashboardify the Brain's operational surfaces — resolved, and built
+
+- completed: 2026-08-23 — investigation resolved *and* the implementation it led to
+  shipped; the Brain board has been iterated on several times since.
+- write-up (the deliverable this prompt asked for):
+  `PyAutoMind/docs/pyautobrain/brain_board_assessment.md` — inventory of
+  `/wake_up`'s legs and where each landed, what was deliberately NOT dashboarded,
+  and the sibling-board architecture.
+- human direction at unpark (2026-08-23): build the PyAutoBrain dashboard, move the
+  `/wake_up` routine onto it, make it the morning starting point, and run the local
+  repo sync as a terminal command. So the "recommend a subset, or none" outcome was
+  overtaken — the answer was "build it".
+- what is live on PyAutoBrain `main`: `board/_board.py` (+ `_publish.py`, `_theme.py`,
+  `board.sh`, `gallery/`), `.github/workflows/brain_board.yml` publishing the board
+  each morning, `bin/morning.sh` as the local sync/clean leg, and `/wake_up` demoted
+  to the fallback door — all documented in PyAutoBrain's `AGENTS.md` § command
+  surface. Later PRs #258–#263 (morning timer, cloud hygiene, organ logos, the
+  test-performance surface, the board gallery) have built on it.
+- related records: `complete/2026/08/actionable-health-board.md` (the Heart board
+  this pattern came from), `complete/2026/08/one-tap-dashboard-rollout.md`,
+  `complete/2026/08/organism-board-final-readmes.md` (the arc's finale).
+- follow-ups still open: `draft/feature/pyautobrain/brain_board_follow_ups.md`
+  ("what real mornings surface", filed 2026-08-23).
+
+## Lifecycle note
+
+The prompt was updated in place on 2026-08-23 with "investigation resolved;
+implementation begun" but never advanced out of `draft/`, so it kept rendering as
+pickable backlog for a board that already exists. Recorded here by the 2026-08-24
+completed-prompt reconciliation sweep.
+
+## Original prompt
+
 # Explore: dashboardify the Brain's operational surfaces with pasteable conductor prompts
 
 Type: research

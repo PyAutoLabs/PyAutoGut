@@ -1,3 +1,29 @@
+# extra_galaxies feature parity — the parent prompt, arc complete
+
+- completed: 2026-07-30 — ARC COMPLETE, recorded phase by phase.
+- phases (all merged):
+  | Phase | Issue | PR |
+  |---|---|---|
+  | 1 — point_source | autolens_workspace#374 closed | autolens_workspace#376 (`e005caca`) |
+  | 2a — autogalaxy multi_galaxy | autogalaxy_workspace#182 closed | autogalaxy_workspace#184 (`78568683`) |
+  | 2b — autolens multi_galaxy | autolens_workspace#387 closed | autolens_workspace#391 (`9b274ff2`) |
+- phase records: `complete/2026/07/extra-galaxies-point-source.md`,
+  `complete/2026/07/extra-galaxies-multi-galaxy.md`,
+  `complete/2026/07/extra-galaxies-multi-galaxy-lens.md`.
+- summary: the user's scoping held throughout — `imaging/features/extra_galaxies`
+  and its interferometer twin were the standard to mirror; `point_source/features`
+  got the same style without a `slam.py`; `multi_galaxy` got it in both workspaces;
+  `group/` and `cluster/` were deliberately left untouched.
+
+## Lifecycle note
+
+`complete/2026/07/extra-galaxies-multi-galaxy-lens.md` already names this file as
+its parent and declares the arc complete, but the parent prompt itself was never
+advanced, so it kept rendering as pickable backlog. Recorded here by the 2026-08-24
+completed-prompt reconciliation sweep.
+
+## Original prompt
+
 # extra_galaxies feature parity: point_source + multi_galaxy (both workspaces)
 
 Type: docs

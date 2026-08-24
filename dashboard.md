@@ -6,16 +6,50 @@ This is the markdown version of the [PyAutoMind Dashboard](https://pyautolabs.gi
 
 Every task the Mind is holding, on one page: what is in flight, what is parked, and the whole backlog to pick from. Pick a task and run its `/start_dev` command in a Claude Code chat to start it. [Recent](#recent) is the same work by date — what has been happening rather than what to do next.
 
+> **Last updated 2026-08-24.** This page is generated from `active/`, `draft/` and the registry files, so it is only as current as they are. `dashboard_refresh.yml` re-renders it on every push to `main` — that heals a stale page, but not a stale prompt: a task that shipped without its prompt advancing to `complete/` keeps rendering here as pickable backlog. Reconciling those is the refresh below.
+
+<details><summary>📋 <b>Refresh this page</b> — reconcile finished prompts, then regenerate</summary>
+
+```
+Bring the PyAutoMind dashboard up to date. Work in the PyAutoMind checkout:
+
+1. `git fetch origin && git status`. If behind `origin/main`, `git pull --ff-only`
+   before touching anything.
+2. `python3 scripts/lifecycle.py check`, `orphans`, and `index --check`. Fix
+   whatever drift they report.
+3. Reconcile finished work — this is the part nothing automates. For every prompt
+   under `draft/` and `active/`, decide whether it is already done: a `Status:`
+   header saying shipped/superseded/absorbed, a merged PR named in its body, or a
+   record in `complete/` whose scope already covers it (check `complete/index.md`
+   and grep the dated buckets). Treat a same-subject record as evidence, not
+   proof — read both and confirm the scope really matches before retiring a
+   prompt.
+4. For each one that IS done, write its record and retire the prompt:
+   `python3 scripts/lifecycle.py record <slug> --date <YYYY-MM-DD> --from-file
+   <body> --apply`, where <body> ends with `## Original prompt` followed by the
+   prompt's full text. Then `git rm` the prompt file and repoint every
+   cross-reference to it (grep the slug across `draft/`, `active/`, `epics.md`
+   and the registry files).
+5. Regenerate the page: `pyauto-brain intake --apply dashboard`. Never hand-edit
+   `dashboard.md` or `dashboard.html` — they are generated.
+6. Commit and push to `main`, so `dashboard_refresh.yml` agrees with the tree.
+
+Report what you retired, what you deliberately left in the backlog and why, and
+anything you could not verify.
+```
+
+</details>
+
 | Where | Count |
 |-------|------:|
 | [In flight](#in-flight) (`active/`) | 1 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 5 |
-| [Backlog](#backlog) (`draft/`) | 154 |
+| [Backlog](#backlog) (`draft/`) | 142 |
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 17
+**Highest priority** (filed as `high`) — showing 12 of 14
 
 <details><summary>📋 <a href="draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — medium · safe · high</summary>
 
@@ -57,34 +91,10 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 </details>
 
-<details><summary>📋 <a href="draft/feature/autolens_profiling/jax_compile_time_profiling.md">Profile and speed up JAX likelihood-function compile times (all use cases)</a> — autolens_profiling · large · supervised · high</summary>
-
-```
-/start_dev draft/feature/autolens_profiling/jax_compile_time_profiling.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/profiling/profiling_agent_jax_compile_time_scope.md">Give the Profiling Agent a compile-time axis — the arc</a> — profiling · large · supervised · high</summary>
-
-```
-/start_dev draft/feature/profiling/profiling_agent_jax_compile_time_scope.md
-```
-
-</details>
-
 <details><summary>📋 <a href="draft/research/autoarray/delaunay_research.md">Deep research: Can we speed up Delaunay in PyAutoArray?</a> — autoarray · too-large · supervised · high</summary>
 
 ```
 /start_dev draft/research/autoarray/delaunay_research.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/research/autofit/priors_and_messages_math_audit.md">Census of priors and messages — confirmed bugs + redesign ideas</a> — autofit · too-large · supervised · high</summary>
-
-```
-/start_dev draft/research/autofit/priors_and_messages_math_audit.md
 ```
 
 </details>
@@ -109,6 +119,30 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 ```
 /start_dev draft/test/autolens_workspace_developer/mge_jit_regression_rebaseline.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/health_fixes/jax_runtime_and_parity.md">Fix release JAX runtime compatibility and likelihood parity</a> — health_fixes · too-large · supervised · high</summary>
+
+```
+/start_dev draft/bug/health_fixes/jax_runtime_and_parity.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/health_fixes/jit_visualization_outputs.md">Fix JIT quick-update visualization output regressions</a> — health_fixes · too-large · supervised · high</summary>
+
+```
+/start_dev draft/bug/health_fixes/jit_visualization_outputs.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/health_fixes/samples_parameter_paths.md">Fix release result/sample parameter-path regressions</a> — health_fixes · too-large · supervised · high</summary>
+
+```
+/start_dev draft/bug/health_fixes/samples_parameter_paths.md
 ```
 
 </details>
@@ -235,10 +269,10 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**154** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **26** of them belong to an epic and are listed only under [Epics](#epics) below.
+**142** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **26** of them belong to an epic and are listed only under [Epics](#epics) below.
 
 <details>
-<summary><b>feature</b> — 29</summary>
+<summary><b>feature</b> — 27</summary>
 
 <details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md">Numba CPU likelihood phase 1: batched MGE convolution + operated-matrix caching</a> — autoarray · medium · supervised · high</summary>
 
@@ -260,22 +294,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/feature/autoarray/numba_cpu_likelihood_kernel_cdf_fast_path.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/autolens_profiling/jax_compile_time_profiling.md">Profile and speed up JAX likelihood-function compile times (all use cases)</a> — autolens_profiling · large · supervised · high</summary>
-
-```
-/start_dev draft/feature/autolens_profiling/jax_compile_time_profiling.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/profiling/profiling_agent_jax_compile_time_scope.md">Give the Profiling Agent a compile-time axis — the arc</a> — profiling · large · supervised · high</summary>
-
-```
-/start_dev draft/feature/profiling/profiling_agent_jax_compile_time_scope.md
 ```
 
 </details>
@@ -475,7 +493,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>bug</b> — 28</summary>
+<summary><b>bug</b> — 26</summary>
 
 <details><summary>📋 <a href="draft/bug/health_fixes/jax_runtime_and_parity.md">Fix release JAX runtime compatibility and likelihood parity</a> — health_fixes · too-large · supervised · high</summary>
 
@@ -597,14 +615,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/bug/autolens/interferometer_delaunay_nonpd_fitexception.md">interferometer Delaunay pixelization — non-PD FitException in test-mode bypass</a> — autolens · medium · supervised · normal</summary>
-
-```
-/start_dev draft/bug/autolens/interferometer_delaunay_nonpd_fitexception.md
-```
-
-</details>
-
 <details><summary>📋 <a href="draft/bug/autolens/jit_cache_not_hit_modeling_visualization.md">JIT cache not hit in modeling_visualization delaunay/rectangular scripts</a> — autolens · medium · supervised · normal</summary>
 
 ```
@@ -617,14 +627,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/bug/autolens_workspace_test/gradient_eager_jit_divergence_py313.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/autolens_workspace_test/multi_dataset_jax_likelihood_xla_stall.md">multi_dataset/jax_likelihood scripts hang to the timeout cap (XLA compile stall)</a> — autolens_workspace_test · medium · supervised · normal</summary>
-
-```
-/start_dev draft/bug/autolens_workspace_test/multi_dataset_jax_likelihood_xla_stall.md
 ```
 
 </details>
@@ -704,20 +706,12 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>research</b> — 17</summary>
+<summary><b>research</b> — 14</summary>
 
 <details><summary>📋 <a href="draft/research/autoarray/delaunay_research.md">Deep research: Can we speed up Delaunay in PyAutoArray?</a> — autoarray · too-large · supervised · high</summary>
 
 ```
 /start_dev draft/research/autoarray/delaunay_research.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/research/autofit/priors_and_messages_math_audit.md">Census of priors and messages — confirmed bugs + redesign ideas</a> — autofit · too-large · supervised · high</summary>
-
-```
-/start_dev draft/research/autofit/priors_and_messages_math_audit.md
 ```
 
 </details>
@@ -742,14 +736,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/research/autobuild/git_docs.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/research/pyautobrain/explore_dashboardify_the_brain_s_operational_sur.md">Explore: dashboardify the Brain's operational surfaces with pasteable conductor prompts</a> — pyautobrain · small · supervised · normal</summary>
-
-```
-/start_dev draft/research/pyautobrain/explore_dashboardify_the_brain_s_operational_sur.md
 ```
 
 </details>
@@ -834,18 +820,10 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/research/libraries/python_312_minimum.md">Adopt Python 3.12 as the PyAuto ecosystem minimum</a> — libraries</summary>
-
-```
-/start_dev draft/research/libraries/python_312_minimum.md
-```
-
-</details>
-
 </details>
 
 <details>
-<summary><b>maintenance</b> — 25</summary>
+<summary><b>maintenance</b> — 22</summary>
 
 <details><summary>📋 <a href="draft/maintenance/libraries/untrack_generated_fits_test_artifacts.md">Untrack the generated FITS test artifacts in autoarray</a> — libraries · small · supervised · medium</summary>
 
@@ -935,14 +913,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/maintenance/pyautomind/history_policy_generated_block.md">Single-source the "Never rewrite history" policy as a generated AGENTS.md block</a> — pyautomind · medium · supervised · normal</summary>
-
-```
-/start_dev draft/maintenance/pyautomind/history_policy_generated_block.md
-```
-
-</details>
-
 <details><summary>📋 <a href="draft/maintenance/workspaces/committed_capped_smoke_datasets.md">Capped smoke datasets were committed as if they were real</a> — workspaces · medium · supervised · normal</summary>
 
 ```
@@ -971,14 +941,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/maintenance/workspaces/read_through_issues.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/maintenance/libraries/remove_pynufft_legacy_transformer.md">Remove pynufft + legacy TransformerNUFFTPyNUFFT</a> — libraries · low-medium · supervised · normal</summary>
-
-```
-/start_dev draft/maintenance/libraries/remove_pynufft_legacy_transformer.md
 ```
 
 </details>
@@ -1015,14 +977,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/maintenance/autolens_workspace/latex_docstrings_invalid_escape_warnings.md">LaTeX in non-raw docstrings emits SyntaxWarning: invalid escape sequence</a> — autolens_workspace · small · supervised · low</summary>
-
-```
-/start_dev draft/maintenance/autolens_workspace/latex_docstrings_invalid_escape_warnings.md
-```
-
-</details>
-
 <details><summary>📋 <a href="draft/maintenance/pyautoheart/weekly_smoke_timings_artifact_naming.md">The weekly smoke run's timings land in <code>results-*</code> under no discoverable name</a> — pyautoheart · small · safe · low</summary>
 
 ```
@@ -1050,7 +1004,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>docs</b> — 14</summary>
+<summary><b>docs</b> — 12</summary>
 
 <details><summary>📋 <a href="draft/docs/autolens/multi_galaxy_package.md">multi_galaxy package: new regime package in autolens_workspace</a> — autolens · large · supervised · high</summary>
 
@@ -1116,14 +1070,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/docs/workspaces/extra_galaxies_feature_parity.md">extra_galaxies feature parity: point_source + multi_galaxy (both workspaces)</a> — workspaces · medium · supervised · normal</summary>
-
-```
-/start_dev draft/docs/workspaces/extra_galaxies_feature_parity.md
-```
-
-</details>
-
 <details><summary>📋 <a href="draft/docs/howtolens/ch4_mask_overlay_never_drawn.md">HowToLens ch4 tutorial 3: mask overlay is never actually drawn</a> — howtolens · small · supervised · low</summary>
 
 ```
@@ -1152,14 +1098,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/docs/workspaces/plot_coverage_followups.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/docs/workspaces/unify_ai_assistant_workspace_readmes.md">Phase 2: Make workspace READMEs assistant-first</a> — workspaces</summary>
-
-```
-/start_dev draft/docs/workspaces/unify_ai_assistant_workspace_readmes.md
 ```
 
 </details>
@@ -1321,15 +1259,13 @@ The 50 newest things to happen to the work in hand, newest first — issued, par
 | 2026-08-23 | filed | <a href="draft/maintenance/workspaces/pynufft_removal_downstream_residue_phase_3_ci_install_docs.md">Phase 3: stop installing pynufft in Hands/Heart CI and PyAutoCTI…</a> |
 | 2026-08-23 | filed | <a href="draft/feature/pyautobrain/brain_board_follow_ups.md">Brain board follow-ups: what real mornings surface</a> |
 | 2026-08-22 | filed | <a href="draft/maintenance/ci/smoke_install_stale_jax_pin.md">smoke_install.sh's stale <code>jax&lt;0.7</code> pin — CI is on the right jax…</a> |
-| 2026-08-22 | filed | <a href="draft/bug/autolens_workspace_test/multi_dataset_jax_likelihood_xla_stall.md">multi_dataset/jax_likelihood scripts hang to the timeout cap (XLA…</a> |
+| 2026-08-22 | filed | <a href="draft/maintenance/libraries/untrack_generated_fits_test_artifacts.md">Untrack the generated FITS test artifacts in autoarray</a> |
 
 <details><summary>… 10 more (40 left)</summary>
 
 | Date | Event | Task |
 |------|-------|------|
-| 2026-08-22 | filed | <a href="draft/maintenance/libraries/untrack_generated_fits_test_artifacts.md">Untrack the generated FITS test artifacts in autoarray</a> |
 | 2026-08-22 | filed | <a href="draft/bug/autoarray/reconstruction_noise_map_solver_mismatch.md">The reconstruction noise map describes a different estimator than the…</a> |
-| 2026-08-22 | filed | <a href="draft/maintenance/libraries/remove_pynufft_legacy_transformer.md">Remove pynufft + legacy TransformerNUFFTPyNUFFT</a> |
 | 2026-08-22 | filed | <a href="draft/bug/pyautolens/point_source_json_datasets_record_no_regime.md">Point-source JSON datasets record no resolution regime</a> |
 | 2026-08-22 | filed | <a href="draft/research/libraries/intel_macos_support_policy.md">Is Intel macOS a supported platform, and what is the numpy-only…</a> |
 | 2026-08-22 | filed | <a href="draft/maintenance/libraries/defer_scipy_sparse_import.md">Defer the eager scipy.sparse import in derivative_util (~0.10 s of…</a> |
@@ -1337,13 +1273,13 @@ The 50 newest things to happen to the work in hand, newest first — issued, par
 | 2026-08-21 | filed | <a href="draft/feature/autoarray/rectangular_bilinear_rtu_mesh_split.md">Rectangular mesh split: Bilinear (fast CPU default) vs RTU…</a> |
 | 2026-08-20 | filed | <a href="draft/feature/autoarray/numba_cpu_likelihood_kernel_cdf_fast_path.md">Numba CPU likelihood phase 2: kernel-CDF numba fast path (the 49-88%…</a> |
 | 2026-08-20 | filed | <a href="draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md">Numba CPU likelihood phase 1: batched MGE convolution +…</a> |
+| 2026-08-19 | filed | <a href="draft/bug/pyautomind/status_sh_repos_missing_source.md">status.sh --repos sources a file that no longer exists</a> |
+| 2026-08-19 | filed | <a href="draft/bug/autofit/jax_011_message_log_partition_tuple_shape.md">jax 0.11 breaks beta/gamma message log_partition under jit…</a> |
 
 <details><summary>… 10 more (30 left)</summary>
 
 | Date | Event | Task |
 |------|-------|------|
-| 2026-08-19 | filed | <a href="draft/bug/pyautomind/status_sh_repos_missing_source.md">status.sh --repos sources a file that no longer exists</a> |
-| 2026-08-19 | filed | <a href="draft/bug/autofit/jax_011_message_log_partition_tuple_shape.md">jax 0.11 breaks beta/gamma message log_partition under jit…</a> |
 | 2026-08-19 | filed | <a href="draft/bug/autolens/jax_likelihood_smoke_pins_stale.md">autolens_workspace_test jax_likelihood pins: 4 scripts fail smoke on…</a> |
 | 2026-08-19 | filed | <a href="draft/research/autofit/autofit_profiling_bootstrap.md">autofit_profiling: bootstrap the repo + general PyAutoFit profiling…</a> |
 | 2026-08-19 | filed | <a href="draft/bug/pyautoreduce/published_autoreduce_09_missing_312_floor.md"><code>autoreduce 0.9</code> on PyPI never got the Python 3.12 floor</a> |
@@ -1352,14 +1288,13 @@ The 50 newest things to happen to the work in hand, newest first — issued, par
 | 2026-08-19 | filed | <a href="draft/maintenance/pyautobrain/refactor_witness_map_missing_autonerves.md">Refactor Agent witness map lacks PyAutoNerves test suite</a> |
 | 2026-08-19 | filed | <a href="draft/docs/pyautobrain/rtd_organism_currency.md">RTD organism docs currency: Nerves page, organ-count drift, hands.md…</a> |
 | 2026-08-19 | filed | <a href="draft/bug/pyautobrain/pyautoconf_rename_functional_leftovers.md">PyAutoConf rename leftovers in Brain functional surfaces</a> |
+| 2026-08-19 | filed | <a href="draft/refactor/pyautomind/repos_sync_check_dedup.md">Deduplicate repos_sync.py's check/write pairs</a> |
+| 2026-08-19 | filed | <a href="draft/triage/bug_in_autocti_workspace_the_dataset_1d.md">Bug in autocti_workspace: the dataset_1d results/database example…</a> |
 
 <details><summary>… 10 more (20 left)</summary>
 
 | Date | Event | Task |
 |------|-------|------|
-| 2026-08-19 | filed | <a href="draft/research/pyautobrain/explore_dashboardify_the_brain_s_operational_sur.md">Explore: dashboardify the Brain's operational surfaces with pasteable…</a> |
-| 2026-08-19 | filed | <a href="draft/refactor/pyautomind/repos_sync_check_dedup.md">Deduplicate repos_sync.py's check/write pairs</a> |
-| 2026-08-19 | filed | <a href="draft/triage/bug_in_autocti_workspace_the_dataset_1d.md">Bug in autocti_workspace: the dataset_1d results/database example…</a> |
 | 2026-08-18 | parked | <a href="parked.md#single-source-density-design">single-source-density-design</a> |
 | 2026-08-18 | parked | <a href="parked.md#prior-message-collapse-design">prior-message-collapse-design</a> |
 | 2026-08-18 | filed | <a href="draft/bug/priors/15_transformed_message_logpdf_jacobian.md"><code>@PyAutoFit</code> <code>TransformedMessage.logpdf</code>/<code>pdf</code> omit the transform…</a> |
@@ -1367,14 +1302,14 @@ The 50 newest things to happen to the work in hand, newest first — issued, par
 | 2026-08-17 | filed | <a href="draft/feature/pyautomind/repos-sync-config-stamper.md">Teach repos_sync --write to stamp organ config surfaces</a> |
 | 2026-08-16 | filed | <a href="draft/bug/autofit/loggaussian_prior_declares_own_support.md"><code>LogGaussianPrior</code> misreports its own support as <code>(-inf, inf)</code></a> |
 | 2026-08-14 | filed | <a href="draft/bug/workspaces/jax_likelihood_pins_stale_by_1e4.md">Three <code>jax_likelihood</code> pins are stale by ~1.24e-4 and fail the smoke…</a> |
+| 2026-08-09 | found | <a href="planned.md#isothermal-ell-sph-oversampling-at-the-cusp">isothermal-ell-sph-oversampling-at-the-cusp</a> |
+| 2026-08-08 | parked | <a href="parked.md#pyautoreduce-slacs1430-acs-comparison">pyautoreduce-slacs1430-acs-comparison</a> |
+| 2026-08-08 | filed | <a href="draft/docs/autolens_workspace/markdown_regeneration_sigma_min.md">Regenerate autolens_workspace markdown/ so the MGE pages show…</a> |
 
 <details><summary>… 10 more (10 left)</summary>
 
 | Date | Event | Task |
 |------|-------|------|
-| 2026-08-09 | found | <a href="planned.md#isothermal-ell-sph-oversampling-at-the-cusp">isothermal-ell-sph-oversampling-at-the-cusp</a> |
-| 2026-08-08 | parked | <a href="parked.md#pyautoreduce-slacs1430-acs-comparison">pyautoreduce-slacs1430-acs-comparison</a> |
-| 2026-08-08 | filed | <a href="draft/docs/autolens_workspace/markdown_regeneration_sigma_min.md">Regenerate autolens_workspace markdown/ so the MGE pages show…</a> |
 | 2026-08-07 | filed | <a href="draft/bug/autofit/plot_functions_discard_kwargs.md"><code>autofit.plot</code> functions accept <code>**kwargs</code> and silently discard them</a> |
 | 2026-08-07 | filed | <a href="draft/maintenance/workspaces/notebook_setup_notebook_drift_siblings.md">Regenerate setup_notebook-drifted notebooks in…</a> |
 | 2026-08-06 | filed | <a href="draft/triage/convolver_blurring_image_warning.md">Triage: Convolver "No blurring_image provided" warning in canonical…</a> |
@@ -1382,6 +1317,9 @@ The 50 newest things to happen to the work in hand, newest first — issued, par
 | 2026-08-06 | filed | <a href="draft/maintenance/libraries/dep_cap_refresh_2026_08.md">Dependency-cap refresh 2026-08: safe bumps, astropy 8 decision, two…</a> |
 | 2026-08-05 | filed | <a href="draft/feature/autofit/search_seed_reproducibility.md">Give PyAutoFit searches a <code>seed</code> — today no search can be made…</a> |
 | 2026-08-04 | filed | <a href="draft/maintenance/autolens_profiling/jwst_lw_untracked_gitignore_gap.md">dataset/imaging/jwst_lw is untracked because the gitignore was never…</a> |
+| 2026-08-04 | filed | <a href="draft/maintenance/autolens_workspace/cosmos_web_ring_mask_dtype.md">cosmos_web_ring stores boolean masks as float64, wasting ~3.4 MB of…</a> |
+| 2026-08-04 | filed | <a href="draft/maintenance/autolens_workspace_developer/stale_api_rot_audit.md">autolens_workspace_developer: broad stale-API rot (56 symbols, no CI)</a> |
+| 2026-08-04 | filed | <a href="draft/bug/workspaces/aplt_output_drift_remaining_repos.md"><code>aplt.Output</code> stale-API drift in the remaining workspace repos</a> |
 
 </details>
 
@@ -1536,7 +1474,7 @@ Continue the 'Cluster strong lensing — Source & Cluster arc' epic. Its canonic
 <details><summary>📋 <b>Intermittent XLA compile stall in the JAX vmap likelihood path</b> — ledger: `draft/bug/ci/jax_vmap_jit_compile_stall.md` — CLOSED AS PARTIAL 2026-08-23 — record complete/2026/08/jax-compile-stall-slow-vs-stall-audit.md</summary>
 
 ```
-Continue the 'Intermittent XLA compile stall in the JAX vmap likelihood path' epic. Its canonical state lives in draft/bug/ci/jax_vmap_jit_compile_stall.md — read that ledger (and any DECISIONS/RESULTS files beside it) first. Cross-check this epic's entry in PyAutoMind/epics.md, any related rows in PyAutoMind/active.md, and the referenced repos' open issues and PRs, to work out the last completed phase and what is currently in flight. Then pick the next logical step and continue it through the normal workflow (/start_dev — filing the phase's prompt first if none exists), updating the ledger as the work advances. Note: phase 1 (watchdog) shipped in full; phases 2/3 stopped deliberately at a measured-but-not-root-caused state. The stall is instrumented and characterised (>100x bimodality inside one compile step; vmap-of-jit contributory at p=0.070 but NOT causal; the compile-cache hypothesis never tested) and NOTHING was un-quarantined. Resume via draft/research/ci/smoke_timing_and_profiling.md, which is where this gets dug up. Superseded draft/bug/autolens_workspace_test/multi_dataset_jax_likelihood_xla_stall.md.
+Continue the 'Intermittent XLA compile stall in the JAX vmap likelihood path' epic. Its canonical state lives in draft/bug/ci/jax_vmap_jit_compile_stall.md — read that ledger (and any DECISIONS/RESULTS files beside it) first. Cross-check this epic's entry in PyAutoMind/epics.md, any related rows in PyAutoMind/active.md, and the referenced repos' open issues and PRs, to work out the last completed phase and what is currently in flight. Then pick the next logical step and continue it through the normal workflow (/start_dev — filing the phase's prompt first if none exists), updating the ledger as the work advances. Note: phase 1 (watchdog) shipped in full; phases 2/3 stopped deliberately at a measured-but-not-root-caused state. The stall is instrumented and characterised (>100x bimodality inside one compile step; vmap-of-jit contributory at p=0.070 but NOT causal; the compile-cache hypothesis never tested) and NOTHING was un-quarantined. Resume via draft/research/ci/smoke_timing_and_profiling.md, which is where this gets dug up. Superseded complete/2026/08/multi-dataset-jax-likelihood-xla-stall.md (was draft/bug/autolens_workspace_test/multi_dataset_jax_likelihood_xla_stall.md).
 ```
 
 </details>
@@ -1659,7 +1597,7 @@ Continue the 'Expectation propagation (EP) campaign' epic. Its canonical state l
 
 ## Hygiene
 
-6 prompt(s) without a metadata header — they show no facets above. Re-home or re-run intake on them when touched.
+4 prompt(s) without a metadata header — they show no facets above. Re-home or re-run intake on them when touched.
 
 <details>
 <summary>Headerless prompts</summary>
@@ -1667,9 +1605,7 @@ Continue the 'Expectation propagation (EP) campaign' epic. Its canonical state l
 - `draft/bug/autolens/interferometer_release_leg_oom.md`
 - `draft/docs/autolens_workspace/sampler_cli_output_workspace_sweep.md`
 - `draft/docs/workspaces/plot_coverage_followups.md`
-- `draft/docs/workspaces/unify_ai_assistant_workspace_readmes.md`
 - `draft/research/autolens_profiling/cluster_gradient_search_benchmark.md`
-- `draft/research/libraries/python_312_minimum.md`
 
 </details>
 

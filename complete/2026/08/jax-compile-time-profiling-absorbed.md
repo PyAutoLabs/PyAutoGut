@@ -1,3 +1,32 @@
+# Profile and speed up JAX likelihood-function compile times — absorbed, then shipped
+
+- completed: 2026-08-10 — absorbed into the compile-axis arc and shipped there; no
+  work remained under this slug.
+- absorbed-into: `draft/feature/profiling/compile_warm_baseline_dashboard.md`
+  (phase 2 of the compile-axis arc), shipped as
+  `complete/2026/08/compile-warm-baseline-dashboard.md` — autolens_profiling#104
+  (`355d555`) + PyAutoBrain#220 (`74d7b1b`). Merged there because the dashboard and
+  the Profiling Agent that reads it are two halves of one thing, and building them
+  from opposite ends risks incompatible schemas.
+- the earlier legs were already spent by then: the compile-time speed-up arc
+  (`#71 → #77`) closed the "can we make it faster" question — settings suffice
+  (persistent cache 117.0 s → 2.3 s; autotune-off 498 s → 29 s) — and the
+  search-transform measurement scope was executed by the MultiStartProdigy census
+  (autolens_profiling#93).
+- one claim of this prompt is overturned on the record: its "autotuning ruled out"
+  section was wrong — that A/B never actually flipped the flag. See
+  `autolens_profiling/scripts/misc/jax_compile/README.md`.
+- arc record: `profiling-agent-compile-axis-arc`.
+
+## Lifecycle note
+
+Banner-marked "ABSORBED 2026-08-10 — do not start from this file" but left in
+`draft/` at `Priority: high`, so it kept rendering in the dashboard's top pick list.
+Recorded here by the 2026-08-24 completed-prompt reconciliation sweep; the
+measurements and overturned-claim trail are preserved in the original prompt below.
+
+## Original prompt
+
 # Profile and speed up JAX likelihood-function compile times (all use cases)
 
 > **ABSORBED 2026-08-10 — do not start from this file.** The surviving scope (the

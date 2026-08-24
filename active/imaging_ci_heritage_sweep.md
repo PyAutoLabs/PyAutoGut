@@ -1,86 +1,89 @@
-# The root-level `imaging_ci/` heritage tree was missed by the Phase 5 legacy sweep
+# Top-level `imaging_ci/` is pre-resurrection heritage the legacy sweep missed
 
 Type: maintenance
 Target: autocti_workspace_test
 Repos:
-- @autocti_workspace_test
+- autocti_workspace_test
 Difficulty: small
 Autonomy: supervised
-Priority: normal
+Priority: low
 Status: formalised
 Filed: 2026-08-24
 Issued: 2026-08-24
 
-CTI resurrection Phase 5 (`complete/2026/07/cti-resurrection-phase5.md`) rebuilt
-`autocti_workspace_test` as a modern integration suite and preserved the 2022-23
-Euclid VIS heritage verbatim under `legacy/` — `euclid/`, `tvac/`, `temporal/`,
-`validation/`, `overview_output/` and `config_2023/`, with a `legacy/README.md`
-explaining the era.
+Split out of `aplt-output-drift-remaining-repos` (PyAutoGalaxy#585, 2026-08-24),
+which scoped `autocti_workspace_test` out rather than modernising code that
+looks dead.
 
-**It missed a tree.** `imaging_ci/` still sits at the repository root — 43 files,
-~284 KB — outside both `legacy/` and `scripts/`:
+## The observation
 
+`autocti_workspace_test` has a top-level `imaging_ci/` directory — 41 Python
+files — that behaves in every observable way like the `legacy/` tree beside it,
+but is not in it:
+
+- **Not documented.** AGENTS.md's "Repository Structure" block lists `scripts/`,
+  `legacy/`, `config/` and `smoke_tests.txt`. Top-level `imaging_ci/` appears
+  nowhere in it.
+- **Not exercised.** `smoke_tests.txt` lists three scripts
+  (`dataset_1d/model_fit.py`, `imaging_ci/model_fit.py`, `plot/subplots.py`) —
+  all of them under `scripts/`, none under top-level `imaging_ci/`. Nothing in
+  CI touches it.
+- **Not maintained since 2023.** Its substantive history is `2023-02-07 add all
+  files` and `2023-02-13 temporal fit now runs`. Its only 2026 commits are
+  repo-wide mechanical sweeps (`remove the Finished./Finish. notebook-generation
+  crutch`, `remove legacy notebook bootstrap`) that also touched `legacy/`.
+- **Broken against the current stack, in exactly the `legacy/` way.** 13 of its
+  files call the removed plotter-object API — `ImagingCIPlotter`, `MatPlot2D`,
+  `MatPlot1D`, `Output`, `Array2DPlotter`, `Cmap`, `Title`, `Axis` — none of
+  which `autocti.plot` exports (its `__init__.py` is 49 lines of flat functions).
+  `legacy/README.md` describes its own contents in the same terms: *"target the
+  pre-2025 PyAutoCTI API (the removed Plotter object stack, analysis summing,
+  etc.) and are not runnable against the current stack."*
+
+`legacy/` was created on 2026-07-17 by *"CTI resurrection Phase 5: rebuild as a
+modern integration-test suite (#1)"*, which swept the pre-resurrection contents
+into it. The reading this prompt proposes: `imaging_ci/` is part of that same
+heritage and the sweep simply missed it.
+
+## Why it matters
+
+`AGENTS.md:52` says *"Never edit `legacy/` — it is preserved Euclid VIS
+history."* That rule protects the tree it names. Because `imaging_ci/` sits
+outside it, an API-drift sweep reads those 13 files as live breakage and
+"fixes" them — modernising dead code against no CI and no dataset. That is the
+mistake PyAutoGalaxy#585 stopped one step short of making.
+
+## What to decide
+
+Confirm the reading before acting — the point of this prompt is the question,
+not a foregone move. Check `imaging_ci/` against the CTI resurrection epic
+(PyAutoCTI#82): is any of it slated for modernisation, or is it all superseded
+by `scripts/`?
+
+Then one of:
+
+1. **`git mv imaging_ci/ legacy/imaging_ci/`** and extend `legacy/README.md` +
+   AGENTS.md's structure block to cover it. Preserves the history, and puts it
+   behind the never-edit rule where a future sweep will leave it alone.
+2. **Condemn it** via the Gut's transit-and-void lifecycle (see PyAutoGut), if
+   `legacy/` is meant to hold only the Euclid VIS material specifically and this
+   is something else.
+3. **Keep and modernise** — only if the epic actually wants these 13 files
+   working. Then it is a real dev task, not maintenance, and wants its own
+   prompt with a plan for validating them (no CI, no committed dataset).
+
+Note `imaging_ci/profiling/` (17 files) and `imaging_ci/temporal/` are in the
+directory too and are *not* part of the 13 broken ones — they need the same
+decision but on their own evidence, not by association.
+
+## Evidence to re-derive
+
+```bash
+git -C autocti_workspace_test log --format="%ad %s" --date=short -- imaging_ci | head
+git -C autocti_workspace_test log --diff-filter=A --format="%ad %s" --date=short -- legacy/README.md
 ```
-imaging_ci/
-  cosmics/      cosmic-ray flagging + its simulators (imports `lacosmic`)
-  profiling/    add_cti / likelihood / pruning / arctic run-time profiling scripts
-  simulators/   uniform charge-injection simulators (parallel_x1/x3, serial_x1/x3)
-  temporal/     individual_fits.py, individual_temporal.py
-```
 
-## Why this is the same heritage, not live material
-
-Three independent signals, all checked against `main` (01f1d72):
-
-1. **Same era, same dead API.** The files carry the pre-resurrection prose and
-   imports — `import autocti.plot as aplt` (the removed Plotter object stack),
-   docstrings writing datasets to `/autocti_workspace/dataset/...`, `lacosmic`
-   as a hard import. `legacy/README.md` describes exactly this: "target the
-   pre-2025 PyAutoCTI API ... **not runnable** against the current stack".
-2. **Nothing references it.** Every `imaging_ci` reference outside the tree
-   resolves to `scripts/imaging_ci/model_fit.py` — `smoke_tests.txt:2`,
-   `AGENTS.md:23`, and the `aplt.subplot_imaging_ci*` calls in
-   `scripts/plot/subplots.py`. No CI workflow, no config, no `.gitignore` entry
-   names the root tree.
-3. **It is undocumented.** `AGENTS.md` "Repository Structure" lists `scripts/`,
-   `legacy/`, `config/` and `smoke_tests.txt` and does not mention it at all —
-   so the repo's own canonical layout map already behaves as though the tree
-   does not exist.
-
-It is also a **naming hazard**: a root-level `imaging_ci/` sitting next to a
-`smoke_tests.txt` line that reads `imaging_ci/model_fit.py` (resolved relative
-to `scripts/`) invites exactly the wrong reading of which tree is live.
-
-## Work
-
-1. **Move `imaging_ci/` → `legacy/imaging_ci/` verbatim.** `git mv` only — no
-   content edits, no reformatting, no modernization. The Phase 5 precedent is
-   preservation, and `AGENTS.md` already says "Never edit `legacy/`".
-2. **Extend `legacy/README.md`** with the `imaging_ci/` entry, matching the
-   existing one-line-per-subtree style, and note it was swept later than the
-   rest (Phase 5 missed it) so the record is honest about provenance.
-3. **Update the `AGENTS.md` "Repository Structure" block** so its `legacy/`
-   line names `imaging_ci/` alongside the trees it already covers. The block
-   never listed the root tree, so this is the first time the layout map and the
-   repository agree.
-4. **Verify nothing broke.** `python .github/scripts/run_smoke.py` (3/3) after
-   the move, and re-grep for `imaging_ci` references to confirm the only hits
-   outside `legacy/` are the `scripts/` ones listed above.
-
-## Explicitly out of scope
-
-- **Modernizing** any of the moved scripts to the current PyAutoCTI API. If the
-  profiling scripts are wanted live, that is a separate task against
-  `autolens_profiling` conventions, not this sweep.
-- **Condemning** the tree (Gut transit-and-void). Phase 5 chose preservation for
-  its sibling trees; this sweep follows that choice rather than re-litigating it.
-  If the heritage should instead be condemned, that is a decision to take across
-  all of `legacy/` at once, not for this one subtree.
-
-## Context
-
-- `PyAutoMind/complete/2026/07/cti-resurrection-phase5.md` — the sweep that
-  established `legacy/` and named the trees it moved.
-- `autocti_workspace_test/legacy/README.md` — the preservation rationale.
-- `autocti_workspace_test/AGENTS.md` — "Never edit `legacy/`" and the structure
-  block this task updates.
+Alias-aware AST scan (resolve the plot alias from each file's own imports, then
+diff attribute use against `autocti/plot/__init__.py`'s real export list) —
+the scan written for PyAutoGalaxy#585 reports 31 broken files repo-wide,
+18 under `legacy/` and 13 under top-level `imaging_ci/`.

@@ -23,10 +23,15 @@
 - repos:
   - autocti_workspace_test: feature/imaging-ci-heritage-sweep
 - summary: |
-    Verbatim `git mv` of the orphaned root `imaging_ci/` tree (43 files, ~284 KB —
-    cosmics/, profiling/, simulators/, temporal/) into the existing `legacy/` home,
-    plus the `legacy/README.md` and `AGENTS.md` structure-block lines that name it.
-    Pre-resurrection heritage the Phase 5 sweep missed; nothing references it and
-    the repo's own layout map already omits it. No behaviour change.
-    Planned in a web-github session — the worktree above does not exist yet;
-    `/start_workspace` creates it. Next: /start_workspace.
+    DECISION task, not a foregone move (the prompt is explicit about this). Top-level
+    `imaging_ci/` in autocti_workspace_test behaves like the `legacy/` tree beside it
+    — undocumented, unexercised, unmaintained since 2023, 13 files on the removed
+    plotter-object API — but sits outside it, so an API-drift sweep reads it as live
+    breakage. Split out of aplt-output-drift-remaining-repos (PyAutoGalaxy#585).
+    Three options on the table: (1) git mv into legacy/, (2) condemn via the Gut,
+    (3) keep and modernise (would be a dev task, not maintenance). `profiling/`
+    (17 files) and `temporal/` are NOT among the 13 broken and need the same
+    decision on their own evidence, not by association.
+    Evidence re-derivation must precede the choice; check against the CTI
+    resurrection epic (PyAutoCTI#82) for anything slated for modernisation.
+    Planned in a web-github session — the worktree above does not exist yet.

@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1125 records across 7 buckets.
+1126 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -102,6 +102,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [imaging-mge-pytree-migration](2026/08/imaging-mge-pytree-migration.md)
 - [inference-method-cards-seed](2026/08/inference-method-cards-seed.md)
 - [inference-programme-ledger](2026/08/inference-programme-ledger.md)
+- [intake-declared-difficulty](2026/08/intake-declared-difficulty.md) — the precedence rule "a DECLARED header key beats a value derived from
 - [interferometer-delaunay-flaky-fitexception](2026/08/interferometer-delaunay-flaky-fitexception.md)
 - [interferometer-delaunay-nonpd-fitexception](2026/08/interferometer-delaunay-nonpd-fitexception.md)
 - [interferometer-start-here-integrate-oom](2026/08/interferometer-start-here-integrate-oom.md)

@@ -30,11 +30,15 @@
   HowTo 75L differ by PROJECT alone). Prompt steps 1 and 4 verified already done.
 - registered: 2026-08-24 by the start_dev session (claude/smoke-copy-drift-ci-docs-ozntvv);
   worktree_check_conflict clean (exit 0) for all 8 repos.
-- progress: BOTH Hands legs DONE and pushed to PyAutoHands
-  claude/smoke-copy-drift-ci-docs-ozntvv. Phase 1 (8884ecd): `--list` opt-in script
-  lists on run_python.py. Phase 2 (c979b37): matching notebook leg on run.py —
-  `--list`, `--no-write-back`, `--retry-from`. 16 new tests; suite 388 passed /
-  5 skipped / 0 failed. No PR opened yet.
+- status-detail: HANDS LEGS MERGED, workspace collapses not started. The task stays
+  active deliberately — issue #260 scopes seven workspace PRs that have zero commits,
+  so this is not complete and must not be recorded as such.
+- library-pr: https://github.com/PyAutoLabs/PyAutoHands/pull/261 MERGED 2026-08-24 → c0e2e53
+  (both Hands legs: phase 1 `--list` opt-in script lists on run_python.py; phase 2
+  the matching notebook leg on run.py — `--list`, `--no-write-back`, `--retry-from`).
+  16 new tests; suite 388 passed / 5 skipped / 0 failed; CI green on all three
+  matrix legs (3.12/3.13/3.14) plus the tenant-firewall step in each.
+- mind-pr: https://github.com/PyAutoLabs/PyAutoMind/pull/280 MERGED 2026-08-24 → 0cd8544a
 - phase-2 findings (these changed the plan, recorded so the workspace PRs inherit them):
   - run_notebook.py writes executed outputs back IN PLACE. Correct for generation
     (the outputs are the product), wrong for a PR gate, which must not dirty the

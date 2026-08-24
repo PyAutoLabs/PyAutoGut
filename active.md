@@ -1,5 +1,27 @@
 # Active Tasks
 
+## euclid-crlf-line-endings
+- issue: https://github.com/PyAutoLabs/euclid_strong_lens_modeling_pipeline/issues/40 (issued 2026-08-24)
+- issued: 2026-08-24
+- prompt: active/euclid_crlf_line_endings.md
+- status: workspace-dev
+- worktree: none — remote web session (`web-github`), work done in the session clones
+- repos:
+  - euclid_strong_lens_modeling_pipeline: claude/euclid-crlf-line-endings-0tr00e
+  - PyAutoMind: claude/euclid-crlf-line-endings-0tr00e
+- autonomy: safe (declared `safe`, maintenance cap `safe`) — launched with `--auto`
+- summary: |
+    The 2026-07-25 org-wide CRLF sweep stopped at the five libraries; the Euclid
+    pipeline still has no .gitattributes and 42/189 tracked files are CRLF —
+    including hpc/sync, the four hpc/batch_* SLURM scripts and activate.sh, which
+    are executed/sourced, so the CR is functional breakage on HPC, not cosmetic.
+    Hazard: two .fits files read as text to git's heuristic (ASCII FITS headers,
+    no NUL in the sampled prefix); a bare `* text=auto eol=lf` + --renormalize
+    would strip ~10k CR bytes out of binary image data. `*.fits binary` must be
+    declared first, and the .fits blob SHAs verified unchanged against HEAD.
+    Jammy2211/euclid_assistant NOT inventoried — different GitHub owner tier,
+    could not be attached to this session; follow-up prompt if it drifts too.
+
 ## intake-declared-difficulty
 - issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/274 (issued 2026-08-24)
 - issued: 2026-08-24

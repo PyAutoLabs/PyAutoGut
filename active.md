@@ -4,7 +4,8 @@
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1519
 - issued: 2026-08-24
 - prompt: active/test_mode_bypass_ordered_assertion_ties.md
-- status: library-dev
+- status: library-shipped, awaiting-merge
+- library-pr: https://github.com/PyAutoLabs/PyAutoFit/pull/1520 (pending-release)
 - environment: web-github (no local worktree; PyAutoBrain/skills/WORKFLOW.md)
 - repos:
   - PyAutoFit: feature/test-mode-bypass-assertion-ties
@@ -24,7 +25,14 @@
     point (medians, then seeded prior draws) so modes 2 AND 3 store an
     assertion-valid vector. Verified: repro failed both modes before, passes
     after; 5 new tests fail without the source change; full test_autofit
-    2016 passed / 34 skipped. Next step: /ship_library (PR not yet opened).
+    2016 passed / 34 skipped. Shipped as PyAutoFit#1520 (pending-release).
+    GATE CAVEAT: pyauto-heart is unreachable from this web-github session, so
+    the readiness gate ran in the WORKFLOW.md fallback form (full library suite
+    as the gate) — this is NOT a Heart GREEN verdict; confirm from a
+    Heart-reachable environment before merge. Workspace impact: API Changes are
+    "none — internal", but the workspace clones are absent here so the
+    reference.md grep was NOT run; option (iii) is inferred, not measured.
+    Next step: /prm (CI green → merge → close-out).
 
 ## transformed-message-factor-gradient-unpack
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1501 (issued 2026-08-19)

@@ -159,7 +159,7 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
-<details><summary>📋 <a href="active/test_mode_bypass_ordered_assertion_ties.md">TEST_MODE bypass crashes on ordered-parameter assertion ties</a> — <a href="https://github.com/PyAutoLabs/PyAutoFit/issues/1519">issue #1519</a> — issued 2026-08-24 — library-dev</summary>
+<details><summary>📋 <a href="active/test_mode_bypass_ordered_assertion_ties.md">TEST_MODE bypass crashes on ordered-parameter assertion ties</a> — <a href="https://github.com/PyAutoLabs/PyAutoFit/issues/1519">issue #1519</a> — issued 2026-08-24 — library-shipped, awaiting-merge</summary>
 
 ```
 /start_dev active/test_mode_bypass_ordered_assertion_ties.md

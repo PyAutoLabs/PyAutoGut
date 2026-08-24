@@ -15,9 +15,20 @@
  --bad:#f85149;--accent:#2ee6cf;--tint:#2ee6cf1f;
  --edge:#2ee6cf47}}
 *{box-sizing:border-box}
+/* Wrapping is the page DEFAULT, not a per-component opt-in. These boards are
+   read on phones, and every one of them prints run URLs, dotted test ids and
+   long file paths — a single unbreakable token in any element a renderer adds
+   itself (a reasons list, a footer, a details block) spills past the right
+   edge and gives the WHOLE page a horizontal scroll. `overflow-wrap` is
+   inherited, so setting it here covers markup this module has never seen.
+   The three max-width/overflow rules do the same job for the things that
+   cannot be wrapped: an image, a table, a code block. */
 body{margin:0 auto;max-width:44rem;padding:0 1rem 4rem;background:var(--bg);
  color:var(--fg);font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",
- Helvetica,Arial,sans-serif;-webkit-text-size-adjust:100%}
+ Helvetica,Arial,sans-serif;-webkit-text-size-adjust:100%;
+ overflow-wrap:anywhere}
+img,svg,table{max-width:100%}
+pre{overflow-x:auto}
 a{color:var(--accent);text-decoration:none}
 a:hover{text-decoration:underline}
 .muted{color:var(--muted)}
@@ -69,7 +80,7 @@ h3{font-size:.98rem;margin:1.3rem 0 .2rem;font-weight:650;color:var(--accent)}
 .task{display:flex;gap:.6rem;align-items:flex-start;padding:.45rem .35rem;
  margin:0 -.35rem;border-bottom:1px solid var(--line);border-radius:7px}
 .task:hover{background:var(--tint)}
-.task p{margin:.25rem 0 0;flex:1;overflow-wrap:anywhere}
+.task p{margin:.25rem 0 0;flex:1}
 button.copy{flex:0 0 auto;width:2.6rem;height:2.6rem;font-size:1.1rem;
  border:1px solid var(--line);border-radius:9px;background:var(--btn);
  cursor:pointer;color:var(--fg);transition:border-color .12s,color .12s}
@@ -86,9 +97,17 @@ summary::marker{color:var(--accent)}
 /* --- facet pills: the backlog, scannable by colour --------------------- */
 .facets{color:var(--muted);font-size:.85em}
 .tags{display:block;margin-top:.32rem;line-height:1.9}
-.pill{display:inline-block;padding:.06em .5em;border-radius:999px;
+/* A pill is a LABEL, and a label that will not fit is elided, never allowed
+   to push the page sideways. `nowrap` is what makes a chip read as a chip, so
+   it is also the one thing the page-wide wrap guard above cannot reach: an
+   over-long value (a board handing a whole log sentence to a facet) used to
+   run a chip a thousand pixels wide. The row's prose carries the meaning; the
+   chip carries the word. `vertical-align:bottom` because `overflow:hidden`
+   moves an inline-block's baseline to its bottom edge. */
+.pill{display:inline-block;max-width:100%;padding:.06em .5em;border-radius:999px;
  font-size:.74em;font-weight:650;letter-spacing:.015em;white-space:nowrap;
- vertical-align:.09em;border:1px solid var(--edge);background:var(--tint);
+ overflow:hidden;text-overflow:ellipsis;
+ vertical-align:bottom;border:1px solid var(--edge);background:var(--tint);
  color:var(--accent)}
 .pill+.pill{margin-left:.28rem}
 .pill.n{border-color:var(--line);background:var(--btn);color:var(--muted)}
@@ -118,7 +137,7 @@ summary::marker{color:var(--accent)}
 /* --- tables ------------------------------------------------------------ */
 table.recent{width:100%;border-collapse:collapse;font-size:.95em}
 table.recent td{border-bottom:1px solid var(--line);
- padding:.45rem .4rem .45rem 0;vertical-align:top;overflow-wrap:anywhere}
+ padding:.45rem .4rem .45rem 0;vertical-align:top}
 table.recent tr:hover td{background:var(--tint)}
 table.recent td.when{white-space:nowrap;color:var(--muted);
  font-variant-numeric:tabular-nums}

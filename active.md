@@ -13,8 +13,3 @@
 - registered: 2026-08-19 by the wake_up session — the issuing session (claude/autofit-priors-messages-audit-ylvenv)
   filed the prompt + issue but not this entry, tripping Lifecycle Drift on main.
 - repos-none-claimed: this entry claims NO repos — one line deliberately, not 2-space bullets.
-
-## smoke-surface-retime-sweep
-- issue: https://github.com/PyAutoLabs/autolens_workspace_test/issues/274
-- issued: 2026-08-24
-- prompt: active/smoke_timing_and_profiling.md

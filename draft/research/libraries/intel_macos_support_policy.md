@@ -19,7 +19,7 @@ Filed: 2026-08-22 (backfilled from git)
 > issue in general?
 
 Asked while reviewing the pynufft removal
-(`draft/maintenance/libraries/remove_pynufft_legacy_transformer.md`), whose
+(`complete/2026/08/remove-pynufft-legacy-transformer.md`), whose
 Intel-Mac caveat was accepted as a release-note line on the understanding that
 the general platform question gets its own task.
 

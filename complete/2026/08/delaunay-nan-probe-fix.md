@@ -1,3 +1,25 @@
+<<<<<<<< HEAD:complete/2026/08/delaunay-nan-probe-ell-comps-validator.md
+# The delaunay.py NaN-poisoning probe died in ell_comps validation
+
+- shipped: 2026-08-24 — autolens_workspace_test#277 (merged `995f0c9`)
+- classification: bug (autolens_workspace_test + PyAutoGalaxy) — the JAX NaN-lane
+  probe in `scripts/interferometer/jax_likelihood/delaunay.py`
+- validation: retime run 32759921650 — NEITHER on both matrix legs, full PASS
+  sequence restored on the script.
+- summary: `instance_from_vector` handed the deliberate all-NaN vector's
+  `ell_comps` to autogalaxy's `validate.validate_ell_comps`, which raised
+  `ModelParameterException` at instance construction — so the probe exited 1
+  before it could test the thing it exists for (that an invalid Delaunay mesh
+  reaches the raw interferometer likelihood as NaN rather than crashing or
+  returning a plausible number). Fixed probe-side.
+
+## Lifecycle note
+
+The shipping session closed the prompt out in place (Mind commit `9f5e6972`,
+`Status: shipped 2026-08-24`) but never advanced it out of `draft/`, so it kept
+rendering as pickable backlog on the dashboard. Recorded here by the 2026-08-24
+completed-prompt reconciliation sweep; no further work.
+========
 # The delaunay NaN probe injected above the boundary the validator guards
 
 autolens_workspace_test#277 (`995f0c9`), shipped 2026-08-24 — the first of the
@@ -45,6 +67,7 @@ None of its own. The sibling bug found by the same sweep —
 `gradient_eager_jit_divergence_py313.md`, root-caused to an NNLS
 `while_loop` branch flip — remains in `draft/` with its fix direction
 recorded (pin `nnls_solver_tol`/`max_iter`).
+>>>>>>>> origin/main:complete/2026/08/delaunay-nan-probe-fix.md
 
 ## Original prompt
 

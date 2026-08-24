@@ -1,3 +1,37 @@
+# Give the Profiling Agent a compile-time axis — the arc, closed
+
+- completed: 2026-08-10 — all three child prompts shipped the same day; phase 3's
+  record says "closes it".
+- phases:
+  | # | Record | Issue | PR |
+  |---|---|---|---|
+  | 1 | `complete/2026/08/compile-axis-campaign-coverage.md` | PyAutoBrain#218 | PyAutoBrain#219 (`cd79005`) |
+  | 2 | `complete/2026/08/compile-warm-baseline-dashboard.md` | autolens_profiling#103 | autolens_profiling#104 (`355d555`) · PyAutoBrain#220 (`74d7b1b`) |
+  | 3 | `complete/2026/08/compile-axis-triage-drift.md` | PyAutoBrain#221 | PyAutoBrain#222 (`a50efc3`) |
+- what the arc was for, after the 2026-08-10 re-scope: not speed-up (the
+  `#71 → #74 → #77` arc had already shipped persistent-cache-by-default and
+  `--xla_gpu_autotune_level=0`, and closed the question) but **regression
+  surveillance** — both wins are settings, and a config drift, a `jax` bump or a
+  wrapper clobbering `XLA_FLAGS` puts the 70-minute worst case back with nothing
+  failing. `pyauto-brain profiling <mode> --axis compile` now answers all three
+  modes, warm rows are machine-identifiable and pinned, and compile-time profiling
+  moved from **Future modes** to **Modes** in the conductor's `AGENTS.md`.
+- deliberately out of scope, and stayed out: the release-validation heavy scripts.
+  Script-suite cost is the `/hygiene` `perf` boundary, and PyAutoHeart#72 had
+  already handled the 300 s cap that motivated it.
+- absorbed here: `draft/feature/autolens_profiling/jax_compile_time_profiling.md`
+  was the workspace half of phase 2 — recorded separately as
+  `jax-compile-time-profiling-absorbed`.
+
+## Lifecycle note
+
+The arc tracker was left in `draft/` at `Priority: high` after its last child
+merged, so it sat at the top of the dashboard's "Highest priority" pick list for two
+weeks pointing at finished work. Recorded here by the 2026-08-24 completed-prompt
+reconciliation sweep.
+
+## Original prompt
+
 # Give the Profiling Agent a compile-time axis — the arc
 
 Type: feature

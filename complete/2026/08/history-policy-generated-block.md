@@ -1,5 +1,36 @@
 # Single-source the "Never rewrite history" policy as a generated AGENTS.md block
 
+- shipped: 2026-08-23 (Mind `18a6a82b`).
+- classification: maintenance (PyAutoMind + every repo in `repos.yaml`).
+- what landed, exactly as the prompt specified:
+  - the canonical text lives in a file, not a code constant —
+    `PyAutoMind/policy/never_rewrite_history.md` (`HISTORY_POLICY_FILE`), the
+    recommendation the prompt made so a safety policy is editable without
+    touching generator code;
+  - `scripts/repos_sync.py` gained `load_history_policy()` +
+    `HISTORY_BEGIN`/`HISTORY_END` (`<!-- repos_sync:history:begin/end -->`) and
+    writes the block into every checked-out repo's `AGENTS.md` on `--write`,
+    opt-in by markers and tolerant of absent repos, mirroring the `system_map`
+    rollout;
+  - `check_history_blocks()` is a registered check in `main()`, so a stale block
+    fails the drift guard rather than rotting.
+- the guardrail was not weakened: the full `## Never rewrite history` section is
+  still inline and always-loaded in every `AGENTS.md` (verified in PyAutoMind and
+  PyAutoBrain), and `PyAutoMind/AGENTS.md` § Hard rules keeps its one-line summary.
+  The 2026-07-12 proposal to simply delete the section stays rejected.
+- epic context: `complete/archive/epics/agents_md_standardization.md`, whose fourth
+  generated block this was.
+
+## Lifecycle note
+
+Shipped without a completion record and never advanced out of `draft/`, so it kept
+rendering as pickable backlog against machinery that is already on `main` and
+CI-gated. Recorded here by the 2026-08-24 completed-prompt reconciliation sweep.
+
+## Original prompt
+
+# Single-source the "Never rewrite history" policy as a generated AGENTS.md block
+
 Type: maintenance
 Target: PyAutoMind
 Repos:

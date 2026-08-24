@@ -13,7 +13,7 @@ Filed: 2026-08-22 (backfilled from git)
 ## Where this came from
 
 Found 2026-08-22 while measuring the pynufft removal
-(`draft/maintenance/libraries/remove_pynufft_legacy_transformer.md`). That task
+(`complete/2026/08/remove-pynufft-legacy-transformer.md`). That task
 assumed removing pynufft would take ~0.23 s off `import autoarray`. It takes
 ~10 ms. The reason is the real target:
 

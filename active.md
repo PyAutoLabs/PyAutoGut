@@ -10,12 +10,17 @@
   - PyAutoBrain: claude/intake-declared-difficulty-icstba
   - PyAutoMind: claude/intake-declared-difficulty-icstba
 - summary: |
-    Intake now honours a Difficulty:/Autonomy:/Priority: the raw text declares (the
-    ideas.md "Difficulty large, supervised." idiom included), reports whether each
-    value was declared or estimated, and keeps the declaration out of the derived
-    title/slug. Declarations are read from prose only — code fences/backticks are
-    masked. The sizing faculty stays the pure estimator; formalise applies the same
-    precedence. Brain suite (485) + tenant-firewall leg green.
+    Third instance of one family: a conductor deriving from prose while ignoring a
+    declared header key (1 = feature ranker, fixed #217; 2 = the Bug Agent's Type:
+    leg, fixed in this pass; 3 = intake's Difficulty:). Per the prompt, the
+    precedence rule moves INTO the sizing faculty — one `effective_difficulty`
+    both conductors call — rather than being re-implemented per conductor:
+    declared wins, derived level + score reported alongside on disagreement.
+    Intake also reads a declaration out of unstructured raw text (the ideas.md
+    "Difficulty large, supervised." idiom), keeps it out of the derived
+    title/slug, and honours a declared `Type:` over prose classification.
+    The prompt file on main (c1927d5) is authoritative; the session's earlier
+    reconstruction of it was dropped in the merge.
 
 ## transformed-message-factor-gradient-unpack
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1501 (issued 2026-08-19)

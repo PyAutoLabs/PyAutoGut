@@ -185,7 +185,7 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
-<details><summary>📋 <a href="active/intake_ignores_declared_difficulty.md">Intake ignores a difficulty declared in the raw text</a> — <a href="https://github.com/PyAutoLabs/PyAutoBrain/issues/274">issue #274</a> — issued 2026-08-24 — library-dev</summary>
+<details><summary>📋 <a href="active/intake_ignores_declared_difficulty.md">Intake discards a declared Difficulty and persists its own derived one</a> — <a href="https://github.com/PyAutoLabs/PyAutoBrain/issues/274">issue #274</a> — issued 2026-08-24 — library-dev</summary>
 
 ```
 /start_dev active/intake_ignores_declared_difficulty.md
@@ -1256,7 +1256,7 @@ The 50 newest things to happen to the work in hand, newest first — issued, par
 | 2026-08-24 | filed | <a href="draft/maintenance/workspaces/unpark_multi_galaxy_scaling_relation_slam.md">Un-park multi_galaxy/features/scaling_relation/slam once a capped run…</a> |
 | 2026-08-24 | filed | <a href="draft/maintenance/pyautoheart/weekly_smoke_timings_artifact_naming.md">The weekly smoke run's timings land in <code>results-*</code> under no…</a> |
 | 2026-08-24 | filed | <a href="draft/bug/pyautobrain/organ_repo_spellings_split_across_keys.md">Organ repo spellings split across two normalised keys</a> |
-| 2026-08-24 | issued | <a href="active/intake_ignores_declared_difficulty.md">Intake ignores a difficulty declared in the raw text</a> |
+| 2026-08-24 | issued | <a href="active/intake_ignores_declared_difficulty.md">Intake discards a declared Difficulty and persists its own derived one</a> |
 | 2026-08-24 | filed | <a href="draft/maintenance/ci/heart_smoke_table_autocti.md">Heart's local smoke runner cannot run any CTI workspace — no autocti…</a> |
 | 2026-08-23 | filed | <a href="draft/maintenance/workspaces/pynufft_removal_downstream_residue.md">pynufft removal: unswept downstream residue (1 hard break + stale…</a> |
 | 2026-08-23 | filed | <a href="draft/maintenance/workspaces/pynufft_removal_downstream_residue_phase_3_ci_install_docs.md">Phase 3: stop installing pynufft in Hands/Heart CI and PyAutoCTI…</a> |

@@ -5,8 +5,9 @@
 - issued: 2026-08-24
 - prompt: active/test_mode_bypass_ordered_assertion_ties.md
 - status: library-dev
-- worktree: ~/Code/PyAutoLabs-wt/test-mode-bypass-assertion-ties
+- environment: web-github (no local worktree; PyAutoBrain/skills/WORKFLOW.md)
 - repos:
+  - PyAutoFit: feature/test-mode-bypass-assertion-ties
 - summary: |
     TEST_MODE=2/3 bypass evaluates at the prior medians, so a model with identical
     priors plus an ordering assertion ties and raises FitException. Verified on
@@ -18,7 +19,12 @@
     therefore broken as well. Chosen fix (human-approved): share TEST_MODE=1's
     existing deterministic valid-point search (medians, then seeded prior draws)
     so the bypass evaluates AND stores an assertion-valid vector, fixing all three.
-    Next step: /start_library.
+    Implemented and pushed: PyAutoFit feature/test-mode-bypass-assertion-ties
+    (d49275c33). Shared _test_mode_valid_parameter_vector now picks the bypass
+    point (medians, then seeded prior draws) so modes 2 AND 3 store an
+    assertion-valid vector. Verified: repro failed both modes before, passes
+    after; 5 new tests fail without the source change; full test_autofit
+    2016 passed / 34 skipped. Next step: /ship_library (PR not yet opened).
 
 ## transformed-message-factor-gradient-unpack
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1501 (issued 2026-08-19)

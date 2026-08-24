@@ -1,5 +1,28 @@
 # Active Tasks
 
+## wiki-currency-check-version-gate
+- issue: https://github.com/PyAutoLabs/autocti_assistant/issues/25
+- issued: 2026-08-24
+- prompt: active/wiki_currency_check_version_gate.md
+- status: workspace-dev
+- location: cloud-session (web-github; no worktree — session clones under /home/user)
+- repos:
+  - autocti_assistant: feature/wiki-currency-check-version-gate
+- summary: |
+    CTI CI standardisation Phase 6, task 3 of 3. `--check-version` hashes the
+    ENTIRE public surface of autoarray/autofit, so the baseline rots on every
+    library main merge that exports a name.
+
+    Design decided by the human at the two-option checkpoint: OPTION 1 —
+    record the sorted symbol names in the baseline, print a real +added/-removed
+    diff, exit 0 on additions-only, exit 1 on any removal. Chosen over option 2
+    (demote to informational) because the baseline stores only a hash today, so
+    a red prints "public API surface changed: autofit" and nothing else — which
+    is exactly what cost the last session hand-built worktree diffs. Recording
+    449 names (~15KB) fixes the noise AND makes every future red diagnosable.
+    Caveat recorded: this would NOT have prevented the original red (both
+    removed symbols were uncited) — it makes it arrive with names attached.
+
 ## heart-smoke-table-autocti
 - issue: https://github.com/PyAutoLabs/PyAutoHeart/issues/172
 - issued: 2026-08-24

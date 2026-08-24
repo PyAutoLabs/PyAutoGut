@@ -9,6 +9,7 @@ Autonomy: supervised
 Priority: normal
 Status: formalised
 Filed: 2026-08-24
+Issued: 2026-08-24
 
 `wiki-currency` went red on `autocti_assistant` main and was fixed on 2026-08-24
 by regenerating `wiki/core/api_audit_baseline.json` (autocti_assistant#24, PR

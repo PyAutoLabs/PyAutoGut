@@ -30,4 +30,11 @@
   HowTo 75L differ by PROJECT alone). Prompt steps 1 and 4 verified already done.
 - registered: 2026-08-24 by the start_dev session (claude/smoke-copy-drift-ci-docs-ozntvv);
   worktree_check_conflict clean (exit 0) for all 8 repos.
+- progress: phase 1 Hands leg DONE and pushed — `--list` allowlist mode on run_python.py,
+  8 new tests, docs/internals.md inventory corrected. Suite 362 passed / 8 skipped
+  (the 14 sandbox failures are pre-existing: ipynb-py-convert + Pillow unavailable;
+  clean-tree baseline is the same 14 with 354 passed). No PR opened yet.
+  Remaining: phase 1 collapse of the 4 *_workspace_test copies (blocked on this
+  merging), then phase 2 (notebook leg promotion + the 3 workspace copies).
 - repos:
+  - PyAutoHands (branch claude/smoke-copy-drift-ci-docs-ozntvv)

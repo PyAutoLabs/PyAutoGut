@@ -93,3 +93,196 @@ lives.
 - The `interferometer/jax_grad/gradient.py` `NEEDS_FIX` entry is removed from
   `@autolens_workspace_test/config/build/no_run.yaml`, restoring mega-run
   coverage on 3.13.
+
+---
+
+## UPDATE 2026-08-24 — investigation (read-only; no code changed)
+
+Investigated ahead of the fix. Result: **the `pure_callback` constant-folding
+hypothesis in the guard's own message is refuted, and the jax-version-delta
+hypothesis (Task item 3) is refuted.** The divergence is a **discrete branch
+change in the positive-only NNLS solve**, and its magnitude is *exactly* the
+solver-branch quantum this script already documents at the failing call site.
+Nothing was edited in `@autolens_workspace_test` — in particular the guard's
+`rtol` was NOT widened; see "Why the tolerance must not be widened" below.
+
+### 1. `pure_callback` is structurally absent from Variant B's path
+
+Repo-wide grep of the installed chain (`PyAutoNerves PyAutoFit PyAutoArray
+PyAutoGalaxy PyAutoLens`) finds `jax.pure_callback` in exactly one family — the
+**Delaunay/Sibson qhull triangulation**:
+
+```
+autoarray/inversion/mesh/interpolator/delaunay.py:149:    return jax.pure_callback(
+autoarray/inversion/mesh/interpolator/sibson.py:514  (docstring)
+autoarray/inversion/mesh/mesh/delaunay.py:30         (docstring)
+autoarray/inversion/mesh/mesh/delaunay_nn.py:22      (docstring)
+```
+
+Variant B is a **rectangular** mesh (`RectangularRTUAdaptDensity`), which never
+constructs a triangulation. A grep for `callback` across
+`autoarray/inversion/inversion/`, `autoarray/inversion/regularization/`,
+`autoarray/inversion/mesh/mesh/rectangular_rtu_adapt_density.py`,
+`autoarray/operators/transformer.py`,
+`autoarray/dataset/interferometer/` and `autolens/interferometer/` returns
+**zero hits**. There is no callback boundary in this likelihood for XLA to
+constant-fold. Task item 2 is answered: hypothesis refuted, no library-side
+callback pinning is needed.
+
+### 2. Both legs resolve the *same* jax/jaxlib — Task item 3 refuted
+
+From the install logs of retime run **32741386752** (`resolved jax …` is printed
+by `.github/scripts/smoke_install.sh`'s `JAXCHECK` block):
+
+- 3.12 job **97476472522**:
+  ```
+  resolved jax 0.11.1
+    Downloading jax-0.11.1-py3-none-any.whl.metadata (13 kB)
+    Downloading jaxlib-0.11.1-cp312-cp312-manylinux_2_27_x86_64.whl.metadata (1.3 kB)
+  ```
+- 3.13 job **97476472555**:
+  ```
+  resolved jax 0.11.1
+    Downloading jax-0.11.1-py3-none-any.whl.metadata (13 kB)
+    Downloading jaxlib-0.11.1-cp313-cp313-manylinux_2_27_x86_64.whl.metadata (1.3 kB)
+  ```
+
+Every numerically relevant package is identical version-for-version on the two
+legs: `jax-0.11.1`, `jaxlib-0.11.1`, `jaxnnls-1.0.1`, `numpy-2.5.2`,
+`scipy-1.17.1`, `ml_dtypes-0.6.0`, `opt_einsum-3.4.0`, `jax_zero_contour-2.0.0`.
+Only the CPython ABI tag of the `jaxlib` wheel differs (`cp312` vs `cp313`).
+**This is not an environment-pinning task** — there is nothing to pin.
+
+### 3. The mechanism: a PDIP iteration-count / branch flip in the NNLS solve
+
+`use_positive_only_solver: true` (autoarray `config/general.yaml:5`, and the
+workspace's shadowing `config/general.yaml:16`), so the inversion solves through
+`inversion_util.reconstruction_positive_only_from` →
+`autoarray/util/jax_nnls.py:solve_nnls`, a **primal-dual interior-point** NNLS
+whose termination is a data-dependent `lax.while_loop`:
+
+```python
+def converged_check(inputs):
+    _, _, _, _, _, _, converged, pdip_iter = inputs
+    return jnp.logical_and(pdip_iter < max_iter, converged == 0)
+
+init_inputs = (Q, q, x, s, z, solver_tol, 0, 0)
+outputs = jax.lax.while_loop(converged_check, pdip_pc_step, init_inputs)
+```
+
+with `solver_tol = jax.lax.min(Q.shape[0] * EPSILON, 1e-2)`. The returned `x` is
+therefore accurate only to a **finite KKT residual tolerance**, not to machine
+precision, and the *number of PDIP iterations actually taken* is a step function
+of the iterates. Any O(1e-16) difference in how the dense Cholesky inside
+`pdip_pc_step` is evaluated — exactly what differs between JAX's eager
+op-by-op dispatch and a single fused XLA program under `jax.jit` — can move the
+convergence trip by one iteration and return a materially different `x`.
+
+### 4. The decisive quantitative evidence: the gap IS the documented quantum
+
+`gradient.py:251-257` and `util.py:97-107` already document that this exact
+configuration has measure-thin solver branch flips of **ΔLL ~1.6e-3**:
+
+> "single float inputs (width < 1e-15) where the solve lands on a marginally
+> different branch (ΔLL ~1.6e-3, identical for two orthogonal parameter
+> directions; also present under reg.Constant, so not mesh- or reg-specific)"
+
+The failing gap is:
+
+```
+jitted − eager = -3164.021216643465 − (-3164.0196392095145) = -1.5774339503877854e-03
+                                                    (= 4.9855e-07 relative)
+```
+
+And in the **same retime run**, the *passing* 3.12 leg's FD step sweep for
+Variant B prints the poisoned steps whose magnitude is that same quantum divided
+by the FD step (`h = rel_step * max(|x|, 0.1)`, so `h = rel_step * 0.1` here):
+
+```
+FD step sweep (rel_steps=(1e-08, 1e-07, 1e-06); * = used for comparison):
+ p[ 0] ad= -4.822776e-01  fd:    7.887165e+05    -4.822823e-01  * -4.822778e-01
+ p[ 1] ad=  1.035652e-01  fd:    1.034550e-01  *  1.035687e-01     7.887273e+03
+ p[ 3] ad= -1.675453e+00  fd:   -1.675517e+00  * -1.675448e+00     7.885495e+03
+ p[ 5] ad= -9.340543e-01  fd:   -7.887179e+05    -9.340511e-01  * -9.340533e-01
+ p[ 6] ad=  3.146983e+00  fd:    3.147079e+00     7.887485e+04  *  3.146984e+00
+```
+
+Back out ΔLL = outlier × 2h from each:
+
+| outlier | rel_step | 2h | implied ΔLL |
+|---|---|---|---|
+| 7.887165e+05 | 1e-8 | 2e-9 | **1.5774330e-03** |
+| 7.887179e+05 | 1e-8 | 2e-9 | **1.5774358e-03** |
+| 7.887485e+04 | 1e-7 | 2e-8 | **1.5774970e-03** |
+| 7.887273e+03 | 1e-6 | 2e-7 | **1.5774546e-03** |
+| 7.885495e+03 | 1e-6 | 2e-7 | **1.5770990e-03** |
+
+All five agree with the eager/jit gap (**1.5774340e-03**) to 4–5 significant
+figures, across three step sizes and both flip directions. The eager and jitted
+programs are not disagreeing by accumulated round-off — **they are sitting on
+opposite sides of one documented branch of the positive-only solve.** That is
+the named cause the Acceptance section asks for: *a genuine (discrete) numerical
+property of the solve*, not constant-folding and not a version delta.
+
+Variant C passes because its base point is not near a flip; the flip is
+knife-edge and evaluation-point-specific (the script's own note already records
+it is "also present under reg.Constant, so not mesh- or reg-specific").
+
+### 5. Caveat on the "3.13-only" framing
+
+The evidence establishes the *mechanism* but not that CPython 3.13 is the causal
+variable. `jaxlib` 0.11.1 cp312 and cp313 are the same XLA sources; a more
+ordinary explanation for which leg tips is that the two matrix jobs ran on
+different runner hardware (CPU vector width changes reduction association inside
+fused kernels, which is a ~1e-16 perturbation — enough to tip a knife-edge
+`while_loop` trip). Note the *eager* value is bit-identical across legs, which
+is consistent with either story: eager dispatch is unfused. Before writing
+"Python 3.13" into a fix, falsify cheaply by re-running the retime on 3.12
+several times (and on 3.13) and printing `converged` / `pdip_iter` from
+`solve_nnls` on both the eager and jitted evaluation.
+
+### 6. Why the tolerance must NOT be widened (why nothing was edited)
+
+Considered and rejected — this is the "report, don't change" outcome:
+
+- **`rtol=1e-10` is not the only thing the guard buys here.**
+  `compare_gradients` computes autodiff on the **eager** `f` and finite
+  differences on the **jitted** `f_fd` (`gradient.py:258-264`). If eager and
+  jitted sit on different NNLS branches, the two halves of that comparison are
+  derivatives of two different piecewise branches, and a passing FD/AD check
+  would be luck, not certification. The guard is what makes the downstream
+  FD-certification meaningful, so a run that trips it genuinely must not
+  proceed.
+- Passing would require `rtol >= 5e-7`, a five-order widening, and it would
+  bless the exact 1.577e-3 LL quantum that the `rel_steps` sweep machinery
+  exists to *route around*, not to accept.
+- `assert_eager_jit_consistent` is used at 11 call sites across
+  `imaging/jax_grad/{lp,mge,knn,delaunay,pixelization,regularization}.py`,
+  `interferometer/jax_grad/gradient.py` (×3) and `weak/jax_grad.py`, all at the
+  default `rtol` — there is no precedent of a looser value to point at.
+
+### 7. Suggested fix directions for whoever takes this
+
+In rough order of preference; all keep the guard armed.
+
+1. **Make the solve compilation-path-independent** rather than the guard
+   tolerant. `Settings(nnls_solver_tol=..., nnls_max_iter=...)` are already
+   plumbed through to `solve_nnls` (`settings.py:18-19`,
+   `inversion_util.py:337-338`). Fixing the iteration count (or tightening
+   `solver_tol` well below the flip's sensitivity) makes the PDIP loop take the
+   same number of steps under both compilations, so eager and jit land on the
+   same branch by construction. Scope it to this script's `AnalysisInterferometer`
+   settings, not globally.
+2. **Move the base point off the branch boundary** — `param_vector_from` uses a
+   fixed `PRNGKey(42)` perturbation, so the evaluation point is arbitrary; a
+   different seed that is not knife-edge would restore both legs without
+   touching any tolerance. Cheap, but it hides rather than fixes the
+   sensitivity, so pair it with a recorded note.
+3. **Compare like with like** — run autodiff under `jax.jit` too, so AD and FD
+   are both taken on the compiled program. This removes the eager/jit mismatch
+   from the FD certification, but leaves the eager/jit guard failing, so it is
+   only useful combined with (1).
+
+Do NOT close this by relaxing `assert_eager_jit_consistent`, and do not remove
+the `NEEDS_FIX` entry in `config/build/no_run.yaml` until the underlying solve
+is deterministic across compilation paths.

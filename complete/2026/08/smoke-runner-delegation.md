@@ -1,3 +1,118 @@
+Ten repos each carried their own `.github/scripts/run_smoke.py` — the file
+PyAutoHeart's reusable `smoke-tests.yml` invokes from inside each workspace, so
+one must exist per repo. What was duplicated was not the file's existence but
+its **driver loop**: read the allowlist, resolve per-entry env, spawn a
+subprocess under the timeout cap, classify PASS/FAIL/TIMEOUT, accumulate, print
+the summary, exit non-zero. Seven repos held that loop; the three HowTo repos
+were already thin shims.
+
+All ten are now shims. 2085 lines became 1127, and 1127 is mostly prose: of
+`autolens_workspace_test`'s 77 lines, 32 are the docstring explaining why it
+delegates.
+
+## The argument, which was not "they have drifted"
+
+The prompt was filed on a drift finding. Re-measured 2026-08-24 from every
+repo's `main`, there was **zero functional drift inside any variant** — the
+three workspace copies byte-identical, the four `_test` copies differing in two
+docstring lines, the three HowTo copies in `PROJECT` alone.
+
+That is not evidence the design was safe. It is the receipt for three manual
+N-repo sweeps that had been paid to restore it: the env-resolver fork (#185),
+the per-script timeout and process-group kill (#226/#227), and the jupyter
+guard. The HowTo tier needed **none** of the three, precisely because it holds
+no logic. The case for collapsing is maintenance cost, not drift.
+
+The prompt's blocking question — "does autolens_workspace_test's timeout/kill
+get promoted, or keep a documented divergence?" — was already answered by
+promotion in #226/#227. All ten copies imported `timeout_for` and `kill_group`
+before this task started; `_kill_group` existed in zero.
+
+## The real obstacle was discovery model, not behaviour
+
+The shared runners were opt-out (recursive discovery minus `no_run.yaml`); the
+seven logic-bearing copies are opt-in allowlists (`smoke_tests.txt`,
+`smoke_notebooks.txt`). That mismatch is why they could not delegate. So each
+phase was a PyAutoHands feature first and per-repo edits second.
+
+## Two bugs found by measuring before writing
+
+**1. The `no_run`-wins rule would have deleted 13 scripts from smoke coverage
+(#262).** #261 shipped "an explicit exclusion is the more specific intent, so
+`no_run` wins over the allowlist". Measured against the real repos, that rule
+would have silently skipped 9 scripts in autogalaxy_workspace_test, 2 in
+autolens_workspace_test, 1 in autofit_workspace and 1 in autolens_workspace —
+every one of which runs in smoke today, since the vendored runners never opened
+`no_run.yaml` at all.
+
+The rule was wrong because it conflated two policies for two different runs:
+`no_run.yaml` governs the release mega-run and notebook generation, the
+allowlist governs the PR gate, and a script legitimately appears in both. The
+failure mode is the dangerous kind — **CI would have stayed green**, because a
+skipped script is not a failure. Corrected to allowlist-authoritative before any
+workspace was touched, and confirmed in production afterwards: autogalaxy's nine
+all ran and passed, as did autolens's two and autofit's `searches/mcmc` in both
+its script and notebook forms.
+
+Same PR fixed a second blocker: `autocti_workspace_test` is the only workspace
+with no `config/build/no_run.yaml`, and the autohands-level fallback path does
+not exist either, so both runners crashed with `FileNotFoundError` before
+running anything.
+
+**2. `regenerate_notebook` resolved the source by bare filename (#263).** It
+looked up `scripts_dir / nb_path.name`, dropping the subdirectory, so
+`notebooks/imaging/model_fit.ipynb` searched for `scripts/model_fit.py`. Every
+workspace notebook is in a subdirectory, so the stale-notebook recovery was dead
+on arrival — and a bare filename can find the *wrong* source when two topics
+share a name. The existing tests missed it because their fixture was **flat**,
+which is the one layout where the bug is invisible. The replacement tests use a
+nested notebook plus a decoy script at the scripts root, and were negative-tested
+against the old resolution.
+
+## What was proven rather than assumed
+
+- **Env resolution is identical.** The old runners passed a *relative* script
+  path to `build_env_for_script`; the shared runners pass an *absolute* one. All
+  128 listed scripts across all seven repos were resolved both ways and diffed:
+  0 differences, in env and in args. Pattern matching is substring/stem based so
+  path form is irrelevant, and no profile pattern collides with the absolute
+  prefix.
+- No profile sets per-script `args`, so the shared runners' extra-args support
+  changes nothing.
+- Every allowlist entry resolves to a real file, and every listed notebook's
+  source script exists for the retry path.
+- The two-leg exit code is the worst of both, verified in all three
+  pass/fail combinations — a failing notebook cannot be masked by passing
+  scripts.
+- **Every merge was verified from the CI log, not the green tick**, because a
+  coverage regression here is indistinguishable from a pass. Each repo's
+  "Running N listed scripts/notebooks" was checked against its allowlist:
+  11/11, 22/22, 35/35, 3/3, 8/8+2/2, 14/14+2/2, 35/35+2/2.
+
+## Traps for anyone touching this again
+
+- `--report-dir` is load-bearing. `run_python.py` only propagates failure when a
+  report was built; without it the gate runs to completion and always exits 0.
+- `run_notebook.py` writes executed outputs back **in place**. Correct for
+  generation, where the outputs are the product; wrong for a PR gate, which must
+  not dirty the tree it tests. Hence `--no-write-back`.
+- `JUPYTER_MISSING_RC` did **not** need promoting. It existed because the
+  workspace copies shelled out to a bare `jupyter`; the shared runner invokes
+  `sys.executable run_notebook.py`, so the abort-with-no-summary mode is
+  structurally absent. One planned promotion item dissolved on inspection.
+- A bare `off`/`on`/`yes` entry in `no_run.yaml` parses as a YAML **boolean** and
+  crashes `should_skip` with `TypeError: argument of type 'bool' is not
+  iterable`. Hit while building a fixture; not fixed, no repo currently has such
+  a script name.
+
+## Still open
+
+The merged `claude/smoke-copy-drift-ci-docs-ozntvv` branches across nine repos
+were not deleted — this session's git proxy refuses delete refspecs
+(`send-pack: unexpected disconnect`). They are all proven merged into `main`.
+
+## Original prompt
+
 # run_smoke.py: three runner variants across 10 repos, no sync mechanism
 
 Type: maintenance

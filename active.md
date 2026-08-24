@@ -18,7 +18,9 @@
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1523
 - issued: 2026-08-24
 - prompt: active/plot_functions_discard_kwargs.md
-- status: ready-to-ship (both branches pushed; no PRs opened yet)
+- status: library-shipped, workspace-pending
+- library-pr: https://github.com/PyAutoLabs/PyAutoFit/pull/1524
+- workspace-pr: https://github.com/PyAutoLabs/autofit_workspace/pull/148 (blocked on the library PR by the library-first gate)
 - env: web-github (no local worktree; clones at /home/user/pyautofit + /home/user/autofit_workspace, venv /home/user/.venv-af on py3.12)
 - repos:
   - PyAutoFit: claude/autofit-plot-functions-kwargs-vvwj5x
@@ -42,5 +44,8 @@
     properties. Full suite 2088 passed / 36 skipped. autofit_workspace: the four plot
     scripts' kwarg lists rewritten to genuine corner.py arguments (15 wrong-library names
     removed, zeus's list rebuilt), prose corrected, notebooks regenerated.
-    Next: /ship_library to open the PyAutoFit PR, then /ship_workspace behind the
-    library-first gate. No PRs opened yet — awaiting the human.
+    Shipped 2026-08-24: PyAutoFit#1524 and autofit_workspace#148, both labelled
+    pending-release. Gate was the per-repo pytest fallback (pyauto-heart is not
+    available in this web-github session): full suite 2089 passed / 36 skipped on a
+    clean serial run. Merge is human — library PR first, then the workspace PR.
+    Next: /prm to watch CI and close out.

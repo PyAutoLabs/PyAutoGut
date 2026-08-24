@@ -10,6 +10,7 @@ Autonomy: supervised
 Priority: high
 Status: formalised
 Filed: 2026-08-24
+Issued: 2026-08-24
 
 `PyAutoHeart/config/repos.yaml` lists `autocti_workspace` in the `workspaces`
 group, whose required workflows are:

@@ -1,5 +1,26 @@
 # Active Tasks
 
+## autocti-workspace-navigator-check
+- issue: https://github.com/PyAutoLabs/autocti_workspace/issues/29
+- issued: 2026-08-24
+- prompt: active/autocti_workspace_navigator_check.md
+- status: workspace-dev
+- location: cloud-session (web-github; no worktree — session clones under /home/user)
+- repos:
+  - autocti_workspace: feature/autocti-workspace-navigator-check
+- summary: |
+    CTI CI standardisation Phase 6, task 1 of 3 (HIGH). Add the missing
+    `Navigator Check` workflow so autocti_workspace can roll up green — a
+    required workflow with no runs never satisfies Heart's `all_green`, so the
+    repo is permanently `in_progress`.
+
+    Correction to the prompt's premise: the repo has NO `llms.txt`,
+    `llms-full.txt` or `workspace_index.json` (git ls-files finds none). The
+    catalogue must be generated and committed, else the staleness job's
+    `git diff --exit-code` on untracked paths exits 0 and the check is vacuous.
+
+    All three reusable-workflow jobs verified passing locally against main.
+
 ## transformed-message-factor-gradient-unpack
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1501 (issued 2026-08-19)
 - issued: 2026-08-19

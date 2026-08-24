@@ -4,7 +4,7 @@
 - issue: https://github.com/PyAutoLabs/autocti_assistant/issues/25
 - issued: 2026-08-24
 - prompt: active/wiki_currency_check_version_gate.md
-- status: workspace-dev
+- status: awaiting-merge (PR https://github.com/PyAutoLabs/autocti_assistant/pull/26 — CI running)
 - location: cloud-session (web-github; no worktree — session clones under /home/user)
 - repos:
   - autocti_assistant: feature/wiki-currency-check-version-gate

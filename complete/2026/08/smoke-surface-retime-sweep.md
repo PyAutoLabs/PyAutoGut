@@ -72,8 +72,12 @@ had shipped that morning as `complete/2026/08/smoke-timings-dataset.md`.
 
 - `mge_group` higher-cap retime (the one surviving SLOW marker).
 - The two filed bug prompts above.
-- Trim the 900 s `jax_grad/` cap override in autolens `profile_smoke.yaml`
-  (measured worst case 61 s; ~15× oversized).
+- ~~Trim the 900 s `jax_grad/` cap override in autolens `profile_smoke.yaml`
+  (measured worst case 61 s; ~15× oversized).~~ **Withdrawn 2026-08-24 (same
+  day):** the 61 s figure was one script; the cap's measured basis is the
+  weekly workspace-smoke channel, where `point_source/jax_grad/gradient.py`
+  runs at 568.2 s (63 % of the budget, run 30938311069) and two more family
+  members exceed 250 s — all live and unskipped. The cap stays.
 - `draft/maintenance/pyautoheart/weekly_smoke_timings_artifact_naming.md` —
   the weekly validation legs' timings land only inside `results-*` zips.
 

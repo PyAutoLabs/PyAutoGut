@@ -6,9 +6,15 @@ subprocess under the timeout cap, classify PASS/FAIL/TIMEOUT, accumulate, print
 the summary, exit non-zero. Seven repos held that loop; the three HowTo repos
 were already thin shims.
 
-All ten are now shims. 2085 lines became 1127, and 1127 is mostly prose: of
-`autolens_workspace_test`'s 77 lines, 32 are the docstring explaining why it
-delegates.
+All ten are now shims. 2085 lines became **890** (3x119 + 4x77 + 3x75), and
+most of that is prose: of `autolens_workspace_test`'s 77 lines, 32 are the
+docstring explaining why it delegates.
+
+(The figure 1127 appears in this task's commit message, PyAutoMind#283 and the
+PyAutoHands#260 close-out comment. It is wrong — a verification loop fell back
+to a cached CDN read and counted autolens_workspace at its pre-merge 356.
+Confirmed against `origin/main`: that file is 119 lines. 890 is the correct
+total.)
 
 ## The argument, which was not "they have drifted"
 

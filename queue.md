@@ -11,5 +11,5 @@ rather than fixed. Independent of each other — different repos, different work
 types — so they are three prompts and three PRs, ordered cheapest-risk first.
 
 draft/maintenance/autocti_workspace_test/imaging_ci_heritage_sweep.md
-draft/refactor/autoarray/shared_log_norm_helper.md
+# DONE 2026-08-24 draft/refactor/autoarray/shared_log_norm_helper.md
 draft/maintenance/workspaces/euclid_crlf_line_endings.md

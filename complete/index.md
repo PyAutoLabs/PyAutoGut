@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1126 records across 7 buckets.
+1127 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -211,6 +211,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [script-timing-baselines-fix](2026/08/script-timing-baselines-fix.md)
 - [script-title-underline-off-by-one](2026/08/script-title-underline-off-by-one.md)
 - [searches-readme-dashboard](2026/08/searches-readme-dashboard.md)
+- [shared-log-norm-helper](2026/08/shared-log-norm-helper.md) — Collapsed three copies of the matplotlib colour-norm construction into
 - [should-simulate-capped-branch-reuse](2026/08/should-simulate-capped-branch-reuse.md) — small, single-repo follow-up of the closed PyAutoNerves#153
 - [simulator-util-to-af-ex](2026/08/simulator-util-to-af-ex.md) — moved the four 1D-Gaussian simulator helpers out of the duplicated
 - [small-datasets-loader-pixel-scales](2026/08/small-datasets-loader-pixel-scales.md)

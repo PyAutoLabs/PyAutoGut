@@ -9,6 +9,7 @@ Autonomy: supervised
 Priority: medium
 Status: formalised
 Filed: 2026-08-04 (backfilled from git)
+Issued: 2026-08-24
 
 Two independent defects in `PyAutoHeart/heart/checks/script_timing.py`, both found
 while diagnosing the jax_grad smoke timeouts (PyAutoHands#226). Neither is fixed by

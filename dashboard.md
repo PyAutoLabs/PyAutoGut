@@ -6,6 +6,40 @@ This is the markdown version of the [PyAutoMind Dashboard](https://pyautolabs.gi
 
 Every task the Mind is holding, on one page: what is in flight, what is parked, and the whole backlog to pick from. Pick a task and run its `/start_dev` command in a Claude Code chat to start it. [Recent](#recent) is the same work by date — what has been happening rather than what to do next.
 
+> **Last updated 2026-08-24.** This page is generated from `active/`, `draft/` and the registry files, so it is only as current as they are. `dashboard_refresh.yml` re-renders it on every push to `main` — that heals a stale page, but not a stale prompt: a task that shipped without its prompt advancing to `complete/` keeps rendering here as pickable backlog. Reconciling those is the refresh below.
+
+<details><summary>📋 <b>Refresh this page</b> — reconcile finished prompts, then regenerate</summary>
+
+```
+Bring the PyAutoMind dashboard up to date. Work in the PyAutoMind checkout:
+
+1. `git fetch origin && git status`. If behind `origin/main`, `git pull --ff-only`
+   before touching anything.
+2. `python3 scripts/lifecycle.py check`, `orphans`, and `index --check`. Fix
+   whatever drift they report.
+3. Reconcile finished work — this is the part nothing automates. For every prompt
+   under `draft/` and `active/`, decide whether it is already done: a `Status:`
+   header saying shipped/superseded/absorbed, a merged PR named in its body, or a
+   record in `complete/` whose scope already covers it (check `complete/index.md`
+   and grep the dated buckets). Treat a same-subject record as evidence, not
+   proof — read both and confirm the scope really matches before retiring a
+   prompt.
+4. For each one that IS done, write its record and retire the prompt:
+   `python3 scripts/lifecycle.py record <slug> --date <YYYY-MM-DD> --from-file
+   <body> --apply`, where <body> ends with `## Original prompt` followed by the
+   prompt's full text. Then `git rm` the prompt file and repoint every
+   cross-reference to it (grep the slug across `draft/`, `active/`, `epics.md`
+   and the registry files).
+5. Regenerate the page: `pyauto-brain intake --apply dashboard`. Never hand-edit
+   `dashboard.md` or `dashboard.html` — they are generated.
+6. Commit and push to `main`, so `dashboard_refresh.yml` agrees with the tree.
+
+Report what you retired, what you deliberately left in the backlog and why, and
+anything you could not verify.
+```
+
+</details>
+
 | Where | Count |
 |-------|------:|
 | [In flight](#in-flight) (`active/`) | 2 |

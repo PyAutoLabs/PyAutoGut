@@ -207,19 +207,29 @@ jobs:
             Add one section block per highlight, then (if any) a final section
             block holding the "*More:*" bulleted list of the rest.
 
-            After those, append ONE more section block — the one-tap queue
-            hand-off. Its mrkdwn text is exactly two lines: the label
-            "*📥 Queue these* — paste into a Claude Code chat:" and then a
-            single inline code block (triple backticks) containing:
+            After those, append ONE more section block pointing at the inbox:
+            mrkdwn text exactly
 
-              Append these to the '## Strong Lensing' section of the
-              PyAutoMemory reading-queue.md (one per line, title then
-              ' — <arXiv id>'), then run make validate:
-              <one line per surviving paper: <title> — <arXiv id>>
+              *📥 In your <https://pyautolabs.github.io/PyAutoMemory/|Memory inbox>*
+              — add to the reading queue, file, or dismiss. Lapses in 7 days.
 
-            (Pasting that into Claude Code files the night's papers into the
-            reading queue; the digest itself still never commits anything.)
-            Skip this block on the no-papers day.
+            (These papers are filed into PyAutoMemory's arXiv inbox by the next
+            step; the buttons on that page are how they reach the reading
+            queue.) Skip this block on the no-papers day.
+
+            ALSO write `arxiv_survivors.json` in the repo root — the machine
+            readable form of the same decision, which is what the inbox step
+            consumes:
+
+              { "papers": [ { "title": "<title verbatim>",
+                              "id": "<bare arXiv id, e.g. 2608.21253>" }, ... ] }
+
+            One entry per SURVIVING paper, in the same order as the post,
+            highlights first. Titles verbatim from arxiv_papers.json — do not
+            re-word them, they are matched against the reading queue. Strip any
+            `arXiv:` prefix and any trailing `vN` from the id. Write it even
+            when only one paper survives; on the no-papers day write
+            `{"papers": []}` rather than omitting the file.
 
             IF, after dropping off-topic papers, NOTHING genuinely about strong
             lensing remains, do NOT omit the file — instead write
@@ -239,8 +249,9 @@ jobs:
                 ]
               }
 
-            Do not POST anything yourself, do not commit, do not modify any
-            other file.
+            Do not POST anything yourself, do not commit, and do not modify
+            any file other than `slack_payload.json` and
+            `arxiv_survivors.json`.
 
       - name: POST to Slack
         env:
@@ -265,3 +276,68 @@ jobs:
                --data @slack_payload.json \
                --fail-with-body \
                "$SLACK_WEBHOOK_URL"
+
+      # --- the Memory inbox -------------------------------------------------
+      # The night's survivors land in PyAutoMemory's arxiv-inbox.md, where the
+      # knowledge board renders them with one-tap add / intake / cite / dismiss
+      # buttons and un-acted lines lapse after a week.
+      #
+      # This DELIBERATELY reverses the original "the digest never commits"
+      # constraint (PyAutoMemory#35): the human gate moved from "paste the
+      # block into a session" to "tap a button on the board", it did not go
+      # away — nothing reaches reading-queue.md without a tap. See
+      # PyAutoMemory#57.
+      #
+      # It runs AFTER the Slack POST on purpose. The digest is the product; the
+      # inbox is a convenience on top of it, and a cross-repo auth or push
+      # failure here must never cost the morning's post.
+      #
+      # PAT_PYAUTOLABS, not GITHUB_TOKEN: the job token is scoped to this repo
+      # and cannot write to PyAutoMemory. The format, the window and the sweep
+      # all live in PyAutoMemory's scripts/inbox_actions.py — this step only
+      # supplies the papers, so the line format is never re-expressed here.
+      - name: File the survivors into the PyAutoMemory arXiv inbox
+        if: ${{ steps.fetch.outputs.count != '0' }}
+        env:
+          PAT: ${{ secrets.PAT_PYAUTOLABS }}
+        run: |
+          set -euo pipefail
+          if [ ! -s arxiv_survivors.json ]; then
+            echo "::warning::arxiv_survivors.json missing — the Claude step did not write it, so nothing was filed into the Memory inbox. The Slack digest above is unaffected."
+            exit 0
+          fi
+          if [ -z "${PAT:-}" ]; then
+            echo "::warning::PAT_PYAUTOLABS not set — cannot write to PyAutoMemory. The Slack digest above is unaffected."
+            exit 0
+          fi
+
+          uk_date=$(python3 -c "import json;print(json.load(open('arxiv_papers.json'))['uk_date'])")
+
+          git clone --depth 1 \
+            "https://x-access-token:${PAT}@github.com/PyAutoLabs/PyAutoMemory.git" \
+            /tmp/memory
+          cp arxiv_survivors.json /tmp/memory/
+          cd /tmp/memory
+
+          # append is idempotent and dedupes against BOTH the inbox and the
+          # reading queue, so a re-run (or a paper announced twice) adds nothing.
+          added=$(python3 scripts/inbox_actions.py append \
+                    --papers-file arxiv_survivors.json)
+          swept=$(python3 scripts/inbox_actions.py sweep)
+          rm arxiv_survivors.json
+          echo "inbox: ${added}, ${swept}"
+
+          if [ -z "$(git status --porcelain -- arxiv-inbox.md)" ]; then
+            echo "inbox unchanged — nothing to commit."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add arxiv-inbox.md
+          git commit -m "inbox: ${added}, ${swept} (arXiv digest ${uk_date})"
+          for attempt in 1 2 3; do
+            if git push; then exit 0; fi
+            git pull --rebase origin main || break
+          done
+          echo "::warning::could not push the Memory inbox commit. The Slack digest above is unaffected."
+          exit 0

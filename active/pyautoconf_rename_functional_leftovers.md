@@ -9,6 +9,7 @@ Autonomy: supervised
 Priority: normal
 Status: formalised
 Filed: 2026-08-19 (backfilled from git)
+Issued: 2026-08-24
 
 Found by the 2026-08-19 readability census (#237). The PyAutoConf → PyAutoNerves
 rename (package `autoconf` → `autonerves`) was fixed in the reader-facing docs

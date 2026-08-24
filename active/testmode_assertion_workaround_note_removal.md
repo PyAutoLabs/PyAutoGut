@@ -11,6 +11,7 @@ Autonomy: supervised
 Priority: normal
 Status: formalised
 Filed: 2026-08-24
+Issued: 2026-08-24
 
 Re-homed from `draft/triage/` by the filing session: intake classified this
 `triage` / `Target: PyAutoFit` / `too-large` on low confidence, which is wrong on

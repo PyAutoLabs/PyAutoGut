@@ -8,10 +8,10 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 2 |
+| [In flight](#in-flight) (`active/`) | 3 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 154 |
+| [Backlog](#backlog) (`draft/`) | 153 |
 
 ## Start here
 
@@ -159,6 +159,14 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
+<details><summary>📋 <a href="active/testmode_assertion_workaround_note_removal.md">Delete the TEST_MODE ordered-assertion workaround note from @autocti_workspace AGENTS.md</a> — <a href="https://github.com/PyAutoLabs/autocti_workspace/issues/24">issue #24</a> — issued 2026-08-24 — workspace-shipped, awaiting-merge</summary>
+
+```
+/start_dev active/testmode_assertion_workaround_note_removal.md
+```
+
+</details>
+
 ## Parked
 
 Started or scoped, not currently in flight — resume by moving the row back to `active.md`. Full detail in [`parked.md`](parked.md).
@@ -251,7 +259,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**154** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **26** of them belong to an epic and are listed only under [Epics](#epics) below.
+**153** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **26** of them belong to an epic and are listed only under [Epics](#epics) below.
 
 <details>
 <summary><b>feature</b> — 29</summary>
@@ -1058,7 +1066,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>docs</b> — 15</summary>
+<summary><b>docs</b> — 14</summary>
 
 <details><summary>📋 <a href="draft/docs/autolens/multi_galaxy_package.md">multi_galaxy package: new regime package in autolens_workspace</a> — autolens · large · supervised · high</summary>
 
@@ -1080,14 +1088,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/docs/workspaces/preloads_advanced_workspace_guide.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/docs/autocti/testmode_assertion_workaround_note_removal.md">Delete the TEST_MODE ordered-assertion workaround note from @autocti_workspace AGENTS.md</a> — autocti · small · supervised · normal</summary>
-
-```
-/start_dev draft/docs/autocti/testmode_assertion_workaround_note_removal.md
 ```
 
 </details>
@@ -1330,7 +1330,7 @@ The 50 newest things to happen to the work in hand, newest first — issued, par
 |------|-------|------|
 | 2026-08-24 | filed | <a href="draft/maintenance/pyautoheart/weekly_smoke_timings_artifact_naming.md">The weekly smoke run's timings land in <code>results-*</code> under no…</a> |
 | 2026-08-24 | issued | <a href="active/smoke_timing_and_profiling.md">Properly time and profile the smoke/release script surface</a> |
-| 2026-08-24 | filed | <a href="draft/docs/autocti/testmode_assertion_workaround_note_removal.md">Delete the TEST_MODE ordered-assertion workaround note from…</a> |
+| 2026-08-24 | issued | <a href="active/testmode_assertion_workaround_note_removal.md">Delete the TEST_MODE ordered-assertion workaround note from…</a> |
 | 2026-08-23 | filed | <a href="draft/maintenance/workspaces/pynufft_removal_downstream_residue.md">pynufft removal: unswept downstream residue (1 hard break + stale…</a> |
 | 2026-08-23 | filed | <a href="draft/maintenance/workspaces/pynufft_removal_downstream_residue_phase_3_ci_install_docs.md">Phase 3: stop installing pynufft in Hands/Heart CI and PyAutoCTI…</a> |
 | 2026-08-23 | filed | <a href="draft/feature/pyautobrain/brain_board_follow_ups.md">Brain board follow-ups: what real mornings surface</a> |

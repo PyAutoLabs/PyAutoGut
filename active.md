@@ -4,11 +4,12 @@
 - issue: https://github.com/PyAutoLabs/euclid_strong_lens_modeling_pipeline/issues/40 (issued 2026-08-24)
 - issued: 2026-08-24
 - prompt: active/euclid_crlf_line_endings.md
-- status: PARKED at the ship gate — implementation complete + pushed, PR deliberately NOT opened.
-  Ship-gate legs 1 (tests) and 2 (smoke) are applicable here but unrunnable in `web-github`:
-  no autolens/autofit/pytest, and the smoke scripts need real Euclid datasets. Per the
-  autonomy contract a failed leg downgrades to a human checkpoint, so the run stopped at
-  push. Resume: run the suite + smoke on a machine with the stack, then open the PR.
+- status: PR-OPEN — https://github.com/PyAutoLabs/euclid_strong_lens_modeling_pipeline/pull/41
+  The earlier park is resolved: the stack installed in a venv (the Debian setuptools blocked a
+  system install; a clean venv bypassed it), so both blocked legs actually ran.
+  Gate: tests 1 passed / smoke 6-of-6 under PYAUTO_TEST_MODE=2 / review CLEAN inline
+  (faculty could not resolve a checkout) / heart n/a (pyauto-heart absent).
+  Merge stays human, per the contract's hard invariant.
 - worktree: none — remote web session (`web-github`), work done in the session clones
 - repos:
   - euclid_strong_lens_modeling_pipeline: claude/euclid-crlf-line-endings-0tr00e (2 commits, base 62b2fd4)

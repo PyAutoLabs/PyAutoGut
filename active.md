@@ -13,3 +13,40 @@
 - registered: 2026-08-19 by the wake_up session — the issuing session (claude/autofit-priors-messages-audit-ylvenv)
   filed the prompt + issue but not this entry, tripping Lifecycle Drift on main.
 - repos-none-claimed: this entry claims NO repos — one line deliberately, not 2-space bullets.
+
+## smoke-runner-delegation
+- issue: https://github.com/PyAutoLabs/PyAutoHands/issues/260 (issued 2026-08-24)
+- issued: 2026-08-24
+- prompt: active/run_smoke_copy_drift.md
+- status: library-dev
+- worktree: ~/Code/PyAutoLabs-wt/smoke-runner-delegation
+- decision: the prompt's blocking question is ANSWERED before any repo is touched —
+  the timeout/kill behaviour was PROMOTED to everyone (PyAutoHands#226/#227 → 52408a84;
+  all 10 copies import timeout_for + kill_group). Shape chosen: full delegation to a
+  PyAutoHands-owned runner, staged. Phase 1 = --list allowlist mode + the 4 *_workspace_test
+  copies; phase 2 = notebook leg + the 3 workspace copies; phase 3 = HowTo, no work.
+- measured: 2026-08-24, from every repo's main — 10 copies, 3 variants, ZERO functional
+  drift inside any variant (workspace 356L byte-identical; workspace_test 198L comment-only;
+  HowTo 75L differ by PROJECT alone). Prompt steps 1 and 4 verified already done.
+- registered: 2026-08-24 by the start_dev session (claude/smoke-copy-drift-ci-docs-ozntvv);
+  worktree_check_conflict clean (exit 0) for all 8 repos.
+- progress: BOTH Hands legs DONE and pushed to PyAutoHands
+  claude/smoke-copy-drift-ci-docs-ozntvv. Phase 1 (8884ecd): `--list` opt-in script
+  lists on run_python.py. Phase 2 (c979b37): matching notebook leg on run.py —
+  `--list`, `--no-write-back`, `--retry-from`. 16 new tests; suite 388 passed /
+  5 skipped / 0 failed. No PR opened yet.
+- phase-2 findings (these changed the plan, recorded so the workspace PRs inherit them):
+  - run_notebook.py writes executed outputs back IN PLACE. Correct for generation
+    (the outputs are the product), wrong for a PR gate, which must not dirty the
+    tree it tests. Hence `--no-write-back`; it supersedes the workspace copy's
+    staged-copy-at-root trick rather than porting it, since the kernel cwd is
+    already pinned to the repo root.
+  - JUPYTER_MISSING_RC did NOT need promoting. It exists because the workspace copy
+    shelled out to a bare `jupyter`; execute_notebook invokes
+    `sys.executable run_notebook.py`, so the abort-with-no-summary failure mode is
+    structurally absent. One promotion item dissolved on inspection.
+- remaining: the 7 workspace collapses (4 *_workspace_test, then 3 workspace), each a
+  one-file PR, all blocked on the Hands branch merging first (library-first gate).
+  Those repos are not attached to this session — each needs add_repo with push.
+- repos:
+  - PyAutoHands (branch claude/smoke-copy-drift-ci-docs-ozntvv)

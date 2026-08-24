@@ -8,7 +8,7 @@ Repos:
 Difficulty: medium
 Autonomy: supervised
 Priority: normal
-Status: fix shipped 2026-08-24 (autolens_workspace_test fix/delaunay-nan-probe; validation + PR in flight)
+Status: shipped 2026-08-24 (autolens_workspace_test#277, merged 995f0c9)
 Filed: 2026-08-24
 
 ## The failure

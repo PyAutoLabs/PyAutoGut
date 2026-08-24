@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1095 records across 7 buckets.
+1097 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -187,6 +187,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [samplers-surface-autolens-tiers](2026/08/samplers-surface-autolens-tiers.md) — the samplers faculty's SamplerSurface now scans the findings
 - [save-json-numpy-scalar-typeerror](2026/08/save-json-numpy-scalar-typeerror.md) — Adds `NumpyEncoder` in `autofit/tools/util.py` (`np.ndarray` ->
 - [script-size-guard-git-based](2026/08/script-size-guard-git-based.md) — replaced the rotting `.script_sizes.json` snapshot with a git-diff truncation
+- [script-timing-baselines-fix](2026/08/script-timing-baselines-fix.md)
 - [script-title-underline-off-by-one](2026/08/script-title-underline-off-by-one.md)
 - [searches-readme-dashboard](2026/08/searches-readme-dashboard.md)
 - [should-simulate-capped-branch-reuse](2026/08/should-simulate-capped-branch-reuse.md) — small, single-repo follow-up of the closed PyAutoNerves#153
@@ -196,6 +197,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [small-datasets-rmtree-committed-data](2026/08/small-datasets-rmtree-committed-data.md)
 - [smoke-runner-delegation](2026/08/smoke-runner-delegation.md)
 - [smoke-runner-jupyter-guard](2026/08/smoke-runner-jupyter-guard.md)
+- [smoke-timings-dataset](2026/08/smoke-timings-dataset.md)
 - [spawn-autonomy-log-generated](2026/08/spawn-autonomy-log-generated.md)
 - [spawn-drift-self-heal](2026/08/spawn-drift-self-heal.md)
 - [spawn-empty-body-privacy-fix](2026/08/spawn-empty-body-privacy-fix.md)

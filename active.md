@@ -19,8 +19,12 @@
 - issued: 2026-08-24
 - session: https://claude.ai/code/session_01LN2Qsx6JjVKV45o17EKGtB (remote/web — no `--resume` id)
 - status: library-dev
-- worktree: ~/Code/PyAutoLabs-wt/aplt-output-drift-remaining-repos
+- environment: web-github — no task worktree; work happens in the session clones
+  (`/home/user/pyautogalaxy`), venv at `/home/user/venv312` (Python 3.12, a CI leg).
+  Deliberately no `worktree:` field: claiming a `~/Code/PyAutoLabs-wt/` path that
+  will never exist is what the resume check treats as drift.
 - repos:
+  - PyAutoGalaxy: feature/aplt-output-drift-remaining-repos
 - summary: |
     Planned and issued by /start_dev; implementation not started. Classification
     is **both** — PyAutoGalaxy (library) merges first under the library-first
@@ -43,4 +47,15 @@
       * euclid has 3 broken files, not the 2 the prompt lists
         (extra_galaxies_mask_gui.py also uses aplt.Cmap).
 
-    Next step: /start_library for PyAutoGalaxy, then /start_workspace for euclid.
+    /start_library ran 2026-08-24: PyAutoGalaxy claimed on
+    feature/aplt-output-drift-remaining-repos.
+
+    Exploration found a SECOND instance of the same library defect, in
+    PyAutoGalaxy itself: autogalaxy/gui/clicker.py:31 calls aplt.Cmap(...) on
+    autoarray.plot, which exports no Cmap — so Clicker.start() raises
+    AttributeError for every caller (worse than Scribbler, which at least works
+    when cmap=None). Same bug, same fix locus, adjacent file; folded into
+    Phase 1 rather than shipping a half-fix.
+
+    Next step: implement Phase 1, then /ship_library; /start_workspace for
+    euclid follows behind the library-first merge gate.

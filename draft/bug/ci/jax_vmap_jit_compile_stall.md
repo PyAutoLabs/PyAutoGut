@@ -210,3 +210,37 @@ also records that XLA compiles on host CPUs and that compile timing is
 load-sensitive by up to 7×. Cache-lock contention and runner CPU contention are
 therefore both live hypotheses alongside the version-interaction one already in
 § Task step 3.
+
+## New occurrence — 2026-08-24, `multi_dataset/jax_likelihood/mge.py`
+
+Verified via the Actions API. `autogalaxy_workspace_test` `Smoke Tests` run
+**32680155872** (main, push, commit `2a294d5` — the `run_smoke.py`
+runner-collapse merge, PR#111), job `smoke / smoke (3.12)` (97295321230):
+
+```
+TIMEOUT (300s)  multi_dataset/jax_likelihood/mge.py
+```
+
+34/35 other scripts passed, including its sibling
+`multi_dataset/jax_likelihood/mge_group.py` in **42.2s** in the same run.
+
+It is the known per-compile probability, not a runner-collapse regression: the
+**identical commit** passed the PR-gate run 32679570426 eleven minutes earlier
+(01:22–01:31); only the 3.12 leg failed (3.13 green); and
+`autolens_workspace_test`'s equivalent collapse merge run 32679945097 was green
+on main at 01:29. Same signature as § "It is not one script".
+
+**Affected-set shape.** This extends the family to
+`multi_dataset/jax_likelihood/mge.py` — previously `imaging/jax_likelihood/`
+`mge_group.py` + `rectangular_mge.py` (parked 2026-08-23,
+autogalaxy_workspace_test#109) and `multi_dataset/jax_likelihood/rectangular.py`
+(parked 2026-08-01, autolens_workspace_test#245). Composite/multi-dataset MGE
+vmap graphs remain the common factor — note the plain `imaging` `mge.py` still
+passes in 9.4s, so it is the multi-dataset composition, not the MGE alone.
+
+**Consequence.** First `Smoke Tests` red on `autogalaxy` main after the collapse,
+and Heart's sole RED blocker (PyAutoHeart README strip, 03:14). The failed job
+was re-run at ~14:00 UTC to clear the gate; the script was deliberately **not**
+parked, per #109's own warning against whack-a-mole parking that strips coverage
+of the heaviest JAX paths. The per-script cap behaved exactly as designed: a 300s
+TIMEOUT and exit 1 rather than a six-hour silent hang.

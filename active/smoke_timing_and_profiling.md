@@ -11,6 +11,7 @@ Autonomy: supervised
 Priority: normal
 Status: formalised
 Filed: 2026-08-23
+Issued: 2026-08-24
 
 Filed 2026-08-23 at James's direction, to hold the timing/profiling work that
 the `jax-compile-stall` epic's phase 2 kept pulling in. Phase 2 asked one narrow
@@ -70,6 +71,9 @@ belongs.
    measurement refutes.
 4. Consider whether the runner should record per-script timings routinely, so
    this is a standing dataset rather than a periodic archaeology exercise.
+   *(Shipped 2026-08-24 ahead of this task — PyAutoHands d2a22f4 +
+   PyAutoHeart#167; record in `complete/2026/08/smoke-timings-dataset.md`.
+   Items 1–3 remain.)*
 
 ## Acceptance
 

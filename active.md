@@ -18,7 +18,8 @@
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/501
 - issued: 2026-08-24
 - prompt: active/script_local_pixel_scale_vs_dataset_pixel_scales.md
-- status: workspace-dev
+- status: ready-to-ship — PR open, awaiting the capped run + human merge
+- workspace-pr: https://github.com/PyAutoLabs/autolens_workspace/pull/502 (pending-release)
 - worktree: none — web-github session, clone at /home/user/autolens_workspace (no local worktree root exists; do not treat as a deleted worktree on resume)
 - repos:
   - autolens_workspace (claude/autolens-pixel-scale-script-3wx8m6)

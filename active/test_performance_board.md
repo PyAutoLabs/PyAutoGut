@@ -11,6 +11,7 @@ Autonomy: supervised
 Priority: high
 Status: formalised
 Filed: 2026-08-24
+Issued: 2026-08-24
 
 Development speed tracks test speed, and today knowing what is slow takes a
 manual archaeology session over CI job logs. Build the standing surface: a
@@ -22,7 +23,7 @@ kill-timer/hang events surfaced, the NO_RUN census with reasons, and a one-tap
 Claude prompt on every row so "speed this up" is a paste.
 
 Full design rationale, data-plane analysis, chip payloads, and the trap list:
-[`docs/pyautoheart/test_performance_board_assessment.md`](../../../docs/pyautoheart/test_performance_board_assessment.md).
+[`docs/pyautoheart/test_performance_board_assessment.md`](../docs/pyautoheart/test_performance_board_assessment.md).
 Read it before starting — it cites the mechanisms (kill timer, no_run tiers,
 board contracts, Actions API fields) with receipts.
 

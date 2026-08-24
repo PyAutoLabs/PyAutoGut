@@ -8,14 +8,14 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 1 |
+| [In flight](#in-flight) (`active/`) | 2 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 6 |
-| [Backlog](#backlog) (`draft/`) | 156 |
+| [Backlog](#backlog) (`draft/`) | 155 |
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 18
+**Highest priority** (filed as `high`) — showing 12 of 17
 
 <details><summary>📋 <a href="draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — medium · safe · high</summary>
 
@@ -73,14 +73,6 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 </details>
 
-<details><summary>📋 <a href="draft/feature/pyautoheart/test_performance_board.md">Test-performance section on the Heart board — run times, hangs, NO_RUN…</a> — pyautoheart · large · supervised · high</summary>
-
-```
-/start_dev draft/feature/pyautoheart/test_performance_board.md
-```
-
-</details>
-
 <details><summary>📋 <a href="draft/research/autoarray/delaunay_research.md">Deep research: Can we speed up Delaunay in PyAutoArray?</a> — autoarray · too-large · supervised · high</summary>
 
 ```
@@ -113,6 +105,14 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 </details>
 
+<details><summary>📋 <a href="draft/test/autolens_workspace_developer/mge_jit_regression_rebaseline.md">Re-baseline the MGE imaging JIT profiling regression value</a> — autolens_workspace_developer · too-large · supervised · high</summary>
+
+```
+/start_dev draft/test/autolens_workspace_developer/mge_jit_regression_rebaseline.md
+```
+
+</details>
+
 **Quick wins** (small enough, and safe enough to run unattended)
 
 <details><summary>📋 <a href="draft/maintenance/libraries/defer_scipy_sparse_import.md">Defer the eager scipy.sparse import in derivative_util (~0.10 s of import)</a> — libraries · small · safe · normal</summary>
@@ -139,6 +139,14 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/16_transformed_message_factor_gradient_unpack.md
+```
+
+</details>
+
+<details><summary>📋 <a href="active/test_performance_board.md">Test-performance section on the Heart board — run times, hangs, NO_RUN…</a> — <a href="https://github.com/PyAutoLabs/PyAutoHeart/issues/163">issue #163</a> — issued 2026-08-24 — library-dev</summary>
+
+```
+/start_dev active/test_performance_board.md
 ```
 
 </details>
@@ -235,10 +243,10 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**156** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **25** of them belong to an epic and are listed only under [Epics](#epics) below.
+**155** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **25** of them belong to an epic and are listed only under [Epics](#epics) below.
 
 <details>
-<summary><b>feature</b> — 30</summary>
+<summary><b>feature</b> — 29</summary>
 
 <details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md">Numba CPU likelihood phase 1: batched MGE convolution + operated-matrix caching</a> — autoarray · medium · supervised · high</summary>
 
@@ -276,14 +284,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/feature/profiling/profiling_agent_jax_compile_time_scope.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/pyautoheart/test_performance_board.md">Test-performance section on the Heart board — run times, hangs, NO_RUN…</a> — pyautoheart · large · supervised · high</summary>
-
-```
-/start_dev draft/feature/pyautoheart/test_performance_board.md
 ```
 
 </details>
@@ -1336,7 +1336,7 @@ The 50 newest things to happen to the work in hand, newest first — issued, par
 
 | Date | Event | Task |
 |------|-------|------|
-| 2026-08-24 | filed | <a href="draft/feature/pyautoheart/test_performance_board.md">Test-performance section on the Heart board — run times, hangs…</a> |
+| 2026-08-24 | issued | <a href="active/test_performance_board.md">Test-performance section on the Heart board — run times, hangs…</a> |
 | 2026-08-23 | filed | <a href="draft/maintenance/workspaces/pynufft_removal_downstream_residue.md">pynufft removal: unswept downstream residue (1 hard break + stale…</a> |
 | 2026-08-23 | filed | <a href="draft/research/ci/smoke_timing_and_profiling.md">Properly time and profile the smoke/release script surface</a> |
 | 2026-08-23 | filed | <a href="draft/maintenance/workspaces/pynufft_removal_downstream_residue_phase_3_ci_install_docs.md">Phase 3: stop installing pynufft in Hands/Heart CI and PyAutoCTI…</a> |

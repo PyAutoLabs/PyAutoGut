@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1091 records across 7 buckets.
+1092 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -165,6 +165,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [pyautoscientist-readme-two-paragraph-opening](2026/08/pyautoscientist-readme-two-paragraph-opening.md) — PyAutoScientist README opening now matches the organ house pattern — one bold
 - [pynufft-removal-residue-phase-1](2026/08/pynufft-removal-residue-phase-1.md)
 - [pynufft-removal-residue-phase-2](2026/08/pynufft-removal-residue-phase-2.md)
+- [pynufft-removal-residue-phase-3](2026/08/pynufft-removal-residue-phase-3.md)
 - [pynufft-scipy-pinv2-dev-extra](2026/08/pynufft-scipy-pinv2-dev-extra.md)
 - [queue-intake-claude](2026/08/queue-intake-claude.md) — auto-closed on merge
 - [readme-scientist-buttons](2026/08/readme-scientist-buttons.md)

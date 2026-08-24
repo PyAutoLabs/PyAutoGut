@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1120 records across 7 buckets.
+1125 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -22,12 +22,14 @@ _(curate hard-won records here — survives regeneration.)_
 - [active-prompt-orphan-triage](2026/08/active-prompt-orphan-triage.md)
 - [aplt-output-drift-remaining-repos](2026/08/aplt-output-drift-remaining-repos.md)
 - [arcticpy-install-standardisation](2026/08/arcticpy-install-standardisation.md)
+- [arxiv-inbox-tier](2026/08/arxiv-inbox-tier.md) — the nightly strong-lensing digest no longer ends in a Slack paste-block the
 - [astropy-cap-bump](2026/08/astropy-cap-bump.md) — closed manually post-merge — "Part of" in the PR bodies does not auto-close
 - [autoarray-adapt-images-precondition](2026/08/autoarray-adapt-images-precondition.md)
 - [autoarray-input-validation-guards](2026/08/autoarray-input-validation-guards.md)
 - [autoarray-pixel-scales-scalar-widening](2026/08/autoarray-pixel-scales-scalar-widening.md)
 - [autocti-util-dataset-export](2026/08/autocti-util-dataset-export.md) — no GitHub issue — worked directly from the draft prompt in a cloud session on explicit human instruction; the …
 - [autofit-mock-all-ones-ell-comps](2026/08/autofit-mock-all-ones-ell-comps.md)
+- [autofit-plot-functions-kwargs](2026/08/autofit-plot-functions-kwargs.md)
 - [autofit-sampler-database](2026/08/autofit-sampler-database.md)
 - [autogalaxy-assistant](2026/08/autogalaxy-assistant.md) — epic; human to close
 - [autogalaxy-profile-validation-guards](2026/08/autogalaxy-profile-validation-guards.md)
@@ -174,6 +176,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [profiling-agent-compile-axis-arc](2026/08/profiling-agent-compile-axis-arc.md)
 - [purge-autocti-dataset-1d-overview](2026/08/purge-autocti-dataset-1d-overview.md) — no GitHub issue — the leftover from `autocti-util-dataset-export`, executed on direct human instruction "do th…
 - [pyautobrain-pr-test-ci](2026/08/pyautobrain-pr-test-ci.md) — auto-closed by the merge
+- [pyautoconf-rename-leftovers](2026/08/pyautoconf-rename-leftovers.md) — PyAutoBrain#267 → PR #268, merge 2e7ea30
 - [pyautofit_plot_rst_dead_plotters](2026/08/pyautofit_plot_rst_dead_plotters.md)
 - [pyautogalaxy-mge-sigma-test](2026/08/pyautogalaxy-mge-sigma-test.md)
 - [pyautonerves-release-for-regime-stamp](2026/08/pyautonerves-release-for-regime-stamp.md)
@@ -188,6 +191,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [reconcile-upstream-repo-mode](2026/08/reconcile-upstream-repo-mode.md)
 - [reconstruction-noise-map-covariance-sqrt](2026/08/reconstruction-noise-map-covariance-sqrt.md)
 - [rectangular-spline-adapt-image-jit-fix](2026/08/rectangular-spline-adapt-image-jit-fix.md)
+- [refactor-witness-map-audit](2026/08/refactor-witness-map-audit.md) — PyAutoBrain#269 → PR #271, merge cf969f3; stacked on #268
 - [registry-integrity-check](2026/08/registry-integrity-check.md)
 - [regularization-jax-gradient-gaps](2026/08/regularization-jax-gradient-gaps.md)
 - [release-board](2026/08/release-board.md) — auto-closed on merge
@@ -230,6 +234,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [test-mode-samples-info-hook-contract](2026/08/test-mode-samples-info-hook-contract.md) — `NonLinearSearch._test_mode_samples_info()`'s docstring told subclasses
 - [test-performance-board](2026/08/test-performance-board.md)
 - [testmode-assertion-note-removal](2026/08/testmode-assertion-note-removal.md) — Follow-up to test-mode-bypass-assertion-ties (PyAutoFit#1520, merged
+- [tracer-fits-existence-guard](2026/08/tracer-fits-existence-guard.md)
 - [transformed-message-semantics-doc](2026/08/transformed-message-semantics-doc.md)
 - [undo-community-file-declutter](2026/08/undo-community-file-declutter.md) — Undid the 2026-08-19 community-file declutter (#248 Mind, #32 Memory):
 - [uniform-prior-bounds-numpy-path](2026/08/uniform-prior-bounds-numpy-path.md) — auto-closed by the merge's `Closes` line

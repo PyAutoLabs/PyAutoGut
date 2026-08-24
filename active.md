@@ -23,7 +23,8 @@
 - issue: https://github.com/PyAutoLabs/PyAutoArray/issues/486
 - issued: 2026-08-24
 - prompt: active/numba_kernel_shift_axes_swapped.md
-- status: library-dev
+- status: ready-to-ship — PR open, awaiting CI + review
+- pr: https://github.com/PyAutoLabs/PyAutoArray/pull/487
 - classification: library (PyAutoArray only)
 - environment: web-github — session clone at /home/user/pyautoarray is the working tree;
   no `~/Code/PyAutoLabs-wt/` worktree exists or is claimed by this task.
@@ -33,5 +34,9 @@
     Both numba PSF gathers derive the kernel half-widths from the transposed kernel
     axes (y from shape[1], x from shape[0]) — silent wrong answer for non-square odd
     PSFs, invisible for square ones. Reproduced on main (9e47505): 3x5 kernel gives
-    max|numba - numpy| = 1420.0, square control 0.0. Fixing both gather sites together
-    plus the test helper that mirrors the same transposition.
+    max|numba - numpy| = 1420.0, square control 0.0. Fixed both gather sites together
+    plus the test helper that mirrored the same transposition. The swap also repairs
+    psf_precision_value_from's pair-overlap early-exit, which was dropping genuinely
+    overlapping pixel pairs on one axis. Tests parametrised over 3x3/3x5/5x3/5x7 plus
+    two direct orientation probes; verified as a detector (8 fail on unpatched source,
+    the 6 square cases pass). Full suite 1154 passed, 55 skipped.

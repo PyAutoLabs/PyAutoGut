@@ -9,6 +9,7 @@ Autonomy: safe
 Priority: low
 Status: draft
 Filed: 2026-08-19 (backfilled from git)
+Issued: 2026-08-24
 
 ## Finding (2026-08-19, lazy-heavy-imports RefactorDecision)
 

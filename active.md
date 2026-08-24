@@ -28,3 +28,19 @@
 - worktree: n/a — web-github session, working from the session clones
 - repos:
   - PyAutoBrain: claude/pyautoconf-rename-leftovers-38ia48
+
+## refactor-witness-map-audit
+- issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/269
+- issued: 2026-08-24
+- prompt: active/refactor_witness_map_missing_autonerves.md
+- status: library-shipped, awaiting-merge
+- library-pr: https://github.com/PyAutoLabs/PyAutoBrain/pull/271
+- autonomy: safe (--auto launch; effective = min(header safe, maintenance cap safe))
+- stacked-on: PyAutoBrain#268 (same policy.yaml maps) — branch based on
+  claude/pyautoconf-rename-leftovers-38ia48; merge #268 first
+- gate: tests PASS (468); smoke n/a (organism repo); review CLEAN (claim
+  basis-cited on the PR); Heart NOT EVALUATED — pyauto-heart unreachable in this
+  web-github session
+- worktree: n/a — web-github session, working from the session clones
+- repos:
+  - PyAutoBrain: claude/refactor-witness-map-audit

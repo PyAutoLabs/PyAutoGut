@@ -49,6 +49,12 @@ reason: `ellipse/modeling` (`KeyError on 'ellipses.0.centre_0'`) and `guides/adv
 own marker stale (autolens_workspace_test#193), and Heart still counts 58 stale parked scripts — the
 2026-04 marker set looks systematically out of date and warrants a sweep rather than one-by-one work.
 
+**CLOSED 2026-08-24.** Both siblings were already stale when this was written — fixed on
+`autogalaxy_workspace` main by #38 (2026-04-26, `plot_grid_lines`) and #73 (2026-05-15, ellipse
+JAX refactor), and recorded as stale by the 2026-07-21 umbrella triage
+(`complete/archive/shelved/api_drift_callsite_fixes.md`). The prompt this follow-up spawned is
+retired unworked at `complete/archive/shelved/small_api_drift_ellipse_and_plot_grid_lines.md`.
+
 ## Original prompt
 
 # `ell_comps` kwargs KeyError in imaging/modeling after API drift (parked NEEDS_FIX)

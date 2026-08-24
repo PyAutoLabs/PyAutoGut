@@ -13,3 +13,16 @@
 - registered: 2026-08-19 by the wake_up session — the issuing session (claude/autofit-priors-messages-audit-ylvenv)
   filed the prompt + issue but not this entry, tripping Lifecycle Drift on main.
 - repos-none-claimed: this entry claims NO repos — one line deliberately, not 2-space bullets.
+
+## tracer-fits-existence-guard
+- issue: https://github.com/PyAutoLabs/autolens_workspace/issues/503 (issued 2026-08-24)
+- issued: 2026-08-24
+- prompt: active/bug_fix_the_tracer_fits_existence_guard.md
+- status: workspace-dev
+- worktree: ~/Code/PyAutoLabs-wt/tracer-fits-existence-guard
+- environment: web-github (cloud session; no local worktree — operates on the session clone,
+  branch claude/tracer-fits-existence-guard-zihsnn)
+- autonomy: --auto launch; header safe, bug cap supervised -> effective supervised. Plan written
+  to the issue; ship sign-off parks for a human.
+- repos:
+  - autolens_workspace: claude/tracer-fits-existence-guard-zihsnn

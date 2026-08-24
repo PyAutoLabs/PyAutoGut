@@ -42,10 +42,10 @@ anything you could not verify.
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 1 |
+| [In flight](#in-flight) (`active/`) | 2 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 5 |
-| [Backlog](#backlog) (`draft/`) | 140 |
+| [Backlog](#backlog) (`draft/`) | 139 |
 
 ## Start here
 
@@ -157,14 +157,6 @@ anything you could not verify.
 
 </details>
 
-<details><summary>📋 <a href="draft/bug/workspaces/bug_fix_the_tracer_fits_existence_guard.md">Bug: fix the tracer.fits existence guard in autolens_workspace imaging modeling.py</a> — workspaces · small · safe · normal</summary>
-
-```
-/start_dev draft/bug/workspaces/bug_fix_the_tracer_fits_existence_guard.md
-```
-
-</details>
-
 <details><summary>📋 <a href="draft/maintenance/pyautoheart/weekly_smoke_timings_artifact_naming.md">The weekly smoke run's timings land in <code>results-*</code> under no discoverable name</a> — pyautoheart · small · safe · low</summary>
 
 ```
@@ -181,6 +173,14 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 ```
 /start_dev active/16_transformed_message_factor_gradient_unpack.md
+```
+
+</details>
+
+<details><summary>📋 <a href="active/bug_fix_the_tracer_fits_existence_guard.md">Bug: fix the tracer.fits existence guard in autolens_workspace imaging modeling.py</a> — <a href="https://github.com/PyAutoLabs/autolens_workspace/issues/503">issue #503</a> — issued 2026-08-24 — workspace-dev</summary>
+
+```
+/start_dev active/bug_fix_the_tracer_fits_existence_guard.md
 ```
 
 </details>
@@ -269,7 +269,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**140** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **25** of them belong to an epic and are listed only under [Epics](#epics) below.
+**139** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **25** of them belong to an epic and are listed only under [Epics](#epics) below.
 
 <details>
 <summary><b>feature</b> — 27</summary>
@@ -493,7 +493,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>bug</b> — 24</summary>
+<summary><b>bug</b> — 23</summary>
 
 <details><summary>📋 <a href="draft/bug/health_fixes/jax_runtime_and_parity.md">Fix release JAX runtime compatibility and likelihood parity</a> — health_fixes · too-large · supervised · high</summary>
 
@@ -563,14 +563,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/bug/workspaces/aplt_output_drift_remaining_repos.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/bug/workspaces/bug_fix_the_tracer_fits_existence_guard.md">Bug: fix the tracer.fits existence guard in autolens_workspace imaging modeling.py</a> — workspaces · small · safe · normal</summary>
-
-```
-/start_dev draft/bug/workspaces/bug_fix_the_tracer_fits_existence_guard.md
 ```
 
 </details>
@@ -1249,21 +1241,21 @@ The 50 newest things to happen to the work in hand, newest first — issued, par
 | 2026-08-24 | filed | <a href="draft/maintenance/pyautoheart/weekly_smoke_timings_artifact_naming.md">The weekly smoke run's timings land in <code>results-*</code> under no…</a> |
 | 2026-08-24 | filed | <a href="draft/bug/pyautobrain/organ_repo_spellings_split_across_keys.md">Organ repo spellings split across two normalised keys</a> |
 | 2026-08-24 | filed | <a href="draft/maintenance/ci/heart_smoke_table_autocti.md">Heart's local smoke runner cannot run any CTI workspace — no autocti…</a> |
+| 2026-08-24 | issued | <a href="active/bug_fix_the_tracer_fits_existence_guard.md">Bug: fix the tracer.fits existence guard in autolens_workspace…</a> |
 | 2026-08-23 | filed | <a href="draft/maintenance/workspaces/pynufft_removal_downstream_residue.md">pynufft removal: unswept downstream residue (1 hard break + stale…</a> |
 | 2026-08-23 | filed | <a href="draft/maintenance/workspaces/pynufft_removal_downstream_residue_phase_3_ci_install_docs.md">Phase 3: stop installing pynufft in Hands/Heart CI and PyAutoCTI…</a> |
-| 2026-08-23 | filed | <a href="draft/feature/pyautobrain/brain_board_follow_ups.md">Brain board follow-ups: what real mornings surface</a> |
 
 <details><summary>… 10 more (40 left)</summary>
 
 | Date | Event | Task |
 |------|-------|------|
+| 2026-08-23 | filed | <a href="draft/feature/pyautobrain/brain_board_follow_ups.md">Brain board follow-ups: what real mornings surface</a> |
 | 2026-08-22 | filed | <a href="draft/maintenance/ci/smoke_install_stale_jax_pin.md">smoke_install.sh's stale <code>jax&lt;0.7</code> pin — CI is on the right jax…</a> |
 | 2026-08-22 | filed | <a href="draft/maintenance/libraries/untrack_generated_fits_test_artifacts.md">Untrack the generated FITS test artifacts in autoarray</a> |
 | 2026-08-22 | filed | <a href="draft/bug/autoarray/reconstruction_noise_map_solver_mismatch.md">The reconstruction noise map describes a different estimator than the…</a> |
 | 2026-08-22 | filed | <a href="draft/bug/pyautolens/point_source_json_datasets_record_no_regime.md">Point-source JSON datasets record no resolution regime</a> |
 | 2026-08-22 | filed | <a href="draft/research/libraries/intel_macos_support_policy.md">Is Intel macOS a supported platform, and what is the numpy-only…</a> |
 | 2026-08-22 | filed | <a href="draft/maintenance/libraries/defer_scipy_sparse_import.md">Defer the eager scipy.sparse import in derivative_util (~0.10 s of…</a> |
-| 2026-08-22 | filed | <a href="draft/bug/workspaces/bug_fix_the_tracer_fits_existence_guard.md">Bug: fix the tracer.fits existence guard in autolens_workspace…</a> |
 | 2026-08-21 | filed | <a href="draft/feature/autoarray/rectangular_bilinear_rtu_mesh_split.md">Rectangular mesh split: Bilinear (fast CPU default) vs RTU…</a> |
 | 2026-08-20 | filed | <a href="draft/feature/autoarray/numba_cpu_likelihood_kernel_cdf_fast_path.md">Numba CPU likelihood phase 2: kernel-CDF numba fast path (the 49-88%…</a> |
 | 2026-08-20 | filed | <a href="draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md">Numba CPU likelihood phase 1: batched MGE convolution +…</a> |

@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1121 records across 7 buckets.
+1122 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -87,6 +87,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [health-conductor-stale-verdict](2026/08/health-conductor-stale-verdict.md)
 - [heart-green-validation-ingest](2026/08/heart-green-validation-ingest.md)
 - [heart-red-guarded-sample-escape](2026/08/heart-red-guarded-sample-escape.md) — Closed the escape path that kept release validation RED after
+- [heart-smoke-table-autocti](2026/08/heart-smoke-table-autocti.md)
 - [history-policy-generated-block](2026/08/history-policy-generated-block.md)
 - [howto-setup-notebook-audit](2026/08/howto-setup-notebook-audit.md) — none — run end-to-end from a cloud session; the six PRs are the record
 - [howto-smoke-all-tutorials](2026/08/howto-smoke-all-tutorials.md)

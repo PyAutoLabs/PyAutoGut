@@ -4,7 +4,41 @@
 
 This is the markdown version of the [PyAutoMind Dashboard](https://pyautolabs.github.io/PyAutoMind/), which puts a task's command on your clipboard with a single tap of 📋.
 
-Every task the Mind is holding, on one page: what is in flight, what is parked, and the whole backlog to pick from. Pick a task and run its `/start_dev` command in a Claude Code chat to start it.
+Every task the Mind is holding, on one page: what is in flight, what is parked, and the whole backlog to pick from. Pick a task and run its `/start_dev` command in a Claude Code chat to start it. [Recent](#recent) is the same work by date — what has been happening rather than what to do next.
+
+> **Last updated 2026-08-24.** This page is generated from `active/`, `draft/` and the registry files, so it is only as current as they are. `dashboard_refresh.yml` re-renders it on every push to `main` — that heals a stale page, but not a stale prompt: a task that shipped without its prompt advancing to `complete/` keeps rendering here as pickable backlog. Reconciling those is the refresh below.
+
+<details><summary>📋 <b>Refresh this page</b> — reconcile finished prompts, then regenerate</summary>
+
+```
+Bring the PyAutoMind dashboard up to date. Work in the PyAutoMind checkout:
+
+1. `git fetch origin && git status`. If behind `origin/main`, `git pull --ff-only`
+   before touching anything.
+2. `python3 scripts/lifecycle.py check`, `orphans`, and `index --check`. Fix
+   whatever drift they report.
+3. Reconcile finished work — this is the part nothing automates. For every prompt
+   under `draft/` and `active/`, decide whether it is already done: a `Status:`
+   header saying shipped/superseded/absorbed, a merged PR named in its body, or a
+   record in `complete/` whose scope already covers it (check `complete/index.md`
+   and grep the dated buckets). Treat a same-subject record as evidence, not
+   proof — read both and confirm the scope really matches before retiring a
+   prompt.
+4. For each one that IS done, write its record and retire the prompt:
+   `python3 scripts/lifecycle.py record <slug> --date <YYYY-MM-DD> --from-file
+   <body> --apply`, where <body> ends with `## Original prompt` followed by the
+   prompt's full text. Then `git rm` the prompt file and repoint every
+   cross-reference to it (grep the slug across `draft/`, `active/`, `epics.md`
+   and the registry files).
+5. Regenerate the page: `pyauto-brain intake --apply dashboard`. Never hand-edit
+   `dashboard.md` or `dashboard.html` — they are generated.
+6. Commit and push to `main`, so `dashboard_refresh.yml` agrees with the tree.
+
+Report what you retired, what you deliberately left in the backlog and why, and
+anything you could not verify.
+```
+
+</details>
 
 | Where | Count |
 |-------|------:|
@@ -25,7 +59,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 </details>
 
-<details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md">Numba CPU likelihood phase 1: batched MGE convolution + operated-matrix</a> — autoarray · medium · supervised · high</summary>
+<details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md">Numba CPU likelihood phase 1: batched MGE convolution + operated-matrix caching</a> — autoarray · medium · supervised · high</summary>
 
 ```
 /start_dev draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md
@@ -41,7 +75,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 </details>
 
-<details><summary>📋 <a href="draft/maintenance/ci/autocti_workspace_navigator_check.md">autocti_workspace has no Navigator Check, so its CI can never</a> — ci · medium · supervised · high</summary>
+<details><summary>📋 <a href="draft/maintenance/ci/autocti_workspace_navigator_check.md">autocti_workspace has no Navigator Check, so its CI can never roll…</a> — ci · medium · supervised · high</summary>
 
 ```
 /start_dev draft/maintenance/ci/autocti_workspace_navigator_check.md
@@ -49,7 +83,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 </details>
 
-<details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_kernel_cdf_fast_path.md">Numba CPU likelihood phase 2: kernel-CDF numba fast path (the</a> — autoarray · large · supervised · high</summary>
+<details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_kernel_cdf_fast_path.md">Numba CPU likelihood phase 2: kernel-CDF numba fast path (the 49-88% lever)</a> — autoarray · large · supervised · high</summary>
 
 ```
 /start_dev draft/feature/autoarray/numba_cpu_likelihood_kernel_cdf_fast_path.md
@@ -115,7 +149,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 **Quick wins** (small enough, and safe enough to run unattended)
 
-<details><summary>📋 <a href="draft/maintenance/libraries/defer_scipy_sparse_import.md">Defer the eager scipy.sparse import in derivative_util (~0.10 s of</a> — libraries · small · safe · normal</summary>
+<details><summary>📋 <a href="draft/maintenance/libraries/defer_scipy_sparse_import.md">Defer the eager scipy.sparse import in derivative_util (~0.10 s of import)</a> — libraries · small · safe · normal</summary>
 
 ```
 /start_dev draft/maintenance/libraries/defer_scipy_sparse_import.md
@@ -131,7 +165,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 </details>
 
-<details><summary>📋 <a href="draft/maintenance/pyautoheart/weekly_smoke_timings_artifact_naming.md">The weekly smoke run's timings land in <code>results-*</code> under no</a> — pyautoheart · small · safe · low</summary>
+<details><summary>📋 <a href="draft/maintenance/pyautoheart/weekly_smoke_timings_artifact_naming.md">The weekly smoke run's timings land in <code>results-*</code> under no discoverable name</a> — pyautoheart · small · safe · low</summary>
 
 ```
 /start_dev draft/maintenance/pyautoheart/weekly_smoke_timings_artifact_naming.md
@@ -143,7 +177,7 @@ Every task the Mind is holding, on one page: what is in flight, what is parked, 
 
 Issued — each has an open GitHub issue and usually a branch. The full record for each is in [`active.md`](active.md).
 
-<details><summary>📋 <a href="active/16_transformed_message_factor_gradient_unpack.md"><code>@PyAutoFit</code> <code>TransformedMessage.factor_gradient</code> crashes on first call</a> — <a href="https://github.com/PyAutoLabs/PyAutoFit/issues/1501">issue #1501</a> — HOLD — do not start dev. Fix-or-delete hangs off the PyAutoFit#1498 logpdf-contract</summary>
+<details><summary>📋 <a href="active/16_transformed_message_factor_gradient_unpack.md"><code>@PyAutoFit</code> <code>TransformedMessage.factor_gradient</code> crashes on first call</a> — <a href="https://github.com/PyAutoLabs/PyAutoFit/issues/1501">issue #1501</a> — issued 2026-08-19 — HOLD — do not start dev. Fix-or-delete hangs off the PyAutoFit#1498 logpdf-contract</summary>
 
 ```
 /start_dev active/16_transformed_message_factor_gradient_unpack.md
@@ -158,7 +192,7 @@ Started or scoped, not currently in flight — resume by moving the row back to 
 <details>
 <summary><b>3</b> task(s)</summary>
 
-<details><summary>📋 <b>single-source-density-design</b> — <a href="https://github.com/PyAutoLabs/PyAutoFit/issues/1500">issue #1500</a></summary>
+<details><summary>📋 <b>single-source-density-design</b> — <a href="https://github.com/PyAutoLabs/PyAutoFit/issues/1500">issue #1500</a> — parked 2026-08-18</summary>
 
 ```
 /start_dev active/12_single_source_density_refactor.md
@@ -166,7 +200,7 @@ Started or scoped, not currently in flight — resume by moving the row back to 
 
 </details>
 
-<details><summary>📋 <b>prior-message-collapse-design</b> — <a href="https://github.com/PyAutoLabs/PyAutoFit/issues/1500">issue #1500</a></summary>
+<details><summary>📋 <b>prior-message-collapse-design</b> — <a href="https://github.com/PyAutoLabs/PyAutoFit/issues/1500">issue #1500</a> — parked 2026-08-18</summary>
 
 ```
 /start_dev active/13_collapse_prior_and_message.md
@@ -174,7 +208,7 @@ Started or scoped, not currently in flight — resume by moving the row back to 
 
 </details>
 
-<details><summary>📋 <b>pyautoreduce-slacs1430-acs-comparison</b></summary>
+<details><summary>📋 <b>pyautoreduce-slacs1430-acs-comparison</b> — parked 2026-08-08</summary>
 
 ```
 /start_dev active/pyautoreduce_slacs1430_acs_comparison.md
@@ -191,7 +225,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 <details>
 <summary><b>5</b> task(s)</summary>
 
-<details><summary>📋 <b>isothermal-ell-sph-oversampling-at-the-cusp</b> — planned — NOT yet a prompt file; file one via <code>/intake</code> before starting</summary>
+<details><summary>📋 <b>isothermal-ell-sph-oversampling-at-the-cusp</b> — found 2026-08-09 — planned — NOT yet a prompt file; file one via <code>/intake</code> before starting</summary>
 
 ```
 /route start the planned PyAutoMind task isothermal-ell-sph-oversampling-at-the-cusp — its record is in planned.md
@@ -199,7 +233,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <b>remote-mcp-deployment-tiers</b> — <a href="https://github.com/PyAutoLabs/autofit_assistant/issues/20">issue #20</a> — DESIGN-COMPLETE, build BLOCKED-ON-DEMAND — issue #20 holds the full auth/transport/hosting design + Richard/PyAutoMCP…</summary>
+<details><summary>📋 <b>remote-mcp-deployment-tiers</b> — <a href="https://github.com/PyAutoLabs/autofit_assistant/issues/20">issue #20</a> — filed 2026-07-21 — DESIGN-COMPLETE, build BLOCKED-ON-DEMAND — issue #20 holds the full auth/transport/hosting design + Richard/PyAutoMCP…</summary>
 
 ```
 /start_dev draft/feature/autofit_assistant/remote_mcp_deployment_tiers.md
@@ -207,7 +241,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <b>samples-parameter-paths</b> — <a href="https://github.com/PyAutoLabs/PyAutoFit/issues/1327">issue #1327</a> — parked</summary>
+<details><summary>📋 <b>samples-parameter-paths</b> — <a href="https://github.com/PyAutoLabs/PyAutoFit/issues/1327">issue #1327</a> — filed 2026-07-08 — parked</summary>
 
 ```
 /start_dev draft/bug/health_fixes/samples_parameter_paths.md
@@ -215,7 +249,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <b>piemass-potential</b> — planned</summary>
+<details><summary>📋 <b>piemass-potential</b> — filed 2026-06-05 — planned</summary>
 
 ```
 /start_dev draft/feature/autogalaxy/piemass_potential.md
@@ -223,7 +257,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <b>latent-nan-guard-honest-run</b></summary>
+<details><summary>📋 <b>latent-nan-guard-honest-run</b> — planned 2026-07-22</summary>
 
 ```
 /route start the planned PyAutoMind task latent-nan-guard-honest-run — its record is in planned.md
@@ -240,7 +274,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 <details>
 <summary><b>feature</b> — 27</summary>
 
-<details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md">Numba CPU likelihood phase 1: batched MGE convolution + operated-matrix</a> — autoarray · medium · supervised · high</summary>
+<details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md">Numba CPU likelihood phase 1: batched MGE convolution + operated-matrix caching</a> — autoarray · medium · supervised · high</summary>
 
 ```
 /start_dev draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md
@@ -256,7 +290,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_kernel_cdf_fast_path.md">Numba CPU likelihood phase 2: kernel-CDF numba fast path (the</a> — autoarray · large · supervised · high</summary>
+<details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_kernel_cdf_fast_path.md">Numba CPU likelihood phase 2: kernel-CDF numba fast path (the 49-88% lever)</a> — autoarray · large · supervised · high</summary>
 
 ```
 /start_dev draft/feature/autoarray/numba_cpu_likelihood_kernel_cdf_fast_path.md
@@ -264,7 +298,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/feature/autofit/prior_exit_sampler_coverage.md">Which other searches need prior-support handling — coverage audit after</a> — autofit · medium · supervised · medium</summary>
+<details><summary>📋 <a href="draft/feature/autofit/prior_exit_sampler_coverage.md">Which other searches need prior-support handling — coverage audit after Prodigy</a> — autofit · medium · supervised · medium</summary>
 
 ```
 /start_dev draft/feature/autofit/prior_exit_sampler_coverage.md
@@ -272,7 +306,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/feature/autofit/search_seed_reproducibility.md">Give PyAutoFit searches a <code>seed</code> — today no search can</a> — autofit · medium · supervised · medium</summary>
+<details><summary>📋 <a href="draft/feature/autofit/search_seed_reproducibility.md">Give PyAutoFit searches a <code>seed</code> — today no search can be made…</a> — autofit · medium · supervised · medium</summary>
 
 ```
 /start_dev draft/feature/autofit/search_seed_reproducibility.md
@@ -485,7 +519,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/bug/autofit/jax_011_message_log_partition_tuple_shape.md">jax 0.11 breaks beta/gamma message log_partition under jit ('tuple' object</a> — autofit · small · supervised · medium</summary>
+<details><summary>📋 <a href="draft/bug/autofit/jax_011_message_log_partition_tuple_shape.md">jax 0.11 breaks beta/gamma message log_partition under jit…</a> — autofit · small · supervised · medium</summary>
 
 ```
 /start_dev draft/bug/autofit/jax_011_message_log_partition_tuple_shape.md
@@ -541,7 +575,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/bug/workspaces/jax_likelihood_pins_stale_by_1e4.md">Three <code>jax_likelihood</code> pins are stale by ~1.24e-4 and fail the</a> — workspaces · small · supervised · normal</summary>
+<details><summary>📋 <a href="draft/bug/workspaces/jax_likelihood_pins_stale_by_1e4.md">Three <code>jax_likelihood</code> pins are stale by ~1.24e-4 and fail the smoke gate…</a> — workspaces · small · supervised · normal</summary>
 
 ```
 /start_dev draft/bug/workspaces/jax_likelihood_pins_stale_by_1e4.md
@@ -565,7 +599,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/bug/autolens_workspace_test/gradient_eager_jit_divergence_py313.md">interferometer/jax_grad/gradient.py: eager and jitted likelihoods diverge ~5e-7 on Python 3.13</a> — autolens_workspace_test · medium · supervised · normal</summary>
+<details><summary>📋 <a href="draft/bug/autolens_workspace_test/gradient_eager_jit_divergence_py313.md">interferometer/jax_grad/gradient.py: eager and jitted likelihoods diverge ~5e-7 on Python 3.13 only</a> — autolens_workspace_test · medium · supervised · normal</summary>
 
 ```
 /start_dev draft/bug/autolens_workspace_test/gradient_eager_jit_divergence_py313.md
@@ -629,7 +663,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/bug/autoarray/reconstruction_noise_map_solver_mismatch.md">The reconstruction noise map describes a different estimator than the</a> — autoarray · medium · human-required · low</summary>
+<details><summary>📋 <a href="draft/bug/autoarray/reconstruction_noise_map_solver_mismatch.md">The reconstruction noise map describes a different estimator than the default solver</a> — autoarray · medium · human-required · low</summary>
 
 ```
 /start_dev draft/bug/autoarray/reconstruction_noise_map_solver_mismatch.md
@@ -658,7 +692,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 <details>
 <summary><b>maintenance</b> — 23</summary>
 
-<details><summary>📋 <a href="draft/maintenance/ci/autocti_workspace_navigator_check.md">autocti_workspace has no Navigator Check, so its CI can never</a> — ci · medium · supervised · high</summary>
+<details><summary>📋 <a href="draft/maintenance/ci/autocti_workspace_navigator_check.md">autocti_workspace has no Navigator Check, so its CI can never roll…</a> — ci · medium · supervised · high</summary>
 
 ```
 /start_dev draft/maintenance/ci/autocti_workspace_navigator_check.md
@@ -674,7 +708,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/maintenance/ci/smoke_install_stale_jax_pin.md">smoke_install.sh's stale <code>jax&lt;0.7</code> pin — CI is on the right</a> — ci · low · supervised · medium</summary>
+<details><summary>📋 <a href="draft/maintenance/ci/smoke_install_stale_jax_pin.md">smoke_install.sh's stale <code>jax&lt;0.7</code> pin — CI is on the right jax…</a> — ci · low · supervised · medium</summary>
 
 ```
 /start_dev draft/maintenance/ci/smoke_install_stale_jax_pin.md
@@ -690,7 +724,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/maintenance/libraries/defer_scipy_sparse_import.md">Defer the eager scipy.sparse import in derivative_util (~0.10 s of</a> — libraries · small · safe · normal</summary>
+<details><summary>📋 <a href="draft/maintenance/libraries/defer_scipy_sparse_import.md">Defer the eager scipy.sparse import in derivative_util (~0.10 s of import)</a> — libraries · small · safe · normal</summary>
 
 ```
 /start_dev draft/maintenance/libraries/defer_scipy_sparse_import.md
@@ -730,7 +764,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/maintenance/ci/heart_smoke_table_autocti.md">Heart's local smoke runner cannot run any CTI workspace —</a> — ci · medium · supervised · normal</summary>
+<details><summary>📋 <a href="draft/maintenance/ci/heart_smoke_table_autocti.md">Heart's local smoke runner cannot run any CTI workspace — no autocti…</a> — ci · medium · supervised · normal</summary>
 
 ```
 /start_dev draft/maintenance/ci/heart_smoke_table_autocti.md
@@ -746,7 +780,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/maintenance/libraries/dep_cap_refresh_2026_08.md">Dependency-cap refresh 2026-08: safe bumps, astropy 8 decision, two dead</a> — libraries · medium · supervised · normal</summary>
+<details><summary>📋 <a href="draft/maintenance/libraries/dep_cap_refresh_2026_08.md">Dependency-cap refresh 2026-08: safe bumps, astropy 8 decision, two dead deps</a> — libraries · medium · supervised · normal</summary>
 
 ```
 /start_dev draft/maintenance/libraries/dep_cap_refresh_2026_08.md
@@ -794,7 +828,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/maintenance/workspaces/pynufft_removal_downstream_residue.md">pynufft removal: unswept downstream residue (1 hard break + stale</a> — workspaces · low-medium · supervised · normal</summary>
+<details><summary>📋 <a href="draft/maintenance/workspaces/pynufft_removal_downstream_residue.md">pynufft removal: unswept downstream residue (1 hard break + stale docs/CI)</a> — workspaces · low-medium · supervised · normal</summary>
 
 ```
 /start_dev draft/maintenance/workspaces/pynufft_removal_downstream_residue.md
@@ -802,7 +836,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/maintenance/workspaces/pynufft_removal_downstream_residue_phase_3_ci_install_docs.md">Phase 3: stop installing pynufft in Hands/Heart CI and PyAutoCTI</a> — workspaces · low · supervised · normal</summary>
+<details><summary>📋 <a href="draft/maintenance/workspaces/pynufft_removal_downstream_residue_phase_3_ci_install_docs.md">Phase 3: stop installing pynufft in Hands/Heart CI and PyAutoCTI install docs</a> — workspaces · low · supervised · normal</summary>
 
 ```
 /start_dev draft/maintenance/workspaces/pynufft_removal_downstream_residue_phase_3_ci_install_docs.md
@@ -810,7 +844,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/maintenance/autolens_profiling/jwst_lw_untracked_gitignore_gap.md">dataset/imaging/jwst_lw is untracked because the gitignore was never extended for</a> — autolens_profiling · small · supervised · low</summary>
+<details><summary>📋 <a href="draft/maintenance/autolens_profiling/jwst_lw_untracked_gitignore_gap.md">dataset/imaging/jwst_lw is untracked because the gitignore was never extended for it</a> — autolens_profiling · small · supervised · low</summary>
 
 ```
 /start_dev draft/maintenance/autolens_profiling/jwst_lw_untracked_gitignore_gap.md
@@ -818,7 +852,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/maintenance/autolens_workspace/cosmos_web_ring_mask_dtype.md">cosmos_web_ring stores boolean masks as float64, wasting ~3.4 MB of</a> — autolens_workspace · small · supervised · low</summary>
+<details><summary>📋 <a href="draft/maintenance/autolens_workspace/cosmos_web_ring_mask_dtype.md">cosmos_web_ring stores boolean masks as float64, wasting ~3.4 MB of the repo's…</a> — autolens_workspace · small · supervised · low</summary>
 
 ```
 /start_dev draft/maintenance/autolens_workspace/cosmos_web_ring_mask_dtype.md
@@ -826,7 +860,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/maintenance/pyautoheart/weekly_smoke_timings_artifact_naming.md">The weekly smoke run's timings land in <code>results-*</code> under no</a> — pyautoheart · small · safe · low</summary>
+<details><summary>📋 <a href="draft/maintenance/pyautoheart/weekly_smoke_timings_artifact_naming.md">The weekly smoke run's timings land in <code>results-*</code> under no discoverable name</a> — pyautoheart · small · safe · low</summary>
 
 ```
 /start_dev draft/maintenance/pyautoheart/weekly_smoke_timings_artifact_naming.md
@@ -863,7 +897,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/research/autolens/quick_update_plotting_cost.md">Quick-update plotting cost — minutes per update, and it is</a> — autolens · medium · supervised · medium</summary>
+<details><summary>📋 <a href="draft/research/autolens/quick_update_plotting_cost.md">Quick-update plotting cost — minutes per update, and it is not JAX…</a> — autolens · medium · supervised · medium</summary>
 
 ```
 /start_dev draft/research/autolens/quick_update_plotting_cost.md
@@ -903,7 +937,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/research/libraries/intel_macos_support_policy.md">Is Intel macOS a supported platform, and what is the</a> — libraries · medium · supervised · normal</summary>
+<details><summary>📋 <a href="draft/research/libraries/intel_macos_support_policy.md">Is Intel macOS a supported platform, and what is the numpy-only contract?</a> — libraries · medium · supervised · normal</summary>
 
 ```
 /start_dev draft/research/libraries/intel_macos_support_policy.md
@@ -911,7 +945,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/research/pyautomemory/checkerboard_psf_mismatch_residual_diagnostic.md">Checkerboard PSF-mismatch residual diagnostic — research + document + ingest</a> — pyautomemory · medium · supervised · normal</summary>
+<details><summary>📋 <a href="draft/research/pyautomemory/checkerboard_psf_mismatch_residual_diagnostic.md">Checkerboard PSF-mismatch residual diagnostic — research + document + ingest papers</a> — pyautomemory · medium · supervised · normal</summary>
 
 ```
 /start_dev draft/research/pyautomemory/checkerboard_psf_mismatch_residual_diagnostic.md
@@ -935,7 +969,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/research/pyautoreduce/legacy_flux_scale_parity.md">Chase the ~6% flux scale between PyAutoReduce and legacy SLACS</a> — pyautoreduce · medium · supervised · low</summary>
+<details><summary>📋 <a href="draft/research/pyautoreduce/legacy_flux_scale_parity.md">Chase the ~6% flux scale between PyAutoReduce and legacy SLACS reductions</a> — pyautoreduce · medium · supervised · low</summary>
 
 ```
 /start_dev draft/research/pyautoreduce/legacy_flux_scale_parity.md
@@ -1020,7 +1054,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/docs/autocti/api_rst_rewrite.md">Rewrite PyAutoCTI docs/api — 55 of 89 autosummary entries are</a> — autocti · medium · supervised · normal</summary>
+<details><summary>📋 <a href="draft/docs/autocti/api_rst_rewrite.md">Rewrite PyAutoCTI docs/api — 55 of 89 autosummary entries are dead</a> — autocti · medium · supervised · normal</summary>
 
 ```
 /start_dev draft/docs/autocti/api_rst_rewrite.md
@@ -1044,7 +1078,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/docs/autolens_workspace/sampler_cli_output_workspace_sweep.md">Phase 2 — drop the hand-written quick-update sentence from the</a> — autolens_workspace</summary>
+<details><summary>📋 <a href="draft/docs/autolens_workspace/sampler_cli_output_workspace_sweep.md">Phase 2 — drop the hand-written quick-update sentence from the workspace scripts</a> — autolens_workspace</summary>
 
 ```
 /start_dev draft/docs/autolens_workspace/sampler_cli_output_workspace_sweep.md
@@ -1126,7 +1160,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/test/pyautoheart/smoke_relevance_gate.md">Relevance-gate the reusable smoke workflow so a PR only runs</a> — pyautoheart · medium · supervised · normal</summary>
+<details><summary>📋 <a href="draft/test/pyautoheart/smoke_relevance_gate.md">Relevance-gate the reusable smoke workflow so a PR only runs…</a> — pyautoheart · medium · supervised · normal</summary>
 
 ```
 /start_dev draft/test/pyautoheart/smoke_relevance_gate.md
@@ -1171,7 +1205,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 </details>
 
-<details><summary>📋 <a href="draft/triage/nightly_release_blocked_eight_nights.md">Nightly release has been blocked 8 nights running — triage</a> — medium · supervised · normal</summary>
+<details><summary>📋 <a href="draft/triage/nightly_release_blocked_eight_nights.md">Nightly release has been blocked 8 nights running — triage the streak</a> — medium · supervised · normal</summary>
 
 ```
 /start_dev draft/triage/nightly_release_blocked_eight_nights.md
@@ -1201,6 +1235,93 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 </details>
+
+## Recent
+
+The 50 newest things to happen to the work in hand, newest first — issued, parked, filed. Every other section on this page is laid out by state, which is exactly why none of them can answer “what has been happening?”. Shipped work is not here: it is read from `complete/index.md`, and a thousand records deep it would crowd out everything anyone can still act on. Showing the newest 10; … opens the next 10.
+
+| Date | Event | Task |
+|------|-------|------|
+| 2026-08-24 | filed | <a href="draft/maintenance/ci/wiki_currency_check_version_gate.md">wiki-currency's --check-version gate rots on every library main merge</a> |
+| 2026-08-24 | filed | <a href="draft/bug/autolens_workspace_test/gradient_eager_jit_divergence_py313.md">interferometer/jax_grad/gradient.py: eager and jitted likelihoods…</a> |
+| 2026-08-24 | filed | <a href="draft/maintenance/ci/autocti_workspace_navigator_check.md">autocti_workspace has no Navigator Check, so its CI can never roll…</a> |
+| 2026-08-24 | filed | <a href="draft/maintenance/workspaces/unpark_multi_galaxy_scaling_relation_slam.md">Un-park multi_galaxy/features/scaling_relation/slam once a capped run…</a> |
+| 2026-08-24 | filed | <a href="draft/maintenance/pyautoheart/weekly_smoke_timings_artifact_naming.md">The weekly smoke run's timings land in <code>results-*</code> under no…</a> |
+| 2026-08-24 | filed | <a href="draft/bug/pyautobrain/organ_repo_spellings_split_across_keys.md">Organ repo spellings split across two normalised keys</a> |
+| 2026-08-24 | filed | <a href="draft/maintenance/ci/heart_smoke_table_autocti.md">Heart's local smoke runner cannot run any CTI workspace — no autocti…</a> |
+| 2026-08-23 | filed | <a href="draft/maintenance/workspaces/pynufft_removal_downstream_residue.md">pynufft removal: unswept downstream residue (1 hard break + stale…</a> |
+| 2026-08-23 | filed | <a href="draft/maintenance/workspaces/pynufft_removal_downstream_residue_phase_3_ci_install_docs.md">Phase 3: stop installing pynufft in Hands/Heart CI and PyAutoCTI…</a> |
+| 2026-08-23 | filed | <a href="draft/feature/pyautobrain/brain_board_follow_ups.md">Brain board follow-ups: what real mornings surface</a> |
+
+<details><summary>… 10 more (40 left)</summary>
+
+| Date | Event | Task |
+|------|-------|------|
+| 2026-08-22 | filed | <a href="draft/maintenance/ci/smoke_install_stale_jax_pin.md">smoke_install.sh's stale <code>jax&lt;0.7</code> pin — CI is on the right jax…</a> |
+| 2026-08-22 | filed | <a href="draft/maintenance/libraries/untrack_generated_fits_test_artifacts.md">Untrack the generated FITS test artifacts in autoarray</a> |
+| 2026-08-22 | filed | <a href="draft/bug/autoarray/reconstruction_noise_map_solver_mismatch.md">The reconstruction noise map describes a different estimator than the…</a> |
+| 2026-08-22 | filed | <a href="draft/bug/pyautolens/point_source_json_datasets_record_no_regime.md">Point-source JSON datasets record no resolution regime</a> |
+| 2026-08-22 | filed | <a href="draft/research/libraries/intel_macos_support_policy.md">Is Intel macOS a supported platform, and what is the numpy-only…</a> |
+| 2026-08-22 | filed | <a href="draft/maintenance/libraries/defer_scipy_sparse_import.md">Defer the eager scipy.sparse import in derivative_util (~0.10 s of…</a> |
+| 2026-08-22 | filed | <a href="draft/bug/workspaces/bug_fix_the_tracer_fits_existence_guard.md">Bug: fix the tracer.fits existence guard in autolens_workspace…</a> |
+| 2026-08-21 | filed | <a href="draft/feature/autoarray/rectangular_bilinear_rtu_mesh_split.md">Rectangular mesh split: Bilinear (fast CPU default) vs RTU…</a> |
+| 2026-08-20 | filed | <a href="draft/feature/autoarray/numba_cpu_likelihood_kernel_cdf_fast_path.md">Numba CPU likelihood phase 2: kernel-CDF numba fast path (the 49-88%…</a> |
+| 2026-08-20 | filed | <a href="draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md">Numba CPU likelihood phase 1: batched MGE convolution +…</a> |
+
+<details><summary>… 10 more (30 left)</summary>
+
+| Date | Event | Task |
+|------|-------|------|
+| 2026-08-19 | filed | <a href="draft/bug/pyautomind/status_sh_repos_missing_source.md">status.sh --repos sources a file that no longer exists</a> |
+| 2026-08-19 | filed | <a href="draft/bug/autofit/jax_011_message_log_partition_tuple_shape.md">jax 0.11 breaks beta/gamma message log_partition under jit…</a> |
+| 2026-08-19 | filed | <a href="draft/bug/autolens/jax_likelihood_smoke_pins_stale.md">autolens_workspace_test jax_likelihood pins: 4 scripts fail smoke on…</a> |
+| 2026-08-19 | filed | <a href="draft/research/autofit/autofit_profiling_bootstrap.md">autofit_profiling: bootstrap the repo + general PyAutoFit profiling…</a> |
+| 2026-08-19 | filed | <a href="draft/bug/pyautoreduce/published_autoreduce_09_missing_312_floor.md"><code>autoreduce 0.9</code> on PyPI never got the Python 3.12 floor</a> |
+| 2026-08-19 | issued | <a href="active/16_transformed_message_factor_gradient_unpack.md"><code>@PyAutoFit</code> <code>TransformedMessage.factor_gradient</code> crashes on first…</a> |
+| 2026-08-19 | filed | <a href="draft/feature/pyautohands/release_board_run_logs_enrichment.md">Release board: local run_logs enrichment</a> |
+| 2026-08-19 | filed | <a href="draft/docs/pyautobrain/rtd_organism_currency.md">RTD organism docs currency: Nerves page, organ-count drift, hands.md…</a> |
+| 2026-08-19 | filed | <a href="draft/refactor/pyautomind/repos_sync_check_dedup.md">Deduplicate repos_sync.py's check/write pairs</a> |
+| 2026-08-19 | filed | <a href="draft/triage/bug_in_autocti_workspace_the_dataset_1d.md">Bug in autocti_workspace: the dataset_1d results/database example…</a> |
+
+<details><summary>… 10 more (20 left)</summary>
+
+| Date | Event | Task |
+|------|-------|------|
+| 2026-08-18 | parked | <a href="parked.md#single-source-density-design">single-source-density-design</a> |
+| 2026-08-18 | parked | <a href="parked.md#prior-message-collapse-design">prior-message-collapse-design</a> |
+| 2026-08-18 | filed | <a href="draft/bug/priors/15_transformed_message_logpdf_jacobian.md"><code>@PyAutoFit</code> <code>TransformedMessage.logpdf</code>/<code>pdf</code> omit the transform…</a> |
+| 2026-08-17 | filed | <a href="draft/feature/autofit/prior_exit_sampler_coverage.md">Which other searches need prior-support handling — coverage audit…</a> |
+| 2026-08-17 | filed | <a href="draft/feature/pyautomind/repos-sync-config-stamper.md">Teach repos_sync --write to stamp organ config surfaces</a> |
+| 2026-08-16 | filed | <a href="draft/bug/autofit/loggaussian_prior_declares_own_support.md"><code>LogGaussianPrior</code> misreports its own support as <code>(-inf, inf)</code></a> |
+| 2026-08-14 | filed | <a href="draft/bug/workspaces/jax_likelihood_pins_stale_by_1e4.md">Three <code>jax_likelihood</code> pins are stale by ~1.24e-4 and fail the smoke…</a> |
+| 2026-08-09 | found | <a href="planned.md#isothermal-ell-sph-oversampling-at-the-cusp">isothermal-ell-sph-oversampling-at-the-cusp</a> |
+| 2026-08-08 | parked | <a href="parked.md#pyautoreduce-slacs1430-acs-comparison">pyautoreduce-slacs1430-acs-comparison</a> |
+| 2026-08-08 | filed | <a href="draft/docs/autolens_workspace/markdown_regeneration_sigma_min.md">Regenerate autolens_workspace markdown/ so the MGE pages show…</a> |
+
+<details><summary>… 10 more (10 left)</summary>
+
+| Date | Event | Task |
+|------|-------|------|
+| 2026-08-07 | filed | <a href="draft/maintenance/workspaces/notebook_setup_notebook_drift_siblings.md">Regenerate setup_notebook-drifted notebooks in…</a> |
+| 2026-08-06 | filed | <a href="draft/triage/convolver_blurring_image_warning.md">Triage: Convolver "No blurring_image provided" warning in canonical…</a> |
+| 2026-08-06 | filed | <a href="draft/docs/autocti/api_rst_rewrite.md">Rewrite PyAutoCTI docs/api — 55 of 89 autosummary entries are dead</a> |
+| 2026-08-06 | filed | <a href="draft/maintenance/libraries/dep_cap_refresh_2026_08.md">Dependency-cap refresh 2026-08: safe bumps, astropy 8 decision, two…</a> |
+| 2026-08-05 | filed | <a href="draft/feature/autofit/search_seed_reproducibility.md">Give PyAutoFit searches a <code>seed</code> — today no search can be made…</a> |
+| 2026-08-04 | filed | <a href="draft/maintenance/autolens_profiling/jwst_lw_untracked_gitignore_gap.md">dataset/imaging/jwst_lw is untracked because the gitignore was never…</a> |
+| 2026-08-04 | filed | <a href="draft/maintenance/autolens_workspace/cosmos_web_ring_mask_dtype.md">cosmos_web_ring stores boolean masks as float64, wasting ~3.4 MB of…</a> |
+| 2026-08-04 | filed | <a href="draft/maintenance/autolens_workspace_developer/stale_api_rot_audit.md">autolens_workspace_developer: broad stale-API rot (56 symbols, no CI)</a> |
+| 2026-08-04 | filed | <a href="draft/bug/workspaces/aplt_output_drift_remaining_repos.md"><code>aplt.Output</code> stale-API drift in the remaining workspace repos</a> |
+| 2026-08-04 | filed | <a href="draft/triage/nightly_release_blocked_eight_nights.md">Nightly release has been blocked 8 nights running — triage the streak</a> |
+
+</details>
+
+</details>
+
+</details>
+
+</details>
+
+_Dates come from each task's registry entry — `lifecycle.py dates` reports anything undated._
 
 ## Epics
 
@@ -1329,7 +1450,7 @@ Continue the 'Cluster strong lensing — Source & Cluster arc' epic. Its canonic
 
 </details>
 
-<details><summary>📋 <a href="draft/feature/autolens/source_cluster_arc.md">Source &amp; Cluster arc — magnification science, PointSolver trust, cluster</a> — autolens · too-large · supervised · high</summary>
+<details><summary>📋 <a href="draft/feature/autolens/source_cluster_arc.md">Source &amp; Cluster arc — magnification science, PointSolver trust, cluster extended sources</a> — autolens · too-large · supervised · high</summary>
 
 ```
 /start_dev draft/feature/autolens/source_cluster_arc.md
@@ -1350,7 +1471,7 @@ Continue the 'Intermittent XLA compile stall in the JAX vmap likelihood path' ep
 
 </details>
 
-<details><summary>📋 <a href="draft/bug/ci/jax_compile_stall_3_root_cause.md">Phase 3: root-cause the XLA vmap compile stall and clear</a> — ci · large · supervised · high</summary>
+<details><summary>📋 <a href="draft/bug/ci/jax_compile_stall_3_root_cause.md">Phase 3: root-cause the XLA vmap compile stall and clear every NEEDS_FIX…</a> — ci · large · supervised · high</summary>
 
 ```
 /start_dev draft/bug/ci/jax_compile_stall_3_root_cause.md
@@ -1358,7 +1479,7 @@ Continue the 'Intermittent XLA compile stall in the JAX vmap likelihood path' ep
 
 </details>
 
-<details><summary>📋 <a href="draft/bug/ci/jax_vmap_jit_compile_stall.md">Intermittent XLA compile stall in JAX vmap likelihood scripts —</a> — ci · too-large · supervised · high</summary>
+<details><summary>📋 <a href="draft/bug/ci/jax_vmap_jit_compile_stall.md">Intermittent XLA compile stall in JAX vmap likelihood scripts — third repo…</a> — ci · too-large · supervised · high</summary>
 
 ```
 /start_dev draft/bug/ci/jax_vmap_jit_compile_stall.md
@@ -1387,7 +1508,7 @@ Continue the 'Expectation propagation (EP) campaign' epic. Its canonical state l
 
 </details>
 
-<details><summary>📋 <a href="draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md">EP hierarchical parent-scale collapse: cure the basin, or document the</a> — autofit · too-large · human-required · high</summary>
+<details><summary>📋 <a href="draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md">EP hierarchical parent-scale collapse: cure the basin, or document the caveat</a> — autofit · too-large · human-required · high</summary>
 
 ```
 /start_dev draft/bug/autofit/ep_scale_collapse_basin_cure_or_caveat.md
@@ -1427,7 +1548,7 @@ Continue the 'Expectation propagation (EP) campaign' epic. Its canonical state l
 
 </details>
 
-<details><summary>📋 <a href="draft/research/graphical_ep/ep_campaign.md">EP campaign — phase map for the 2026 Q3 graphical/EP</a> — graphical_ep · too-large · supervised · high</summary>
+<details><summary>📋 <a href="draft/research/graphical_ep/ep_campaign.md">EP campaign — phase map for the 2026 Q3 graphical/EP push</a> — graphical_ep · too-large · supervised · high</summary>
 
 ```
 /start_dev draft/research/graphical_ep/ep_campaign.md
@@ -1466,3 +1587,5 @@ Continue the 'Expectation propagation (EP) campaign' epic. Its canonical state l
 - `draft/research/autolens_profiling/cluster_gradient_search_benchmark.md`
 
 </details>
+
+Boards: [brain](https://pyautolabs.github.io/PyAutoBrain/) · [heart](https://pyautolabs.github.io/PyAutoHeart/) · [hands](https://pyautolabs.github.io/PyAutoHands/) · [memory](https://pyautolabs.github.io/PyAutoMemory/) · [organism](https://pyautolabs.github.io/PyAutoScientist/)

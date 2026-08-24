@@ -18,8 +18,13 @@
 - issue: https://github.com/PyAutoLabs/PyAutoBrain/issues/267
 - issued: 2026-08-24
 - prompt: active/pyautoconf_rename_functional_leftovers.md
-- status: library-dev
+- status: awaiting-input — implementation complete + pushed; parked at ship PR sign-off
+  (supervised converts checkpoint 2 into a question, per PyAutoBrain/AUTONOMY.md)
+- question: https://github.com/PyAutoLabs/PyAutoBrain/issues/267#issuecomment-5401398548
 - autonomy: supervised (--auto launch; effective = min(header supervised, bug cap supervised))
+- gate: tests PASS (467); smoke n/a (organism repo); review CLEAN (dispositions on the
+  question comment); Heart NOT EVALUATED — pyauto-heart unreachable in this web-github
+  session, so no YELLOW was acknowledged and no RED was seen
 - worktree: n/a — web-github session, working from the session clones
 - repos:
   - PyAutoBrain: claude/pyautoconf-rename-leftovers-38ia48

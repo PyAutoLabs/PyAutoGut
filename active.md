@@ -18,15 +18,16 @@
 - issue: https://github.com/PyAutoLabs/autolens_workspace/issues/503 (issued 2026-08-24)
 - issued: 2026-08-24
 - prompt: active/bug_fix_the_tracer_fits_existence_guard.md
-- status: awaiting-input
-- question: https://github.com/PyAutoLabs/autolens_workspace/issues/503#issuecomment-5402138356
+- status: awaiting-merge
+- workspace-pr: https://github.com/PyAutoLabs/autolens_workspace/pull/504 (pending-release)
+- question: https://github.com/PyAutoLabs/autolens_workspace/issues/503#issuecomment-5402138356 (answered: human typed /prm = ship as-is + close out)
 - worktree: ~/Code/PyAutoLabs-wt/tracer-fits-existence-guard
 - environment: web-github (cloud session; no local worktree — operates on the session clone,
   branch claude/tracer-fits-existence-guard-zihsnn)
 - autonomy: --auto launch; header safe, bug cap supervised -> effective supervised. Plan written
   to the issue; ship sign-off parks for a human (checkpoint 2 -> the question above).
 - progress: fix implemented + verified and pushed to branch claude/tracer-fits-existence-guard-zihsnn
-  on autolens_workspace (scripts/imaging/modeling.py, scripts/multi_galaxy/modeling.py). NO PR open.
-  Remaining on resume: regenerate the two notebooks/ mirrors, then /ship_workspace.
+  on autolens_workspace (scripts/imaging/modeling.py, scripts/multi_galaxy/modeling.py).
+  Notebooks regenerated (0c14d00). PR #504 open; /prm watching CI to merge + close out.
 - repos:
   - autolens_workspace: claude/tracer-fits-existence-guard-zihsnn

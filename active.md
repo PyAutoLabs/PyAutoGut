@@ -18,7 +18,7 @@
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1523
 - issued: 2026-08-24
 - prompt: active/plot_functions_discard_kwargs.md
-- status: library-dev
+- status: ready-to-ship (both branches pushed; no PRs opened yet)
 - env: web-github (no local worktree; clones at /home/user/pyautofit + /home/user/autofit_workspace, venv /home/user/.venv-af on py3.12)
 - repos:
   - PyAutoFit: claude/autofit-plot-functions-kwargs-vvwj5x
@@ -36,4 +36,11 @@
     phasing; overridden deliberately — the score is inflated by prompt word
     count plus the multi-repo flag. Library PR merges first, workspace PR
     follows behind the library-first gate.
-    Next: /start_library for PyAutoFit.
+    Implemented and pushed 2026-08-24. PyAutoFit 8cdcff3: forward-with-strict-filter
+    (PlotKwargsError + checked_kwargs in plot_util), the weight_list=/weights= fix,
+    anesthetic kwargs split between make_2d_axes and plot_2d, mle traces forward Line2D
+    properties. Full suite 2088 passed / 36 skipped. autofit_workspace: the four plot
+    scripts' kwarg lists rewritten to genuine corner.py arguments (15 wrong-library names
+    removed, zeus's list rebuilt), prose corrected, notebooks regenerated.
+    Next: /ship_library to open the PyAutoFit PR, then /ship_workspace behind the
+    library-first gate. No PRs opened yet — awaiting the human.

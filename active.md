@@ -23,8 +23,9 @@
 - issue: https://github.com/PyAutoLabs/PyAutoArray/issues/486
 - issued: 2026-08-24
 - prompt: active/numba_kernel_shift_axes_swapped.md
-- status: ready-to-ship — PR open, awaiting CI + review
+- status: ready-to-ship — CI green, mergeable_state clean, awaiting human review + merge
 - pr: https://github.com/PyAutoLabs/PyAutoArray/pull/487
+- ci: Tests run 2586 on cc61161a — completed/success (2026-08-24 16:21Z)
 - classification: library (PyAutoArray only)
 - environment: web-github — session clone at /home/user/pyautoarray is the working tree;
   no `~/Code/PyAutoLabs-wt/` worktree exists or is claimed by this task.

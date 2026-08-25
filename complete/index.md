@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1133 records across 7 buckets.
+1134 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -105,6 +105,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [hygiene-gone-ref-counter](2026/08/hygiene-gone-ref-counter.md) — the prompt was never issued — the defects were fixed under other issues, see below
 - [hygiene-howto-refs-docstrings](2026/08/hygiene-howto-refs-docstrings.md)
 - [imaging-mge-pytree-migration](2026/08/imaging-mge-pytree-migration.md)
+- [inbox-board-staleness-signal](2026/08/inbox-board-staleness-signal.md) — the knowledge board rendered an empty arXiv inbox as "nothing waiting — the
 - [inference-method-cards-seed](2026/08/inference-method-cards-seed.md)
 - [inference-programme-ledger](2026/08/inference-programme-ledger.md)
 - [intake-declared-difficulty](2026/08/intake-declared-difficulty.md) — the precedence rule "a DECLARED header key beats a value derived from

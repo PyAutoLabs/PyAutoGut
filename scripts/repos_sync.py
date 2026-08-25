@@ -27,6 +27,13 @@ organism. A repo opts in by adding the map markers to its AGENTS.md; organ
 repos (or roots) that are absent, or lack the markers, are skipped rather than
 failing the run.
 
+--write also installs the SessionStart hook (`policy/session_start_hook.sh` ->
+`<repo>/.claude/hooks/session-start.sh`, registered in `<repo>/.claude/
+settings.json`) into every checked-out repo. It is what makes a Claude Code
+web/mobile session run Python 3.12 instead of the container's 3.11 default; the
+copies must be byte-identical to the canonical file, so `--check` fails on any
+edit made to a copy.
+
 --check (always run) verifies, against the manifest:
 
   * PyAutoHeart/config/repos.yaml          — polled repos exist, owners match
@@ -38,6 +45,8 @@ failing the run.
   * the tenant firewall — no instance fact (satellite repo name, GitHub
     owner, workspace path) in Brain/Heart/Build *.py / *.sh outside the
     declared config surfaces (FIREWALL_ALLOWLIST below)
+  * the SessionStart hook — present, executable, byte-identical to
+    policy/session_start_hook.sh and registered in .claude/settings.json
 
 Exit code 0 = no drift; 1 = drift found (each mismatch printed).
 """
@@ -74,9 +83,27 @@ ORGANS_END = "<!-- repos_sync:organs:end -->"
 # every session; keep it to the prohibition + the clean-tree recovery command.
 HISTORY_POLICY_FILE = "policy/never_rewrite_history.md"
 
+# The SessionStart hook that makes Python 3.12 the default in Claude Code
+# web/mobile session containers. Single-sourced here (one file, editable
+# without touching this generator) and installed verbatim into every checked-out
+# repo, because the harness reads it per repo — a session opened on any repo has
+# to bring its own copy. Same shape as the history policy: one source, N
+# generated copies, a drift check so they cannot diverge. A repo's own
+# dependencies stay OUT of the hook (they would make the copies differ) and go
+# in that repo's `.claude/session-python.txt`, which the hook reads at run time.
+SESSION_HOOK_FILE = "policy/session_start_hook.sh"
+SESSION_HOOK_REL = ".claude/hooks/session-start.sh"
+SESSION_SETTINGS_REL = ".claude/settings.json"
+SESSION_HOOK_COMMAND = "$CLAUDE_PROJECT_DIR/.claude/hooks/session-start.sh"
+SESSION_HOOKS = "session-start hooks (generated)"
+
 
 def load_history_policy(mind_root):
     return (mind_root / HISTORY_POLICY_FILE).read_text().rstrip("\n")
+
+
+def load_session_hook(mind_root):
+    return (mind_root / SESSION_HOOK_FILE).read_text()
 
 # The canonical content-free CLAUDE.md pointer. Guidance is agent-agnostic and
 # lives in AGENTS.md (read natively by Codex, Cursor, etc.); Claude Code loads
@@ -846,6 +873,103 @@ def check_origins(root, repos):
 
 # --------------------------------------------------------------------------
 
+def session_start_entries(settings):
+    """Every hook command registered under SessionStart, whatever the nesting
+    (the harness accepts a list of matcher groups, each holding a hooks list)."""
+    commands = []
+    for group in settings.get("hooks", {}).get("SessionStart", []) or []:
+        if not isinstance(group, dict):
+            continue
+        for hook in group.get("hooks", []) or []:
+            if isinstance(hook, dict) and "command" in hook:
+                commands.append(hook["command"])
+    return commands
+
+
+def settings_registers_hook(text):
+    try:
+        settings = json.loads(text)
+    except (ValueError, TypeError):
+        return False
+    if not isinstance(settings, dict):
+        return False
+    return SESSION_HOOK_COMMAND in session_start_entries(settings)
+
+
+def register_session_hook(settings):
+    """Add the SessionStart registration, preserving everything else the repo
+    keeps in its settings.json (permissions, env, other hook events)."""
+    hooks = settings.setdefault("hooks", {})
+    groups = hooks.setdefault("SessionStart", [])
+    groups.append({"hooks": [{"type": "command", "command": SESSION_HOOK_COMMAND}]})
+    return settings
+
+
+def check_session_hooks(root, repos, hook_text):
+    problems = []
+    for name in repos:
+        repo_dir = root / name
+        if not repo_dir.is_dir():
+            continue  # not checked out in this environment
+        hook = repo_dir / SESSION_HOOK_REL
+        if not hook.exists():
+            problems.append(f"'{name}': no {SESSION_HOOK_REL}")
+        elif hook.read_text() != hook_text:
+            problems.append(
+                f"'{name}': {SESSION_HOOK_REL} differs from {SESSION_HOOK_FILE}"
+            )
+        elif not os.access(hook, os.X_OK):
+            problems.append(f"'{name}': {SESSION_HOOK_REL} is not executable")
+        settings = repo_dir / SESSION_SETTINGS_REL
+        if not settings.exists():
+            problems.append(f"'{name}': no {SESSION_SETTINGS_REL}")
+        elif not settings_registers_hook(settings.read_text()):
+            problems.append(
+                f"'{name}': {SESSION_SETTINGS_REL} does not register the "
+                "SessionStart hook"
+            )
+    return problems
+
+
+def write_session_hooks(root, repos, hook_text):
+    """Install the hook + its registration in every checked-out repo. Idempotent:
+    an up-to-date copy is left alone, and a settings.json that already registers
+    the hook keeps its own formatting."""
+    for name in repos:
+        repo_dir = root / name
+        if not repo_dir.is_dir():
+            continue
+        hook = repo_dir / SESSION_HOOK_REL
+        hook.parent.mkdir(parents=True, exist_ok=True)
+        if hook.exists() and hook.read_text() == hook_text:
+            print(f"unchanged: {hook}")
+        else:
+            hook.write_text(hook_text)
+            print(f"wrote: {hook}")
+        hook.chmod(0o755)
+
+        settings = repo_dir / SESSION_SETTINGS_REL
+        if settings.exists():
+            if settings_registers_hook(settings.read_text()):
+                print(f"unchanged: {settings}")
+                continue
+            try:
+                current = json.loads(settings.read_text())
+            except ValueError:
+                print(f"SKIPPED (unparseable JSON, fix by hand): {settings}")
+                continue
+            if not isinstance(current, dict):
+                print(f"SKIPPED (not a JSON object): {settings}")
+                continue
+        else:
+            current = {}
+        settings.write_text(
+            json.dumps(register_session_hook(current), indent=2) + "\n"
+        )
+        print(f"wrote: {settings}")
+
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--write", action="store_true")
@@ -869,6 +993,7 @@ def main():
 
     smap = system_map(categories, repos)
     hpol = load_history_policy(mind_root)
+    hook_text = load_session_hook(mind_root)
 
     if args.write:
         write_block(root / "AGENTS.md", routing_table(categories, repos),
@@ -889,6 +1014,7 @@ def main():
             write_block(root / rel, organ_public_table(repos, bold=bold),
                         ORGANS_BEGIN, ORGANS_END, required=False)
         write_claude_md_pointers(root, repos)
+        write_session_hooks(root, repos, hook_text)
 
     # Lazy (label -> thunk) so --only pays for exactly the selected legs.
     checks = {
@@ -908,6 +1034,7 @@ def main():
         "hub organism blurb (organs present)": lambda: check_hub_blurb(root, repos),
         "CLAUDE.md → AGENTS.md pointers":
             lambda: check_claude_md_pointers(root, repos),
+        SESSION_HOOKS: lambda: check_session_hooks(root, repos, hook_text),
     }
     if args.only:
         unknown = [label for label in args.only if label not in checks]

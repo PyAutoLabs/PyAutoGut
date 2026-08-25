@@ -126,8 +126,9 @@ environment still has `pynufft 2025.1.1` installed at all.
   coverage**, which is why the break went unnoticed. If a minimal smoke tier is
   added under that prompt, `dataset_setup/interferometer.py` is a strong
   candidate for it.
-- Unrelated to `draft/maintenance/libraries/defer_scipy_sparse_import.md` (the
-  real ~0.10s import-time win) and to the `nufftax` dependency itself.
+- Unrelated to `complete/2026/08/defer-scipy-sparse-import.md` (the real
+  import-time win, shipped 2026-08-22 at 281 ms) and to the `nufftax`
+  dependency itself.
 
 ## Phase split (decided 2026-08-23)
 

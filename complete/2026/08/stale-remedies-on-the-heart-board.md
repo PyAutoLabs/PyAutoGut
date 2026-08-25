@@ -1,41 +1,86 @@
-# A STALE board gives you nothing to copy: every evidence gap should carry its own remedy
+# stale-remedies-on-the-heart-board
 
-Type: feature
-Target: pyautoheart
-Repos:
-- @PyAutoHeart
-- @PyAutoBrain
-Difficulty: small
-Autonomy: supervised
-Priority: normal
-Status: SHIPPED 2026-08-25 (branch `claude/pyautoheart-stale-r4swxg` in
-        @PyAutoHeart + @PyAutoBrain) — pending issue/PR close-out
-Filed: 2026-08-25
+**Completed:** 2026-08-25
+**Type:** feature · **Target:** PyAutoHeart, PyAutoBrain · **PRs:**
+PyAutoHeart#177, PyAutoBrain#276, PyAutoMind#315 (branch
+`claude/pyautoheart-stale-r4swxg` in all three)
+
+## Summary
+
+A STALE Heart board offered nothing copyable that closed a gap. Every stale
+reason got the same generic string from `_reason_item()` —
+`/health re-run the stale evidence: <text>` — which hands the sentence back to
+the reader, and a **reason** row carried no command at all on any surface
+(commands existed only on **section** rows: `pyauto-heart fix drift`,
+`fix timing <project>`). That is most of what the board is asked to do: the
+cloud verdict had been `STALE · score 65` on every `heart-health.yml` run since
+2026-08-19, alternating only with a transient `RED · 45`.
+
+The 35-point penalty decomposes uniquely into the three evidence gaps a
+working-tree-less CI job always has — `install_unknown` (10), `test_unknown`
+(10), `validation_absent` (15) — none of which the cloud job can produce, which
+is why the published board never reaches GREEN on its own.
 
 ## What shipped
 
-Both legs, built directly from this prompt on the branch above:
+**PyAutoHeart** — `readiness.compute` emits `stale_details`: each stale reason
+with the **gate key** that produced it, index for index with `stale_reasons`.
+The `stale.append(...)` / `hit(...)` pairs collapsed into one `add_stale(msg,
+key)` helper, so a gap cannot be filed without its key or its score penalty.
+Additive: flat reason lists, verdict, score, profiles and the release gate are
+untouched (`tests/test_readiness.py` passed unmodified).
 
-- **@PyAutoHeart** — `readiness.compute` emits `stale_details` (each stale
-  reason with the gate key that produced it; the flat lists, verdict, score and
-  release gate untouched). `dashboard.py` keys `STALE_REMEDIES` off that: a
-  stale row gains `command` (⌨ chip on html, fenced line in md, `command` in
-  json), a prompt that names the check AND the gap, and the tier gains
-  `stale_plan` — one prompt walking every gap, plus the shell chain when every
-  gap has a command (withheld when one needs a rehearsal). `pyauto-heart fix
-  stale` is the terminal door; `readiness` points at it; json → schema v3.
-- **@PyAutoBrain** — `board/_board.py` forwards each gap's `command` and
-  renders the plan verbatim: a 📋 row with the prompt, a ⌨ row with the chain,
-  one digest line for the tier.
+`dashboard.py` keys `STALE_REMEDIES` off that key — never off the reason text:
 
-Two deviations from the spec below, both deliberate:
+- a stale row gains `command` (the shell remedy; `None` where the remedy needs a
+  conversation) and a prompt naming both the check and the gap;
+- the tier gains `stale_plan` — **one** prompt walking every current gap, plus
+  the shell chain that does the same, offered only when *every* gap has a
+  command, since a chain that silently skips one reads as if it cleared it;
+- html renders a ⌨ command chip beside the 📋 prompt chip and a "clear them all"
+  line above the gaps; md leads its prompts block with the plan; json carries
+  `blockers[].command` and `stale_plan` (schema **v3**).
 
-- The README strip stays one line for STALE — `test_md_brief_is_one_line_unless_something_is_wrong`
-  pins that on purpose, and a glance surface is the wrong place for a plan.
-- `skew_pypi_unknown` carries a prompt but no command: the deep PyPI leg has no
-  `pyauto-heart` verb, and inventing one here would have been a fake remedy.
+`pyauto-heart fix stale` is the terminal door to the same payloads from the same
+persisted verdict, and `readiness` ends a stale block with `→ clear them:
+pyauto-heart fix stale`.
 
-## The spec it was built from
+**PyAutoBrain** — `board/_board.py` forwards each gap's `command` and renders
+the Heart's plan verbatim: a 📋 row with the prompt, a ⌨ row with the chain, one
+digest line for the tier. The Brain derives no remedy of its own, exactly as it
+already treats the Heart's `/bug` prompts.
+
+## Traps and findings
+
+- **The remedy must be keyed, not parsed.** Sniffing the reason sentence would
+  have coupled the Brain and the board to prose that changes; the gate key is
+  the gap's real identity and readiness already had it in `hit(key)`.
+- **A partial command chain is a lie.** With a release-validation gap in the
+  set there is no chain that clears everything, so `stale_plan.command` is
+  withheld and only the prompt is offered. Emitting the runnable subset would
+  read as "that cleared it".
+- **Fall back, never guess.** A verdict from an older Heart carries no keys, so
+  the rows degrade to the old generic nudge and no plan is offered.
+- **STALE's rule survives every path** — every remedy re-runs a check; a stale
+  row can never emit a `/bug` prompt (asserted).
+- **The README strip stays one line for STALE.**
+  `test_md_brief_is_one_line_unless_something_is_wrong` pins that deliberately;
+  a glance surface is the wrong place for a multi-step plan.
+- **`skew_pypi_unknown` keeps a prompt but no command** — the deep PyPI leg has
+  no `pyauto-heart` verb, and inventing one would have been a fake remedy.
+
+**Validated:** 615 Heart tests (11 new), 494 Brain tests (3 new). A synthetic
+cloud snapshot reproduces the live `STALE · score 65` with the three current
+gaps, and `fix stale` prints their commands and the one plan.
+
+## Notes
+
+Filed and shipped the same day, straight from the question "why is pyautoheart
+stale" — the answer was legible, but the board had no hand to offer once it was.
+The prompt never passed through `active/` (no issue), so this record was written
+directly with `lifecycle.py record` and the draft removed in the same PR.
+
+## Original prompt
 
 ## The complaint
 

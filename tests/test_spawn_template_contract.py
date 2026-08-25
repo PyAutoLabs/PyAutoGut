@@ -111,6 +111,8 @@ GITHUB_FILES = {
         "      - env:\n          HOOK: ${{ secrets.PYAUTO_PAPERS_WEBHOOK_URL }}\n"
         "        run: echo x\n"
     ),
+    ".github/workflows/firewall_gate.yml": _real("firewall_gate.yml"),
+    ".github/workflows/pages_dashboard.yml": _real("pages_dashboard.yml"),
     ".github/scripts/arxiv_fetch.py": "QUERY = 'strong lensing OR lensed quasar'\n",
 }
 
@@ -125,6 +127,13 @@ DROPPED_GITHUB = [
     ".github/workflows/morning_status.yml",
     ".github/workflows/morning_health.yml",
     ".github/workflows/arxiv_papers.yml",
+    # rule 9c: checks out three sibling organ repos by name — dashboard_refresh's
+    # failure mode three times over. Added 2026-08, first caught by the
+    # 2026-08-24 spawn_drift run as UNMATCHED.
+    ".github/workflows/firewall_gate.yml",
+    # rule 9c: needs a GitHub Pages site the default token cannot create on a
+    # fresh repo, and takes pages:write + id-token:write.
+    ".github/workflows/pages_dashboard.yml",
     ".github/scripts/arxiv_fetch.py",
 ]
 

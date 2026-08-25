@@ -1,3 +1,17 @@
+- issue: https://github.com/PyAutoLabs/PyAutoHeart/issues/179
+- completed: 2026-08-25
+- library-pr: PyAutoHeart#180 (merged a570d0a -> main) — shared with #178, the two halves of one no-gh path
+- what shipped: `HEART_CLOUD_CI_DIR` (`$HEART_STATE_DIR/cloud_ci/<Name>.json`) holding `{ts, runs}`, read by `ci_status.cloud_runs()` and consulted by `main` **only when the live fetch already failed**. New `source` field on the sidecar (`"gh"` | `"cloud"`) recording provenance. `ts` optional — file mtime is used when absent.
+- why the ordering matters: `gh` is authoritative and is never second-guessed, so on the dev box `error` is empty and the new path never runs. That is what keeps dev-box behaviour byte-for-byte unchanged.
+- the insight that made it small: MCP's `list_workflow_runs` returns exactly the `{"workflow_runs": [...]}` snake_case shape `normalize_runs` already expects — verified against the live API — so nothing is reshaped on the way in. Mirrors `test_run.py`'s proven `cloud_validation.json` hand-off rather than inventing a second idiom.
+- speed decision that matters most: the tick does **no** network work for this. It only reads the drop point, as it already reads `cloud_validation.json`; population is a separate one-shot leg. ~20 repos of network calls inside the tick loop would blow the <30s budget outright.
+- fails closed everywhere: unreadable, malformed, empty, undated-and-un-stat-able, or past `HEART_CLOUD_CI_MAX_AGE` (default 3600s) all degrade to the same `unavailable` a failed fetch produces, never a stale green. A rejected payload appends its reason to the original fetch error rather than vanishing, so "no gh AND the payload was stale" is one readable string.
+- validation: 635 tests pass (13 new across `cloud_runs`' freshness/fail-closed paths and `main`'s ordering). End-to-end in a gh-less container against a drop point built from a real MCP response: consumed with `source="cloud"` and the error cleared.
+- the finding worth keeping: that same run still declined to report success, because PyAutoFit's `main` advanced between fetching the runs and the tick, so the pre-existing `on_head` guard marked them off-HEAD. The guard working as intended — and the reason the age bound alone is not sufficient. **A payload can be fresh by clock and stale by commit.** The on-HEAD success path is covered by a unit test rather than by rewriting the sha to force a green.
+- standing constraint, not solved here: the Actions API needs each repo attached to the session, and attachment can be refused — it was, for one library, during the session that motivated this. Such a repo degrades to `unavailable`, which is correct rather than an error, but it means this half delivers less on mobile than #178 does.
+
+## Original prompt
+
 # Feed ci_status run conclusions from an MCP drop point
 
 Type: feature

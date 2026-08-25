@@ -18,7 +18,7 @@
 - issue: https://github.com/PyAutoLabs/PyAutoFit/issues/1526
 - issued: 2026-08-25
 - prompt: active/17_loggaussian_prior_declares_own_support.md
-- status: library-dev
+- status: ready-to-ship — branch pushed, PR not opened (awaiting human go-ahead)
 - worktree: ~/Code/PyAutoLabs-wt/loggaussian-prior-support
 - repos:
   - PyAutoFit: feature/loggaussian-prior-support

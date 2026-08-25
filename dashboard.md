@@ -169,7 +169,7 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
-<details><summary>📋 <a href="active/17_loggaussian_prior_declares_own_support.md"><code>LogGaussianPrior</code> misreports its own support as <code>(-inf, inf)</code></a> — <a href="https://github.com/PyAutoLabs/PyAutoFit/issues/1526">issue #1526</a> — issued 2026-08-25 — library-dev</summary>
+<details><summary>📋 <a href="active/17_loggaussian_prior_declares_own_support.md"><code>LogGaussianPrior</code> misreports its own support as <code>(-inf, inf)</code></a> — <a href="https://github.com/PyAutoLabs/PyAutoFit/issues/1526">issue #1526</a> — issued 2026-08-25 — ready-to-ship — branch pushed, PR not opened (awaiting human go-ahead)</summary>
 
 ```
 /start_dev active/17_loggaussian_prior_declares_own_support.md

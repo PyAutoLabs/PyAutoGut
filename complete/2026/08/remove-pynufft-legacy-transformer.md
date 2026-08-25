@@ -67,8 +67,11 @@ The 2026-08-19 filing had two factual errors, both found during implementation:
 
 The removal is still worth doing — an unmaintained dependency, one dead class,
 and a `dev` extra that is broken against SciPy >= 1.17 — but **not** on
-import-time grounds. The real 0.10 s win is filed separately as
-`draft/maintenance/libraries/defer_scipy_sparse_import.md`.
+import-time grounds. The real win shipped separately as
+`complete/2026/08/defer-scipy-sparse-import.md` — and it was 281 ms, not the
+0.10 s estimated here: `scipy.sparse` was never imported from
+`derivative_util.py` at all; `scipy.spatial` pulls it in transitively, and
+deferring both is what removed the subtree.
 
 ## The Intel-macOS decision (settled 2026-08-22)
 

@@ -54,6 +54,9 @@ Verified after merge: residual on `main` is **0** in all 12 repos; PyAutoHands f
 ## Follow-ups filed
 
 - `draft/bug/pyautohands/generate_rejects_autocti_after_deleting_notebooks.md` — the autocti blocker. It had been filed **three times independently** (dataset-bulk leg 6, `script-prose-ref-drift`, and this task); consolidated into one and the two duplicates deleted. It gates three separate merged sweeps from reaching that repo's notebooks, not just this one.
+  **Retired 2026-08-25:** the destructive-ordering half shipped as PyAutoHands#215 / PR #216
+  (with a regression test); the remaining `autocti` registration was folded into
+  `draft/release/autocti/cti_release_train_wiring.md` and that draft deleted.
 - `draft/bug/hands/notebook_quotes_string_literal_closing_delimiter.md` — a code string literal's column-0 *closing* delimiter is read as a docstring, inverting every boundary after it. Latent: one occurrence, `autolens_workspace_test/gallery/gallery_build.py:42`, outside `scripts/` so never converted. Needs real tokenization, shared with `navigator.py`.
 
 ## Brain override

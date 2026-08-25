@@ -46,7 +46,11 @@ Running `generate.py autocti` **deleted 117 tracked files** under
 `COLAB_PROJECTS` (`build_util.py:37`) and PyAutoNerves `_PROJECTS`. Restored with
 `git checkout -- notebooks`; nothing damaged shipped. Filed as
 `draft/bug/pyautohands/generate_rejects_autocti_after_deleting_notebooks.md`,
-where two other sessions turned out to have hit it independently.
+where two other sessions turned out to have hit it independently. **Retired
+2026-08-25:** the ordering was fixed by PyAutoHands#215 / PR #216 (validate
+before the rmtree, plus `tests/test_generate_validates_project.py`); what was
+left — registering `autocti` — was folded into
+`draft/release/autocti/cti_release_train_wiring.md` and that draft deleted.
 
 **And do not hand-roll the workaround.** `build_util.py_to_notebook` alone is NOT
 equivalent to `generate.py`: control-tested against an *unchanged* script

@@ -34,6 +34,12 @@ web/mobile session run Python 3.12 instead of the container's 3.11 default; the
 copies must be byte-identical to the canonical file, so `--check` fails on any
 edit made to a copy.
 
+`.claude/` and `CLAUDE.md` are the only top-level entries --write creates in a
+target repo, and a repo may lint its own layout. Before writing either one,
+--write reads that repo's own allowlist (see "Structure-lint agreement" below)
+and skips a repo that has not allowlisted the entry, rather than breaking that
+repo's CI with a path it rejects.
+
 --check (always run) verifies, against the manifest:
 
   * PyAutoHeart/config/repos.yaml          — polled repos exist, owners match
@@ -47,11 +53,15 @@ edit made to a copy.
     declared config surfaces (FIREWALL_ALLOWLIST below)
   * the SessionStart hook — present, executable, byte-identical to
     policy/session_start_hook.sh and registered in .claude/settings.json
+  * target-repo layout lints — every checked-out repo that lints its own
+    top-level entries allowlists the `.claude/` and `CLAUDE.md` that --write
+    installs (a repo that does not is skipped by --write and named here)
 
 Exit code 0 = no drift; 1 = drift found (each mismatch printed).
 """
 
 import argparse
+import ast
 import json
 import os
 import re
@@ -589,6 +599,8 @@ def check_claude_md_pointers(root, repos):
             continue  # not checked out in this environment
         if not (repo_dir / "AGENTS.md").exists():
             continue  # AGENTS-less repos are reported separately, not drift
+        if structure_lint_forbids(repo_dir, "CLAUDE.md"):
+            continue  # --write skips it; check_structure_lints reports it
         claude = repo_dir / "CLAUDE.md"
         if not claude.exists():
             problems.append(f"'{name}': has AGENTS.md but no CLAUDE.md pointer")
@@ -622,6 +634,12 @@ def write_claude_md_pointers(root, repos):
         if not (repo_dir / "AGENTS.md").exists():
             print(f"skipped (no AGENTS.md): {repo_dir / 'CLAUDE.md'}")
             continue
+        if structure_lint_forbids(repo_dir, "CLAUDE.md"):
+            print(
+                "SKIPPED (repo's layout lint disallows it): "
+                f"{repo_dir / 'CLAUDE.md'}"
+            )
+            continue
         claude = repo_dir / "CLAUDE.md"
         if claude.exists() and claude_md_is_pointer(claude.read_text()):
             print(f"unchanged: {claude}")
@@ -629,6 +647,159 @@ def write_claude_md_pointers(root, repos):
         verb = "rewrote (dead pointer)" if claude.exists() else "created"
         claude.write_text(CLAUDE_MD_POINTER)
         print(f"{verb}: {claude}")
+
+
+# --------------------------------------------------------------------------
+# Structure-lint agreement
+# --------------------------------------------------------------------------
+#
+# `--write` creates exactly two top-level entries in a target repo: the
+# `.claude/` tooling folder and the `CLAUDE.md` pointer. A repo may lint its
+# own layout — an allowlist of the top-level entries it accepts — and such a
+# repo has no way to know this script is about to write into it. Installing
+# `.claude/` into a repo whose lint has not allowlisted it breaks that repo's
+# CI, and the breakage reads as the repo's fault rather than as this script's.
+#
+# So: before writing, ask the target's own lint whether it accepts what is
+# about to be created. The lint stays the single authority — its allowlist is
+# READ (never executed, never copied here), so a repo that adds `.claude` to
+# its allowlist is covered again on the next run with no change on this side.
+# Repos with no lint are the common case and are untouched by any of this.
+
+# Where a repo is expected to keep its layout lint. A repo that keeps one
+# somewhere else is not covered — a real, bounded gap: extend this tuple when a
+# repo lints its layout from a different path. Detection is by convention
+# because the alternative (a per-repo key in repos.yaml) would put POLICY in the
+# body map, which is identity-only by contract.
+STRUCTURE_LINT_CANDIDATES = ("scripts/validate_structure.py",)
+
+# The top-level entries --write creates, each flagged with whether it is a
+# directory — which picks the allowlist that governs it.
+GENERATED_TOP_LEVEL = ((".claude", True), ("CLAUDE.md", False))
+
+# The module-level names a layout lint uses for its two allowlists. Matched
+# exactly: accepting near-miss spellings would turn "no allowlist found"
+# (reported) into "wrong allowlist read" (silent).
+ALLOWLIST_NAMES = {True: "ALLOWED_TOP_DIRS", False: "ALLOWED_TOP_FILES"}
+
+
+def find_structure_lint(repo_dir):
+    """The repo's own layout lint, or None if it keeps none."""
+    for rel in STRUCTURE_LINT_CANDIDATES:
+        path = repo_dir / rel
+        if path.is_file():
+            return path
+    return None
+
+
+def string_set_literal(node):
+    """The strings in a set/list/tuple literal, or None if the node is not one
+    — or holds anything but plain strings. A computed allowlist cannot be read
+    without running the lint, and this never runs the lint."""
+    if not isinstance(node, (ast.Set, ast.List, ast.Tuple)):
+        return None
+    names = set()
+    for element in node.elts:
+        if not isinstance(element, ast.Constant) or not isinstance(
+            element.value, str
+        ):
+            return None
+        names.add(element.value)
+    return names
+
+
+def structure_lint_allowlists(path):
+    """Read `{is_dir: allowed names}` out of a layout lint without running it.
+
+    A missing entry means that allowlist could not be read (absent, computed,
+    or the file does not parse) — never that it is empty, and never that it is
+    permissive. check_structure_lints reports the difference.
+    """
+    try:
+        tree = ast.parse(path.read_text())
+    except (OSError, SyntaxError):
+        return {}
+    wanted = {name: is_dir for is_dir, name in ALLOWLIST_NAMES.items()}
+    found = {}
+    for node in tree.body:
+        if not isinstance(node, ast.Assign):
+            continue
+        for target in node.targets:
+            if isinstance(target, ast.Name) and target.id in wanted:
+                names = string_set_literal(node.value)
+                if names is not None:
+                    found[wanted[target.id]] = names
+    return found
+
+
+def structure_lint_verdict(repo_dir):
+    """`(lint_path, forbidden, unreadable)` for one checked-out repo.
+
+    `forbidden` names the generated top-level entries this repo's lint would
+    reject — the writers skip those. `unreadable` names allowlists that exist
+    in principle but could not be read; those do NOT block the write, because
+    "cannot tell" is not "forbids", and refusing on a guess would strand the
+    common case. They are surfaced for a human instead.
+    """
+    lint = find_structure_lint(repo_dir)
+    if lint is None:
+        return None, [], []
+    allowlists = structure_lint_allowlists(lint)
+    forbidden, unreadable = [], []
+    for entry, is_dir in GENERATED_TOP_LEVEL:
+        allowed = allowlists.get(is_dir)
+        if allowed is None:
+            unreadable.append(ALLOWLIST_NAMES[is_dir])
+        elif entry not in allowed:
+            forbidden.append(entry)
+    return lint, forbidden, sorted(set(unreadable))
+
+
+def structure_lint_forbids(repo_dir, entry):
+    """True when this repo's own layout lint would reject `entry`."""
+    return entry in structure_lint_verdict(repo_dir)[1]
+
+
+def check_structure_lints(root, repos):
+    """Report repos whose own layout lint disagrees with what --write creates.
+
+    Not drift in the generated-copy sense — nothing here has rotted. It is the
+    coupling this script would otherwise break blind: the writers skip these
+    repos, and this names them, so the skip gets resolved (extend the
+    allowlist) rather than going unnoticed.
+    """
+    problems = []
+    for name in repos:
+        repo_dir = root / name
+        if not repo_dir.is_dir():
+            continue  # not checked out in this environment
+        lint, forbidden, unreadable = structure_lint_verdict(repo_dir)
+        if lint is None:
+            continue  # no layout lint: nothing to disagree with
+        rel = lint.relative_to(repo_dir)
+        for entry in forbidden:
+            # Already on disk is the worse case, and the one that actually
+            # happened: a --write from before this guard existed left the entry
+            # behind, so the repo's own lint is failing right now. Skipping the
+            # next write does not undo that — say so, rather than reporting it
+            # as a write this run declined to make.
+            if (repo_dir / entry).exists():
+                problems.append(
+                    f"'{name}': {rel} does not allow '{entry}', which is "
+                    "already installed — that lint is failing now; allowlist "
+                    f"'{entry}' or remove it from the repo"
+                )
+            else:
+                problems.append(
+                    f"'{name}': {rel} does not allow '{entry}' — --write skips "
+                    f"the repo; add '{entry}' to that lint's allowlist"
+                )
+        for allowlist in unreadable:
+            problems.append(
+                f"'{name}': {rel} has no readable {allowlist} — cannot tell "
+                "whether it accepts the generated .claude/ and CLAUDE.md"
+            )
+    return problems
 
 
 # --------------------------------------------------------------------------
@@ -911,6 +1082,8 @@ def check_session_hooks(root, repos, hook_text):
         repo_dir = root / name
         if not repo_dir.is_dir():
             continue  # not checked out in this environment
+        if structure_lint_forbids(repo_dir, ".claude"):
+            continue  # --write skips it; check_structure_lints reports it
         hook = repo_dir / SESSION_HOOK_REL
         if not hook.exists():
             problems.append(f"'{name}': no {SESSION_HOOK_REL}")
@@ -938,6 +1111,12 @@ def write_session_hooks(root, repos, hook_text):
     for name in repos:
         repo_dir = root / name
         if not repo_dir.is_dir():
+            continue
+        if structure_lint_forbids(repo_dir, ".claude"):
+            print(
+                "SKIPPED (repo's layout lint disallows .claude/): "
+                f"{repo_dir / SESSION_HOOK_REL}"
+            )
             continue
         hook = repo_dir / SESSION_HOOK_REL
         hook.parent.mkdir(parents=True, exist_ok=True)
@@ -1035,6 +1214,7 @@ def main():
         "CLAUDE.md → AGENTS.md pointers":
             lambda: check_claude_md_pointers(root, repos),
         SESSION_HOOKS: lambda: check_session_hooks(root, repos, hook_text),
+        "target-repo layout lints": lambda: check_structure_lints(root, repos),
     }
     if args.only:
         unknown = [label for label in args.only if label not in checks]

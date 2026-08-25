@@ -8,8 +8,34 @@ Repos:
 Difficulty: small
 Autonomy: supervised
 Priority: normal
-Status: draft
+Status: SHIPPED 2026-08-25 (branch `claude/pyautoheart-stale-r4swxg` in
+        @PyAutoHeart + @PyAutoBrain) — pending issue/PR close-out
 Filed: 2026-08-25
+
+## What shipped
+
+Both legs, built directly from this prompt on the branch above:
+
+- **@PyAutoHeart** — `readiness.compute` emits `stale_details` (each stale
+  reason with the gate key that produced it; the flat lists, verdict, score and
+  release gate untouched). `dashboard.py` keys `STALE_REMEDIES` off that: a
+  stale row gains `command` (⌨ chip on html, fenced line in md, `command` in
+  json), a prompt that names the check AND the gap, and the tier gains
+  `stale_plan` — one prompt walking every gap, plus the shell chain when every
+  gap has a command (withheld when one needs a rehearsal). `pyauto-heart fix
+  stale` is the terminal door; `readiness` points at it; json → schema v3.
+- **@PyAutoBrain** — `board/_board.py` forwards each gap's `command` and
+  renders the plan verbatim: a 📋 row with the prompt, a ⌨ row with the chain,
+  one digest line for the tier.
+
+Two deviations from the spec below, both deliberate:
+
+- The README strip stays one line for STALE — `test_md_brief_is_one_line_unless_something_is_wrong`
+  pins that on purpose, and a glance surface is the wrong place for a plan.
+- `skew_pypi_unknown` carries a prompt but no command: the deep PyPI leg has no
+  `pyauto-heart` verb, and inventing one here would have been a fake remedy.
+
+## The spec it was built from
 
 ## The complaint
 

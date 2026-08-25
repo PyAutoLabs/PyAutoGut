@@ -191,6 +191,12 @@ MEMORY_RULES = [
     # DROP: the claude-action filing workflow needs the instance's Claude OAuth
     # secret, labels and reading queue — instance machinery like the two above.
     (".github/workflows/queue_filing.yml", "DROP"),
+    # DROP: the arXiv-ref backfill is generic (no secrets, no sibling repos) but
+    # runs on a schedule and pushes to main, which breaks the fresh-repo
+    # invariant exactly as the board publisher does. scripts/arxiv_refs.py and
+    # scripts/backfill_arxiv_refs.py SHIP via scripts/*, so an adopter with a
+    # populated reading queue re-adds the workflow deliberately.
+    (".github/workflows/arxiv_refs.yml", "DROP"),
     # The shared wiki schema is template content; the sub-wikis are instance
     # content (the generator stamps an empty wiki/example/ instead).
     ("wiki/CLAUDE.md", "KEEP"),

@@ -177,7 +177,7 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
-<details><summary>📋 <a href="active/inbox_board_staleness_signal.md">The knowledge board's empty inbox should distinguish quiet from broken</a> — <a href="https://github.com/PyAutoLabs/PyAutoMemory/issues/58">issue #58</a> — issued 2026-08-25 — library-dev</summary>
+<details><summary>📋 <a href="active/inbox_board_staleness_signal.md">The knowledge board's empty inbox should distinguish quiet from broken</a> — <a href="https://github.com/PyAutoLabs/PyAutoMemory/issues/58">issue #58</a> — issued 2026-08-25 — ready-to-ship — both legs implemented, tested and pushed; no PR opened yet</summary>
 
 ```
 /start_dev active/inbox_board_staleness_signal.md

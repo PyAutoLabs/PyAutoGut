@@ -111,6 +111,8 @@ GITHUB_FILES = {
         "      - env:\n          HOOK: ${{ secrets.PYAUTO_PAPERS_WEBHOOK_URL }}\n"
         "        run: echo x\n"
     ),
+    ".github/workflows/firewall_gate.yml": _real("firewall_gate.yml"),
+    ".github/workflows/pages_dashboard.yml": _real("pages_dashboard.yml"),
     ".github/scripts/arxiv_fetch.py": "QUERY = 'strong lensing OR lensed quasar'\n",
 }
 
@@ -125,6 +127,13 @@ DROPPED_GITHUB = [
     ".github/workflows/morning_status.yml",
     ".github/workflows/morning_health.yml",
     ".github/workflows/arxiv_papers.yml",
+    # rule 9c: checks out three sibling organ repos by name — dashboard_refresh's
+    # failure mode three times over. Added 2026-08, first caught by the
+    # 2026-08-24 spawn_drift run as UNMATCHED.
+    ".github/workflows/firewall_gate.yml",
+    # rule 9c: needs a GitHub Pages site the default token cannot create on a
+    # fresh repo, and takes pages:write + id-token:write.
+    ".github/workflows/pages_dashboard.yml",
     ".github/scripts/arxiv_fetch.py",
 ]
 
@@ -141,6 +150,45 @@ def mind_with_github(tmp_path):
 def _shipped_workflows(out):
     d = out / ".github" / "workflows"
     return sorted(d.glob("*.yml")) if d.exists() else []
+
+
+def test_no_tracked_file_is_unmatched_by_mind_rules():
+    """Every file in the LIVE Mind tree must have an explicit MIND_RULES entry.
+
+    Every other test here builds a synthetic tree, so it only covers the file
+    classes somebody remembered to add to the fixture. That is how
+    `firewall_gate.yml`, `pages_dashboard.yml` and `dashboard.html` reached
+    main unclassified and sat there until the 2026-08-24 weekly drift run
+    failed on them: nothing at PR time ever looked at the real file list.
+
+    This reads the real tracked files instead, so a new file class fails the
+    PR that adds it rather than the next Monday cron. It is the same condition
+    the drift job reports as UNMATCHED / exit 2, minus the clones — the `drift`
+    job is skipped on pull_request, so this hermetic check is the only
+    PR-time guard there is.
+
+    MEMORY_RULES cannot be checked from here (PyAutoMemory is not a sibling in
+    this checkout); it stays covered by the weekly run.
+    """
+    repo = Path(__file__).resolve().parents[1]
+    proc = subprocess.run(
+        ["git", "-C", str(repo), "ls-files", "-z"],
+        capture_output=True, text=True,
+    )
+    if proc.returncode != 0:
+        pytest.skip("not a git checkout")
+    tracked = [f for f in proc.stdout.split("\0") if f]
+    assert tracked, "git ls-files returned nothing — wrong root?"
+
+    unmatched = [
+        f for f in tracked if spawn.match_rule(Path(f), spawn.MIND_RULES)[1] is None
+    ]
+    assert not unmatched, (
+        "these tracked files match no MIND_RULES entry, so spawn cannot decide "
+        "whether they travel into the template. Extend the spec's tables "
+        "(docs/pyautobrain/spawn_spec.md), then mirror the decision into "
+        f"MIND_RULES: {unmatched}"
+    )
 
 
 def test_instance_automation_is_not_shipped(mind_with_github):

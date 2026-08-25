@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1123 records across 7 buckets.
+1136 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -20,7 +20,10 @@ _(curate hard-won records here — survives regeneration.)_
 
 - [actionable-health-board](2026/08/actionable-health-board.md) — closed on ship
 - [active-prompt-orphan-triage](2026/08/active-prompt-orphan-triage.md)
+- [aplt-output-drift-remaining-repos](2026/08/aplt-output-drift-remaining-repos.md)
 - [arcticpy-install-standardisation](2026/08/arcticpy-install-standardisation.md)
+- [arxiv-inbox-pat-scope](2026/08/arxiv-inbox-pat-scope.md) — the nightly arXiv digest's inbox-filing step silently lost every paper it
+- [arxiv-inbox-tier](2026/08/arxiv-inbox-tier.md) — the nightly strong-lensing digest no longer ends in a Slack paste-block the
 - [astropy-cap-bump](2026/08/astropy-cap-bump.md) — closed manually post-merge — "Part of" in the PR bodies does not auto-close
 - [autoarray-adapt-images-precondition](2026/08/autoarray-adapt-images-precondition.md)
 - [autoarray-input-validation-guards](2026/08/autoarray-input-validation-guards.md)
@@ -41,7 +44,10 @@ _(curate hard-won records here — survives regeneration.)_
 - [border-relocator-degenerate-pca](2026/08/border-relocator-degenerate-pca.md) — Stabilized near-isotropic border PCA axes with a deterministic axis-aligned branch at a scale-aware eigenvalue…
 - [brain-readability-pass](2026/08/brain-readability-pass.md) — auto-closed on merge
 - [bump-autonerves-floor](2026/08/bump-autonerves-floor.md)
+- [ci-status-cloud-runs-drop-point](2026/08/ci-status-cloud-runs-drop-point.md)
+- [ci-status-head-sha-without-gh](2026/08/ci-status-head-sha-without-gh.md)
 - [circular-ell-comps-image-gradient](2026/08/circular-ell-comps-image-gradient.md) — Replaced the Sersic image path's Cartesian-to-polar ellipticity conversion with an algebraically equivalent Ca…
+- [claude-session-python-312-default](2026/08/claude-session-python-312-default.md)
 - [cli-noise-autonerves-batch](2026/08/cli-noise-autonerves-batch.md)
 - [cli-noise-pyautofit-batch](2026/08/cli-noise-pyautofit-batch.md)
 - [clipper-in-search-identifier](2026/08/clipper-in-search-identifier.md) — decided: option 2 — the clipper enters the MLE identifiers
@@ -75,6 +81,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [ep-hierarchical-scale-collapse-guard](2026/08/ep-hierarchical-scale-collapse-guard.md)
 - [ep-initializer-exception-should-not-abort](2026/08/ep-initializer-exception-should-not-abort.md)
 - [ep-optimise-updater](2026/08/ep-optimise-updater.md)
+- [euclid-crlf-line-endings](2026/08/euclid-crlf-line-endings.md) — Extended the 2026-07-25 org-wide CRLF sweep to the Euclid pipeline, the tier it
 - [falsified-by-checkpoint-efficacy-review](2026/08/falsified-by-checkpoint-efficacy-review.md)
 - [feature-ranker-ignores-header-keys](2026/08/feature-ranker-ignores-header-keys.md) — the Feature Agent's ranker now reads the prompt metadata header it was
 - [file-path-guard-decision](2026/08/file-path-guard-decision.md) — The file-path leg split from raw-guard-migration (leg 3 of the dataset-bulk series, autolens_workspace#354). D…
@@ -99,8 +106,10 @@ _(curate hard-won records here — survives regeneration.)_
 - [hygiene-gone-ref-counter](2026/08/hygiene-gone-ref-counter.md) — the prompt was never issued — the defects were fixed under other issues, see below
 - [hygiene-howto-refs-docstrings](2026/08/hygiene-howto-refs-docstrings.md)
 - [imaging-mge-pytree-migration](2026/08/imaging-mge-pytree-migration.md)
+- [inbox-board-staleness-signal](2026/08/inbox-board-staleness-signal.md) — the knowledge board rendered an empty arXiv inbox as "nothing waiting — the
 - [inference-method-cards-seed](2026/08/inference-method-cards-seed.md)
 - [inference-programme-ledger](2026/08/inference-programme-ledger.md)
+- [intake-declared-difficulty](2026/08/intake-declared-difficulty.md) — the precedence rule "a DECLARED header key beats a value derived from
 - [interferometer-delaunay-flaky-fitexception](2026/08/interferometer-delaunay-flaky-fitexception.md)
 - [interferometer-delaunay-nonpd-fitexception](2026/08/interferometer-delaunay-nonpd-fitexception.md)
 - [interferometer-start-here-integrate-oom](2026/08/interferometer-start-here-integrate-oom.md)
@@ -199,6 +208,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [release-validation-tri-state](2026/08/release-validation-tri-state.md)
 - [release-version-sync-back-to-main](2026/08/release-version-sync-back-to-main.md)
 - [remove-pynufft-legacy-transformer](2026/08/remove-pynufft-legacy-transformer.md)
+- [repos-sync-target-repo-lint-awareness](2026/08/repos-sync-target-repo-lint-awareness.md)
 - [resolve-border-relocator-hazard](2026/08/resolve-border-relocator-hazard.md) — Reconciled the likelihood hazard instrument after the border-relocator source fix. The resolved backend-diverg…
 - [resolve-curvature-floor-doc-drift](2026/08/resolve-curvature-floor-doc-drift.md) — Reconciled the curvature-floor documentation finding after PyAutoArray#444. The detector now requires both run…
 - [resolve-sersic-ell-comps-gradient](2026/08/resolve-sersic-ell-comps-gradient.md) — Reconciled the numerical-hazard evidence after the Sersic Cartesian-radius fix. The stable conditional detecto…
@@ -209,6 +219,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [script-timing-baselines-fix](2026/08/script-timing-baselines-fix.md)
 - [script-title-underline-off-by-one](2026/08/script-title-underline-off-by-one.md)
 - [searches-readme-dashboard](2026/08/searches-readme-dashboard.md)
+- [shared-log-norm-helper](2026/08/shared-log-norm-helper.md) — Collapsed three copies of the matplotlib colour-norm construction into
 - [should-simulate-capped-branch-reuse](2026/08/should-simulate-capped-branch-reuse.md) — small, single-repo follow-up of the closed PyAutoNerves#153
 - [simulator-util-to-af-ex](2026/08/simulator-util-to-af-ex.md) — moved the four 1D-Gaussian simulator helpers out of the duplicated
 - [small-datasets-loader-pixel-scales](2026/08/small-datasets-loader-pixel-scales.md)
@@ -223,6 +234,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [spawn-empty-body-privacy-fix](2026/08/spawn-empty-body-privacy-fix.md)
 - [spawn-github-instance-automation](2026/08/spawn-github-instance-automation.md)
 - [sph-transform-name-check](2026/08/sph-transform-name-check.md) — auto-closed by the merge via "Closes #555"
+- [stale-remedies-on-the-heart-board](2026/08/stale-remedies-on-the-heart-board.md)
 - [stored-sample-reconstruction-guard](2026/08/stored-sample-reconstruction-guard.md) — stored samples that current model validation rejects no longer raise raw
 - [sub-312-install-tombstone](2026/08/sub-312-install-tombstone.md)
 - [tenant-firewall-drift-aug](2026/08/tenant-firewall-drift-aug.md) — issue #198; 9 → OK, and a green `--check` is only evidence for the organs actually checked out
@@ -233,6 +245,7 @@ _(curate hard-won records here — survives regeneration.)_
 - [test-mode-samples-info-hook-contract](2026/08/test-mode-samples-info-hook-contract.md) — `NonLinearSearch._test_mode_samples_info()`'s docstring told subclasses
 - [test-performance-board](2026/08/test-performance-board.md)
 - [testmode-assertion-note-removal](2026/08/testmode-assertion-note-removal.md) — Follow-up to test-mode-bypass-assertion-ties (PyAutoFit#1520, merged
+- [tracer-fits-existence-guard](2026/08/tracer-fits-existence-guard.md)
 - [transformed-message-semantics-doc](2026/08/transformed-message-semantics-doc.md)
 - [undo-community-file-declutter](2026/08/undo-community-file-declutter.md) — Undid the 2026-08-19 community-file declutter (#248 Mind, #32 Memory):
 - [uniform-prior-bounds-numpy-path](2026/08/uniform-prior-bounds-numpy-path.md) — auto-closed by the merge's `Closes` line

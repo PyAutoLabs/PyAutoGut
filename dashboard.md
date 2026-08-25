@@ -42,10 +42,10 @@ anything you could not verify.
 
 | Where | Count |
 |-------|------:|
-| [In flight](#in-flight) (`active/`) | 1 |
+| [In flight](#in-flight) (`active/`) | 2 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 5 |
-| [Backlog](#backlog) (`draft/`) | 141 |
+| [Backlog](#backlog) (`draft/`) | 140 |
 
 ## Start here
 
@@ -177,6 +177,14 @@ Issued — each has an open GitHub issue and usually a branch. The full record f
 
 </details>
 
+<details><summary>📋 <a href="active/inbox_board_staleness_signal.md">The knowledge board's empty inbox should distinguish quiet from broken</a> — <a href="https://github.com/PyAutoLabs/PyAutoMemory/issues/58">issue #58</a> — issued 2026-08-25 — library-dev</summary>
+
+```
+/start_dev active/inbox_board_staleness_signal.md
+```
+
+</details>
+
 ## Parked
 
 Started or scoped, not currently in flight — resume by moving the row back to `active.md`. Full detail in [`parked.md`](parked.md).
@@ -261,10 +269,10 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**141** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **25** of them belong to an epic and are listed only under [Epics](#epics) below.
+**140** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **25** of them belong to an epic and are listed only under [Epics](#epics) below.
 
 <details>
-<summary><b>feature</b> — 28</summary>
+<summary><b>feature</b> — 27</summary>
 
 <details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md">Numba CPU likelihood phase 1: batched MGE convolution + operated-matrix caching</a> — autoarray · medium · supervised · high</summary>
 
@@ -310,14 +318,6 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/feature/pyautobrain/brain_board_follow_ups.md
-```
-
-</details>
-
-<details><summary>📋 <a href="draft/feature/pyautomemory/inbox_board_staleness_signal.md">The knowledge board's empty inbox should distinguish quiet from broken</a> — pyautomemory · small · supervised · normal</summary>
-
-```
-/start_dev draft/feature/pyautomemory/inbox_board_staleness_signal.md
 ```
 
 </details>
@@ -1242,7 +1242,7 @@ The 50 newest things to happen to the work in hand, newest first — issued, par
 
 | Date | Event | Task |
 |------|-------|------|
-| 2026-08-25 | filed | <a href="draft/feature/pyautomemory/inbox_board_staleness_signal.md">The knowledge board's empty inbox should distinguish quiet from broken</a> |
+| 2026-08-25 | issued | <a href="active/inbox_board_staleness_signal.md">The knowledge board's empty inbox should distinguish quiet from broken</a> |
 | 2026-08-24 | filed | <a href="draft/maintenance/ci/wiki_currency_check_version_gate.md">wiki-currency's --check-version gate rots on every library main merge</a> |
 | 2026-08-24 | filed | <a href="draft/bug/autolens_workspace_test/gradient_eager_jit_divergence_py313.md">interferometer/jax_grad/gradient.py: eager and jitted likelihoods…</a> |
 | 2026-08-24 | filed | <a href="draft/maintenance/workspaces/euclid_crlf_line_endings.md">euclid: CRLF has reached the HPC submit scripts AGENTS.md warns about</a> |

@@ -9,6 +9,7 @@ Autonomy: supervised
 Priority: normal
 Status: formalised
 Filed: 2026-08-25
+Issued: 2026-08-25
 
 Split out of `complete/2026/08/arxiv-inbox-pat-scope.md`, which fixed the filing
 bug but deliberately left this open.

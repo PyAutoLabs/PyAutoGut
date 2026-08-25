@@ -9,6 +9,7 @@ Autonomy: supervised
 Priority: normal
 Status: formalised
 Filed: 2026-08-16 (backfilled from git)
+Issued: 2026-08-25
 
 Filed 2026-08-16. Follow-up 3 owed by the prior-support `Clipper`
 (`complete/2026/08/prior-support-clipper.md`, PyAutoFit#1477), which worked

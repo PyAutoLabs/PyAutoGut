@@ -49,15 +49,7 @@ anything you could not verify.
 
 ## Start here
 
-**Highest priority** (filed as `high`) — showing 12 of 16
-
-<details><summary>📋 <a href="draft/bug/pyautomemory/arxiv_inbox_never_filled_pat_scope.md">arXiv inbox never fills — PAT_PYAUTOLABS cannot write to PyAutoMemory</a> — pyautomemory · small · supervised · high</summary>
-
-```
-/start_dev draft/bug/pyautomemory/arxiv_inbox_never_filled_pat_scope.md
-```
-
-</details>
+**Highest priority** (filed as `high`) — showing 12 of 15
 
 <details><summary>📋 <a href="draft/triage/jax_zero_contour.md">TRIAGE: needs manual review before routing</a> — medium · safe · high</summary>
 
@@ -143,6 +135,14 @@ anything you could not verify.
 
 ```
 /start_dev draft/bug/health_fixes/jax_runtime_and_parity.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/bug/health_fixes/jit_visualization_outputs.md">Fix JIT quick-update visualization output regressions</a> — health_fixes · too-large · supervised · high</summary>
+
+```
+/start_dev draft/bug/health_fixes/jit_visualization_outputs.md
 ```
 
 </details>
@@ -264,7 +264,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 **142** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **25** of them belong to an epic and are listed only under [Epics](#epics) below.
 
 <details>
-<summary><b>feature</b> — 27</summary>
+<summary><b>feature</b> — 28</summary>
 
 <details><summary>📋 <a href="draft/feature/autoarray/numba_cpu_likelihood_mge_convolution_and_caching.md">Numba CPU likelihood phase 1: batched MGE convolution + operated-matrix caching</a> — autoarray · medium · supervised · high</summary>
 
@@ -310,6 +310,14 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/feature/pyautobrain/brain_board_follow_ups.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/feature/pyautomemory/inbox_board_staleness_signal.md">The knowledge board's empty inbox should distinguish quiet from broken</a> — pyautomemory · small · supervised · normal</summary>
+
+```
+/start_dev draft/feature/pyautomemory/inbox_board_staleness_signal.md
 ```
 
 </details>
@@ -485,15 +493,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>bug</b> — 23</summary>
-
-<details><summary>📋 <a href="draft/bug/pyautomemory/arxiv_inbox_never_filled_pat_scope.md">arXiv inbox never fills — PAT_PYAUTOLABS cannot write to PyAutoMemory</a> — pyautomemory · small · supervised · high</summary>
-
-```
-/start_dev draft/bug/pyautomemory/arxiv_inbox_never_filled_pat_scope.md
-```
-
-</details>
+<summary><b>bug</b> — 22</summary>
 
 <details><summary>📋 <a href="draft/bug/health_fixes/jax_runtime_and_parity.md">Fix release JAX runtime compatibility and likelihood parity</a> — health_fixes · too-large · supervised · high</summary>
 
@@ -1250,7 +1250,7 @@ The 50 newest things to happen to the work in hand, newest first — issued, par
 
 | Date | Event | Task |
 |------|-------|------|
-| 2026-08-25 | filed | <a href="draft/bug/pyautomemory/arxiv_inbox_never_filled_pat_scope.md">arXiv inbox never fills — PAT_PYAUTOLABS cannot write to PyAutoMemory</a> |
+| 2026-08-25 | filed | <a href="draft/feature/pyautomemory/inbox_board_staleness_signal.md">The knowledge board's empty inbox should distinguish quiet from broken</a> |
 | 2026-08-25 | filed | <a href="draft/maintenance/ci/claude_session_python_311_default.md">Claude web/mobile session containers default to Python 3.11 — below…</a> |
 | 2026-08-24 | filed | <a href="draft/maintenance/ci/wiki_currency_check_version_gate.md">wiki-currency's --check-version gate rots on every library main merge</a> |
 | 2026-08-24 | filed | <a href="draft/bug/autolens_workspace_test/gradient_eager_jit_divergence_py313.md">interferometer/jax_grad/gradient.py: eager and jitted likelihoods…</a> |

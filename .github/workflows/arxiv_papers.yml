@@ -127,6 +127,15 @@ jobs:
         # Skip Claude on empty days to spend zero subscription usage — the
         # heartbeat above already wrote the notice. This runs only when there is
         # something to summarise.
+        #
+        # TESTING TRAP: claude-code-action refuses to run when this file differs
+        # from the copy on the default branch ("Workflow validation failed"),
+        # and then exits SUCCESS. So a workflow_dispatch from a branch that
+        # edits this file writes no slack_payload.json, the POST below fails on
+        # the missing file, and every later step — the inbox filing included —
+        # is skipped. The error names an expired CLAUDE_CODE_OAUTH_TOKEN, which
+        # is the wrong cause. Test edits to this file by merging them, or
+        # dispatch main and read the logs.
         if: ${{ steps.fetch.outputs.count != '0' }}
         uses: anthropics/claude-code-action@v1
         with:

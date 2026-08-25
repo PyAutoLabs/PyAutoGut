@@ -46,19 +46,53 @@ cross-repo write needed no new secret" checked that the *secret* existed, not
 that its *scope* covered the new target. The clone succeeded (read is
 unrestricted), so nothing upstream of the push hinted at it.
 
-## Remaining work (human-gated)
+## Resolved 2026-08-25
 
-1. **Grant the scope.** On the fine-grained PAT behind `PAT_PYAUTOLABS`, add
-   `PyAutoLabs/PyAutoMemory` with `Contents: read-and-write`. This is the whole
-   fix; nothing in either repo needs to change for filing to start working.
-2. **Backfill the lost night.** Today's surviving paper is not recoverable from
-   the next scheduled run — the announcement band moves on and never revisits.
-   Re-file it with a `workflow_dispatch` of `arxiv_papers.yml` carrying
-   `lookback_hours=168`. **Not 24**: the lookback is submission-anchored
-   (`arxiv_fetch.py` sorts and filters on `submittedDate`), and a paper
-   announced today may have been submitted days earlier — the same trap as
-   PyAutoMind#79. `append` dedupes against both the inbox and the reading queue,
-   so an over-wide sweep is safe.
+1. **Scope granted.** `PAT_PYAUTOLABS` now carries write on
+   `PyAutoLabs/PyAutoMemory`. No code change was needed for filing to work.
+2. **Backfill done.** `workflow_dispatch` of `arxiv_papers.yml` on `main` with
+   `lookback_hours=168`
+   ([run 32847233221](https://github.com/PyAutoLabs/PyAutoMind/actions/runs/32847233221))
+   filed `appended:2, swept:0` and pushed clean. PyAutoMemory `arxiv-inbox.md`
+   now holds:
+
+   ```
+   2026-08-25 — Strong Lensing Cosmology with Population-level Calibrated Neural Ratio Estimation — 2608.23534
+   2026-08-25 — Mapping the Information Geometry of an Unresolved Dark Matter Population using a Differentiable Strong Lensing Simulator — 2608.18224
+   ```
+
+   168, not 24: the lookback is submission-anchored (`arxiv_fetch.py` sorts and
+   filters on `submittedDate`), so a paper announced today may have been
+   submitted days earlier — the PyAutoMind#79 trap. `append` dedupes against
+   both the inbox and the reading queue, so an over-wide sweep is safe, and it
+   stamps every backfilled line with *today's* date, giving each a fresh 7-day
+   window rather than its original announcement date.
+
+## Trap: you cannot test this workflow from a branch that edits it
+
+The first backfill attempt was dispatched from this branch so the new
+fail-loudly path would be exercised. It cannot be. `claude-code-action@v1`
+refuses to run when the workflow file differs from the default branch's copy:
+
+```
+Skipping action due to workflow validation: Workflow validation failed. The
+workflow file must exist and have identical content to the version on the
+repository's default branch.
+```
+
+The action then **exits `success`**, so the run continues with no
+`slack_payload.json`, the POST step fails on the missing file, and every later
+step — the inbox filing included — is skipped. Consequence for anyone editing
+`arxiv_papers.yml`: a branch dispatch exercises the fetch and the band self-test
+and nothing past them, and its failure says "the Claude summarise step failed to
+write it (check for an expired CLAUDE_CODE_OAUTH_TOKEN)", which points at the
+wrong cause entirely. Test workflow-file changes by merging them, or dispatch
+`main` and read the step logs.
+
+Consequence for this change specifically: the 403 path it fixes cannot be
+re-triggered now that the token works, so the new branch is shell-syntax-checked
+and reasoned, not live-fired. The step it touches is plain bash with no
+dependency on `claude-code-action`, so a merge to `main` is what proves it.
 
 ## Already fixed on this branch
 

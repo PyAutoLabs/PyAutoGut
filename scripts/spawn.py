@@ -142,6 +142,13 @@ MIND_RULES = [
     # so it is unrunnable on arrival. scripts/ and the renderer still travel;
     # an adopter re-adds the publisher deliberately.
     (".github/workflows/pages_dashboard.yml", "DROP"),
+    # 9c also: the branch sweep checks out PyAutoLabs/PyAutoBrain for its logic
+    # (dashboard_refresh.yml's failure mode again — YOURORG/PyAutoBrain does not
+    # exist), and carries a weekly cron, which rule 9's no-unattended-trigger
+    # condition rejects on its own. Worth re-adding deliberately once an
+    # adopter has a Brain; not worth inheriting a scheduled job that fails on
+    # checkout every Sunday.
+    (".github/workflows/branch_sweep.yml", "DROP"),
     (".github/scripts/*", "DROP"),
     # NO `.github/*` catch-all, deliberately. A catch-all is fail-OPEN: a new
     # Mind workflow would ride it into the template carrying whatever schedule

@@ -45,7 +45,7 @@ anything you could not verify.
 | [In flight](#in-flight) (`active/`) | 1 |
 | [Parked](#parked) (`parked.md`) | 3 |
 | [Planned](#planned) (`planned.md`) | 5 |
-| [Backlog](#backlog) (`draft/`) | 139 |
+| [Backlog](#backlog) (`draft/`) | 140 |
 
 ## Start here
 
@@ -261,7 +261,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ## Backlog
 
-**139** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **25** of them belong to an epic and are listed only under [Epics](#epics) below.
+**140** filed prompts, not started. Each section is sorted most-pickable first (priority, then size). **25** of them belong to an epic and are listed only under [Epics](#epics) below.
 
 <details>
 <summary><b>feature</b> — 27</summary>
@@ -666,7 +666,7 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 </details>
 
 <details>
-<summary><b>maintenance</b> — 24</summary>
+<summary><b>maintenance</b> — 25</summary>
 
 <details><summary>📋 <a href="draft/maintenance/ci/autocti_workspace_navigator_check.md">autocti_workspace has no Navigator Check, so its CI can never roll…</a> — ci · medium · supervised · high</summary>
 
@@ -752,6 +752,14 @@ Scoped but not started; some are not yet prompt files. Full detail in [`planned.
 
 ```
 /start_dev draft/maintenance/ci/heart_smoke_table_autocti.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/maintenance/ci/run_smoke_copy_drift.md">run_smoke.py: three runner variants across 10 repos, no sync mechanism</a> — ci · medium · supervised · normal</summary>
+
+```
+/start_dev draft/maintenance/ci/run_smoke_copy_drift.md
 ```
 
 </details>

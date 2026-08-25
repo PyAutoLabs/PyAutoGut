@@ -6,7 +6,7 @@ Token-light navigation over the finished-work records (schema:
 only then grep a dated bucket. Curators: edit the band between the CURATED
 markers; everything below GENERATED is rebuilt.
 
-1130 records across 7 buckets.
+1133 records across 7 buckets.
 
 <!-- CURATED:START -->
 ## Highlights
@@ -43,7 +43,10 @@ _(curate hard-won records here — survives regeneration.)_
 - [border-relocator-degenerate-pca](2026/08/border-relocator-degenerate-pca.md) — Stabilized near-isotropic border PCA axes with a deterministic axis-aligned branch at a scale-aware eigenvalue…
 - [brain-readability-pass](2026/08/brain-readability-pass.md) — auto-closed on merge
 - [bump-autonerves-floor](2026/08/bump-autonerves-floor.md)
+- [ci-status-cloud-runs-drop-point](2026/08/ci-status-cloud-runs-drop-point.md)
+- [ci-status-head-sha-without-gh](2026/08/ci-status-head-sha-without-gh.md)
 - [circular-ell-comps-image-gradient](2026/08/circular-ell-comps-image-gradient.md) — Replaced the Sersic image path's Cartesian-to-polar ellipticity conversion with an algebraically equivalent Ca…
+- [claude-session-python-312-default](2026/08/claude-session-python-312-default.md)
 - [cli-noise-autonerves-batch](2026/08/cli-noise-autonerves-batch.md)
 - [cli-noise-pyautofit-batch](2026/08/cli-noise-pyautofit-batch.md)
 - [clipper-in-search-identifier](2026/08/clipper-in-search-identifier.md) — decided: option 2 — the clipper enters the MLE identifiers

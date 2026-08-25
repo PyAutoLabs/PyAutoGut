@@ -14,7 +14,11 @@ name: pyauto-arxiv-papers
 # 4–5 sentence summary, then a compact list of the rest.
 # Cadence: weekday mornings. Empty days STILL post a short "no new strong-
 # lensing papers today" heartbeat (user, 2026-07-13) — so silence in #papers
-# always means a broken run, never a genuinely empty one.
+# always means a broken run, never a genuinely empty one. The Memory inbox step
+# at the bottom carries the same invariant onto the knowledge board: it runs on
+# every weekday and stamps `last digest: <date>` even with nothing to file, so
+# an empty board is a quiet day and a stale one is a broken run
+# (PyAutoMemory#58).
 #
 # Timing: arXiv announces new astro-ph at 20:00 US Eastern, Sun–Thu, which is
 # ~01:00 UK (00:00 UTC in summer / 01:00 UTC in winter) — the papers are live in
@@ -101,6 +105,12 @@ jobs:
         # spend no subscription usage, but still write the heartbeat payload so
         # the POST step below has something to send. uk_date is read from
         # arxiv_papers.json, which the fetch always writes even at count=0.
+        #
+        # It also writes an EMPTY arxiv_survivors.json — the same file the
+        # Claude step writes on its own no-papers day. Every path therefore
+        # produces one, so the inbox step below can run unconditionally and
+        # stamp the quiet day, and a MISSING survivors file there stays what it
+        # has always been: a real failure, not an empty day.
         if: ${{ steps.fetch.outputs.count == '0' }}
         run: |
           set -euo pipefail
@@ -120,6 +130,8 @@ jobs:
           }
           with open("slack_payload.json", "w") as f:
               json.dump(payload, f, indent=2)
+          with open("arxiv_survivors.json", "w") as f:
+              json.dump({"papers": []}, f)
           print(f"Wrote no-papers heartbeat for {uk_date}.")
           PY
 
@@ -291,6 +303,14 @@ jobs:
       # knowledge board renders them with one-tap add / intake / cite / dismiss
       # buttons and un-acted lines lapse after a week.
       #
+      # It runs on EVERY weekday, including days with nothing to file, because
+      # it also writes the inbox's `last digest: <date>` stamp — the board's
+      # equivalent of the #papers empty-day heartbeat. Without a stamp on quiet
+      # days the board cannot tell "arXiv was quiet" from "the filing broke and
+      # the papers were lost", which is the exact ambiguity that hid the
+      # 2026-08-25 PAT failure (PyAutoMemory#58). A quiet day is therefore a
+      # one-line commit, not silence.
+      #
       # This DELIBERATELY reverses the original "the digest never commits"
       # constraint (PyAutoMemory#35): the human gate moved from "paste the
       # block into a session" to "tap a button on the board", it did not go
@@ -306,7 +326,6 @@ jobs:
       # all live in PyAutoMemory's scripts/inbox_actions.py — this step only
       # supplies the papers, so the line format is never re-expressed here.
       - name: File the survivors into the PyAutoMemory arXiv inbox
-        if: ${{ steps.fetch.outputs.count != '0' }}
         env:
           PAT: ${{ secrets.PAT_PYAUTOLABS }}
         run: |
@@ -332,9 +351,13 @@ jobs:
           # reading queue, so a re-run (or a paper announced twice) adds nothing.
           added=$(python3 scripts/inbox_actions.py append \
                     --papers-file arxiv_survivors.json)
+          # Unconditional, and the whole reason this step no longer skips empty
+          # days: it records that the digest ran at all. inbox_actions.py owns
+          # the line, so the format is never re-expressed here.
+          stamped=$(python3 scripts/inbox_actions.py stamp)
           swept=$(python3 scripts/inbox_actions.py sweep)
           rm arxiv_survivors.json
-          echo "inbox: ${added}, ${swept}"
+          echo "inbox: ${added}, ${swept}, ${stamped}"
 
           if [ -z "$(git status --porcelain -- arxiv-inbox.md)" ]; then
             echo "inbox unchanged — nothing to commit."
@@ -343,7 +366,7 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add arxiv-inbox.md
-          git commit -m "inbox: ${added}, ${swept} (arXiv digest ${uk_date})"
+          git commit -m "inbox: ${added}, ${swept}, ${stamped} (arXiv digest ${uk_date})"
           # The retry is for a concurrent-push race — the knowledge board and the
           # queue-action workflows commit to this same repo — so a rejected push
           # is worth a rebase and another go. An auth failure is NOT that: the

@@ -31,29 +31,14 @@ lens's posterior is read-only to it: the aggregator opens each zip with
 ``unzip_temporary=True``, which extracts to a temporary directory that is
 removed again, so no result tree is modified.
 
-__Why Not af.AggregateFITS__
+__The PyAutoFit Version This Needs__
 
-``deblending.py`` reaches its HDUs through ``af.AggregateFITS.extract_fits``,
-and that is what this producer was meant to use too. It cannot, and the reason
-is a name collision rather than anything about mass maps.
-
-``AggregateFITS._hdus`` resolves an HDU enum to a file by
-``SearchOutput.value(subplot_filename(hdu))``, and for ``FITSTracer`` that name
-is ``"tracer"``. ``SearchOutput.value`` searches ``jsons`` **before** ``fits``,
-and every lens fit also writes ``files/tracer.json`` — the max-log-likelihood
-``Tracer`` object. So ``value("tracer")`` returns that ``Tracer``, not the
-``image/tracer.fits`` ``HDUList``, and ``extract_fits`` dies on
-``'Tracer' object has no attribute 'index_of'``. Measured on the DR1 ``dr1_sep1``
-results with PyAutoFit/PyAutoLens 2026.8.17.1. No other ``FITS*`` enum collides:
-``galaxy_images``, ``model_galaxy_images`` and ``fit`` have no same-named JSON,
-which is why ``deblending.py`` never hit it.
-
-``AggregateTracerFITS`` below is therefore a minimal stand-in: the same
-extract-and-copy loop, resolving the source through ``result.fits`` — where the
-FITS files are unambiguously the FITS files — instead of through ``value()``.
-It is a workaround for an upstream defect, not a design choice, and should be
-deleted in favour of ``af.AggregateFITS`` once PyAutoFit resolves a ``FITS*``
-enum against ``result.fits``.
+The HDUs are collected with ``af.AggregateFITS.extract_fits``, the same call
+``deblending.py`` makes. It requires PyAutoFit at or after the fix in PyAutoFit
+PR ``feature/catalogue-mass-maps-fits``: earlier versions resolved the
+``FITSTracer`` name ``"tracer"`` through ``SearchOutput.value``, which searches
+JSONs first and so returned the ``files/tracer.json`` ``Tracer`` object instead
+of ``image/tracer.fits``.
 
 __The Grid The Maps Live On__
 
@@ -107,96 +92,6 @@ sys.path.insert(0, str(Path(__file__).parent))
 import catalogue_util
 
 
-# The `SearchOutput` output name of the FITS a finished fit wrote the mass maps
-# into: `image/tracer.fits`, named by its path relative to `image/` without the
-# suffix. It is also the name of `files/tracer.json`, which is the collision the
-# module docstring describes.
-TRACER_FITS_NAME = "tracer"
-
-
-class AggregateTracerFITS:
-    """
-    The ``af.AggregateFITS`` stand-in this producer extracts with, described in
-    the module docstring's "Why Not af.AggregateFITS".
-
-    It exposes the one method the writer uses, ``extract_fits(hdus=...)``, with
-    the same contract: an ``HDUList`` whose first entry is an empty
-    ``PrimaryHDU``, followed by the requested HDUs of every search in the
-    aggregator, in the order requested. The only difference from the upstream
-    class is where the source file comes from — ``result.fits`` rather than
-    ``result.value(name)`` — so switching back once PyAutoFit is fixed is a
-    one-line change in ``main``.
-
-    ``ValueError`` on an empty aggregator is deliberate and load-bearing: it is
-    what ``af.AggregateFITS`` raises, and what ``main`` catches to skip a lens
-    with no completed search under the tag.
-    """
-
-    def __init__(self, aggregator):
-        if len(aggregator) == 0:
-            raise ValueError("The aggregator is empty.")
-
-        self.aggregator = aggregator
-
-    @staticmethod
-    def _tracer_fits(result):
-        """
-        The ``FITSOutput`` for ``image/tracer.fits`` of one search.
-
-        Raises ``ValueError`` — caught per lens by ``main`` — when the fit wrote
-        no ``tracer.fits`` at all, which is what a ``PYAUTO_TEST_MODE`` result
-        or a run with ``visualize.plots.tracer.fits_tracer`` off looks like.
-        """
-        for output in result.fits:
-            if output.name == TRACER_FITS_NAME:
-                return output
-
-        raise ValueError(
-            f"no {TRACER_FITS_NAME}.fits in the result at {result.directory}; "
-            "the fit wrote no tracer maps (test mode, or fits_tracer disabled "
-            "in config/visualize/plots.yaml)"
-        )
-
-    def extract_fits(self, hdus, extname_prefix_list=None):
-        """
-        Copy ``hdus`` out of every search's ``tracer.fits`` into one ``HDUList``.
-
-        The data is copied out of the memmap and the source closed in a
-        ``finally``, mirroring ``af.AggregateFITS._hdus``: without it one file
-        handle leaks per result, which exhausts the open-file limit over a
-        DR1-sized sample.
-
-        ``extname_prefix_list`` is accepted for signature parity with
-        ``af.AggregateFITS.extract_fits`` and is not used here — one search per
-        file means the extension names the fit wrote are already unambiguous.
-        """
-        from astropy.io import fits
-
-        if extname_prefix_list is not None:
-            raise NotImplementedError(
-                "extname_prefix_list is not supported: the mass maps are "
-                "written one search per file, so no prefix is needed."
-            )
-
-        output = [fits.PrimaryHDU()]
-
-        for result in self.aggregator:
-            source = self._tracer_fits(result).value
-            try:
-                for hdu in hdus:
-                    source_hdu = source[source.index_of(hdu.value)]
-                    output.append(
-                        fits.ImageHDU(
-                            data=source_hdu.data.copy(),
-                            header=source_hdu.header,
-                        )
-                    )
-            finally:
-                source.close()
-
-        return fits.HDUList(output)
-
-
 def mass_map_products():
     """
     The file-and-HDU contract of this stage: output filename → the
@@ -243,9 +138,9 @@ def write_mass_maps(agg_fits, output_dataset_path: Path, products=None):
     ----------
     agg_fits
         Anything exposing ``extract_fits(hdus=...)`` — in production the
-        ``AggregateTracerFITS`` built around one lens's aggregator, in the tests
-        a stub returning synthetic HDUs, which is why the writer takes the
-        object rather than building it.
+        ``af.AggregateFITS`` built around one lens's aggregator, in the tests a
+        stub returning synthetic HDUs, which is why the writer takes the object
+        rather than building it.
     output_dataset_path
         This lens's folder inside the inspection bundle; created if absent.
     products
@@ -311,15 +206,16 @@ def main():
     nothing else.
 
     Failures are per lens too. A lens with no completed search under the tag and
-    search name makes ``AggregateTracerFITS`` raise ``ValueError`` ("The
-    aggregator is empty."), and one whose fit wrote no ``tracer.fits`` raises it
-    at extraction; both are caught, reported and skipped so the rest of the
-    sample still gets bundled — that is what lets a sample still being fitted
-    produce a partial bundle rather than a broken one.
+    search name makes ``af.AggregateFITS`` raise ``ValueError`` ("The aggregator
+    is empty."), and one whose fit wrote no ``tracer.fits`` raises
+    ``FileNotFoundError`` at extraction; both are caught, reported and skipped so
+    the rest of the sample still gets bundled — that is what lets a sample still
+    being fitted produce a partial bundle rather than a broken one.
     """
     args = parse_args()
     output_path, inspect_path = catalogue_util.resolve_paths(args)
 
+    import autofit as af
     from autofit.aggregator.aggregator import Aggregator
 
     products = mass_map_products()
@@ -348,9 +244,9 @@ def main():
             agg_query = agg_query.query(agg_query.search.name == args.search_name)
 
         try:
-            agg_fits = AggregateTracerFITS(aggregator=agg_query)
+            agg_fits = af.AggregateFITS(aggregator=agg_query)
             write_mass_maps(agg_fits, output_dataset_path, products=products)
-        except ValueError as e:
+        except (ValueError, FileNotFoundError) as e:
             print(f"skipping {dataset_name}: {e}")
             continue
 

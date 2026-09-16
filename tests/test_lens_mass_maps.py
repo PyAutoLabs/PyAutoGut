@@ -13,16 +13,17 @@ needs a fit, a dataset or an aggregator:
 2. **The skip.** ``mass_maps_exist`` is what makes the stage cheap to re-run,
    and it is existence-only by design: a *partially* written lens must not be
    skipped, or it stays partial forever.
-3. **The extraction.** ``AggregateTracerFITS`` exists only because
-   ``af.AggregateFITS`` cannot reach ``tracer.fits`` (``files/tracer.json``
-   shadows it in ``SearchOutput.value`` — see the producer's module docstring),
-   so this module holds the control: a synthetic ``tracer.fits`` written with
-   the library's own ``hdu_list_for_output_from``, a stub search output carrying
-   *both* a JSON and a FITS named ``tracer``, and the assertion that the
-   extraction reads the FITS.
+3. **The extraction.** ``af.AggregateFITS`` reaches ``tracer.fits`` only from
+   the PyAutoFit fix this producer requires — before it, ``files/tracer.json``
+   shadowed the FITS in ``SearchOutput.value`` (see the producer's module
+   docstring). The control is here: a synthetic result directory holding a
+   ``tracer.fits`` written with the library's own ``hdu_list_for_output_from``
+   *and* a same-named JSON beside it, driven through the real
+   ``af.AggregateFITS``, which pins the version floor as well as the contract.
 
-JAX-free and fit-free: the only library code is ``autolens``'s enum and
-``autonerves``'s FITS writer, both imported inside the tests.
+JAX-free and fit-free: the only library code is ``autolens``'s enum,
+``autofit``'s aggregator and ``autonerves``'s FITS writer, all imported inside
+the tests.
 """
 
 import importlib.util
@@ -87,69 +88,45 @@ def _tracer_hdu_list():
 
 
 @pytest.fixture
-def tracer_fits_path(tmp_path):
-    path = tmp_path / "image" / "tracer.fits"
-    path.parent.mkdir(parents=True, exist_ok=True)
-    _tracer_hdu_list().writeto(path, overwrite=True)
-    return path
-
-
-class _FileOutput:
+def result_directory(tmp_path):
     """
-    A ``FileOutput`` stand-in: a name and, for the FITS one, an open ``HDUList``
-    as its ``value``. ``AggregateTracerFITS`` reads exactly those two.
+    One search's result directory as a finished fit leaves it: ``image/tracer.fits``
+    beside a same-named ``files/tracer.json``.
+
+    The JSON is the collision — a real fit writes its max-log-likelihood
+    ``Tracer`` there — so ``af.AggregateFITS`` is exercised against exactly the
+    shape of result tree that defeated it before the PyAutoFit fix.
     """
+    import json
 
-    def __init__(self, name, path=None, value=None):
-        self.name = name
-        self.path = path
-        self._value = value
+    directory = tmp_path / "search"
+    (directory / "image").mkdir(parents=True)
+    (directory / "files").mkdir(parents=True)
 
-    @property
-    def value(self):
-        if self.path is None:
-            return self._value
+    _tracer_hdu_list().writeto(directory / "image" / "tracer.fits", overwrite=True)
+    (directory / "files" / "tracer.json").write_text(
+        json.dumps({"not": "the fits file"})
+    )
 
-        from astropy.io import fits
-
-        return fits.open(self.path)
+    return directory
 
 
-class _Tracer:
+def _aggregate_fits(directory):
     """
-    What ``files/tracer.json`` deserialises to: an object with no ``index_of``
-    and no ``close``, which is exactly why the upstream path fails.
+    The real ``af.AggregateFITS`` over one search output — the production object,
+    built from a list of ``SearchOutput`` rather than an ``Aggregator`` so the
+    control needs no scan, no ``search.json`` and no query.
     """
+    import autofit as af
+    from autofit import SearchOutput
 
-
-class _SearchOutput:
-    """
-    A ``SearchOutput`` stand-in carrying a JSON *and* a FITS both named
-    ``tracer`` — the collision that defeats ``af.AggregateFITS``.
-
-    ``value`` reproduces the real resolution order (``jsons`` before
-    ``fits + pickles + arrays``), so a producer that went back to ``value()``
-    fails here the way it fails against a real result.
-    """
-
-    def __init__(self, tracer_fits_path, directory=Path("/nowhere"), with_fits=True):
-        self.directory = directory
-        self.jsons = [_FileOutput("tracer", value=_Tracer())]
-        self.fits = [_FileOutput("galaxy_images", path=tracer_fits_path)]
-        if with_fits:
-            self.fits.append(_FileOutput("tracer", path=tracer_fits_path))
-
-    def value(self, name):
-        for item in self.jsons + self.fits:
-            if item.name == name:
-                return item.value
-        return None
+    return af.AggregateFITS(aggregator=[SearchOutput(directory)])
 
 
 class _StubAggregate:
     """
     The ``extract_fits``-exposing object ``write_mass_maps`` takes, standing in
-    for ``AggregateTracerFITS``. It records the HDU lists it was asked for so
+    for ``af.AggregateFITS``. It records the HDU lists it was asked for so
     the writer can be checked independently of the extraction.
     """
 
@@ -254,25 +231,22 @@ def test_a_lens_with_no_folder_is_not_skipped(tmp_path):
 # ---------------------------------------------------------------------------
 
 
-def test_extraction_reads_the_fits_not_the_same_named_json(tracer_fits_path):
+def test_extraction_reads_the_fits_not_the_same_named_json(result_directory):
     """
-    The regression this producer's ``AggregateTracerFITS`` exists for.
+    The regression the producer's PyAutoFit floor exists for.
 
-    ``af.AggregateFITS`` resolves ``FITSTracer`` through
-    ``SearchOutput.value("tracer")``, which searches ``jsons`` before ``fits``
-    and so returns the ``files/tracer.json`` ``Tracer`` object — measured
+    ``af.AggregateFITS`` resolves ``FITSTracer`` to the name ``"tracer"``. Before
+    the fix it did so through ``SearchOutput.value``, which searches ``jsons``
+    before ``fits`` and so returned the ``files/tracer.json`` object — measured
     against PyAutoFit/PyAutoLens 2026.8.17.1, where it fails with
-    ``'Tracer' object has no attribute 'index_of'``. Resolving through
-    ``result.fits`` is what makes the stage work; the stub carries both files so
-    a regression to the ``value()`` path fails here.
+    ``'Tracer' object has no attribute 'index_of'``. The result directory here
+    carries both files, so a stack without the fix fails this test.
     """
     import autolens as al
 
-    aggregate = lens_mass_maps.AggregateTracerFITS(
-        aggregator=[_SearchOutput(tracer_fits_path)]
+    hdu_list = _aggregate_fits(result_directory).extract_fits(
+        hdus=[al.agg.fits_tracer.convergence]
     )
-
-    hdu_list = aggregate.extract_fits(hdus=[al.agg.fits_tracer.convergence])
 
     assert [hdu.header.get("EXTNAME") for hdu in hdu_list] == [None, "CONVERGENCE"]
     assert hdu_list[1].data.shape == SHAPE
@@ -280,7 +254,7 @@ def test_extraction_reads_the_fits_not_the_same_named_json(tracer_fits_path):
     assert np.array_equal(hdu_list[1].data, np.full(SHAPE, 1.0))
 
 
-def test_extraction_preserves_extnames_shapes_and_header(tracer_fits_path):
+def test_extraction_preserves_extnames_shapes_and_header(result_directory):
     """
     Every requested map arrives under its own name, with its own data and the
     zoomed mask's header keys — the pixel scale a reader needs to re-project the
@@ -288,11 +262,7 @@ def test_extraction_preserves_extnames_shapes_and_header(tracer_fits_path):
     """
     import autolens as al
 
-    aggregate = lens_mass_maps.AggregateTracerFITS(
-        aggregator=[_SearchOutput(tracer_fits_path)]
-    )
-
-    hdu_list = aggregate.extract_fits(
+    hdu_list = _aggregate_fits(result_directory).extract_fits(
         hdus=[al.agg.fits_tracer.deflections_y, al.agg.fits_tracer.deflections_x]
     )
 
@@ -314,24 +284,29 @@ def test_an_empty_aggregator_raises_the_value_error_main_catches():
     completed search under this tag" case, and must raise rather than write an
     empty file.
     """
+    import autofit as af
+
     with pytest.raises(ValueError):
-        lens_mass_maps.AggregateTracerFITS(aggregator=[])
+        af.AggregateFITS(aggregator=[])
 
 
-def test_a_result_without_tracer_fits_raises_the_same_value_error(tracer_fits_path):
+def test_a_result_without_tracer_fits_raises_the_file_not_found_main_catches(
+    result_directory,
+):
     """
     A test-mode result, or one fitted with ``fits_tracer`` off, has no
-    ``tracer.fits``. That is a skip, not a crash, so it must surface as the same
-    ``ValueError`` ``main`` catches.
+    ``tracer.fits`` — only the shadowing JSON. That is a skip, not a crash, so it
+    must surface as the ``FileNotFoundError`` ``main`` catches beside
+    ``ValueError``.
     """
     import autolens as al
 
-    aggregate = lens_mass_maps.AggregateTracerFITS(
-        aggregator=[_SearchOutput(tracer_fits_path, with_fits=False)]
-    )
+    (result_directory / "image" / "tracer.fits").unlink()
 
-    with pytest.raises(ValueError):
-        aggregate.extract_fits(hdus=[al.agg.fits_tracer.convergence])
+    with pytest.raises(FileNotFoundError):
+        _aggregate_fits(result_directory).extract_fits(
+            hdus=[al.agg.fits_tracer.convergence]
+        )
 
 
 # ---------------------------------------------------------------------------

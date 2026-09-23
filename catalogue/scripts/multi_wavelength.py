@@ -175,7 +175,7 @@ def main(counts):
     from autofit.aggregator.aggregator import Aggregator
 
     sample_root = catalogue_util.sample_root_from(output_path, args.sample)
-    dataset_name_list = catalogue_util.dataset_names_from(sample_root)
+    dataset_name_list = catalogue_util.selected_dataset_names_from(sample_root, args)
 
     for dataset_name in dataset_name_list:
         print(dataset_name)

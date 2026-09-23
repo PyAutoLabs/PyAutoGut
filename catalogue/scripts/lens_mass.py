@@ -123,6 +123,8 @@ def main(counts):
     agg = Aggregator.from_directory(
         directory=sample_root, completed_only=True, unzip_temporary=True
     )
+    dataset_names = catalogue_util.selected_dataset_names_from(sample_root, args)
+    agg = catalogue_util.select_aggregator_datasets(agg, dataset_names)
 
     """
     __Query: Pipeline Stage And Search__
@@ -246,9 +248,18 @@ def main(counts):
                 name=name,
                 value_types=value_types_all,
             )
+        elif ".centre." in argument:
+            catalogue_util.add_variable_with_fixed_fallback(
+                agg_csv=agg_csv,
+                argument=argument,
+                name=name,
+                value_types=value_types_all,
+            )
         else:
             agg_csv.add_variable(
-                argument=argument, name=name, value_types=value_types_all
+                argument=argument,
+                name=name,
+                value_types=value_types_all,
             )
 
     """

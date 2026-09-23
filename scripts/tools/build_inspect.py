@@ -2,15 +2,15 @@
 Euclid Pipeline: Inspection File Collector
 ===========================================
 
-Collects the six per-lens PNGs and the two COOLEST templates of the inspection
-bundle into a flat ``inspect/<sample>/<dataset_name>/`` layout, so a whole
+Collects the per-lens PNGs and COOLEST templates of the inspection bundle into a flat ``inspect/<sample>/<dataset_name>/`` layout, so a whole
 sample can be reviewed by scrolling one folder instead of clicking through
 ``output/`` and unpacking a zip per lens.
 
 Six images are collected per lens (two of them best-effort):
 
 - ``vis_lp_fit.png``                  — ``initial_lens_model/vis_lp`` fit subplot
-- ``vis_pix_fit.png``                 — ``initial_lens_model/vis_pix`` fit subplot
+- ``vis_pix_fit.png``                 — ``initial_lens_model/vis_pix`` fit subplot;
+  collected only in the default ``--initial_search_name=vis_pix`` mode
 - ``vis_lp_image_with_positions.png`` — the vis_lp image with the multiple-image
   positions overlaid; best-effort, absent when the lens has no ``positions.json``
 - ``rgb.png``                         — the RGB subplot from the vis_lp result,
@@ -20,11 +20,13 @@ Six images are collected per lens (two of them best-effort):
 - ``segmentation.png``                — copied from the dataset folder; its
   ultimate producer is ``preprocess/segmentation.py``
 
-Two COOLEST templates are collected alongside them, both best-effort — a result
+COOLEST templates are collected alongside them, best-effort — a result
 fitted before the pipeline started writing them simply has none:
 
 - ``coolest.json``                    — ``initial_lens_model/vis_pix``'s
   ``files/coolest.json``, the COOLEST template of the pixelized-source fit
+- ``coolest_vis_lp.json``             — ``initial_lens_model/vis_lp``'s
+  ``files/coolest.json`` when the bundle selects the vis_lp-only mode
 - ``coolest_sersic.json``             — ``sersic_lens_model/vis``'s
   ``files/coolest.json``, present only once that pipeline has run for the lens
 
@@ -35,8 +37,8 @@ directory's ``image/`` folder. Selected zip members are streamed with
 ``zipfile`` to staging files; the result archive is never expanded or rewritten.
 
 It is incremental: a lens whose targets all exist is reported as ``already`` and
-validated before reuse. A lens whose ``vis_lp`` or ``vis_pix`` search has not
-finished is warned and skipped — a normal state of a sample still being fitted.
+validated before reuse. The selected initial-model search must exist; vis_lp-only
+mode does not require vis_pix. An unfinished selected search is warned and skipped.
 Missing members produce per-lens warnings and skips. Corrupt ZIP, image or JSON
 assets and output-write errors fail the stage; existing complete products are
 validated before they count as already present.
@@ -51,6 +53,11 @@ Usage
         --sample=dr1_prelim_grade_ab \
         --inspect_dir=inspect/dr1_prelim_grade_ab_run250 \
         --tar_to=/scratch/dr1_prelim_grade_ab.tar
+
+    # vis_lp-only: bundle lenses whose vis_pix search has not run (or is not
+    # wanted); vis_pix_fit.png / coolest.json are not written.
+    python scripts/tools/build_inspect.py \
+        --sample=dr1_sep1_rest --initial_search_name=vis_lp
 """
 
 import argparse
@@ -167,7 +174,12 @@ def result_source(search_dir: Path):
 
 
 def process_dataset(
-    dataset_dir: Path, dataset_main_dir: Path, inspect_dir: Path
+    dataset_dir: Path,
+    dataset_main_dir: Path,
+    inspect_dir: Path,
+    *,
+    sersic_dataset_dir: Path | None = None,
+    initial_search_name: str = "vis_pix",
 ) -> str:
     """
     Collect one lens's images and COOLEST templates. Returns ``built``,
@@ -177,23 +189,34 @@ def process_dataset(
 
     vis_lp_source = result_source(dataset_dir / "initial_lens_model" / "vis_lp")
     vis_pix_source = result_source(dataset_dir / "initial_lens_model" / "vis_pix")
-    sersic_source = result_source(dataset_dir / "sersic_lens_model" / "vis")
+    if sersic_dataset_dir is None:
+        sersic_dataset_dir = dataset_dir
+    sersic_source = result_source(sersic_dataset_dir / "sersic_lens_model" / "vis")
 
-    if vis_lp_source is None or vis_pix_source is None:
+    selected_source = {
+        "vis_lp": vis_lp_source,
+        "vis_pix": vis_pix_source,
+    }[initial_search_name]
+    if vis_lp_source is None or selected_source is None:
+        missing = "vis_lp" if vis_lp_source is None else initial_search_name
         print(
-            f"WARNING {dataset_name}: skipping inspection images; missing vis_lp or vis_pix result"
+            f"WARNING {dataset_name}: skipping inspection images; "
+            f"missing {missing} result"
         )
         return "skipped"
 
     out_dir = inspect_dir / dataset_name
     targets = {
         "vis_lp_fit.png": out_dir / "vis_lp_fit.png",
-        "vis_pix_fit.png": out_dir / "vis_pix_fit.png",
         "vis_lp_image_with_positions.png": out_dir / "vis_lp_image_with_positions.png",
         "rgb.png": out_dir / "rgb.png",
         "segmentation.png": out_dir / "segmentation.png",
-        "coolest.json": out_dir / "coolest.json",
     }
+    if initial_search_name == "vis_pix":
+        targets["vis_pix_fit.png"] = out_dir / "vis_pix_fit.png"
+        targets["coolest.json"] = out_dir / "coolest.json"
+    else:
+        targets["coolest_vis_lp.json"] = out_dir / "coolest_vis_lp.json"
     # fit_sersic.png and coolest_sersic.json are optional — only present once
     # the sersic pipeline has finished for this lens. Adding them to the targets
     # when the result exists stops the "already" check from skipping a lens that
@@ -212,7 +235,9 @@ def process_dataset(
     if not collect_member(vis_lp_source, "image/fit.png", targets["vis_lp_fit.png"]):
         print(f"WARNING {dataset_name} band=vis stage=vis_lp: missing image/fit.png")
         return "skipped"
-    if not collect_member(vis_pix_source, "image/fit.png", targets["vis_pix_fit.png"]):
+    if initial_search_name == "vis_pix" and not collect_member(
+        vis_pix_source, "image/fit.png", targets["vis_pix_fit.png"]
+    ):
         print(f"WARNING {dataset_name} band=vis stage=vis_pix: missing image/fit.png")
         return "skipped"
 
@@ -237,7 +262,10 @@ def process_dataset(
     # Best-effort: results fitted before the pipeline wrote COOLEST templates
     # carry no `files/coolest.json`, and a run whose `coolest` package was
     # missing logged a warning instead of writing one.
-    collect_member(vis_pix_source, "files/coolest.json", targets["coolest.json"])
+    coolest_name = (
+        "coolest.json" if initial_search_name == "vis_pix" else "coolest_vis_lp.json"
+    )
+    collect_member(selected_source, "files/coolest.json", targets[coolest_name])
 
     if sersic_source is not None:
         collect_member(sersic_source, "image/fit.png", targets["fit_sersic.png"])
@@ -277,6 +305,24 @@ def parse_args():
         ),
     )
     parser.add_argument(
+        "--sersic_output_path",
+        metavar="path",
+        default=None,
+        help=(
+            "Separate root containing sersic_lens_model results. Default: the "
+            "same root as --output_path."
+        ),
+    )
+    parser.add_argument(
+        "--initial_search_name",
+        choices=("vis_lp", "vis_pix"),
+        default="vis_pix",
+        help=(
+            "Initial-model search to bundle. vis_lp does not require vis_pix "
+            "and writes coolest_vis_lp.json. Default: vis_pix."
+        ),
+    )
+    parser.add_argument(
         "--inspect_dir",
         metavar="path",
         default=None,
@@ -289,6 +335,15 @@ def parse_args():
         help=(
             "Only collect datasets whose directory name starts with this "
             "prefix (the DR1 sample uses 'Tile'). Default: every dataset."
+        ),
+    )
+    parser.add_argument(
+        "--dataset_names_path",
+        metavar="path",
+        default=None,
+        help=(
+            "Optional directory whose child directory names select the exact "
+            "lenses to collect. Default: every lens in --output_path."
         ),
     )
     parser.add_argument(
@@ -310,9 +365,13 @@ def main() -> int:
     output_path = resolve(
         args.output_path, Path(os.environ.get("PYAUTO_OUTPUT_DIR", "output"))
     )
+    sersic_output_path = resolve(args.sersic_output_path, output_path)
     inspect_dir = resolve(args.inspect_dir, Path("inspect") / args.sample)
 
     results_dir = output_path / args.sample if args.sample else output_path
+    sersic_results_dir = (
+        sersic_output_path / args.sample if args.sample else sersic_output_path
+    )
     dataset_main_dir = (
         PROJECT_ROOT / "dataset" / args.sample
         if args.sample
@@ -332,11 +391,31 @@ def main() -> int:
         for path in results_dir.iterdir()
         if path.is_dir() and path.name.startswith(args.dataset_prefix)
     )
+    if args.dataset_names_path is not None:
+        dataset_names_path = resolve(args.dataset_names_path, Path())
+        if not dataset_names_path.is_dir():
+            raise FileNotFoundError(
+                f"dataset selection directory not found: {dataset_names_path}"
+            )
+        selected = {path.name for path in dataset_names_path.iterdir() if path.is_dir()}
+        dataset_dirs = [path for path in dataset_dirs if path.name in selected]
+        print(
+            f"Selected {len(dataset_dirs)} datasets using {dataset_names_path}",
+            flush=True,
+        )
     print(f"Scanning {len(dataset_dirs)} datasets in {results_dir}...", flush=True)
 
     try:
         for dataset_dir in dataset_dirs:
-            counts[process_dataset(dataset_dir, dataset_main_dir, inspect_dir)] += 1
+            counts[
+                process_dataset(
+                    dataset_dir,
+                    dataset_main_dir,
+                    inspect_dir,
+                    sersic_dataset_dir=sersic_results_dir / dataset_dir.name,
+                    initial_search_name=args.initial_search_name,
+                )
+            ] += 1
     except Exception:
         counts["error"] += 1
         raise

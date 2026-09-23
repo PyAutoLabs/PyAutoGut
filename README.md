@@ -290,9 +290,10 @@ The template therefore carries:
   than silently dropped, so a reader can never mistake the template for the
   whole model.
 
-The inspection bundle collects both templates per lens, as `coolest.json` (from
-`initial_lens_model/vis_pix`) and `coolest_sersic.json` (from
-`sersic_lens_model/vis`) — see [`catalogue/README.md`](catalogue/README.md).
+The inspection bundle collects `coolest.json` from `initial_lens_model/vis_pix`
+and `coolest_sersic.json` from `sersic_lens_model/vis`. A vis_lp-only bundle
+instead writes `coolest_vis_lp.json`, so it never labels an MGE-source result as
+the absent pixelized-source fit — see [`catalogue/README.md`](catalogue/README.md).
 
 The `coolest` package is an optional dependency of **PyAutoLens**, installed
 with the `[coolest]` extra used in [Getting Started](#getting-started):

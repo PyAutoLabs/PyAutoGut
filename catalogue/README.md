@@ -5,6 +5,10 @@ bundle**: one folder per lens holding everything a scientist needs to judge that
 lens, plus master CSVs spanning the whole sample. It is the direct ancestor of
 the exported DR1 catalogue.
 
+[`CATALOGUE_ENTRIES_AND_METADATA.md`](CATALOGUE_ENTRIES_AND_METADATA.md) is the
+compact data dictionary for every CSV field, per-lens product, provenance value,
+unit, and build counter.
+
 ### Relation to `workflow/`
 
 Both trees read finished fits out of `output/` through the PyAutoFit aggregator,
@@ -12,7 +16,7 @@ and they differ in purpose rather than in mechanism. `workflow/` holds *general
 examples* of the aggregator export API — `csv_make.py`, `png_make.py` and
 `fits_make.py` teach it step by step, and `workflow/example/` shows it applied to
 real Euclid runs. `catalogue/` holds the *production* producers: the scripts the
-bundle builder actually runs to write the 21 bundle files and the master CSVs.
+bundle builder actually runs to write the bundle files and the master CSVs.
 
 The clearest way in is to read the two side by side.
 `workflow/example/csv/lens_mass.py` builds the same table as
@@ -29,7 +33,7 @@ Producers live in `catalogue/scripts/`. The two orchestration scripts live in
 
 ```
 scripts/build_inspection_bundle.sh   # runs the ten stages in order
-scripts/tools/build_inspect.py             # stage 1 — collects 6 PNGs + 2 COOLEST templates
+scripts/tools/build_inspect.py        # stage 1 — collects PNGs + COOLEST templates
 catalogue/scripts/
   catalogue_util.py                  # shared path resolution + per-lens CSV split
   deblending.py                      # stage 2 — pre_psf.fits, model.fits
@@ -46,7 +50,7 @@ catalogue/scripts/
 
 ---
 
-## The 21 bundle files and what produces each
+## Bundle files and what produces each
 
 Every file of a complete per-lens bundle, the script that produces it, and
 whether that script *generates* the file from the fit or *collects* an image the
@@ -54,18 +58,20 @@ fit already wrote.
 
 | Output file | Producer | Generates / collects | Upstream fit it needs |
 |---|---|---|---|
-| `lens_mass.csv` | `catalogue/scripts/lens_mass.py` | generates | `initial_lens_model/vis_pix` |
+| `lens_mass.csv` | `catalogue/scripts/lens_mass.py` | generates | selected `initial_lens_model` search (`vis_pix` or `vis_lp`) |
 | `lens_sersic.csv` | `catalogue/scripts/lens_sersic.py` | generates | `sersic_lens_model/vis` |
 | `source_sersic.csv` | `catalogue/scripts/source_sersic.py` | generates | `sersic_lens_model/vis` |
 | `magnitudes.csv` | `catalogue/scripts/magnitudes.py` | generates | multi-band `sersic_lens_model/<band>` in `output_sed/` |
-| `witt_wynne.csv` | `catalogue/scripts/witt_wynne.py` | generates | `initial_lens_model/vis_pix` |
-| `witt_wynne.in` | `catalogue/scripts/witt_wynne.py` | generates | `initial_lens_model/vis_pix` |
+| `witt_wynne.csv` | `catalogue/scripts/witt_wynne.py` | generates | selected `initial_lens_model` search (`vis_pix` or `vis_lp`) |
+| `witt_wynne.in` | `catalogue/scripts/witt_wynne.py` | generates | selected `initial_lens_model` search (`vis_pix` or `vis_lp`) |
 | `astrometric_offsets.csv` | `catalogue/scripts/astrometric_offsets.py` | generates | multi-band `sersic_lens_model/<band>` in `output_sed/` |
 | `pre_psf.fits` | `catalogue/scripts/deblending.py` | generates | `sersic_lens_model` (every waveband) |
 | `model.fits` | `catalogue/scripts/deblending.py` | generates | `sersic_lens_model` (every waveband) |
-| `convergence.fits` | `catalogue/scripts/lens_mass_maps.py` | collects `image/tracer.fits` | `initial_lens_model/vis_pix` |
-| `potential.fits` | `catalogue/scripts/lens_mass_maps.py` | collects `image/tracer.fits` | `initial_lens_model/vis_pix` |
-| `deflections.fits` | `catalogue/scripts/lens_mass_maps.py` | collects `image/tracer.fits` | `initial_lens_model/vis_pix` |
+| `vis_lp_pre_psf.fits` / `vis_pix_pre_psf.fits` | `catalogue/scripts/deblending.py` | generates | selected `initial_lens_model` search |
+| `vis_lp_model.fits` / `vis_pix_model.fits` | `catalogue/scripts/deblending.py` | generates | selected `initial_lens_model` search |
+| `convergence.fits` | `catalogue/scripts/lens_mass_maps.py` | collects `image/tracer.fits` | selected `initial_lens_model` search |
+| `potential.fits` | `catalogue/scripts/lens_mass_maps.py` | collects `image/tracer.fits` | selected `initial_lens_model` search |
+| `deflections.fits` | `catalogue/scripts/lens_mass_maps.py` | collects `image/tracer.fits` | selected `initial_lens_model` search |
 | `fit_multi_wavelength.png` | `catalogue/scripts/multi_wavelength.py` | generates | multi-band `sersic_lens_model/<band>` in `output_sed/` |
 | `vis_lp_fit.png` | `scripts/tools/build_inspect.py` | collects `image/fit.png` | `initial_lens_model/vis_lp` |
 | `vis_pix_fit.png` | `scripts/tools/build_inspect.py` | collects `image/fit.png` | `initial_lens_model/vis_pix` |
@@ -74,14 +80,15 @@ fit already wrote.
 | `segmentation.png` | `scripts/tools/build_inspect.py` | copies `dataset/<sample>/<lens>/segmentation.png` | `preprocess/segmentation.py` |
 | `fit_sersic.png` | `scripts/tools/build_inspect.py` | collects `image/fit.png` | `sersic_lens_model/vis` |
 | `coolest.json` | `scripts/tools/build_inspect.py` | collects `files/coolest.json` (best-effort) | `initial_lens_model/vis_pix` |
+| `coolest_vis_lp.json` | `scripts/tools/build_inspect.py` | collects `files/coolest.json` (best-effort) | `initial_lens_model/vis_lp` in vis_lp-only mode |
 | `coolest_sersic.json` | `scripts/tools/build_inspect.py` | collects `files/coolest.json` (best-effort) | `sersic_lens_model/vis` |
 
 `build_inspect.py` never re-renders: it streams the image out of the result zip
 PyAutoFit writes when a search finishes, falling back to the unzipped result
 directory's `image/` folder when a run was not zipped (an interrupted run, or a
-`PYAUTO_TEST_MODE` run). The two COOLEST templates are streamed the same way out
+`PYAUTO_TEST_MODE` run). The COOLEST templates are streamed the same way out
 of the result's `files/` folder — `util.AnalysisImaging.save_results` writes them
-(see README's "COOLEST output"), and both are best-effort: a lens fitted before
+(see README's "COOLEST output"), and all are best-effort: a lens fitted before
 the pipeline started writing them, or one fitted without the optional `coolest`
 package installed, simply has no template to collect.
 
@@ -121,13 +128,14 @@ bash scripts/build_inspection_bundle.sh dr1_prelim_grade_ab run250
 
 | Stage | Script | Reads | Writes |
 |---|---|---|---|
-| 1/10 | `scripts/tools/build_inspect.py` | `output/<sample>/` | the 6 collected PNGs + 2 COOLEST templates |
-| 2/10 | `catalogue/scripts/deblending.py` | `output/<sample>/` | `pre_psf.fits`, `model.fits` |
-| 3/10 | `catalogue/scripts/lens_mass_maps.py` | `output/<sample>/` | `convergence.fits`, `potential.fits`, `deflections.fits` |
-| 4/10 | `catalogue/scripts/lens_mass.py` | `output/<sample>/` | `lens_mass.csv` |
-| 5/10 | `catalogue/scripts/lens_sersic.py` | `output/<sample>/` | `lens_sersic.csv` |
-| 6/10 | `catalogue/scripts/source_sersic.py` | `output/<sample>/` | `source_sersic.csv` |
-| 7/10 | `catalogue/scripts/witt_wynne.py` | `output/<sample>/` | `witt_wynne.csv`, `witt_wynne.in` |
+| 1/10 | `scripts/tools/build_inspect.py` | `OUTPUT_DIR/<sample>/` plus `SERSIC_OUTPUT_DIR/<sample>/` | collected PNGs + COOLEST templates |
+| 2/10 (Sersic) | `catalogue/scripts/deblending.py` | `SERSIC_OUTPUT_DIR/<sample>/` | `pre_psf.fits`, `model.fits` |
+| 2/10 (selected search) | `catalogue/scripts/deblending.py` | `OUTPUT_DIR/<sample>/` | namespaced selected-search FITS, e.g. `vis_lp_pre_psf.fits`, `vis_lp_model.fits` |
+| 3/10 | `catalogue/scripts/lens_mass_maps.py` | `OUTPUT_DIR/<sample>/` | `convergence.fits`, `potential.fits`, `deflections.fits` |
+| 4/10 | `catalogue/scripts/lens_mass.py` | `OUTPUT_DIR/<sample>/` | `lens_mass.csv` |
+| 5/10 | `catalogue/scripts/lens_sersic.py` | `SERSIC_OUTPUT_DIR/<sample>/` | `lens_sersic.csv` |
+| 6/10 | `catalogue/scripts/source_sersic.py` | `SERSIC_OUTPUT_DIR/<sample>/` | `source_sersic.csv` |
+| 7/10 | `catalogue/scripts/witt_wynne.py` | `OUTPUT_DIR/<sample>/` | `witt_wynne.csv`, `witt_wynne.in` |
 | 8/10 | `catalogue/scripts/multi_wavelength.py` | `output_sed/<sample>/` | `fit_multi_wavelength.png` |
 | 9/10 | `catalogue/scripts/magnitudes.py` | `output_sed/<sample>/` | `magnitudes.csv` |
 | 10/10 | `catalogue/scripts/astrometric_offsets.py` | `output_sed/<sample>/` | `astrometric_offsets.csv` |
@@ -135,7 +143,8 @@ bash scripts/build_inspection_bundle.sh dr1_prelim_grade_ab run250
 Everything lands in `inspect/<sample>[_<run_tag>]/`, with the master CSVs at the
 root and one folder per lens holding that lens's own copy of every product.
 
-Stages 8-10 read a **separate** results tree. The multi-band SED fits are run
+Sersic products and stages 8-10 read a **separate** results tree when it exists.
+The multi-band SED fits are run
 with `PYAUTO_OUTPUT_DIR=output_sed` (see `scripts/sersic_lens_model_waveband.py`
 and `scripts/lens_model_waveband.py`), so those three stages are skipped when
 `output_sed/<sample>/` does not exist. Set `SKIP_SED=1` to skip them
@@ -143,7 +152,7 @@ deliberately while SED jobs are still running.
 
 ### Fits the bundle expects
 
-Producing all 21 files needs three pipeline runs per lens:
+Producing every available file needs three pipeline runs per lens:
 
 ```bash
 python scripts/initial_lens_model.py --dataset=<lens> --sample=<sample>
@@ -154,18 +163,50 @@ PYAUTO_OUTPUT_DIR=output_sed python scripts/sersic_lens_model_waveband.py \
 
 plus `preprocess/segmentation.py` for `segmentation.png`.
 
+When only the normal `vis_lp` stage exists, select it explicitly. The Sersic
+tree supplies the exact lens set, so a larger main result tree cannot add extra
+lenses to the bundle:
+
+```bash
+INITIAL_SEARCH_NAME=vis_lp \
+OUTPUT_DIR=output SED_OUTPUT_DIR=output_sed \
+bash scripts/build_inspection_bundle.sh <sample> <run_tag>
+```
+
+This writes the vis_lp fit, positions and RGB images, `coolest_vis_lp.json`,
+namespaced vis_lp deblending FITS, mass maps, `lens_mass.csv` and Witt-Wynne
+products. It does not create `vis_pix_fit.png` or `coolest.json`, because no
+vis_pix result exists.
+
+To bundle every lens in the main tree instead — for example a full vis_lp-only
+build while `output_sed/<sample>/` holds only a Sersic subset — disable the
+selection with `DATASET_NAMES_PATH=all`. Lenses without a Sersic or SED result
+simply lack those products. `TAR_TO=<path>` additionally writes the stage-1
+PNGs and COOLEST templates to one uncompressed tar:
+
+```bash
+INITIAL_SEARCH_NAME=vis_lp DATASET_NAMES_PATH=all \
+TAR_TO=inspect/<sample>_pngs.tar \
+bash scripts/build_inspection_bundle.sh <sample> <run_tag>
+```
+
 ### Environment
 
 | Variable | Default | Effect |
 |---|---|---|
-| `OUTPUT_DIR` | `output` | results tree read by stages 1-7 |
-| `SED_OUTPUT_DIR` | `output_sed` | results tree read by stages 8-10 |
+| `OUTPUT_DIR` | `output` | initial-model results used by stages 1, 2, 3, 4 and 7 |
+| `SED_OUTPUT_DIR` | `output_sed` | multi-band SED results used by stages 8-10 |
+| `SERSIC_OUTPUT_DIR` | `SED_OUTPUT_DIR` when that sample exists, otherwise `OUTPUT_DIR` | Sersic results used by stages 1, 2, 5 and 6 |
+| `INITIAL_SEARCH_NAME` | `vis_pix` | initial-model search to bundle; set `vis_lp` before vis_pix exists |
+| `DATASET_NAMES_PATH` | `SERSIC_OUTPUT_DIR/<sample>` | directory whose child names define the exact lens set for every stage; `all`, `none` or an explicit empty value disables it so every lens under `OUTPUT_DIR/<sample>` is bundled |
+| `TAR_TO` | *(empty)* | when set, stage 1 writes an uncompressed tar of the collected PNGs + COOLEST templates to this path |
 | `SKIP_SED` | `0` | `1` skips stages 8-10 |
 | `CREATE_ARCHIVE` | `1` | `0` skips the closing `tar czf` |
 | `DATASET_PREFIX` | *(empty)* | restrict stage 1 to lens folders with this name prefix (`Tile` for DR1) |
 
 Every producer can also be run on its own; each takes `--sample`,
-`--output_path` and `--inspect_dir`, and `--help` documents the rest.
+`--output_path`, `--inspect_dir` and optional `--dataset_names_path`, and
+`--help` documents the rest.
 
 ---
 

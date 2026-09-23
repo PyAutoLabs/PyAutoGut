@@ -49,8 +49,21 @@
 #   bash scripts/build_inspection_bundle.sh dr1_prelim_grade_ab run250
 #
 # Environment:
-#   OUTPUT_DIR        results tree for stages 1-7      (default: output)
-#   SED_OUTPUT_DIR    results tree for stages 8-10     (default: output_sed)
+#   OUTPUT_DIR        initial-model results tree       (default: output)
+#   SED_OUTPUT_DIR    multi-band SED results tree      (default: output_sed)
+#   SERSIC_OUTPUT_DIR Sersic results tree; defaults to SED_OUTPUT_DIR when its
+#                     sample exists, otherwise OUTPUT_DIR
+#   INITIAL_SEARCH_NAME initial-model search to bundle (default: vis_pix)
+#   DATASET_NAMES_PATH directory whose child names select the exact lenses;
+#                     defaults to SERSIC_OUTPUT_DIR/<sample> when unset. Set it
+#                     to `all` (or `none`, or an explicit empty value) to
+#                     disable the selection and bundle every lens under
+#                     OUTPUT_DIR/<sample> — e.g. a full vis_lp-only build while
+#                     output_sed/<sample> holds only a Sersic subset.
+#   TAR_TO            when non-empty, stage 1 (build_inspect.py) also writes an
+#                     uncompressed tar of the bundle's collected PNGs +
+#                     COOLEST templates here, so they come back in one stream
+#                     (default: empty, no tar)
 #   SKIP_SED=1        skip stages 8-10 even if present (default: 0)
 #   CREATE_ARCHIVE=0  do not tar the bundle at the end (default: 1)
 #   DATASET_PREFIX    only collect datasets with this name prefix (default: all)
@@ -87,8 +100,46 @@ export MPLCONFIGDIR="${MPLCONFIGDIR:-/tmp/matplotlib}"
 OUTPUT_DIR="${OUTPUT_DIR:-output}"
 SED_OUTPUT_DIR="${SED_OUTPUT_DIR:-output_sed}"
 DATASET_PREFIX="${DATASET_PREFIX:-}"
+INITIAL_SEARCH_NAME="${INITIAL_SEARCH_NAME:-vis_pix}"
 
 cd "$PROJECT_ROOT"
+
+sample_path() {
+    if [[ "$1" = /* ]]; then
+        printf '%s/%s\n' "$1" "$SAMPLE"
+    else
+        printf '%s/%s/%s\n' "$PROJECT_ROOT" "$1" "$SAMPLE"
+    fi
+}
+
+if [ -n "${SERSIC_OUTPUT_DIR:-}" ]; then
+    SERSIC_OUTPUT_DIR="$SERSIC_OUTPUT_DIR"
+elif [ -d "$(sample_path "$SED_OUTPUT_DIR")" ]; then
+    SERSIC_OUTPUT_DIR="$SED_OUTPUT_DIR"
+else
+    SERSIC_OUTPUT_DIR="$OUTPUT_DIR"
+fi
+
+# `-` (not `:-`): an explicitly empty DATASET_NAMES_PATH disables the default
+# selection rather than falling back to it. `all` / `none` do the same and
+# survive `sbatch --export`, which is the safer way to ask for every lens.
+DATASET_NAMES_PATH="${DATASET_NAMES_PATH-$(sample_path "$SERSIC_OUTPUT_DIR")}"
+case "$DATASET_NAMES_PATH" in
+    all|none) DATASET_NAMES_PATH="" ;;
+esac
+SELECTION_ARGS=()
+if [ -n "$DATASET_NAMES_PATH" ]; then
+    SELECTION_ARGS+=("--dataset_names_path=$DATASET_NAMES_PATH")
+    echo "==> lens selection: child directories of $DATASET_NAMES_PATH"
+else
+    echo "==> lens selection: every lens under $OUTPUT_DIR/$SAMPLE"
+fi
+
+TAR_TO="${TAR_TO:-}"
+TAR_ARGS=()
+if [ -n "$TAR_TO" ]; then
+    TAR_ARGS+=("--tar_to=$TAR_TO")
+fi
 
 mkdir -p "$INSPECT_DIR"
 
@@ -96,44 +147,67 @@ echo "==> [1/10] inspection PNGs (scripts/tools/build_inspect.py)"
 python "$PROJECT_ROOT/scripts/tools/build_inspect.py" \
     --sample="$SAMPLE" \
     --output_path="$OUTPUT_DIR" \
+    --sersic_output_path="$SERSIC_OUTPUT_DIR" \
+    --initial_search_name="$INITIAL_SEARCH_NAME" \
     --inspect_dir="$INSPECT_DIR" \
-    --dataset_prefix="$DATASET_PREFIX"
+    --dataset_prefix="$DATASET_PREFIX" \
+    "${SELECTION_ARGS[@]}" \
+    "${TAR_ARGS[@]}"
 
-echo "==> [2/10] deblended FITS (catalogue/scripts/deblending.py)"
+echo "==> [2/10] Sersic multi-band deblended FITS (catalogue/scripts/deblending.py)"
+python "$PROJECT_ROOT/catalogue/scripts/deblending.py" \
+    --sample="$SAMPLE" \
+    --output_path="$SERSIC_OUTPUT_DIR" \
+    --inspect_dir="$INSPECT_DIR" \
+    "${SELECTION_ARGS[@]}"
+
+echo "==> [2/10] $INITIAL_SEARCH_NAME deblended FITS (catalogue/scripts/deblending.py)"
 python "$PROJECT_ROOT/catalogue/scripts/deblending.py" \
     --sample="$SAMPLE" \
     --output_path="$OUTPUT_DIR" \
-    --inspect_dir="$INSPECT_DIR"
+    --inspect_dir="$INSPECT_DIR" \
+    --unique_tag=initial_lens_model \
+    --search_name="$INITIAL_SEARCH_NAME" \
+    --product_prefix="${INITIAL_SEARCH_NAME}_" \
+    "${SELECTION_ARGS[@]}"
 
 echo "==> [3/10] lens mass maps (catalogue/scripts/lens_mass_maps.py)"
 python "$PROJECT_ROOT/catalogue/scripts/lens_mass_maps.py" \
     --sample="$SAMPLE" \
     --output_path="$OUTPUT_DIR" \
-    --inspect_dir="$INSPECT_DIR"
+    --inspect_dir="$INSPECT_DIR" \
+    --search_name="$INITIAL_SEARCH_NAME" \
+    "${SELECTION_ARGS[@]}"
 
 echo "==> [4/10] lens mass CSV (catalogue/scripts/lens_mass.py)"
 python "$PROJECT_ROOT/catalogue/scripts/lens_mass.py" \
     --sample="$SAMPLE" \
     --output_path="$OUTPUT_DIR" \
-    --inspect_dir="$INSPECT_DIR"
+    --inspect_dir="$INSPECT_DIR" \
+    --search_name="$INITIAL_SEARCH_NAME" \
+    "${SELECTION_ARGS[@]}"
 
 echo "==> [5/10] lens Sersic CSV (catalogue/scripts/lens_sersic.py)"
 python "$PROJECT_ROOT/catalogue/scripts/lens_sersic.py" \
     --sample="$SAMPLE" \
-    --output_path="$OUTPUT_DIR" \
-    --inspect_dir="$INSPECT_DIR"
+    --output_path="$SERSIC_OUTPUT_DIR" \
+    --inspect_dir="$INSPECT_DIR" \
+    "${SELECTION_ARGS[@]}"
 
 echo "==> [6/10] source Sersic CSV (catalogue/scripts/source_sersic.py)"
 python "$PROJECT_ROOT/catalogue/scripts/source_sersic.py" \
     --sample="$SAMPLE" \
-    --output_path="$OUTPUT_DIR" \
-    --inspect_dir="$INSPECT_DIR"
+    --output_path="$SERSIC_OUTPUT_DIR" \
+    --inspect_dir="$INSPECT_DIR" \
+    "${SELECTION_ARGS[@]}"
 
 echo "==> [7/10] Witt-Wynne SIEP projection (catalogue/scripts/witt_wynne.py)"
 python "$PROJECT_ROOT/catalogue/scripts/witt_wynne.py" \
     --sample="$SAMPLE" \
     --output_path="$OUTPUT_DIR" \
-    --inspect_dir="$INSPECT_DIR"
+    --inspect_dir="$INSPECT_DIR" \
+    --search_name="$INITIAL_SEARCH_NAME" \
+    "${SELECTION_ARGS[@]}"
 
 # Stages 8-10 read the multi-band SED tree. Set SKIP_SED=1 to refresh only the
 # stable products while SED jobs are still running.
@@ -145,19 +219,22 @@ elif [ -d "$SED_OUTPUT_PATH/$SAMPLE" ]; then
     python "$PROJECT_ROOT/catalogue/scripts/multi_wavelength.py" \
         --sample="$SAMPLE" \
         --output_path="$SED_OUTPUT_DIR" \
-        --inspect_dir="$INSPECT_DIR"
+        --inspect_dir="$INSPECT_DIR" \
+        "${SELECTION_ARGS[@]}"
 
     echo "==> [9/10] magnitudes CSV (catalogue/scripts/magnitudes.py)"
     python "$PROJECT_ROOT/catalogue/scripts/magnitudes.py" \
         --sample="$SAMPLE" \
         --output_path="$SED_OUTPUT_DIR" \
-        --inspect_dir="$INSPECT_DIR"
+        --inspect_dir="$INSPECT_DIR" \
+        "${SELECTION_ARGS[@]}"
 
     echo "==> [10/10] astrometric offsets CSV (catalogue/scripts/astrometric_offsets.py)"
     python "$PROJECT_ROOT/catalogue/scripts/astrometric_offsets.py" \
         --sample="$SAMPLE" \
         --output_path="$SED_OUTPUT_DIR" \
-        --inspect_dir="$INSPECT_DIR"
+        --inspect_dir="$INSPECT_DIR" \
+        "${SELECTION_ARGS[@]}"
 else
     echo "==> [8/10,9/10,10/10] skipped — no $SED_OUTPUT_PATH/$SAMPLE/ (no SED runs yet)"
 fi

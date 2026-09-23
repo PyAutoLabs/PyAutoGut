@@ -112,16 +112,29 @@ export NUMEXPR_NUM_THREADS=$THREADS
 # RUN_TAG    an optional suffix on the bundle directory, so two builds of one
 #            sample do not overwrite each other: inspect/<sample>_<run_tag>/.
 #
-# OUTPUT_DIR / SED_OUTPUT_DIR / SKIP_SED / CREATE_ARCHIVE / DATASET_PREFIX are
-# read by build_inspection_bundle.sh straight out of the environment, so they
-# are exported here untouched rather than being re-implemented: pass any of them
-# with --export and the bundle builder honours it.
+# OUTPUT_DIR / SED_OUTPUT_DIR / SERSIC_OUTPUT_DIR / INITIAL_SEARCH_NAME /
+# DATASET_NAMES_PATH / TAR_TO / SKIP_SED / CREATE_ARCHIVE / DATASET_PREFIX are
+# read by build_inspection_bundle.sh straight out of the environment.
+#
+# INITIAL_SEARCH_NAME=vis_lp  bundle the vis_lp fit only (no vis_pix needed).
+# DATASET_NAMES_PATH=all      disable the default lens selection (the child
+#                             directories of SERSIC_OUTPUT_DIR/<sample>) and
+#                             bundle every lens under OUTPUT_DIR/<sample>; use
+#                             it when output_sed/<sample> holds only a subset.
+# TAR_TO=<path>               stage 1 also writes an uncompressed tar of the
+#                             collected PNGs here, to pull back in one stream.
+#
+# e.g. a full vis_lp-only build of the DR1 sep1 remainder:
+#   sbatch --export=ALL,SAMPLE=dr1_sep1_rest,INITIAL_SEARCH_NAME=vis_lp,\
+#          DATASET_NAMES_PATH=all,TAR_TO=inspect/dr1_sep1_rest_pngs.tar \
+#          hpc/batch_cpu/submit_build_inspection_bundle
 # -----------------------------------------------------------------------------
 SAMPLE="${SAMPLE:-dr1_prelim_grade_ab}"   # --export=ALL,SAMPLE=dr1_sep1 for the DR1 September sample
 RUN_TAG="${RUN_TAG:-}"
 
 export OUTPUT_DIR="${OUTPUT_DIR:-output}"
 export SED_OUTPUT_DIR="${SED_OUTPUT_DIR:-output_sed}"
+export INITIAL_SEARCH_NAME="${INITIAL_SEARCH_NAME:-vis_pix}"
 
 echo "=========================================="
 echo "Project    : $PROJECT_PATH"
@@ -129,6 +142,7 @@ echo "Sample     : $SAMPLE"
 echo "Run tag    : ${RUN_TAG:-<none>}"
 echo "Output dir : $OUTPUT_DIR"
 echo "SED dir    : $SED_OUTPUT_DIR"
+echo "Init search: $INITIAL_SEARCH_NAME"
 echo "CPUs       : $THREADS"
 date
 

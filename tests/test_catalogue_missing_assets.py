@@ -222,6 +222,36 @@ def test_complete_eight_band_pair_has_17_hdus(results, tmp_path, monkeypatch):
             ]
 
 
+def test_deblending_prefix_and_exact_lens_selection(results, tmp_path, monkeypatch):
+    import sys
+    import deblending
+
+    output, _ = results
+    selection = tmp_path / "selection"
+    for lens in ("TileAAA", "TileCCC"):
+        (selection / lens).mkdir(parents=True)
+    inspect = tmp_path / "inspect"
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "deblending.py",
+            f"--sample={SAMPLE}",
+            f"--output_path={output}",
+            f"--inspect_dir={inspect}",
+            f"--dataset_names_path={selection}",
+            "--product_prefix=vis_lp_",
+        ],
+    )
+    deblending.main()
+
+    for lens in ("TileAAA", "TileCCC"):
+        assert (inspect / lens / "vis_lp_pre_psf.fits").exists()
+        assert (inspect / lens / "vis_lp_model.fits").exists()
+        assert not (inspect / lens / "pre_psf.fits").exists()
+    assert not (inspect / "TileBBB").exists()
+
+
 def test_zip_completed_result_missing_asset(results, tmp_path, monkeypatch):
     import shutil
     import zipfile

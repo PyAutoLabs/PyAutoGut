@@ -95,5 +95,7 @@ All fitting pipelines share one argument parser (`util.parse_fit_args`) —
 - `tools/build_inspect.py`: Collects the inspection bundle's PNGs out of the result
   zips PyAutoFit writes (falling back to an unzipped result directory).
 - `build_inspection_bundle.sh`: Runs all ten catalogue stages in order for a
-  sample. See [`../catalogue/README.md`](../catalogue/README.md) for the
-  21-file to producer table, the run order and the upstream fit each stage needs.
+  sample. It can combine initial-model results in `output/` with Sersic/SED
+  results in `output_sed/`, including an explicit vis_lp-only mode before
+  vis_pix exists. See [`../catalogue/README.md`](../catalogue/README.md) for the
+  producer table, run order and upstream fit each stage needs.

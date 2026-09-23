@@ -210,6 +210,8 @@ def main(counts):
     agg = Aggregator.from_directory(
         directory=sample_root, completed_only=True, unzip_temporary=True
     )
+    dataset_names = catalogue_util.selected_dataset_names_from(sample_root, args)
+    agg = catalogue_util.select_aggregator_datasets(agg, dataset_names)
     agg_query = agg.query(agg.unique_tag == args.unique_tag)
     agg_query = latest_result_per_lens_band(agg_query, sample_root=sample_root)
 

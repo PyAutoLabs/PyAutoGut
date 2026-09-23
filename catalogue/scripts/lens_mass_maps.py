@@ -219,7 +219,7 @@ def main(counts):
     products = mass_map_products()
 
     sample_root = catalogue_util.sample_root_from(output_path, args.sample)
-    dataset_name_list = catalogue_util.dataset_names_from(sample_root)
+    dataset_name_list = catalogue_util.selected_dataset_names_from(sample_root, args)
 
     for dataset_name in dataset_name_list:
         output_dataset_path = inspect_path / dataset_name

@@ -71,6 +71,69 @@ def add_variable_with_fallback(
     agg_csv._columns.append(FallbackColumn())
 
 
+def add_variable_with_fixed_fallback(
+    agg_csv,
+    argument: str,
+    name: str,
+    value_types,
+):
+    """Add a posterior variable, or repeat its fixed model value across bounds.
+
+    The vis_lp mass centre is fixed to the fitted lens-light centre rather than
+    sampled. It is therefore present in ``model.json`` but absent from every
+    samples-summary dictionary. A fixed value has zero posterior width: writing
+    the same value for the median and interval bounds keeps the established CSV
+    schema meaningful without pretending the parameter was sampled.
+    """
+    from numbers import Real
+
+    from autofit.aggregator.summary.aggregate_csv.column import Column, ValueType
+
+    class FixedFallbackColumn(Column):
+        def value(self, row):
+            if self.path in row.known_paths:
+                return super().value(row)
+            try:
+                fixed = row.result.model.object_for_path(self.path)
+            except (AttributeError, KeyError):
+                # Fixed tuple parameters are serialized as a plain tuple, so
+                # ``object_for_path`` resolves ``centre`` but cannot traverse
+                # the synthetic ``centre_0`` / ``centre_1`` component names.
+                component = self.path[-1]
+                prefix, separator, index = component.rpartition("_")
+                if not separator or not index.isdigit():
+                    return super().value(row)
+                try:
+                    parent = row.result.model.object_for_path(self.path[:-1])
+                    fixed = parent[int(index)]
+                except (AttributeError, IndexError, KeyError, TypeError):
+                    return super().value(row)
+            if not isinstance(fixed, Real):
+                return super().value(row)
+
+            result = {}
+            if ValueType.Median in self.value_types:
+                result[""] = fixed
+            if ValueType.MaxLogLikelihood in self.value_types:
+                result["max_lh"] = fixed
+            if ValueType.ValuesAt1Sigma in self.value_types:
+                result["lower_1_sigma"] = fixed
+                result["upper_1_sigma"] = fixed
+            if ValueType.ValuesAt3Sigma in self.value_types:
+                result["lower_3_sigma"] = fixed
+                result["upper_3_sigma"] = fixed
+            return result
+
+    agg_csv._columns.append(
+        FixedFallbackColumn(
+            argument=argument,
+            name=name,
+            value_types=value_types,
+            strict=agg_csv._strict,
+        )
+    )
+
+
 def add_common_arguments(parser: argparse.ArgumentParser, default_output_path="output"):
     """
     Add the ``--sample`` / ``--output_path`` / ``--inspect_dir`` trio every
@@ -111,6 +174,16 @@ def add_common_arguments(parser: argparse.ArgumentParser, default_output_path="o
         help=(
             "Directory the products are written to. "
             "Default: <project_root>/inspect/<sample>."
+        ),
+    )
+    parser.add_argument(
+        "--dataset_names_path",
+        metavar="path",
+        default=None,
+        help=(
+            "Optional directory whose immediate subdirectory names select the "
+            "lenses to process. Relative paths are resolved from the project "
+            "root. Default: every lens under <output_path>/<sample>."
         ),
     )
     return parser
@@ -205,7 +278,7 @@ def write_per_tile_csv(master_csv: Path, inspect_path: Path, filename: str) -> i
     return len(rows_by_lens)
 
 
-def dataset_names_from(sample_root: Path):
+def dataset_names_from(sample_root: Path, dataset_names_path: Path | None = None):
     """
     Sorted names of the per-lens result directories under ``sample_root``,
     or an empty list (with a message) when the sample has not been run.
@@ -213,8 +286,55 @@ def dataset_names_from(sample_root: Path):
     if not sample_root.is_dir():
         print(f"no sample directory at {sample_root}; nothing to do")
         return []
-    return sorted(
+    names = sorted(
         name for name in os.listdir(sample_root) if (sample_root / name).is_dir()
+    )
+    if dataset_names_path is None:
+        return names
+    if not dataset_names_path.is_dir():
+        raise FileNotFoundError(
+            f"dataset selection directory not found: {dataset_names_path}"
+        )
+    selected = {
+        name
+        for name in os.listdir(dataset_names_path)
+        if (dataset_names_path / name).is_dir()
+    }
+    kept = [name for name in names if name in selected]
+    print(f"selected {len(kept)} of {len(names)} datasets using {dataset_names_path}")
+    return kept
+
+
+def dataset_names_path_from(args) -> Path | None:
+    """Resolve an optional exact-lens selection directory from common args."""
+    value = getattr(args, "dataset_names_path", None)
+    if value is None:
+        return None
+    path = Path(value)
+    return path if path.is_absolute() else PROJECT_ROOT / path
+
+
+def selected_dataset_names_from(sample_root: Path, args):
+    """Dataset names under ``sample_root`` restricted by the common selector."""
+    return dataset_names_from(
+        sample_root=sample_root,
+        dataset_names_path=dataset_names_path_from(args),
+    )
+
+
+def select_aggregator_datasets(aggregator, dataset_names):
+    """Return only results whose lens directory is in ``dataset_names``."""
+    from autofit.aggregator.aggregator import Aggregator
+
+    allowed = set(dataset_names)
+    kept = [
+        result
+        for result in aggregator
+        if result.search.path_prefix.parts[-1] in allowed
+    ]
+    return Aggregator(
+        search_outputs=kept,
+        grid_search_outputs=aggregator.grid_search_outputs,
     )
 
 

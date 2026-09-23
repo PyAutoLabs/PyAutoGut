@@ -133,7 +133,19 @@ def parse_args():
             "Default: every waveband under the stage."
         ),
     )
-    return parser.parse_args()
+    parser.add_argument(
+        "--product_prefix",
+        metavar="prefix",
+        default="",
+        help=(
+            "Prefix for the two output filenames, e.g. 'vis_lp_' writes "
+            "vis_lp_pre_psf.fits and vis_lp_model.fits. Default: none."
+        ),
+    )
+    args = parser.parse_args()
+    if "/" in args.product_prefix or "\\" in args.product_prefix:
+        parser.error("--product_prefix must be a filename prefix, not a path")
+    return args
 
 
 @catalogue_util.reported("deblending")
@@ -166,12 +178,15 @@ def main(counts):
     from autofit.aggregator.aggregator import Aggregator
 
     sample_root = catalogue_util.sample_root_from(output_path, args.sample)
-    dataset_name_list = catalogue_util.dataset_names_from(sample_root)
+    dataset_name_list = catalogue_util.selected_dataset_names_from(sample_root, args)
+
+    pre_psf_name = f"{args.product_prefix}pre_psf.fits"
+    model_name = f"{args.product_prefix}model.fits"
 
     for dataset_name in dataset_name_list:
         # Idempotency: skip a lens whose two FITS bundles are already present.
-        target_pre_psf = inspect_path / dataset_name / "pre_psf.fits"
-        target_model = inspect_path / dataset_name / "model.fits"
+        target_pre_psf = inspect_path / dataset_name / pre_psf_name
+        target_model = inspect_path / dataset_name / model_name
         if target_pre_psf.exists() and target_model.exists():
             counts.already_present += 1
             continue
@@ -265,10 +280,10 @@ def main(counts):
         """
         products = {}
         try:
-            products["pre_psf.fits"] = agg_fits.extract_fits(
+            products[pre_psf_name] = agg_fits.extract_fits(
                 hdus=pre_psf_hdus, extname_prefix_list=waveband_list
             )
-            products["model.fits"] = agg_fits.extract_fits(
+            products[model_name] = agg_fits.extract_fits(
                 hdus=model_hdus, extname_prefix_list=waveband_list
             )
             catalogue_util.write_fits_products(products, output_dataset_path)

@@ -509,7 +509,7 @@ def main(counts):
     import autolens as al
 
     sample_root = catalogue_util.sample_root_from(output_path, args.sample)
-    dataset_name_list = catalogue_util.dataset_names_from(sample_root)
+    dataset_name_list = catalogue_util.selected_dataset_names_from(sample_root, args)
 
     project = (
         witt_wynne_util.witt_wynne_from_tracer

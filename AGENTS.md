@@ -97,6 +97,28 @@ recoverable store of git objects held through a transit window — a persistent
 reusable-artifact lifecycle. See
 `PyAutoMind/complete/2026/07/pyautogut-organ.md`.
 
+## The board and the void workflow (PyAutoGut#9)
+
+The Gut publishes a board (`scripts/board.py` → `gut_board.yml` → Pages +
+`state.json`), and voiding is a button: a prefilled `void: <name>` (or
+`void: all-due`) issue that `.github/workflows/void.yml` acts on. Rules:
+
+- **The issue is the human yes.** Submitting a `void:` issue is the explicit
+  consent `pyauto-gut void --yes` asks for; an agent never opens one on its
+  own initiative.
+- **Truth is two sources.** The board and the workflow both reconcile
+  `git ls-remote` against the Mind's `condemned.md` (parsed by the Brain's
+  `_hygiene_condemned.py`); void names come from each entry's `archive-ref`,
+  never its `##` heading.
+- **Never bulk-void undated entries.** Held (`sweep-after: never`) refs are
+  refused by the workflow and left out of `all-due`; orphans (no ledger
+  entry) and refs on other repos are never in `all-due` either.
+- **Ledger retirement is a session act.** The workflow's token deletes refs in
+  this repo only and cannot edit the Mind; a voided ref's entry is retired
+  from `condemned.md` by a session (the board's "retire entry" payload).
+- **Never red.** The feed is grey when nothing could be listed, yellow when
+  anything is due / orphaned / dangling, green otherwise.
+
 <!-- repos_sync:history:begin -->
 ## Never rewrite history
 

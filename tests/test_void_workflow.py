@@ -1,7 +1,9 @@
 """Lint the Gut's two workflows: they parse, and the void workflow carries
 its safety gates — the author-association gate, the `void:` title prefix
 (labels can be dropped by the issue form), the namespace refusal, the held
-refusal and `push origin --delete` behind an ls-remote read."""
+refusal and `push origin --delete` behind an ls-remote read — plus the
+sibling-repo reach: the PAT branch, its mask, the repo column and the per-ref
+failure rows."""
 
 from pathlib import Path
 
@@ -45,8 +47,9 @@ def test_void_workflow_refuses_names_outside_the_namespace_and_held():
     text, _ = _load("void.yml")
     assert "*..*|/*|*/|*//*|-*|refs/*" in text
     assert '[ "$n" != "main" ]' in text
-    assert "is HELD" in text and ".held | index($n)" in text
-    assert "jq -r '.due[]' plan.json" in text
+    assert "is HELD" in text and ".held | map(.name) | index($n)" in text
+    assert "jq -r '.due[] | [.repo, .name] | @tsv' plan.json" in text
+    assert "valid_repo" in text and "names refs on more than one repo" in text
     # the title is untrusted: read from env, never interpolated in a script
     assert "TITLE: ${{ github.event.issue.title }}" in text
     for step in _load("void.yml")[1]["jobs"]["void"]["steps"]:
@@ -86,3 +89,41 @@ def test_board_workflow_publishes_and_validates_the_feed():
     assert any(u.startswith("actions/configure-pages") for u in uses)
     assert any(u.startswith("actions/deploy-pages") for u in uses)
     assert "enablement: true" in text
+
+
+def test_void_workflow_reaches_sibling_repos_with_the_pat_kept_out_of_logs():
+    text, doc = _load("void.yml")
+    steps = {s.get("name"): s for s in doc["jobs"]["void"]["steps"]}
+    void = steps["Void each ref (ls-remote → push --delete → verify)"]
+    # the PAT is scoped to the one step that needs it
+    assert void["env"] == {"PAT": "${{ secrets.PAT_PYAUTOLABS }}"}
+    assert sum("secrets.PAT_PYAUTOLABS" in str(s) for s in steps.values()) == 1
+    run = void["run"]
+    assert 'if [ "$repo" = "$own" ]; then' in run
+    # masked (raw and header form) and sent as a header via env, never a URL
+    assert 'echo "::add-mask::$PAT"' in run
+    assert 'echo "::add-mask::$auth"' in run
+    assert "GIT_CONFIG_KEY_0=\"http.https://github.com/.extraheader\"" in run
+    assert "x-access-token:${PAT}@" not in text and "x-access-token:$PAT@" not in text
+    assert 'url="https://github.com/$owner/$repo.git"' in run
+    # ls-remote → push --delete → verify on the sibling, in that order
+    i_ls = run.index('sibling_git ls-remote "$url" "$ref" 2>ls.err')
+    i_push = run.index('sibling_git push "$url" --delete "$ref"')
+    i_verify = run.index('left=$(sibling_git ls-remote "$url" "$ref"')
+    assert i_ls < i_push < i_verify
+    # per-ref outcomes: no PAT, unreadable, 403, generic failure
+    assert "skipped: no PAT" in run
+    assert "could not read $repo with the PAT" in run
+    assert "403 — the PAT cannot push to $repo" in run
+    assert "left in place" in run and 'echo "$repo" >> pat_failed.txt' in run
+
+
+def test_void_comment_has_a_repo_column_and_names_the_pat_gaps():
+    text, doc = _load("void.yml")
+    assert "| repo | name | pre-delete sha | result |" in text
+    assert "|---|---|---|---|" in text
+    report = next(s for s in doc["jobs"]["void"]["steps"]
+                  if s.get("name") == "Report, close and re-render")["run"]
+    assert "pat_failed.txt" in report and "missing from its repository list" in report
+    # a failure or a no-PAT skip leaves the issue open (exit before close)
+    assert report.index('if [ "$FAIL" = "1" ]') < report.index("--reason completed")

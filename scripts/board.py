@@ -23,17 +23,21 @@ either direction is shown, not hidden:
   ledger row is retired by a session);
 * **held on another repo** — an entry whose ``archive-ref`` says the ref
   lives on a sibling repo's origin (``… on <Repo> origin``): read with a
-  best-effort ``ls-remote`` of that repo, flagged when due, voidable only in
-  a session (this repo's token cannot delete another repo's refs);
+  best-effort ``ls-remote`` of that repo, flagged when due, and voidable with
+  the same button when dated and present — the void workflow deletes it on
+  the sibling with the org PAT (``PAT_PYAUTOLABS``); undated sibling refs are
+  held like any other;
 * **history-only** — ``archive-ref: n/a`` (bytes live in remote history):
   listed for completeness, never voidable;
 * **recently voided** — the last closed ``void:`` issues (best-effort).
 
 **The button is a prefilled GitHub issue.** "Void permanently" opens
 ``issues/new?title=void:+<name>&labels=void&body=…``; pressing Submit is the
-human's ``--yes``. ``.github/workflows/void.yml`` deletes the ref with this
-repo's own token, comments the pre-delete SHA, closes the issue and
-re-renders this board. ``void: all-due`` voids every *due* row at once.
+human's ``--yes``. ``.github/workflows/void.yml`` deletes the ref — with this
+repo's own token when the ref is in the Gut, with ``PAT_PYAUTOLABS`` when it
+is held on a sibling repo — comments the repo and pre-delete SHA, closes the
+issue and re-renders this board. ``void: all-due`` voids every *due* row at
+once, in the Gut and on sibling repos alike.
 
 **Shape** (mirrors ``PyAutoHands/autohands/board.py``): ``collect()`` is the
 only I/O and degrades per-section into ``errors[]``; ``render(snapshot,
@@ -73,9 +77,11 @@ LEDGER = "condemned.md"
 RECENT_VOIDED = 10
 BUCKETS = ("due", "transit", "held", "orphans", "dangling", "voided_pending",
            "elsewhere", "history")
-# The rows the one-tap button may void: refs in THIS repo that a human has not
-# asked to hold. Held (undated) rows are voided only in a session.
-VOIDABLE = ("due", "transit", "orphans")
+# The rows the one-tap button may void: refs a human has not asked to hold —
+# in THIS repo (due / transit / orphans) or held on a sibling repo with a dated
+# entry (elsewhere; see `foreign_voidable`). Held (undated) rows, here or on a
+# sibling, are voided only in a session.
+VOIDABLE = ("due", "transit", "orphans", "elsewhere")
 
 # A void name is appended to NS and nothing else, so it cannot leave the
 # namespace — but it must also be a sane ref tail: no traversal, no leading
@@ -203,12 +209,28 @@ def pages_url(snap: dict) -> str:
     return f"https://{o}.github.io/{r}/" if o and r else ""
 
 
+def row_repo(snap: dict, row: dict) -> str:
+    """The repo a row's ref lives on: its sibling host, else the Gut itself."""
+    return row.get("host") or snap.get("repo") or ""
+
+
+def foreign_voidable(row: dict) -> bool:
+    """A sibling-held row the button may void: present on the sibling (a SHA
+    was read this render) and dated — an undated sibling entry is held."""
+    return bool(row.get("sha")) and _date(row.get("sweep_after")) is not None
+
+
 def void_issue_url(snap: dict, row: dict) -> str:
     """The one-tap button: a prefilled issue whose submission voids the ref."""
     base = repo_url(snap)
     if not base or not row.get("name") or not row.get("sha"):
         return ""
-    body = (f"Void `{NS}{row['name']}` permanently.\n\n"
+    where = row_repo(snap, row)
+    held_on = (f" on {where} (held on a sibling repo — deleted there with "
+               "the org PAT, PAT_PYAUTOLABS)" if row.get("host") else
+               f" on {where}")
+    body = (f"Void `{NS}{row['name']}` permanently{held_on}.\n\n"
+            f"- repo: {where}\n"
             f"- entry: {row.get('entry') or '(no ledger entry — orphan ref)'}\n"
             f"- reason: {_clip(row.get('reason') or '-', 300)}\n"
             f"- sweep-after: {row.get('sweep_after') or '-'}\n"
@@ -220,12 +242,22 @@ def void_issue_url(snap: dict, row: dict) -> str:
             f"&labels=void&body={quote_plus(body)}")
 
 
+def due_rows(snap: dict) -> list[dict]:
+    """The `void: all-due` set: due Gut rows, then overdue sibling-held rows
+    (present and dated). Never held, orphan, dangling or history rows."""
+    b = snap.get("buckets") or {}
+    return list(b.get("due") or []) + [
+        r for r in b.get("elsewhere") or []
+        if r.get("overdue") and foreign_voidable(r)]
+
+
 def void_all_due_url(snap: dict) -> str:
     base = repo_url(snap)
-    due = (snap.get("buckets") or {}).get("due") or []
+    due = due_rows(snap)
     if not base or not due:
         return ""
-    names = [r["name"] for r in due]
+    names = [r["name"] + (f" (on {r['host']})" if r.get("host") else "")
+             for r in due]
     shown = names[:40]
     listing = "\n".join(f"- {n}" for n in shown)
     if len(names) > len(shown):
@@ -234,7 +266,9 @@ def void_all_due_url(snap: dict) -> str:
             f"date — {len(names)} ref(s) as of {snap.get('today')}:\n\n"
             f"{listing}\n\nThe workflow recomputes the due set from "
             "condemned.md when it runs; undated (held) entries and refs with "
-            "no ledger entry are never included.\n\nSubmitting this issue "
+            "no ledger entry are never included. Refs held on sibling repos "
+            "are deleted there with the org PAT (PAT_PYAUTOLABS).\n\n"
+            "Submitting this issue "
             "voids the refs permanently. Recovery is no longer possible "
             "afterwards.")
     return (f"{base}/issues/new?title={quote_plus('void: all-due')}"
@@ -359,8 +393,9 @@ def build_snapshot(ledger_text, ls_remote_text, parser, today, owner, repo,
     }
     for key, rows in snap["buckets"].items():
         for row in rows:
-            row["void_url"] = (void_issue_url(snap, row)
-                               if key in VOIDABLE and row.get("sha") else "")
+            ok = key in VOIDABLE and bool(row.get("sha")) and (
+                key != "elsewhere" or foreign_voidable(row))
+            row["void_url"] = void_issue_url(snap, row) if ok else ""
     snap["void_all_due_url"] = void_all_due_url(snap)
     return snap
 
@@ -483,7 +518,7 @@ _TITLES = {
     "orphans": "Orphan refs (no ledger entry)",
     "dangling": "Dangling entries (ref missing)",
     "voided_pending": "Voided — entry still in condemned.md",
-    "elsewhere": "Held on another repo (void in a session)",
+    "elsewhere": "Held on another repo",
     "history": "History-only (not voidable here)",
 }
 
@@ -590,6 +625,8 @@ def _row_html(key: str, r: dict) -> str:
     if r.get("void_url"):
         acts.append(f"<a class='void' href=\"{_esc(r['void_url'])}\">"
                     "Void permanently</a>")
+    if key == "elsewhere" and r.get("host"):
+        lines.insert(1, f"<span class='flag'>on {_esc(r['host'])}</span>")
     if key == "elsewhere" and r.get("sha"):
         acts.append(_chip(_foreign_void(r), "void via session"))
     elif r.get("sha"):
@@ -617,9 +654,13 @@ def _section_html(key: str, rows: list, snap: dict) -> str:
     head = (f"<h2>{_esc(_TITLES[key])} <span class='muted'>({len(rows)})"
             "</span></h2>")
     extra = ""
-    if key == "due" and snap.get("void_all_due_url"):
+    # "Void all due" covers the Gut and sibling repos alike: it sits on the
+    # due section, or on the sibling section when nothing in the Gut is due.
+    b = snap.get("buckets") or {}
+    host = "due" if b.get("due") else "elsewhere"
+    if key == host and snap.get("void_all_due_url"):
         extra = (f"<a class='void all' href=\"{_esc(snap['void_all_due_url'])}\">"
-                 f"Void all due ({len(rows)})</a>")
+                 f"Void all due ({len(due_rows(snap))})</a>")
     items = [_row_html(key, r) for r in rows]
     if len(items) > _FOLD_AFTER + 2:
         items = items[:_FOLD_AFTER] + [
@@ -741,7 +782,8 @@ def to_state(snap: dict) -> dict:
                           "text": _clip(f"due on {r['host']}: {r['name']} — "
                                         f"sweep-after {r['sweep_after']} "
                                         f"({r['days']}d over)"),
-                          "url": None, "prompt": _foreign_void(r)})
+                          "url": r.get("void_url") or None,
+                          "prompt": _foreign_void(r)})
     for r in b.get("orphans") or []:
         items.append({"severity": "info",
                       "text": _clip(f"orphan ref: {r['name']} — no ledger entry"),
@@ -790,21 +832,38 @@ def render(snap: dict, fmt: str = "md") -> str:
     if fmt == "state":
         return json.dumps(to_state(snap), indent=2)
     if fmt == "due-names":
-        # The void workflow's `void: all-due` set: due rows only — undated,
-        # orphan, other-repo and history-only rows are never in it.
-        return "\n".join(r["name"] for r in (snap.get("buckets") or {})
-                         .get("due") or [] if valid_name(r["name"]))
+        # The void workflow's `void: all-due` set: due Gut rows and overdue
+        # sibling-held rows — undated, orphan and history-only rows are never
+        # in it. (Names only; `void-plan` carries the repo per name.)
+        return "\n".join(r["name"] for r in due_rows(snap)
+                         if valid_name(r["name"]))
     if fmt == "void-plan":
-        # What void.yml may act on, by bucket: `due` (the all-due set),
-        # `voidable` (due + transit + orphans — one-tap single voids) and
-        # `held` (refused: undated entries are voided only in a session).
+        # What void.yml may act on, by bucket, each entry {name, repo, sha}
+        # (repo = the Gut itself, or the sibling the ref is held on):
+        # `due` (the all-due set), `voidable` (due + transit + orphans +
+        # dated sibling-held — one-tap single voids) and `held` (refused:
+        # undated entries, here or on a sibling, are voided only in a session).
         b = snap.get("buckets") or {}
-        pick = lambda keys: sorted({r["name"] for k in keys
-                                    for r in b.get(k) or []
-                                    if r.get("sha") and valid_name(r["name"])})
+
+        def entry(r):
+            return {"name": r["name"], "repo": row_repo(snap, r),
+                    "sha": r.get("sha") or ""}
+
+        def pick(rows):
+            out = {(e["repo"], e["name"]): e for e in map(entry, rows)
+                   if e["sha"] and e["repo"] and valid_name(e["name"])}
+            return [out[k] for k in sorted(out, key=lambda k: (k[1], k[0]))]
+
+        voidable = [r for k in VOIDABLE for r in b.get(k) or []
+                    if r.get("void_url")]
+        held = list(b.get("held") or []) + [
+            r for r in b.get("elsewhere") or []
+            if r.get("sha") and not foreign_voidable(r)]
         return json.dumps({"refs_listed": bool(snap.get("refs_listed")),
-                           "due": pick(("due",)), "voidable": pick(VOIDABLE),
-                           "held": pick(("held",))}, indent=2)
+                           "repo": snap.get("repo") or "",
+                           "due": pick(due_rows(snap)),
+                           "voidable": pick(voidable),
+                           "held": pick(held)}, indent=2)
     raise ValueError(f"unknown board fmt: {fmt!r}")
 
 

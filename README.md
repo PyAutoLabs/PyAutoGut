@@ -45,15 +45,24 @@ after every void by [`gut_board.yml`](.github/workflows/gut_board.yml), with a
 
 **Void permanently** on a row opens a prefilled issue titled
 `void: <name>`; *submitting it is the yes*. [`void.yml`](.github/workflows/void.yml)
-then deletes that ref with this repo's own token, comments the pre-delete SHA,
-closes the issue and re-renders the board. **Void all due** does the same for
-every due row (`void: all-due`). The contract:
+then deletes that ref, comments the repo and pre-delete SHA, closes the issue
+and re-renders the board. **Void all due** does the same for every due row
+(`void: all-due`). The button reaches refs **held on another repo** too (an
+entry whose `archive-ref` says `… on <Repo> origin`): refs in the Gut are
+deleted with this repo's own token, refs on a sibling repo with the org PAT
+`secrets.PAT_PYAUTOLABS` — the token Brain's `branch_archive.yml` already
+pushes cross-repo with. The PAT is sent as an HTTP header from an empty scratch
+repo (never in a URL or a log line, and masked). Without the PAT, or when the PAT
+cannot reach a repo (a repo born after the PAT was minted may be missing from
+its repository list), that ref is reported per row in the closing comment —
+which names the repo — and left in place, and the issue stays open. The contract:
 
 - only owners, members and collaborators can void — anyone else's issue is
   closed untouched;
 - names must sit inside the archive namespace (no `..`, no `main`, no globs);
-- **held** (undated) entries are never one-tap voidable and never in
-  `all-due` — void them in a session with `bin/pyauto-gut void <name> --yes`;
+- **held** (undated) entries — in the Gut or on a sibling repo — are never
+  one-tap voidable and never in `all-due`; void them in a session with
+  `bin/pyauto-gut void <name> --yes`;
 - refs without a ledger entry are voided one at a time, never in bulk;
 - voiding removes the bytes; the ledger row stays in `condemned.md` until a
   session retires it (the board lists it with a copy-for-Claude payload),

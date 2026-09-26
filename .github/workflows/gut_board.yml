@@ -1,0 +1,105 @@
+name: Gut Board
+
+# Publishes the PyAutoGut Dashboard — EVERYTHING IN THE GUT — from one
+# renderer (scripts/board.py, the Hands-board shape):
+#   * the GitHub Pages page: every condemned ref, read against the Mind's
+#     condemned.md, with a "Void permanently" button (a prefilled issue that
+#     void.yml acts on) on every voidable row,
+#   * badge.json (the shields endpoint),
+#   * board.json (the full snapshot),
+#   * state.json (the organ-cockpit feed — contract v1, owned by
+#     PyAutoBrain board/_state.py and validated below),
+#   * dashboard.md (the markdown mirror + the job summary).
+#
+# Truth is `git ls-remote` of this repo plus condemned.md parsed by the
+# Brain's parser — both checked out read-only here. Re-renders right after
+# every void (workflow_run of "Gut Void"), daily as a backstop, and on demand.
+# Never cached: state.json is rebuilt from the remote on every run.
+
+on:
+  schedule:
+    - cron: "45 5 * * *"
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Gut Void"]
+    types: [completed]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: gut-board-pages
+  cancel-in-progress: false
+
+jobs:
+  board:
+    name: Render + publish the dashboard
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      # The family look (theme) and the condemned.md parser live once in the
+      # Brain; the ledger lives in the Mind. Both read-only.
+      - uses: actions/checkout@v4
+        with:
+          repository: PyAutoLabs/PyAutoBrain
+          path: PyAutoBrain
+
+      - uses: actions/checkout@v4
+        with:
+          repository: PyAutoLabs/PyAutoMind
+          path: PyAutoMind
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install PyYAML
+        run: pip install --quiet pyyaml
+
+      - name: Collect the snapshot (ls-remote + condemned.md + void issues)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python scripts/board.py --mind PyAutoMind --brain PyAutoBrain \
+            --collect board_snapshot.json
+
+      - name: Render every surface
+        run: |
+          mkdir -p _site
+          render() { python scripts/board.py --brain PyAutoBrain --snapshot board_snapshot.json "$@"; }
+          render --html  > _site/index.html
+          render --badge > _site/badge.json
+          render --json  > _site/board.json
+          render --state > _site/state.json
+          render --md    > _site/dashboard.md
+
+      - name: Validate the cockpit feed against the Brain contract
+        run: |
+          # The contract is owned by the Brain (board/_state.py); the Gut only
+          # emits it. A feed the cockpit cannot read fails loudly here.
+          python3 PyAutoBrain/board/_state.py _site/state.json
+
+      - name: Write the board to the job step summary
+        run: cat _site/dashboard.md >> "$GITHUB_STEP_SUMMARY"
+
+      # enablement: true creates the Pages site on first run (no manual
+      # Settings → Pages step) — the Pages birth for PyAutoGut.
+      - uses: actions/configure-pages@v5
+        if: github.ref == 'refs/heads/main'
+        with:
+          enablement: true
+
+      - uses: actions/upload-pages-artifact@v3
+        if: github.ref == 'refs/heads/main'
+        with:
+          path: _site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
+        if: github.ref == 'refs/heads/main'

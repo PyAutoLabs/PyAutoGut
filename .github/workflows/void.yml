@@ -1,0 +1,222 @@
+name: Gut Void
+
+# The Gut board's "Void permanently" button lands here. The button is a
+# prefilled issue — `void: <name>` or `void: all-due` — and SUBMITTING it is
+# the human's `--yes`. This workflow then:
+#
+#   1. refuses anyone who is not an owner / member / collaborator (comment +
+#      close as not planned: this is a public repo, and a stranger's issue
+#      must never delete anything);
+#   2. recomputes the plan from the truth — `git ls-remote` of this repo and
+#      the Mind's condemned.md parsed by the Brain's parser (both checked out
+#      read-only) — via `scripts/board.py --void-plan`;
+#   3. for each name: re-reads its SHA with `git ls-remote` (absent → skipped
+#      with a note), then `git push origin --delete` of
+#      refs/heads/archive/condemned/<name>, then re-checks it is gone;
+#   4. comments a table (name | pre-delete sha | result), closes the issue as
+#      completed and re-dispatches the Gut Board.
+#
+# Refused, always: a name outside the archive namespace (`..`, a leading `/`
+# or `-`, `refs/…`, globs, spaces), `main`, an empty name, and any HELD
+# entry (undated / `sweep-after: never` — voided only in a session on explicit
+# human request). `void: all-due` takes the due set only: never undated
+# entries, never refs without a ledger entry, never refs on other repos.
+#
+# The label is a hint, not a gate: GitHub's issue form can drop `labels=` on
+# submission (seen on the Memory queue from phones), so the `void:` title
+# prefix alone is enough; the label is put back best-effort for the record.
+#
+# Scope: this repo's own GITHUB_TOKEN deletes refs in THIS repo only. It
+# cannot edit the Mind, so the voided entry stays in condemned.md until a
+# session retires it — the board shows it as "voided — entry still in
+# condemned.md" with a copy-for-Claude payload. On any failure the issue is
+# commented and LEFT OPEN.
+
+on:
+  issues:
+    types: [opened]
+
+# contents: write → delete the ref; issues: write → label, comment, close;
+# actions: write → re-dispatch gut_board.yml (token pushes/closes do not
+# retrigger workflows on their own).
+permissions:
+  contents: write
+  issues: write
+  actions: write
+
+concurrency:
+  group: gut-void-${{ github.event.issue.number }}
+  cancel-in-progress: false
+
+jobs:
+  refuse:
+    name: Refuse a void from outside the org
+    if: >-
+      (startsWith(github.event.issue.title, 'void:') ||
+       contains(github.event.issue.labels.*.name, 'void')) &&
+      !contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'),
+                github.event.issue.author_association)
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      ISSUE: ${{ github.event.issue.number }}
+    steps:
+      - name: Comment and close as not planned
+        run: |
+          gh issue comment "$ISSUE" --repo "$GITHUB_REPOSITORY" --body \
+            "Only owners, members and collaborators can void Gut refs. Nothing was deleted."
+          gh issue close "$ISSUE" --repo "$GITHUB_REPOSITORY" --reason "not planned"
+
+  void:
+    name: Void the requested refs
+    if: >-
+      (startsWith(github.event.issue.title, 'void:') ||
+       contains(github.event.issue.labels.*.name, 'void')) &&
+      contains(fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'),
+               github.event.issue.author_association)
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      ISSUE: ${{ github.event.issue.number }}
+      # Untrusted text: read from the environment, never interpolated.
+      TITLE: ${{ github.event.issue.title }}
+      NS: refs/heads/archive/condemned
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/checkout@v4
+        with:
+          repository: PyAutoLabs/PyAutoBrain
+          path: PyAutoBrain
+
+      - uses: actions/checkout@v4
+        with:
+          repository: PyAutoLabs/PyAutoMind
+          path: PyAutoMind
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Put the void label back (best-effort)
+        run: |
+          gh label create void --repo "$GITHUB_REPOSITORY" --color B60205 \
+            --description "Gut board: void a condemned ref permanently" 2>/dev/null || true
+          gh issue edit "$ISSUE" --repo "$GITHUB_REPOSITORY" --add-label void || true
+
+      - name: Compute the void plan from ls-remote + condemned.md
+        run: |
+          python scripts/board.py --mind PyAutoMind --brain PyAutoBrain \
+            --collect snap.json
+          python scripts/board.py --snapshot snap.json --void-plan > plan.json
+          cat plan.json
+
+      - name: Resolve the request into names
+        id: resolve
+        run: |
+          valid_name() {
+            local n="$1"
+            [ -n "$n" ] || return 1
+            [ "$n" != "main" ] || return 1
+            case "$n" in
+              *..*|/*|*/|*//*|-*|refs/*|*' '*|*'*'*) return 1 ;;
+            esac
+            [[ "$n" =~ ^[A-Za-z0-9._][A-Za-z0-9._/-]*$ ]] || return 1
+          }
+          target="${TITLE#void:}"
+          target="$(printf '%s' "$target" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+          : > names.txt
+          : > refused.md
+          if [ "$(jq -r '.refs_listed' plan.json)" != "true" ]; then
+            echo "The Gut's refs could not be listed — nothing was deleted." > refused.md
+          elif [ "$target" = "all-due" ]; then
+            # The due set only: undated (held), orphan and other-repo refs
+            # are never in it — scripts/board.py builds it from the ledger.
+            jq -r '.due[]' plan.json > names.txt
+          elif ! valid_name "$target"; then
+            echo "Refused: \`$target\` is not a name inside $NS/ (empty, \`main\`, \`..\`, a leading \`/\` or \`-\`, \`refs/\`, a glob or a space)." > refused.md
+          elif jq -e --arg n "$target" '.held | index($n)' plan.json >/dev/null; then
+            echo "Refused: \`$target\` is HELD (its ledger entry is undated / \`sweep-after: never\`). Held refs are voided only in a session on explicit human request: \`bin/pyauto-gut void $target --yes\`." > refused.md
+          else
+            printf '%s\n' "$target" > names.txt
+          fi
+          # Belt and braces: every name, however it arrived, passes the same
+          # namespace check before anything is deleted.
+          : > checked.txt
+          while IFS= read -r n; do
+            [ -n "$n" ] || continue
+            if valid_name "$n"; then echo "$n" >> checked.txt
+            else echo "Refused: \`$n\` failed the namespace check." >> refused.md; fi
+          done < names.txt
+          echo "target=$target" >> "$GITHUB_OUTPUT"
+          echo "count=$(wc -l < checked.txt | tr -d ' ')" >> "$GITHUB_OUTPUT"
+
+      - name: Void each ref (ls-remote → push origin --delete → verify)
+        id: void
+        run: |
+          fail=0
+          {
+            echo "| name | pre-delete sha | result |"
+            echo "|---|---|---|"
+          } > table.md
+          while IFS= read -r name; do
+            [ -n "$name" ] || continue
+            ref="$NS/$name"
+            sha=$(git ls-remote origin "$ref" | awk '{print $1}')
+            if [ -z "$sha" ]; then
+              echo "| \`$name\` | — | absent on the remote — skipped |" >> table.md
+              continue
+            fi
+            if git push origin --delete "$ref"; then
+              left=$(git ls-remote origin "$ref" | awk '{print $1}')
+              if [ -z "$left" ]; then
+                echo "| \`$name\` | \`$sha\` | voided |" >> table.md
+              else
+                echo "| \`$name\` | \`$sha\` | **still present after delete** |" >> table.md
+                fail=1
+              fi
+            else
+              echo "| \`$name\` | \`$sha\` | **delete failed** |" >> table.md
+              fail=1
+            fi
+          done < checked.txt
+          echo "fail=$fail" >> "$GITHUB_OUTPUT"
+          cat table.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Report, close and re-render
+        env:
+          FAIL: ${{ steps.void.outputs.fail }}
+          COUNT: ${{ steps.resolve.outputs.count }}
+          TARGET: ${{ steps.resolve.outputs.target }}
+        run: |
+          {
+            echo "## Gut void — \`$TARGET\`"
+            echo
+            if [ -s refused.md ]; then cat refused.md; echo; fi
+            if [ "$COUNT" != "0" ]; then
+              cat table.md
+              echo
+              echo "Voided refs are gone for good — **recovery is no longer possible**."
+              echo "Their entries stay in PyAutoMind/condemned.md until a session retires them (the board lists them)."
+            elif [ ! -s refused.md ]; then
+              echo "Nothing to void — the request resolved to no refs."
+            fi
+          } > comment.md
+          gh issue comment "$ISSUE" --repo "$GITHUB_REPOSITORY" --body-file comment.md
+          if [ "$FAIL" = "1" ]; then
+            echo "::error::at least one delete failed — issue left open"
+            exit 1
+          fi
+          if [ -s refused.md ] && [ "$COUNT" = "0" ]; then
+            gh issue close "$ISSUE" --repo "$GITHUB_REPOSITORY" --reason "not planned"
+          else
+            gh issue close "$ISSUE" --repo "$GITHUB_REPOSITORY" --reason completed
+          fi
+          gh workflow run gut_board.yml --repo "$GITHUB_REPOSITORY" --ref main || true
+
+      # (The report step already commented when a delete itself failed.)
+      - name: Say so on failure and leave the issue open
+        if: failure() && steps.void.outputs.fail != '1'
+        run: |
+          gh issue comment "$ISSUE" --repo "$GITHUB_REPOSITORY" --body \
+            "The Gut void run failed ($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID). The issue is left open; check the run log before retrying." || true

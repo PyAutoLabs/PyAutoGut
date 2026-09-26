@@ -28,8 +28,36 @@ transit window, then performs the final deletion itself.
    the entry leaves the ledger.
 
 The split mirrors Heart ↔ vitals: the conductor reasons and drives, the organ
-holds and voids. There is no dashboard here by design — the Gut's ledger *is*
-the Mind's `condemned.md`, one click above.
+holds and voids.
+
+## The board, and the void button
+
+**[PyAutoGut Dashboard](https://pyautolabs.github.io/PyAutoGut/)** — a clear
+overview of everything in the Gut: every ref under
+`refs/heads/archive/condemned/` read against the Mind's `condemned.md`, in
+buckets — **due** (past `sweep-after`), **in transit** (days left), **held**
+(undated, kept until a human asks), **orphan refs** (no ledger entry),
+**dangling entries** (ref missing), refs **held on another repo**,
+**history-only** entries (`archive-ref: n/a`) and the **recently voided**.
+Rendered by [`scripts/board.py`](scripts/board.py) and published daily and
+after every void by [`gut_board.yml`](.github/workflows/gut_board.yml), with a
+`state.json` feed for the organism cockpit.
+
+**Void permanently** on a row opens a prefilled issue titled
+`void: <name>`; *submitting it is the yes*. [`void.yml`](.github/workflows/void.yml)
+then deletes that ref with this repo's own token, comments the pre-delete SHA,
+closes the issue and re-renders the board. **Void all due** does the same for
+every due row (`void: all-due`). The contract:
+
+- only owners, members and collaborators can void — anyone else's issue is
+  closed untouched;
+- names must sit inside the archive namespace (no `..`, no `main`, no globs);
+- **held** (undated) entries are never one-tap voidable and never in
+  `all-due` — void them in a session with `bin/pyauto-gut void <name> --yes`;
+- refs without a ledger entry are voided one at a time, never in bulk;
+- voiding removes the bytes; the ledger row stays in `condemned.md` until a
+  session retires it (the board lists it with a copy-for-Claude payload),
+  because the workflow cannot edit the Mind.
 
 Full rationale and boundaries:
 [`pyautogut-organ-decision`](https://github.com/PyAutoLabs/PyAutoMind/blob/main/complete/2026/07/pyautogut-organ-decision.md).

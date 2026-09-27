@@ -10,24 +10,35 @@ name: Gut Void
 #   2. recomputes the plan from the truth — `git ls-remote` of this repo and
 #      the Mind's condemned.md parsed by the Brain's parser (both checked out
 #      read-only) — via `scripts/board.py --void-plan`;
-#   3. for each name: re-reads its SHA with `git ls-remote` (absent → skipped
-#      with a note), then `git push origin --delete` of
-#      refs/heads/archive/condemned/<name>, then re-checks it is gone;
-#   4. comments a table (name | pre-delete sha | result), closes the issue as
-#      completed and re-dispatches the Gut Board.
+#   3. for each (repo, name) — repo is the Gut itself, or the sibling repo
+#      the ledger says the ref is held on (`… on <Repo> origin`): re-reads its
+#      SHA with `git ls-remote` (absent → skipped with a note), then deletes
+#      refs/heads/archive/condemned/<name> there, then re-checks it is gone.
+#      In the Gut: `git push origin --delete` with this repo's GITHUB_TOKEN.
+#      On a sibling: the org PAT (secrets.PAT_PYAUTOLABS, the token Brain's
+#      branch_archive.yml pushes cross-repo with), from an empty scratch repo,
+#      sent as an HTTP header through GIT_CONFIG_* env — never in a URL, an
+#      argv or a log line, and masked with ::add-mask:: besides;
+#   4. comments a table (repo | name | pre-delete sha | result), closes the
+#      issue as completed and re-dispatches the Gut Board.
 #
 # Refused, always: a name outside the archive namespace (`..`, a leading `/`
 # or `-`, `refs/…`, globs, spaces), `main`, an empty name, and any HELD
 # entry (undated / `sweep-after: never` — voided only in a session on explicit
-# human request). `void: all-due` takes the due set only: never undated
-# entries, never refs without a ledger entry, never refs on other repos.
+# human request), in the Gut or on a sibling. `void: all-due` takes the due
+# set only: never undated entries, never refs without a ledger entry.
+#
+# Sibling reach depends on the PAT: no PAT → each sibling ref is reported
+# "skipped: no PAT" and left in place; a 403 (a repo born after the PAT was
+# minted may be missing from its repository list) → a per-ref failure row
+# naming the repo. Either way the issue is LEFT OPEN — it closes as completed
+# only when every requested ref was voided or absent (skipped by design).
 #
 # The label is a hint, not a gate: GitHub's issue form can drop `labels=` on
 # submission (seen on the Memory queue from phones), so the `void:` title
 # prefix alone is enough; the label is put back best-effort for the record.
 #
-# Scope: this repo's own GITHUB_TOKEN deletes refs in THIS repo only. It
-# cannot edit the Mind, so the voided entry stays in condemned.md until a
+# Scope: neither token edits the Mind, so the voided entry stays in condemned.md until a
 # session retires it — the board shows it as "voided — entry still in
 # condemned.md" with a copy-for-Claude payload. On any failure the issue is
 # commented and LEFT OPEN.
@@ -123,63 +134,155 @@ jobs:
             esac
             [[ "$n" =~ ^[A-Za-z0-9._][A-Za-z0-9._/-]*$ ]] || return 1
           }
+          # A repo comes from plan.json (the ledger), never from the title;
+          # still, it must be a bare repo name under this owner.
+          valid_repo() {
+            local r="$1"
+            [ -n "$r" ] && [ "$r" != "." ] && [ "$r" != ".." ] || return 1
+            [[ "$r" =~ ^[A-Za-z0-9_.-]+$ ]] || return 1
+          }
+          own="${GITHUB_REPOSITORY#*/}"
           target="${TITLE#void:}"
           target="$(printf '%s' "$target" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+          # names.txt / checked.txt: one `<repo><TAB><name>` per line.
           : > names.txt
           : > refused.md
           if [ "$(jq -r '.refs_listed' plan.json)" != "true" ]; then
             echo "The Gut's refs could not be listed — nothing was deleted." > refused.md
           elif [ "$target" = "all-due" ]; then
-            # The due set only: undated (held), orphan and other-repo refs
-            # are never in it — scripts/board.py builds it from the ledger.
-            jq -r '.due[]' plan.json > names.txt
+            # The due set only — due Gut refs and overdue refs held on sibling
+            # repos; undated (held) and orphan refs are never in it.
+            # scripts/board.py builds it from the ledger.
+            jq -r '.due[] | [.repo, .name] | @tsv' plan.json > names.txt
           elif ! valid_name "$target"; then
             echo "Refused: \`$target\` is not a name inside $NS/ (empty, \`main\`, \`..\`, a leading \`/\` or \`-\`, \`refs/\`, a glob or a space)." > refused.md
-          elif jq -e --arg n "$target" '.held | index($n)' plan.json >/dev/null; then
+          elif jq -e --arg n "$target" '.held | map(.name) | index($n)' plan.json >/dev/null; then
             echo "Refused: \`$target\` is HELD (its ledger entry is undated / \`sweep-after: never\`). Held refs are voided only in a session on explicit human request: \`bin/pyauto-gut void $target --yes\`." > refused.md
           else
-            printf '%s\n' "$target" > names.txt
+            hits=$(jq -r --arg n "$target" '[.voidable[] | select(.name == $n)] | length' plan.json)
+            if [ "$hits" -gt 1 ]; then
+              echo "Refused: \`$target\` names refs on more than one repo ($(jq -r --arg n "$target" '[.voidable[] | select(.name == $n) | .repo] | join(", ")' plan.json)) — void it in a session." > refused.md
+            elif [ "$hits" = "1" ]; then
+              jq -r --arg n "$target" '.voidable[] | select(.name == $n) | [.repo, .name] | @tsv' plan.json > names.txt
+            else
+              # Not in the plan: try the Gut itself (absent → skipped).
+              printf '%s\t%s\n' "$own" "$target" > names.txt
+            fi
           fi
-          # Belt and braces: every name, however it arrived, passes the same
-          # namespace check before anything is deleted.
+          # Belt and braces: every (repo, name), however it arrived, passes
+          # the same checks before anything is deleted.
           : > checked.txt
-          while IFS= read -r n; do
-            [ -n "$n" ] || continue
-            if valid_name "$n"; then echo "$n" >> checked.txt
-            else echo "Refused: \`$n\` failed the namespace check." >> refused.md; fi
+          while IFS=$'\t' read -r r n; do
+            [ -n "$r$n" ] || continue
+            if valid_repo "$r" && valid_name "$n"; then printf '%s\t%s\n' "$r" "$n" >> checked.txt
+            else echo "Refused: \`$r\` / \`$n\` failed the repo / namespace check." >> refused.md; fi
           done < names.txt
           echo "target=$target" >> "$GITHUB_OUTPUT"
           echo "count=$(wc -l < checked.txt | tr -d ' ')" >> "$GITHUB_OUTPUT"
 
-      - name: Void each ref (ls-remote → push origin --delete → verify)
+      - name: Void each ref (ls-remote → push --delete → verify)
         id: void
+        env:
+          # Only this step sees the org PAT; it is used for sibling repos only.
+          PAT: ${{ secrets.PAT_PYAUTOLABS }}
         run: |
+          own="${GITHUB_REPOSITORY#*/}"
+          owner="${GITHUB_REPOSITORY%%/*}"
           fail=0
+          : > pat_failed.txt
+          # Sibling repos: the PAT goes out as an HTTP Authorization header
+          # through GIT_CONFIG_* environment entries (not argv, not a URL),
+          # from an empty scratch repo — the checkout's persisted
+          # GITHUB_TOKEN extraheader lives in ITS .git/config and would
+          # otherwise ride along (and win) on every github.com request.
+          sib=""
+          if [ -n "${PAT:-}" ]; then
+            echo "::add-mask::$PAT"
+            auth=$(printf 'x-access-token:%s' "$PAT" | base64 | tr -d '\n')
+            echo "::add-mask::$auth"
+            if git config --global --get-regexp 'http\..*extraheader' >/dev/null 2>&1; then
+              echo "::error::a global git extraheader is set; it would override the PAT."
+              exit 1
+            fi
+            sib=$(mktemp -d)
+            git -C "$sib" init -q
+          fi
+          sibling_git() {
+            GIT_TERMINAL_PROMPT=0 GIT_CONFIG_COUNT=1 \
+              GIT_CONFIG_KEY_0="http.https://github.com/.extraheader" \
+              GIT_CONFIG_VALUE_0="AUTHORIZATION: basic $auth" \
+              git -C "$sib" "$@"
+          }
           {
-            echo "| name | pre-delete sha | result |"
-            echo "|---|---|---|"
+            echo "| repo | name | pre-delete sha | result |"
+            echo "|---|---|---|---|"
           } > table.md
-          while IFS= read -r name; do
+          while IFS=$'\t' read -r repo name; do
             [ -n "$name" ] || continue
             ref="$NS/$name"
-            sha=$(git ls-remote origin "$ref" | awk '{print $1}')
-            if [ -z "$sha" ]; then
-              echo "| \`$name\` | — | absent on the remote — skipped |" >> table.md
+            if [ "$repo" = "$own" ]; then
+              sha=$(git ls-remote origin "$ref" | awk '{print $1}')
+              if [ -z "$sha" ]; then
+                echo "| $repo | \`$name\` | — | absent on the remote — skipped |" >> table.md
+                continue
+              fi
+              if git push origin --delete "$ref"; then
+                left=$(git ls-remote origin "$ref" | awk '{print $1}')
+                if [ -z "$left" ]; then
+                  echo "| $repo | \`$name\` | \`$sha\` | voided |" >> table.md
+                else
+                  echo "| $repo | \`$name\` | \`$sha\` | **still present after delete** |" >> table.md
+                  fail=1
+                fi
+              else
+                echo "| $repo | \`$name\` | \`$sha\` | **delete failed** |" >> table.md
+                fail=1
+              fi
               continue
             fi
-            if git push origin --delete "$ref"; then
-              left=$(git ls-remote origin "$ref" | awk '{print $1}')
-              if [ -z "$left" ]; then
-                echo "| \`$name\` | \`$sha\` | voided |" >> table.md
+            # A ref held on a sibling repo: the org PAT or nothing.
+            url="https://github.com/$owner/$repo.git"
+            if [ -z "$sib" ]; then
+              echo "| $repo | \`$name\` | — | **skipped: no PAT** (PAT_PYAUTOLABS is not set) — left in place |" >> table.md
+              fail=1
+              continue
+            fi
+            if ! listing=$(sibling_git ls-remote "$url" "$ref" 2>ls.err); then
+              echo "| $repo | \`$name\` | — | **failed: could not read $repo with the PAT** — left in place |" >> table.md
+              sed 's/^/  /' ls.err || true
+              echo "$repo" >> pat_failed.txt
+              fail=1
+              continue
+            fi
+            sha=$(printf '%s\n' "$listing" | awk '{print $1}')
+            if [ -z "$sha" ]; then
+              echo "| $repo | \`$name\` | — | absent on the remote — skipped |" >> table.md
+              continue
+            fi
+            if sibling_git push "$url" --delete "$ref" 2>push.err; then
+              if left=$(sibling_git ls-remote "$url" "$ref" 2>/dev/null); then
+                left=$(printf '%s\n' "$left" | awk '{print $1}')
+                if [ -z "$left" ]; then
+                  echo "| $repo | \`$name\` | \`$sha\` | voided |" >> table.md
+                else
+                  echo "| $repo | \`$name\` | \`$sha\` | **still present after delete** |" >> table.md
+                  fail=1
+                fi
               else
-                echo "| \`$name\` | \`$sha\` | **still present after delete** |" >> table.md
+                echo "| $repo | \`$name\` | \`$sha\` | **failed: delete sent but could not re-read $repo to verify** |" >> table.md
                 fail=1
               fi
             else
-              echo "| \`$name\` | \`$sha\` | **delete failed** |" >> table.md
+              reason="delete failed"
+              grep -q '403' push.err && reason="delete failed: 403 — the PAT cannot push to $repo"
+              echo "| $repo | \`$name\` | \`$sha\` | **$reason** — left in place |" >> table.md
+              sed 's/^/  /' push.err || true
+              echo "$repo" >> pat_failed.txt
               fail=1
             fi
           done < checked.txt
+          [ -z "$sib" ] || rm -rf "$sib"
+          sort -u pat_failed.txt -o pat_failed.txt
           echo "fail=$fail" >> "$GITHUB_OUTPUT"
           cat table.md >> "$GITHUB_STEP_SUMMARY"
 
@@ -196,6 +299,14 @@ jobs:
             if [ "$COUNT" != "0" ]; then
               cat table.md
               echo
+              if [ -s pat_failed.txt ]; then
+                echo "The org PAT (PAT_PYAUTOLABS) could not act on: $(paste -sd, pat_failed.txt | sed 's/,/, /g'). A repo born after the PAT was minted may be missing from its repository list — add it there, then submit a new void issue. Those refs were left in place."
+                echo
+              fi
+              if grep -q 'skipped: no PAT' table.md; then
+                echo "PAT_PYAUTOLABS is not set on this repo, so refs held on sibling repos were left in place."
+                echo
+              fi
               echo "Voided refs are gone for good — **recovery is no longer possible**."
               echo "Their entries stay in PyAutoMind/condemned.md until a session retires them (the board lists them)."
             elif [ ! -s refused.md ]; then
@@ -204,7 +315,7 @@ jobs:
           } > comment.md
           gh issue comment "$ISSUE" --repo "$GITHUB_REPOSITORY" --body-file comment.md
           if [ "$FAIL" = "1" ]; then
-            echo "::error::at least one delete failed — issue left open"
+            echo "::error::at least one requested ref was not voided (failed, or skipped for want of the PAT) — issue left open"
             exit 1
           fi
           if [ -s refused.md ] && [ "$COUNT" = "0" ]; then

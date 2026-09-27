@@ -164,24 +164,73 @@ def test_void_link_is_well_formed_and_only_on_present_voidable_refs(parser):
             assert q["title"] == [f"void: {row['name']}"]
             assert q["labels"] == ["void"]
             assert row["sha"] in q["body"][0]
+            assert f"- repo: {board.row_repo(snap, row)}" in q["body"][0]
             assert "Submitting this issue voids the ref permanently." in q["body"][0]
     assert "title=void%3A+team-old-spike" in b["due"][0]["void_url"]
-    for key in ("held", "dangling", "voided_pending", "history", "elsewhere"):
+    for key in ("held", "dangling", "voided_pending", "history"):
         assert all(not r["void_url"] for r in b[key]), key
 
 
-def test_void_all_due_never_includes_undated_orphan_or_sibling_refs(parser):
-    snap = _snap(parser)
-    assert board.render(snap, "due-names").split() == ["team-old-spike"]
+def test_sibling_held_rows_get_the_button_naming_the_repo(parser):
+    b = _snap(parser)["buckets"]
+    row = b["elsewhere"][0]
+    q = parse_qs(urlsplit(row["void_url"]).query)
+    assert q["title"] == ["void: sibling-stash-0"]
+    body = q["body"][0]
+    assert "- repo: SomeSibling" in body and "on SomeSibling" in body
+    assert "PAT_PYAUTOLABS" in body and "6" * 40 in body
+    # not listed this render → no SHA → no button
+    unlisted = _snap(parser, foreign={"SomeSibling": None})
+    assert not unlisted["buckets"]["elsewhere"][0]["void_url"]
+
+
+def test_an_undated_sibling_ref_is_held_not_voidable(parser):
+    ledger = LEDGER + (
+        "\n## sibling/history\n- type: branch\n"
+        "- sweep-after: never — void only on explicit human request\n"
+        "- archive-ref: refs/heads/archive/condemned/sibling-history "
+        "on SomeSibling origin\n")
+    snap = board.build_snapshot(
+        ledger, LS_REMOTE, parser, TODAY, "SomeOrg", "SomeGut",
+        generated="2026-09-26T06:00:00+00:00",
+        foreign={"SomeSibling": {"sibling-stash-0": "6" * 40,
+                                 "sibling-history": "5" * 40}})
+    rows = {r["name"]: r for r in snap["buckets"]["elsewhere"]}
+    assert not rows["sibling-history"]["void_url"]
     plan = json.loads(board.render(snap, "void-plan"))
-    assert plan["due"] == ["team-old-spike"]
-    assert plan["held"] == ["history-kept"]
-    assert "history-kept" not in plan["voidable"]
-    assert "sibling-stash-0" not in plan["voidable"]
-    assert "__selftest_branch__" in plan["voidable"]
+    assert {"name": "sibling-history", "repo": "SomeSibling",
+            "sha": "5" * 40} in plan["held"]
+    assert "sibling-history" not in [e["name"] for e in plan["voidable"]]
+    assert "sibling-history" not in [e["name"] for e in plan["due"]]
+
+
+def test_void_plan_carries_the_repo_and_all_due_reaches_siblings(parser):
+    snap = _snap(parser)
+    assert board.render(snap, "due-names").split() == ["team-old-spike",
+                                                        "sibling-stash-0"]
+    plan = json.loads(board.render(snap, "void-plan"))
+    assert plan["repo"] == "SomeGut"
+    assert plan["due"] == [
+        {"name": "sibling-stash-0", "repo": "SomeSibling", "sha": "6" * 40},
+        {"name": "team-old-spike", "repo": "SomeGut", "sha": "a" * 40}]
+    assert plan["held"] == [{"name": "history-kept", "repo": "SomeGut",
+                             "sha": "c" * 40}]
+    voidable = {(e["repo"], e["name"]) for e in plan["voidable"]}
+    assert ("SomeGut", "history-kept") not in voidable
+    assert ("SomeSibling", "sibling-stash-0") in voidable
+    assert ("SomeGut", "__selftest_branch__") in voidable
+    assert ("SomeGut", "fresh-experiment") in voidable
+    # orphans are single-void only, never in the all-due set
+    assert "__selftest_branch__" not in [e["name"] for e in plan["due"]]
     q = parse_qs(urlsplit(snap["void_all_due_url"]).query)
     assert q["title"] == ["void: all-due"]
     assert "history-kept" not in q["body"][0]
+    assert "sibling-stash-0 (on SomeSibling)" in q["body"][0]
+    # a sibling that could not be listed is left out of the plan entirely
+    unlisted = json.loads(board.render(
+        _snap(parser, foreign={"SomeSibling": None}), "void-plan"))
+    assert all(e["repo"] == "SomeGut" for k in ("due", "voidable", "held")
+               for e in unlisted[k])
 
 
 def test_valid_name_refuses_anything_outside_the_namespace():
@@ -209,6 +258,8 @@ def test_state_is_yellow_with_due_rows_first_and_validates(parser):
     _validate_state(state)
     assert state["status"] == "yellow" and state["organ"] == "gut"
     assert state["items"][0]["severity"] == "yellow"
+    sib = [i for i in state["items"] if i["text"].startswith("due on SomeSibling")]
+    assert sib and "title=void%3A+sibling-stash-0" in sib[0]["url"]
     assert state["items"][0]["url"].startswith(
         "https://github.com/SomeOrg/SomeGut/issues/new?title=void%3A+team-old-spike")
     assert "pyauto-gut void team-old-spike --yes" in state["items"][0]["prompt"]
@@ -263,8 +314,10 @@ def test_cli_snapshot_roundtrip_renders_state_and_html(parser, tmp_path):
     _validate_state(json.loads(run("--state")))
     page = run("--html")
     assert "/* theme:gut */" in page
-    assert "Void all due (1)" in page
-    assert page.count("class='void'") == 5  # 1 due + 3 transit + 1 orphan
+    assert "Void all due (2)" in page  # 1 due in the Gut + 1 on a sibling
+    # 1 due + 3 transit + 1 orphan + 1 held on another repo
+    assert page.count("class='void'") == 6
+    assert "on SomeSibling" in page
     assert "no ledger entry" in page
     assert "retire entry" in page
 

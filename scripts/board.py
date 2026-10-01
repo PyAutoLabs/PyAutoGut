@@ -570,7 +570,7 @@ def _render_md_brief(snap: dict) -> str:
 _LEDE = ("Everything the Gut holds, read against the Mind's "
          "<code>condemned.md</code>. <b>Void permanently</b> opens a prefilled "
          "issue — submitting it is the yes. Tap \U0001f4cb to copy a command "
-         "for a Claude Code session instead.")
+         "for an AI assistant session instead.")
 
 _EXTRA_CSS = """
 .acts{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.4rem}

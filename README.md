@@ -65,7 +65,7 @@ which names the repo — and left in place, and the issue stays open. The contra
   `bin/pyauto-gut void <name> --yes`;
 - refs without a ledger entry are voided one at a time, never in bulk;
 - voiding removes the bytes; the ledger row stays in `condemned.md` until a
-  session retires it (the board lists it with a copy-for-Claude payload),
+  session retires it (the board lists it with a copyable AI assistant prompt),
   because the workflow cannot edit the Mind.
 
 Full rationale and boundaries:

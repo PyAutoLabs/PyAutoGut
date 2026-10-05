@@ -8,7 +8,7 @@ def css(key):
     return f":root{{--accent:#000}} /* theme:{key} */"
 
 
-def hero(key, kind, lede_html=""):
+def hero(key, kind, lede_html="", *, navigation=()):
     return f'<header class="hero">PyAuto<b>{key}</b> {kind}</header>{lede_html}'
 
 

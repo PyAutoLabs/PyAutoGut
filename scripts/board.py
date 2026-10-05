@@ -651,7 +651,7 @@ _FOLD_AFTER = 8
 def _section_html(key: str, rows: list, snap: dict) -> str:
     if not rows:
         return ""
-    head = (f"<h2>{_esc(_TITLES[key])} <span class='muted'>({len(rows)})"
+    head = (f"<h2 id='bucket-{key}'>{_esc(_TITLES[key])} <span class='muted'>({len(rows)})"
             "</span></h2>")
     extra = ""
     # "Void all due" covers the Gut and sibling repos alike: it sits on the
@@ -681,14 +681,16 @@ def _boards_nav(snap: dict) -> str:
 
 def _render_html(snap: dict) -> str:
     t_ = theme()
-    c = counts(snap)
     st = status(snap)
     tone = {"green": "ok", "yellow": "warn", "grey": "muted"}[st]
-    stats = t_.stats((c["due"], "due"), (c["transit"], "in transit"),
-                     (c["held"], "held"), (c["orphans"], "orphans"),
-                     (c["dangling"] + c["voided_pending"], "dangling"),
-                     (c["history"], "history-only")) \
-        if hasattr(t_, "stats") else ""
+    navigation = [{"href": "#inventory", "label": "Inventory"}]
+    navigation.extend(
+        {"href": "#bucket-" + key, "label": _TITLES[key], "count": len(rows)}
+        for key in BUCKETS
+        if (rows := (snap.get("buckets") or {}).get(key))
+    )
+    if snap.get("voided"):
+        navigation.append({"href": "#voided", "label": "Recently voided", "count": len(snap["voided"])})
     sections = "".join(_section_html(k, (snap.get("buckets") or {}).get(k) or [],
                                      snap) for k in BUCKETS)
     if not snap.get("refs_listed"):
@@ -699,7 +701,7 @@ def _render_html(snap: dict) -> str:
         sections = "<p class='muted'>The Gut is empty.</p>"
     voided = ""
     if snap.get("voided"):
-        voided = "<h2>Recently voided</h2>" + "".join(
+        voided = "<h2 id='voided'>Recently voided</h2>" + "".join(
             f"<div class='task'><p><a href=\"{_esc(v['url'])}\">#{v['number']}"
             f"</a> {_esc(v['title'])} <span class='muted'>"
             f"{_esc(str(v.get('closed_at'))[:10])}</span></p></div>"
@@ -719,14 +721,13 @@ def _render_html(snap: dict) -> str:
 <style>{t_.css(BOARD_KEY)}{_EXTRA_CSS}</style>
 </head>
 <body>
-{t_.hero(BOARD_KEY, "Dashboard", _LEDE)}
+{t_.hero(BOARD_KEY, "Dashboard", _LEDE, navigation=navigation)}
 <p class="verdict {tone}"><b class="{tone}">{st.upper()}</b>
 <span class="muted">{_esc(_summary(snap))}</span></p>
-{stats}
 <p class="muted">{snap.get('ref_count', 0)} refs on the remote ·
 {snap.get('entry_count', 0)} ledger entries · as of {_esc(snap.get('today'))} ·
 <a href="dashboard.md">markdown version</a>{gh_link}</p>
-{sections}
+<section id="inventory">{sections}</section>
 {voided}
 {errors}
 {_boards_nav(snap)}

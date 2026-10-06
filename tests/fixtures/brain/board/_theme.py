@@ -23,3 +23,7 @@ def board_links(base_url, current=None, policy=None):
 def boards_footer(links, current):
     return "".join(f'<a data-organ="{k}" href="{u}">{k}</a>'
                    for k, u in links.items())
+
+
+def prompt_heading(key):
+    return '<h2 class="prompt-heading">Clear out your <strong>Gut</strong></h2>'

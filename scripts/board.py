@@ -722,6 +722,7 @@ def _render_html(snap: dict) -> str:
 </head>
 <body>
 {t_.hero(BOARD_KEY, "Dashboard", _LEDE, navigation=navigation)}
+{t_.prompt_heading("gut")}
 <p class="verdict {tone}"><b class="{tone}">{st.upper()}</b>
 <span class="muted">{_esc(_summary(snap))}</span></p>
 <p class="muted">{snap.get('ref_count', 0)} refs on the remote ·

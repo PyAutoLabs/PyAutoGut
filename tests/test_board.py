@@ -343,3 +343,21 @@ def test_collect_reads_a_fixture_ledger_and_a_local_remote(tmp_path):
     # owner cannot be derived from a local path: said, not guessed
     assert any("owner" in e for e in snap["errors"])
     assert board.to_state(snap)["pages_url"] == "./"
+
+
+def test_general_checkin_preserves_destructive_approval(parser, monkeypatch):
+    captured = {}
+    def panel(key, title, description, prompt, **kwargs):
+        captured.update(kwargs, prompt=prompt)
+        return "<section data-orchestration-panel></section>"
+    board._THEME_BRAIN[0] = FIXTURE_BRAIN
+    monkeypatch.setattr(board.theme(), "orchestration_panel", panel)
+    snap = _snap(parser)
+    rendered = board.render(snap, "html")
+    assert rendered.index("data-orchestration-panel") < rendered.index('id="inventory"')
+    assert "explicit human authorization" in captured["prompt"]
+    assert "copying this prompt grants none" in captured["prompt"]
+    assert {link["href"] for link in captured["work_links"]} == {
+        "https://github.com/SomeOrg/SomeGut",
+        "https://github.com/SomeOrg/PyAutoMind/blob/main/condemned.md"}
+    assert snap["void_all_due_url"] in rendered.replace("&amp;", "&")

@@ -27,3 +27,8 @@ def boards_footer(links, current):
 
 def prompt_heading(key):
     return '<h2 class="prompt-heading">Clear out your <strong>Gut</strong></h2>'
+
+
+def orchestration_panel(key, title, description, prompt, **kwargs):
+    import html
+    return '<section data-orchestration-panel>' + html.escape(prompt) + '</section>'

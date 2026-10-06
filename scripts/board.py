@@ -69,6 +69,8 @@ from pathlib import Path
 from urllib.parse import quote_plus
 
 GUT_HOME = Path(__file__).resolve().parents[1]
+CHECKIN_PROMPT = 'Review the Gut retention and recovery board in this chat. Read PyAutoGut/AGENTS.md and reconcile archive refs with PyAutoMind/condemned.md, held entries, sweep-after dates and recovery evidence. Summarize drift, items needing a decision and the next bounded step, keeping unknowns explicit. Apply my direction while retaining the whole queue. Preserve recoverability and ask for explicit human authorization before any permanent void, ref deletion or destructive cleanup; copying this prompt grants none. Route implementation changes through the existing workflow.'
+
 BOARD_KEY = "gut"  # this board's entry in the Brain's palette table
 NS = "refs/heads/archive/condemned/"
 SCHEMA_VERSION = 1
@@ -681,6 +683,14 @@ def _boards_nav(snap: dict) -> str:
 
 def _render_html(snap: dict) -> str:
     t_ = theme()
+    work_links = []
+    if repo_url(snap):
+        work_links.append({"label": "Gut repository", "href": repo_url(snap)})
+        # The board's publishing workflow checks out this owner's Mind ledger.
+        work_links.append({"label": "Mind retention ledger",
+                           "href": f"https://github.com/{snap['owner']}/PyAutoMind/blob/main/condemned.md"})
+    panel = t_.orchestration_panel("gut", "", "", CHECKIN_PROMPT,
+                                   organ="gut", work_links=work_links)
     st = status(snap)
     tone = {"green": "ok", "yellow": "warn", "grey": "muted"}[st]
     navigation = [{"href": "#inventory", "label": "Inventory"}]
@@ -722,7 +732,7 @@ def _render_html(snap: dict) -> str:
 </head>
 <body>
 {t_.hero(BOARD_KEY, "Dashboard", _LEDE, navigation=navigation)}
-{t_.prompt_heading("gut")}
+{panel}
 <p class="verdict {tone}"><b class="{tone}">{st.upper()}</b>
 <span class="muted">{_esc(_summary(snap))}</span></p>
 <p class="muted">{snap.get('ref_count', 0)} refs on the remote ·

@@ -361,3 +361,20 @@ def test_general_checkin_preserves_destructive_approval(parser, monkeypatch):
         "https://github.com/SomeOrg/SomeGut",
         "https://github.com/SomeOrg/PyAutoMind/blob/main/condemned.md"}
     assert snap["void_all_due_url"] in rendered.replace("&amp;", "&")
+
+
+def test_panel_uses_collection_time_and_owner_refresh(parser, monkeypatch):
+    captured = {}
+    def panel(*args, **kwargs):
+        captured.update(kwargs)
+        return ""
+    board._THEME_BRAIN[0] = FIXTURE_BRAIN
+    monkeypatch.setattr(board.theme(), "orchestration_panel", panel)
+    snap = _snap(parser)
+    snap["generated"] = "2026-10-07T09:00:00Z"
+    board.render(snap, 'html')
+    assert captured["refreshed_at"] == snap["generated"]
+    assert captured["refresh_url"] == "https://github.com/SomeOrg/SomeGut/actions/workflows/gut_board.yml"
+    snap["errors"] = ["source collection failed"]
+    board.render(snap, "html")
+    assert captured["refreshed_at"] is None

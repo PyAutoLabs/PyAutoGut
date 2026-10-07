@@ -715,7 +715,11 @@ def _render_html(snap: dict) -> str:
         work_links.append({"label": "Mind retention ledger",
                            "href": f"https://github.com/{snap['owner']}/PyAutoMind/blob/main/condemned.md"})
     panel = t_.orchestration_panel("gut", "", "", CHECKIN_PROMPT,
-                                   organ="gut", work_links=work_links)
+                                   organ="gut", work_links=work_links,
+                                   refreshed_at=(snap.get("generated")
+                                                 if snap.get("refs_listed") and not snap.get("errors") else None),
+                                   refresh_url=(repo_url(snap) + "/actions/workflows/gut_board.yml")
+                                   if repo_url(snap) else None)
     st = status(snap)
     tone = {"green": "ok", "yellow": "warn", "grey": "muted"}[st]
     navigation = [{"href": "#inventory", "label": "Inventory"}]

@@ -356,7 +356,7 @@ def test_general_checkin_preserves_destructive_approval(parser, monkeypatch):
     rendered = board.render(snap, "html")
     assert rendered.index("data-orchestration-panel") < rendered.index('id="inventory"')
     assert "explicit human authorization" in captured["prompt"]
-    assert "copying this prompt grants none" in captured["prompt"]
+    assert "a general check-in grants none" in captured["prompt"]
     assert {link["href"] for link in captured["work_links"]} == {
         "https://github.com/SomeOrg/SomeGut",
         "https://github.com/SomeOrg/PyAutoMind/blob/main/condemned.md"}

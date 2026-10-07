@@ -69,7 +69,32 @@ from pathlib import Path
 from urllib.parse import quote_plus
 
 GUT_HOME = Path(__file__).resolve().parents[1]
-CHECKIN_PROMPT = 'Review the Gut retention and recovery board in this chat. Read PyAutoGut/AGENTS.md and reconcile archive refs with PyAutoMind/condemned.md, held entries, sweep-after dates and recovery evidence. Summarize drift, items needing a decision and the next bounded step, keeping unknowns explicit. Apply my direction while retaining the whole queue. Preserve recoverability and ask for explicit human authorization before any permanent void, ref deletion or destructive cleanup; copying this prompt grants none. Route implementation changes through the existing workflow.'
+CHECKIN_PROMPT = (
+    "Use this chat as an ongoing place to review retained material, recover previous work and "
+    "manage cleanup through PyAutoGut. Read PyAutoGut/AGENTS.md and its current board. "
+    "Reconcile archive references with PyAutoMind/condemned.md, checking held entries, "
+    "retention dates, recovery evidence and unavailable sources.\n\n"
+    "When I give no particular direction, summarize what is retained, what is on hold, what "
+    "is eligible for a sweep and which discrepancies need attention. Explain why items are "
+    "retained and identify decisions needed from me. Eligibility for deletion is not "
+    "authorization to delete.\n\n"
+    "When I name a branch, stash, archived item or question, make that the main focus. Help "
+    "me understand what it contains, why it was retained, whether it includes unique work and "
+    "how it could be recovered. Bring in related records where useful; do not repeat the full "
+    "queue review on every follow-up.\n\n"
+    "Help me compare recovery, continued retention, a hold or eventual disposal. Inspect "
+    "relevant history and references before recommending an action. Keep missing evidence "
+    "explicit and verify recoverability rather than assuming an archive is sufficient.\n\n"
+    "When I request recovery, use the established procedure and preserve existing work. When "
+    "I request cleanup, identify the exact items and consequences before acting. Require "
+    "explicit human authorization for permanent voiding, reference deletion or destructive "
+    "cleanup; a general check-in grants none.\n\n"
+    "Keep retention records consistent with verified actions through the owning repository "
+    "procedures. Route implementation changes through the development workflow, and retain "
+    "decisions and approvals already given in this conversation.\n\n"
+    "After taking action, report what was recovered, retained, held or removed, how you "
+    "verified the outcome and what remains unresolved."
+)
 
 BOARD_KEY = "gut"  # this board's entry in the Brain's palette table
 NS = "refs/heads/archive/condemned/"

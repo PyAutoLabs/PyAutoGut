@@ -753,7 +753,7 @@ def _render_html(snap: dict) -> str:
                   "</ul></div>")
     gh = repo_url(snap)
     gh_link = f' · <a href="{gh}">GitHub</a>' if gh else ""
-    return f"""<!doctype html>
+    return t_.section_layout(f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PyAutoGut Dashboard</title>
@@ -776,7 +776,7 @@ def _render_html(snap: dict) -> str:
 {_esc(snap.get('generated') or '?')}.</footer>
 <script>{t_.JS}</script>
 </body></html>
-"""
+""")
 
 
 # --- badge / state --------------------------------------------------------------

@@ -32,3 +32,8 @@ def prompt_heading(key):
 def orchestration_panel(key, title, description, prompt, **kwargs):
     import html
     return '<section data-orchestration-panel>' + html.escape(prompt) + '</section>'
+
+
+def section_layout(page, summaries=None):
+    """Stand-in for Brain's HTML-only layout adapter."""
+    return page

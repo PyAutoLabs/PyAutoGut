@@ -178,7 +178,7 @@ def test_sibling_held_rows_get_the_button_naming_the_repo(parser):
     assert q["title"] == ["void: sibling-stash-0"]
     body = q["body"][0]
     assert "- repo: SomeSibling" in body and "on SomeSibling" in body
-    assert "PAT_PYAUTOLABS" in body and "6" * 40 in body
+    assert "pyautolabs-bot App token" in body and "6" * 40 in body
     # not listed this render → no SHA → no button
     unlisted = _snap(parser, foreign={"SomeSibling": None})
     assert not unlisted["buckets"]["elsewhere"][0]["void_url"]

@@ -25,7 +25,7 @@ either direction is shown, not hidden:
   lives on a sibling repo's origin (``… on <Repo> origin``): read with a
   best-effort ``ls-remote`` of that repo, flagged when due, and voidable with
   the same button when dated and present — the void workflow deletes it on
-  the sibling with the org PAT (``PAT_PYAUTOLABS``); undated sibling refs are
+  the sibling with the org's ``pyautolabs-bot`` App token; undated sibling refs are
   held like any other;
 * **history-only** — ``archive-ref: n/a`` (bytes live in remote history):
   listed for completeness, never voidable;
@@ -34,7 +34,8 @@ either direction is shown, not hidden:
 **The button is a prefilled GitHub issue.** "Void permanently" opens
 ``issues/new?title=void:+<name>&labels=void&body=…``; pressing Submit is the
 human's ``--yes``. ``.github/workflows/void.yml`` deletes the ref — with this
-repo's own token when the ref is in the Gut, with ``PAT_PYAUTOLABS`` when it
+repo's own token when the ref is in the Gut, with a ``pyautolabs-bot`` App
+token when it
 is held on a sibling repo — comments the repo and pre-delete SHA, closes the
 issue and re-renders this board. ``void: all-due`` voids every *due* row at
 once, in the Gut and on sibling repos alike.
@@ -254,7 +255,7 @@ def void_issue_url(snap: dict, row: dict) -> str:
         return ""
     where = row_repo(snap, row)
     held_on = (f" on {where} (held on a sibling repo — deleted there with "
-               "the org PAT, PAT_PYAUTOLABS)" if row.get("host") else
+               "the pyautolabs-bot App token)" if row.get("host") else
                f" on {where}")
     body = (f"Void `{NS}{row['name']}` permanently{held_on}.\n\n"
             f"- repo: {where}\n"
@@ -294,7 +295,7 @@ def void_all_due_url(snap: dict) -> str:
             f"{listing}\n\nThe workflow recomputes the due set from "
             "condemned.md when it runs; undated (held) entries and refs with "
             "no ledger entry are never included. Refs held on sibling repos "
-            "are deleted there with the org PAT (PAT_PYAUTOLABS).\n\n"
+            "are deleted there with the pyautolabs-bot App token.\n\n"
             "Submitting this issue "
             "voids the refs permanently. Recovery is no longer possible "
             "afterwards.")

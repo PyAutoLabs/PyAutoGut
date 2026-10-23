@@ -119,17 +119,17 @@ The Gut publishes a board (`scripts/board.py` → `gut_board.yml` → Pages +
   the Gut or on a sibling repo — are refused by the workflow and left out of
   `all-due`; orphans (no ledger entry) are single-void only, never in
   `all-due`.
-- **The reach covers sibling repos (PyAutoGut#11), through the org PAT.** An
+- **The reach covers sibling repos (PyAutoGut#11), through the org App.** An
   entry whose `archive-ref` says `… on <Repo> origin` is voided on that repo:
   `--void-plan` carries `{name, repo, sha}` per entry, and void.yml deletes
-  a sibling ref with `secrets.PAT_PYAUTOLABS` (the Gut's own token cannot
-  reach another repo). The PAT is sent as an `http.extraheader` via
-  `GIT_CONFIG_*` env from an empty scratch repo — never in a URL, argv or log
-  — and masked with `::add-mask::`. No PAT → "skipped: no PAT"; a 403 (the
-  PAT403 precedent: a newborn repo missing from the PAT's repository list) →
-  a per-ref failure row naming the repo. Either way the ref stays and the
-  issue stays open; it closes as completed only when every requested ref was
-  voided or absent.
+  a sibling ref with a one-hour `pyautolabs-bot` App token (owner-wide,
+  contents write; the Gut's own token cannot reach another repo), handed to
+  git by `gh auth setup-git` from an empty scratch repo — never in a URL. A
+  mint failure fails the run; a 403 from a sibling → a per-ref failure row
+  naming the repo, the ref stays and the issue stays open; it closes as
+  completed only when every requested ref was voided or absent. The
+  dispatch-only `dry_run` probe `push --dry-run --delete`s every due sibling
+  ref to prove the credential and changes nothing.
 - **Ledger retirement is a session act.** Neither token edits the Mind; a
   voided ref's entry is retired from `condemned.md` by a session (the board's
   "retire entry" payload).

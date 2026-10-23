@@ -49,13 +49,16 @@ then deletes that ref, comments the repo and pre-delete SHA, closes the issue
 and re-renders the board. **Void all due** does the same for every due row
 (`void: all-due`). The button reaches refs **held on another repo** too (an
 entry whose `archive-ref` says `… on <Repo> origin`): refs in the Gut are
-deleted with this repo's own token, refs on a sibling repo with the org PAT
-`secrets.PAT_PYAUTOLABS` — the token Brain's `branch_archive.yml` already
-pushes cross-repo with. The PAT is sent as an HTTP header from an empty scratch
-repo (never in a URL or a log line, and masked). Without the PAT, or when the PAT
-cannot reach a repo (a repo born after the PAT was minted may be missing from
-its repository list), that ref is reported per row in the closing comment —
-which names the repo — and left in place, and the issue stays open. The contract:
+deleted with this repo's own token, refs on a sibling repo with a one-hour
+token minted from the org's `pyautolabs-bot` GitHub App (contents write on
+every installed repo, so a new repo needs no token change; the same App Brain's
+`branch_archive.yml` pushes into the Gut with). git reaches it through
+`gh auth setup-git` from an empty scratch repo — never a credential in a URL.
+A token that cannot be minted fails the run; a sibling that refuses it is
+reported per row in the closing comment — which names the repo — and left in
+place, and the issue stays open. Dispatching `void.yml` with `dry_run: true`
+runs `git push --dry-run --delete` for every due sibling ref and deletes
+nothing. The contract:
 
 - only owners, members and collaborators can void — anyone else's issue is
   closed untouched;

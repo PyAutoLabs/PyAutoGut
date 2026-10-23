@@ -2,8 +2,8 @@
 its safety gates — the author-association gate, the `void:` title prefix
 (labels can be dropped by the issue form), the namespace refusal, the held
 refusal and `push origin --delete` behind an ls-remote read — plus the
-sibling-repo reach: the PAT branch, its mask, the repo column and the per-ref
-failure rows."""
+sibling-repo reach: the App-token branch, the repo column and the per-ref
+failure rows, and the dispatch-only dry-run probe."""
 
 from pathlib import Path
 
@@ -24,7 +24,11 @@ def _on(doc):
 def test_void_workflow_triggers_and_permissions():
     text, doc = _load("void.yml")
     assert doc["name"] == "Gut Void"
-    assert _on(doc) == {"issues": {"types": ["opened"]}}
+    on = _on(doc)
+    assert on["issues"] == {"types": ["opened"]}
+    # dispatch exists only for the dry-run probe; it never reaches `void`
+    assert on["workflow_dispatch"]["inputs"]["dry_run"]["default"] is False
+    assert "github.event.issue.title" in doc["jobs"]["void"]["if"]
     assert doc["permissions"] == {"contents": "write", "issues": "write",
                                   "actions": "write"}
 
@@ -91,31 +95,50 @@ def test_board_workflow_publishes_and_validates_the_feed():
     assert "enablement: true" in text
 
 
-def test_void_workflow_reaches_sibling_repos_with_the_pat_kept_out_of_logs():
+def test_void_workflow_reaches_sibling_repos_with_the_app_token():
     text, doc = _load("void.yml")
     steps = {s.get("name"): s for s in doc["jobs"]["void"]["steps"]}
+    mint = steps["Mint App token (every installed repo — delete sibling refs)"]
+    assert mint["uses"] == "actions/create-github-app-token@v3"
+    assert mint["with"]["client-id"] == "${{ vars.APP_CLIENT_ID }}"
+    assert mint["with"]["private-key"] == "${{ secrets.APP_PRIVATE_KEY }}"
+    assert mint["with"]["permission-contents"] == "write"
+    assert "repositories" not in mint["with"]  # owner-wide: any sibling
     void = steps["Void each ref (ls-remote → push --delete → verify)"]
-    # the PAT is scoped to the one step that needs it
-    assert void["env"] == {"PAT": "${{ secrets.PAT_PYAUTOLABS }}"}
-    assert sum("secrets.PAT_PYAUTOLABS" in str(s) for s in steps.values()) == 1
+    # the App token is scoped to the one step that needs it
+    assert void["env"] == {"APP_TOKEN": "${{ steps.app_token.outputs.token }}"}
+    assert sum("steps.app_token.outputs.token" in str(s)
+               for s in steps.values()) == 1
     run = void["run"]
     assert 'if [ "$repo" = "$own" ]; then' in run
-    # masked (raw and header form) and sent as a header via env, never a URL
-    assert 'echo "::add-mask::$PAT"' in run
-    assert 'echo "::add-mask::$auth"' in run
-    assert "GIT_CONFIG_KEY_0=\"http.https://github.com/.extraheader\"" in run
-    assert "x-access-token:${PAT}@" not in text and "x-access-token:$PAT@" not in text
+    # gh is git's credential helper; no credential in a URL or a header env
+    assert 'GH_TOKEN="$APP_TOKEN" gh auth setup-git' in run
+    assert "PAT_PYAUTOLABS" not in text and "x-access-token" not in text
+    assert "GIT_CONFIG_KEY" not in text and "extraheader" not in run
+    assert "|| github.token" not in text
     assert 'url="https://github.com/$owner/$repo.git"' in run
     # ls-remote → push --delete → verify on the sibling, in that order
     i_ls = run.index('sibling_git ls-remote "$url" "$ref" 2>ls.err')
     i_push = run.index('sibling_git push "$url" --delete "$ref"')
     i_verify = run.index('left=$(sibling_git ls-remote "$url" "$ref"')
     assert i_ls < i_push < i_verify
-    # per-ref outcomes: no PAT, unreadable, 403, generic failure
-    assert "skipped: no PAT" in run
-    assert "could not read $repo with the PAT" in run
-    assert "403 — the PAT cannot push to $repo" in run
-    assert "left in place" in run and 'echo "$repo" >> pat_failed.txt' in run
+    # per-ref outcomes: unreadable, 403, generic failure
+    assert "could not read $repo with the App token" in run
+    assert "403 — the App token cannot push to $repo" in run
+    assert "left in place" in run and 'echo "$repo" >> token_failed.txt' in run
+
+
+def test_void_dry_run_probe_deletes_nothing():
+    text, doc = _load("void.yml")
+    probe = doc["jobs"]["probe"]
+    assert probe["if"] == "github.event_name == 'workflow_dispatch' && inputs.dry_run"
+    assert probe["permissions"] == {"contents": "read"}
+    body = "\n".join(str(s.get("run", "")) for s in probe["steps"])
+    assert "push --dry-run" in body and "ls-remote" in body
+    for forbidden in ("gh issue", "gh workflow run", "push origin --delete"):
+        assert forbidden not in body
+    import re
+    assert not re.search(r"git -C \"\$sib\" push (?!--dry-run)", body)
 
 
 def test_void_comment_has_a_repo_column_and_names_the_pat_gaps():
@@ -124,6 +147,6 @@ def test_void_comment_has_a_repo_column_and_names_the_pat_gaps():
     assert "|---|---|---|---|" in text
     report = next(s for s in doc["jobs"]["void"]["steps"]
                   if s.get("name") == "Report, close and re-render")["run"]
-    assert "pat_failed.txt" in report and "missing from its repository list" in report
-    # a failure or a no-PAT skip leaves the issue open (exit before close)
+    assert "token_failed.txt" in report and "pyautolabs-bot App token" in report
+    # a failure leaves the issue open (exit before close)
     assert report.index('if [ "$FAIL" = "1" ]') < report.index("--reason completed")

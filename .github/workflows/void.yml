@@ -15,10 +15,9 @@ name: Gut Void
 #      SHA with `git ls-remote` (absent → skipped with a note), then deletes
 #      refs/heads/archive/condemned/<name> there, then re-checks it is gone.
 #      In the Gut: `git push origin --delete` with this repo's GITHUB_TOKEN.
-#      On a sibling: the org PAT (secrets.PAT_PYAUTOLABS, the token Brain's
-#      branch_archive.yml pushes cross-repo with), from an empty scratch repo,
-#      sent as an HTTP header through GIT_CONFIG_* env — never in a URL, an
-#      argv or a log line, and masked with ::add-mask:: besides;
+#      On a sibling: a one-hour `pyautolabs-bot` App token (contents write,
+#      every installed repo), minted in this job and handed to git through
+#      `gh auth setup-git`, from an empty scratch repo — never in a URL;
 #   4. comments a table (repo | name | pre-delete sha | result), closes the
 #      issue as completed and re-dispatches the Gut Board.
 #
@@ -28,11 +27,17 @@ name: Gut Void
 # human request), in the Gut or on a sibling. `void: all-due` takes the due
 # set only: never undated entries, never refs without a ledger entry.
 #
-# Sibling reach depends on the PAT: no PAT → each sibling ref is reported
-# "skipped: no PAT" and left in place; a 403 (a repo born after the PAT was
-# minted may be missing from its repository list) → a per-ref failure row
-# naming the repo. Either way the issue is LEFT OPEN — it closes as completed
-# only when every requested ref was voided or absent (skipped by design).
+# Sibling reach: a token that cannot be minted fails the job (the issue is
+# commented and left open); a sibling that refuses the App token (403) → a
+# per-ref failure row naming the repo, and the issue is LEFT OPEN — it closes
+# as completed only when every requested ref was voided or absent (skipped by
+# design).
+#
+# `workflow_dispatch` with `dry_run: true` runs only the `probe` job: it
+# computes the same plan, mints the same token and runs `git ls-remote` +
+# `git push --dry-run --delete` for every due ref (no pack is sent, no ref
+# moves) — proof of the credential that deletes nothing, comments nothing and
+# closes nothing.
 #
 # The label is a hint, not a gate: GitHub's issue form can drop `labels=` on
 # submission (seen on the Memory queue from phones), so the `void:` title
@@ -46,6 +51,12 @@ name: Gut Void
 on:
   issues:
     types: [opened]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Prove the void credential: push --dry-run --delete every due ref, change nothing"
+        type: boolean
+        default: false
 
 # contents: write → delete the ref; issues: write → label, comment, close;
 # actions: write → re-dispatch gut_board.yml (token pushes/closes do not
@@ -180,38 +191,40 @@ jobs:
           echo "target=$target" >> "$GITHUB_OUTPUT"
           echo "count=$(wc -l < checked.txt | tr -d ' ')" >> "$GITHUB_OUTPUT"
 
+      # Owner-wide (no `repositories:`): a void can name a ref held on any
+      # sibling repo, and the App is installed on every repo, so a repo born
+      # tomorrow is reachable with no token edit. contents: write is the
+      # delete; nothing else.
+      - name: Mint App token (every installed repo — delete sibling refs)
+        id: app_token
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ vars.APP_CLIENT_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          owner: PyAutoLabs
+          permission-contents: write
+
       - name: Void each ref (ls-remote → push --delete → verify)
         id: void
         env:
-          # Only this step sees the org PAT; it is used for sibling repos only.
-          PAT: ${{ secrets.PAT_PYAUTOLABS }}
+          # Only this step sees the App token; it is used for sibling repos only.
+          APP_TOKEN: ${{ steps.app_token.outputs.token }}
         run: |
           own="${GITHUB_REPOSITORY#*/}"
           owner="${GITHUB_REPOSITORY%%/*}"
           fail=0
-          : > pat_failed.txt
-          # Sibling repos: the PAT goes out as an HTTP Authorization header
-          # through GIT_CONFIG_* environment entries (not argv, not a URL),
-          # from an empty scratch repo — the checkout's persisted
-          # GITHUB_TOKEN extraheader lives in ITS .git/config and would
-          # otherwise ride along (and win) on every github.com request.
-          sib=""
-          if [ -n "${PAT:-}" ]; then
-            echo "::add-mask::$PAT"
-            auth=$(printf 'x-access-token:%s' "$PAT" | base64 | tr -d '\n')
-            echo "::add-mask::$auth"
-            if git config --global --get-regexp 'http\..*extraheader' >/dev/null 2>&1; then
-              echo "::error::a global git extraheader is set; it would override the PAT."
-              exit 1
-            fi
-            sib=$(mktemp -d)
-            git -C "$sib" init -q
-          fi
+          : > token_failed.txt
+          # Sibling repos: gh is git's credential helper (`gh auth setup-git`)
+          # and reads the App token from GH_TOKEN, set per call below. They
+          # run from an empty scratch repo, so the checkout's persisted
+          # GITHUB_TOKEN header (local to ITS .git/config) never rides along;
+          # in the Gut itself that header is exactly what deletes, with this
+          # repo's own token.
+          GH_TOKEN="$APP_TOKEN" gh auth setup-git
+          sib=$(mktemp -d)
+          git -C "$sib" init -q
           sibling_git() {
-            GIT_TERMINAL_PROMPT=0 GIT_CONFIG_COUNT=1 \
-              GIT_CONFIG_KEY_0="http.https://github.com/.extraheader" \
-              GIT_CONFIG_VALUE_0="AUTHORIZATION: basic $auth" \
-              git -C "$sib" "$@"
+            GH_TOKEN="$APP_TOKEN" GIT_TERMINAL_PROMPT=0 git -C "$sib" "$@"
           }
           {
             echo "| repo | name | pre-delete sha | result |"
@@ -240,17 +253,12 @@ jobs:
               fi
               continue
             fi
-            # A ref held on a sibling repo: the org PAT or nothing.
+            # A ref held on a sibling repo: the App token.
             url="https://github.com/$owner/$repo.git"
-            if [ -z "$sib" ]; then
-              echo "| $repo | \`$name\` | — | **skipped: no PAT** (PAT_PYAUTOLABS is not set) — left in place |" >> table.md
-              fail=1
-              continue
-            fi
             if ! listing=$(sibling_git ls-remote "$url" "$ref" 2>ls.err); then
-              echo "| $repo | \`$name\` | — | **failed: could not read $repo with the PAT** — left in place |" >> table.md
+              echo "| $repo | \`$name\` | — | **failed: could not read $repo with the App token** — left in place |" >> table.md
               sed 's/^/  /' ls.err || true
-              echo "$repo" >> pat_failed.txt
+              echo "$repo" >> token_failed.txt
               fail=1
               continue
             fi
@@ -274,15 +282,15 @@ jobs:
               fi
             else
               reason="delete failed"
-              grep -q '403' push.err && reason="delete failed: 403 — the PAT cannot push to $repo"
+              grep -q '403' push.err && reason="delete failed: 403 — the App token cannot push to $repo"
               echo "| $repo | \`$name\` | \`$sha\` | **$reason** — left in place |" >> table.md
               sed 's/^/  /' push.err || true
-              echo "$repo" >> pat_failed.txt
+              echo "$repo" >> token_failed.txt
               fail=1
             fi
           done < checked.txt
-          [ -z "$sib" ] || rm -rf "$sib"
-          sort -u pat_failed.txt -o pat_failed.txt
+          rm -rf "$sib"
+          sort -u token_failed.txt -o token_failed.txt
           echo "fail=$fail" >> "$GITHUB_OUTPUT"
           cat table.md >> "$GITHUB_STEP_SUMMARY"
 
@@ -299,12 +307,8 @@ jobs:
             if [ "$COUNT" != "0" ]; then
               cat table.md
               echo
-              if [ -s pat_failed.txt ]; then
-                echo "The org PAT (PAT_PYAUTOLABS) could not act on: $(paste -sd, pat_failed.txt | sed 's/,/, /g'). A repo born after the PAT was minted may be missing from its repository list — add it there, then submit a new void issue. Those refs were left in place."
-                echo
-              fi
-              if grep -q 'skipped: no PAT' table.md; then
-                echo "PAT_PYAUTOLABS is not set on this repo, so refs held on sibling repos were left in place."
+              if [ -s token_failed.txt ]; then
+                echo "The pyautolabs-bot App token could not act on: $(paste -sd, token_failed.txt | sed 's/,/, /g'). The App is installed on every repo, so check the run log for that repo's refusal (installation or branch rules), then submit a new void issue. Those refs were left in place."
                 echo
               fi
               echo "Voided refs are gone for good — **recovery is no longer possible**."
@@ -315,7 +319,7 @@ jobs:
           } > comment.md
           gh issue comment "$ISSUE" --repo "$GITHUB_REPOSITORY" --body-file comment.md
           if [ "$FAIL" = "1" ]; then
-            echo "::error::at least one requested ref was not voided (failed, or skipped for want of the PAT) — issue left open"
+            echo "::error::at least one requested ref was not voided — issue left open"
             exit 1
           fi
           if [ -s refused.md ] && [ "$COUNT" = "0" ]; then
@@ -331,3 +335,85 @@ jobs:
         run: |
           gh issue comment "$ISSUE" --repo "$GITHUB_REPOSITORY" --body \
             "The Gut void run failed ($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID). The issue is left open; check the run log before retrying." || true
+
+  probe:
+    name: Prove the void credential (dry run)
+    if: github.event_name == 'workflow_dispatch' && inputs.dry_run
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      NS: refs/heads/archive/condemned
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/checkout@v4
+        with:
+          repository: PyAutoLabs/PyAutoBrain
+          path: PyAutoBrain
+
+      - uses: actions/checkout@v4
+        with:
+          repository: PyAutoLabs/PyAutoMind
+          path: PyAutoMind
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Compute the void plan from ls-remote + condemned.md
+        run: |
+          python scripts/board.py --mind PyAutoMind --brain PyAutoBrain \
+            --collect snap.json
+          python scripts/board.py --snapshot snap.json --void-plan > plan.json
+          jq -r '.due[] | [.repo, .name] | @tsv' plan.json > due.txt
+          cat due.txt
+
+      - name: Mint App token (every installed repo — delete sibling refs)
+        id: app_token
+        uses: actions/create-github-app-token@v3
+        with:
+          client-id: ${{ vars.APP_CLIENT_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          owner: PyAutoLabs
+          permission-contents: write
+
+      - name: ls-remote + push --dry-run --delete each due sibling ref
+        env:
+          APP_TOKEN: ${{ steps.app_token.outputs.token }}
+        run: |
+          own="${GITHUB_REPOSITORY#*/}"
+          owner="${GITHUB_REPOSITORY%%/*}"
+          GH_TOKEN="$APP_TOKEN" gh auth setup-git
+          sib=$(mktemp -d)
+          git -C "$sib" init -q
+          fail=0
+          probed=0
+          {
+            echo "## Gut void — dry run (nothing deleted)"
+            echo
+            echo "| repo | name | ls-remote | push --dry-run --delete |"
+            echo "|---|---|---|---|"
+          } >> "$GITHUB_STEP_SUMMARY"
+          while IFS=$'\t' read -r repo name; do
+            [ -n "$name" ] && [ "$repo" != "$own" ] || continue
+            url="https://github.com/$owner/$repo.git"
+            ref="$NS/$name"
+            if ! sha=$(GH_TOKEN="$APP_TOKEN" git -C "$sib" ls-remote "$url" "$ref" | awk '{print $1}') || [ -z "$sha" ]; then
+              echo "| $repo | \`$name\` | **unreadable or absent** | — |" >> "$GITHUB_STEP_SUMMARY"
+              fail=1; continue
+            fi
+            if GH_TOKEN="$APP_TOKEN" GIT_TERMINAL_PROMPT=0 git -C "$sib" push --dry-run "$url" --delete "$ref"; then
+              echo "| $repo | \`$name\` | \`$sha\` | ok |" >> "$GITHUB_STEP_SUMMARY"
+            else
+              echo "| $repo | \`$name\` | \`$sha\` | **refused** |" >> "$GITHUB_STEP_SUMMARY"
+              fail=1
+            fi
+            probed=$((probed + 1))
+          done < due.txt
+          rm -rf "$sib"
+          echo "probed $probed sibling ref(s)"
+          if [ "$probed" = "0" ]; then
+            echo "::warning::no due sibling refs to probe — the credential was minted but not exercised"
+          fi
+          [ "$fail" = "0" ] || { echo "::error::the App token could not reach at least one sibling ref"; exit 1; }

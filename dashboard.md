@@ -12,7 +12,7 @@
 | [Epics](#epics) | 17 |
 | [In flight](#in-flight) | 5 |
 | [Planned](#planned) | 9 |
-| [Backlog](#backlog) | 274 |
+| [Backlog](#backlog) | 275 |
 | [Recent](#recent) | 50 |
 | [Pending release](#pending-release) | 5 |
 
@@ -943,7 +943,7 @@ Use the start-dev skill. active/colab_custom_instructions_assistant_context.md
 
 </details>
 
-<details><summary>📋 <a href="active/corner_plot_config_keys_pr1709_phase3.md">Workspace config + docs for corner-plot labels and latent plots…</a> — <a href="https://github.com/PyAutoLabs/autofit_workspace/issues/177">issue #177</a> — issued 2026-10-26 — release-blocker-repair; Fit #174 merged; four Galaxy-dependent PRs await publication; bounded smoke-profile prerequisite in… — PRs: <a href="https://github.com/PyAutoLabs/autofit_workspace/pull/174">autofit_workspace#174</a>, <a href="https://github.com/PyAutoLabs/autogalaxy_workspace/pull/259">autogalaxy_workspace#259</a>, <a href="https://github.com/PyAutoLabs/autolens_workspace/pull/595">autolens_workspace#595</a>, <a href="https://github.com/PyAutoLabs/HowToGalaxy/pull/87">HowToGalaxy#87</a>, <a href="https://github.com/PyAutoLabs/HowToLens/pull/100">HowToLens#100</a> — ⏸ waiting on PyAutoGalaxy's release</summary>
+<details><summary>📋 <a href="active/corner_plot_config_keys_pr1709_phase3.md">Workspace config + docs for corner-plot labels and latent plots…</a> — <a href="https://github.com/PyAutoLabs/autofit_workspace/issues/177">issue #177</a> — issued 2026-10-26 — awaiting-release; production and full recovery integration deferred by human until other AI tasks finish; four community PRs… — PRs: <a href="https://github.com/PyAutoLabs/autofit_workspace/pull/174">autofit_workspace#174</a>, <a href="https://github.com/PyAutoLabs/autogalaxy_workspace/pull/259">autogalaxy_workspace#259</a>, <a href="https://github.com/PyAutoLabs/autolens_workspace/pull/595">autolens_workspace#595</a>, <a href="https://github.com/PyAutoLabs/HowToGalaxy/pull/87">HowToGalaxy#87</a>, <a href="https://github.com/PyAutoLabs/HowToLens/pull/100">HowToLens#100</a> — ⏸ waiting on PyAutoGalaxy's release</summary>
 
 ```
 Use the start-dev skill. active/corner_plot_config_keys_pr1709_phase3.md
@@ -1925,7 +1925,7 @@ Use the start-dev skill. draft/bug/euclid/euclid_dr1_flip_rgb_jpg_upside_down.md
 </details>
 
 <details>
-<summary><b>research</b> — 42</summary>
+<summary><b>research</b> — 43</summary>
 
 <details><summary>📋 <a href="draft/research/autofit_inference/search_ext_b5c2a_rerun.md"><code>@autofit_inference</code> B5c-2a-rerun: re-pilot the 80 Emcee/Zeus rows lost to the harness bug…</a> — autofit_inference · medium · supervised · high</summary>
 
@@ -2027,6 +2027,14 @@ Use the start-dev skill. draft/research/pyautoinsight/slim_inference_repo_output
 
 ```
 Use the start-dev skill. draft/research/pyautomemory/checkerboard_psf_mismatch_residual_diagnostic.md
+```
+
+</details>
+
+<details><summary>📋 <a href="draft/research/autolens/sky_orientation_pyautolens_frame_is_a_north.md">Sky orientation: PyAutoLens frame is a north-down mirror of the sky…</a> — autolens · too-large · supervised · normal</summary>
+
+```
+Use the start-dev skill. draft/research/autolens/sky_orientation_pyautolens_frame_is_a_north.md
 ```
 
 </details>

@@ -1,3 +1,5 @@
 dataset_1d/model_fit.py
+dataset_1d/likelihood/pins.py
 imaging_ci/model_fit.py
+imaging_ci/likelihood/pins.py
 plot/subplots.py

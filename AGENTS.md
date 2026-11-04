@@ -21,6 +21,8 @@ pip install arcticpy==2.6 --no-build-isolation --no-deps
 scripts/                     Integration-test scripts run in CI
   dataset_1d/model_fit.py    1D calibration: simulate -> factor-graph fit -> aggregator round-trip
   imaging_ci/model_fit.py    2D charge injection: simulate -> factor-graph fit -> result inspection
+  dataset_1d/likelihood/pins.py   Pinned log-likelihood literals (1 and 2 trap species)
+  imaging_ci/likelihood/pins.py   Pinned log-likelihood literals (parallel, serial, parallel+serial)
   plot/subplots.py           Drives the autocti.plot function surface to files
 legacy/                      Euclid VIS heritage (2022-2023, pre-resurrection API — not runnable;
                              see legacy/README.md)
@@ -50,6 +52,19 @@ workspace-specific chain install.
 - The test-mode knob is `PYAUTO_TEST_MODE` (`2` bypasses sampling); `PYAUTOFIT_TEST_MODE`
   does not exist.
 - Never edit `legacy/` — it is preserved Euclid VIS history.
+
+## Likelihood pins
+
+`scripts/*/likelihood/pins.py` pin the absolute value of `analysis.log_likelihood_function` at
+`rtol=1e-8`, the same pattern as the `jax_likelihood/` pins in the lens and galaxy test
+workspaces. A failing pin means the CTI likelihood changed value: find out why before touching it.
+
+- A pin moves only with a dated comment above it naming the PR and the cause, for example
+  `# re-pinned 2026-12-01: arcticpy 2.7 DR2 well-filling model (PyAutoCTI#NNN)`. Record the old
+  and new values in the PR. Never loosen the tolerance to make a pin pass.
+- The arcticpy version is part of every pin's provenance (`arcticpy 2.6` in the comment). A new
+  arcticpy release is expected to move every literal, so re-pin all of them in one PR.
+- The scripts print every value, so a CI log has the new numbers for a re-pin.
 
 <!-- repos_sync:history:begin -->
 ## Never rewrite history

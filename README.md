@@ -77,3 +77,5 @@ Operating guidance for agents: [`AGENTS.md`](AGENTS.md). The organism this
 repo is the Gut of is described once in
 [PyAutoBrain/ORGANISM.md](https://github.com/PyAutoLabs/PyAutoBrain/blob/main/ORGANISM.md)
 and documented in full at <https://pyautoscientist.readthedocs.io>.
+
+<sub><i><a href="https://music.apple.com/us/album/roze-forgive/1594208592?i=1594208595">made some mistakes, but i still loved you</a></i></sub>
